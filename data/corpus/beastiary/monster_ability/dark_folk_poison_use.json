@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Dark Folk ~ Poison Use",
+    "delivery": "Extraordinary",
+    "description": "Dark Folk are skilled in the use of poison and never risk accidentally poisoning themselves. Dark Folk favor a foul-smelling black paste distilled from certain deep-underground fungi known as black smear-- injury; save Fort DC 15; frequency 1/round for 6 rounds; effect 1d2 Str; cure 1 save.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:dark_folk_poison_use",
+    "name": "Poison Use",
+    "owners": [
+      "beastiary:monster:dark_stalker"
+    ],
+    "source_page": "p.53",
+    "traits": [
+      "Poison Use"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 258,
+    "record_key": "Dark Folk ~ Poison Use"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

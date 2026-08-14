@@ -49,22 +49,32 @@ use codex::rules_core::character_input::{
     AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput, EquipmentSelection,
     SelectedChoice, SpellSelection, load_character_input_fixture,
 };
-use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
+use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus, load_spell_corpus};
+use codex::rules_core::race_resolver::{TraitRole, load_race_corpus};
 use codex::rules_core::equipment_effects::compute_equipment_effects;
 use codex::rules_core::equipment_resolver;
 use codex::rules_core::pilot_compute::{
-    PilotBaseChassisComputation, compute_pilot_base_chassis,
+    HeadlessReceiptStatus, PilotBaseChassisComputation, build_pilot_headless_receipt,
+    compute_pilot_base_chassis,
 };
 use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
 use codex::rules_core::rules_tables::apg::{self, ApgClassId};
 use codex::rules_core::rules_tables::beastiary1::{self, MonsterId};
+use codex::rules_core::rules_tables::companion_chassis;
+use codex::rules_core::rules_tables::monster_chassis;
 use codex::rules_core::rules_tables::crb::{
-    class_tables::ClassId, equipment_tables as crb_equipment_tables,
+    bard_spell_list as crb_bard_spell_list, class_tables::ClassId,
+    cleric_spell_list as crb_cleric_spell_list, druid_spell_list as crb_druid_spell_list,
+    equipment_tables as crb_equipment_tables, paladin_spell_list as crb_paladin_spell_list,
     race_tables::{RaceId, race_traits},
-    spell_list as crb_spell_list,
+    ranger_spell_list as crb_ranger_spell_list, sorcerer_spell_list as crb_sorcerer_spell_list,
+    spell_list as crb_spell_list, wizard_spell_list as crb_wizard_spell_list,
 };
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotSpellbookViewModel, PilotViewModel};
+use codex::rules_core::spell_resolver::{self, spell_id_resolve};
+use codex::rules_core::spellbook::compute_spellbook_coverage;
 use codex::rules_core::rules_tables::ultimate_campaign::feat_tables as uca_feat_tables;
 use codex::rules_core::wiring_class::{self, MAGNITUDE_TOKENS};
 
@@ -217,6 +227,16 @@ fn file_kind(basename: &str) -> Option<Kind> {
         return Some(Kind::ClassFeature);
     }
     if basename.contains("_abilities_race") {
+        // ...but a companion/familiar marker anywhere else in the basename
+        // wins: `isi_abilities_race_companion.lst` and
+        // `b4_abilities_race_ce_companion.lst` hold the racial abilities of
+        // *companion creatures* (Clockwork Spy, Clockwork Familiar), not
+        // racial traits of a player race. Without this narrowing the bare
+        // `_abilities_race` substring claims them for `race_trait` before the
+        // companion checks below are ever reached.
+        if basename.contains("companion") || basename.contains("familiar") {
+            return Some(Kind::Companion);
+        }
         return Some(Kind::RaceTrait);
     }
     if basename.contains("_abilities_companion") || basename.contains("_abilities_familiar") {
@@ -511,6 +531,89 @@ fn slug(name: &str) -> String {
         out.pop();
     }
     out
+}
+
+/// A stable 64-bit FNV-1a digest of one exact corpus key, rendered as sixteen
+/// lowercase hex characters. Used only by [`unit_id`] to disambiguate two
+/// distinct corpus keys whose [`slug`]s collide.
+///
+/// # Why FNV-1a and not [`std::collections::hash_map::DefaultHasher`]
+///
+/// `DefaultHasher`'s algorithm is explicitly documented as unspecified and
+/// free to change between Rust releases. Hanging a field of this file's own
+/// output on it would mean a toolchain upgrade silently rewrites every
+/// disambiguated id — breaking, in the one place it is hardest to notice, the
+/// byte-equality contract this whole function exists to protect. FNV-1a is a
+/// fixed specification with fixed constants, so the digest is a function of
+/// the key alone: same key, same sixteen characters, on any machine, under any
+/// compiler, forever.
+fn key_digest(key: &str) -> String {
+    // FNV-1a, 64-bit: offset basis 0xcbf29ce484222325, prime 0x100000001b3.
+    let mut hash: u64 = 0xcbf2_9ce4_8422_2325;
+    for byte in key.as_bytes() {
+        hash ^= u64::from(*byte);
+        hash = hash.wrapping_mul(0x0000_0100_0000_01b3);
+    }
+    format!("{hash:016x}")
+}
+
+/// One unit's `id` — the handle every downstream consumer keys on — built so
+/// that it is **unique**, which before this function it was not.
+///
+/// # The defect this closes
+///
+/// `id` is `<book>:<kind>:<slug of the corpus key>`, but `duplicate_identity`
+/// de-duplicates on the *exact* corpus key, and [`slug`] is deliberately lossy:
+/// it collapses every run of non-alphanumerics to one `_`. So two genuinely
+/// distinct records in one book+kind could — and did — land on one id.
+/// `Path Skill Acrobatics` and `Path Skill ~ Acrobatics`, `MITHRAL_ITEM` and
+/// `Mithral (Item)`, `Half-Elf ~ Drow Blooded` and `Half-Elf ~ Drow-Blooded`:
+/// twenty-nine ids in the corpus-wide run carried two rows each, and
+/// twenty-seven of those pairs disagreed about `wiring_class`, nineteen of them
+/// as `computed` against `display`.
+///
+/// That is not a cosmetic flaw. Every consumer that indexes the inventory by
+/// `id` — a `{u["id"]: u for u in units}` in Python, a `jq INDEX(.id)`, a
+/// pandas `set_index` — keeps exactly one row per id and drops the other, and
+/// *which* one it keeps is that consumer's own last-wins or first-wins detail.
+/// Point two such indexes at a before snapshot and an after snapshot and the
+/// dropped row can differ between them, manufacturing a `wiring_class`
+/// transition that no code change caused. That is precisely the phantom
+/// nineteen-unit `computed -> display` move recorded as a near-miss in
+/// `docs/retro/events/wiring-classifier.jsonl`, and it was read there as
+/// run-to-run nondeterminism in this generator. It is not: five consecutive
+/// runs of one binary over one corpus are byte-identical. The generator was
+/// deterministic and its output was ambiguous.
+///
+/// # The tie-break rule, and why it is the correct one
+///
+/// * **Suffix, never merge.** Two distinct corpus keys are two records. Making
+///   them one unit would change a count, and this is a fix to an identifier,
+///   not a ruling about content.
+/// * **Every colliding unit is suffixed; none keeps the bare slug.** A rule
+///   that let one member win the unsuffixed id would have to pick a winner, and
+///   every available criterion — enumeration order, line number, lexical order
+///   of the key — makes an id that moves when something *else* moves.
+/// * **The suffix is a digest of the unit's own exact corpus key.** An ordinal
+///   (`__1`, `__2`) would depend on the *set* of colliding siblings, so
+///   ingesting one new row could renumber a unit that had not changed. A digest
+///   of the key alone cannot: a unit's id is a function of its own identity.
+/// * **`__` is an unambiguous delimiter.** [`slug`] collapses every run of
+///   non-alphanumerics to a single `_`, so no slug can ever contain `__`, and no
+///   suffixed id can be mistaken for an unsuffixed one.
+/// * **Non-colliding units keep the id they have always had.** Only the rows
+///   that were actually broken move, so this fix costs no downstream consumer a
+///   re-pin it does not owe.
+///
+/// `collides` is the caller's answer to "does more than one unit in this
+/// book+kind slug to this?", counted over the de-duplicated unit set.
+fn unit_id(book: &str, kind: Kind, key: &str, collides: bool) -> String {
+    let base = slug(key);
+    if collides {
+        format!("{book}:{}:{base}__{}", kind.id(), key_digest(key))
+    } else {
+        format!("{book}:{}:{base}", kind.id())
+    }
 }
 
 /// SD28-E15 (2026-08-09): `_abilities_race.lst`'s own `TYPE:` first-segment
@@ -869,6 +972,29 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     RuleSetId::Uc,
     RuleSetId::Um,
     RuleSetId::Upsi,
+    RuleSetId::BonusBestiary,
+    RuleSetId::MonsterCodex,
+    RuleSetId::Isr,
+    RuleSetId::Ha,
+    RuleSetId::Botd1,
+    RuleSetId::Botd2,
+    RuleSetId::Iswg,
+    RuleSetId::Ce,
+    RuleSetId::Isc,
+    RuleSetId::Isi,
+    RuleSetId::B5,
+    RuleSetId::B6,
+    RuleSetId::B2,
+    // SD-29 Epic 5 extend, round 5 (monster lane).
+    RuleSetId::B3,
+    // SD-29 Epic 5 extend, round 6 (monster lane).
+    RuleSetId::B4,
+    // SD-29 Epic 5 extend, round 7 (monster lane). The engine id and the corpus
+    // directory are spelled the same, unlike `bestiary` -> `bestiary_1`.
+    RuleSetId::Isb,
+    // SD-29 Epic 5 extend, round 9 (monster lane). Engine id and corpus
+    // directory are spelled the same.
+    RuleSetId::Isg,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -890,6 +1016,23 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Uc => "ultimate_combat",
         RuleSetId::Um => "ultimate_magic",
         RuleSetId::Upsi => "ultimate_psionics",
+        RuleSetId::BonusBestiary => "bonus_bestiary",
+        RuleSetId::MonsterCodex => "monster_codex",
+        RuleSetId::Isr => "inner_sea_races",
+        RuleSetId::Ha => "horror_adventures",
+        RuleSetId::Botd1 => "book_of_the_damned_volume_1",
+        RuleSetId::Botd2 => "book_of_the_damned_volume_2",
+        RuleSetId::Iswg => "inner_sea_world_guide",
+        RuleSetId::Ce => "core_essentials",
+        RuleSetId::Isc => "inner_sea_combat",
+        RuleSetId::Isi => "inner_sea_intrigue",
+        RuleSetId::B5 => "bestiary_5",
+        RuleSetId::B6 => "bestiary_6",
+        RuleSetId::B2 => "bestiary_2",
+        RuleSetId::B3 => "bestiary_3",
+        RuleSetId::B4 => "bestiary_4",
+        RuleSetId::Isb => "inner_sea_bestiary",
+        RuleSetId::Isg => "inner_sea_gods",
     }
 }
 
@@ -923,6 +1066,25 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Uc => "ultimate_combat",
         RuleSetId::Um => "ultimate_magic",
         RuleSetId::Upsi => "ultimate_psionics",
+        RuleSetId::BonusBestiary => "bonus_bestiary",
+        RuleSetId::MonsterCodex => "monster_codex",
+        RuleSetId::Isr => "inner_sea_races",
+        RuleSetId::Ha => "horror_adventures",
+        RuleSetId::Botd1 => "book_of_the_damned_volume_1",
+        RuleSetId::Botd2 => "book_of_the_damned_volume_2",
+        RuleSetId::Iswg => "inner_sea_world_guide",
+        RuleSetId::Ce => "core_essentials",
+        RuleSetId::Isc => "inner_sea_combat",
+        RuleSetId::Isi => "inner_sea_intrigue",
+        // Unlike `bestiary` -> `bestiary_1`, these three engine ids are spelled
+        // exactly like their corpus directories.
+        RuleSetId::B5 => "bestiary_5",
+        RuleSetId::B6 => "bestiary_6",
+        RuleSetId::B2 => "bestiary_2",
+        RuleSetId::B3 => "bestiary_3",
+        RuleSetId::B4 => "bestiary_4",
+        RuleSetId::Isb => "inner_sea_bestiary",
+        RuleSetId::Isg => "inner_sea_gods",
     }
 }
 
@@ -946,11 +1108,37 @@ fn equipment_book_slug_for(short_code: &str) -> &'static str {
         "UM" => "ultimate_magic",
         "UPSI" => "ultimate_psionics",
         "UC" => "ultimate_combat",
+        // SD-29 `epic-4-proven-equip-mod`: UW has no hand-authored equipment
+        // table; all 127 of its catalog rows come from
+        // `rules_tables::equipment_gap_tables`.
+        "UW" => "ultimate_wilderness",
         other => panic!(
             "equipment_resolver::equipment_catalog_rows() now carries an unmapped book code \
              {other:?} -- add it to equipment_book_slug_for so the equipment classifier does \
              not silently drop the book (this is exactly the SD-28-E15 defect this function \
              replaces)"
+        ),
+    }
+}
+
+/// Translates one `spell_resolver::SPELL_BOOK_*` short code to the same
+/// book-directory slug `spell_levels`'s map is keyed by elsewhere in this
+/// file (`rule_set_id`'s own output). Panics on an unrecognized code rather
+/// than silently dropping the book from the spell classifier -- the failure
+/// mode this fix exists to replace, and the same guard shape
+/// `equipment_book_slug_for` above already carries. See
+/// `spell_book_slug_for_covers_every_catalog_book`.
+fn spell_book_slug_for(short_code: &str) -> &'static str {
+    match short_code {
+        "CRB" => "core_rulebook",
+        "APG" => "advanced_players_guide",
+        "ACG" => "advanced_class_guide",
+        "ARG" => "advanced_race_guide",
+        "UI" => "ultimate_intrigue",
+        other => panic!(
+            "spell_resolver::spell_catalog_rows() now carries an unmapped book code {other:?} \
+             -- add it to spell_book_slug_for so the spell classifier does not silently drop \
+             the book (this is exactly the divergence this function replaces)"
         ),
     }
 }
@@ -992,6 +1180,12 @@ fn pcc_includes(book_dir: &Path, known_books: &BTreeSet<String>) -> BTreeSet<Str
 // ---------------------------------------------------------------------------
 
 /// Everything the engine can prove, gathered once.
+///
+/// `Default` is derived so a test can state the ONE fact it is exercising and
+/// leave every other field empty. Every field is a collection whose empty
+/// value means "the engine proved nothing here", which is the correct and
+/// conservative starting point: a defaulted `EngineFacts` grounds nothing.
+#[derive(Default)]
 struct EngineFacts {
     /// Feat keys whose presence genuinely changes a computed number, observed
     /// by running the real compute pipeline twice per feat.
@@ -1003,7 +1197,31 @@ struct EngineFacts {
     /// [`probe_equipment_effect_wiring`]. A lower bound in the same
     /// documented direction as `feat_effect_wired`: gated on a real
     /// on-disk JSON record existing under `data/corpus/<book>/equipment/`.
-    equipment_effect_wired: BTreeSet<String>,
+    ///
+    /// `(engine_book, key)`, because the observation is book-scoped: the
+    /// probe resolves each book's catalog keys against that book's own corpus
+    /// alone, so a key shared by two books' reprints of *different* items
+    /// grounds only the book whose record was actually read.
+    equipment_effect_wired: BTreeSet<(String, String)>,
+    /// SD-32 `ground-spell-units`: spell keys whose own corpus record was
+    /// observed producing a real save-DC magnitude on
+    /// `PilotSpellbookViewModel.spell_save_dc` — the field
+    /// `pf1_adapter::resolve_unified_pilot_snapshot` puts on the snapshot and
+    /// `CharacterSheet.tsx` renders as `DC {entry.dc}`. Populated by
+    /// [`probe_spell_effect_wiring`] through
+    /// [`spell_effect_wired_from_outcomes`], which admits only
+    /// [`SpellProbeOutcome::Wired`].
+    ///
+    /// `(engine_book, key)` for the same book-scoping reason as
+    /// `equipment_effect_wired`, and here it bites: every per-school resolver
+    /// stamps `RuleSetId::Crb`, so a non-CRB book's same-named record is
+    /// refused at the probe (`SpellProbeOutcome::ForeignBookTable`) and must
+    /// not be re-admitted by a bare-key lookup here.
+    ///
+    /// A lower bound in the same documented direction as the other two probes:
+    /// it can only reach a book with an on-disk `data/corpus/<book>/spell/`
+    /// tree in [`OBSERVABLE_BOOK_DIRS`].
+    spell_effect_wired: BTreeSet<(String, String)>,
     /// Every feat key the catalog holds, per book.
     feat_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every spell key the catalog holds, per book, with whether the engine
@@ -1013,12 +1231,60 @@ struct EngineFacts {
     equipment_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every Bestiary 1 monster that resolves to a real stat block, by name.
     monster_names: BTreeSet<String>,
+    /// Every chassis-book monster the engine holds, keyed by corpus book then
+    /// by lowercase corpus key.
+    ///
+    /// Kept per book rather than merged into one set: the books' tables are
+    /// independent, and a merged set would credit one book's stat block to
+    /// another on a name collision -- the same book-gating `holds_key` already
+    /// applies to races and race traits. Built by iterating
+    /// `monster_chassis::MONSTER_BOOKS`, so registering a book there is what
+    /// makes its units classify; nothing here names a book.
+    chassis_monster_keys: BTreeMap<&'static str, BTreeSet<String>>,
+    /// Every chassis-book `monster_ability` the engine holds, same shape. The
+    /// key, never the display name: namespaced keys (`Seru ~ Poison`,
+    /// `Caryatid Column ~ Immunity to Magic`) have leaves that are not unique.
+    chassis_monster_ability_keys: BTreeMap<&'static str, BTreeSet<String>>,
+    /// Every chassis-book `companion` record the engine holds, keyed by corpus
+    /// book then by lowercase corpus key.
+    ///
+    /// One map for both of the kind's structural shapes (creature rows and
+    /// ability rows), because `Kind::Companion` is one kind: `file_kind` types
+    /// `*_races_companion.lst` and `*_abilities_companion.lst` alike, and a unit
+    /// carries no field that distinguishes them. Built by iterating
+    /// `companion_chassis::COMPANION_BOOKS`, so registering a book there is what
+    /// makes its units classify; nothing here names a book.
+    chassis_companion_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every class the engine models, by lowercase name, with its book.
     class_books: BTreeMap<String, &'static str>,
+    /// Every modelled class the class consumer-delta probe OBSERVED producing
+    /// a magnitude attributable to it alone on the snapshot the character
+    /// sheet renders. A subset of `class_books`' keys, never a superset: see
+    /// [`probe_class_name`].
+    class_effect_wired: BTreeSet<String>,
+    /// Every option-pool `class_feature` corpus key the class_feature
+    /// consumer-delta probe OBSERVED moving a rendered fact attributably to
+    /// itself, mapped to the book that models the pool's owning class.
+    ///
+    /// The book is carried, not just the key, for the reason
+    /// `probe_equipment_effect_wiring`'s `Celestial Shield` discipline records
+    /// and `SpellProbeOutcome::ForeignBookTable` enforces: a shared NAME is
+    /// not a shared record. A key is only ever grounded for the book whose
+    /// class the engine actually models.
+    class_feature_effect_wired: BTreeMap<String, &'static str>,
     /// Every race the engine models, by lowercase name.
     race_names: BTreeSet<String>,
     /// Race trait identities the engine grounds, as `<race>.<trait slug>`.
+    ///
+    /// CRB's seven compiled races only. Kept as the FALLBACK rule beneath
+    /// `reachable_race_traits`, never as the primary one — see
+    /// [`probe_reachable_race_traits`] for why a probe pinned to this table
+    /// under-reports the product by eleven races.
     race_trait_ids: BTreeSet<String>,
+    /// Every race trait the app's loaded race corpus can APPLY to a player,
+    /// by `(<lst basename>, <line>)` -> corpus book, and every record that
+    /// load found at all. See [`probe_race_trait_corpus`].
+    race_trait_probe: RaceTraitProbe,
     /// Explanation ids observed in a real receipt across the class sweep.
     explanation_ids: BTreeSet<String>,
     /// Diagnostics observed in the same sweep: id -> (message, claim_blocking).
@@ -1036,12 +1302,53 @@ struct EngineFacts {
 }
 
 impl EngineFacts {
+    /// The engine book whose ingested race-trait corpus really holds this
+    /// unit, joined on the record's own source coordinates.
+    ///
+    /// Race traits are the one kind whose `.lst` rows are routinely filed
+    /// under a *different* book than the one that ingested them —
+    /// `core_essentials/duergar_abilities_race.lst` is Bestiary 1's content
+    /// living in the shared library — so name matching cannot attribute them
+    /// and the source coordinate is the only identity that can.
+    fn race_trait_engine_book(&self, unit: &CorpusUnit) -> Option<&'static str> {
+        let coordinate = (unit.provenance.file.clone(), unit.provenance.line);
+        engine_book_for_corpus_dir(self.race_trait_probe.reachable.get(&coordinate)?)
+    }
+
+    /// Whether this unit's record was found by the race-corpus load at all,
+    /// applicable or not. `true` with [`Self::race_trait_engine_book`]
+    /// returning `None` is the "ingested, loaded, inert" case.
+    fn race_trait_was_loaded(&self, unit: &CorpusUnit) -> bool {
+        self.race_trait_probe
+            .loaded
+            .contains(&(unit.provenance.file.clone(), unit.provenance.line))
+    }
+
+    /// Whether one book really holds this unit. Delegates to
+    /// [`Self::holds_key`] for every kind whose identity is its name, and
+    /// uses the source-coordinate join for race traits, which is the only
+    /// kind for which the name is not enough.
+    fn holds_unit(&self, book: &str, unit: &CorpusUnit) -> bool {
+        if matches!(unit.kind, Kind::RaceTrait)
+            && self.race_trait_engine_book(unit) == Some(book)
+        {
+            return true;
+        }
+        self.holds_key(book, &unit.kind, &unit.key, &unit.name)
+    }
+
     /// Whether one book's own compiled table holds this unit's identity.
     /// Used to attribute a shared-library record to the book that really
     /// ingested it rather than to an arbitrary one of its hosts.
     fn holds_key(&self, book: &str, kind: &Kind, key: &str, name: &str) -> bool {
         let hit = |set: Option<&BTreeSet<String>>| {
             set.map(|s| s.contains(key) || s.contains(name)).unwrap_or(false)
+        };
+        // The chassis tables are indexed lowercase, because the corpus and the
+        // inventory disagree on case for a handful of rows.
+        let hit_lowercase = |set: Option<&BTreeSet<String>>| {
+            set.map(|s| s.contains(&key.to_lowercase()) || s.contains(&name.to_lowercase()))
+                .unwrap_or(false)
         };
         match kind {
             Kind::Feat => hit(self.feat_keys.get(book)),
@@ -1055,14 +1362,28 @@ impl EngineFacts {
             // module (`crb::race_tables`, `beastiary1`), so the book gate is
             // part of the fact -- without it a shared-library race would be
             // credited to whichever host happened to be tried first.
-            Kind::Monster => book == "bestiary_1" && self.monster_names.contains(&name.to_lowercase()),
+            // Bestiary 1 is served by TWO tables and both ground it: SD-22's
+            // `beastiary1` (46 hand-modelled stat blocks, joined by display
+            // name) and, since SD-29 Epic 5 round 8, the chassis holding the
+            // book's other 284 rows (`decisions.md §58.3`). A UNION, not a
+            // precedence: an early return on `monster_names` would report all
+            // 284 chassis rows `not-ingested` while the registry held them, and
+            // consulting only the chassis would demote the 46. Both halves have
+            // to answer, because the book really is in both places.
+            Kind::Monster => {
+                (book == "bestiary_1" && self.monster_names.contains(&name.to_lowercase()))
+                    || hit_lowercase(self.chassis_monster_keys.get(book))
+            }
+            Kind::MonsterAbility => hit_lowercase(self.chassis_monster_ability_keys.get(book)),
+            Kind::Companion => hit_lowercase(self.chassis_companion_keys.get(book)),
             Kind::Race => book == "core_rulebook" && self.race_names.contains(&name.to_lowercase()),
+            // The record's OWN race gates this, not "any modelled race" --
+            // see `modelled_race_of_race_trait`.
             Kind::RaceTrait => {
                 book == "core_rulebook"
-                    && self
-                        .race_names
-                        .iter()
-                        .any(|r| self.race_trait_ids.contains(&format!("{r}.{}", slug(name))))
+                    && modelled_race_of_race_trait(key, &self.race_names).is_some_and(|race| {
+                        self.race_trait_ids.contains(&format!("{race}.{}", slug(name)))
+                    })
             }
             Kind::Class => self
                 .class_books
@@ -1303,6 +1624,156 @@ fn book_corpus_roots(repo_root: &Path) -> Vec<PathBuf> {
     OBSERVABLE_BOOK_DIRS.iter().map(|b| repo_root.join("data/corpus").join(b)).collect()
 }
 
+/// Where the desktop app declares which books' race content it loads.
+const RACE_CATALOG_SOURCE_RELATIVE: &str = "apps/desktop/src-tauri/src/race_catalog.rs";
+
+/// Bestiary 1's `data/corpus/` directory is spelled `beastiary`, and
+/// `corpus_dir_for` spells the same book `bestiary` — that one is the PCGen
+/// SOURCE tree's directory, and the two names have simply never agreed.
+///
+/// `engine_book_for` keys on the source spelling, so a record whose
+/// `book_id` came off disk needs the alias applied first or it resolves to no
+/// engine book at all. `reach_gate::CORPUS_BOOK_IDS` records the same
+/// divergence for the same reason (`("beastiary", "beastiary1")`).
+///
+/// Stated as a one-entry alias rather than papered over with a fuzzy match:
+/// [`every_corpus_book_with_race_traits_resolves_to_an_engine_book`] proves
+/// this is the only book that needs one.
+const CORPUS_DIR_ALIASES: &[(&str, &str)] = &[("beastiary", "bestiary")];
+
+/// [`engine_book_for`], for a `data/corpus/<dir>` directory name.
+fn engine_book_for_corpus_dir(dir: &str) -> Option<&'static str> {
+    let source_dir = CORPUS_DIR_ALIASES
+        .iter()
+        .find(|(corpus, _)| *corpus == dir)
+        .map(|(_, source)| *source)
+        .unwrap_or(dir);
+    engine_book_for(source_dir)
+}
+
+/// The corpus books whose race content the shipped app really loads, read out
+/// of the app's own `RACE_CORPUS_BOOKS` declaration.
+///
+/// Read rather than duplicated, and read from the *product's* source rather
+/// than from a list in this file, because the claim this probe makes is about
+/// the product. A hand-copied list here would keep reporting `grounded` for a
+/// book the app had stopped loading, which is precisely the over-claim this
+/// inventory exists to prevent. `tests/duergar_invisibility_sla_reaches_a_
+/// player_via_monster_codex.rs` already parses the same declaration the same
+/// way for the same reason.
+///
+/// An unreadable or unparseable declaration yields an EMPTY list, never a
+/// guessed one: the probe then observes nothing, every race trait falls back
+/// to the CRB-table rule below, and the inventory under-claims. Under-claiming
+/// on a broken read is the safe direction.
+fn app_race_corpus_books(repo_root: &Path) -> Vec<String> {
+    let Ok(src) = std::fs::read_to_string(repo_root.join(RACE_CATALOG_SOURCE_RELATIVE)) else {
+        return Vec::new();
+    };
+    let Some(decl) = src.split("pub(crate) const RACE_CORPUS_BOOKS: &[&str] =").nth(1) else {
+        return Vec::new();
+    };
+    let Some(list) = decl.split(';').next() else {
+        return Vec::new();
+    };
+    list.split('"').skip(1).step_by(2).map(str::to_owned).collect()
+}
+
+/// Every race-trait record the app's loaded race corpus can actually APPLY to
+/// a player, keyed by the record's own source coordinates
+/// (`(<lst basename>, <line>)`) and valued by the corpus book it came from.
+///
+/// # Why this exists (SD-29 `decisions.md §43.5`)
+///
+/// `race_trait_ids` below is built solely from `crb::race_traits()` — CRB's
+/// seven compiled races. The **product** models eighteen, read off disk at
+/// runtime by `race_resolver::load_race_corpus`, which is what
+/// `race_trait_picker` and `list_alternate_racial_traits` serve. So every
+/// ingested race trait belonging to a non-CRB race reported
+/// `race_trait_race_not_modelled` **no matter how reachable it was** — ARG's
+/// 156, Bestiary 1's 108 and Monster Codex's 5 among them, the last of which
+/// `reach_gate` simultaneously carried a passing claim for and SD-29
+/// photographed in the player's own picker. That is the doneness-instrument
+/// hierarchy inverted: the narrower instrument was overruling the one that
+/// executes the real path.
+///
+/// # What it will not do
+///
+/// It does not ground a record for being on disk. A record whose role is
+/// [`TraitRole::Unclassified`] carries no readable gate and is never applied
+/// by `RaceCorpus::resolve`, so it is deliberately absent here — `Oversized
+/// Goblin` is the live instance, and it has a standing `OPEN_FINDINGS` entry
+/// naming its remedy. Nor does it reach a trait whose race has no chassis in
+/// any loaded book: `race_keys()` yields only races that have one, and
+/// `resolve` returns `None` without one. Both exclusions keep this probe's
+/// answer identical to what a player can actually obtain.
+///
+/// The join key is the source coordinate, never the name. A race trait's
+/// display name is not unique corpus-wide — the name-coincidence defect
+/// `modelled_race_of_race_trait` exists to close is the proof — whereas the
+/// `.lst` file and line the ingest records verbatim is an identity.
+fn probe_reachable_race_traits(repo_root: &Path) -> BTreeMap<(String, usize), String> {
+    probe_race_trait_corpus(repo_root).reachable
+}
+
+/// What one load of the app's race corpus tells this generator.
+#[derive(Debug, Default)]
+struct RaceTraitProbe {
+    /// Records the resolver can apply -> the corpus book each came from.
+    reachable: BTreeMap<(String, usize), String>,
+    /// EVERY record the load found, applicable or not. The difference between
+    /// the two sets is the honest middle status: ingested, loaded, and still
+    /// inert. Reporting those as "not ingested" would be a lie in the other
+    /// direction, and reporting them as grounded would be the lie this whole
+    /// generator exists to prevent.
+    loaded: BTreeSet<(String, usize)>,
+}
+
+fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
+    let books = app_race_corpus_books(repo_root);
+    let dirs: Vec<(String, PathBuf)> =
+        books.into_iter().map(|b| (b.clone(), repo_root.join("data/corpus").join(b))).collect();
+    let roots: Vec<BookCorpusRoot<'_>> = dirs
+        .iter()
+        .map(|(book, dir)| BookCorpusRoot { book_id: book.as_str(), dir: dir.as_path() })
+        .collect();
+    let corpus = load_race_corpus(&roots);
+
+    let mut probe = RaceTraitProbe::default();
+    // `race_keys()` yields only races that have a chassis record in some
+    // loaded book. A trait whose race has none is left out of BOTH sets by
+    // construction, which is right: `RaceCorpus::resolve` returns `None`
+    // without a chassis, so no player can obtain it and no ingest of the
+    // trait alone would change that. Monster Codex's six Ratfolk rows are
+    // the live instance -- the pilot skipped writing them for exactly this
+    // reason (SD-29 `decisions.md §43.4`).
+    for race in corpus.race_keys() {
+        for record in corpus.traits_for(race) {
+            let Some(file) = Path::new(&record.source_path).file_name() else { continue };
+            let coordinate = (file.to_string_lossy().into_owned(), record.source_line as usize);
+            probe.loaded.insert(coordinate.clone());
+            if record.role == TraitRole::Unclassified {
+                continue;
+            }
+            probe.reachable.insert(coordinate, record.book_id.clone());
+        }
+    }
+    probe
+}
+
+// SUPERSEDED 2026-08-13 (SD-32 `spell-consumer-delta-probe`), in its
+// conclusion only. Everything below about the RETRACTED first attempt stands
+// and is the reason this file keeps it: probing `school_coverage` observed
+// resolution, not a magnitude, and promoted 1,067 of 1,067.
+//
+// Its closing conclusion -- "there is currently no wired spell-magnitude
+// consumer to observe at all" -- was true when written and is now false.
+// `epic-31-spell-wiring` (2026-08-07) wired `compute_spellbook_coverage` into
+// `pf1_adapter::resolve_unified_pilot_snapshot`, which is the surface the
+// desktop sheet reads; `contract::build_pilot_receipt` being uncalled, cited
+// below as the blocker, is no longer the only route. `probe_spell_key` (above)
+// observes that wired consumer. See its own block comment.
+//
 // SD28-E14-F1: **NOT implemented as a promoting probe.** An earlier version
 // of this cycle probed `pilot_compute_corpus::compute_pilot_with_corpus`'s
 // `school_coverage` map and promoted any spell that landed in it. Corrected
@@ -1347,28 +1818,99 @@ fn book_corpus_roots(repo_root: &Path) -> Vec<PathBuf> {
 /// weapon-enhancement) produces an all-`None` per-item effect and correctly
 /// stays unwired -- see
 /// `equipment_effect_probe_never_promotes_a_text_only_item_with_no_mechanical_tokens`.
-fn probe_equipment_effect_wiring(repo_root: &Path) -> BTreeSet<String> {
-    let mut wired = BTreeSet::new();
-    let book_dirs: Vec<PathBuf> = book_corpus_roots(repo_root);
-    let roots: Vec<BookCorpusRoot> = OBSERVABLE_BOOK_DIRS
+///
+/// **Book-scoped, and the result is keyed `(engine_book, key)`.** Each book's
+/// catalog keys are resolved against **that book's own corpus, loaded alone**,
+/// never against a merged corpus of every observable book. Two independent
+/// reasons, both of them the same recorded defect this repo already fixed once
+/// for `race_trait` (`modelled_race_of_race_trait`'s doc comment, SD-28 §56):
+///
+///   * A merged corpus lets a book with **no** corpus of its own ground on
+///     another book's record purely because the two share a key. Widening the
+///     key universe to the whole catalog surfaced this immediately: Ultimate
+///     Equipment has no `data/corpus/ultimate_equipment` at all, yet six of
+///     its units grounded off ARG/CRB rows. `Celestial Shield` is the proof
+///     that a shared key is not a shared item -- ARG's
+///     (`arg_equip_arms_armor.lst:22`) is a **heavy** shield, 13,170 gp,
+///     `ACCHECK:0`, `SPELLFAILURE:0`; UE's (`ue_equip_arms_armor.lst:126`) is
+///     a **light** shield, 4,020 gp, `ACCHECK:-1`, `SPELLFAILURE:5`, with a
+///     `BONUS:COMBAT|AC` chain of its own. Reporting UE's unit as grounded on
+///     ARG's numbers is the over-claim, not a hedge.
+///   * Even between two books that both have a corpus, resolution order
+///     decided which record answered. Scoping makes the attribution a rule
+///     rather than a coincidence of iteration order.
+///
+/// A book with a catalog but no corpus directory therefore gets no probe
+/// coverage at all and its units stay `ingested-magnitude`. That is the honest
+/// result: nothing observed it, so nothing may claim it.
+/// Every equipment key the probe asks the wiring question of.
+///
+/// **Derived from the engine catalog, never hand-listed.** `classify()`'s
+/// `Kind::Equipment`/`Kind::EquipmentModifier` arm decides `known` from
+/// `facts.equipment_keys`, which is built from
+/// `equipment_resolver::equipment_catalog_rows()` (SD-28-E15 rebuilt it that
+/// way for exactly this reason). The probe's key universe was four
+/// hand-maintained `.extend()` calls over `crb`/`apg`/`acg`/`beastiary1`'s
+/// compiled tables — so every key the catalog holds from any *other* source
+/// was never examined at all, and its unit could only ever report
+/// `equipment_table_entry_with_corpus_magnitude`. Two populations were
+/// invisible to the probe this way:
+///
+///   * the four books' own **gap rows** — `equipment_gap_tables` supplies 335
+///     `core_rulebook` records the hand-authored CRB table does not hold
+///     (`CLOTH`, `LEATHER`, `MWORKW`, … — equipment *modifiers*, the largest
+///     `in-progress` population on the board), plus APG/ACG/ARG rows;
+///   * every book with a catalog but no entry in the four calls — ARG, PU,
+///     UM, UC, UI, UE, UPSI, UW.
+///
+/// This is Decision 36's pattern (two lists of the same fact, never
+/// reconciled) one function over from where SD-28-E15 already fixed it, and
+/// [`the_probe_examines_every_key_the_engine_catalog_holds`] pins it closed.
+///
+/// **This widens what is ASKED, not what counts as an answer.** The bar is
+/// still [`equipment_key_is_wired`], unchanged: the item must resolve against
+/// the real on-disk corpus and produce at least one non-`None` mechanical
+/// stat effect. A key from a book whose corpus is not loaded resolves to
+/// nothing and stays unwired, which is the honest result rather than a
+/// promotion.
+fn probe_equipment_key_universe() -> BTreeSet<&'static str> {
+    equipment_resolver::equipment_catalog_rows()
         .iter()
-        .zip(book_dirs.iter())
-        .map(|(id, dir)| BookCorpusRoot { book_id: id, dir })
-        .collect();
-    let corpus = load_equipment_corpus(&roots);
-    if corpus.is_empty() {
-        return wired;
+        .map(|row| row.key)
+        .collect()
+}
+
+/// [`probe_equipment_key_universe`], partitioned by the engine book whose
+/// catalog supplied each key.
+fn probe_equipment_keys_by_book() -> BTreeMap<&'static str, BTreeSet<&'static str>> {
+    let mut by_book: BTreeMap<&'static str, BTreeSet<&'static str>> = BTreeMap::new();
+    for row in equipment_resolver::equipment_catalog_rows() {
+        by_book.entry(equipment_book_slug_for(row.book)).or_default().insert(row.key);
     }
+    by_book
+}
 
-    let mut keys: BTreeSet<&'static str> = BTreeSet::new();
-    keys.extend(crb_equipment_tables::equipment_tables().iter().map(|e| e.key));
-    keys.extend(apg::equipment_tables::EQUIPMENT_TABLE.iter().map(|e| e.key));
-    keys.extend(acg::equipment_tables::equipment_tables().iter().map(|e| e.key));
-    keys.extend(beastiary1::equipment_tables::EQUIPMENT_TABLE.iter().map(|e| e.key));
+fn probe_equipment_effect_wiring(repo_root: &Path) -> BTreeSet<(String, String)> {
+    let mut wired = BTreeSet::new();
+    let keys_by_book = probe_equipment_keys_by_book();
 
-    for &key in &keys {
-        if equipment_key_is_wired(key, &corpus) {
-            wired.insert(key.to_string());
+    for (dir_name, dir) in OBSERVABLE_BOOK_DIRS.iter().zip(book_corpus_roots(repo_root)) {
+        let Some(engine_book) = engine_book_for_corpus_dir(dir_name) else {
+            continue;
+        };
+        let Some(keys) = keys_by_book.get(engine_book) else {
+            continue;
+        };
+        // One book's corpus, alone. See this function's doc comment.
+        let roots = [BookCorpusRoot { book_id: engine_book, dir: &dir }];
+        let corpus = load_equipment_corpus(&roots);
+        if corpus.is_empty() {
+            continue;
+        }
+        for &key in keys {
+            if equipment_key_is_wired(key, &corpus) {
+                wired.insert((engine_book.to_string(), key.to_string()));
+            }
         }
     }
     wired
@@ -1401,6 +1943,682 @@ fn equipment_key_is_wired(
         || item.weapon_enhancement_bonus.is_some()
 }
 
+// ---------------------------------------------------------------------------
+// Spell consumer-delta probe
+// ---------------------------------------------------------------------------
+//
+// Why this exists NOW when SD-28-E14-F1 recorded that it could not.
+//
+// That epic's finding (the long note further down this file, and
+// `docs/release/SD-28-ultimate-book-content-ingestion/artifacts/e14-harness-widening.md`)
+// was correct on the day it was written and is now STALE. It said:
+// `spellbook::compute_spellbook_coverage` does read a real spell magnitude
+// (`SpellEffect.level` -> `spell_save_dc`), but it was wired only into
+// `contract::PilotReceipt`, and `contract::build_pilot_receipt` is called by
+// no desktop command -- the "twin problem", a real computation nothing on
+// screen reads.
+//
+// `epic-31-spell-wiring` (2026-08-07) closed exactly that gap.
+// `pf1_adapter::resolve_unified_pilot_snapshot` now calls
+// `compute_spellbook_coverage` itself and projects it through
+// `PilotSpellbookViewModel::from_coverage` onto the `PilotSnapshot` the app
+// renders (`character_hub::map_snapshot_dto` -> `PilotSnapshotDto.spellbook`
+// -> `CharacterSheet.tsx` renders `spellbook.spellSaveDc`). Verify with:
+//
+//   grep -n 'PilotSpellbookViewModel::from_coverage' apps/desktop/src-tauri/src/pf1_adapter.rs
+//   grep -n 'spellSaveDc' apps/desktop/src/characterHub/CharacterSheet.tsx
+//
+// So there IS now a wired consumer that reads a spell's own magnitude, and
+// this probe observes it. It composes the same two engine calls the adapter
+// composes, in the same order -- `compute_spellbook_coverage` then
+// `PilotSpellbookViewModel::from_coverage` -- so what it measures is the value
+// the sheet prints, not a private field beside it.
+//
+// What it does NOT do, stated plainly: it does not drive
+// `resolve_unified_pilot_snapshot` itself. That function lives in
+// `apps/desktop/src-tauri`, a separate cargo workspace this root-crate binary
+// cannot call, and it emits a snapshot only for a build whose receipt is
+// `Computed`. The probe therefore proves "this spell's own level produces the
+// save-DC value the sheet's spellbook cell renders", not "this particular
+// character build reaches Computed". That is the same boundary
+// `probe_equipment_effect_wiring` already sits behind (it calls
+// `compute_equipment_effects` directly, not the adapter).
+
+/// Ability score the spell probe fixes on every casting ability, so the save
+/// DC it observes has exactly one arithmetic explanation. 18 -> modifier +4
+/// (`floor(18/2) - 5`).
+const SPELL_PROBE_ABILITY_SCORE: i16 = 18;
+
+/// [`SPELL_PROBE_ABILITY_SCORE`]'s PF1 ability modifier, stated as the probe's
+/// oracle input rather than read back out of the engine -- the whole point of
+/// the comparison below is that the two sides are derived independently.
+const SPELL_PROBE_ABILITY_MODIFIER: i16 = 4;
+
+/// The casting classes the probe will select a spell through, each paired with
+/// that class's OWN per-class CRB spell-list accessor.
+///
+/// Not "any class". `spellbook::compute_spellbook_coverage` computes a save DC
+/// for whatever `source_class_id` it is handed and never checks that the class
+/// can cast the spell, so probing every spell as a Wizard would produce a real
+/// number for a posture no player can build -- "a magnitude no player can
+/// see", the failure this program has recorded three times. The probe asks
+/// each class's own list first and selects the spell only through a class that
+/// really has it.
+///
+/// These seven are exactly the ids `spellbook::casting_ability_for_class` maps
+/// to a casting ability; a class it does not map yields no DC at all, so
+/// probing through one could observe nothing.
+const SPELL_PROBE_CASTING_CLASSES: &[(&str, fn(&str) -> Option<u8>)] = &[
+    ("class:wizard", crb_wizard_spell_list::wizard_spell_level),
+    ("class:cleric", crb_cleric_spell_list::cleric_spell_level),
+    ("class:druid", crb_druid_spell_list::druid_spell_level),
+    ("class:bard", crb_bard_spell_list::bard_spell_level),
+    ("class:sorcerer", crb_sorcerer_spell_list::sorcerer_spell_level),
+    ("class:paladin", crb_paladin_spell_list::paladin_spell_level),
+    ("class:ranger", crb_ranger_spell_list::ranger_spell_level),
+];
+
+/// Why one spell key did or did not produce an observed consumer delta.
+///
+/// An enum rather than a `bool` because the ceiling report has to say what the
+/// probe *cannot* reach and why, and a boolean can only say "no".
+#[derive(Debug, Clone, PartialEq, Eq)]
+enum SpellProbeOutcome {
+    /// A real save-DC magnitude, attributable to this spell's own level,
+    /// appeared on the very view model the character sheet renders.
+    Wired { class_id: &'static str, level: u8, dc: u8 },
+    /// No CRB casting class has this spell on its own list, so no player can
+    /// put it in a spellbook and any DC it produced would be unreachable.
+    NoCastingClassHasIt,
+    /// The key is in this book's spell catalog but no record of that name
+    /// exists in this book's own on-disk corpus.
+    AbsentFromBookCorpus,
+    /// The corpus record carries no `SCHOOL:` this engine recognizes, so
+    /// `compute_spellbook_coverage` dispatches to no school function.
+    SchoolNotRecognized,
+    /// Resolved, school recognized, but no per-school table record exists for
+    /// the key -- the spell is not in `crb::spell_list::SPELL_LIST` under that
+    /// school, so no `SpellEffect` and so no level is produced.
+    NoTableEffect,
+    /// The magnitude came from a different book's table than the one whose
+    /// unit would claim it. The `Celestial Shield` discipline
+    /// (`probe_equipment_effect_wiring`'s doc comment) applied to spells: a
+    /// shared NAME is not a shared record.
+    ForeignBookTable,
+    /// A `SpellEffect` was produced but the projection the sheet renders
+    /// carried no save DC for the selecting class.
+    NoSaveDcOnViewModel,
+    /// A DC appeared but not the one this spell's own level explains. Never
+    /// promoted: an unexplained number is not an observed magnitude.
+    DcDisagreesWithOracle { observed: u8, oracle: i16 },
+    /// The same character with this spell NOT selected already carried a save
+    /// DC, so nothing about the observed DC is attributable to this spell.
+    /// Never promoted -- this is the "delta" half of consumer-delta.
+    BaselineAlreadyCarriesADc,
+}
+
+/// The first casting class whose own CRB spell list holds `key`.
+fn probe_casting_class_for_spell(key: &str) -> Option<&'static str> {
+    SPELL_PROBE_CASTING_CLASSES
+        .iter()
+        .find(|(_, level_of)| level_of(key).is_some())
+        .map(|(class_id, _)| *class_id)
+}
+
+/// The probe's character posture: the shared fixture with every casting
+/// ability pinned to [`SPELL_PROBE_ABILITY_SCORE`] and exactly the given spell
+/// selection. `compute_spellbook_coverage` reads only `spells_selected` and
+/// `ability_scores`, so nothing else about the fixture can influence what the
+/// probe observes.
+fn spell_probe_input(
+    fixture: &CharacterInput,
+    class_id: &str,
+    spell_id: Option<&str>,
+) -> CharacterInput {
+    let mut input = fixture.clone();
+    input.chosen.ability_scores.intelligence = SPELL_PROBE_ABILITY_SCORE;
+    input.chosen.ability_scores.wisdom = SPELL_PROBE_ABILITY_SCORE;
+    input.chosen.ability_scores.charisma = SPELL_PROBE_ABILITY_SCORE;
+    input.chosen.spells_selected = match spell_id {
+        Some(id) => vec![SpellSelection {
+            spell_id: id.to_string(),
+            source_class_id: class_id.to_string(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        }],
+        None => Vec::new(),
+    };
+    input
+}
+
+/// Whether selecting exactly this spell, alone, for a class that really has
+/// it, against one book's own corpus, produces a save-DC magnitude explained
+/// by that spell's own level on the surface the character sheet renders.
+///
+/// The spell-side sibling of [`equipment_key_is_wired`], and deliberately a
+/// stricter bar than that one: equipment asks only "is some field non-`None`",
+/// while this additionally requires the observed number to equal an
+/// independently-stated oracle (`10 + level + modifier`). It has to be
+/// stricter. A spell selection that merely resolves already has its own status
+/// (`ingested-magnitude`), and SD-28-E14-F1's retracted first attempt failed
+/// precisely by building a predicate that reduced to "this spell resolves"
+/// -- it promoted 1,067 of 1,067.
+fn probe_spell_key(
+    fixture: &CharacterInput,
+    key: &str,
+    corpus: &codex::rules_core::source_content::SourcePackageContent,
+    book_rule_set: RuleSetId,
+) -> SpellProbeOutcome {
+    let Some(class_id) = probe_casting_class_for_spell(key) else {
+        return SpellProbeOutcome::NoCastingClassHasIt;
+    };
+    let Some((record, _)) = spell_id_resolve(key, book_rule_set, corpus) else {
+        return SpellProbeOutcome::AbsentFromBookCorpus;
+    };
+    if record
+        .school
+        .as_deref()
+        .and_then(crb_spell_list::Pf1SchoolId::from_corpus_str)
+        .is_none()
+    {
+        return SpellProbeOutcome::SchoolNotRecognized;
+    }
+
+    // The delta's baseline: the same character, same corpus, this spell NOT
+    // selected. If a DC is already there, the one observed below is not
+    // attributable to this spell and must not be claimed for it.
+    let baseline = compute_spellbook_coverage(&spell_probe_input(fixture, class_id, None), corpus);
+    if PilotSpellbookViewModel::from_coverage(&baseline).is_some() {
+        return SpellProbeOutcome::BaselineAlreadyCarriesADc;
+    }
+
+    let coverage =
+        compute_spellbook_coverage(&spell_probe_input(fixture, class_id, Some(key)), corpus);
+    let Some(prepared) = coverage.spells_prepared.first() else {
+        return SpellProbeOutcome::NoTableEffect;
+    };
+    if prepared.effect.table_cell.rule_set != book_rule_set {
+        return SpellProbeOutcome::ForeignBookTable;
+    }
+    let Some(view) = PilotSpellbookViewModel::from_coverage(&coverage) else {
+        return SpellProbeOutcome::NoSaveDcOnViewModel;
+    };
+    let Some(observed) = view.spell_save_dc.iter().find(|entry| entry.class_id == class_id) else {
+        return SpellProbeOutcome::NoSaveDcOnViewModel;
+    };
+
+    // The oracle: the DC the spell's OWN level explains, built from this
+    // function's own two constants rather than read back out of the value
+    // under test.
+    let oracle = 10i16 + i16::from(prepared.effect.level) + SPELL_PROBE_ABILITY_MODIFIER;
+    if i16::from(observed.dc) != oracle {
+        return SpellProbeOutcome::DcDisagreesWithOracle { observed: observed.dc, oracle };
+    }
+    SpellProbeOutcome::Wired { class_id, level: prepared.effect.level, dc: observed.dc }
+}
+
+// There is deliberately no `spell_key_is_wired` bool wrapper beside
+// [`probe_spell_key`], despite `equipment_key_is_wired` being the model for
+// this probe. Nothing in this binary consults the spell probe's verdict yet
+// (this cycle builds and proves the instrument; `classify()`'s `Kind::Spell`
+// arm is untouched), so a wrapper would ship as dead code and spend a clippy
+// warning against the recorded ceiling for nothing. `probe_spell_key` already
+// carries strictly more information than a bool; the cycle that wires the
+// verdict into `classify()` reads it directly.
+
+/// Every spell key the engine catalog holds, partitioned by the engine book
+/// that supplied it -- the spell-side sibling of
+/// [`probe_equipment_keys_by_book`], derived from the same registry
+/// (`spell_resolver::spell_catalog_rows`) `classify()`'s `Kind::Spell` arm
+/// already decides `known` from, so the probe asks its question of exactly the
+/// population the classifier judges.
+fn probe_spell_keys_by_book() -> BTreeMap<&'static str, BTreeSet<&'static str>> {
+    let mut by_book: BTreeMap<&'static str, BTreeSet<&'static str>> = BTreeMap::new();
+    for row in spell_resolver::spell_catalog_rows() {
+        by_book.entry(spell_book_slug_for(row.book)).or_default().insert(row.key);
+    }
+    by_book
+}
+
+/// The engine rule set whose [`rule_set_id`] is `engine_book`.
+fn rule_set_for_engine_book(engine_book: &str) -> Option<RuleSetId> {
+    COMPILED_RULE_SETS.iter().copied().find(|&rs| rule_set_id(rs) == engine_book)
+}
+
+/// Runs [`probe_spell_key`] over every catalog spell key of every observable
+/// book, against that book's own corpus loaded ALONE -- the same book-scoping
+/// discipline, and for the same recorded reason, as
+/// [`probe_equipment_effect_wiring`].
+///
+/// Returns the full outcome per `(engine_book, key)` rather than only the
+/// wired set, because the ceiling report needs the refusals and their reasons.
+fn probe_spell_effect_wiring(
+    fixture: &CharacterInput,
+    repo_root: &Path,
+) -> BTreeMap<(String, String), SpellProbeOutcome> {
+    let mut outcomes = BTreeMap::new();
+    let keys_by_book = probe_spell_keys_by_book();
+
+    for (dir_name, dir) in OBSERVABLE_BOOK_DIRS.iter().zip(book_corpus_roots(repo_root)) {
+        let Some(engine_book) = engine_book_for_corpus_dir(dir_name) else { continue };
+        let Some(rule_set) = rule_set_for_engine_book(engine_book) else { continue };
+        let Some(keys) = keys_by_book.get(engine_book) else { continue };
+        // One book's corpus, alone. See this function's doc comment.
+        let roots = [BookCorpusRoot { book_id: engine_book, dir: &dir }];
+        let corpus = load_spell_corpus(&roots);
+        for &key in keys {
+            let outcome = probe_spell_key(fixture, key, &corpus, rule_set);
+            outcomes.insert((engine_book.to_string(), key.to_string()), outcome);
+        }
+    }
+    outcomes
+}
+
+/// The `(engine_book, key)` pairs [`classify`] may ground: exactly the probe's
+/// [`SpellProbeOutcome::Wired`] verdicts, and nothing else.
+///
+/// A named function rather than an inline `filter` at the one call site so the
+/// admission rule has somewhere to be tested against every refusal variant
+/// (`only_wired_outcomes_enter_the_fact_set`). The match is exhaustive and
+/// deliberately not a `_ =>` catch-all: a future outcome variant must be
+/// classified as promoting or refusing by hand, not defaulted into either.
+fn spell_effect_wired_from_outcomes(
+    outcomes: &BTreeMap<(String, String), SpellProbeOutcome>,
+) -> BTreeSet<(String, String)> {
+    outcomes
+        .iter()
+        .filter(|(_, outcome)| match outcome {
+            SpellProbeOutcome::Wired { .. } => true,
+            SpellProbeOutcome::NoCastingClassHasIt
+            | SpellProbeOutcome::AbsentFromBookCorpus
+            | SpellProbeOutcome::SchoolNotRecognized
+            | SpellProbeOutcome::NoTableEffect
+            | SpellProbeOutcome::ForeignBookTable
+            | SpellProbeOutcome::NoSaveDcOnViewModel
+            | SpellProbeOutcome::DcDisagreesWithOracle { .. }
+            | SpellProbeOutcome::BaselineAlreadyCarriesADc => false,
+        })
+        .map(|(pair, _)| pair.clone())
+        .collect()
+}
+
+/// The probe's ceiling, printed by `--spell-probe`: how many catalog spell
+/// keys it legitimately reaches and, for every one it does not, the reason it
+/// refused. Grounding no unit, moving no number -- this is the instrument
+/// reporting on itself.
+fn spell_probe_ceiling_report(
+    outcomes: &BTreeMap<(String, String), SpellProbeOutcome>,
+) -> String {
+    let mut per_book: BTreeMap<&str, BTreeMap<&'static str, usize>> = BTreeMap::new();
+    let mut totals: BTreeMap<&'static str, usize> = BTreeMap::new();
+    for ((book, _key), outcome) in outcomes {
+        let label = match outcome {
+            SpellProbeOutcome::Wired { .. } => "wired",
+            SpellProbeOutcome::NoCastingClassHasIt => "no_casting_class_has_it",
+            SpellProbeOutcome::AbsentFromBookCorpus => "absent_from_book_corpus",
+            SpellProbeOutcome::SchoolNotRecognized => "school_not_recognized",
+            SpellProbeOutcome::NoTableEffect => "no_table_effect",
+            SpellProbeOutcome::ForeignBookTable => "foreign_book_table",
+            SpellProbeOutcome::NoSaveDcOnViewModel => "no_save_dc_on_view_model",
+            SpellProbeOutcome::DcDisagreesWithOracle { .. } => "dc_disagrees_with_oracle",
+            SpellProbeOutcome::BaselineAlreadyCarriesADc => "baseline_already_carries_a_dc",
+        };
+        *per_book.entry(book.as_str()).or_default().entry(label).or_default() += 1;
+        *totals.entry(label).or_default() += 1;
+    }
+
+    let mut out = String::new();
+    out.push_str("spell consumer-delta probe -- ceiling report\n");
+    out.push_str(&format!("keys examined: {}\n\n", outcomes.len()));
+    for (book, counts) in &per_book {
+        out.push_str(&format!("{book}\n"));
+        for (label, n) in counts {
+            out.push_str(&format!("  {label}: {n}\n"));
+        }
+    }
+    out.push_str("\nTOTAL\n");
+    for (label, n) in &totals {
+        out.push_str(&format!("  {label}: {n}\n"));
+    }
+    out
+}
+
+// ---------------------------------------------------------------------------
+// Class consumer-delta probe
+// ---------------------------------------------------------------------------
+//
+// Why this exists, and what it is allowed to conclude.
+//
+// `classify()`'s `Kind::Class` arm grounded a class unit on ONE test: is this
+// record's name a key of `class_books`, i.e. does some `ClassId`/`ApgClassId`/
+// `AcgClassId` enum name it. That is a membership test on a Rust enum. It
+// observes nothing about what the engine computes, and it would keep saying
+// `grounded` if every class table in the crate were deleted and only the enum
+// variants left behind. `class_modelled_and_swept_through_the_real_compute_pipeline`
+// is the evidence string it emitted; the sweep in `engine_facts` really does
+// run, but its result was unioned into `explanation_ids` for other kinds to
+// consult and the class arm never read it back.
+//
+// This probe replaces that membership test with the same three-part bar the
+// spell consumer-delta probe (`probe_spell_key`) established:
+//
+//   1. A real, creatable character of this class reaches
+//      `HeadlessReceiptStatus::Computed` -- no claim-blocking diagnostic. This
+//      is not a new bar invented here: it is the one this program already
+//      ruled on and recorded, `docs/release/v0.6/risks-and-open-questions.md`
+//      lines 208-210 ("'done' for any of the 24 classes must mean 'genuinely
+//      reaches Computed'"), after a `done` claim was overstated and caught.
+//   2. The magnitude reaches a consumer. The probe reads
+//      `PilotViewModel::from_receipt(..).snapshot`, the projection
+//      `PilotSnapshot::from_receipt` builds and the character sheet renders --
+//      not a private field beside it. A `Blocked` receipt projects `None`.
+//   3. The magnitude is attributable to selecting THIS class. A snapshot that
+//      merely differs from the classless baseline only proves "having some
+//      class computes something"; it cannot tell Fighter from Wizard. So the
+//      probe additionally requires at least one explanation record whose id
+//      names this class in its own dot-segment AND which no other modelled
+//      class produces at that level. That is the `Celestial Shield` discipline
+//      (`probe_equipment_effect_wiring`) in its class form: a shared row is
+//      not this class's row.
+//
+// What it deliberately does NOT do: it does not drive
+// `resolve_unified_pilot_snapshot`, which lives in `apps/desktop/src-tauri`, a
+// separate cargo workspace this root-crate binary cannot call. Same boundary
+// `probe_spell_key` and `probe_equipment_effect_wiring` already sit behind.
+//
+// The direction this probe moves the number is NOT assumed. It is strictly
+// stricter than the membership test it replaces, so it can only confirm or
+// demote the units that test grounded; it can promote nothing, because a class
+// absent from `class_books` is a class the engine models nowhere and no delta
+// can be observed for it. That is a finding about the corpus, not a weakness
+// of the instrument, and `--class-probe` prints it rather than hiding it.
+
+/// The levels the class probe evaluates. Identical to [`SWEEP_LEVELS`], and
+/// deliberately the same postures `engine_facts`' existing class sweep already
+/// walks, so the probe asks its question of exactly the population the
+/// classifier judges.
+const CLASS_PROBE_LEVELS: &[u8] = SWEEP_LEVELS;
+
+/// Why one modelled class did or did not produce an observed consumer delta.
+///
+/// An enum rather than a `bool` for the same reason [`SpellProbeOutcome`] is
+/// one: the ceiling report has to say what the probe *cannot* reach and why.
+#[derive(Debug, Clone, PartialEq, Eq)]
+enum ClassProbeOutcome {
+    /// A real creatable character of this class reached `Computed`, projected
+    /// a snapshot that moved off the classless baseline, and carried at least
+    /// one explanation record attributable to this class alone.
+    Wired { level: u8, attributed_explanations: usize },
+    /// The engine models no class of this name at all, so there is nothing to
+    /// observe a delta against. Never promoted.
+    NotModelledByEngine,
+    /// The compute pipeline panicked at every probed level.
+    PipelinePanicked,
+    /// The pipeline ran but every probed level carried a claim-blocking
+    /// diagnostic, so no level reaches `Computed` and no snapshot is projected.
+    NeverReachesComputed,
+    /// `Computed`, but `PilotViewModel::from_receipt` projected no snapshot --
+    /// the consumer surface carried nothing.
+    NoSnapshotProjected,
+    /// A snapshot was projected but it is numerically identical to the same
+    /// character with no class levels at all, so nothing on the rendered
+    /// surface moved when this class was selected.
+    NoSnapshotDeltaVsClasslessBaseline,
+    /// The snapshot moved, but every explanation record naming this class is
+    /// also produced by another modelled class, so the magnitude is not
+    /// attributable to selecting this class. Never promoted.
+    NoExplanationAttributedToThisClass,
+}
+
+/// The character posture the class probe measures: the shared fixture carrying
+/// exactly this class at this level, with the same canonical creation-time
+/// seeds `compose_character_input` applies. Reuses [`class_sweep_input`]
+/// verbatim rather than forking a second posture builder, so the probe cannot
+/// drift from the sweep whose population it judges.
+fn class_probe_input(fixture: &CharacterInput, class_name: &str, level: u8) -> CharacterInput {
+    class_sweep_input(fixture, class_name, level)
+}
+
+/// The delta's baseline: the same fixture with NO class levels at all. The
+/// class-side equivalent of [`spell_probe_input`]'s `None` arm.
+fn classless_probe_input(fixture: &CharacterInput) -> CharacterInput {
+    let mut input = fixture.clone();
+    input.case_id = Some("v06_work_inventory.classless_baseline".to_string());
+    input.chosen.class_levels = Vec::new();
+    input
+}
+
+/// The numbers a [`PilotSnapshot`] puts on the surface the character sheet
+/// renders, flattened for equality comparison.
+///
+/// Every field here is one the sheet really prints. `ability_modifiers` is
+/// deliberately included even though a class does not move it: leaving it out
+/// would be choosing the comparison to favour a delta, and including a field
+/// that never moves can only make the probe stricter, never looser.
+fn class_snapshot_numbers(snapshot: &PilotSnapshot) -> Vec<i16> {
+    vec![
+        snapshot.ability_modifiers.strength,
+        snapshot.ability_modifiers.dexterity,
+        snapshot.ability_modifiers.constitution,
+        snapshot.base_attack_bonus,
+        snapshot.base_saves.fortitude,
+        snapshot.base_saves.reflex,
+        snapshot.base_saves.will,
+        snapshot.combat.baseline_melee_attack_bonus,
+        snapshot.defense.baseline_armor_class,
+        snapshot.defense.total_save.fortitude,
+        snapshot.defense.total_save.reflex,
+        snapshot.defense.total_save.will,
+        // `damage_reduction` is `Option`; absence and a real 0 are different
+        // states and are encoded as different numbers rather than collapsed.
+        snapshot.defense.damage_reduction.map_or(i16::MIN, |dr| dr),
+    ]
+}
+
+/// True when `explanation_id` names `class_name` in one of its own
+/// dot-separated segments.
+///
+/// Segment equality, never `contains`. `class_chassis.unchained_barbarian.x`
+/// contains the substring `barbarian` while belonging to a different class
+/// entirely, and a substring test would credit Barbarian with Unchained
+/// Barbarian's magnitude -- the corpus-identifier scope collision this program
+/// has already recorded.
+fn explanation_names_class(explanation_id: &str, class_name: &str) -> bool {
+    explanation_id.split('.').any(|segment| segment == class_name)
+}
+
+/// Every explanation id a modelled class produces at `level`, or `None` when
+/// the pipeline panicked for it.
+fn class_explanation_ids_at(
+    fixture: &CharacterInput,
+    class_name: &str,
+    level: u8,
+) -> Option<BTreeSet<String>> {
+    let input = class_probe_input(fixture, class_name, level);
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+        compute_pilot_base_chassis(&input)
+    }));
+    std::panic::set_hook(previous_hook);
+    outcome.ok().map(|c| c.explanations.iter().map(|e| e.id.clone()).collect())
+}
+
+/// Whether selecting exactly this class, on a real creatable character,
+/// produces a magnitude attributable to this class alone on the snapshot the
+/// character sheet renders.
+///
+/// `modelled` carries every class the engine models, so the attribution half of
+/// the delta is decided against the real engine rather than against an
+/// assumption about how explanation ids are namespaced.
+fn probe_class_name(
+    fixture: &CharacterInput,
+    class_name: &str,
+    modelled: &BTreeSet<String>,
+    baseline_numbers: Option<&Vec<i16>>,
+) -> ClassProbeOutcome {
+    if !modelled.contains(class_name) {
+        return ClassProbeOutcome::NotModelledByEngine;
+    }
+
+    let mut any_level_ran = false;
+    let mut any_level_computed = false;
+    let mut any_snapshot = false;
+    let mut any_snapshot_delta = false;
+
+    for &level in CLASS_PROBE_LEVELS {
+        let input = class_probe_input(fixture, class_name, level);
+        let previous_hook = std::panic::take_hook();
+        std::panic::set_hook(Box::new(|_| {}));
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            build_pilot_headless_receipt(&input)
+        }));
+        std::panic::set_hook(previous_hook);
+        let Ok(receipt) = outcome else { continue };
+        any_level_ran = true;
+        if receipt.status != HeadlessReceiptStatus::Computed {
+            continue;
+        }
+        any_level_computed = true;
+
+        // The consumer surface, reached the way production reaches it.
+        let view = PilotViewModel::from_receipt(&receipt);
+        let Some(snapshot) = view.snapshot.as_ref() else { continue };
+        any_snapshot = true;
+
+        // Delta half one: the rendered numbers moved off the classless
+        // baseline. A baseline that projects no snapshot at all is itself a
+        // delta -- the same reasoning as the spell probe's "no DC at all".
+        let numbers = class_snapshot_numbers(snapshot);
+        if baseline_numbers.is_some_and(|b| *b == numbers) {
+            continue;
+        }
+        any_snapshot_delta = true;
+
+        // Delta half two: attribution. At least one explanation record naming
+        // this class that NO other modelled class produces at this level.
+        let mut others: BTreeSet<String> = BTreeSet::new();
+        for other in modelled.iter().filter(|c| c.as_str() != class_name) {
+            if let Some(ids) = class_explanation_ids_at(fixture, other, level) {
+                others.extend(ids);
+            }
+        }
+        let attributed = receipt
+            .computation
+            .explanations
+            .iter()
+            .filter(|e| explanation_names_class(&e.id, class_name) && !others.contains(&e.id))
+            .count();
+        if attributed > 0 {
+            return ClassProbeOutcome::Wired { level, attributed_explanations: attributed };
+        }
+    }
+
+    if !any_level_ran {
+        ClassProbeOutcome::PipelinePanicked
+    } else if !any_level_computed {
+        ClassProbeOutcome::NeverReachesComputed
+    } else if !any_snapshot {
+        ClassProbeOutcome::NoSnapshotProjected
+    } else if !any_snapshot_delta {
+        ClassProbeOutcome::NoSnapshotDeltaVsClasslessBaseline
+    } else {
+        ClassProbeOutcome::NoExplanationAttributedToThisClass
+    }
+}
+
+/// The classless baseline's rendered numbers, or `None` when it projects no
+/// snapshot at all (which is itself the strongest possible baseline).
+fn class_probe_baseline_numbers(fixture: &CharacterInput) -> Option<Vec<i16>> {
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    let baseline = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+        build_pilot_headless_receipt(&classless_probe_input(fixture))
+    }));
+    std::panic::set_hook(previous_hook);
+    baseline
+        .ok()
+        .and_then(|r| PilotViewModel::from_receipt(&r).snapshot.as_ref().map(class_snapshot_numbers))
+}
+
+/// Runs [`probe_class_name`] over every class the engine models.
+///
+/// Returns the full outcome per class rather than only the wired set, because
+/// the ceiling report needs the refusals and their reasons.
+fn probe_class_effect_wiring(
+    fixture: &CharacterInput,
+    modelled: &BTreeSet<String>,
+) -> BTreeMap<String, ClassProbeOutcome> {
+    let baseline_numbers = class_probe_baseline_numbers(fixture);
+    modelled
+        .iter()
+        .map(|class_name| {
+            let outcome =
+                probe_class_name(fixture, class_name, modelled, baseline_numbers.as_ref());
+            (class_name.clone(), outcome)
+        })
+        .collect()
+}
+
+/// The class names [`classify`] may ground: exactly the probe's
+/// [`ClassProbeOutcome::Wired`] verdicts, and nothing else.
+///
+/// The match is exhaustive and deliberately not a `_ =>` catch-all: a future
+/// outcome variant must be classified as promoting or refusing by hand.
+fn class_effect_wired_from_outcomes(
+    outcomes: &BTreeMap<String, ClassProbeOutcome>,
+) -> BTreeSet<String> {
+    outcomes
+        .iter()
+        .filter(|(_, outcome)| match outcome {
+            ClassProbeOutcome::Wired { .. } => true,
+            ClassProbeOutcome::NotModelledByEngine
+            | ClassProbeOutcome::PipelinePanicked
+            | ClassProbeOutcome::NeverReachesComputed
+            | ClassProbeOutcome::NoSnapshotProjected
+            | ClassProbeOutcome::NoSnapshotDeltaVsClasslessBaseline
+            | ClassProbeOutcome::NoExplanationAttributedToThisClass => false,
+        })
+        .map(|(name, _)| name.clone())
+        .collect()
+}
+
+/// The probe's ceiling, printed by `--class-probe`: which modelled classes it
+/// legitimately reaches and, for every one it does not, the reason it refused.
+/// Grounding no unit, moving no number -- the instrument reporting on itself.
+fn class_probe_ceiling_report(outcomes: &BTreeMap<String, ClassProbeOutcome>) -> String {
+    let mut totals: BTreeMap<&'static str, usize> = BTreeMap::new();
+    let mut out = String::new();
+    out.push_str("class consumer-delta probe -- ceiling report\n");
+    out.push_str(&format!("modelled classes examined: {}\n\n", outcomes.len()));
+    for (name, outcome) in outcomes {
+        let label = match outcome {
+            ClassProbeOutcome::Wired { .. } => "wired",
+            ClassProbeOutcome::NotModelledByEngine => "not_modelled_by_engine",
+            ClassProbeOutcome::PipelinePanicked => "pipeline_panicked",
+            ClassProbeOutcome::NeverReachesComputed => "never_reaches_computed",
+            ClassProbeOutcome::NoSnapshotProjected => "no_snapshot_projected",
+            ClassProbeOutcome::NoSnapshotDeltaVsClasslessBaseline => {
+                "no_snapshot_delta_vs_classless_baseline"
+            }
+            ClassProbeOutcome::NoExplanationAttributedToThisClass => {
+                "no_explanation_attributed_to_this_class"
+            }
+        };
+        *totals.entry(label).or_default() += 1;
+        match outcome {
+            ClassProbeOutcome::Wired { level, attributed_explanations } => out.push_str(&format!(
+                "  {name}: wired (level {level}, {attributed_explanations} attributed explanations)\n"
+            )),
+            _ => out.push_str(&format!("  {name}: {label}\n")),
+        }
+    }
+    out.push_str("\nTOTAL\n");
+    for (label, n) in &totals {
+        out.push_str(&format!("  {label}: {n}\n"));
+    }
+    out
+}
+
 fn crb_class_name(class_id: ClassId) -> &'static str {
     match class_id {
         ClassId::Barbarian => "barbarian",
@@ -1415,6 +2633,38 @@ fn crb_class_name(class_id: ClassId) -> &'static str {
         ClassId::Sorcerer => "sorcerer",
         ClassId::Wizard => "wizard",
     }
+}
+
+/// The modelled race a `race_trait` record belongs to, or `None` when the
+/// record names no race the engine models.
+///
+/// A race trait's corpus key names its own race in a `~`-qualifier ahead of
+/// the trait name: `Blue ~ Keen Senses` -> `Blue`, and ARG's heritage form
+/// `Saltbeard ~ Dwarf ~ Greed` -> `Dwarf`. Grounding must be keyed on THAT
+/// race and never on "any race the engine models".
+///
+/// This is the fix for the name-coincidence defect
+/// (`docs/release/corpus-work-channels.md` §9.3, SD-28 §56). `race_trait_ids`
+/// is built solely from CRB's hardcoded `race_traits()` table, so the previous
+/// rule -- pair the record's trait slug with *every* name in `race_names` and
+/// ground on any hit -- let a non-CRB record reach `grounded` by coincidental
+/// NAME match alone. Ultimate Psionics' `Blue ~ Keen Senses` scored off the
+/// Elf's `elf.keen_senses`; `DuergarDSP ~ Hardy`, `DuergarDSP ~ Stability` and
+/// `Forgeborn ~ Fearless` did the same. None of those four races is modelled at
+/// all, so none of their traits is grounded by anything.
+///
+/// The TRAILING segment is the trait name, never the race, and is excluded
+/// from the search — otherwise a trait whose name happens to equal a race name
+/// would nominate itself. A key with no `~` separator names no race.
+fn modelled_race_of_race_trait<'a>(
+    key: &str,
+    race_names: &'a BTreeSet<String>,
+) -> Option<&'a String> {
+    let segments: Vec<&str> = key.split(" ~ ").collect();
+    segments[..segments.len().saturating_sub(1)].iter().find_map(|segment| {
+        let segment = segment.trim().to_lowercase();
+        race_names.iter().find(|race| **race == segment)
+    })
 }
 
 fn race_name(race: RaceId) -> &'static str {
@@ -1443,28 +2693,26 @@ fn gather_engine_facts(
         }
     }
 
+    // SD-29 Epic 4 (spell lane): this map used to be three hand-maintained
+    // `.insert()` calls (core_rulebook/apg/acg only) sitting beside
+    // `spell_catalog::build_spell_catalog`, which already chained FIVE books
+    // (adding ARG and UI). The two never being reconciled silently
+    // misreported every already-shipping ARG and UI spell as
+    // `not-ingested` -- Decision 36's pattern, the exact defect the
+    // `equipment_keys` map immediately below this one was rebuilt to close
+    // for equipment in SD-28-E15, reproduced one record family over.
+    // Derived directly from `spell_resolver::spell_catalog_rows()` now, so
+    // there is no second list left to diverge: adding a sixth book to the
+    // registry populates this map automatically, and an unmapped
+    // `SPELL_BOOK_*` code panics loudly here rather than silently vanishing
+    // (see `spell_book_slug_for` and its own test below).
     let mut spell_levels: BTreeMap<&'static str, BTreeMap<String, bool>> = BTreeMap::new();
-    spell_levels.insert(
-        "core_rulebook",
-        crb_spell_list::SPELL_LIST
-            .iter()
-            .map(|e| (e.key.to_string(), true))
-            .collect(),
-    );
-    spell_levels.insert(
-        "advanced_players_guide",
-        apg::spell_list::SPELL_LIST
-            .iter()
-            .map(|e| (e.key.to_string(), e.level.is_some()))
-            .collect(),
-    );
-    spell_levels.insert(
-        "advanced_class_guide",
-        acg::spell_list::SPELL_LIST
-            .iter()
-            .map(|e| (e.key.to_string(), true))
-            .collect(),
-    );
+    for row in spell_resolver::spell_catalog_rows() {
+        spell_levels
+            .entry(spell_book_slug_for(row.book))
+            .or_default()
+            .insert(row.key.to_string(), row.level.is_some());
+    }
 
     // SD-28-E15: this map used to be four hand-maintained `.insert()` calls
     // (core_rulebook/apg/acg/bestiary_1 only) sitting beside
@@ -1491,16 +2739,74 @@ fn gather_engine_facts(
         .map(|b| b.name.to_lowercase())
         .collect();
 
-    let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
-    for id in ClassId::ALL {
-        class_books.insert(crb_class_name(*id).to_string(), "core_rulebook");
+    // Registry-driven: every book in `monster_chassis::MONSTER_BOOKS` is
+    // indexed here without being named. Adding a book to that registry is what
+    // moves its `monster`/`monster_ability` units off `not-ingested`.
+    let mut chassis_monster_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
+    let mut chassis_monster_ability_keys: BTreeMap<&'static str, BTreeSet<String>> =
+        BTreeMap::new();
+    //
+    // Keyed by the ENGINE book, translated from the registry's corpus
+    // directory, exactly as `chassis_companion_keys` below is and for the same
+    // reason: the `Kind::Monster` / `Kind::MonsterAbility` verdict arms have an
+    // `engine_book` in hand (`rule_set_id`), never a corpus directory. For the
+    // first nine registered monster books the two strings are identical, so a
+    // raw `book.corpus_book` key worked by COINCIDENCE rather than by rule --
+    // the same latent defect `decisions.md §54.3` records the companion lane
+    // finding in its own copy of this loop. Bestiary 1 is where the coincidence
+    // ends: its corpus directory is `beastiary`, its engine book is
+    // `bestiary_1`, and an untranslated key would have reported all 607 of its
+    // chassis records as `not-ingested` while the registry held them.
+    for book in monster_chassis::MONSTER_BOOKS {
+        let engine_book = engine_book_for_corpus_dir(book.corpus_book).unwrap_or_else(|| {
+            panic!(
+                "monster book {:?} is registered in MONSTER_BOOKS but resolves to no rule \
+                 set; add it to CORPUS_DIR_ALIASES or register its RuleSetId",
+                book.corpus_book
+            )
+        });
+        chassis_monster_keys.insert(
+            engine_book,
+            book.monsters.iter().map(|m| m.key.to_lowercase()).collect(),
+        );
+        chassis_monster_ability_keys.insert(
+            engine_book,
+            book.monster_abilities.iter().map(|a| a.key.to_lowercase()).collect(),
+        );
     }
-    for id in ApgClassId::ALL {
-        class_books.insert(id.name().to_string(), "advanced_players_guide");
+
+    // Same registry discipline for `companion`: `companion_chassis::COMPANION_BOOKS`
+    // is iterated, never enumerated here. Both structural shapes go into one set
+    // per book because `Kind::Companion` is one kind (see
+    // `EngineFacts::chassis_companion_keys`).
+    //
+    // Keyed by the ENGINE book, translated from the registry's corpus
+    // directory, never by the corpus directory itself. The lookup at the
+    // `Kind::Companion` verdict arm has an `engine_book` in hand
+    // (`rule_set_id`), and for the first seven registered companion books the
+    // two strings happened to be identical, so a raw `book.corpus_book` key
+    // worked by coincidence rather than by rule. Bestiary 1 is where the
+    // coincidence ends: its corpus directory is `beastiary`, its engine book is
+    // `bestiary_1`, and an untranslated key would have reported all 59 of its
+    // grounded records as `companion_content_has_no_engine_table` — the
+    // silent-under-report shape `decisions.md §44` already paid for once.
+    // `engine_book_for_corpus_dir` is the existing translation, not a new one.
+    let mut chassis_companion_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
+    for book in companion_chassis::COMPANION_BOOKS {
+        let mut keys: BTreeSet<String> =
+            book.companions.iter().map(|c| c.key.to_lowercase()).collect();
+        keys.extend(book.companion_abilities.iter().map(|a| a.key.to_lowercase()));
+        let engine_book = engine_book_for_corpus_dir(book.corpus_book).unwrap_or_else(|| {
+            panic!(
+                "companion book {:?} is registered in COMPANION_BOOKS but resolves to no rule \
+                 set; add it to CORPUS_DIR_ALIASES or register its RuleSetId",
+                book.corpus_book
+            )
+        });
+        chassis_companion_keys.insert(engine_book, keys);
     }
-    for id in AcgClassId::ALL {
-        class_books.insert(id.name().to_string(), "advanced_class_guide");
-    }
+
+    let class_books = modelled_class_books();
 
     let race_names: BTreeSet<String> =
         RaceId::ALL.iter().map(|&r| race_name(r).to_string()).collect();
@@ -1508,6 +2814,15 @@ fn gather_engine_facts(
         .iter()
         .map(|t| format!("{}.{}", race_name(t.race_id), slug(t.trait_name)))
         .collect();
+    let race_trait_probe = probe_race_trait_corpus(repo_root);
+
+    // The class consumer-delta probe, over exactly the classes the engine
+    // models. Runs BEFORE the union sweep below because it asks a different
+    // question of the same postures: not "what ids exist anywhere across all
+    // classes" but "which magnitude is attributable to THIS class alone".
+    let modelled_classes: BTreeSet<String> = class_books.keys().cloned().collect();
+    let class_effect_wired =
+        class_effect_wired_from_outcomes(&probe_class_effect_wiring(fixture, &modelled_classes));
 
     // Sweep every modelled class at every SWEEP_LEVELS level through the REAL
     // compute pipeline and union what it says. A panic is caught rather than
@@ -1539,13 +2854,24 @@ fn gather_engine_facts(
     EngineFacts {
         feat_effect_wired: probe_feat_effect_wiring(fixture),
         equipment_effect_wired: probe_equipment_effect_wiring(repo_root),
+        spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
+            fixture, repo_root,
+        )),
         feat_keys,
         spell_levels,
         equipment_keys,
         monster_names,
+        chassis_monster_keys,
+        chassis_monster_ability_keys,
+        chassis_companion_keys,
         class_books,
+        class_effect_wired,
+        // Filled by `main` after corpus enumeration: the probe's key
+        // population and sibling map are corpus facts, not engine facts.
+        class_feature_effect_wired: BTreeMap::new(),
         race_names,
         race_trait_ids,
+        race_trait_probe,
         explanation_ids,
         diagnostics,
         corpus_class_names,
@@ -1565,6 +2891,27 @@ const STATUS_VOCABULARY: &[(&str, &str)] = &[
          changes what compute_pilot_base_chassis returns; a class/race that reaches a real \
          receipt; a class feature whose explanation id appears in a real computation; a monster \
          that resolves to a real stat block through monster_resolve.",
+    ),
+    (
+        "literal-verified",
+        "A `static` unit whose shipped `data/corpus` record was byte-compared, this run, against \
+         the upstream corpus literal it cites, by `corpus_literal_sweep --json-out`, and the WHOLE \
+         sweep came back CLEAN. Strictly stronger than `ingested-magnitude`/`grounded`/ \
+         `text-complete`, which it supersedes for a unit the sweep actually reached: only the \
+         producer's `static`/`derived` doneness rung (operator directive 2026-08-13) maps this to \
+         `done`. A unit the sweep did not reach, or a sweep that found any mismatch anywhere, \
+         leaves every unit at its ordinary status -- this word is never assigned on trust.",
+    ),
+    (
+        "fixture-verified",
+        "A `derived` unit whose engine evaluator was run, this run, over the real corpus record \
+         through `compute_equipment_effects` and matched a pinned, independently-derived fixture \
+         value exactly, by `derived_evaluator_fixture_check --json-out`. Strictly stronger than \
+         `ingested-magnitude`/`grounded`/`text-complete`, which it supersedes for a unit the \
+         fixture actually covers: only the producer's `static`/`derived` doneness rung (operator \
+         directive 2026-08-13) maps this to `done`. Coverage is 94 of 2,879 held `derived` units \
+         by the fixture's own design, not a sample -- a unit outside that coverage, or one the \
+         check ran and failed, keeps its ordinary status and stays `held`.",
     ),
     (
         "ingested-magnitude",
@@ -1639,7 +2986,31 @@ fn class_feature_owner<'a, I: Iterator<Item = &'a String>>(key: &str, classes: I
 }
 
 /// Resolve one corpus unit against the engine.
-fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<String>) -> Verdict {
+///
+/// `carries_prose_magnitude` is the caller's own `wiring_class` verdict for
+/// this same unit's token closure, narrowed to the two reasons
+/// (`prose_expr`, `prose_formula_segment`) that mean "a real, non-guard,
+/// non-cross-reference formula was found in prose" -- the %N-placeholder
+/// pattern `99efb504` taught `wiring_class::determine_closure` but never
+/// wired into this function's own, independent `text_only` signal. Before
+/// that gap was closed here, a record like Zomok's Breath Weapon
+/// (`DC %1...|CON+18`) could be `wiring_class: derived` (a real formula
+/// exists) while simultaneously `status: text-complete` (`status_vocabulary`
+/// promises that status ONLY when "the corpus record carries NO magnitude
+/// token at all") -- a live contradiction of this file's own contract, and
+/// the mechanism behind the classifier-quality/dashboard-score
+/// anti-correlation the 2026-08-14 incentive-fix investigation traced to
+/// this function. See that investigation's retro event for the corpus lines
+/// (Rejuvenate Eidolon's `3d10+min(CASTERLEVEL,10)`, Telepathy Tap's
+/// `10 + 1/2 your racial HD + your Charisma modifier`, Quarterstaff
+/// (Hurricane)'s `.MOD` row `DC %1.|12+WIS`) that proved the pattern
+/// genuine rather than a classifier false positive.
+fn classify(
+    unit: &CorpusUnit,
+    facts: &EngineFacts,
+    book_included_by: &BTreeSet<String>,
+    carries_prose_magnitude: bool,
+) -> Verdict {
     // A book with no compiled rule set has had nothing attempted -- unless it
     // is the shared library other books pull in, in which case the record's
     // real home is whichever ingested book includes it. The host is chosen by
@@ -1666,10 +3037,7 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             // arbitrary host would put thousands of un-ingested shared records
             // into some ingested book's reconciliation and make that book look
             // far further behind than it is.
-            match hosts
-                .iter()
-                .find(|b| facts.holds_key(b, &unit.kind, &unit.key, &unit.name))
-            {
+            match hosts.iter().find(|b| facts.holds_unit(b, unit)) {
                 Some(b) => b.to_string(),
                 None => {
                     return Verdict {
@@ -1688,10 +3056,22 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
         Some(engine_book.clone())
     };
 
-    let text_only = unit.magnitude_token_count == 0;
+    // `magnitude_token_count` only counts `MAGNITUDE_TOKENS`-prefixed tab
+    // fields (BONUS:, DEFINE:, ...). A record can carry zero of those and
+    // still state a real, computable magnitude in prose -- see this
+    // function's doc comment.
+    let text_only = unit.magnitude_token_count == 0 && !carries_prose_magnitude;
     let not_ingested = |evidence: &str| Verdict {
         status: "not-ingested",
         evidence: evidence.to_string(),
+        reason: None,
+        engine_book: engine_book_field.clone(),
+    };
+    // Same verdict, for the registry-driven arms whose evidence token names the
+    // book that answered and so cannot be a `&'static str`.
+    let not_ingested_owned = |evidence: String| Verdict {
+        status: "not-ingested",
+        evidence,
         reason: None,
         engine_book: engine_book_field.clone(),
     };
@@ -1748,13 +3128,19 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                 status: "unknown",
                 evidence: "in_catalog_with_corpus_magnitude_but_no_observed_consumer".to_string(),
                 reason: Some(format!(
-                    "corpus record carries {} magnitude token(s) and the feat IS in the engine's \
-                     catalog, but the feat-effect probe observed no computed delta across the \
-                     swept postures. That is the probe's documented lower-bound behaviour: the \
-                     effect may need a posture, an opponent or a combat action this engine does \
-                     not model. Reported as unknown rather than deferred because no engine \
-                     diagnostic is scoped to a feat, so there is no engine text to quote",
-                    unit.magnitude_token_count
+                    "corpus record carries {} magnitude token(s){} and the feat IS in the \
+                     engine's catalog, but the feat-effect probe observed no computed delta \
+                     across the swept postures. That is the probe's documented lower-bound \
+                     behaviour: the effect may need a posture, an opponent or a combat action \
+                     this engine does not model. Reported as unknown rather than deferred \
+                     because no engine diagnostic is scoped to a feat, so there is no engine \
+                     text to quote",
+                    unit.magnitude_token_count,
+                    if carries_prose_magnitude {
+                        " and a prose-embedded formula (wiring_class: derived)"
+                    } else {
+                        ""
+                    }
                 )),
                 engine_book: engine_book_field,
             }
@@ -1766,18 +3152,41 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             });
             match level_known {
                 None => not_ingested("spell_key_absent_from_spell_list"),
-                // SD28-E14-F1: NOT promoted. See the doc comment above
-                // `probe_equipment_effect_wiring` (the removed
-                // `probe_spell_effect_wiring`'s replacement note) -- no
-                // currently-wired consumer reads a spell's magnitude, so
-                // every resolved-level spell stays `ingested-magnitude`
-                // exactly as before this epic touched this arm.
-                Some(true) => Verdict {
-                    status: "ingested-magnitude",
-                    evidence: "spell_list_entry_with_resolved_level".to_string(),
-                    reason: None,
-                    engine_book: engine_book_field,
-                },
+                // SD28-E14-F1 recorded that this arm could not promote,
+                // because no wired consumer read a spell's magnitude. That
+                // finding is SUPERSEDED, not overruled: `epic-31-spell-wiring`
+                // (2026-08-07) wired `spellbook::compute_spellbook_coverage`
+                // into `pf1_adapter::resolve_unified_pilot_snapshot`, so a
+                // spell's own level now reaches a number the character sheet
+                // prints. See the block comment above `probe_spell_key`.
+                //
+                // `(engine_book, key)`, never a bare key: the probe observed
+                // this DC against ONE book's corpus record, and only that
+                // book's unit may claim it -- the `Celestial Shield`
+                // discipline the equipment arm below already follows. It is
+                // load-bearing here, because every per-school resolver stamps
+                // `RuleSetId::Crb`.
+                Some(true) => {
+                    let observed = |candidate: &str| {
+                        facts
+                            .spell_effect_wired
+                            .contains(&(engine_book.clone(), candidate.to_string()))
+                    };
+                    if observed(&unit.key) || observed(&unit.name) {
+                        return Verdict {
+                            status: "grounded",
+                            evidence: "spell_effect_probe_observed_computed_delta".to_string(),
+                            reason: None,
+                            engine_book: engine_book_field,
+                        };
+                    }
+                    Verdict {
+                        status: "ingested-magnitude",
+                        evidence: "spell_list_entry_with_resolved_level".to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    }
+                }
                 Some(false) => Verdict {
                     status: "text-complete",
                     evidence: "spell_list_entry_with_description_but_no_corpus_level".to_string(),
@@ -1804,9 +3213,17 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                     engine_book: engine_book_field,
                 };
             }
-            if facts.equipment_effect_wired.contains(&unit.key)
-                || facts.equipment_effect_wired.contains(&unit.name)
-            {
+            // `(engine_book, key)`, never a bare key: the probe observed this
+            // delta on ONE book's corpus record, and only that book's unit may
+            // claim it. See `probe_equipment_effect_wiring`'s doc comment for
+            // the `Celestial Shield` case that proves a shared key is not a
+            // shared item.
+            let observed = |candidate: &str| {
+                facts
+                    .equipment_effect_wired
+                    .contains(&(engine_book.clone(), candidate.to_string()))
+            };
+            if observed(&unit.key) || observed(&unit.name) {
                 return Verdict {
                     status: "grounded",
                     evidence: "equipment_effect_probe_observed_computed_delta".to_string(),
@@ -1820,6 +3237,39 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                 reason: None,
                 engine_book: engine_book_field,
             }
+        }
+        // Every registered chassis book, by the registry rather than by name.
+        // The evidence token still carries the book, so a receipt reader sees
+        // which table answered.
+        Kind::Monster if facts.chassis_monster_keys.contains_key(engine_book.as_str()) => {
+            if facts.holds_key(&engine_book, &unit.kind, &unit.key, &unit.name) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: format!(
+                        "{engine_book}_monster_resolve_returned_a_real_stat_block"
+                    ),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            not_ingested_owned(format!("monster_absent_from_{engine_book}_monsters"))
+        }
+        Kind::MonsterAbility
+            if facts.chassis_monster_ability_keys.contains_key(engine_book.as_str()) =>
+        {
+            if facts.holds_key(&engine_book, &unit.kind, &unit.key, &unit.name) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: format!(
+                        "{engine_book}_monster_ability_resolve_returned_a_real_record"
+                    ),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            not_ingested_owned(format!(
+                "monster_ability_absent_from_{engine_book}_monster_abilities"
+            ))
         }
         Kind::Monster => {
             if facts.monster_names.contains(&unit.name.to_lowercase()) {
@@ -1845,12 +3295,57 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             not_ingested("race_absent_from_RaceId_ALL")
         }
         Kind::RaceTrait => {
-            let candidates: Vec<String> = facts
-                .race_names
-                .iter()
-                .map(|r| format!("{r}.{}", slug(&unit.name)))
-                .collect();
-            if candidates.iter().any(|c| facts.race_trait_ids.contains(c)) {
+            // PRIMARY: the race corpus the app really loads applies this
+            // record to a player. This overrules the CRB-table rule below
+            // rather than supplementing it, because it observes the path the
+            // player uses -- see `probe_race_trait_corpus` and SD-29
+            // `decisions.md §43.5`. Order matters: nothing the old rule
+            // grounded can be demoted, because every record it grounds is
+            // also in the loaded corpus.
+            //
+            // **The observation grounds on its own; it is not additionally
+            // required to agree with the unit's own book.** This used to read
+            // `== Some(engine_book.as_str())`, which was indistinguishable
+            // from the rule above for every book whose `.lst` rows are filed
+            // under itself -- and silently wrong for `core_essentials`, the
+            // one book whose rows are routinely filed under a *different*
+            // book (`race_trait_engine_book`'s own doc comment says exactly
+            // that). While `core_essentials` had no compiled rule set the
+            // shared-library path above resolved `engine_book` to the real
+            // host and the equality held. SD-29's race-trait lane round 4 gave
+            // the book a rule set of its own, for the 64 heritage records that
+            // genuinely belong to it, and **155 Core Rulebook and Bestiary 1
+            // standard racial traits stored in that directory instantly
+            // dropped from `grounded` to
+            // `race_trait_record_loaded_but_never_applies`** -- an evidence
+            // token asserting the opposite of what the probe had just
+            // observed. Nothing about those records changed; only the book
+            // they are stored in gained an id.
+            //
+            // The probe's answer is the attribution, so it is reported as
+            // such: a record whose observed book differs from its own is
+            // credited to the observed one, exactly as a shared-library record
+            // was before its host book was named. (`decisions.md §49.3`.)
+            if let Some(observed) = facts.race_trait_engine_book(unit) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "race_trait_applied_by_the_race_corpus_the_app_loads".to_string(),
+                    reason: None,
+                    engine_book: if own_engine_book == Some(observed) {
+                        engine_book_field
+                    } else {
+                        Some(observed.to_string())
+                    },
+                };
+            }
+            // FALLBACK: CRB's seven compiled races. Still consulted, because
+            // it is a real second opinion for the one book whose race traits
+            // are also a compiled table.
+            let crb_table_grounds = modelled_race_of_race_trait(&unit.key, &facts.race_names)
+                .is_some_and(|race| {
+                    facts.race_trait_ids.contains(&format!("{race}.{}", slug(&unit.name)))
+                });
+            if crb_table_grounds {
                 return Verdict {
                     status: "grounded",
                     evidence: "race_trait_record_grounded_by_race_traits".to_string(),
@@ -1858,22 +3353,65 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                     engine_book: engine_book_field,
                 };
             }
-            not_ingested("race_trait_absent_from_race_traits")
+            // The honest middle: the record IS ingested and IS loaded, and
+            // still no selection a player can make brings it in. Distinct
+            // from "the engine holds no record matching this unit" and
+            // reported as its own evidence rather than collapsed into it.
+            if facts.race_trait_was_loaded(unit) {
+                return not_ingested("race_trait_record_loaded_but_never_applies");
+            }
+            if modelled_race_of_race_trait(&unit.key, &facts.race_names).is_some() {
+                return not_ingested("race_trait_absent_from_race_traits");
+            }
+            not_ingested("race_trait_race_not_modelled")
         }
         Kind::Class => {
             let name = unit.name.to_lowercase();
-            if facts.class_books.contains_key(&name) {
+            // The engine must model a class of this name at all. Unchanged:
+            // a name no class enum carries is a class nothing has ingested.
+            if !facts.class_books.contains_key(&name) {
+                return not_ingested("class_absent_from_ClassId_ALL_and_book_class_id_enums");
+            }
+            // PRIMARY, and the whole of the grounding decision: the class
+            // consumer-delta probe OBSERVED this class put a magnitude
+            // attributable to it alone on the snapshot the character sheet
+            // renders. Strictly stricter than the membership test this
+            // replaced -- see the probe's own section comment for why the
+            // membership test could not tell a modelled class from a deleted
+            // one, and why this change can only confirm or demote.
+            if facts.class_effect_wired.contains(&name) {
                 return Verdict {
                     status: "grounded",
-                    evidence: "class_modelled_and_swept_through_the_real_compute_pipeline"
+                    evidence: "class_probe_observed_computed_delta_on_the_rendered_snapshot"
                         .to_string(),
                     reason: None,
                     engine_book: engine_book_field,
                 };
             }
-            not_ingested("class_absent_from_ClassId_ALL_and_book_class_id_enums")
+            // The honest middle, and a genuinely different fact from "no class
+            // enum names this": the engine DOES model a class of this name and
+            // the probe still observed no magnitude a player can see for it.
+            // Reported as its own evidence rather than collapsed into the
+            // absence above.
+            not_ingested("class_modelled_but_no_observed_delta_on_the_rendered_snapshot")
         }
         Kind::ClassFeature => {
+            // The option-pool consumer-delta observation, asked FIRST because
+            // the branches below cannot reach these records at all: a pool
+            // member's group prefix names no class, so `class_feature_owner`
+            // fails and the record lands `unknown` however wired it is. Only
+            // the book whose class the engine models may claim the key --
+            // `class_feature_effect_wired` carries that book precisely so a
+            // second book's same-named record cannot ride this observation.
+            if facts.class_feature_effect_wired.get(&unit.key) == Some(&unit.book.as_str()) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "class_feature_probe_observed_a_delta_attributable_to_this_record"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
             let group = unit.key.split(" ~ ").next().unwrap_or(&unit.key);
             let Some(owner) = class_feature_owner(&unit.key, facts.class_books.keys()) else {
                 // The group names no class this engine models. Before calling
@@ -1979,6 +3517,22 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                 return not_ingested("class_feature_owner_matched_by_name_but_record_not_held_by_engine");
             }
             not_ingested("no_explanation_id_and_no_diagnostic_names_this_feature")
+        }
+        // SD-29 Epic 7 (companion lane). Registry-driven exactly as the two
+        // monster arms above are: `companion_chassis::COMPANION_BOOKS` decides,
+        // and the evidence token carries the book so a receipt reader sees which
+        // table answered. A book with no registered companion table falls
+        // through to the arm below, which keeps its original wording.
+        Kind::Companion if facts.chassis_companion_keys.contains_key(engine_book.as_str()) => {
+            if facts.holds_key(&engine_book, &unit.kind, &unit.key, &unit.name) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: format!("{engine_book}_companion_resolve_returned_a_real_record"),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            not_ingested_owned(format!("companion_absent_from_{engine_book}_companion_tables"))
         }
         Kind::Companion => not_ingested("companion_content_has_no_engine_table"),
         // SD28-E15 (2026-08-09): no engine table exists for monster
@@ -2108,9 +3662,528 @@ struct InventoryUnit {
     wiring_class_signals: BTreeSet<String>,
 }
 
+/// Reads the shared deterministic pilot input fixture, or exits with the
+/// reason. Extracted from [`main`] so `--spell-probe` can run without also
+/// requiring a `PCGEN_CORPUS_ROOT` checkout it does not read.
+/// Parses `corpus_literal_sweep --json-out`'s report into the
+/// `(book, source_file, source_line)` triples it verified.
+///
+/// Hand-rolled rather than pulling in a JSON parser for one file this binary
+/// itself controls the shape of: `{"clean":<bool>,"records_examined":<n>,
+/// "verified":[{"book":"...","source_file":"...","source_line":<n>},...]}`.
+/// Returns an empty set on ANY read/parse failure or when `clean` is not
+/// `true` -- a missing, stale, or dirty report must never be misread as
+/// evidence. `clean:false` in particular is load-bearing: a sweep that found
+/// a mismatch anywhere proves nothing about any individual record, so its
+/// `verified` array (always empty on that branch, see `corpus_literal_sweep`)
+/// is trusted precisely because this function refuses to trust anything else
+/// in a non-clean report either.
+fn load_sweep_verified(path: &Path) -> BTreeSet<(String, String, usize)> {
+    let Ok(text) = std::fs::read_to_string(path) else {
+        return BTreeSet::new();
+    };
+    if !text.contains("\"clean\":true") {
+        return BTreeSet::new();
+    }
+    let mut out = BTreeSet::new();
+    let Some(list_start) = text.find("\"verified\":[") else {
+        return BTreeSet::new();
+    };
+    let mut rest = &text[list_start + "\"verified\":[".len()..];
+    while let Some(obj_start) = rest.find('{') {
+        let Some(obj_end) = rest[obj_start..].find('}') else { break };
+        let obj = &rest[obj_start..obj_start + obj_end];
+        let book = json_field_str(obj, "book");
+        let source_file = json_field_str(obj, "source_file");
+        let source_line = json_field_usize(obj, "source_line");
+        if let (Some(book), Some(source_file), Some(line)) = (book, source_file, source_line) {
+            out.insert((book, source_file, line));
+        }
+        rest = &rest[obj_start + obj_end + 1..];
+        if rest.trim_start().starts_with(']') {
+            break;
+        }
+    }
+    out
+}
+
+/// Parses `derived_evaluator_fixture_check --json-out`'s report into the
+/// `unit_id`s it verified.
+///
+/// Shape: `{"fixtures_total":<n>,"cleared":<n>,"failed":<n>,
+/// "not_ingested":<n>,"verified":["id1","id2",...]}`. Unlike the sweep's
+/// report, there is no whole-report `clean` gate to check: this instrument's
+/// coverage is deliberately partial by design (94 of 2,879 held `derived`
+/// units), and a unit failing does not cast doubt on any other unit's
+/// result the way one mismatched book does for the byte-equality sweep, so
+/// the `verified` array alone -- built by `run_bar_check` from a per-unit
+/// pass, never on trust -- is the whole of what this function needs.
+fn load_derived_fixture_verified(path: &Path) -> BTreeSet<String> {
+    let Ok(text) = std::fs::read_to_string(path) else {
+        return BTreeSet::new();
+    };
+    let mut out = BTreeSet::new();
+    let Some(list_start) = text.find("\"verified\":[") else {
+        return BTreeSet::new();
+    };
+    let mut rest = &text[list_start + "\"verified\":[".len()..];
+    while let Some(quote_start) = rest.find('"') {
+        let after_open = &rest[quote_start + 1..];
+        let Some(quote_end) = after_open.find('"') else { break };
+        let id = &after_open[..quote_end];
+        out.insert(id.replace("\\\"", "\"").replace("\\\\", "\\"));
+        rest = &after_open[quote_end + 1..];
+        if rest.trim_start().starts_with(']') {
+            break;
+        }
+    }
+    out
+}
+
+fn json_field_str(obj: &str, key: &str) -> Option<String> {
+    let needle = format!("\"{key}\":\"");
+    let start = obj.find(&needle)? + needle.len();
+    let end = obj[start..].find('"')? + start;
+    Some(obj[start..end].replace("\\\"", "\"").replace("\\\\", "\\"))
+}
+
+fn json_field_usize(obj: &str, key: &str) -> Option<usize> {
+    let needle = format!("\"{key}\":");
+    let start = obj.find(&needle)? + needle.len();
+    let end = obj[start..].find(|c: char| !c.is_ascii_digit()).map(|e| start + e).unwrap_or(obj.len());
+    obj[start..end].parse().ok()
+}
+
+fn load_probe_fixture(repo_root: &Path) -> CharacterInput {
+    let fixture_path = repo_root.join(FIXTURE_RELATIVE_PATH);
+    let fixture_text = match std::fs::read_to_string(&fixture_path) {
+        Ok(t) => t,
+        Err(e) => {
+            eprintln!("could not read {}: {e}", fixture_path.display());
+            std::process::exit(1);
+        }
+    };
+    match load_character_input_fixture(&fixture_text).character_input {
+        Some(fixture) => fixture,
+        None => {
+            eprintln!("fixture {} did not load", fixture_path.display());
+            std::process::exit(1);
+        }
+    }
+}
+
+/// Every class this engine models, mapped to the book that models it. Shared
+/// by `engine_facts` and the class_feature probe so the two can never disagree
+/// about what "modelled" means.
+fn modelled_class_books() -> BTreeMap<String, &'static str> {
+    let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
+    for id in ClassId::ALL {
+        class_books.insert(crb_class_name(*id).to_string(), "core_rulebook");
+    }
+    for id in ApgClassId::ALL {
+        class_books.insert(id.name().to_string(), "advanced_players_guide");
+    }
+    for id in AcgClassId::ALL {
+        class_books.insert(id.name().to_string(), "advanced_class_guide");
+    }
+    class_books
+}
+
+// ---------------------------------------------------------------------------
+// class_feature consumer-delta probe
+// ---------------------------------------------------------------------------
+//
+// Modelled on `probe_spell_key` above, and held to the same bar: a magnitude
+// only counts when it is (a) observed on what a consumer actually renders and
+// (b) *attributable to this record*, not to the mere fact that a slot was
+// filled.
+//
+// Why class_feature needs a different shape from spell. `classify`'s
+// `Kind::ClassFeature` arm grounds a feature when the engine's own real
+// compute sweep emits an `explanation_id` for it. That sweep
+// (`class_sweep_input`) builds a *base chassis*: the class's automatic
+// features at each level, plus `canonical_seeds_for`'s defaults. A feature a
+// player must PICK out of an option pool -- a rage power, a discovery, a rogue
+// talent -- is never in that posture, so it can never emit an explanation
+// there, and lands as `unknown` with `class_feature_group_names_no_class_at_all`.
+//
+// This probe asks the question that posture cannot: if a player DOES select
+// this specific pool member, does any fact the sheet renders move?
+
+/// The corpus group prefixes that name a real player-facing option pool, the
+/// class that owns it, the engine choice slot that offers it, and the
+/// `selection_id` NAMESPACE that slot's consumer recognizes.
+///
+/// The namespace matters and its omission is a probe defect, not a detail.
+/// `choice_selection(input, "choice:cleric_domain")` is matched against ids
+/// the engine writes as `domain:good`, never as bare `good`; a probe passing
+/// the bare slug would be silently ignored by every namespaced consumer and
+/// would then report `no_consumer_delta` for pools the engine genuinely does
+/// compute per-record. An empty namespace means the consumer is open-ended
+/// (it echoes whatever raw string it is given), which
+/// `BARBARIAN_RAGE_POWER_SLOTS` documents for itself.
+///
+/// Both columns are asserted against the engine source by
+/// `every_pool_names_a_choice_set_the_engine_source_declares` and
+/// `every_namespaced_pool_uses_a_namespace_the_engine_source_writes`.
+const CLASS_FEATURE_POOLS: &[(&str, &str, &str, &str)] = &[
+    ("Rage Power", "barbarian", "choice:barbarian_rage_power", ""),
+    ("Unchained Rage Power", "barbarian", "choice:barbarian_rage_power", ""),
+    ("Discovery", "alchemist", "choice:alchemist_discovery", "discovery:"),
+    ("Grand Discovery", "alchemist", "choice:alchemist_discovery", "discovery:"),
+    ("Rogue Talent", "rogue", "choice:rogue_talent", "talent:"),
+    ("Advanced Talents", "rogue", "choice:rogue_talent", "talent:"),
+    ("Hex", "witch", "choice:witch_hex", "hex:"),
+    ("Revelation", "oracle", "choice:oracle_revelation", "revelation:"),
+    ("Mercy", "paladin", "choice:paladin_mercy", ""),
+    ("Investigator Talent", "investigator", "choice:investigator_talent", "talent:"),
+    ("Slayer Talent", "slayer", "choice:slayer_talent", "talent:"),
+    ("Judgment", "inquisitor", "choice:inquisitor_judgment", "judgment:"),
+    ("Inquisition", "inquisitor", "choice:inquisitor_domain", "domain:"),
+    ("Blessing", "warpriest", "choice:warpriest_blessing", "blessing:"),
+    ("Evolution", "summoner", "choice:summoner_eidolon_evolution", "evolution:"),
+    ("Bloodline", "sorcerer", "choice:sorcerer_bloodline", "bloodline:"),
+    ("Bloodrager Bloodline", "bloodrager", "choice:bloodrager_bloodline", "bloodline:"),
+    ("Domain", "cleric", "choice:cleric_domain", "domain:"),
+    ("Order", "cavalier", "choice:cavalier_order", "order:"),
+    ("Mystery", "oracle", "choice:oracle_mystery", "mystery:"),
+    ("Curse", "oracle", "choice:oracle_curse", "curse:"),
+    ("Spirit", "shaman", "choice:shaman_spirit", "spirit:"),
+    ("Animal Focus", "hunter", "choice:hunter_animal_focus", "animal_focus:"),
+    ("Favored Enemy", "ranger", "choice:ranger_favored_enemy", "enemy:"),
+    ("Favored Terrain", "ranger", "choice:ranger_favored_terrain", "terrain:"),
+    ("Versatile Performance", "bard", "choice:bard_versatile_performance", ""),
+    ("Arcane School", "wizard", "choice:wizard_school_specialization", "school:"),
+    ("Focused Arcane School", "wizard", "choice:wizard_school_specialization", "school:"),
+];
+
+/// Every `class_feature` corpus key in the committed inventory, deduplicated.
+/// The inventory is read rather than the PCGen corpus because the units this
+/// probe is asked about are inventory units.
+fn class_feature_keys_from_inventory(inventory_json: &str) -> Vec<String> {
+    let parsed: serde_json::Value =
+        serde_json::from_str(inventory_json).expect("work-inventory.json parses");
+    let mut keys: BTreeSet<String> = BTreeSet::new();
+    for unit in parsed["units"].as_array().into_iter().flatten() {
+        if unit["kind"].as_str() != Some("class_feature") {
+            continue;
+        }
+        if let Some(key) = unit["corpus_key"].as_str() {
+            keys.insert(key.to_string());
+        }
+    }
+    keys.into_iter().collect()
+}
+
+/// Group prefix -> every member name the corpus declares under it. The source
+/// of each key's control member.
+fn class_feature_siblings(keys: &[String]) -> BTreeMap<String, BTreeSet<String>> {
+    let mut siblings: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
+    for key in keys {
+        let mut parts = key.split(" ~ ");
+        let (Some(group), Some(member)) = (parts.next(), parts.next()) else { continue };
+        siblings.entry(group.to_string()).or_default().insert(member.to_string());
+    }
+    siblings
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+enum ClassFeatureProbeOutcome {
+    /// Selecting this specific pool member moved a fact the sheet renders,
+    /// AND a different real member of the same pool did not move it the same
+    /// way. The delta is attributable to this record.
+    Wired { moved: usize },
+    /// The record's group prefix names no option pool this engine offers as a
+    /// choice slot, so no player selection can reach it at all.
+    NoChoiceSlotOffersIt,
+    /// The pool's owning class is not modelled by this engine.
+    OwnerClassNotModelled,
+    /// The pool has only this one member in the corpus, so there is no sibling
+    /// to control against. Never promoted: without a control, a delta cannot
+    /// be told apart from "a slot got filled".
+    NoSiblingToControlAgainst,
+    /// The selection was accepted and changed nothing a consumer renders.
+    NoConsumerDelta,
+    /// A delta appeared, but a *different real member of the same pool*
+    /// produced the identical delta -- the slot counts picks, it does not
+    /// apply this record. Never promoted: this is the "attributable" half of
+    /// consumer-delta, and it is the outcome `BARBARIAN_RAGE_POWER_SLOTS`'
+    /// own "open-ended recognition (no power-list validation)" predicts.
+    ///
+    /// `shared` names the fact ids that moved identically for both members.
+    /// Carried rather than discarded because these are exactly the units a
+    /// probe WITHOUT a control would have promoted, and a reader deserves to
+    /// see the number that was declined and what it was.
+    DeltaNotAttributableToTheRecord { shared: Vec<String> },
+}
+
+/// The facts a class-feature selection is allowed to move: every explanation
+/// the real compute pipeline emits, plus the twelve rendered numbers
+/// `observable_facts` already pins. Sorted so two runs are comparable.
+/// `None` when the pipeline panicked on this posture -- a panic is not a
+/// delta, and must never be read as one.
+fn class_feature_observable(input: &CharacterInput) -> Option<Vec<(String, i16)>> {
+    let computation =
+        std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| compute_pilot_base_chassis(input)))
+            .ok()?;
+    let (explanations, numbers) = observable_facts(&computation);
+    let mut facts = explanations;
+    for (i, n) in numbers.iter().enumerate() {
+        facts.push((format!("rendered_number.{i}"), *n));
+    }
+    facts.sort();
+    Some(facts)
+}
+
+/// The whole verdict, isolated from any engine call so its three branches can
+/// be pinned directly. `observed` is the character with THIS record selected;
+/// `control` is the same character with a different real member of the same
+/// pool selected instead.
+fn classify_class_feature_delta(
+    baseline: &[(String, i16)],
+    observed: &[(String, i16)],
+    control: &[(String, i16)],
+) -> ClassFeatureProbeOutcome {
+    if observed == baseline {
+        return ClassFeatureProbeOutcome::NoConsumerDelta;
+    }
+    if observed == control {
+        let shared = observed
+            .iter()
+            .filter(|f| !baseline.contains(f))
+            .map(|(id, _)| id.clone())
+            .collect();
+        return ClassFeatureProbeOutcome::DeltaNotAttributableToTheRecord { shared };
+    }
+    let moved = observed.iter().filter(|f| !baseline.contains(f)).count();
+    ClassFeatureProbeOutcome::Wired { moved }
+}
+
+/// The control member for `corpus_key`: any OTHER real member of the same
+/// corpus group. Never a synthetic sentinel -- an invalid id the engine simply
+/// rejects would make every open-ended slot look per-record.
+fn class_feature_control_member<'a>(
+    siblings: &'a BTreeMap<String, BTreeSet<String>>,
+    group: &str,
+    member: &str,
+) -> Option<&'a str> {
+    siblings.get(group)?.iter().map(String::as_str).find(|s| *s != member)
+}
+
+fn probe_class_feature_key(
+    fixture: &CharacterInput,
+    class_books: &BTreeMap<String, &'static str>,
+    siblings: &BTreeMap<String, BTreeSet<String>>,
+    corpus_key: &str,
+) -> ClassFeatureProbeOutcome {
+    let group = corpus_key.split(" ~ ").next().unwrap_or(corpus_key);
+    let Some((_, owner, choice_set_id, namespace)) =
+        CLASS_FEATURE_POOLS.iter().find(|(g, _, _, _)| *g == group)
+    else {
+        return ClassFeatureProbeOutcome::NoChoiceSlotOffersIt;
+    };
+    if !class_books.contains_key(*owner) {
+        return ClassFeatureProbeOutcome::OwnerClassNotModelled;
+    }
+    let member = corpus_key.split(" ~ ").nth(1).unwrap_or(corpus_key);
+    let Some(control_member) = class_feature_control_member(siblings, group, member) else {
+        return ClassFeatureProbeOutcome::NoSiblingToControlAgainst;
+    };
+
+    let pick = |selection: &str| SelectedChoice {
+        choice_set_id: (*choice_set_id).to_owned(),
+        selection_id: format!("{namespace}{}", slug(selection)),
+    };
+
+    let mut verdict = ClassFeatureProbeOutcome::NoConsumerDelta;
+    for &level in SWEEP_LEVELS {
+        let mut base_input = class_sweep_input(fixture, owner, level);
+        // `canonical_seeds_for` pre-fills several of these very slots
+        // (`choice:cleric_domain -> domain:good`, `choice:witch_hex ->
+        // hex:flight`, ...). Leaving a seed in place would make the BASELINE
+        // already carry the pool's effect, so the record under test could
+        // add nothing and every such pool would report `no_consumer_delta`
+        // for the probe's own reason rather than the engine's. The slot under
+        // test is emptied first, exactly as `probe_spell_key`'s baseline is
+        // the same character with the spell NOT selected.
+        base_input.chosen.selected_choices.retain(|c| c.choice_set_id != **choice_set_id);
+        let Some(baseline) = class_feature_observable(&base_input) else { continue };
+
+        let mut with_record = base_input.clone();
+        with_record.chosen.selected_choices.push(pick(member));
+        let Some(observed) = class_feature_observable(&with_record) else { continue };
+
+        let mut with_control = base_input.clone();
+        with_control.chosen.selected_choices.push(pick(control_member));
+        let Some(control) = class_feature_observable(&with_control) else { continue };
+
+        match classify_class_feature_delta(&baseline, &observed, &control) {
+            wired @ ClassFeatureProbeOutcome::Wired { .. } => return wired,
+            // A pick-counting slot at one level is the honest answer for the
+            // whole key unless some other level genuinely applies the record.
+            not_attributable @ ClassFeatureProbeOutcome::DeltaNotAttributableToTheRecord {
+                ..
+            } => {
+                verdict = not_attributable;
+            }
+            _ => {}
+        }
+    }
+    verdict
+}
+
+/// Runs the probe across every `class_feature` corpus key and keeps only the
+/// `Wired` verdicts, each mapped to the book that models its pool's owning
+/// class. The direct analogue of `spell_effect_wired_from_outcomes`.
+fn probe_class_feature_effect_wiring(
+    fixture: &CharacterInput,
+    class_books: &BTreeMap<String, &'static str>,
+    keys: &[String],
+) -> BTreeMap<String, &'static str> {
+    let siblings = class_feature_siblings(keys);
+    let mut wired = BTreeMap::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    for key in keys {
+        if !matches!(
+            probe_class_feature_key(fixture, class_books, &siblings, key),
+            ClassFeatureProbeOutcome::Wired { .. }
+        ) {
+            continue;
+        }
+        let group = key.split(" ~ ").next().unwrap_or(key);
+        let Some((_, owner, _, _)) = CLASS_FEATURE_POOLS.iter().find(|(g, _, _, _)| *g == group)
+        else {
+            continue;
+        };
+        if let Some(book) = class_books.get(*owner) {
+            wired.insert(key.clone(), *book);
+        }
+    }
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+/// The probe's ceiling, printed by `--class-feature-probe`. Grounds nothing
+/// and moves no number on any board: this is the instrument reporting on
+/// itself, exactly as `--spell-probe` does.
+fn class_feature_probe_ceiling_report(
+    outcomes: &BTreeMap<String, ClassFeatureProbeOutcome>,
+) -> String {
+    let mut totals: BTreeMap<&'static str, usize> = BTreeMap::new();
+    let mut wired_keys: Vec<&str> = Vec::new();
+    let mut declined_pools: BTreeMap<&str, usize> = BTreeMap::new();
+    let mut declined_facts: BTreeMap<String, usize> = BTreeMap::new();
+    for (key, outcome) in outcomes {
+        let label = match outcome {
+            ClassFeatureProbeOutcome::Wired { .. } => {
+                wired_keys.push(key.as_str());
+                "wired"
+            }
+            ClassFeatureProbeOutcome::NoChoiceSlotOffersIt => "no_choice_slot_offers_it",
+            ClassFeatureProbeOutcome::OwnerClassNotModelled => "owner_class_not_modelled",
+            ClassFeatureProbeOutcome::NoSiblingToControlAgainst => "no_sibling_to_control_against",
+            ClassFeatureProbeOutcome::NoConsumerDelta => "no_consumer_delta",
+            ClassFeatureProbeOutcome::DeltaNotAttributableToTheRecord { shared } => {
+                *declined_pools
+                    .entry(key.split(" ~ ").next().unwrap_or(key.as_str()))
+                    .or_default() += 1;
+                for id in shared {
+                    *declined_facts.entry(id.clone()).or_default() += 1;
+                }
+                "delta_not_attributable_to_the_record"
+            }
+        };
+        *totals.entry(label).or_default() += 1;
+    }
+    let mut out = String::new();
+    out.push_str("class_feature consumer-delta probe -- ceiling report\n");
+    out.push_str(&format!("keys examined: {}\n\n", outcomes.len()));
+    for (label, n) in &totals {
+        out.push_str(&format!("  {label:<40} {n}\n"));
+    }
+    out.push_str(&format!("\nwired keys: {}\n", wired_keys.len()));
+    for key in wired_keys.iter().take(50) {
+        out.push_str(&format!("  {key}\n"));
+    }
+    // The declined number, named. A probe without a control would have
+    // promoted every one of these.
+    out.push_str("\ndeclined as not-attributable, by pool:\n");
+    let mut pools: Vec<_> = declined_pools.iter().collect();
+    pools.sort_by(|a, b| b.1.cmp(a.1).then(a.0.cmp(b.0)));
+    for (pool, n) in pools {
+        out.push_str(&format!("  {n:>5}  {pool}\n"));
+    }
+    out.push_str("\nthe facts those selections moved identically for both members:\n");
+    let mut facts: Vec<_> = declined_facts.iter().collect();
+    facts.sort_by(|a, b| b.1.cmp(a.1).then(a.0.cmp(b.0)));
+    for (id, n) in facts.iter().take(20) {
+        out.push_str(&format!("  {n:>5}  {id}\n"));
+    }
+    out
+}
+
 fn main() {
     let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let args: Vec<String> = std::env::args().collect();
+
+    // The spell consumer-delta probe's own ceiling report. Reads only
+    // `data/corpus/` and the engine's own tables, writes nothing, classifies
+    // nothing, and moves no unit on any board -- it reports what the
+    // instrument can and cannot reach. Deliberately an early return, before
+    // the PCGen-corpus gate below, because it does not read that corpus.
+    if args.iter().any(|a| a == "--spell-probe") {
+        let fixture = load_probe_fixture(&repo_root);
+        let outcomes = probe_spell_effect_wiring(&fixture, &repo_root);
+        print!("{}", spell_probe_ceiling_report(&outcomes));
+        return;
+    }
+
+    // The class consumer-delta probe's own ceiling report, on the same terms:
+    // reads only the engine's own tables and the shared fixture, writes
+    // nothing, classifies nothing, moves no unit.
+    if args.iter().any(|a| a == "--class-probe") {
+        let fixture = load_probe_fixture(&repo_root);
+        let mut modelled: BTreeSet<String> = BTreeSet::new();
+        for id in ClassId::ALL {
+            modelled.insert(crb_class_name(*id).to_string());
+        }
+        for id in ApgClassId::ALL {
+            modelled.insert(id.name().to_string());
+        }
+        for id in AcgClassId::ALL {
+            modelled.insert(id.name().to_string());
+        }
+        let outcomes = probe_class_effect_wiring(&fixture, &modelled);
+        print!("{}", class_probe_ceiling_report(&outcomes));
+        return;
+    }
+
+    // The class_feature consumer-delta probe's own ceiling report. Same
+    // contract as `--spell-probe`: writes nothing, classifies nothing, moves
+    // no unit on any board. Its key population comes from the committed
+    // inventory rather than the PCGen corpus, so it runs without a corpus
+    // checkout -- the inventory is the artifact whose `class_feature` units
+    // are the question.
+    if args.iter().any(|a| a == "--class-feature-probe") {
+        let fixture = load_probe_fixture(&repo_root);
+        let class_books = modelled_class_books();
+        let inventory = std::fs::read_to_string(repo_root.join(OUTPUT_RELATIVE_PATH))
+            .expect("docs/work-inventory.json is readable");
+        let keys = class_feature_keys_from_inventory(&inventory);
+        let siblings = class_feature_siblings(&keys);
+        let mut outcomes: BTreeMap<String, ClassFeatureProbeOutcome> = BTreeMap::new();
+        let previous_hook = std::panic::take_hook();
+        std::panic::set_hook(Box::new(|_| {}));
+        for key in &keys {
+            let outcome = probe_class_feature_key(&fixture, &class_books, &siblings, key);
+            outcomes.insert(key.clone(), outcome);
+        }
+        std::panic::set_hook(previous_hook);
+        print!("{}", class_feature_probe_ceiling_report(&outcomes));
+        return;
+    }
+
     let summary_only = args.iter().any(|a| a == "--summary");
     // `--summary` never writes the file: a summary is not the artefact, and
     // overwriting the full inventory with one would be a silent data loss.
@@ -2135,18 +4208,40 @@ fn main() {
         std::process::exit(1);
     }
 
-    let fixture_path = repo_root.join(FIXTURE_RELATIVE_PATH);
-    let fixture_text = match std::fs::read_to_string(&fixture_path) {
-        Ok(t) => t,
-        Err(e) => {
-            eprintln!("could not read {}: {e}", fixture_path.display());
-            std::process::exit(1);
-        }
-    };
-    let Some(fixture) = load_character_input_fixture(&fixture_text).character_input else {
-        eprintln!("fixture {} did not load", fixture_path.display());
-        std::process::exit(1);
-    };
+    // The `static` done-rung evidence (operator directive 2026-08-13,
+    // answering SD-32 decisions.md §2): `corpus_literal_sweep --json-out`'s
+    // report of which shipped records it byte-compared clean, if a fresh one
+    // has been generated. `CORPUS_LITERAL_SWEEP_REPORT` is opt-in and unset
+    // by default, so an inventory generated without first running the sweep
+    // carries no `literal-verified` units at all -- it never fabricates
+    // evidence it was not handed. Only used for `wiring_class == Static`
+    // below.
+    let sweep_verified: BTreeSet<(String, String, usize)> =
+        std::env::var("CORPUS_LITERAL_SWEEP_REPORT")
+            .ok()
+            .map(PathBuf::from)
+            .map(|p| load_sweep_verified(&p))
+            .unwrap_or_default();
+
+    // The `derived` done-rung evidence, same operator directive:
+    // `derived_evaluator_fixture_check --json-out`'s report of which
+    // `unit_id`s the engine's evaluator actually matched against the pinned
+    // fixture (coverage is 94 of 2,879 held `derived` units by the fixture's
+    // own design -- see `tests/derived_evaluator_fixture_check.rs`'s module
+    // doc; every unit not in this set keeps its ordinary status and stays
+    // `held`). `DERIVED_FIXTURE_CHECK_REPORT` is opt-in and unset by
+    // default, same reason as the static rung above. The report's
+    // `verified` array carries `unit_id`s directly -- unlike the sweep's
+    // triples, `Fixture::unit_id` is spelled identically to this
+    // generator's own `InventoryUnit::id`, so the join is a direct set
+    // membership test with no book/file/line reconstruction needed.
+    let derived_fixture_verified: BTreeSet<String> = std::env::var("DERIVED_FIXTURE_CHECK_REPORT")
+        .ok()
+        .map(PathBuf::from)
+        .map(|p| load_derived_fixture_verified(&p))
+        .unwrap_or_default();
+
+    let fixture = load_probe_fixture(&repo_root);
 
     // --- book roster, from the corpus itself ------------------------------
     // `book_paths` maps a book id (directory basename) to its real directory,
@@ -2303,13 +4398,52 @@ fn main() {
         .filter(|u| u.kind == Kind::Class)
         .map(|u| u.name.to_lowercase())
         .collect();
-    let facts = gather_engine_facts(&fixture, corpus_class_names, &repo_root);
+    let mut facts = gather_engine_facts(&fixture, corpus_class_names, &repo_root);
+
+    // The class_feature consumer-delta probe, run over the keys the CORPUS
+    // enumeration just produced rather than over the committed inventory --
+    // generating this file from a previous copy of itself would make the
+    // observation circular. Its sibling map (which other members share a
+    // pool) comes from the same enumeration, so a key's control is always a
+    // real alternative the corpus declares.
+    {
+        let class_feature_keys: Vec<String> = enumerations
+            .values()
+            .flat_map(|e| e.units.iter())
+            .filter(|u| u.kind == Kind::ClassFeature)
+            .map(|u| u.key.clone())
+            .collect::<BTreeSet<String>>()
+            .into_iter()
+            .collect();
+        facts.class_feature_effect_wired = probe_class_feature_effect_wiring(
+            &fixture,
+            &facts.class_books.clone(),
+            &class_feature_keys,
+        );
+    }
+    let facts = facts;
 
     // --- wiring_class (GE-01) -----------------------------------------------
     // Built once, corpus-wide: the token closure index and a raw-line cache
     // shared by every unit's determination.
     let mod_index = build_mod_index(&book_paths);
     let mut corpus_lines = CorpusLines::new(&book_paths);
+
+    // --- id uniqueness ------------------------------------------------------
+    // How many de-duplicated units in each book+kind slug to the same thing.
+    // Counted BEFORE any id is minted, over the same unit set the classifier
+    // walks, so `unit_id` can suffix exactly the ids that would otherwise
+    // collide and leave every other id byte-identical to the one it has always
+    // carried. See [`unit_id`] for why the collisions exist and what they broke.
+    let mut slug_population: BTreeMap<(String, Kind, String), usize> = BTreeMap::new();
+    for book in &books {
+        let Some(enumeration) = enumerations.get(&book.id) else { continue };
+        for unit in &enumeration.units {
+            *slug_population
+                .entry((book.id.clone(), unit.kind, slug(&unit.key)))
+                .or_default() += 1;
+        }
+    }
 
     // --- classify ----------------------------------------------------------
     let empty: BTreeSet<String> = BTreeSet::new();
@@ -2318,7 +4452,6 @@ fn main() {
         let Some(enumeration) = enumerations.get(&book.id) else { continue };
         let hosts = included_by.get(&book.id).unwrap_or(&empty);
         for unit in &enumeration.units {
-            let verdict = classify(unit, &facts, hosts);
             let rows = token_closure_rows(
                 &mut corpus_lines,
                 &mod_index,
@@ -2330,8 +4463,18 @@ fn main() {
             );
             let row_refs: Vec<Option<&str>> = rows.iter().map(|r| r.as_deref()).collect();
             let (wc_class, wc_reason, wc_signals) = wiring_class::determine_closure(&row_refs);
+            // See `classify`'s doc comment: these two reasons are the only
+            // ones that mean "a real formula was found in prose", as
+            // opposed to a literal-magnitude-token or bonus/pre-guard
+            // signal `magnitude_token_count` already covers on its own.
+            let carries_prose_magnitude =
+                matches!(wc_reason.as_str(), "prose_expr" | "prose_formula_segment");
+            let verdict = classify(unit, &facts, hosts, carries_prose_magnitude);
+            let collides = slug_population
+                .get(&(book.id.clone(), unit.kind, slug(&unit.key)))
+                .is_some_and(|n| *n > 1);
             inventory.push(InventoryUnit {
-                id: format!("{}:{}:{}", book.id, unit.kind.id(), slug(&unit.key)),
+                id: unit_id(&book.id, unit.kind, &unit.key, collides),
                 unit: unit.clone(),
                 verdict,
                 wiring_class: wc_class,
@@ -2344,6 +4487,78 @@ fn main() {
     inventory.sort_by(|a, b| {
         (&a.unit.book, a.unit.kind, &a.unit.key, &a.id).cmp(&(&b.unit.book, b.unit.kind, &b.unit.key, &b.id))
     });
+
+    // A deterministic ORDER is not the same guarantee as a unique HANDLE, and
+    // every consumer that indexes this file by `id` needs the second one. This
+    // instrument emits no output it cannot stand behind: a residual collision
+    // is a hard failure here, loudly, rather than an ambiguity a downstream
+    // before/after diff silently reports as a wiring_class transition. See
+    // [`unit_id`].
+    let mut minted: BTreeSet<&str> = BTreeSet::new();
+    let mut collisions: Vec<&str> = Vec::new();
+    for item in &inventory {
+        if !minted.insert(item.id.as_str()) {
+            collisions.push(item.id.as_str());
+        }
+    }
+    if !collisions.is_empty() {
+        eprintln!(
+            "unit id uniqueness violated for {} id(s) -- the inventory's own contract. \
+             First offenders: {}",
+            collisions.len(),
+            collisions.iter().take(10).copied().collect::<Vec<_>>().join(", ")
+        );
+        std::process::exit(1);
+    }
+
+    // The `static` done rung (operator directive 2026-08-13, answering SD-32
+    // decisions.md §2): upgrade a unit's status to `literal-verified` when,
+    // and only when, `wiring_class == Static`, its existing status is one of
+    // the three the sweep's bar supersedes, AND its own `(book, source_file,
+    // source_line)` triple is in `corpus_literal_sweep --json-out`'s verified
+    // set. Applied here, before `by_status`/`by_kind`/`by_book` are
+    // aggregated below, so every rollup in this file's output -- corpus-wide
+    // totals, per-book, per-kind -- agrees with the per-unit `status` field
+    // the final `units` array carries; doing this only in the serializer
+    // would leave the aggregates stale (caught by this generator's own
+    // idempotence contract before it ever reached the dashboard). A unit the
+    // sweep did not reach (no shipped `data/corpus` record, or a
+    // digest-only comparison) keeps its ordinary status and stays `held`,
+    // same as before this rung existed.
+    for item in &mut inventory {
+        if item.wiring_class == wiring_class::WiringClass::Static
+            && matches!(item.verdict.status, "ingested-magnitude" | "grounded" | "text-complete")
+            && sweep_verified.contains(&(
+                item.unit.book.clone(),
+                item.unit.provenance.file.clone(),
+                item.unit.provenance.line,
+            ))
+        {
+            item.verdict.status = "literal-verified";
+        }
+    }
+
+    // The `derived` done rung, same operator directive: upgrade a unit's
+    // status to `fixture-verified` when, and only when, `wiring_class ==
+    // Derived`, its existing status is one of the three the fixture check's
+    // bar supersedes, AND its own `id` is in
+    // `derived_evaluator_fixture_check --json-out`'s verified set --
+    // `run_bar_check` only ever inserts a `unit_id` there after the
+    // engine's evaluator matched the pinned fixture exactly, so this is a
+    // direct join, unlike the static rung's book/file/line reconstruction.
+    // A unit outside the fixture's 94-entry coverage, or one the check ran
+    // and failed, keeps its ordinary status and stays `held` -- most of the
+    // 2,879 held `derived` units are NOT in `derived_fixture_verified` and
+    // this loop does nothing for them, which is the honest, intended
+    // outcome, not a bug.
+    for item in &mut inventory {
+        if item.wiring_class == wiring_class::WiringClass::Derived
+            && matches!(item.verdict.status, "ingested-magnitude" | "grounded" | "text-complete")
+            && derived_fixture_verified.contains(&item.id)
+        {
+            item.verdict.status = "fixture-verified";
+        }
+    }
 
     // --- aggregate ---------------------------------------------------------
     let mut by_kind: BTreeMap<&str, usize> = BTreeMap::new();
@@ -2413,7 +4628,9 @@ fn main() {
     out.push_str(
         "  \"contract\": \"Every field below is derived from the corpus or observed from the \
          engine. Nothing here is hand-maintained; two consecutive runs over an unchanged corpus \
-         and engine differ only in `generated_at`.\",\n",
+         and engine differ only in `generated_at`. Every `units[].id` is unique: it is safe to \
+         index this file by `id`, and a before/after comparison keyed on `id` compares like with \
+         like. The generator exits non-zero rather than emit a duplicate.\",\n",
     );
 
     out.push_str("  \"status_vocabulary\": {\n");
@@ -2653,6 +4870,85 @@ fn main() {
     print!("{out}");
 }
 
+/// 2026-08-14 incentive-fix investigation: proves `classify()`'s own
+/// `text_only` signal agrees with `wiring_class::determine_closure`'s
+/// %N-placeholder detection (`99efb504`) instead of contradicting it. See
+/// `classify`'s doc comment for the real corpus lines that motivated this.
+#[cfg(test)]
+mod prose_magnitude_status_tests {
+    use super::*;
+
+    fn feat_unit(book: &str, key: &str, magnitude_token_count: usize) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            kind: Kind::Feat,
+            key: key.to_string(),
+            name: key.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "feats.lst".to_string(), line: 1 },
+            magnitude_token_count,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    fn facts_with_feat_catalog(book: &'static str, key: &str) -> EngineFacts {
+        let mut facts = EngineFacts::default();
+        facts.feat_keys.entry(book).or_default().insert(key.to_string());
+        facts
+    }
+
+    /// Before this fix: a feat with zero `MAGNITUDE_TOKENS` fields always
+    /// read `text-complete`, even when `wiring_class` had already resolved a
+    /// real formula in its DESC/BENEFIT prose (Zomok's Breath Weapon shape:
+    /// `DC %1...|CON+18`). That is a direct contradiction of
+    /// `status_vocabulary`'s promise that `text-complete` means "NO
+    /// magnitude token at all, so there is no number to compute" -- there
+    /// plainly is one here, `wiring_class` just found it in prose rather
+    /// than in a `MAGNITUDE_TOKENS`-prefixed field.
+    #[test]
+    fn a_prose_formula_feat_does_not_read_text_complete() {
+        let facts = facts_with_feat_catalog("core_rulebook", "Zomok's Breath Weapon");
+        let verdict = classify(
+            &feat_unit("core_rulebook", "Zomok's Breath Weapon", 0),
+            &facts,
+            &BTreeSet::new(),
+            true, // wiring_class resolved prose_formula_segment/prose_expr
+        );
+        assert_ne!(verdict.status, "text-complete");
+        // Honestly `unknown`/`held`, not silently promoted to `done`: the
+        // fix must not manufacture a done-eligible status out of a formula
+        // the corpus-literal/evaluator-fixture bar has not verified.
+        assert_eq!(verdict.status, "unknown");
+    }
+
+    /// A feat with genuinely zero magnitude anywhere -- no
+    /// `MAGNITUDE_TOKENS` field AND no prose formula -- must still read
+    /// `text-complete`. The fix narrows the signal, it does not remove it.
+    #[test]
+    fn a_true_no_magnitude_feat_still_reads_text_complete() {
+        let facts = facts_with_feat_catalog("core_rulebook", "Iron Will");
+        let verdict =
+            classify(&feat_unit("core_rulebook", "Iron Will", 0), &facts, &BTreeSet::new(), false);
+        assert_eq!(verdict.status, "text-complete");
+    }
+
+    /// A feat whose own `MAGNITUDE_TOKENS` field count is already nonzero
+    /// must not regress just because `carries_prose_magnitude` is false --
+    /// the two signals are additive (`||`), never exclusive.
+    #[test]
+    fn a_token_magnitude_feat_is_unaffected_by_the_prose_signal() {
+        let facts = facts_with_feat_catalog("core_rulebook", "Power Attack");
+        let verdict = classify(
+            &feat_unit("core_rulebook", "Power Attack", 1),
+            &facts,
+            &BTreeSet::new(),
+            false,
+        );
+        assert_ne!(verdict.status, "text-complete");
+    }
+}
+
 #[cfg(test)]
 mod wiring_class_wiring_tests {
     use super::*;
@@ -2811,7 +5107,7 @@ mod rule_set_mapping_tests {
     }
 
     #[test]
-    fn sd27_books_are_measurable() {
+    fn ingested_books_are_measurable() {
         assert_eq!(rule_set_for("advanced_race_guide"), Some(RuleSetId::Arg));
         assert_eq!(rule_set_for("pathfinder_unchained"), Some(RuleSetId::Pu));
     }
@@ -2835,20 +5131,30 @@ mod rule_set_mapping_tests {
     /// A book the engine has not compiled must still report honestly.
     #[test]
     fn uncompiled_books_stay_none() {
-        // `ultimate_psionics` moved from uncompiled to compiled in SD28-E29
-        // (`epic-29-upsi-complete`) -- `rule_set_for` now correctly returns
-        // `Some(RuleSetId::Upsi)` for it, so it is no longer a valid
-        // uncompiled example. `inner_sea_gods` remains genuinely
-        // uncompiled (SD-30's own book set, out of this bundle).
-        assert_eq!(rule_set_for("inner_sea_gods"), None);
+        // This test needs a book the engine genuinely has not compiled, and it
+        // has now outlived TWO of them: `ultimate_psionics` moved to compiled
+        // in SD28-E29 (`epic-29-upsi-complete`), and `inner_sea_gods` in SD-29
+        // Epic 5 extend round 9, which registered `RuleSetId::Isg` for its
+        // monster / monster_ability families. The comment this replaces also
+        // stated a reason that was wrong by the time it was read --
+        // "`inner_sea_gods` ... (SD-30's own book set, out of this bundle)" --
+        // and `decisions.md §38` had already re-scoped SD-29 corpus-wide.
+        //
+        // `occult_adventures` is uncompiled by DERIVATION, not by assumption:
+        // `corpus_dir_for` is exhaustive over `RuleSetId` and carries no arm
+        // returning it, so no `COMPILED_RULE_SETS` member can map to it.
+        assert_eq!(rule_set_for("occult_adventures"), None);
     }
 }
 
 /// SD28-E14: observation-harness widening tests. F2 (equipment probe) with
 /// a positive proof against the real on-disk corpus and negative proofs
 /// that the probe does NOT promote a unit the engine genuinely does not
-/// wire (F3's anti-gaming binding). F1 (spell probe) is deliberately absent
-/// -- see the doc comment at the bottom of this module for why.
+/// wire (F3's anti-gaming binding). F1 (spell probe) was deliberately absent
+/// when this module was written -- see the doc comment at the bottom of this
+/// module for why, and `mod spell_probe_tests` for the cycle that superseded
+/// that reasoning once `epic-31-spell-wiring` gave the spell magnitude a wired
+/// consumer to observe.
 #[cfg(test)]
 mod e14_harness_tests {
     use super::*;
@@ -2872,6 +5178,148 @@ mod e14_harness_tests {
     }
 
     // ----- F2: equipment probe -----
+
+    /// The probe must ask its wiring question of **every** key the engine
+    /// catalog holds, because `classify()` decides `known` from that same
+    /// catalog (`facts.equipment_keys`, built from
+    /// `equipment_catalog_rows()`). Any catalog key the probe never examines
+    /// is a unit that can only ever report
+    /// `equipment_table_entry_with_corpus_magnitude` — not because the engine
+    /// computes nothing from it, but because nobody asked.
+    ///
+    /// This is the guard, not the fix: it fails against the previous
+    /// four-hand-table key universe, which omitted every gap row and every
+    /// book past `crb`/`apg`/`acg`/`beastiary1`.
+    ///
+    /// It deliberately pins **coverage of the question**, never the answer.
+    /// `equipment_key_is_wired` — the bar — is untouched by it.
+    #[test]
+    fn the_probe_examines_every_key_the_engine_catalog_holds() {
+        let universe = probe_equipment_key_universe();
+        let unexamined: Vec<&str> = equipment_resolver::equipment_catalog_rows()
+            .iter()
+            .map(|row| row.key)
+            .filter(|key| !universe.contains(key))
+            .collect();
+        assert!(
+            unexamined.is_empty(),
+            "{} equipment catalog key(s) are never asked the wiring question, \
+             e.g. {:?}",
+            unexamined.len(),
+            &unexamined[..unexamined.len().min(10)]
+        );
+    }
+
+    /// The observation is book-scoped, and a shared key is not a shared item.
+    ///
+    /// `Celestial Shield` is printed in BOTH Ultimate Equipment and the
+    /// Advanced Race Guide under the same key, and the two rows are different
+    /// items: ARG's is a heavy shield (`ACCHECK:0`, `SPELLFAILURE:0`), UE's is
+    /// a light shield (`ACCHECK:-1`, `SPELLFAILURE:5`). Only ARG has a
+    /// `data/corpus/` directory, so a book-agnostic probe grounds UE's unit on
+    /// ARG's numbers — the name-coincidence defect
+    /// `modelled_race_of_race_trait` already records for `race_trait`.
+    ///
+    /// This pins the *attribution*, and it is a strictly HIGHER bar than the
+    /// bare-key form it replaced: it can only ever withhold a grounding, never
+    /// grant one.
+    #[test]
+    fn a_key_two_books_share_grounds_only_the_book_whose_corpus_was_read() {
+        let wired = probe_equipment_effect_wiring(&repo_root());
+        assert!(
+            wired.contains(&(
+                "advanced_race_guide".to_string(),
+                "Celestial Shield".to_string()
+            )),
+            "ARG owns a real corpus record for this key and must still ground"
+        );
+        assert!(
+            !wired.contains(&(
+                "ultimate_equipment".to_string(),
+                "Celestial Shield".to_string()
+            )),
+            "Ultimate Equipment has no corpus directory at all -- nothing observed \
+             ITS record, so nothing may claim it"
+        );
+        // Structural, not just this one pair: no book without a
+        // `data/corpus/<book>/equipment` directory may appear at all.
+        let observable: BTreeSet<&'static str> = OBSERVABLE_BOOK_DIRS
+            .iter()
+            .filter_map(|dir| engine_book_for_corpus_dir(dir))
+            .collect();
+        let unobservable: BTreeSet<&String> = wired
+            .iter()
+            .map(|(book, _)| book)
+            .filter(|book| !observable.contains(book.as_str()))
+            .collect();
+        assert!(
+            unobservable.is_empty(),
+            "these books have no loaded corpus yet appear in the probe result: {unobservable:?}"
+        );
+    }
+
+    /// Every observable book's catalog keys really reach the probe.
+    ///
+    /// `probe_equipment_effect_wiring` looks the book up by the slug
+    /// `engine_book_for_corpus_dir` returns and skips it on a miss. That miss
+    /// is SILENT — a book whose two slugs stop agreeing simply stops being
+    /// probed, and every one of its units quietly falls back to
+    /// `ingested-magnitude`. Bestiary 1 is the standing trap: its corpus
+    /// directory is `beastiary`, its engine book is `bestiary_1`, and the two
+    /// only meet through `CORPUS_DIR_ALIASES`.
+    #[test]
+    fn every_observable_books_catalog_keys_reach_the_probe() {
+        let keys_by_book = probe_equipment_keys_by_book();
+        for dir in OBSERVABLE_BOOK_DIRS {
+            let engine_book = engine_book_for_corpus_dir(dir).unwrap_or_else(|| {
+                panic!("observable corpus dir {dir:?} resolves to no engine book")
+            });
+            let keys = keys_by_book.get(engine_book).unwrap_or_else(|| {
+                panic!(
+                    "corpus dir {dir:?} -> engine book {engine_book:?} has no catalog keys \
+                     at all; the probe silently skips this whole book"
+                )
+            });
+            assert!(
+                !keys.is_empty(),
+                "{engine_book} contributes an empty key set to the probe"
+            );
+        }
+    }
+
+    /// Control for the test above: proves the universe is genuinely wider
+    /// than the four compiled tables it used to be built from, so that guard
+    /// cannot pass vacuously by both sides shrinking together.
+    #[test]
+    fn the_probe_key_universe_is_wider_than_the_four_compiled_tables() {
+        let universe = probe_equipment_key_universe();
+        let mut four_tables: BTreeSet<&'static str> = BTreeSet::new();
+        four_tables.extend(crb_equipment_tables::equipment_tables().iter().map(|e| e.key));
+        four_tables.extend(apg::equipment_tables::EQUIPMENT_TABLE.iter().map(|e| e.key));
+        four_tables.extend(acg::equipment_tables::equipment_tables().iter().map(|e| e.key));
+        four_tables.extend(beastiary1::equipment_tables::EQUIPMENT_TABLE.iter().map(|e| e.key));
+        // Printed, not pinned: the two sizes are the RED evidence for the
+        // widening (how many catalog keys went unexamined), and pinning
+        // either as a literal would turn every future table addition into an
+        // unrelated red test — the count-pin hazard this repo already tracks.
+        eprintln!(
+            "probe key universe: {} keys; four compiled tables alone: {} keys; \
+             previously unexamined: {}",
+            universe.len(),
+            four_tables.len(),
+            universe.len() - four_tables.len()
+        );
+        assert!(
+            universe.len() > four_tables.len(),
+            "universe {} must exceed the four hand tables' {}",
+            universe.len(),
+            four_tables.len()
+        );
+        assert!(
+            four_tables.iter().all(|k| universe.contains(k)),
+            "the widened universe must still contain every key the four tables held"
+        );
+    }
 
     /// Positive: CRB's real, on-disk Padded Armor (Base) carries real
     /// AC/max-dex/spell-failure/ACP tokens, resolves against the real
@@ -2924,6 +5372,13 @@ mod e14_harness_tests {
     }
 
     // ----- F1: spell probe -- NOT implemented, and this is the finding -----
+    //
+    // CONCLUSION SUPERSEDED 2026-08-13 by `mod spell_probe_tests` (SD-32
+    // `spell-consumer-delta-probe`). The retracted-attempt account below still
+    // stands and is why it is kept; the claim that no wired spell-magnitude
+    // consumer exists no longer holds. `epic-31-spell-wiring` (2026-08-07)
+    // wired `compute_spellbook_coverage` into
+    // `pf1_adapter::resolve_unified_pilot_snapshot`.
     //
     // An earlier version of this cycle probed
     // `pilot_compute_corpus::compute_pilot_with_corpus`'s `school_coverage`
@@ -2989,6 +5444,73 @@ mod equipment_book_slug_tests {
         }
     }
 
+    /// The spell-family twin of `equipment_book_slug_for_covers_every_catalog_book`.
+    /// A sixth book added to `spell_catalog_rows()` without a matching arm in
+    /// `spell_book_slug_for` fails this test immediately (a panic on
+    /// `cargo test`) instead of silently dropping that book's spell units
+    /// from the inventory the way the old three-`.insert()`-call list did.
+    #[test]
+    fn spell_book_slug_for_covers_every_catalog_book() {
+        let codes: std::collections::BTreeSet<&'static str> =
+            spell_resolver::spell_catalog_rows().iter().map(|row| row.book).collect();
+        assert!(!codes.is_empty(), "the registry must carry at least one book's rows");
+        for code in codes {
+            let slug = spell_book_slug_for(code);
+            assert!(!slug.is_empty(), "{code} resolved to an empty slug");
+        }
+    }
+
+    /// The specific defect this fix closes, pinned so it cannot regress.
+    /// Before the consolidation the work inventory's `spell_levels` map held
+    /// three books while the shipped Spell Catalog served five, so every ARG
+    /// and UI spell was reported `not-ingested` despite already being on
+    /// screen. Two real corpus keys, one per newly-joined book, must now be
+    /// reachable through the registry under their own book slug.
+    #[test]
+    fn arg_and_ui_spell_keys_are_reachable_through_the_derived_map() {
+        let rows = spell_resolver::spell_catalog_rows();
+        assert!(
+            rows.iter().any(|r| r.book == "ARG" && r.key == "Aboleth's Lung"),
+            "Aboleth's Lung must be a real ARG row in spell_catalog_rows()"
+        );
+        assert!(
+            rows.iter().any(|r| r.book == "UI" && r.key == "Absolution"),
+            "Absolution must be a real UI row in spell_catalog_rows()"
+        );
+        assert_eq!(spell_book_slug_for("ARG"), "advanced_race_guide");
+        assert_eq!(spell_book_slug_for("UI"), "ultimate_intrigue");
+    }
+
+    /// The consolidation must be a pure widening for the three books that
+    /// were already mapped: every CRB/APG/ACG key the old hand-maintained
+    /// inserts produced, with the same level-known flag, must still be
+    /// present. This is what makes the change safe to land without moving
+    /// any already-`ingested-magnitude` unit.
+    #[test]
+    fn registry_preserves_every_key_the_hand_maintained_map_carried() {
+        let rows = spell_resolver::spell_catalog_rows();
+        let derived = |slug: &str| -> BTreeMap<String, bool> {
+            rows.iter()
+                .filter(|r| spell_book_slug_for(r.book) == slug)
+                .map(|r| (r.key.to_string(), r.level.is_some()))
+                .collect()
+        };
+
+        let crb_expected: BTreeMap<String, bool> =
+            crb_spell_list::SPELL_LIST.iter().map(|e| (e.key.to_string(), true)).collect();
+        assert_eq!(derived("core_rulebook"), crb_expected);
+
+        let apg_expected: BTreeMap<String, bool> = apg::spell_list::SPELL_LIST
+            .iter()
+            .map(|e| (e.key.to_string(), e.level.is_some()))
+            .collect();
+        assert_eq!(derived("advanced_players_guide"), apg_expected);
+
+        let acg_expected: BTreeMap<String, bool> =
+            acg::spell_list::SPELL_LIST.iter().map(|e| (e.key.to_string(), true)).collect();
+        assert_eq!(derived("advanced_class_guide"), acg_expected);
+    }
+
     /// The specific defect this fix closes, pinned so it cannot regress:
     /// UE's real corpus key `Abjurant Salt` (`ue_equip_magic_items.lst:954`,
     /// verified present in `ultimate_equipment::equipment_tables()`) must
@@ -3001,5 +5523,1387 @@ mod equipment_book_slug_tests {
             .any(|row| row.book == "UE" && row.key == "Abjurant Salt");
         assert!(found, "Abjurant Salt must be a real UE row in equipment_catalog_rows()");
         assert_eq!(equipment_book_slug_for("UE"), "ultimate_equipment");
+    }
+}
+
+#[cfg(test)]
+mod race_trait_grounding_tests {
+    use super::*;
+
+    /// The seven races CRB's `race_traits()` table is keyed on, exactly as
+    /// `gather_engine_facts` builds them (`race_name`, lowercase).
+    fn modelled_races() -> BTreeSet<String> {
+        RaceId::ALL.iter().map(|&r| race_name(r).to_string()).collect()
+    }
+
+    /// The regression this card exists to close
+    /// (`docs/release/corpus-work-channels.md` §9.3, SD-28 §56). Each of these
+    /// records was reported `grounded` by the old rule purely because its
+    /// TRAIT NAME slug collided with a CRB trait's — re-derived from
+    /// `docs/work-inventory.json` on 2026-08-11, where all of them carried
+    /// `race_trait_record_grounded_by_race_traits`. None of these races is
+    /// modelled by the engine at all, so none can ground on anything.
+    #[test]
+    fn a_race_the_engine_does_not_model_grounds_no_trait_however_its_name_collides() {
+        let races = modelled_races();
+        for key in [
+            "Blue ~ Keen Senses",        // collided with elf.keen_senses
+            "DuergarDSP ~ Hardy",        // collided with dwarf.hardy
+            "DuergarDSP ~ Stability",    // collided with dwarf.stability
+            "Forgeborn ~ Fearless",      // collided with halfling.fearless
+            "Aquatic Elf ~ Elven Magic", // "Aquatic Elf" is not "Elf"
+            "Svirfneblin ~ Stonecunning",
+        ] {
+            assert_eq!(
+                modelled_race_of_race_trait(key, &races),
+                None,
+                "{key} names no modelled race and must not ground"
+            );
+        }
+    }
+
+    /// The other half of the ruling: the fix must not throw away the records
+    /// that legitimately ground. A CRB race's own trait still resolves to that
+    /// race, and ARG's heritage form carries its base race as an inner
+    /// qualifier rather than the leading one.
+    #[test]
+    fn a_modelled_race_is_found_in_its_own_key_including_the_inner_heritage_qualifier() {
+        let races = modelled_races();
+        assert_eq!(
+            modelled_race_of_race_trait("Dwarf ~ Greed", &races).map(String::as_str),
+            Some("dwarf")
+        );
+        assert_eq!(
+            modelled_race_of_race_trait("Half-Elf ~ Keen Senses", &races).map(String::as_str),
+            Some("half-elf")
+        );
+        // ARG's `Saltbeard ~ Dwarf ~ Greed`: the leading segment is the
+        // heritage, the base race sits in the middle.
+        assert_eq!(
+            modelled_race_of_race_trait("Saltbeard ~ Dwarf ~ Greed", &races).map(String::as_str),
+            Some("dwarf")
+        );
+    }
+
+    /// The trailing segment is the trait name, never the race. Without this
+    /// exclusion a trait whose NAME equals a race name would nominate itself
+    /// and re-open the very coincidence class this fix closes.
+    #[test]
+    fn the_trailing_trait_name_segment_is_never_read_as_the_race() {
+        let races = modelled_races();
+        assert_eq!(modelled_race_of_race_trait("Dwarf", &races), None);
+        assert_eq!(modelled_race_of_race_trait("Orc ~ Human", &races), None);
+    }
+
+    // -----------------------------------------------------------------
+    // The probe repair (SD-29 `decisions.md §43.5`).
+    //
+    // Everything above tests the CRB-table probe's *name-coincidence*
+    // guard, and that guard is correct. What it cannot do is ground a
+    // record belonging to a race CRB's compiled table never mentions --
+    // and the product models 18 races off disk, not 7. The tests below
+    // pin the replacement probe, which asks the race corpus the desktop
+    // app actually loads whether it can APPLY the record to a player.
+    // -----------------------------------------------------------------
+
+    fn probe_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    /// The probe must load exactly the books the app loads. A probe over a
+    /// wider list would ground records no player can reach; a narrower one
+    /// would under-report. Neither list is hand-maintained here -- both are
+    /// read from `race_catalog.rs`, so the pin cannot drift silently.
+    #[test]
+    fn the_probe_loads_exactly_the_books_the_desktop_app_loads() {
+        let books = app_race_corpus_books(&probe_root());
+        assert!(
+            books.contains(&"core_rulebook".to_string())
+                && books.contains(&"beastiary".to_string())
+                && books.contains(&"monster_codex".to_string()),
+            "the app's race corpus book list did not parse: {books:?}"
+        );
+        let src = std::fs::read_to_string(
+            probe_root().join("apps/desktop/src-tauri/src/race_catalog.rs"),
+        )
+        .expect("the desktop race catalog source is readable from the repo root");
+        for book in &books {
+            assert!(
+                src.contains(&format!("\"{book}\"")),
+                "{book} is not named in race_catalog.rs at all"
+            );
+        }
+    }
+
+    /// The point of the repair. `Duergar ~ Ironskinned` belongs to a race
+    /// `crb::race_traits()` has never heard of, so the CRB-table probe
+    /// reports `race_trait_race_not_modelled` for it -- while `reach_gate`
+    /// executes a passing claim against the same record and SD-29's own
+    /// on-screen verification photographed it in the player's picker.
+    #[test]
+    fn a_reachable_trait_of_a_non_crb_race_is_observed_by_the_probe() {
+        let reachable = probe_reachable_race_traits(&probe_root());
+        assert_eq!(
+            reachable.get(&("mc_abilities_race.lst".to_string(), 16)).map(String::as_str),
+            Some("monster_codex"),
+            "Duergar ~ Ironskinned reaches a player (reach_gate + on-screen, SD-29 \
+             progress.md) and must be observed as reachable"
+        );
+        // The half the repair must not break: a record the OLD probe already
+        // grounded stays grounded.
+        assert_eq!(
+            reachable.get(&("arg_abilities_race.lst".to_string(), 53)).map(String::as_str),
+            Some("advanced_race_guide"),
+            "Saltbeard ~ Dwarf ~ Greed is `grounded` in the shipped inventory and must stay so"
+        );
+    }
+
+    /// The probe grounds on *applicability*, not on presence on disk.
+    /// `Oversized Goblin` is ingested, loaded, and still unreachable:
+    /// it carries no readable gate, so `race_resolver::classify` leaves it
+    /// `TraitRole::Unclassified`, the role that never applies. It has a
+    /// standing `OPEN_FINDINGS` entry naming its remedy for exactly that
+    /// reason, and a probe that called it grounded would contradict the
+    /// gate the same repo already ships.
+    #[test]
+    fn a_loaded_record_the_resolver_can_never_apply_is_not_observed_as_reachable() {
+        let reachable = probe_reachable_race_traits(&probe_root());
+        assert!(
+            !reachable.contains_key(&("mc_abilities_race.lst".to_string(), 31)),
+            "Oversized Goblin never applies (TraitRole::Unclassified) and must not ground"
+        );
+    }
+
+    /// Every book the probe observes must resolve to an engine book, or its
+    /// records ground against nothing however reachable they are.
+    ///
+    /// This is the assertion that would have caught the defect it was written
+    /// for: Bestiary 1's 108 race-trait records were loaded, applied, and
+    /// reachable, and every one of them still reported `not-ingested` —
+    /// silently — because `data/corpus/beastiary` does not spell its book the
+    /// way `corpus_dir_for` does. It also pins that `beastiary` is the ONLY
+    /// book needing the alias, so a second divergence fails here rather than
+    /// being absorbed.
+    #[test]
+    fn every_corpus_book_with_race_traits_resolves_to_an_engine_book() {
+        let reachable = probe_reachable_race_traits(&probe_root());
+        let books: BTreeSet<&str> = reachable.values().map(String::as_str).collect();
+        assert!(!books.is_empty(), "the probe observed no books at all");
+        for book in &books {
+            assert!(
+                engine_book_for_corpus_dir(book).is_some(),
+                "corpus book {book} resolves to no engine book, so every one of its reachable \
+                 race traits would report not-ingested"
+            );
+        }
+        let aliased: BTreeSet<&str> =
+            books.iter().copied().filter(|b| engine_book_for(b).is_none()).collect();
+        assert_eq!(
+            aliased,
+            BTreeSet::from(["beastiary"]),
+            "exactly one corpus directory is spelled differently from its PCGen source \
+             directory; a second one is a new divergence, not a thing to absorb"
+        );
+    }
+
+    /// The join is on the record's own source coordinates, never on its
+    /// name. A race trait's display name is not unique corpus-wide -- the
+    /// whole reason the name-coincidence defect above existed -- so the
+    /// probe keys on `(source file basename, source line)`, which is an
+    /// identity the ingest writes verbatim from the `.lst` row.
+    #[test]
+    fn the_probe_keys_on_source_coordinates_so_two_books_sharing_a_trait_name_stay_distinct() {
+        let reachable = probe_reachable_race_traits(&probe_root());
+        let mut books: BTreeSet<&str> = BTreeSet::new();
+        for book in reachable.values() {
+            books.insert(book.as_str());
+        }
+        assert!(
+            books.len() >= 3,
+            "the probe observed reachable records from only {books:?}; the loaded corpus \
+             spans more books than that"
+        );
+        // No two entries share a source coordinate: the map's own key type
+        // guarantees it, so what this asserts is that the probe found a
+        // real population rather than silently collapsing to nothing.
+        assert!(
+            reachable.len() >= 200,
+            "the probe observed only {} reachable race traits; 336 are on disk",
+            reachable.len()
+        );
+    }
+}
+
+#[cfg(test)]
+mod companion_ability_file_classification_tests {
+    use super::*;
+
+    /// A file whose basename carries BOTH `_abilities_race` and a
+    /// companion/familiar marker holds abilities of a *companion creature*,
+    /// not racial traits of a player race. Two such files exist corpus-wide
+    /// (re-derived 2026-08-11 from `docs/work-inventory.json`:
+    /// `isi_abilities_race_companion.lst` 9 units,
+    /// `b4_abilities_race_ce_companion.lst` 2 units) and both were typed
+    /// `race_trait` purely because `_abilities_race` is a substring tested
+    /// before the companion markers. `isi_abilities_race_companion.lst`'s
+    /// rows are Clockwork Spy / Clockwork Familiar construct abilities
+    /// (`CATEGORY:Special Ability TYPE:ClockworkSpyRacialAbility...`).
+    #[test]
+    fn an_abilities_race_file_marked_companion_or_familiar_is_a_companion_file() {
+        assert_eq!(file_kind("isi_abilities_race_companion.lst"), Some(Kind::Companion));
+        assert_eq!(file_kind("b4_abilities_race_ce_companion.lst"), Some(Kind::Companion));
+    }
+
+    /// The narrowing must not swallow the genuine race-trait files, nor
+    /// disturb the companion files that already classified correctly.
+    #[test]
+    fn plain_abilities_race_files_remain_race_traits() {
+        assert_eq!(file_kind("mc_abilities_race.lst"), Some(Kind::RaceTrait));
+        assert_eq!(file_kind("arg_abilities_race.lst"), Some(Kind::RaceTrait));
+        // `_abilities_familiar_race` never matched `_abilities_race` in the
+        // first place; it must still land on Companion.
+        assert_eq!(file_kind("b2_abilities_familiar_race.lst"), Some(Kind::Companion));
+        assert_eq!(file_kind("ce_abilities_familiar_race_cr.lst"), Some(Kind::Companion));
+        assert_eq!(file_kind("isi_abilities_companion.lst"), Some(Kind::Companion));
+    }
+}
+
+/// The `units[].id` uniqueness contract.
+///
+/// These tests exist because the contract `docs/work-inventory.json` prints at
+/// the top of itself was, for `id`, false — and false in the one way that
+/// corrupts measurement rather than merely annoying a reader. Twenty-nine ids
+/// in the corpus-wide run carried two units each; twenty-seven of those pairs
+/// disagreed about `wiring_class`. Any before/after comparison keyed on `id`
+/// silently kept one row on one side and the other row on the other, which is
+/// how a nineteen-unit `computed -> display` transition appeared in a diff of a
+/// change that could not structurally cause one
+/// (`docs/retro/events/wiring-classifier.jsonl`). The contract is now enforced
+/// by [`unit_id`], by a hard exit in the generator, and here.
+#[cfg(test)]
+mod unit_id_uniqueness_tests {
+    use super::*;
+
+    /// Real colliding key pairs, read off the corpus-wide run that exposed
+    /// them. Each entry is `(book, kind, key_a, key_b)`, and every pair shares
+    /// one `slug` — which is the whole defect.
+    const REAL_COLLISIONS: &[(&str, Kind, &str, &str)] = &[
+        (
+            "ultimate_psionics",
+            Kind::ClassFeature,
+            "Path Skill Acrobatics",
+            "Path Skill ~ Acrobatics",
+        ),
+        ("core_rulebook", Kind::EquipmentModifier, "MITHRAL_ITEM", "Mithral (Item)"),
+        (
+            "core_rulebook",
+            Kind::EquipmentModifier,
+            "Intelligent Item Purpose (Slay All)",
+            "Intelligent Item ~ Purpose / Slay All",
+        ),
+        (
+            "advanced_race_guide",
+            Kind::RaceTrait,
+            "Half-Elf ~ Drow Blooded",
+            "Half-Elf ~ Drow-Blooded",
+        ),
+        (
+            "ultimate_combat",
+            Kind::ClassFeature,
+            "Master Of Many Styles ~ Perfect Style",
+            "Master of Many Styles ~ Perfect Style",
+        ),
+        (
+            "advanced_class_guide",
+            Kind::ClassFeature,
+            "Arcanist School Void",
+            "Arcanist School ~ Void",
+        ),
+    ];
+
+    /// The root cause, stated as a test rather than as a comment: `slug` is
+    /// lossy, so it is NOT an identity, and an id built from it alone cannot be
+    /// unique. If this ever starts failing, `slug` has been changed and the
+    /// disambiguation below may no longer be reaching the cases it was built
+    /// for — read `unit_id`'s doc comment before touching either.
+    #[test]
+    fn slug_collapses_genuinely_distinct_corpus_keys() {
+        for (_, _, a, b) in REAL_COLLISIONS {
+            assert_ne!(a, b, "these are two different corpus keys");
+            assert_eq!(
+                slug(a),
+                slug(b),
+                "slug() is expected to collapse {a:?} and {b:?} onto one string"
+            );
+        }
+    }
+
+    /// The contract itself: two distinct corpus keys never share an id.
+    #[test]
+    fn colliding_keys_get_distinct_ids() {
+        for (book, kind, a, b) in REAL_COLLISIONS {
+            let id_a = unit_id(book, *kind, a, true);
+            let id_b = unit_id(book, *kind, b, true);
+            assert_ne!(
+                id_a, id_b,
+                "{a:?} and {b:?} in {book}/{} must not share an id",
+                kind.id()
+            );
+        }
+    }
+
+    /// The tie-break rule's defensibility, and the reason it is a key digest
+    /// rather than an ordinal: a unit's id is a function of that unit's own
+    /// identity and of nothing else. Ingesting a new row that happens to
+    /// collide with an existing one must not renumber the existing one, and
+    /// removing a sibling must not renumber its survivor. An `__1`/`__2`
+    /// ordinal fails exactly this test.
+    #[test]
+    fn a_units_id_does_not_depend_on_which_siblings_it_collides_with() {
+        let key = "Path Skill ~ Acrobatics";
+        let alone = unit_id("ultimate_psionics", Kind::ClassFeature, key, true);
+        // Every other colliding key in the corpus, real or hypothetical, is
+        // irrelevant to this unit's id -- there is no argument to `unit_id`
+        // through which a sibling could reach it.
+        for sibling in ["Path Skill Acrobatics", "Path_Skill_Acrobatics", "path skill acrobatics"] {
+            assert_eq!(slug(sibling), slug(key), "test setup: {sibling:?} must collide");
+            let again = unit_id("ultimate_psionics", Kind::ClassFeature, key, true);
+            assert_eq!(alone, again);
+        }
+    }
+
+    /// Blast radius. A unit whose slug is unique keeps the exact id it carried
+    /// before this fix existed, so no consumer owes a re-pin it did not earn.
+    #[test]
+    fn a_non_colliding_unit_keeps_the_unsuffixed_id() {
+        assert_eq!(
+            unit_id("core_rulebook", Kind::Feat, "Power Attack", false),
+            "core_rulebook:feat:power_attack"
+        );
+        assert_eq!(
+            unit_id("advanced_race_guide", Kind::RaceTrait, "Half-Elf ~ Drow-Blooded", false),
+            "advanced_race_guide:race_trait:half_elf_drow_blooded"
+        );
+    }
+
+    /// `__` is claimed as the delimiter on the grounds that `slug` can never
+    /// produce it — it collapses every run of non-alphanumerics to a single
+    /// `_`. If that ever stops being true, a suffixed id becomes ambiguous with
+    /// an unsuffixed one and this test is the alarm.
+    #[test]
+    fn no_slug_can_contain_the_double_underscore_delimiter() {
+        let adversarial = [
+            "Path Skill ~ Acrobatics",
+            "A__B",
+            "A -- B",
+            "  leading and trailing  ",
+            "!!!",
+            "Intelligent Item ~ Purpose / Slay All",
+            "Weapon (+1) ~ Flaming / Burst",
+        ];
+        for s in adversarial {
+            assert!(
+                !slug(s).contains("__"),
+                "slug({s:?}) = {:?} must not contain the reserved delimiter",
+                slug(s)
+            );
+        }
+        for (_, _, a, b) in REAL_COLLISIONS {
+            assert!(!slug(a).contains("__"));
+            assert!(!slug(b).contains("__"));
+        }
+    }
+
+    /// The digest algorithm is pinned, because every disambiguated id is built
+    /// from it and a silent change to it would rewrite those ids wholesale and
+    /// break the byte-equality contract in the least visible way available.
+    /// These are FNV-1a 64's own published reference vectors; a
+    /// re-implementation that passes them is the specified function.
+    #[test]
+    fn key_digest_is_fnv1a_64_against_its_published_vectors() {
+        assert_eq!(key_digest(""), "cbf29ce484222325");
+        assert_eq!(key_digest("a"), "af63dc4c8601ec8c");
+        assert_eq!(key_digest("foobar"), "85944171f73967e8");
+    }
+
+    /// The digest is a pure function of the key's bytes: same key, same
+    /// sixteen characters, every call. Stated separately from the vectors
+    /// because this is the property `unit_id` actually leans on.
+    #[test]
+    fn key_digest_is_stable_and_full_width() {
+        for (_, _, a, b) in REAL_COLLISIONS {
+            for key in [a, b] {
+                let first = key_digest(key);
+                assert_eq!(first.len(), 16, "digest for {key:?} must be 16 hex chars");
+                assert!(first.chars().all(|c| c.is_ascii_hexdigit() && !c.is_ascii_uppercase()));
+                assert_eq!(first, key_digest(key));
+            }
+        }
+    }
+
+    /// End to end over the real collision set: mint every id the way the
+    /// generator mints it and assert the whole set is unique. This is the
+    /// property the generator's own hard exit enforces at run time.
+    #[test]
+    fn the_real_collision_set_mints_a_fully_unique_id_set() {
+        let mut ids: BTreeSet<String> = BTreeSet::new();
+        for (book, kind, a, b) in REAL_COLLISIONS {
+            for key in [a, b] {
+                assert!(
+                    ids.insert(unit_id(book, *kind, key, true)),
+                    "duplicate id minted for {key:?} in {book}/{}",
+                    kind.id()
+                );
+            }
+        }
+        assert_eq!(ids.len(), REAL_COLLISIONS.len() * 2);
+    }
+}
+
+/// SD-32 `spell-consumer-delta-probe`: the spell probe's own proofs.
+///
+/// This module is the answer to the `e14_harness_tests` module's closing note
+/// ("F1: spell probe -- NOT implemented, and this is the finding"). That note
+/// is superseded, not contradicted: its blocker was that
+/// `spellbook::compute_spellbook_coverage` reached no surface the player
+/// reads. `epic-31-spell-wiring` wired it to one. See the block comment above
+/// [`probe_spell_key`].
+#[cfg(test)]
+mod spell_probe_tests {
+    use super::*;
+    use codex::rules_core::source_content::SourcePackageContent;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    /// A scratch book directory holding hand-written Shape B v1 spell JSON,
+    /// cleaned up on drop. Loaded through the SAME `load_spell_corpus` the
+    /// probe uses in production, so a negative case is exercised against the
+    /// real loading path rather than a hand-assembled package.
+    struct ScratchSpellBook {
+        root: PathBuf,
+    }
+
+    impl ScratchSpellBook {
+        fn new(name: &str, records: &[(&str, Option<&str>)]) -> Self {
+            let root = std::env::temp_dir()
+                .join(format!("codex_spell_probe_{name}_{}", std::process::id()));
+            let _ = std::fs::remove_dir_all(&root);
+            std::fs::create_dir_all(root.join("spell")).unwrap();
+            for (i, (key, school)) in records.iter().enumerate() {
+                let school_json = match school {
+                    Some(s) => format!("\"{s}\""),
+                    None => "null".to_string(),
+                };
+                std::fs::write(
+                    root.join("spell").join(format!("record_{i}.json")),
+                    format!(
+                        "{{\"data\":{{\"key\":{},\"school\":{school_json}}}}}",
+                        q(key)
+                    ),
+                )
+                .unwrap();
+            }
+            ScratchSpellBook { root }
+        }
+
+        fn corpus(&self) -> SourcePackageContent<'static> {
+            let roots = [BookCorpusRoot { book_id: "scratch", dir: &self.root }];
+            load_spell_corpus(&roots)
+        }
+    }
+
+    impl Drop for ScratchSpellBook {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    fn crb_corpus() -> SourcePackageContent<'static> {
+        let dir = repo_root().join("data/corpus/core_rulebook");
+        let roots = [BookCorpusRoot { book_id: "core_rulebook", dir: &dir }];
+        load_spell_corpus(&roots)
+    }
+
+    // ----- The delta's baseline is real -----
+
+    /// The "delta" in consumer-delta. The probe's own posture, with NO spell
+    /// selected, must carry no save DC at all — otherwise every DC it later
+    /// observes would be unattributable to the spell that was added.
+    #[test]
+    fn the_probes_baseline_posture_carries_no_save_dc_at_all() {
+        let corpus = crb_corpus();
+        let baseline =
+            compute_spellbook_coverage(&spell_probe_input(&fixture(), "class:wizard", None), &corpus);
+        assert!(
+            PilotSpellbookViewModel::from_coverage(&baseline).is_none(),
+            "the no-spell baseline must project no spellbook block at all: {:?}",
+            baseline.spell_save_dc
+        );
+    }
+
+    // ----- Positive: a real magnitude on the surface the sheet renders -----
+
+    /// `Shield` is a real CRB Abjuration record, 1st level, on the real Wizard
+    /// spell list, present in `data/corpus/core_rulebook/spell/`. Selecting it
+    /// alone must put `10 + 1 + 4 = 15` on
+    /// `PilotSpellbookViewModel.spell_save_dc` — the field
+    /// `pf1_adapter::resolve_unified_pilot_snapshot` puts on the snapshot and
+    /// `CharacterSheet.tsx` renders.
+    #[test]
+    fn the_probe_observes_a_real_spells_save_dc_on_the_surface_the_sheet_renders() {
+        let corpus = crb_corpus();
+        let outcome = probe_spell_key(&fixture(), "Shield", &corpus, RuleSetId::Crb);
+        assert_eq!(
+            outcome,
+            SpellProbeOutcome::Wired { class_id: "class:wizard", level: 1, dc: 15 },
+            "Shield must produce a wizard save DC of 10 + level 1 + modifier 4"
+        );
+    }
+
+    // ----- Validation against answers recorded independently in this repo ---
+
+    /// The exercise this program's own recorded lesson demands: reproduce
+    /// answers already recorded elsewhere before trusting the instrument on
+    /// anything new.
+    ///
+    /// `pilot_compute.rs` computes the same PF1 DC formula in a completely
+    /// separate implementation and emits it as
+    /// `class_chassis.wizard.spell_save_dc.spell_level_<N>`. That ladder is
+    /// this probe's oracle. The two are compared on the part that is actually
+    /// in dispute — how much the SPELL'S OWN LEVEL moves the number — by
+    /// subtracting each side's own casting-ability modifier, so the comparison
+    /// does not silently depend on the two paths deriving the same modifier
+    /// (the chassis applies racial bonuses; the probe pins a raw score).
+    ///
+    /// A probe that reported a constant, or that read some other spell's
+    /// level, fails this at the first rung.
+    #[test]
+    fn probe_dcs_reproduce_the_independently_computed_chassis_dc_ladder() {
+        let fixture = fixture();
+        let corpus = crb_corpus();
+
+        // The chassis's own ladder, harvested from a real computation.
+        let computation = compute_pilot_base_chassis(&class_sweep_input(&fixture, "wizard", 20));
+        let mut chassis: BTreeMap<u8, i16> = BTreeMap::new();
+        for e in &computation.explanations {
+            if let Some(rest) = e.id.strip_prefix("class_chassis.wizard.spell_save_dc.spell_level_")
+                && let Ok(level) = rest.parse::<u8>()
+            {
+                chassis.insert(level, e.value);
+            }
+        }
+        assert!(
+            chassis.len() >= 5,
+            "the wizard chassis must publish a DC ladder to compare against: {chassis:?}"
+        );
+        // The chassis's own modifier, read off its own 1st-level rung rather
+        // than assumed: dc = 10 + 1 + modifier.
+        let chassis_modifier = chassis[&1] - 11;
+
+        // One real, unambiguous Wizard spell per level 1-5, each in
+        // `crb::spell_list::SPELL_LIST` at that level.
+        let anchors: &[(&str, u8)] = &[
+            ("Alarm", 1),
+            ("Acid Arrow", 2),
+            ("Arcane Sight", 3),
+            ("Arcane Eye", 4),
+            ("Cone of Cold", 5),
+        ];
+        for &(key, level) in anchors {
+            let outcome = probe_spell_key(&fixture, key, &corpus, RuleSetId::Crb);
+            let SpellProbeOutcome::Wired { dc, level: observed_level, .. } = outcome else {
+                panic!("{key} must be wired, got {outcome:?}");
+            };
+            assert_eq!(observed_level, level, "{key}'s level came from the wrong record");
+            assert_eq!(
+                i16::from(dc) - SPELL_PROBE_ABILITY_MODIFIER,
+                chassis[&level] - chassis_modifier,
+                "{key} (level {level}): the probe's level-dependent DC term must equal the \
+                 independently computed chassis ladder's"
+            );
+        }
+    }
+
+    /// A magnitude, not a flag: two spells that differ ONLY in level must
+    /// produce DCs that differ by exactly that difference. A probe reporting
+    /// "some number appeared" passes the positive test above and fails this.
+    #[test]
+    fn the_observed_dc_moves_with_the_spells_own_level() {
+        let fixture = fixture();
+        let corpus = crb_corpus();
+        let SpellProbeOutcome::Wired { dc: low, level: low_level, .. } =
+            probe_spell_key(&fixture, "Alarm", &corpus, RuleSetId::Crb)
+        else {
+            panic!("Alarm must be wired");
+        };
+        let SpellProbeOutcome::Wired { dc: high, level: high_level, .. } =
+            probe_spell_key(&fixture, "Cone of Cold", &corpus, RuleSetId::Crb)
+        else {
+            panic!("Cone of Cold must be wired");
+        };
+        assert_eq!(
+            i16::from(high) - i16::from(low),
+            i16::from(high_level) - i16::from(low_level),
+            "the DC gap must be exactly the level gap"
+        );
+        assert!(high > low, "a 5th-level spell must not produce the same DC as a 1st-level one");
+    }
+
+    // ----- Negatives: what must stay ungrounded -----
+
+    /// `Burning Hands (Acid)` is a real, ingested CRB record with a real
+    /// school and level — but no class's own spell list holds it (it is an
+    /// elemental-variant row). No player can put it in a spellbook, so any DC
+    /// computed for it would be a magnitude nobody can see. It must not be
+    /// promoted, and the reason must be the intended one.
+    #[test]
+    fn the_probe_never_promotes_a_record_no_casting_class_has() {
+        assert_eq!(
+            probe_spell_key(&fixture(), "Burning Hands (Acid)", &crb_corpus(), RuleSetId::Crb),
+            SpellProbeOutcome::NoCastingClassHasIt
+        );
+        // Control: the base record IS promoted, which proves the refusal above
+        // is about the variant row and not about the harness failing to find
+        // anything at all.
+        assert!(matches!(
+            probe_spell_key(&fixture(), "Burning Hands", &crb_corpus(), RuleSetId::Crb),
+            SpellProbeOutcome::Wired { .. }
+        ));
+    }
+
+    /// A key on a real class list whose book corpus holds no such record must
+    /// stay ungrounded — the "never ingested here" path, distinct from
+    /// "ingested but inert".
+    #[test]
+    fn the_probe_never_promotes_a_spell_absent_from_the_books_own_corpus() {
+        let book = ScratchSpellBook::new("absent", &[("Some Other Spell", Some("Evocation"))]);
+        assert_eq!(
+            probe_spell_key(&fixture(), "Fireball", &book.corpus(), RuleSetId::Crb),
+            SpellProbeOutcome::AbsentFromBookCorpus
+        );
+    }
+
+    /// A record that resolves against the corpus but that the engine's own
+    /// per-school table store does not hold produces no `SpellEffect`, so no
+    /// level and no DC. It must stay ungrounded. This is the population every
+    /// non-CRB book's spells fall into: the spellbook engine's nine per-school
+    /// resolvers read `crb::spell_list::SPELL_LIST` and nothing else.
+    #[test]
+    fn the_probe_never_promotes_a_record_the_table_store_does_not_hold() {
+        // A real APG spell on the real Wizard list, resolved against a corpus
+        // that holds it — but absent from the CRB table store.
+        let book =
+            ScratchSpellBook::new("notable", &[("Aggressive Thundercloud", Some("Evocation"))]);
+        assert!(
+            crb_wizard_spell_list::wizard_spell_level("Aggressive Thundercloud").is_some(),
+            "this anchor must really be on the Wizard list, else the test proves nothing"
+        );
+        assert!(
+            !crb_spell_list::SPELL_LIST.iter().any(|e| e.key == "Aggressive Thundercloud"),
+            "this anchor must really be absent from the CRB table store"
+        );
+        assert_eq!(
+            probe_spell_key(&fixture(), "Aggressive Thundercloud", &book.corpus(), RuleSetId::Crb),
+            SpellProbeOutcome::NoTableEffect
+        );
+    }
+
+    /// A record whose `SCHOOL:` the engine does not recognize dispatches to no
+    /// school function at all and must stay ungrounded.
+    #[test]
+    fn the_probe_never_promotes_a_record_with_an_unrecognized_school() {
+        let book = ScratchSpellBook::new("badschool", &[("Fireball", Some("Thaumaturgy"))]);
+        assert_eq!(
+            probe_spell_key(&fixture(), "Fireball", &book.corpus(), RuleSetId::Crb),
+            SpellProbeOutcome::SchoolNotRecognized
+        );
+    }
+
+    /// The `Celestial Shield` discipline, spell side: a book whose own record
+    /// happens to share a name with a CRB spell must NOT ground on CRB's
+    /// numbers. The magnitude's provenance has to be the claiming unit's own
+    /// book.
+    ///
+    /// The probe's whole non-CRB population sits behind this gate today, and
+    /// that is the honest result rather than a hedge: every per-school
+    /// resolver stamps `RuleSetId::Crb` because every one of them reads CRB's
+    /// table.
+    #[test]
+    fn the_probe_never_grounds_one_books_unit_on_another_books_table() {
+        // A corpus record named exactly like CRB's `Shield`, but presented as
+        // the Advanced Player's Guide's own record.
+        let book = ScratchSpellBook::new("foreign", &[("Shield", Some("Abjuration"))]);
+        let corpus = book.corpus();
+        assert_eq!(
+            probe_spell_key(&fixture(), "Shield", &corpus, RuleSetId::Apg),
+            SpellProbeOutcome::ForeignBookTable,
+            "an APG unit must not claim a magnitude CRB's table supplied"
+        );
+        // Control: the identical record, claimed by the book whose table
+        // really answered, IS wired — so the refusal above is the provenance
+        // gate and not a broken harness.
+        assert!(matches!(
+            probe_spell_key(&fixture(), "Shield", &corpus, RuleSetId::Crb),
+            SpellProbeOutcome::Wired { .. }
+        ));
+    }
+
+    // ----- Coverage of the question, not of the answer -----
+
+    /// The probe must ask its question of every spell key the engine catalog
+    /// holds for an observable book, for the same reason the equipment probe
+    /// must (`the_probe_examines_every_key_the_engine_catalog_holds`): a key
+    /// the probe never examines is a unit that can only ever report its
+    /// pre-probe status, not because nothing was computed but because nobody
+    /// asked. Pins coverage; says nothing about the answer.
+    #[test]
+    fn the_probe_examines_every_catalog_spell_key_of_every_observable_book() {
+        let outcomes = probe_spell_effect_wiring(&fixture(), &repo_root());
+        let keys_by_book = probe_spell_keys_by_book();
+        let mut expected = 0usize;
+        for dir_name in OBSERVABLE_BOOK_DIRS {
+            let Some(engine_book) = engine_book_for_corpus_dir(dir_name) else { continue };
+            if rule_set_for_engine_book(engine_book).is_none() {
+                continue;
+            }
+            let Some(keys) = keys_by_book.get(engine_book) else { continue };
+            for key in keys {
+                assert!(
+                    outcomes.contains_key(&(engine_book.to_string(), (*key).to_string())),
+                    "{engine_book}/{key} was never asked the wiring question"
+                );
+                expected += 1;
+            }
+        }
+        assert_eq!(outcomes.len(), expected, "the probe asked about keys outside the catalog");
+        assert!(expected > 0, "the probe must examine at least one book's keys");
+    }
+
+    /// The anti-gaming guard the retracted SD-28-E14-F1 attempt failed: that
+    /// version promoted 1,067 of 1,067 targets. A probe that says yes to
+    /// everything it examines is measuring nothing. This pins that the probe
+    /// discriminates over the real catalog — it does NOT pin a target count,
+    /// which would be a bar this cycle could later be tempted to move.
+    #[test]
+    fn the_probe_refuses_a_real_share_of_the_catalog_it_examines() {
+        let outcomes = probe_spell_effect_wiring(&fixture(), &repo_root());
+        let wired =
+            outcomes.values().filter(|o| matches!(o, SpellProbeOutcome::Wired { .. })).count();
+        assert!(wired > 0, "the probe must reach something, else it is not an instrument");
+        assert!(
+            wired < outcomes.len(),
+            "a probe that promotes every key it examines ({wired} of {}) is not observing a \
+             delta — that is exactly the retracted 1,067-of-1,067 failure",
+            outcomes.len()
+        );
+    }
+}
+
+/// SD-32 `ground-spell-units`: the proofs for wiring the spell probe's verdict
+/// into `classify()`.
+///
+/// The probe-building cycle deliberately stopped short of this — it built and
+/// proved the instrument and left `classify()`'s `Kind::Spell` arm
+/// byte-identical, so no unit moved. This module is the second half: it pins
+/// that a spell reaches `grounded` ONLY on the probe's own book-scoped
+/// observation, and that every path that was not observed lands exactly where
+/// it landed before.
+///
+/// Every assertion here is phrased as "this unit legitimately reaches its
+/// bar", never "the count rises" (`decisions.md §1`).
+#[cfg(test)]
+mod spell_grounding_tests {
+    use super::*;
+
+    fn spell_unit(book: &str, key: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            kind: Kind::Spell,
+            key: key.to_string(),
+            name: key.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "spells.lst".to_string(), line: 1 },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    /// Facts holding exactly one book's spell catalog entry, with a resolved
+    /// level, so the unit under test is `ingested-magnitude` before any
+    /// grounding question is asked.
+    fn facts_with_catalog_level(book: &'static str, key: &str) -> EngineFacts {
+        let mut facts = EngineFacts::default();
+        facts.spell_levels.entry(book).or_default().insert(key.to_string(), true);
+        facts
+    }
+
+    // ----- The promotion, and its exact evidence -----
+
+    /// A spell the probe observed producing a real save DC on the surface the
+    /// character sheet renders reaches `grounded`, carrying the probe's own
+    /// evidence token — the spell-side sibling of
+    /// `equipment_effect_probe_observed_computed_delta`.
+    #[test]
+    fn a_spell_the_probe_observed_reaches_grounded_on_the_probes_own_evidence() {
+        let mut facts = facts_with_catalog_level("core_rulebook", "Shield");
+        facts.spell_effect_wired.insert(("core_rulebook".to_string(), "Shield".to_string()));
+        let verdict = classify(&spell_unit("core_rulebook", "Shield"), &facts, &BTreeSet::new(), false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(verdict.evidence, "spell_effect_probe_observed_computed_delta");
+    }
+
+    // ----- The refusals. These are the load-bearing half. -----
+
+    /// A spell whose level the catalog resolves but which the probe did NOT
+    /// observe stays exactly where it was. This is the guard against the
+    /// retracted SD-28-E14-F1 shape, where "the engine knows this spell"
+    /// silently became "a player sees its magnitude".
+    #[test]
+    fn a_catalog_spell_the_probe_did_not_observe_stays_ingested_magnitude() {
+        let facts = facts_with_catalog_level("core_rulebook", "Alarm");
+        let verdict = classify(&spell_unit("core_rulebook", "Alarm"), &facts, &BTreeSet::new(), false);
+        assert_eq!(verdict.status, "ingested-magnitude");
+        assert_eq!(verdict.evidence, "spell_list_entry_with_resolved_level");
+    }
+
+    /// The `Celestial Shield` discipline, spell side: the observation is
+    /// `(engine_book, key)`, so a book whose OWN record was never probed
+    /// cannot claim another book's magnitude just by sharing the name.
+    ///
+    /// Not hypothetical. `Shield` is a real CRB record, and the probe's own
+    /// `the_probe_never_grounds_one_books_unit_on_another_books_table` proves
+    /// an APG record of the same name is refused at the probe. This pins that
+    /// `classify()` does not undo that refusal.
+    #[test]
+    fn one_books_observation_never_grounds_another_books_spell_of_the_same_name() {
+        let mut facts = facts_with_catalog_level("advanced_players_guide", "Shield");
+        facts.spell_effect_wired.insert(("core_rulebook".to_string(), "Shield".to_string()));
+        let verdict =
+            classify(&spell_unit("advanced_players_guide", "Shield"), &facts, &BTreeSet::new(), false);
+        assert_eq!(verdict.status, "ingested-magnitude");
+    }
+
+    /// A spell with no resolved corpus level is `text-complete`, and an
+    /// observation must not overrule that: the probe's verdict is consulted
+    /// only on the branch that already had a magnitude to explain.
+    #[test]
+    fn an_observation_does_not_promote_a_spell_with_no_resolved_level() {
+        let mut facts = EngineFacts::default();
+        facts
+            .spell_levels
+            .entry("core_rulebook")
+            .or_default()
+            .insert("Prestidigitation".to_string(), false);
+        facts
+            .spell_effect_wired
+            .insert(("core_rulebook".to_string(), "Prestidigitation".to_string()));
+        let verdict =
+            classify(&spell_unit("core_rulebook", "Prestidigitation"), &facts, &BTreeSet::new(), false);
+        assert_eq!(verdict.status, "text-complete");
+    }
+
+    /// A spell absent from the catalog stays `not-ingested` even if some
+    /// stale observation names it: the catalog gate runs first, and an
+    /// observation can never manufacture ingestion.
+    #[test]
+    fn an_observation_never_manufactures_ingestion_for_an_uncatalogued_spell() {
+        let mut facts = EngineFacts::default();
+        facts
+            .spell_effect_wired
+            .insert(("core_rulebook".to_string(), "Invented Spell".to_string()));
+        let verdict =
+            classify(&spell_unit("core_rulebook", "Invented Spell"), &facts, &BTreeSet::new(), false);
+        assert_eq!(verdict.status, "not-ingested");
+    }
+
+    // ----- The fact set is exactly the probe's `Wired` verdicts -----
+
+    /// Only `SpellProbeOutcome::Wired` enters the fact set. Every refusal
+    /// reason the probe can return is fed in here, so a refusal cannot be
+    /// silently treated as a promotion.
+    #[test]
+    fn only_wired_outcomes_enter_the_fact_set() {
+        let refusals = [
+            SpellProbeOutcome::NoCastingClassHasIt,
+            SpellProbeOutcome::AbsentFromBookCorpus,
+            SpellProbeOutcome::SchoolNotRecognized,
+            SpellProbeOutcome::NoTableEffect,
+            SpellProbeOutcome::ForeignBookTable,
+            SpellProbeOutcome::NoSaveDcOnViewModel,
+            SpellProbeOutcome::DcDisagreesWithOracle { observed: 99, oracle: 15 },
+            SpellProbeOutcome::BaselineAlreadyCarriesADc,
+        ];
+        let mut outcomes: BTreeMap<(String, String), SpellProbeOutcome> = BTreeMap::new();
+        for (i, refusal) in refusals.into_iter().enumerate() {
+            outcomes.insert(("core_rulebook".to_string(), format!("Refused {i}")), refusal);
+        }
+        outcomes.insert(
+            ("core_rulebook".to_string(), "Shield".to_string()),
+            SpellProbeOutcome::Wired { class_id: "class:wizard", level: 1, dc: 15 },
+        );
+        let wired = spell_effect_wired_from_outcomes(&outcomes);
+        assert_eq!(wired, BTreeSet::from([("core_rulebook".to_string(), "Shield".to_string())]));
+    }
+}
+
+/// SD-30 `probe-race-and-class`: the class consumer-delta probe's own proofs.
+///
+/// Built to the same standard as [`spell_probe_tests`], and for the same
+/// reason: an instrument that has not been shown to refuse is not an
+/// instrument. Every negative below is a way this probe can say "no" to a
+/// class the membership test it replaces would have said "yes" to.
+#[cfg(test)]
+mod class_probe_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    /// Exactly the classes the engine models, built the way `engine_facts`
+    /// builds `class_books`' key set.
+    fn modelled_classes() -> BTreeSet<String> {
+        let mut modelled = BTreeSet::new();
+        for id in ClassId::ALL {
+            modelled.insert(crb_class_name(*id).to_string());
+        }
+        for id in ApgClassId::ALL {
+            modelled.insert(id.name().to_string());
+        }
+        for id in AcgClassId::ALL {
+            modelled.insert(id.name().to_string());
+        }
+        modelled
+    }
+
+    fn snapshot_for(class_name: &str, level: u8) -> Option<PilotSnapshot> {
+        let receipt =
+            build_pilot_headless_receipt(&class_probe_input(&fixture(), class_name, level));
+        PilotViewModel::from_receipt(&receipt).snapshot
+    }
+
+    // ----- Validation against answers stated independently of this engine ---
+
+    /// The exercise this program's recorded lesson demands: reproduce an
+    /// answer that is true independently of the code under test before
+    /// trusting the instrument on anything new.
+    ///
+    /// PF1's base-attack-bonus progressions are a published rule, not
+    /// something this repo decides: a full-BAB class has BAB equal to its
+    /// level, a 3/4 class has `floor(3 * level / 4)`, a 1/2 class has
+    /// `floor(level / 2)`. At level 20 that is Fighter +20, Cleric +15,
+    /// Wizard +10. If the probe's own posture did not reproduce those three
+    /// numbers, every "delta" it later reported would be measuring something
+    /// other than the class.
+    #[test]
+    fn the_probes_posture_reproduces_pf1s_published_bab_progressions() {
+        for (class_name, expected_bab) in [("fighter", 20i16), ("cleric", 15), ("wizard", 10)] {
+            let snapshot = snapshot_for(class_name, 20)
+                .unwrap_or_else(|| panic!("{class_name} at level 20 must project a snapshot"));
+            assert_eq!(
+                snapshot.base_attack_bonus, expected_bab,
+                "{class_name} level 20 must carry PF1's published BAB of +{expected_bab}"
+            );
+        }
+    }
+
+    // ----- The delta's baseline is real -----
+
+    /// The "delta" in consumer-delta. A character with no class levels at all
+    /// must not already carry the numbers a class is about to be credited
+    /// with — otherwise every delta observed later would be unattributable.
+    #[test]
+    fn the_classless_baseline_differs_from_every_modelled_class() {
+        let fixture = fixture();
+        let baseline = class_probe_baseline_numbers(&fixture);
+        for class_name in modelled_classes() {
+            let Some(snapshot) = snapshot_for(&class_name, 20) else { continue };
+            assert_ne!(
+                baseline.as_ref(),
+                Some(&class_snapshot_numbers(&snapshot)),
+                "{class_name} at level 20 must move the rendered numbers off the classless baseline"
+            );
+        }
+    }
+
+    // ----- Positive: a real class puts an attributable magnitude on screen --
+
+    /// Fighter is modelled, reaches `Computed`, and carries explanation
+    /// records no other modelled class produces.
+    #[test]
+    fn the_probe_observes_a_real_classs_magnitude_on_the_rendered_snapshot() {
+        let fixture = fixture();
+        let modelled = modelled_classes();
+        let baseline = class_probe_baseline_numbers(&fixture);
+        let outcome = probe_class_name(&fixture, "fighter", &modelled, baseline.as_ref());
+        assert!(
+            matches!(outcome, ClassProbeOutcome::Wired { .. }),
+            "fighter must be observed wired, got {outcome:?}"
+        );
+    }
+
+    // ----- Negative 1: a class the engine does not model -------------------
+
+    /// The probe can never manufacture ingestion. A name no class enum
+    /// carries is refused outright, whatever the corpus says about it.
+    #[test]
+    fn the_probe_never_promotes_a_class_the_engine_does_not_model() {
+        let fixture = fixture();
+        let modelled = modelled_classes();
+        for absent in ["adept", "commoner", "aristocrat", "psion", "unchained_barbarian"] {
+            assert_eq!(
+                probe_class_name(&fixture, absent, &modelled, None),
+                ClassProbeOutcome::NotModelledByEngine,
+                "{absent} is modelled by no class enum and must be refused"
+            );
+        }
+    }
+
+    /// And the wired set is therefore always a subset of the modelled set.
+    #[test]
+    fn the_wired_set_never_exceeds_the_modelled_set() {
+        let modelled = modelled_classes();
+        let outcomes = probe_class_effect_wiring(&fixture(), &modelled);
+        let wired = class_effect_wired_from_outcomes(&outcomes);
+        assert!(
+            wired.is_subset(&modelled),
+            "the probe promoted a class the engine does not model: {:?}",
+            wired.difference(&modelled).collect::<Vec<_>>()
+        );
+    }
+
+    // ----- Negative 2: attribution by dot-segment, never by substring ------
+
+    /// The corpus-identifier scope collision, in its class form. A substring
+    /// test would credit Barbarian with Unchained Barbarian's magnitude and
+    /// Rogue with Unchained Rogue's.
+    #[test]
+    fn a_longer_classs_explanation_never_counts_as_a_shorter_ones() {
+        for (id, class_name) in [
+            ("class_chassis.unchained_barbarian.replaces", "barbarian"),
+            ("class_feature.pu.unchained_rogue.corpus_record.x", "rogue"),
+            ("class_spell.acg.bloodrager.spells_known.spell_level_1", "rager"),
+        ] {
+            assert!(
+                !explanation_names_class(id, class_name),
+                "{id:?} must not be credited to {class_name:?}"
+            );
+        }
+        // ...while the class that really owns the record still matches.
+        assert!(explanation_names_class(
+            "class_chassis.unchained_barbarian.replaces",
+            "unchained_barbarian"
+        ));
+        assert!(explanation_names_class(
+            "class_spell.acg.bloodrager.spells_known.spell_level_1",
+            "bloodrager"
+        ));
+    }
+
+    // ----- Negative 3: only an observed delta enters the fact set ----------
+
+    /// Every refusal variant is refused, by hand and exhaustively. A future
+    /// variant must be classified deliberately, not defaulted in.
+    #[test]
+    fn only_wired_outcomes_enter_the_class_fact_set() {
+        let outcomes = BTreeMap::from([
+            (
+                "fighter".to_string(),
+                ClassProbeOutcome::Wired { level: 1, attributed_explanations: 3 },
+            ),
+            ("adept".to_string(), ClassProbeOutcome::NotModelledByEngine),
+            ("a".to_string(), ClassProbeOutcome::PipelinePanicked),
+            ("b".to_string(), ClassProbeOutcome::NeverReachesComputed),
+            ("c".to_string(), ClassProbeOutcome::NoSnapshotProjected),
+            ("d".to_string(), ClassProbeOutcome::NoSnapshotDeltaVsClasslessBaseline),
+            ("e".to_string(), ClassProbeOutcome::NoExplanationAttributedToThisClass),
+        ]);
+        assert_eq!(
+            class_effect_wired_from_outcomes(&outcomes),
+            BTreeSet::from(["fighter".to_string()]),
+            "exactly the Wired verdict may ground a class unit"
+        );
+    }
+
+    // ----- The classifier consults the probe, not enum membership ----------
+
+    fn class_unit(book: &str, name: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            kind: Kind::Class,
+            key: name.to_string(),
+            name: name.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "cr_classes.lst".to_string(), line: 1 },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    /// A class the probe observed reaches `grounded` on the probe's own
+    /// evidence token.
+    #[test]
+    fn a_class_the_probe_observed_reaches_grounded_on_the_probes_own_evidence() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("fighter".to_string(), "core_rulebook");
+        facts.class_effect_wired.insert("fighter".to_string());
+        let verdict =
+            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "class_probe_observed_computed_delta_on_the_rendered_snapshot"
+        );
+    }
+
+    /// **The anti-gaming proof.** Enum membership alone no longer grounds a
+    /// class. A class the engine models but the probe did NOT observe stays
+    /// un-grounded, carrying an evidence token that says exactly that — this
+    /// is the case the replaced membership test would have called `grounded`.
+    #[test]
+    fn a_modelled_class_the_probe_did_not_observe_is_not_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("fighter".to_string(), "core_rulebook");
+        // deliberately NOT inserted into `class_effect_wired`
+        let verdict =
+            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false);
+        assert_ne!(verdict.status, "grounded", "membership alone must not ground a class");
+        assert_eq!(
+            verdict.evidence,
+            "class_modelled_but_no_observed_delta_on_the_rendered_snapshot"
+        );
+    }
+
+    /// An observation never manufactures ingestion for a class no enum names.
+    #[test]
+    fn an_observation_never_grounds_a_class_absent_from_every_class_enum() {
+        let mut facts = EngineFacts::default();
+        facts.class_effect_wired.insert("adept".to_string());
+        let verdict = classify(&class_unit("core_rulebook", "Adept"), &facts, &BTreeSet::new(), false);
+        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.evidence, "class_absent_from_ClassId_ALL_and_book_class_id_enums");
+    }
+}
+
+#[cfg(test)]
+mod class_feature_consumer_delta_tests {
+    use super::*;
+
+    /// Every pool in [`CLASS_FEATURE_POOLS`] must name a `choice_set_id` the
+    /// engine actually recognises. A pool naming a slot no engine code reads
+    /// would make the probe report `no_consumer_delta` for a reason that is
+    /// the probe's own fault rather than the engine's -- exactly the kind of
+    /// confident-wrong number this binary exists to avoid.
+    #[test]
+    fn every_pool_names_a_choice_set_the_engine_source_declares() {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let mut declared = BTreeSet::new();
+        let mut stack = vec![repo_root.join("src/rules_core")];
+        while let Some(dir) = stack.pop() {
+            for entry in std::fs::read_dir(&dir).expect("rules_core is readable").flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    stack.push(path);
+                } else if path.extension().is_some_and(|e| e == "rs") {
+                    let text = std::fs::read_to_string(&path).expect("source file is readable");
+                    let mut rest = text.as_str();
+                    while let Some(at) = rest.find("\"choice:") {
+                        rest = &rest[at + 1..];
+                        if let Some(end) = rest.find('"') {
+                            declared.insert(rest[..end].to_string());
+                        }
+                    }
+                }
+            }
+        }
+        assert!(
+            !declared.is_empty(),
+            "found no `choice:` set ids in src/rules_core -- the scan itself is broken"
+        );
+        for (group, owner, choice_set_id, _) in CLASS_FEATURE_POOLS {
+            assert!(
+                declared.contains(*choice_set_id),
+                "pool `{group}` names `{choice_set_id}`, which no file under src/rules_core declares"
+            );
+            assert!(!owner.is_empty(), "pool `{group}` names no owner class");
+        }
+    }
+
+    /// The companion guarantee to the one above, and the reason it exists: a
+    /// namespaced consumer matches `domain:good`, never bare `good`. A pool
+    /// declaring a namespace the engine never writes would have its probe
+    /// selections silently ignored, and the probe would then report
+    /// `no_consumer_delta` as though the ENGINE held nothing -- an
+    /// under-report indistinguishable from a real ceiling. Every non-empty
+    /// namespace must appear in engine source as a written selection id.
+    #[test]
+    fn every_namespaced_pool_uses_a_namespace_the_engine_source_writes() {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let mut source = String::new();
+        let mut stack = vec![repo_root.join("src/rules_core")];
+        while let Some(dir) = stack.pop() {
+            for entry in std::fs::read_dir(&dir).expect("rules_core is readable").flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    stack.push(path);
+                } else if path.extension().is_some_and(|e| e == "rs") {
+                    source.push_str(&std::fs::read_to_string(&path).expect("readable"));
+                }
+            }
+        }
+        for (group, _, _, namespace) in CLASS_FEATURE_POOLS {
+            if namespace.is_empty() {
+                continue;
+            }
+            assert!(
+                source.contains(&format!("\"{namespace}")),
+                "pool `{group}` declares selection namespace `{namespace}`, which no file under \
+                 src/rules_core ever writes -- the probe's selections would be silently ignored"
+            );
+        }
+    }
+
+    /// The probe must empty the slot it is testing before measuring the
+    /// baseline, because `canonical_seeds_for` pre-fills several of these
+    /// pools. This pins the seeds that overlap the pool table, so a future
+    /// seed added to a probed slot cannot silently reintroduce the defect.
+    #[test]
+    fn canonical_seeds_really_do_occupy_probed_slots() {
+        let probed: BTreeSet<&str> =
+            CLASS_FEATURE_POOLS.iter().map(|(_, _, choice_set_id, _)| *choice_set_id).collect();
+        let mut overlapping = BTreeSet::new();
+        for (class_name, _) in modelled_class_books() {
+            for choice in canonical_seeds_for(&class_name).0 {
+                if probed.contains(choice.choice_set_id.as_str()) {
+                    overlapping.insert(choice.choice_set_id);
+                }
+            }
+        }
+        assert!(
+            !overlapping.is_empty(),
+            "no canonical seed occupies a probed slot -- if this ever becomes true the retain() \
+             in probe_class_feature_key is dead code and should be reconsidered, not deleted \
+             silently"
+        );
+    }
+
+    /// The discriminator that makes this a consumer-delta probe rather than a
+    /// "the selection was accepted" probe. A slot that merely COUNTS picks
+    /// produces the identical delta for any selection id, and must be refused.
+    #[test]
+    fn a_slot_that_only_counts_picks_is_refused_not_promoted() {
+        let baseline: Vec<(String, i16)> = Vec::new();
+        let observed = vec![("bab".to_string(), 3i16)];
+        let control = vec![("bab".to_string(), 3i16)];
+        assert_eq!(
+            classify_class_feature_delta(&baseline, &observed, &control),
+            ClassFeatureProbeOutcome::DeltaNotAttributableToTheRecord {
+                shared: vec!["bab".to_string()]
+            }
+        );
+    }
+
+    /// The promoting case: the record's own selection moves a fact, and a
+    /// different selection in the same slot does not move it the same way.
+    #[test]
+    fn a_per_record_delta_is_promoted() {
+        let baseline: Vec<(String, i16)> = Vec::new();
+        let observed = vec![("rage.superstition".to_string(), 2i16)];
+        let control: Vec<(String, i16)> = Vec::new();
+        assert!(matches!(
+            classify_class_feature_delta(&baseline, &observed, &control),
+            ClassFeatureProbeOutcome::Wired { .. }
+        ));
+    }
+
+    /// Selecting the record changed nothing a consumer renders.
+    #[test]
+    fn no_movement_at_all_is_no_consumer_delta() {
+        let baseline = vec![("bab".to_string(), 1i16)];
+        let observed = vec![("bab".to_string(), 1i16)];
+        let control = vec![("bab".to_string(), 1i16)];
+        assert!(matches!(
+            classify_class_feature_delta(&baseline, &observed, &control),
+            ClassFeatureProbeOutcome::NoConsumerDelta
+        ));
+    }
+
+    fn rage_power_siblings() -> BTreeMap<String, BTreeSet<String>> {
+        BTreeMap::from([(
+            "Rage Power".to_string(),
+            BTreeSet::from(["Superstition".to_string(), "Animal Fury".to_string()]),
+        )])
+    }
+
+    /// A group whose prefix names no engine slot is refused before any
+    /// computation happens -- no player selection can reach the record.
+    #[test]
+    fn an_unpooled_group_is_refused() {
+        let fixture = load_probe_fixture(&PathBuf::from(env!("CARGO_MANIFEST_DIR")));
+        let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
+        class_books.insert("barbarian".to_string(), "core_rulebook");
+        assert_eq!(
+            probe_class_feature_key(
+                &fixture,
+                &class_books,
+                &rage_power_siblings(),
+                "Refined Education ~ Appraise"
+            ),
+            ClassFeatureProbeOutcome::NoChoiceSlotOffersIt
+        );
+    }
+
+    /// A pooled group whose owner class this engine does not model is refused
+    /// as such, and never confused with "the engine applies nothing".
+    #[test]
+    fn a_pool_of_an_unmodelled_class_is_refused_as_such() {
+        let fixture = load_probe_fixture(&PathBuf::from(env!("CARGO_MANIFEST_DIR")));
+        let class_books: BTreeMap<String, &'static str> = BTreeMap::new();
+        assert_eq!(
+            probe_class_feature_key(
+                &fixture,
+                &class_books,
+                &rage_power_siblings(),
+                "Rage Power ~ Superstition"
+            ),
+            ClassFeatureProbeOutcome::OwnerClassNotModelled
+        );
+    }
+
+    /// A pool with exactly one corpus member has no control, and is refused
+    /// rather than promoted on an uncontrolled delta.
+    #[test]
+    fn a_pool_with_no_sibling_is_refused() {
+        let fixture = load_probe_fixture(&PathBuf::from(env!("CARGO_MANIFEST_DIR")));
+        let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
+        class_books.insert("barbarian".to_string(), "core_rulebook");
+        let lonely = BTreeMap::from([(
+            "Rage Power".to_string(),
+            BTreeSet::from(["Superstition".to_string()]),
+        )]);
+        assert_eq!(
+            probe_class_feature_key(&fixture, &class_books, &lonely, "Rage Power ~ Superstition"),
+            ClassFeatureProbeOutcome::NoSiblingToControlAgainst
+        );
     }
 }

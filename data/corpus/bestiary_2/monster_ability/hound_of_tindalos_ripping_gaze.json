@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Hound of Tindalos ~ Ripping Gaze",
+    "delivery": "Extraordinary",
+    "description": "5d6 slashing damage, 30 feet, Fortitude DC %1 negates.  A creature that succeeds on its save is immune to that hound's gaze for 24 hours.  Damage caused by a ripping gaze can be defeated by damage reduction, but it bypasses DR/magic and slashing.",
+    "description_variables": [
+      "HoundOfTindalosRippingGazeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:hound_of_tindalos_ripping_gaze",
+    "name": "Ripping Gaze",
+    "owners": [
+      "bestiary_2:monster:hound_of_tindalos"
+    ],
+    "source_page": "p.158",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 691,
+    "record_key": "Hound of Tindalos ~ Ripping Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

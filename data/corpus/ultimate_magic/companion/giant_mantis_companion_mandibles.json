@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T09:20:27Z",
+  "data": {
+    "corpus_key": "Giant Mantis Companion ~ Mandibles",
+    "delivery": "Extraordinary",
+    "description": "1d6 secondary attack against grabbed target",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "ultimate_magic:companion:giant_mantis_companion_mandibles",
+    "name": "Mandibles",
+    "owners": [
+      "ultimate_magic:companion:companion_mantis_giant"
+    ],
+    "record_type": "ability",
+    "source_page": "p.37",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
+    "line": 31,
+    "record_key": "Giant Mantis Companion ~ Mandibles"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

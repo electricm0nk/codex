@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "8",
+    "corpus_key": "Walrus (Emperor)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:walrus_emperor",
+    "monster_class": "Animal:12",
+    "name": "Emperor Walrus",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Animal",
+    "size": "G",
+    "source_page": "p.271",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 242,
+    "record_key": "Walrus (Emperor)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

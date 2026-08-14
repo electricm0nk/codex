@@ -48,7 +48,7 @@ one of them has ever called a Product-Identity screen.**
 v1), written by five generator binaries/modules: `sd26_gen_core_rulebook_cache.rs`
 (CRB), `cache_gen::{acg, apg, beastiary1}` (ACG/APG/Bestiary 1), `sd27_gen_book_cache.rs`
 (ARG, PU — carries its own inline PI-blacklist fork, the third of the three forks
-`pi_screening.rs`'s own doc comment names), and `ingest_race_traits_arg.rs`/
+`pi_screening.rs`'s own doc comment names), and `ingest_race_traits.rs`/
 `ingest_pu_classes.rs`/`ingest_races.rs`. Per `pi_screening.rs`'s own header, **three
 of these five writers originally shipped with no screening at all** (CRB, and the
 ACG/APG/Bestiary-1 trio) — their `license`/`pi_field`/`pi_marker` fields exist today
@@ -93,7 +93,7 @@ patched).
 | advanced_players_guide | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | **screened** (`cache_gen::apg`, retrofit) | none |
 | advanced_class_guide | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | **screened** (`cache_gen::acg`, retrofit) | none — and the one confirmed real leak (`Sarenrae`) lives in this book's Pipeline B archetype table |
 | bestiary | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | **screened** (`cache_gen::beastiary1`, retrofit) | none |
-| advanced_race_guide | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | **screened** (`sd27_gen_book_cache.rs` own fork + `ingest_race_traits_arg.rs`) | none — the second confirmed real leak (`Asmodeus`) lives in this book's Pipeline B archetype table |
+| advanced_race_guide | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | **screened** (`sd27_gen_book_cache.rs` own fork + `ingest_race_traits.rs`, book `advanced_race_guide`) | none — the second confirmed real leak (`Asmodeus`) lives in this book's Pipeline B archetype table |
 | pathfinder_unchained | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | **screened** (`sd27_gen_book_cache.rs` own fork + `ingest_pu_classes.rs`) | none |
 | adventurers_guide | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | n/a (never entered Pipeline A) | **unscreened** |
 | bestiary_2 | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |
@@ -115,7 +115,7 @@ patched).
 | inner_sea_taverns | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |
 | inner_sea_temples | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |
 | inner_sea_world_guide | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |
-| monster_codex | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |
+| monster_codex | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | **partially screened** (`ingest_race_traits.rs`, book `monster_codex` — the 5 `race_trait` records of SD-29's race-trait lane pilot, the book's only ingested family; its other 8 kinds have not entered Pipeline A) | none |
 | mythic_adventures | Paizo Publishing LLC | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |
 | occult_adventures | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |
 | ultimate_campaign | Paizo Publishing | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |
@@ -168,6 +168,38 @@ declaration, and none exists to fall back on.
    generation time, and the three real leaks found in a five-minute sweep suggest
    more exist unfound in the other ~4,700 archetype/equipment/feat records this
    session alone landed through Pipeline B.
+
+## Addendum 2026-08-11 — the Pipeline B screen now exists (SD-29 Epic 3)
+
+The "Not fixed here" section below stands as authored: **no redaction was applied** and
+none of the three real leaks it names was touched — those tables are owned by the bundles
+that wrote them, not by SD-29. What changed is the thing that section named as the likely
+next prerequisite: *"wiring `pi_screening::classify_field` into the extraction scripts that
+write `rules_tables/*.rs`, before any kind-scoped package runs against a book that has never
+passed through it."*
+
+- `src/rules_core/pi_table_sweep.rs` runs the shared `pi_screening::PI_BLACKLIST_TERMS`
+  list (it does not fork it) over Pipeline B. `screen_generated_table()` is the lane-facing
+  call an extraction step makes on generated table text **before** it writes; a hit is a hard
+  stop for that record per `SD-29 decisions.md §37.3` / `AT-29-003a`.
+- `src/bin/pi_sweep_rules_tables.rs` is the standing sweep, wired as the `pi-sweep` stage of
+  `scripts/verify.sh` (in **both** the full and `--quick` sets) and asserted by
+  `tests/pi_table_sweep.rs` on every `cargo test`.
+- `docs/governance/pi-sweep-baseline.tsv` carries the pre-existing hits with an explicit
+  `real-leak`/`false-positive` disposition. The gate fails on any hit the baseline does not
+  account for **and** on any baseline row the tree no longer carries, so the file cannot decay
+  into a blanket suppression.
+
+**Correction to this matrix's own sweep, re-derived 2026-08-11** by
+`cargo run --locked --bin pi_sweep_rules_tables` over 137 files / 55 terms: the tree carries
+**10** hits, not the 4 this matrix's five-minute manual sweep reported. The three real leaks
+are exactly as recorded. The false-positive count is **7**, not 1: besides `Geb`/"Gebr", the
+term `Nex` substring-matches the spell name **"Discern Next of Kin"** in six spell-list tables
+(`acg/shaman_spell_list.rs`, `acg/spell_list.rs`, `apg/witch_spell_list.rs`,
+`crb/bard_spell_list.rs`, `crb/sorcerer_spell_list.rs`, `crb/wizard_spell_list.rs`) — the same
+record whose flavor text carries the `Jarn` re-leak. No new *real* leak was found; the
+correction is to the count and to the blacklist's demonstrated bluntness, both now pinned by a
+committed baseline rather than a prose estimate.
 
 ## Not fixed here
 

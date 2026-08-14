@@ -341,6 +341,22 @@ const RECORD_TYPE_KINDS: &[(&str, &str)] = &[
     // enum (Psionic/Metapsionic have no shared-enum equivalent). Same
     // family ("feats") as every other book's feat table.
     ("UpsiFeatEntry", "feats"),
+    // SD-29 Epic 5: Bonus Bestiary's merged monster chassis. Two record
+    // types, two families -- deliberately NOT one, per
+    // `corpus-work-channels.md` §9.2: a monster ability is to a monster what a
+    // race trait is to a race, and folding the abilities into `monsters` would
+    // make the chassis count silently absorb the feature count.
+    ("MonsterStatBlock", "monsters"),
+    ("MonsterAbilityRecord", "monster_abilities"),
+    // SD-29 Epic 7: the companion chassis. Two record types, ONE family --
+    // deliberately unlike the monster pair above, and for the corpus's own
+    // reason: `v06_work_inventory::file_kind` types a book's
+    // `*_races_companion.lst` creature rows and its `*_abilities_companion.lst`
+    // ability rows both as `Kind::Companion`, so there is one denominator on
+    // disk (`data/corpus/<book>/companion/`) and splitting the claim would
+    // judge two populations against one count.
+    ("CompanionRecord", "companions"),
+    ("CompanionAbilityRecord", "companions"),
     ("SpellListEntry", "spells"),
     ("EquipmentTableEntry", "equipment"),
     ("WeaponTableEntry", "weapons"),
@@ -469,8 +485,31 @@ fn book_of(root: &Path, path: &Path) -> Option<String> {
     // belongs to no book — so requiring a second component is what makes
     // `first` a directory name.
     components.next()?;
-    Some(first.as_os_str().to_string_lossy().into_owned())
+    let dir = first.as_os_str().to_string_lossy().into_owned();
+    Some(
+        RULES_TABLES_BOOK_IDS
+            .iter()
+            .find(|(module, _)| *module == dir)
+            .map(|(_, book_id)| (*book_id).to_owned())
+            .unwrap_or(dir),
+    )
 }
+
+/// `rules_tables` module directory -> the `book_id` this gate joins on, for the
+/// modules whose directory name is not that id.
+///
+/// One entry, and it exists because one book is served by two modules.
+/// `rules_tables::bestiary` holds Bestiary 1's chassis complement beside
+/// `rules_tables::beastiary1`'s hand-modelled 46 (`decisions.md §58.3`), and
+/// both write to `data/corpus/beastiary/`, which [`CORPUS_BOOK_IDS`] already
+/// names `beastiary1`. Without this the source scan would invent a
+/// `bestiary/monsters` family that no corpus directory and no diagnostic row
+/// backs, and demand a claim for a book that already has one under its real
+/// name — a phantom, which is the opposite of what this gate is for.
+///
+/// It is a rename, not an exemption: the module's records still have to be
+/// claimed, under `beastiary1`.
+const RULES_TABLES_BOOK_IDS: &[(&str, &str)] = &[("bestiary", "beastiary1")];
 
 /// Extracts `Foo` from a line declaring a record table, in either of the two
 /// shapes the ingest tools generate:
@@ -533,6 +572,77 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     ("beastiary", "beastiary1"),
     ("advanced_race_guide", "advanced_race_guide"),
     ("pathfinder_unchained", "pathfinder_unchained"),
+    // SD-29 Epic 5 pilot. Directory and book id are spelled the same, like
+    // ARG's and PU's, so no rename is hidden here.
+    ("bonus_bestiary", "bonus_bestiary"),
+    // SD-29 Epic 6 pilot (race-trait lane). Spelled the same in both columns
+    // for the same reason.
+    ("monster_codex", "monster_codex"),
+    // SD-29 Epic 6 round 2 (race-trait lane, extend). Same again.
+    ("inner_sea_races", "inner_sea_races"),
+    // SD-29 Epic 6 round 3 (race-trait lane, extend). Same again.
+    ("horror_adventures", "horror_adventures"),
+    // SD-29 Epic 6 round 4 (race-trait lane, extend). Same again -- and note
+    // that this book id names a real corpus directory of its own only because
+    // Aasimar's and Tiefling's heritage traits belong to no other book; the
+    // book's shared racial-trait files are still attributed to `core_rulebook`
+    // and `beastiary` by `ingest_races`.
+    ("core_essentials", "core_essentials"),
+    // SD-29 Epic 5 extend, round 2 (monster lane). Same again -- the corpus
+    // directory and the book id are the same string for both volumes.
+    ("book_of_the_damned_volume_1", "book_of_the_damned_volume_1"),
+    ("book_of_the_damned_volume_2", "book_of_the_damned_volume_2"),
+    // SD-29 Epic 5 extend, round 3 (monster lane). Same again.
+    ("inner_sea_world_guide", "inner_sea_world_guide"),
+    // SD-29 Epic 7 (companion lane). Directory and book id are spelled the same
+    // for both, like every SD-29 book before them.
+    ("inner_sea_combat", "inner_sea_combat"),
+    ("inner_sea_intrigue", "inner_sea_intrigue"),
+    // SD-29 Epic 7 round 2 (companion lane, extend). Same again. Note these
+    // three books' `companion` family is the ONLY one they contribute today:
+    // B5 and B6 carry no monsters at all, and B2's 782 monster/monster_ability
+    // units belong to the monster lane.
+    ("bestiary_5", "bestiary_5"),
+    ("bestiary_6", "bestiary_6"),
+    ("bestiary_2", "bestiary_2"),
+    // SD-29 Epic 5 extend, round 5 (monster lane). Same again -- and the first
+    // bestiary in this list whose ONLY families are `monster`/`monster_ability`:
+    // B5 and B6 carry no monsters, and B2 carries both lanes' families.
+    ("bestiary_3", "bestiary_3"),
+    // SD-29 Epic 5 extend, round 6 (monster lane). Bestiary 4 carries an 86-unit
+    // `race_trait` family too, but this rule set compiles the two monster
+    // families and those units stay `not-ingested`, which is their honest state.
+    ("bestiary_4", "bestiary_4"),
+    // SD-29 Epic 5 extend, round 7 (monster lane). Same again. Inner Sea
+    // Bestiary carries a 4-unit `race_trait` family too; this rule set compiles
+    // the two monster families and those units stay `not-ingested`.
+    ("inner_sea_bestiary", "inner_sea_bestiary"),
+    // SD-29 Epic 5 extend, round 9 (monster lane). Inner Sea Gods. The book
+    // carries a large `race_trait` family too; this rule set compiles the two
+    // monster families and those units stay `not-ingested`, which is their
+    // honest state.
+    ("inner_sea_gods", "inner_sea_gods"),
+    // SD-29 Epic 7 extend, round 6 (companion lane). Ultimate Wilderness. The
+    // book's `data/corpus/` directory is written by TWO lanes -- SD-28 Epic 26
+    // put its 136 feats there -- and this entry names the directory, not the
+    // family, so it is written once and covers both.
+    ("ultimate_wilderness", "ultimate_wilderness"),
+    // SD-29 Epic 5 extend, round 10 (monster lane). Ultimate Psionics -- the
+    // first non-Paizo book in this table. Its `data/corpus/` directory is
+    // written by TWO lanes (SD-28 E29 put its feats and equipment there), and
+    // this entry names the directory rather than a family, so it covers both.
+    ("ultimate_psionics", "ultimate_psionics"),
+    // SD-29 Epic 7 round 9 (companion lane, final pass). Ultimate Magic. The
+    // ONLY entry of the round: `advanced_race_guide`, `advanced_players_guide`
+    // and `book_of_the_damned_volume_1` are already above, put there by earlier
+    // lanes, and this table names the DIRECTORY rather than a family so no
+    // second row is wanted for their companions.
+    //
+    // Ultimate Magic is different because it had no `data/corpus/ultimate_magic/`
+    // directory at all before this round — SD-28 Epic 28 compiled its 144 feats
+    // into `rules_tables` without ever writing corpus JSON for them — so the
+    // companion family is the first content this book serves off disk.
+    ("ultimate_magic", "ultimate_magic"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -544,8 +654,16 @@ const CORPUS_KIND_NAMES: &[(&str, &str)] = &[
     ("equipment", "equipment"),
     ("feat", "feats"),
     ("monster", "monsters"),
+    // SD-29 Epic 5 pilot: the features half of the merged monster chassis
+    // (`corpus-work-channels.md` §9.2). Bonus Bestiary is the first book to
+    // ingest it, so this is the entry's first appearance.
+    ("monster_ability", "monster_abilities"),
     ("race", "races"),
     ("race_trait", "race_traits"),
+    // SD-29 Epic 7 (companion lane). One kind for both of the corpus's
+    // structural shapes -- see the `CompanionRecord` entry in
+    // `RECORD_TYPE_FAMILIES` for why.
+    ("companion", "companions"),
     ("spell", "spells"),
 ];
 
@@ -878,6 +996,11 @@ fn reach_of(family: &Family) -> Option<Reach> {
                 .map(|entry| entry.key.to_owned())
                 .collect(),
         )),
+        // UW has NO hand-authored equipment table at all — all 127 of its
+        // catalog rows are corpus gap-lane rows, which `equipment_reach`
+        // unions in itself. The empty seed set here is the literal truth of
+        // this book's hand-authored coverage, not an omission.
+        ("ultimate_wilderness", "equipment") => Some(equipment_reach("UW", BTreeSet::new())),
 
         // Races: `list_race_catalog` serves every race's trait bundle, each
         // row carrying the trait's own name and derivation prose, rendered by
@@ -930,6 +1053,68 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // table -- now that `advanced_players_guide` is in
         // `race_catalog::RACE_CORPUS_BOOKS`.
         ("apg", "race_traits") => Some(race_traits_reach("APG", "advanced_players_guide")),
+        // SD-29 Epic 6 pilot (race-trait lane, 2026-08-11, `decisions.md §43`).
+        // Monster Codex's 5 in-scope alternate racial traits -- Duergar's 2 and
+        // Goblin's 3 -- served by exactly the same two commands ARG's and APG's
+        // claims run, now that `monster_codex` is in
+        // `race_catalog::RACE_CORPUS_BOOKS`. No new surface was built for this
+        // book and none was needed: the picker is book-agnostic and reads
+        // whatever the race corpus loads.
+        //
+        // This is also the claim that retires the `beastiary1/race_traits`
+        // finding. `Duergar ~ Ironskinned` carries the only
+        // `FACT:Duergar_ReplaceSLAEnlargePerson|True` token in the upstream
+        // corpus, which is the positive `PREFACT` gate on Bestiary 1's
+        // `Duergar ~ Spell-Like Ability ~ Invisibility` -- so selecting it
+        // brings that row in as a `flagGranted` trait and the B1 claim above
+        // goes from `NotSurfaced` to a plain pass. See
+        // `tests/duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs`.
+        ("monster_codex", "race_traits") => Some(race_traits_reach("MC", "monster_codex")),
+        // SD-29 Epic 6 round 2 (race-trait lane, extend, 2026-08-11,
+        // `decisions.md §45`). Inner Sea Races' 71 in-scope records -- 67 of
+        // them `TraitRole::Alternate`, the largest single contribution after
+        // ARG's own 153 -- served by exactly the two commands ARG's, APG's and
+        // Monster Codex's claims run, now that `inner_sea_races` is in
+        // `race_catalog::RACE_CORPUS_BOOKS`. No new surface and no new
+        // mechanism: the picker is book-agnostic and reads whatever the race
+        // corpus loads, which is precisely why this book was the right one to
+        // take next and why `decisions.md §44.4`'s successor queue -- which put
+        // two mechanism-blocked books ahead of it -- was wrong.
+        ("inner_sea_races", "race_traits") => Some(race_traits_reach("ISR", "inner_sea_races")),
+        // SD-29 Epic 6 round 3 (race-trait lane, extend, 2026-08-12,
+        // `decisions.md §47`). Horror Adventures' 43 in-scope records from
+        // `ha_abilities_race.lst` -- 41 `TraitRole::Alternate` plus the two
+        // `Deep Jungle Halfling ~ ...` rows the book's own
+        // `Halfling ~ Deep Jungle` alternate grants -- served by exactly the
+        // two commands ARG's, APG's, Monster Codex's and ISR's claims run.
+        // Again no new surface and no new mechanism.
+        //
+        // **This is the first book in the lane whose whole ingested family
+        // reaches, with no `OPEN_FINDINGS` shortfall.** That is a property of
+        // the book's upstream data rather than of this round's care: HA's two
+        // non-selectable rows are named by an
+        // `ABILITY:Halfling Racial Trait|AUTOMATIC|` grant on the alternate
+        // that replaces them, so the upstream transaction ISR's
+        // `Human ~ Tribalistic Languages` leaves half-finished is complete
+        // here. The absence of a finding is therefore evidence, not an
+        // omission -- `horror_adventures_alternate_racial_traits_reach_a_player`
+        // asserts the full pass by exact count rather than leaving it unstated.
+        ("horror_adventures", "race_traits") => Some(race_traits_reach("HA", "horror_adventures")),
+        // SD-29 Epic 6 round 4 (race-trait lane, extend, 2026-08-12,
+        // `decisions.md §49`). Core Essentials' 64 heritage records --
+        // Aasimar's 6 and Tiefling's 10 selectable heritages, plus the 48
+        // replacement rows those heritages grant -- served by exactly the two
+        // commands ARG's, APG's, Monster Codex's, ISR's and HA's claims run.
+        //
+        // **This is the first book in the lane whose records are majority
+        // `flagGranted` rather than `Alternate`, and the claim is therefore
+        // load-bearing in a way the earlier ones were not.** 48 of the 64 are
+        // reached only through the third arm of `race_traits_reach` -- the one
+        // that selects each alternate in turn and reads what comes in with it.
+        // A regression that broke the heritage grant link would leave the
+        // other five books' claims completely green and drop this one from 64
+        // to 16, which is exactly the granularity this claim exists to have.
+        ("core_essentials", "race_traits") => Some(race_traits_reach("CE", "core_essentials")),
 
         // Weapons: `list_weapon_targets` serves WEAPON_TABLE to the chooser
         // feat's "which weapon?" step, each row carrying the record's damage
@@ -984,6 +1169,307 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // block is computed by `pilot_compute`'s own
         // `ground_*_companion_stat_block`, not read from these tables.
         ("beastiary1", "monsters") => Some(monsters_reach()),
+        // SD-29 Epic 5 extend, round 8. Bestiary 1's monster ABILITIES — a
+        // family this book has never had a claim for, because until round 8 it
+        // had no ability table. The chassis registered under `corpus_book:
+        // "beastiary"` writes them to `data/corpus/beastiary/monster_ability/`
+        // and `list_monster_catalog` serves them flattened under the monster
+        // that owns them, exactly as every other chassis book's are. The
+        // monster half stays on `monsters_reach` above, which unions the two
+        // tables serving that family; the ability half has only one table and
+        // uses the shared helper unchanged.
+        ("beastiary1", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("beastiary", "B1"))
+        }
+
+        // SD-29 Epic 5 pilot — Bonus Bestiary's two families, both served by
+        // the same `list_monster_catalog` command the Bestiary 1 claim above
+        // already runs, and both rendered by the same
+        // apps/desktop/src/monsterCatalog/MonsterCatalogScreen.tsx.
+        //
+        // The abilities are NOT a second catalog: per
+        // `corpus-work-channels.md` §9.2 a monster ability is to a monster what
+        // a race trait is to a race, so the screen renders each one inside its
+        // owning creature's row. That is why the two claims below judge the same
+        // response from two different denominators — the chassis records and the
+        // feature records are genuinely different populations on disk.
+        ("bonus_bestiary", "monsters") => Some(chassis_monsters_reach("bonus_bestiary", "BB")),
+        ("bonus_bestiary", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("bonus_bestiary", "BB"))
+        }
+        // SD-29 Epic 5 extend, round 1. Same two claim functions, a
+        // different book: the judgement is a property of the chassis, not
+        // of Bonus Bestiary, so registering a book is two arms here.
+        ("monster_codex", "monsters") => Some(chassis_monsters_reach("monster_codex", "MC")),
+        ("monster_codex", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("monster_codex", "MC"))
+        }
+        // SD-29 Epic 5 extend, round 2. Two more books, four more arms, and
+        // the same two claim functions -- which is the registry rewrite's whole
+        // point: a book's reach is judged by the chassis, not per book.
+        ("book_of_the_damned_volume_1", "monsters") => {
+            Some(chassis_monsters_reach("book_of_the_damned_volume_1", "BOTD1"))
+        }
+        ("book_of_the_damned_volume_1", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("book_of_the_damned_volume_1", "BOTD1"))
+        }
+        ("book_of_the_damned_volume_2", "monsters") => {
+            Some(chassis_monsters_reach("book_of_the_damned_volume_2", "BOTD2"))
+        }
+        ("book_of_the_damned_volume_2", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("book_of_the_damned_volume_2", "BOTD2"))
+        }
+        // SD-29 Epic 5 extend, round 3. The first book whose claims cover a
+        // SUBSET of the book's corpus rows: 5 of Inner Sea World Guide's 14
+        // monster rows carry `NAMEISPI:YES` and are Product Identity, and 13 of
+        // its 30 ability rows end up owned by no shipped monster. Both claims
+        // assert what is served -- 9 and 14 -- rather than rounding up to the
+        // corpus count, which is what claims of 14 and 30 would be doing.
+        ("inner_sea_world_guide", "monsters") => {
+            Some(chassis_monsters_reach("inner_sea_world_guide", "ISWG"))
+        }
+        ("inner_sea_world_guide", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("inner_sea_world_guide", "ISWG"))
+        }
+        // SD-29 Epic 5 extend, round 4. Bestiary 2, and the same two claim
+        // functions again at 30x the record count -- 316 monsters and 402
+        // abilities. The book already declares a `companions` claim below under
+        // the same wire code; a book contributes one claim per FAMILY, and B2 is
+        // the first in either lane to carry three.
+        ("bestiary_2", "monsters") => Some(chassis_monsters_reach("bestiary_2", "B2")),
+        ("bestiary_2", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("bestiary_2", "B2"))
+        }
+        // SD-29 Epic 5 extend, round 5. Bestiary 3 -- the same two claim
+        // functions again. Unlike B2 this book contributes no `companions`
+        // family, so these two are the whole of its reach.
+        ("bestiary_3", "monsters") => Some(chassis_monsters_reach("bestiary_3", "B3")),
+        ("bestiary_3", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("bestiary_3", "B3"))
+        }
+        // SD-29 Epic 5 extend, round 6. Bestiary 4 -- the same two claim
+        // functions again. Like B3 and unlike B2 it contributes no `companions`
+        // family, so these two are the whole of its reach.
+        ("bestiary_4", "monsters") => Some(chassis_monsters_reach("bestiary_4", "B4")),
+        ("bestiary_4", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("bestiary_4", "B4"))
+        }
+        // SD-29 Epic 5 extend, round 7. Inner Sea Bestiary -- the same two
+        // claim functions again, and the first `campaign_setting/` book in this
+        // lane whose whole reach is the two monster families.
+        ("inner_sea_bestiary", "monsters") => {
+            Some(chassis_monsters_reach("inner_sea_bestiary", "ISB"))
+        }
+        ("inner_sea_bestiary", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("inner_sea_bestiary", "ISB"))
+        }
+        // SD-29 Epic 5 extend, round 9. Inner Sea Gods -- the same two claim
+        // functions again. The registration cost of a book whose files are
+        // split across `support/` is paid entirely in the transcriber and the
+        // generator; nothing about a reach claim changes.
+        ("inner_sea_gods", "monsters") => Some(chassis_monsters_reach("inner_sea_gods", "ISG")),
+        ("inner_sea_gods", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("inner_sea_gods", "ISG"))
+        }
+        // SD-29 Epic 5 extend, round 10. Ultimate Psionics -- the same two claim
+        // functions again, under the wire code `UPSI` this app already serves
+        // the book's equipment and feats with rather than its own
+        // `SOURCESHORT:UP` (`monster_catalog::BOOK_UPSI`, `decisions.md §64.2`).
+        // This book already had reach claims for `feats`, `equipment` and
+        // `archetypes`; these are the first of its claims this lane owns.
+        ("ultimate_psionics", "monsters") => {
+            Some(chassis_monsters_reach("ultimate_psionics", "UPSI"))
+        }
+        ("ultimate_psionics", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("ultimate_psionics", "UPSI"))
+        }
+        // SD-29 Epic 5 extend, FINAL round. Horror Adventures -- the same two
+        // claim functions, under the wire code `HA` this app already serves the
+        // book's races and companions with (`monster_catalog::BOOK_HA`).
+        //
+        // This is the FOURTH family this book claims reach for, after
+        // `race_traits` (Epic 6 round 3) and `companions` (Epic 7). The
+        // denominator is `data/corpus/horror_adventures/monster*/`, which the
+        // generator writes beside the two directories already there -- so the
+        // book's other claims are untouched by this one.
+        ("horror_adventures", "monsters") => {
+            Some(chassis_monsters_reach("horror_adventures", "HA"))
+        }
+        ("horror_adventures", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("horror_adventures", "HA"))
+        }
+
+        // SD-29 Epic 7 (companion lane) -- the kind's first reach claims. Every
+        // one is served by `list_companion_catalog` and rendered by
+        // apps/desktop/src/companionCatalog/CompanionCatalogScreen.tsx,
+        // reachable from the landing screen alongside the other catalogs.
+        //
+        // ONE claim per book, not two, because the corpus files creature rows
+        // and ability rows under one kind -- see `CORPUS_KIND_NAMES`. The
+        // judgement below therefore has to satisfy both shapes from one
+        // denominator, which is exactly what `companions_reach` does.
+        ("inner_sea_combat", "companions") => Some(companions_reach("inner_sea_combat", "ISC")),
+        ("monster_codex", "companions") => Some(companions_reach("monster_codex", "MC")),
+        ("inner_sea_intrigue", "companions") => {
+            Some(companions_reach("inner_sea_intrigue", "ISI"))
+        }
+        ("horror_adventures", "companions") => Some(companions_reach("horror_adventures", "HA")),
+        // SD-29 Epic 7 round 2 (companion lane, extend). The same one-claim-per-
+        // book judgement; `companions_reach`'s denominator is the book's own
+        // `data/corpus/<book>/companion/` directory, so Bestiary 5's two
+        // Occult-Adventures-gated familiars are outside it by construction
+        // rather than counted as a shortfall (`decisions.md §47.2`).
+        ("bestiary_5", "companions") => Some(companions_reach("bestiary_5", "B5")),
+        ("bestiary_6", "companions") => Some(companions_reach("bestiary_6", "B6")),
+        ("bestiary_2", "companions") => Some(companions_reach("bestiary_2", "B2")),
+        // SD-29 Epic 7 round 3. Bestiary 1's companions, and the only claim in
+        // this file whose family id and corpus directory are different words:
+        // the family is `beastiary1` (what the ingest diagnostic calls the
+        // book), the corpus directory is `beastiary`, and the PCGen source
+        // directory is `bestiary`. See `companion_chassis::COMPANION_BOOKS`.
+        //
+        // A SECOND claim for this book, beside `("beastiary1", "monsters")`.
+        // The two judge different populations from the same book —
+        // `Companion (Wolf)` is an advanceable companion row, `Wolf` is a stat
+        // block — and `beastiary1`'s own
+        // `the_companion_rows_are_not_this_module_s_monster_rows` pins that
+        // they never collide.
+        ("beastiary1", "companions") => Some(companions_reach("beastiary", "B1")),
+        // SD-29 Epic 7 round 4. Bestiary 3's companions — the SECOND claim this
+        // book carries, beside `("bestiary_3", "monsters")` the monster lane
+        // wrote in `9595bd82`. Same both-families-from-one-book shape Bestiary 1
+        // and Bestiary 2 already have (`decisions.md §51.5`).
+        //
+        // ALL 85 of the book's companion units ship, with no `OPEN_FINDINGS`
+        // shortfall. That was not the plan: the round opened expecting 19
+        // orphans and built the drop-and-record disposition `§50` prescribes,
+        // then found the 19 were never orphans at all — their creature rows are
+        // namespaced by `OUTPUTNAME:` (`KEY:Kyton (Augur)` displays as `Augur`,
+        // and its abilities are keyed `Augur ~ …`). Reading that token is
+        // ownership shape 5 (`decisions.md §56.1`).
+        ("bestiary_3", "companions") => Some(companions_reach("bestiary_3", "B3")),
+        // SD-29 Epic 7 round 5. Bestiary 4's companions — the SECOND claim this
+        // book carries, beside `("bestiary_4", "monsters")` the monster lane
+        // wrote in `52da4bc3`.
+        //
+        // 78 of the book's 80 companion units ship — its whole `reachable
+        // remainder`. ZERO are dropped as orphans: the round opened with five on
+        // the board and found every one owned across a `CATEGORY:Internal` relay
+        // row that is not itself an inventory unit (`Familiar (Giant Flea)` ->
+        // `Racial Traits ~ Flea (Giant)` -> `Flea (Giant) ~ Disease`), which is
+        // ownership shape 6 (`decisions.md §59.1`). The two exclusions are
+        // `.COPY=` DELTA rows (`§59.2`), which state a delta on a base record
+        // rather than a record.
+        //
+        // No `OPEN_FINDINGS` entry, and that is the correct outcome rather than
+        // an omission: this list is per FAMILY, `bestiary_4/companions` reaches
+        // a player, and adding a surfaced family here would fail
+        // `unsurfaced_families_are_exactly_the_recorded_findings` in the other
+        // direction.
+        ("bestiary_4", "companions") => Some(companions_reach("bestiary_4", "B4")),
+
+        // SD-29 Epic 7 round 6. Ultimate Wilderness's companions — the SECOND
+        // claim this book carries, beside the 136-feat catalog SD-28 Epic 26
+        // landed, and the LARGEST companion block in the corpus: 169 creature
+        // rows, more than every previously registered companion book combined.
+        //
+        // 327 of the book's 575 companion units ship — its whole `reachable
+        // remainder` per `scripts/classify_companion_rows.py`. The other 248 are
+        // NOT ingested and therefore not in this gate's denominator: unlike
+        // every earlier book in this lane, the shortfall is a DIFFERENT KIND of
+        // record wearing this kind's file name (30 `CATEGORY:Archetype` rows,
+        // the 119 ability rows namespaced under their display names, and the 72
+        // `Animal Trick`/`Animal Companion Feat` option-group rows), not rows
+        // the transcriber failed to read. They get no `OPEN_FINDINGS` entry
+        // because that list is per FAMILY and this family reaches a player;
+        // `docs/work-inventory.json` is where they stay counted
+        // (`decisions.md §61.2`).
+        ("ultimate_wilderness", "companions") => {
+            Some(companions_reach("ultimate_wilderness", "UW"))
+        }
+
+        // SD-29 Epic 7 round 7. Core Essentials's companions and familiars —
+        // the SECOND claim this book carries, beside the 64 heritage
+        // `race_traits` the race-trait lane landed (`("core_essentials",
+        // "race_traits")` above, same `CE` wire code, same corpus directory).
+        // `CORPUS_BOOK_IDS` already names the directory for that reason and
+        // needed no entry this round.
+        //
+        // 103 of the book's 145 companion units ship — its whole `reachable
+        // remainder` per `scripts/classify_companion_rows.py`. The 42 that do
+        // not are not in this gate's denominator, because they were never
+        // ingested: 22 `.COPY=` CREATURE delta rows (`decisions.md §63.1`, the
+        // first companion book to carry the delta shape on its creature half),
+        // the 4 `.MOD` ability overlays `§59.2` predicted this book would first
+        // exercise, and 16 orphans. They stay counted in
+        // `docs/work-inventory.json`, and get no `OPEN_FINDINGS` entry for the
+        // reason `§61.2` states: that list is keyed by FAMILY, and this family
+        // does reach a player.
+        ("core_essentials", "companions") => Some(companions_reach("core_essentials", "CE")),
+
+        // SD-29 Epic 7 round 8. Core Rulebook's companions and familiars — the
+        // SIXTH family this book carries, beside its classes, races, spells,
+        // equipment and race traits.
+        //
+        // The key on the left is the ENGINE book id `crb`, not the corpus
+        // directory `core_rulebook`, and the two arguments to `companions_reach`
+        // are the corpus directory and the wire code. All three spellings differ
+        // here, exactly as they do for Bestiary 1 (`decisions.md §54.3`), and
+        // `CORPUS_BOOK_IDS` already carried `("core_rulebook", "crb")` for the
+        // book's five older families, so no entry was needed this round.
+        //
+        // 84 of the book's 170 companion units ship — its whole `reachable
+        // remainder` per `scripts/classify_companion_rows.py`. The 86 that do
+        // not are absent from this gate's denominator because they were never
+        // ingested: 84 orphan ability rows and the 2 `cr_classes_companion.lst`
+        // CLASS rows (`§65.1`). They stay counted in `docs/work-inventory.json`
+        // and get no `OPEN_FINDINGS` entry, for the reason `§61.2` states —
+        // that list is keyed by FAMILY, and this family does reach a player.
+        //
+        // The shortfall here is ONE finding, not 86: the orphans are the generic
+        // `Animal Companion ~ …` / `Animal Trick ~ …` records, and they are
+        // orphans precisely because they hang off the Animal Companion CLASS
+        // rather than off any creature. Both groups need the same missing record
+        // type, which is named in `crb/mod.rs`'s module doc rather than split
+        // across 86 rows here.
+        ("crb", "companions") => Some(companions_reach("core_rulebook", "CRB")),
+
+        // SD-29 Epic 7 round 9 (companion lane, FINAL PASS). Four books at
+        // once, and the shortfall behind all four is ONE finding.
+        //
+        // 52 units ship between them — Ultimate Magic 32, Advanced Race Guide
+        // 14, Advanced Player's Guide 4, Book of the Damned Volume 1 2 — and
+        // each figure is exactly the `reachable remainder`
+        // `python3 scripts/classify_companion_rows.py <book>` prints for that
+        // book. The 393 that do not ship are absent from this gate's
+        // denominator because they were never ingested; they stay counted in
+        // `docs/work-inventory.json` and get no `OPEN_FINDINGS` entry, for the
+        // reason `§61.2` states — that list is keyed by FAMILY, and every one
+        // of these four families does reach a player.
+        //
+        // THE ONE FINDING: 361 of the 393 are the summoner's evolution pool
+        // (`Evolution ~ …`, `Temp Evolution ~ …`, `<Archetype> Eidolon ~ …`,
+        // `WCEvolution ~ …`) and the bladebound magus's `Black Blade ~ …`
+        // records. Both hang off a CLASS FEATURE rather than off any creature
+        // row, which is the same missing record type round 8 named for Core
+        // Rulebook's 84 `Animal Companion ~ …` orphans (`decisions.md §65`).
+        // The remaining 32 are 27 Book-of-the-Damned `Imp Companion ~ …`
+        // orphans of the same shape plus 5 `*_classes_companion.lst` CLASS rows
+        // (`§65.1`), which is that same type seen from the other side.
+        //
+        // Note the key on the left is the ENGINE book id and the first argument
+        // is the CORPUS directory. They differ only for the APG, whose module
+        // has been `apg` since long before this lane; `CORPUS_BOOK_IDS` already
+        // carried `("advanced_players_guide", "apg")` for the book's older
+        // families, so no entry was needed this round.
+        ("ultimate_magic", "companions") => Some(companions_reach("ultimate_magic", "UM")),
+        ("advanced_race_guide", "companions") => {
+            Some(companions_reach("advanced_race_guide", "ARG"))
+        }
+        ("apg", "companions") => Some(companions_reach("advanced_players_guide", "APG")),
+        ("book_of_the_damned_volume_1", "companions") => {
+            Some(companions_reach("book_of_the_damned_volume_1", "BOTD1"))
+        }
 
         // PU class features: each of the four Unchained classes emits one
         // roster row per ingested `class_feature` record the character holds,
@@ -1148,6 +1634,20 @@ fn spells_reach(wire_book: &str, ingested: BTreeSet<String>) -> Reach {
 /// makes the claim per-book honest: a key that only another book serves must
 /// not count as this book's record arriving.
 fn equipment_reach(wire_book: &str, ingested: BTreeSet<String>) -> Reach {
+    // The corpus gap lane (`epic-4-proven-equip-mod`) ingested 769 equipment /
+    // equipment-modifier records that no hand-authored per-book table holds.
+    // They are unioned into the CLAIM, not merely into the catalog: a gate
+    // that widened only what the surface serves, while leaving the ingested
+    // set at the hand tables alone, would assert nothing about the new rows
+    // and would go on passing if every one of them silently stopped reaching
+    // the picker.
+    let mut ingested = ingested;
+    ingested.extend(
+        codex::rules_core::rules_tables::equipment_gap_tables::equipment_gap_rows()
+            .filter(|row| row.book == wire_book)
+            .map(|row| row.key.to_owned()),
+    );
+
     let response = crate::equipment_catalog::build_equipment_catalog();
     let mut with_payload = BTreeSet::new();
     let mut identity_only = BTreeSet::new();
@@ -1297,22 +1797,43 @@ fn race_traits_reach(wire_book: &'static str, book_dir: &str) -> Reach {
 /// different places — the ingested record files on disk versus the IPC response
 /// the screen renders. (Those records carry their identity as `data.id`; see
 /// [`corpus_record_ids`].)
+/// Bestiary 1's monster family — **both** tables that serve it.
+///
+/// SD-29 Epic 5 round 8 (`decisions.md §58.3`) put a second table behind this
+/// one family: SD-22's hand-modelled 46 write their identity as `data.id` (they
+/// predate the `key` convention), the chassis's 284 write `data.key`. One family
+/// key, one wire code, one screen — so one claim, over the union of both
+/// denominators, rather than two claims the gate cannot both declare.
+///
+/// Unioning is also what keeps the claim honest. Reading only `data.id` would
+/// judge 46 records and silently ignore 284; reading only `data.key` would do
+/// the reverse. Either half alone is a claim that passes while checking a third
+/// of the book.
 fn monsters_reach() -> Reach {
-    let ingested = corpus_record_ids("beastiary", "monster");
+    let mut ingested = corpus_record_ids("beastiary", "monster");
+    ingested.extend(corpus_record_keys("beastiary", "monster"));
 
     let response = crate::monster_catalog::build_monster_catalog();
     let mut with_payload = BTreeSet::new();
     let mut identity_only = BTreeSet::new();
     for entry in response.entries.iter().filter(|entry| entry.book == "B1") {
         // The catalog row prints the monster's name, its size and creature
-        // type, its challenge rating, its land speed and source page, and its
-        // natural attacks. `key` is the `beastiary1:monster:<slug>` identity
-        // and the name is derived from it, so neither counts as payload: a row
-        // reaches the player when it carries something about the creature.
+        // type, its challenge rating, its movement and source page, its
+        // `MONSTERCLASS:` token, its natural attacks and its abilities. `key`
+        // is the corpus identity and the name is derived from it, so neither
+        // counts as payload: a row reaches the player when it carries something
+        // about the creature. The two tables fill different subsets of those
+        // fields, so the rule is their union — the SD-22 half carries no
+        // `speeds`/`monster_class`/`abilities` and the chassis half carries no
+        // `natural_attacks` provenance, and neither absence is a failure to
+        // reach.
         let has_payload = !entry.race_type.trim().is_empty()
             || !entry.size.trim().is_empty()
             || !entry.source_page.trim().is_empty()
-            || !entry.natural_attacks.is_empty();
+            || !entry.speeds.is_empty()
+            || entry.monster_class.is_some()
+            || !entry.natural_attacks.is_empty()
+            || !entry.abilities.is_empty();
         if has_payload {
             with_payload.insert(entry.key.clone());
         } else {
@@ -1326,6 +1847,140 @@ fn monsters_reach() -> Reach {
         &with_payload,
         &identity_only,
     )
+}
+
+/// One chassis book's monster stat blocks, judged against the real
+/// `list_monster_catalog` response.
+///
+/// The denominator is the record files under `data/corpus/<book>/monster/`,
+/// read from disk; the numerator is the served response. Neither side reads
+/// the compiled `rules_tables` module, so a table that stopped reaching the
+/// wire fails here instead of agreeing with itself.
+///
+/// Book-parameterized rather than duplicated per book: the payload rule below
+/// is a property of the chassis DTO, and a copy per book is a copy that drifts.
+fn chassis_monsters_reach(corpus_book: &str, wire_code: &str) -> Reach {
+    let ingested = corpus_record_keys(corpus_book, "monster");
+
+    let response = crate::monster_catalog::build_monster_catalog();
+    let mut with_payload = BTreeSet::new();
+    let mut identity_only = BTreeSet::new();
+    for entry in response.entries.iter().filter(|entry| entry.book == wire_code) {
+        // Name and key are identity, so neither counts. A row reaches the
+        // player when it carries something *about* the creature: its creature
+        // type, its size, its source page, its movement, its `MONSTERCLASS:`
+        // token, an attack, or an ability.
+        let has_payload = !entry.race_type.trim().is_empty()
+            || !entry.size.trim().is_empty()
+            || !entry.source_page.trim().is_empty()
+            || !entry.speeds.is_empty()
+            || entry.monster_class.is_some()
+            || !entry.natural_attacks.is_empty()
+            || !entry.abilities.is_empty();
+        if has_payload {
+            with_payload.insert(entry.key.clone());
+        } else {
+            identity_only.insert(entry.key.clone());
+        }
+    }
+
+    assess("list_monster_catalog", &ingested, &with_payload, &identity_only)
+}
+
+/// One companion book's `companion` records -- BOTH structural shapes -- judged
+/// against the real `list_companion_catalog` response.
+///
+/// The denominator is every record file under `data/corpus/<book>/companion/`,
+/// read from disk, which holds the book's creature rows and its ability rows
+/// alike because the corpus files them under one kind. The numerator is the
+/// served response: creatures at the top level, abilities flattened out of the
+/// creatures that own them, which is exactly how the screen renders them.
+/// Neither side reads the compiled `rules_tables` module, so a table that
+/// stopped reaching the wire fails here instead of agreeing with itself.
+///
+/// A creature reaches the player when its row carries something *about* the
+/// creature beyond its name; an ability reaches when its row says something
+/// beyond its name. Both rules are stated below rather than shared, because the
+/// two shapes genuinely have different fields.
+fn companions_reach(corpus_book: &str, wire_code: &str) -> Reach {
+    let ingested = corpus_record_keys(corpus_book, "companion");
+
+    let response = crate::companion_catalog::build_companion_catalog();
+    let mut with_payload = BTreeSet::new();
+    let mut identity_only = BTreeSet::new();
+    for entry in response.entries.iter().filter(|entry| entry.book == wire_code) {
+        let has_payload = entry.race_type.as_deref().is_some_and(|t| !t.trim().is_empty())
+            || entry.size.as_deref().is_some_and(|s| !s.trim().is_empty())
+            || entry.source_page.as_deref().is_some_and(|p| !p.trim().is_empty())
+            || !entry.speeds.is_empty()
+            || entry.monster_class.is_some()
+            || entry.natural_armor.is_some()
+            || !entry.natural_attacks.is_empty()
+            || !entry.stat_adjustments.is_empty()
+            || !entry.abilities.is_empty();
+        if has_payload {
+            with_payload.insert(entry.key.clone());
+        } else {
+            identity_only.insert(entry.key.clone());
+        }
+        for ability in &entry.abilities {
+            let has_payload = ability.facet.is_some()
+                || ability.delivery.is_some()
+                || !ability.type_segments.is_empty()
+                || ability.description.as_deref().is_some_and(|d| !d.trim().is_empty())
+                // A row whose rules text is stated ONLY per condition still
+                // shows a player rules text — `description` is `None` for it by
+                // construction (`companion_chassis::CompanionDescriptionVariant`),
+                // so a predicate reading only `description` would judge Ultimate
+                // Wilderness's `Poison` and `Constrict` rows identity-only while
+                // the screen renders four paragraphs under them.
+                || ability.description_variants.iter().any(|v| !v.text.trim().is_empty())
+                || !ability.stat_adjustments.is_empty()
+                || ability.source_page.is_some();
+            if has_payload {
+                with_payload.insert(ability.key.clone());
+            } else {
+                identity_only.insert(ability.key.clone());
+            }
+        }
+    }
+
+    assess("list_companion_catalog", &ingested, &with_payload, &identity_only)
+}
+
+/// Bonus Bestiary's `monster_ability` records, judged against the same real
+/// `list_monster_catalog` response — flattened out of the monsters that own
+/// them, which is exactly how the screen renders them.
+///
+/// An ability reaches the player when the row it prints says something beyond
+/// its name: its facet, how it is delivered, its rules text, or its page. One
+/// record in this book (`Magic Circle against Evil`) carries no `DESC:` at all,
+/// so it reaches on facet + delivery alone — a real, checkable corpus fact
+/// rather than a payload this gate invented for it.
+fn chassis_monster_abilities_reach(corpus_book: &str, wire_code: &str) -> Reach {
+    let ingested = corpus_record_keys(corpus_book, "monster_ability");
+
+    let response = crate::monster_catalog::build_monster_catalog();
+    let mut with_payload = BTreeSet::new();
+    let mut identity_only = BTreeSet::new();
+    for ability in response
+        .entries
+        .iter()
+        .filter(|entry| entry.book == wire_code)
+        .flat_map(|entry| entry.abilities.iter())
+    {
+        let has_payload = !ability.facet.trim().is_empty()
+            || ability.delivery.is_some()
+            || ability.description.as_deref().is_some_and(|d| !d.trim().is_empty())
+            || ability.source_page.is_some();
+        if has_payload {
+            with_payload.insert(ability.key.clone());
+        } else {
+            identity_only.insert(ability.key.clone());
+        }
+    }
+
+    assess("list_monster_catalog", &ingested, &with_payload, &identity_only)
 }
 
 /// Pathfinder Unchained's ingested `class_feature` records, judged per record
@@ -1551,28 +2206,61 @@ fn quoted_after(line: &str, field: &str) -> Option<String> {
 /// permanent exemption.
 const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     (
-        "beastiary1",
+        "monster_codex",
         "race_traits",
-        "Read the numbers before the label: 107 of Bestiary 1's 108 ingested race-trait records \
-         reach a player through `list_alternate_racial_traits`' standard-trait column and \
-         `resolve_race_alternate_selection`'s granted rows, and this gate refuses partial credit. \
-         ONE does not: `Duergar ~ Spell-Like Ability ~ Invisibility`, whose positive gate is \
-         `Duergar_ReplaceSLAEnlargePerson`. Derived, not assumed: no record in `data/corpus/` sets \
-         that flag, and `arg_abilities_race.lst` never mentions it (`grep -c \
-         'Duergar_ReplaceSLAEnlargePerson|True'` -> 0). Its only setter anywhere in the PCGen \
-         checkout is `Duergar ~ Ironskinned` in `monster_codex/mc_abilities_race.lst:16` — a book \
-         this project has not registered, audited or ingested, Tier-1 but deferred by \
-         `decisions.md §9` and assigned to SD-29's Bestiary bundle by `epic-breakdown.md:150`. So \
-         this is not a wiring gap and there is nothing to wire: the row is upstream-unreachable \
-         until Monster Codex is in scope. RE-VERIFIED 2026-07-31 rather than inherited: the claim \
-         is now executable, not prose. `tests/sd27_duergar_invisibility_sla_is_upstream_blocked.rs` \
-         derives the empty setter set from the on-disk corpus, proves no Duergar selection (one \
-         at a time or all at once) reaches the row, and proves the MIRROR row does — \
-         `Duergar ~ Blood Enmity` sets `Duergar_ReplaceSLAInvisibility` and really does grant \
-         `Duergar ~ Spell-Like Ability ~ Enlarge Person` — which is what makes 'blocked' the right \
-         word instead of 'broken'. That test goes RED the day Monster Codex is ingested, which is \
-         how this entry closes. Do NOT close it by hiding the record — a record on disk that no \
-         selection can reach is exactly what this gate is for.",
+        "4 of Monster Codex's 5 ingested race-trait records reach a player through \
+         `list_alternate_racial_traits` and `resolve_race_alternate_selection`, and this gate \
+         refuses partial credit. ONE does not: `Oversized Goblin` \
+         (`mc_abilities_race.lst:31`). Derived, not assumed: it carries no \
+         `FACT:<flag>|True` token and no positive `PREFACT` gate, so \
+         `race_resolver::classify` leaves it `TraitRole::Unclassified` -- the role that never \
+         applies -- and it is correctly absent from the picker's alternate list. \
+         \
+         **It is not an ARG-shaped swap and no wiring would make it one.** Upstream it is one of \
+         two Goblin VARIANTS (`Standard Goblin` and `Oversized Goblin`), chosen out of an ability \
+         pool that `mc_abilities_race.lst:26` grants with \
+         `CATEGORY=Internal|Racial Traits ~ Goblin.MOD  BONUS:ABILITYPOOL|Goblin Variant|1`. \
+         Picking the variant is what grants its two replacement rows \
+         (`Oversized Goblin ~ Ability Scores`, `~ Size`), which is also why those two are the \
+         only alternates in the whole menu carrying no `PREMULT` self-exclusion guard \
+         (`race_trait_picker::every_alternate_has_a_readable_exclusion_guard_including_the_preability_spelling` \
+         pins them by name). \
+         \
+         REMEDY: an ability-pool variant mechanism -- a race-level choice of one row out of a \
+         `BONUS:ABILITYPOOL|<Pool>|n` pool, whose selection grants the rows TYPEd for it. That is \
+         a new mechanism, not a missing wire, and it is outside the race-trait lane's \
+         replace-flag protocol. Until it exists, the two replacement rows are offered \
+         individually in the picker where the rules would grant them together; that is the \
+         visible consequence and it is recorded here rather than smoothed over. \
+         Do NOT close this by deleting the record: the row is real corpus content for a modelled \
+         race, and a record on disk that no selection can reach is exactly what this gate is for.",
+    ),
+    (
+        "inner_sea_races",
+        "race_traits",
+        "70 of Inner Sea Races' 71 ingested race-trait records reach a player through \
+         `list_alternate_racial_traits` and `resolve_race_alternate_selection`. ONE does not: \
+         `Human ~ Tribalistic Languages` (`isr_abilities_race.lst:216`). Derived, not assumed: \
+         the row carries no `FACT:<flag>|True`, no positive `PREFACT`, no `PREABILITY` and no \
+         `!PREFACT`, and no other row in the book names it -- \
+         `grep -o 'ABILITY:[^\\t]*Tribalistic Languages' isr_abilities_race.lst` returns nothing, \
+         where the same grep for `Junk Tinker ~ Skilled` returns its granter and that row is \
+         therefore `TraitRole::FlagGranted`. So `race_resolver::classify` leaves it \
+         `TraitRole::Unclassified`, the role that never applies. \
+         \
+         **This is an upstream data gap, not a wiring gap, and the distinction is evidenced.** \
+         The alternate that logically owns it, `Human ~ Tribalistic` (`:210`), IS reachable and \
+         IS selectable, and selecting it correctly fires `Human_ReplaceLanguages`, which \
+         suppresses the standard `Human ~ Languages` row. Nothing then brings the replacement \
+         in. The player sees a language trait removed and no replacement offered, which is the \
+         visible consequence and is recorded here rather than smoothed over. \
+         \
+         REMEDY: either read `TEMPLATE:`-borne grants (the row's own \
+         `TEMPLATE:Bonus Language ~ Common|...` chain is how upstream delivers its effect), or \
+         model human ethnicities as the `PREABILITY:1,CATEGORY=Background,TYPE.HumanEthnicity` \
+         gate on `:210` implies. Both are new mechanisms, not missing wires. \
+         Do NOT close this by deleting the record: it is real corpus content for a modelled \
+         race, and the same rule the `Oversized Goblin` entry above states applies here.",
     ),
     // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 403 records
     // across 7 books. `archetype_resolver::archetype_claiming_slot` grounds
@@ -1674,31 +2362,56 @@ const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[];
 ///
 /// A family whose records reach nothing at all has no `reach_of` claim to
 /// declare — there is no response to execute against, which is the whole reason
-/// it is a finding. `beastiary1/race_traits` is a different case. 107 of its 108
-/// records demonstrably reach a live surface, and a claim that executes
-/// against that surface is exactly what stops those 107 from silently falling
-/// off — which is the defect this whole module exists for. Declaring no claim
-/// would trade a caught regression for a tidier table.
+/// it is a finding. A family with a *partial* shortfall is a different case:
+/// the claim is declared, it returns [`Reach::NotSurfaced`], the family stays a
+/// written finding, and the exact shortfall is pinned here. The property that
+/// matters is preserved in both directions:
 ///
-/// So the claim is declared, it returns [`Reach::NotSurfaced`], the family
-/// stays a written finding, and the exact shortfall is pinned here. The
-/// property that matters is preserved in both directions:
-///
-/// * a 2nd B1 record that stops reaching changes this set and fails;
+/// * another record that stops reaching changes this set and fails;
 /// * fixing one of these fails too, until its key is deleted.
 ///
-/// `advanced_race_guide/race_traits` used to be listed here for exactly this
-/// reason, at 154 of 156. Its two stragglers — `Feral ~ Languages` and
-/// `Scion of Humanity ~ Languages` — now arrive through
-/// `race_resolver`'s reading of the `ABILITY:<cat>|AUTOMATIC|<key>` grant
-/// shape, so the family is a plain claim and both entries are gone.
+/// **Two race-trait entries have been retired by being fixed, not
+/// reclassified**, and both are worth recording because they are the two ways
+/// this list is supposed to shrink:
+///
+/// * `advanced_race_guide/race_traits`, at 154 of 156. Its two stragglers —
+///   `Feral ~ Languages` and `Scion of Humanity ~ Languages` — now arrive
+///   through `race_resolver`'s reading of the `ABILITY:<cat>|AUTOMATIC|<key>`
+///   grant shape. Fixed by **code**: the resolver learned a grant shape it had
+///   been ignoring.
+/// * `beastiary1/race_traits`, at 107 of 108 (retired 2026-08-11, SD-29 Epic 6
+///   pilot, `decisions.md §43`). Its one straggler,
+///   `Duergar ~ Spell-Like Ability ~ Invisibility`, is gated on a positive
+///   `PREFACT` naming `Duergar_ReplaceSLAEnlargePerson`, and the only row in
+///   the whole upstream corpus that sets that flag is `Duergar ~ Ironskinned`
+///   in `monster_codex/mc_abilities_race.lst:16`. Fixed by **data**: nothing
+///   about the resolver changed, Monster Codex's racial traits were ingested
+///   and the row became reachable by a selection a player can really make.
+///   That is the shape this list was designed to distinguish from a wiring gap,
+///   and it took an ingest rather than a screen to close.
+///   `tests/duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs`
+///   holds it closed in both directions.
 const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
     (
-        "beastiary1",
+        "monster_codex",
         "race_traits",
-        // Gated on `Duergar_ReplaceSLAEnlargePerson`, which nothing in any
-        // ingested book sets; its only setter is in Monster Codex.
-        &["Duergar ~ Spell-Like Ability ~ Invisibility"],
+        // A Goblin *variant* selector, not a swap: no replace flag, no
+        // positive gate, so it is `TraitRole::Unclassified` and no selection
+        // reaches it. Remedy in OPEN_FINDINGS above.
+        &["Oversized Goblin"],
+    ),
+    (
+        "inner_sea_races",
+        "race_traits",
+        // The replacement half of the `Human ~ Tribalistic` alternate. Its own
+        // row (`isr_abilities_race.lst:216`) carries no gate of any kind and no
+        // other row in the book names it, so it is `TraitRole::Unclassified`
+        // and no selection reaches it. This is an upstream data gap, not a
+        // wiring gap: selecting `Human ~ Tribalistic` correctly suppresses the
+        // standard `Human ~ Languages` row, and nothing brings this one in to
+        // take its place. Remedy in OPEN_FINDINGS above. 71 of the book's 72
+        // records reach a player; this is the one.
+        &["Human ~ Tribalistic Languages"],
     ),
     // SD28-C4.8/§60/§63: all 403 archetype-swap records across 7 books --
     // every key, because none reaches a player through any surface today
@@ -2297,17 +3010,190 @@ mod tests {
         }
     }
 
-    // APG's own reach test is deliberately not added yet: `decisions.md §37`'s
-    // first estimate of 50 real alternates corrected to 1 genuinely new key
-    // (`Half-Orc ~ Plagueborn`, `decisions.md §39`), and that 1 key is not
-    // ingested this cycle -- `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS`
-    // table (`§36` instance 15) does not recognize it, and shipping the
-    // corpus record without updating that table would offer it in the picker
-    // and refuse it at character-save time, a stub. The
-    // `("apg", "race_traits") => race_traits_reach(...)` match arm above is
-    // landed now (harmless and forward-compatible with 0 records today) so
-    // Plagueborn's follow-up only needs to add the corpus record and this
-    // test, not touch `reach_of` again.
+    /// **Plagueborn's follow-up, landed.** `decisions.md §37`'s first estimate
+    /// of 50 real APG alternates corrected to 1 genuinely new key
+    /// (`Half-Orc ~ Plagueborn`, `decisions.md §39`); the other 49 collide
+    /// with already-ingested ARG keys and are excluded at ingest time.
+    ///
+    /// That 1 record was held back — correctly — because
+    /// `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS` table did not
+    /// know its key, so shipping the corpus record alone would have offered
+    /// it in the picker and refused it at character-save time. SD-29's
+    /// race-trait extend lane landed both halves, and this test is the
+    /// claim DoD item 2 requires for the book's family: it executes, it is
+    /// not a pass-by-absence, and it accounts for the record.
+    #[test]
+    fn apgs_one_genuinely_new_alternate_racial_trait_reaches_a_player() {
+        // `apg`, not `advanced_players_guide`: `CORPUS_BOOK_IDS` maps the corpus
+        // directory to the book id every claim uses, and APG is one of the
+        // entries where the two spellings differ.
+        let apg_traits = Family::new("apg", "race_traits");
+        assert!(
+            corpus_inventory().0.contains(&apg_traits),
+            "the data/corpus scan must see data/corpus/advanced_players_guide/race_trait/"
+        );
+        assert!(full_inventory().contains(&apg_traits), "and it must reach the gate's inventory");
+
+        let ingested = corpus_record_keys("advanced_players_guide", "race_trait");
+        assert_eq!(
+            ingested.len(),
+            1,
+            "APG's 1 ingested race-trait record, counted on disk: {ingested:?}"
+        );
+        match reach_of(&apg_traits).expect("APG race traits have a declared claim") {
+            Reach::Surfaced { records, .. } => assert_eq!(records, 1),
+            other => panic!("APG's race-trait record must reach a player, got {other:?}"),
+        }
+    }
+
+    /// **SD-29 race-trait lane, round 2 (`decisions.md §45`).** Inner Sea
+    /// Races is the biggest single alternate-racial-trait ingest since ARG's
+    /// own, and it needed no new mechanism at all — which is the finding this
+    /// round recorded against `decisions.md §44.4`, whose successor queue
+    /// ranked two mechanism-blocked books ahead of it.
+    ///
+    /// This is the claim DoD item 2 requires for the book's family: it
+    /// executes against the live IPC builders, it is not a pass-by-absence,
+    /// and it accounts for every record — including the one that does not
+    /// reach, which is pinned by exact key in [`UNREACHED_RECORD_FINDINGS`]
+    /// with its remedy in [`OPEN_FINDINGS`] rather than rounded away.
+    #[test]
+    fn inner_sea_races_alternate_racial_traits_reach_a_player() {
+        let isr_traits = Family::new("inner_sea_races", "race_traits");
+        assert!(
+            corpus_inventory().0.contains(&isr_traits),
+            "the data/corpus scan must see data/corpus/inner_sea_races/race_trait/"
+        );
+        assert!(full_inventory().contains(&isr_traits), "and it must reach the gate's inventory");
+
+        let ingested = corpus_record_keys("inner_sea_races", "race_trait");
+        assert_eq!(
+            ingested.len(),
+            71,
+            "ISR's 71 ingested race-trait records, counted on disk. **Was 72 until 2026-08-12** \
+             (SD-29 `decisions.md` 53): `Elf ~ Sovyrian-Born` carries `NAMEISPI:YES`, PCGen's \
+             own declaration that the record NAME is Product Identity. A name cannot be \
+             redacted, so the row is dropped at ingest rather than screened -- the same \
+             ruling the monster lane reached for Inner Sea World Guide's five NAMEISPI rows"
+        );
+
+        // 70 of 71 reach. The shortfall is `Human ~ Tribalistic Languages` and
+        // it is pinned by key, both ways, so a SECOND unreached record fails
+        // here and so does this one silently starting to reach.
+        match reach_of(&isr_traits).expect("ISR race traits have a declared claim") {
+            Reach::NotSurfaced { missing, .. } => {
+                assert_eq!(
+                    missing.iter().map(String::as_str).collect::<Vec<_>>(),
+                    vec!["Human ~ Tribalistic Languages"],
+                    "exactly one ISR record is unreached, and it is the one OPEN_FINDINGS names"
+                );
+            }
+            other => panic!("ISR's race-trait shortfall must be reported exactly, got {other:?}"),
+        }
+    }
+
+    /// Horror Adventures' race traits reach a player, all 43 of them.
+    ///
+    /// SD-29 race-trait lane round 3 (`decisions.md §47`). The book was picked
+    /// by running `scripts/classify_race_trait_rows.py` on it *before* the
+    /// round committed to it, which is `decisions.md §45.1`'s method applied a
+    /// second time rather than a queue transcribed from a doc.
+    ///
+    /// Unlike every other book this lane has taken, this one has **no**
+    /// shortfall, and the assertion is written to make that a claim rather
+    /// than a silence: it demands a plain `Reach::Surfaced`, so a future
+    /// record that stops reaching fails here by name instead of quietly
+    /// widening an already-tolerated `NotSurfaced`.
+    #[test]
+    fn horror_adventures_alternate_racial_traits_reach_a_player() {
+        let ha_traits = Family::new("horror_adventures", "race_traits");
+        assert!(
+            corpus_inventory().0.contains(&ha_traits),
+            "the data/corpus scan must see data/corpus/horror_adventures/race_trait/"
+        );
+        assert!(full_inventory().contains(&ha_traits), "and it must reach the gate's inventory");
+
+        let ingested = corpus_record_keys("horror_adventures", "race_trait");
+        assert_eq!(
+            ingested.len(),
+            43,
+            "HA's 43 ingested race-trait records, counted on disk. Only \
+             ha_abilities_race.lst is ingested: support/ha_abilities_race_oa.lst is loaded by \
+             the pcc under PRECAMPAIGN:1,INCLUDES=Occult Adventures, a book this repo has not \
+             ingested"
+        );
+
+        match reach_of(&ha_traits).expect("HA race traits have a declared claim") {
+            Reach::Surfaced { .. } => {}
+            other => panic!(
+                "every HA race-trait record must reach a player; got {other:?}. HA's two \
+                 non-selectable rows (`Deep Jungle Halfling ~ Languages`, `... ~ Poison Use`) \
+                 are granted by name from `Halfling ~ Deep Jungle`, so unlike ISR's \
+                 `Human ~ Tribalistic Languages` they are reachable"
+            ),
+        }
+    }
+
+    /// Core Essentials' heritage traits reach a player, all 64 of them.
+    ///
+    /// SD-29 race-trait lane round 4 (`decisions.md §49`). This is the last
+    /// entry in the lane's 553-unit ceiling that is ordinary content, and it
+    /// is the only book whose records are **majority granted rather than
+    /// chosen**: 16 heritages a player picks and 48 replacement rows that
+    /// arrive with whichever heritage was picked.
+    ///
+    /// The count is asserted in both halves, not just in total, because the
+    /// two halves fail independently. Losing the heritage selectors would drop
+    /// the total to 0; losing the grant link derived from
+    /// `<race>_abilities_globalvar_subrace.lst` would drop it to 16 while
+    /// leaving 16 perfectly selectable records that change nothing on the
+    /// sheet -- the browse-only stub class `decisions.md §44.2` describes, and
+    /// the precise failure this book's shape invites.
+    #[test]
+    fn core_essentials_heritage_racial_traits_reach_a_player() {
+        let ce_traits = Family::new("core_essentials", "race_traits");
+        assert!(
+            corpus_inventory().0.contains(&ce_traits),
+            "the data/corpus scan must see data/corpus/core_essentials/race_trait/"
+        );
+        assert!(full_inventory().contains(&ce_traits), "and it must reach the gate's inventory");
+
+        let ingested = corpus_record_keys("core_essentials", "race_trait");
+        assert_eq!(
+            ingested.len(),
+            64,
+            "Core Essentials' 64 ingested heritage-trait records, counted on disk: 16 selectors \
+             (6 Aasimar + 10 Tiefling) and the 48 `<Race> Racial Trait`-typed replacement rows \
+             they grant. races/skinwalker/ carries the same shape and is out of scope -- \
+             Skinwalker is not one of the 18 races this project models"
+        );
+
+        // The half that a broken grant link would silently leave standing.
+        let menu = crate::race_trait_picker::build_alternate_racial_traits();
+        let selectable: Vec<String> = menu
+            .races
+            .iter()
+            .flat_map(|race| race.alternates.iter())
+            .filter(|row| row.book == "CE")
+            .map(|row| row.key.clone())
+            .collect();
+        assert_eq!(
+            selectable.len(),
+            16,
+            "16 heritages are offered, not 64: the other 48 are granted by whichever heritage \
+             the player picks and are never menu rows. Got {selectable:?}"
+        );
+
+        match reach_of(&ce_traits).expect("CE race traits have a declared claim") {
+            Reach::Surfaced { .. } => {}
+            other => panic!(
+                "every CE heritage record must reach a player; got {other:?}. A shortfall here \
+                 of exactly 48 means the `ABILITY:<Race> Racial Trait|AUTOMATIC|<key>` grant \
+                 links derived from <race>_abilities_globalvar_subrace.lst stopped being \
+                 written by src/bin/ingest_race_traits.rs"
+            ),
+        }
+    }
 
     /// The other half of the same blind spot: `pathfinder_unchained` hid
     /// behind accessor functions, so a `pub const`-only scanner reported an
@@ -2607,6 +3493,533 @@ mod tests {
         }
     }
 
+    /// Bonus Bestiary's two families, per record, against their own corpus
+    /// directories.
+    ///
+    /// Both sides come from genuinely different places -- the record files
+    /// written by `gen_book_cache -- bonus_bestiary`, and the live
+    /// `list_monster_catalog` response the screen renders -- so a table that
+    /// stopped reaching the wire fails here instead of agreeing with itself.
+    #[test]
+    fn bonus_bestiary_monsters_and_abilities_reach_the_catalog_record_by_record() {
+        let monsters = corpus_record_keys("bonus_bestiary", "monster");
+        let abilities = corpus_record_keys("bonus_bestiary", "monster_ability");
+        assert_eq!(monsters.len(), 14, "re-derived on disk this cycle");
+        assert_eq!(abilities.len(), 17, "re-derived on disk this cycle");
+
+        let response = crate::monster_catalog::build_monster_catalog();
+        let served_monsters: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "BB")
+            .map(|entry| entry.key.clone())
+            .collect();
+        let served_abilities: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "BB")
+            .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
+            .collect();
+        assert_eq!(served_monsters, monsters);
+        assert_eq!(served_abilities, abilities);
+
+        match reach_of(&Family::new("bonus_bestiary", "monsters")).expect("a claim is declared") {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 14);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected all 14 to reach, got {other:?}"),
+        }
+        match reach_of(&Family::new("bonus_bestiary", "monster_abilities"))
+            .expect("a claim is declared")
+        {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 17);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected all 17 to reach, got {other:?}"),
+        }
+    }
+
+    /// Every companion book's one family, per record, against its own corpus
+    /// directory — the `companion` kind's first reach claim in this repo.
+    ///
+    /// Deliberately **one** claim per book against a denominator that holds
+    /// BOTH structural shapes, unlike the monster pair above: the corpus files
+    /// creature rows and ability rows under one kind, so
+    /// `data/corpus/<book>/companion/` is one population and a claim per shape
+    /// would judge two numerators against one count.
+    ///
+    /// Counts re-derived on disk this cycle rather than transcribed:
+    /// `for b in inner_sea_combat monster_codex inner_sea_intrigue horror_adventures
+    /// bestiary_5 bestiary_6 bestiary_2; do echo -n "$b ";
+    /// ls data/corpus/$b/companion/*.json | wc -l; done`
+    /// -> 10, 15, 11, 2, 55, 26, 16 — which reproduce `docs/work-inventory.json`'s
+    /// own companion-unit counts for the same books exactly, with ONE stated
+    /// exception: Bestiary 5's inventory count is 57, and the two extra units
+    /// (`Familiar (Brain Mole)`, `Familiar (Chuspiki)`) live in
+    /// `support/b5_races_companion_oa.lst`, which the book's pcc loads only
+    /// under `PRECAMPAIGN:1,Occult Adventures`. Out of this rule set's scope by
+    /// construction, not by omission — `decisions.md §47.2`, and
+    /// `rules_tables::bestiary_5` pins their absence by name.
+    #[test]
+    fn every_ingested_companion_book_reaches_the_catalog_record_by_record() {
+        let expected: &[(&str, &str, usize)] = &[
+            ("inner_sea_combat", "ISC", 10),
+            ("monster_codex", "MC", 15),
+            ("inner_sea_intrigue", "ISI", 11),
+            ("horror_adventures", "HA", 2),
+            ("bestiary_5", "B5", 55),
+            ("bestiary_6", "B6", 26),
+            ("bestiary_2", "B2", 16),
+        ];
+        for &(book, wire_code, count) in expected {
+            let ingested = corpus_record_keys(book, "companion");
+            assert_eq!(ingested.len(), count, "{book}: re-derived on disk this cycle");
+
+            let response = crate::companion_catalog::build_companion_catalog();
+            let mut served: BTreeSet<String> = response
+                .entries
+                .iter()
+                .filter(|entry| entry.book == wire_code)
+                .map(|entry| entry.key.clone())
+                .collect();
+            served.extend(
+                response
+                    .entries
+                    .iter()
+                    .filter(|entry| entry.book == wire_code)
+                    .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone())),
+            );
+            assert_eq!(served, ingested, "{book}: the wire and the corpus disagree");
+
+            match reach_of(&Family::new(book, "companions")).expect("a claim is declared") {
+                Reach::Surfaced { records, surface } => {
+                    assert_eq!(records, count, "{book}");
+                    assert_eq!(surface, "list_companion_catalog");
+                }
+                other => panic!("{book}: expected all {count} to reach, got {other:?}"),
+            }
+        }
+    }
+
+    /// Monster Codex's two families, per record, against their own corpus
+    /// directories. Same structure as the Bonus Bestiary test above and the
+    /// same two independent sides, run for the second chassis book.
+    ///
+    /// The counts are re-derived rather than transcribed:
+    /// `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+    /// print(sum(1 for u in d['units'] if u['book']=='monster_codex' and
+    /// u['kind']=='monster'))"` -> 2, the same for `monster_ability` -> 3, and
+    /// `ls data/corpus/monster_codex/monster*/ | grep -c json` agrees.
+    ///
+    /// **This is a small book on purpose, not a small ingest.** Monster Codex
+    /// carries 2 monster rows in the whole corpus (`loop-instruction.md`'s
+    /// corpus-shape notes); a cycle that ingested 2 records here has ingested
+    /// the book's entire monster family, not a sample of it.
+    #[test]
+    fn monster_codex_monsters_and_abilities_reach_the_catalog_record_by_record() {
+        let monsters = corpus_record_keys("monster_codex", "monster");
+        let abilities = corpus_record_keys("monster_codex", "monster_ability");
+        assert_eq!(monsters.len(), 2, "re-derived on disk this cycle");
+        assert_eq!(abilities.len(), 3, "re-derived on disk this cycle");
+
+        let response = crate::monster_catalog::build_monster_catalog();
+        let served_monsters: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "MC")
+            .map(|entry| entry.key.clone())
+            .collect();
+        let served_abilities: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "MC")
+            .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
+            .collect();
+        assert_eq!(served_monsters, monsters);
+        assert_eq!(served_abilities, abilities);
+
+        match reach_of(&Family::new("monster_codex", "monsters")).expect("a claim is declared") {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 2);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected both to reach, got {other:?}"),
+        }
+        match reach_of(&Family::new("monster_codex", "monster_abilities"))
+            .expect("a claim is declared")
+        {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 3);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected all 3 to reach, got {other:?}"),
+        }
+    }
+
+    /// Both Book of the Damned volumes, per record, driven off the chassis
+    /// registry rather than hand-listed.
+    ///
+    /// **This is the round's whole-book claim and it is only meaningful because
+    /// neither book has an orphan ability row.** An orphan -- an ability row no
+    /// monster row of the same book claims -- reaches no screen, so a book with
+    /// orphans cannot satisfy a whole-family claim at all. Re-derived, not
+    /// assumed:
+    ///
+    /// ```text
+    /// python3 scripts/classify_monster_ability_rows.py \
+    ///     book_of_the_damned_volume_1 book_of_the_damned_volume_2
+    /// book                          mon  abil row-named prefix ORPHAN
+    /// book_of_the_damned_volume_1     5    36        36      0      0
+    /// book_of_the_damned_volume_2     4    17        17      0      0
+    /// ```
+    ///
+    /// Counts on the other side come from the inventory's own units:
+    /// `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+    /// print(sum(1 for u in d['units'] if
+    /// u['book']=='book_of_the_damned_volume_1' and u['kind']=='monster'))"`
+    /// -> 5, `monster_ability` -> 36; volume 2 -> 4 and 17.
+    #[test]
+    fn both_book_of_the_damned_volumes_reach_the_catalog_record_by_record() {
+        for (book, wire_code, monster_count, ability_count) in [
+            ("book_of_the_damned_volume_1", "BOTD1", 5usize, 36usize),
+            ("book_of_the_damned_volume_2", "BOTD2", 4, 17),
+        ] {
+            let monsters = corpus_record_keys(book, "monster");
+            let abilities = corpus_record_keys(book, "monster_ability");
+            assert_eq!(monsters.len(), monster_count, "{book}: re-derived on disk this cycle");
+            assert_eq!(abilities.len(), ability_count, "{book}: re-derived on disk this cycle");
+
+            let response = crate::monster_catalog::build_monster_catalog();
+            let served_monsters: BTreeSet<String> = response
+                .entries
+                .iter()
+                .filter(|entry| entry.book == wire_code)
+                .map(|entry| entry.key.clone())
+                .collect();
+            let served_abilities: BTreeSet<String> = response
+                .entries
+                .iter()
+                .filter(|entry| entry.book == wire_code)
+                .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
+                .collect();
+            assert_eq!(served_monsters, monsters, "{book}: served monsters");
+            assert_eq!(served_abilities, abilities, "{book}: served abilities");
+
+            match reach_of(&Family::new(book, "monsters")).expect("a claim is declared") {
+                Reach::Surfaced { records, surface } => {
+                    assert_eq!(records, monster_count);
+                    assert_eq!(surface, "list_monster_catalog");
+                }
+                other => panic!("{book}: expected every monster to reach, got {other:?}"),
+            }
+            match reach_of(&Family::new(book, "monster_abilities")).expect("a claim is declared") {
+                Reach::Surfaced { records, surface } => {
+                    assert_eq!(records, ability_count);
+                    assert_eq!(surface, "list_monster_catalog");
+                }
+                other => panic!("{book}: expected every ability to reach, got {other:?}"),
+            }
+        }
+    }
+
+    /// Inner Sea World Guide, per record — and the first book in this lane
+    /// whose served set is deliberately SMALLER than its corpus row count, for
+    /// two independent reasons.
+    ///
+    /// **Product Identity.** Five monster rows carry `NAMEISPI:YES`, PCGen's own
+    /// per-record marker that the NAME is Product Identity, and three ability
+    /// rows match `PI_BLACKLIST_TERMS` outright. A key cannot be redacted, so
+    /// they are not ingested at all. The eight are pinned by corpus line, never
+    /// by name, in `rules_tables::inner_sea_world_guide`'s
+    /// `the_eight_product_identity_rows_are_not_records` — their names ARE the
+    /// Product Identity, and a comment recording a removal has no need to
+    /// instantiate what it removed.
+    ///
+    /// **Orphans.** Thirteen ability rows are then owned by no shipped monster —
+    /// five against the whole book (`iswg_templates.lst` templates), eight
+    /// cascading from the PI drops. Re-derived:
+    ///
+    /// ```text
+    /// python3 scripts/classify_monster_ability_rows.py inner_sea_world_guide
+    /// book                    mon  abil row-named prefix ORPHAN
+    /// inner_sea_world_guide    14    30        25      0      5
+    /// ```
+    ///
+    /// So the claim asserts **9 and 14** — every record that ships — rather than
+    /// 14 and 30. The corpus unit counts are the inventory's own:
+    /// `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+    /// print(sum(1 for u in d['units'] if u['book']=='inner_sea_world_guide'
+    /// and u['kind']=='monster'))"` -> 14, `monster_ability` -> 30.
+    ///
+    /// **The excluded rows are asserted absent from the response too.** A claim
+    /// that only counted what arrived would pass equally well if a PI name had
+    /// quietly been ingested, which is the outcome this exclusion exists to
+    /// prevent.
+    #[test]
+    fn inner_sea_world_guide_reaches_the_catalog_for_every_linked_record() {
+        let monsters = corpus_record_keys("inner_sea_world_guide", "monster");
+        let abilities = corpus_record_keys("inner_sea_world_guide", "monster_ability");
+        assert_eq!(
+            monsters.len(),
+            9,
+            "the 9 shippable rows; the book's other 5 carry NAMEISPI:YES"
+        );
+        assert_eq!(
+            abilities.len(),
+            14,
+            "the 14 owned, non-PI rows; the book's other 16 are PI or orphaned"
+        );
+
+        let response = crate::monster_catalog::build_monster_catalog();
+        let served_monsters: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "ISWG")
+            .map(|entry| entry.key.clone())
+            .collect();
+        let served_abilities: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "ISWG")
+            .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
+            .collect();
+        assert_eq!(served_monsters, monsters, "served monsters");
+        assert_eq!(served_abilities, abilities, "served abilities");
+
+        // Not a count and not a name list: the property is checked against the
+        // LIVE blacklist, so a term added to `PI_BLACKLIST_TERMS` later fails
+        // here rather than shipping quietly, and this file never has to spell a
+        // Product Identity name to say it is absent. The five `NAMEISPI:YES`
+        // rows, which the term list does not name, are pinned by corpus line in
+        // `rules_tables::inner_sea_world_guide`.
+        for key in served_monsters.iter().chain(served_abilities.iter()) {
+            let lower = key.to_ascii_lowercase();
+            for term in codex::rules_core::pi_screening::PI_BLACKLIST_TERMS {
+                assert!(
+                    !lower.contains(&term.to_ascii_lowercase()),
+                    "a served Inner Sea World Guide key matches a Product Identity term; \
+                     the record must not be ingested at all"
+                );
+            }
+        }
+        for orphan in ["aligned_strike", "grant_spells", "winding", "swift_reactions", "difficult_to_create"] {
+            assert!(
+                !served_abilities.iter().any(|key| key.contains(orphan)),
+                "{orphan} is owned by an iswg_templates.lst template and reaches no monster"
+            );
+        }
+
+        match reach_of(&Family::new("inner_sea_world_guide", "monsters"))
+            .expect("a claim is declared")
+        {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 9);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected every monster to reach, got {other:?}"),
+        }
+        match reach_of(&Family::new("inner_sea_world_guide", "monster_abilities"))
+            .expect("a claim is declared")
+        {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 14);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected every linked ability to reach, got {other:?}"),
+        }
+    }
+
+    /// Bestiary 2, per record — the lane's largest book by an order of
+    /// magnitude, and the first one whose whole monster set is Open Game
+    /// Content.
+    ///
+    /// **Zero Product Identity rows**, which is not an assumption but a
+    /// re-derivation: `grep -c 'NAMEISPI:YES' b2_races.lst b2_abilities_race.lst`
+    /// → `0` and `0`, and the classifier's own PI column agrees:
+    ///
+    /// ```text
+    /// python3 scripts/classify_monster_ability_rows.py bestiary_2
+    /// book         mon  abil row-named prefix ORPHAN   PI
+    /// bestiary_2   316   466       398      4     64    0
+    /// ```
+    ///
+    /// `ogl-pi-blacklist.md` §2 predicts exactly this for a
+    /// `roleplaying_game/` bestiary: classic SRD monster names are
+    /// presumptively Open Game Content, and the Product Identity a bestiary
+    /// carries is in the campaign-setting books' proper nouns, not here.
+    ///
+    /// **Two exclusions, neither of them Product Identity.** Two monster rows
+    /// are `<Base>.COPY=<Variant>` derived rows — the only two in the whole
+    /// corpus — and state a delta on another record rather than a stat block;
+    /// 65 ability rows are owned by no shipped monster row of this book. Both
+    /// classes are cited by line in `monster_data.rs`'s generated header and
+    /// pinned in `rules_tables::bestiary_2`.
+    ///
+    /// The claim therefore asserts **314 and 401**, which is what is served,
+    /// rather than rounding up to the corpus's 316 and 466.
+    ///
+    /// Corpus unit counts are the inventory's own, never a line count over the
+    /// `.lst` (which reads 322 declared rows for the races file — six more than
+    /// the inventory's 316, the difference being `.COPY=` rows its own trap
+    /// filters drop):
+    /// `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+    /// print(sum(1 for u in d['units'] if u['book']=='bestiary_2'
+    /// and u['kind']=='monster'))"` → 316, `monster_ability` → 466.
+    #[test]
+    fn bestiary_2_reaches_the_catalog_for_every_linked_record() {
+        let monsters = corpus_record_keys("bestiary_2", "monster");
+        let abilities = corpus_record_keys("bestiary_2", "monster_ability");
+        assert_eq!(
+            monsters.len(),
+            314,
+            "the 314 rows that state a stat block; the other 2 are `.COPY=` deltas"
+        );
+        assert_eq!(
+            abilities.len(),
+            401,
+            "the 401 owned rows; the book's other 65 are orphans owned by no monster row here"
+        );
+
+        let response = crate::monster_catalog::build_monster_catalog();
+        let served_monsters: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "B2")
+            .map(|entry| entry.key.clone())
+            .collect();
+        let served_abilities: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "B2")
+            .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
+            .collect();
+        assert_eq!(served_monsters, monsters, "served monsters");
+        assert_eq!(served_abilities, abilities, "served abilities");
+
+        // The same live-blacklist property the Inner Sea World Guide claim
+        // checks. Asserting "this book has no Product Identity" by citing a
+        // grep that returned 0 today is a statement about today; this fails if
+        // a per-book override ever adds a term that one of these 715 keys
+        // matches.
+        for key in served_monsters.iter().chain(served_abilities.iter()) {
+            let lower = key.to_ascii_lowercase();
+            for term in codex::rules_core::pi_screening::PI_BLACKLIST_TERMS {
+                assert!(
+                    !lower.contains(&term.to_ascii_lowercase()),
+                    "a served Bestiary 2 key matches a Product Identity term; the record must \
+                     not be ingested at all"
+                );
+            }
+        }
+
+        match reach_of(&Family::new("bestiary_2", "monsters")).expect("a claim is declared") {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 314);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected every monster to reach, got {other:?}"),
+        }
+        match reach_of(&Family::new("bestiary_2", "monster_abilities"))
+            .expect("a claim is declared")
+        {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 401);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected every linked ability to reach, got {other:?}"),
+        }
+    }
+
+    /// Bestiary 3, per record — the first book in this lane that loses NO
+    /// monster row, and the cleanest by every screen the lane runs.
+    ///
+    /// ```text
+    /// python3 scripts/classify_monster_ability_rows.py bestiary_3
+    /// book         mon  abil row-named prefix ORPHAN   PI COPY
+    /// bestiary_3   261    40         0     27     13    0    0
+    /// ```
+    ///
+    /// **Zero Product Identity rows** — `grep -c 'NAMEISPI:YES' b3_races.lst
+    /// b3_abilities_race.lst` → `0` and `0`, and the classifier's own PI column
+    /// agrees, which `ogl-pi-blacklist.md` §2 predicts for a
+    /// `roleplaying_game/` bestiary. **Zero `.COPY=` rows** — the only two in
+    /// the corpus are Bestiary 2's.
+    ///
+    /// So the single exclusion class is the 13 orphan ability rows, and the
+    /// claim asserts **261 and 27**: all 261 monsters, and the 27 abilities a
+    /// monster row of this book actually owns.
+    ///
+    /// Corpus unit counts are the inventory's own, never a line count over the
+    /// `.lst`:
+    /// `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+    /// print(sum(1 for u in d['units'] if u['book']=='bestiary_3'
+    /// and u['kind']=='monster'))"` → 261, `monster_ability` → 40.
+    #[test]
+    fn bestiary_3_reaches_the_catalog_for_every_linked_record() {
+        let monsters = corpus_record_keys("bestiary_3", "monster");
+        let abilities = corpus_record_keys("bestiary_3", "monster_ability");
+        assert_eq!(
+            monsters.len(),
+            261,
+            "every one of this book's corpus monster rows ships; no PI row, no `.COPY=` delta"
+        );
+        assert_eq!(
+            abilities.len(),
+            27,
+            "the 27 owned rows; the book's other 13 are orphans owned by no monster row here"
+        );
+
+        let response = crate::monster_catalog::build_monster_catalog();
+        let served_monsters: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "B3")
+            .map(|entry| entry.key.clone())
+            .collect();
+        let served_abilities: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "B3")
+            .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
+            .collect();
+        assert_eq!(served_monsters, monsters, "served monsters");
+        assert_eq!(served_abilities, abilities, "served abilities");
+
+        // The same live-blacklist property every chassis book's claim checks:
+        // a grep that returned 0 today is a statement about today, and this
+        // fails if a per-book override ever adds a term one of these 288 keys
+        // matches.
+        for key in served_monsters.iter().chain(served_abilities.iter()) {
+            let lower = key.to_ascii_lowercase();
+            for term in codex::rules_core::pi_screening::PI_BLACKLIST_TERMS {
+                assert!(
+                    !lower.contains(&term.to_ascii_lowercase()),
+                    "a served Bestiary 3 key matches a Product Identity term; the record must \
+                     not be ingested at all"
+                );
+            }
+        }
+
+        match reach_of(&Family::new("bestiary_3", "monsters")).expect("a claim is declared") {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 261);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected every monster to reach, got {other:?}"),
+        }
+        match reach_of(&Family::new("bestiary_3", "monster_abilities"))
+            .expect("a claim is declared")
+        {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 27);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected every linked ability to reach, got {other:?}"),
+        }
+    }
+
     /// The monster claim, per record.
     ///
     /// The denominator is the record files on disk; the numerator is the live
@@ -2615,17 +4028,36 @@ mod tests {
     /// with each other.
     #[test]
     fn bestiary_1_monsters_reach_the_monster_catalog_record_by_record() {
-        let ingested = corpus_record_ids("beastiary", "monster");
+        // Both tables serving this book, exactly as `monsters_reach` unions
+        // them (SD-29 Epic 5 round 8, `decisions.md §58.3`). The two halves are
+        // pinned separately so neither can vanish behind the other's total: 46
+        // SD-22 records carrying `data.id`, 280 chassis records carrying
+        // `data.key`.
+        let sd22 = corpus_record_ids("beastiary", "monster");
+        let chassis = corpus_record_keys("beastiary", "monster");
         assert_eq!(
-            ingested.len(),
+            sd22.len(),
             46,
-            "Bestiary 1's 46 ingested monster records, counted on disk (SD28-E16 subset 09 \
+            "Bestiary 1's 46 SD-22 monster records, counted on disk (SD28-E16 subset 09 \
              raised this from 41)"
         );
+        assert_eq!(
+            chassis.len(),
+            280,
+            "the chassis complement, counted on disk -- see rules_tables::bestiary"
+        );
+        let mut ingested = sd22;
+        ingested.extend(chassis);
 
+        // Filtered to this book (SD-29 Epic 5): the catalog now serves Bonus
+        // Bestiary from the same command, and comparing the whole response
+        // against one book's directory would fail for a correct reason and
+        // stop saying anything about Bestiary 1. The Bonus Bestiary half has
+        // its own record-by-record test below, against its own directory.
         let served: BTreeSet<String> = crate::monster_catalog::build_monster_catalog()
             .entries
             .into_iter()
+            .filter(|entry| entry.book == "B1")
             .map(|entry| entry.key)
             .collect();
         assert_eq!(
@@ -2634,8 +4066,19 @@ mod tests {
         );
 
         match reach_of(&Family::new("beastiary1", "monsters")).expect("a claim is declared") {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 46),
-            other => panic!("expected all 46 to reach, got {other:?}"),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 326),
+            other => panic!("expected all 326 to reach, got {other:?}"),
+        }
+
+        // The book's monster ABILITIES, a family it has had records for only
+        // since round 8. Same shape as every other chassis book's claim.
+        let abilities = corpus_record_keys("beastiary", "monster_ability");
+        assert_eq!(abilities.len(), 323, "the chassis's owned ability records on disk");
+        match reach_of(&Family::new("beastiary1", "monster_abilities"))
+            .expect("a claim is declared")
+        {
+            Reach::Surfaced { records, .. } => assert_eq!(records, 323),
+            other => panic!("expected all 323 abilities to reach, got {other:?}"),
         }
     }
 

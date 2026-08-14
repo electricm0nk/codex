@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Giant Slug ~ Malleable",
+    "delivery": "Extraordinary",
+    "description": "A giant slug's body is very malleable, allowing it to fit into narrow areas with ease. A giant slug takes no penalty to its speed or checks when squeezing in an area that is one size category smaller than its actual size (10 feet wide for most giant slugs). A giant slug can squeeze normally through an area two size categories smaller than its actual size (5 feet wide for most giant slugs).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:giant_slug_malleable",
+    "name": "Malleable",
+    "owners": [
+      "beastiary:monster:slug_giant"
+    ],
+    "source_page": "p.254",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1129,
+    "record_key": "Giant Slug ~ Malleable"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Releases — Campaign Codex</title>
+  <meta name="description" content="Release notes for Campaign Codex, the open-source Pathfinder 1e rules engine." />
+  <meta name="author" content="electricm0nk" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E📕%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">Campaign Codex</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/">Overview</a>
+        <a href="/status.html">Status</a>
+        <a href="/releases.html">Releases</a>
+        <a href="https://github.com/electricm0nk/codex">GitHub →</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero compact">
+      <div class="wrap">
+        <p class="kicker">Releases</p>
+        <h1>Release notes</h1>
+        <p class="lede">
+          Every Campaign Codex release bundle is documented as a Spec-Domain (SD-NN) handoff under
+          <code>docs/release/SD-NN/</code> in the repository. Each bundle has a <code>release-notes.md</code>
+          as its closure surface. This page indexes the published bundles.
+        </p>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="wrap">
+        <h2>Published releases</h2>
+
+        <article class="release">
+          <header>
+            <h3>v0.7 alpha</h3>
+            <p class="meta">Combined tranche/6 + tranche/7 cut · covers SD-22, SD-23, SD-24, SD-25, SD-27</p>
+          </header>
+          <p>
+            Combines the work that landed across two tranche cuts. Substantive content includes
+            content-source ingest for the Advanced Player's Guide (6 base classes), Advanced Class
+            Guide (10 base classes), Bestiary 1, Advanced Race Guide, Pathfinder Unchained, and the
+            Shape B v1 license-aware schema extension. Fighter+Wizard multiclass base-chassis dispatch
+            lands. Hub-of-hubs rule-system adapter seam lands. Full per-cycle receipts in
+            <code>docs/release/v0.7/release-notes.md</code>.
+          </p>
+          <p>
+            <a href="https://github.com/electricm0nk/codex/blob/main/docs/release/v0.7/release-notes.md">Read full v0.7 release notes →</a>
+          </p>
+        </article>
+
+        <article class="release">
+          <header>
+            <h3>v0.6 alpha</h3>
+            <p class="meta">Initial published alpha · covers SD-18, SD-19, SD-20, SD-21</p>
+          </header>
+          <p>
+            The first alpha published to origin. Versioned <code>v0.6.120</code> at publish time;
+            the tranche-base-7 advance was missed at publish and is captured by v0.7 above. The v0.6
+            closure material lives under <code>docs/release/v0.6/</code> as scoping notes.
+          </p>
+          <p>
+            <a href="https://github.com/electricm0nk/codex/tree/main/docs/release/v0.6">Browse v0.6 scoping notes →</a>
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="content alt">
+      <div class="wrap">
+        <h2>Bundles in flight</h2>
+        <p>These bundles are in the active development stream. They will land on a future release cut.</p>
+
+        <article class="release">
+          <header>
+            <h3>SD-28 — Ultimate book content ingestion</h3>
+            <p class="meta">branch: tranche/8 · build target: 0.8.&lt;build&gt;</p>
+          </header>
+          <p>
+            Ingest of the six Ultimate-line books (Ultimate Combat, Ultimate Equipment, Ultimate
+            Magic, Ultimate Campaign, Wilderness Adventures, Ultimate Intrigue) plus Dreamscarred
+            Press's <em>Ultimate Psionics</em> as a third-party Paizo-adjacent hardcover. Per-book
+            pre-build + verify + parity cycles.
+          </p>
+          <p>
+            <a href="https://github.com/electricm0nk/codex/blob/main/docs/release/SD-28-ultimate-book-content-ingestion/release-notes.md">SD-28 release notes →</a>
+            ·
+            <a href="https://github.com/electricm0nk/codex/tree/main/docs/release/SD-28-ultimate-book-content-ingestion">SD-28 docs →</a>
+          </p>
+        </article>
+
+        <article class="release">
+          <header>
+            <h3>SD-29 — Corpus-wide catch-up lanes</h3>
+            <p class="meta">branch: tranche/9 · build target: 0.9.&lt;build&gt; · closure landed 2026-08-11</p>
+          </header>
+          <p>
+            First bundle to derive the whole corpus's shape in one pass rather than book-by-book.
+            Adds the merged <code>monster</code>/<code>monster_ability</code> kind chassis and the
+            Bonus Bestiary book. Surfaced the race chassis and companion-kind ceilings named on the
+            <a href="status.html">status page</a>.
+          </p>
+          <p>
+            <a href="https://github.com/electricm0nk/codex/blob/main/docs/release/SD-29-corpus-wide-catch-up-lanes/release-notes.md">SD-29 release notes →</a>
+          </p>
+        </article>
+
+        <article class="release">
+          <header>
+            <h3>SD-30 — Class feature &amp; archetype bundle</h3>
+            <p class="meta">branch: tranche/10 · build target: 0.10.&lt;build&gt;</p>
+          </header>
+          <p>
+            Per-record rollup across sixteen books for class features and archetypes. Closure has
+            not fired; release-notes.md will be populated at the closure epic.
+          </p>
+          <p>
+            <a href="https://github.com/electricm0nk/codex/blob/main/docs/release/SD-30-class-feature-archetype-bundle/release-notes.md">SD-30 release notes →</a>
+          </p>
+        </article>
+
+        <article class="release">
+          <header>
+            <h3>SD-31 — PCGen character import</h3>
+            <p class="meta">branch: tranche/11 · build target: 0.11.&lt;build&gt; · planning-ready</p>
+          </header>
+          <p>
+            Codex can read PCGen's <em>data</em> (<code>.lst</code>/<code>.pcc</code>) but not PCGen's
+            <em>characters</em>. SD-31 builds that path. Headline: <em>an import either brings your
+            character across intact, or tells you exactly what it could not bring and refuses</em>.
+            No silent losses.
+          </p>
+          <p>
+            <a href="https://github.com/electricm0nk/codex/blob/main/docs/release/SD-31-pcgen-character-import/release-notes.md">SD-31 release notes →</a>
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="wrap">
+        <h2>How to read the release notes</h2>
+        <p>Every <code>docs/release/SD-NN/release-notes.md</code> file is a closure-updated artifact with the same section headers, enforced by <code>tools/release/check_release_manifest.py</code>:</p>
+        <ul>
+          <li><strong>Summary</strong> — overall release description, build version, branch</li>
+          <li><strong>User-Visible Changes</strong> — what a user notices</li>
+          <li><strong>Defects Fixed</strong> — closed bugs</li>
+          <li><strong>Operational Notes</strong> — operator-relevant changes (deploy, schema, config)</li>
+          <li><strong>Verification Evidence</strong> — receipts, gate outputs, the command set that produced them</li>
+          <li><strong>Known Issues</strong> — open items deferred to a follow-on bundle</li>
+          <li><strong>Update Eligibility</strong> — operator-on-file override indicators</li>
+        </ul>
+        <p>For the full architectural state, see <a href="status.html">status</a> and <a href="https://github.com/electricm0nk/codex/blob/main/docs/architecture/status.md">docs/architecture/status.md</a> in the repo.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Campaign Codex is an independent open-source project. Pathfinder and the Pathfinder Compatibility Logo are trademarks of Paizo Inc.</p>
+      <p>Source code: MIT. Game rules data: see per-dataset licenses.</p>
+    </div>
+  </footer>
+</body>
+</html>

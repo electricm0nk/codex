@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Wraith ~ Constitution Drain",
+    "delivery": "Supernatural",
+    "description": "Creatures hit by a wraith's touch attack must succeed on a DC %1 Fortitude save or take 1d6 points of Constitution drain. On each successful attack, the wraith gains 5 temporary hit points.",
+    "description_variables": [
+      "ConstitutionDrainDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:wraith_constitution_drain",
+    "name": "Constitution Drain",
+    "owners": [
+      "beastiary:monster:wraith"
+    ],
+    "source_page": "p.281",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1255,
+    "record_key": "Wraith ~ Constitution Drain"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

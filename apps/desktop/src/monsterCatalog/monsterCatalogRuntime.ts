@@ -10,7 +10,12 @@ import { hasTauriRuntime } from '../boundary/runtime';
  * Every value below is transcribed from the real ingested record in
  * `data/corpus/beastiary/monster/`, so the preview never shows a monster the
  * corpus does not contain or a number it does not state. In the desktop app
- * this branch is never taken: `list_monster_catalog` serves all 41.
+ * this branch is never taken: `list_monster_catalog` serves all 71 (46
+ * Bestiary 1 + 14 Bonus Bestiary + 2 Monster Codex + 5 Book of the Damned
+ * Volume 1 + 4 Volume 2). The figure is a doc
+ * comment, not a pin — the count that is enforced lives in
+ * `reach_gate.rs`'s per-record claims, which derive it from the corpus
+ * directories rather than from prose.
  */
 function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
   return [
@@ -28,6 +33,10 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
         { name: 'Claw', damageDice: '1d6', damageDiceSource: 'monsterRowToken', groundingNote: null },
         { name: 'Bite', damageDice: '1d6', damageDiceSource: 'monsterRowToken', groundingNote: null },
       ],
+      speeds: [{ mode: 'Walk', feet: 30 }],
+      monsterClass: null,
+      abilities: [],
+      externalAbilityRefs: [],
     },
     {
       key: 'beastiary1:monster:gnoll',
@@ -40,6 +49,10 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       raceSubtype: 'Gnoll',
       sourcePage: 'p.155',
       naturalAttacks: [],
+      speeds: [{ mode: 'Walk', feet: 30 }],
+      monsterClass: null,
+      abilities: [],
+      externalAbilityRefs: [],
     },
     {
       key: 'beastiary1:monster:wolf',
@@ -54,6 +67,10 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       naturalAttacks: [
         { name: 'Bite', damageDice: '1d6', damageDiceSource: 'monsterRowToken', groundingNote: null },
       ],
+      speeds: [{ mode: 'Walk', feet: 50 }],
+      monsterClass: null,
+      abilities: [],
+      externalAbilityRefs: [],
     },
     {
       key: 'beastiary1:monster:shark',
@@ -68,6 +85,10 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       naturalAttacks: [
         { name: 'Bite', damageDice: '1d8', damageDiceSource: 'monsterRowToken', groundingNote: null },
       ],
+      speeds: [],
+      monsterClass: null,
+      abilities: [],
+      externalAbilityRefs: [],
     },
     {
       key: 'beastiary1:monster:ankheg',
@@ -90,6 +111,10 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
             'text ("bite +5 (2d6+4 plus 1d4 acid and grab)").',
         },
       ],
+      speeds: [{ mode: 'Walk', feet: 30 }],
+      monsterClass: null,
+      abilities: [],
+      externalAbilityRefs: [],
     },
     {
       key: 'beastiary1:monster:gelatinous_cube',
@@ -104,6 +129,71 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       naturalAttacks: [
         { name: 'Slam', damageDice: '1d6', damageDiceSource: 'monsterRowToken', groundingNote: null },
       ],
+      speeds: [{ mode: 'Walk', feet: 15 }],
+      monsterClass: null,
+      abilities: [],
+      externalAbilityRefs: [],
+    },
+    {
+      // Bonus Bestiary's chassis + features, transcribed from
+      // `data/corpus/bonus_bestiary/monster/allip.json` and the three ability
+      // records it names. Allip is the preview's Bonus Bestiary row precisely
+      // because it exercises the two things Bestiary 1's rows cannot: a
+      // fly-only `MOVE:` token and ingested `monster_ability` records.
+      key: 'bonus_bestiary:monster:allip',
+      book: 'BB',
+      name: 'Allip',
+      challengeRating: 3,
+      size: 'M',
+      speedFt: 0,
+      raceType: 'Undead',
+      raceSubtype: 'Incorporeal',
+      sourcePage: 'p.4',
+      naturalAttacks: [
+        {
+          name: 'Incorporeal touch',
+          damageDice: '0',
+          damageDiceSource: 'monsterRowToken',
+          groundingNote: null,
+        },
+      ],
+      speeds: [{ mode: 'Fly', feet: 30 }],
+      monsterClass: 'Undead:4',
+      abilities: [
+        {
+          key: 'bonus_bestiary:monster_ability:babble',
+          name: 'Babble',
+          facet: 'SpecialAttack',
+          delivery: 'Supernatural',
+          description:
+            'An allip constantly mutters and whines to itself, creating a hypnotic effect. All ' +
+            'sane creatures within 60 feet of the allip must succeed on a DC %1 Will save or be ' +
+            'fascinated for 2d4 rounds.',
+          sourcePage: 'p.4',
+        },
+        {
+          key: 'bonus_bestiary:monster_ability:madness',
+          name: 'Madness',
+          facet: 'SpecialQuality',
+          delivery: 'Supernatural',
+          description:
+            'Anyone targeting an allip with a thought detection, mind control, or telepathic ' +
+            'ability makes direct contact with its tortured mind and takes 1d4 points of Wisdom ' +
+            'damage.',
+          sourcePage: 'p.4',
+        },
+        {
+          key: 'bonus_bestiary:monster_ability:touch_of_insanity',
+          name: 'Touch of Insanity',
+          facet: 'SpecialAttack',
+          delivery: 'Supernatural',
+          description:
+            'The touch of an allip deals 1d4 points of Wisdom damage. A successful critical hit ' +
+            'causes 1d4 points of Wisdom damage and 1 point of Wisdom drain.',
+          sourcePage: 'p.4',
+        },
+      ],
+      externalAbilityRefs: ['Channel Resistance', 'Flight Maneuverability'],
     },
   ];
 }

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Apocalypse Locust ~ Abyssal Torment",
+    "delivery": "Supernatural",
+    "description": "An apocalypse locust's sting is designed to torment its victims with wracking pain. A victim of the creature's venomous sting also takes a -4 penalty on attack rolls, skill checks, and ability checks. The effects of abyssal torment last until the sling's poison is cured.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:apocalypse_locust_abyssal_torment",
+    "name": "Abyssal Torment",
+    "owners": [
+      "bestiary_4:monster:apocalypse_locust"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 275,
+    "record_key": "Apocalypse Locust ~ Abyssal Torment"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

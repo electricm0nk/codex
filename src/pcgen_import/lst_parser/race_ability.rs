@@ -203,7 +203,7 @@ impl LstDiagnostic {
     /// Returns true when this diagnostic classifies as a SD17-B-3 finding.
     /// All LST parser diagnostics carry the SD17-B-3 tag, so this is a
     /// structural assertion used by the acceptance tests.
-    pub fn kind_is_sd17_b3(&self) -> bool {
+    pub fn kind_is_malformed_race_or_ability(&self) -> bool {
         self.slice == "SD17-B-3"
             && matches!(
                 self.kind,
@@ -576,7 +576,7 @@ mod tests {
     }
 
     #[test]
-    fn diagnostic_carries_sd17_b3_slice_tag() {
+    fn diagnostic_carries_malformed_race_or_ability_kind() {
         let d = LstDiagnostic::new(
             "x.lst",
             1,
@@ -585,6 +585,6 @@ mod tests {
             "no target",
         );
         assert_eq!(d.slice, "SD17-B-3");
-        assert!(d.kind_is_sd17_b3());
+        assert!(d.kind_is_malformed_race_or_ability());
     }
 }

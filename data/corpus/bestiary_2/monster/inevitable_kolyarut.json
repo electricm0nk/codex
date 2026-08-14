@@ -1,0 +1,45 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "12",
+    "corpus_key": "Inevitable (Kolyarut)",
+    "external_ability_refs": [],
+    "key": "bestiary_2:monster:inevitable_kolyarut",
+    "monster_class": "Outsider (Fort/Will):12",
+    "name": "Inevitable (Kolyarut)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Extraplanar|Inevitable|Lawful",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.163",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 512,
+    "record_key": "Inevitable (Kolyarut)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

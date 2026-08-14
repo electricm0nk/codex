@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Tarn Linnorm ~ Poison",
+    "delivery": null,
+    "description": "Bite--injury; save Fort DC %1; frequency 1/round for 10 rounds; effect 6d6 acid damage and 1d8 Con drain; cure 3 consecutive saves",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:tarn_linnorm_poison",
+    "name": "Poison",
+    "owners": [
+      "beastiary:monster:linnorm_tarn"
+    ],
+    "source_page": "p.192",
+    "traits": [
+      "Supernatrual"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 855,
+    "record_key": "Tarn Linnorm ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

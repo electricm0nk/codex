@@ -25,7 +25,7 @@ use codex::rules_core::pilot_compute::{
     compute_pilot_base_chassis,
 };
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const HALF_ORC_FIXTURE: &str =
@@ -156,7 +156,7 @@ fn half_orc_bounded_semantics_note_moves_intimidating_out_of_unproven_list() {
 
 #[test]
 fn matrix_half_orc_row_stays_partial_computed_and_grounding_ref_names_this_slice() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let half_orc = matrix
         .row("race.half_orc.bounded_semantics")
         .expect("half_orc row must exist");

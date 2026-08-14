@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Ice Golem ~ Icy Destruction",
+    "delivery": "Extraordinary",
+    "description": "When reduced to 0 hit points, an ice golem shatters in an explosion of jagged shards of ice. All creatures within a 10-foot burst take 3d6 points of slashing damage and 2d6 points of cold damage; a DC %1 Reflex save halves the damage.",
+    "description_variables": [
+      "IcyDestructionDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:ice_golem_icy_destruction",
+    "name": "Icy Destruction",
+    "owners": [
+      "beastiary:monster:golem_ice"
+    ],
+    "source_page": "p.161",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 726,
+    "record_key": "Ice Golem ~ Icy Destruction"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

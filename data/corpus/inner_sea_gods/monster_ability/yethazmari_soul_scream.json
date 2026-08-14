@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "corpus_key": "Yethazmari ~ Soul Scream",
+    "delivery": "Supernatural",
+    "description": "Anytime the Yethazmari takes piercing or slashing damage, its wounds create a terrifying cacophony equivalent to its bay ability. Creatures within 10 feet of it take a -4 penalty on their saves against this effect.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:yethazmari_soul_scream",
+    "name": "Soul Scream",
+    "owners": [
+      "inner_sea_gods:monster:yethazmari"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 202,
+    "record_key": "Yethazmari ~ Soul Scream"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

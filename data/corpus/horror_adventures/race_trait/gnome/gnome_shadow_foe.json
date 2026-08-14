@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:11:53Z",
+  "data": {
+    "key": "Gnome ~ Shadow Foe",
+    "name": "Shadow Foe",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "SpecialAttack",
+      "Special Attack",
+      "Defensive"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gnome_ReplaceDefensiveTraining",
+      "Gnome_ReplaceHatred"
+    ],
+    "description": "Gnomes with this trait receive a +1 bonus on attack rolls and to their AC against humanoids of the dark folk and wayang subtypes, and outsiders native to the Shadow Plane. This racial trait replaces defensive training and hatred.",
+    "source_page": "p.39",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Shadow Foe"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialAttack.Special Attack.Defensive"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Shadow Foe],[!PREFACT:1,ABILITIES,Gnome_ReplaceDefensiveTraining=true,Gnome_ReplaceHatred=true]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialDefensiveTrainingBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gnomes with this trait receive a +1 bonus on attack rolls and to their AC against humanoids of the dark folk and wayang subtypes, and outsiders native to the Shadow Plane."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces defensive training and hatred.|!PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Shadow Foe"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 on attack rolls and AC vs. humanoids of the dark folk and wayang subtypes, and outsiders native to the Shadow Plane."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+%1 bonus to AC vs. dark folk and wayang humanoids, and Shadow Plane outsiders)|RacialDefensiveTrainingBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "StatBlockName|+1 on attack rolls against dark folk and wayang humanoids, and Shadow Plane outsiders"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceDefensiveTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceHatred|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "RacialDefensiveTrainingBonus",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 45,
+    "record_key": "Gnome ~ Shadow Foe"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:fungus_queen_compel_plants",
+      "inner_sea_bestiary:monster_ability:fungus_queen_create_spawn",
+      "inner_sea_bestiary:monster_ability:fungus_queen_energy_drain",
+      "inner_sea_bestiary:monster_ability:fungus_queen_plant_empathy",
+      "inner_sea_bestiary:monster_ability:fungus_queen_spell_like_abilities",
+      "inner_sea_bestiary:monster_ability:fungus_queen_sporepod"
+    ],
+    "challenge_rating": "9",
+    "corpus_key": "Fungus Queen",
+    "external_ability_refs": [
+      "Constrict",
+      "Grab",
+      "Immunity to Electricity",
+      "Resistance to Acid",
+      "Resistance to Cold",
+      "Telepathy"
+    ],
+    "key": "inner_sea_bestiary:monster:fungus_queen",
+    "monster_class": "Plant:12",
+    "name": "Fungus Queen",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "1d4",
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": "Extraplanar",
+    "race_type": "Plant",
+    "size": "M",
+    "source_page": "p.12",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 25,
+    "record_key": "Fungus Queen"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

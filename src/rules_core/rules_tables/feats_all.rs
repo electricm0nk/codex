@@ -911,7 +911,20 @@ fn upsi_records() -> &'static [FeatCatalogRecord] {
 /// over the eight per-book `feat_tables()` functions -- this never
 /// re-derives or re-filters their contents, only projects each record
 /// onto [`FeatCatalogRecord`].
-pub fn all_feat_tables() -> &'static [BookFeatTable] {
+/// The per-book feat tables **as each book's own module authored them**,
+/// before the corpus gap rows are joined on.
+///
+/// Split out as its own public function for the same reason
+/// `equipment_resolver::hand_authored_equipment_rows` is: it is the input
+/// `gen_feat_gap_tables` filters against, so the generator's output set is
+/// *provably* the complement of the hand-authored catalog rather than a
+/// hand-maintained exclusion list that can drift. Regenerating against
+/// [`all_feat_tables`] instead would see the previous run's own rows as
+/// already-held and emit nothing.
+///
+/// Consumers that want the catalog a player sees want [`all_feat_tables`],
+/// not this.
+pub fn hand_authored_feat_tables() -> &'static [BookFeatTable] {
     static TABLES: std::sync::OnceLock<Vec<BookFeatTable>> = std::sync::OnceLock::new();
     TABLES.get_or_init(|| {
         vec![
@@ -930,14 +943,55 @@ pub fn all_feat_tables() -> &'static [BookFeatTable] {
     })
 }
 
+/// Every ingested book's feat catalog, with the corpus **gap rows** joined
+/// on — the catalog every consumer and every player surface reads.
+///
+/// A gap row is a corpus feat record belonging to one of these
+/// already-compiled books whose own hand-authored table never held it (see
+/// [`feat_gap_tables`](super::feat_gap_tables)). The rows are appended
+/// **after** each book's hand-authored records, never interleaved, so a
+/// first-match key lookup over a book's slice keeps resolving to the
+/// hand-authored record it resolved to before — the ordering property
+/// `tests/feat_gap_tables.rs` pins directly.
+pub fn all_feat_tables() -> &'static [BookFeatTable] {
+    static TABLES: std::sync::OnceLock<Vec<BookFeatTable>> = std::sync::OnceLock::new();
+    TABLES.get_or_init(|| {
+        hand_authored_feat_tables()
+            .iter()
+            .map(|book| {
+                let gaps = super::feat_gap_tables::feat_gap_rows_for(book.rule_set);
+                if gaps.is_empty() {
+                    return *book;
+                }
+                let mut joined: Vec<FeatCatalogRecord> = book.entries.to_vec();
+                joined.extend_from_slice(gaps);
+                BookFeatTable {
+                    rule_set: book.rule_set,
+                    // Leaked once, inside a `OnceLock`, so this allocates
+                    // exactly once per process for the lifetime the
+                    // `&'static` promises — the same trick `map_uw_entry`
+                    // already uses for its joined description strings.
+                    entries: Box::leak(joined.into_boxed_slice()),
+                }
+            })
+            .collect()
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use std::collections::BTreeMap;
 
+    /// Asserted against [`hand_authored_feat_tables`], not [`all_feat_tables`]:
+    /// every number below is a fact about what that book's OWN module
+    /// authored, and the corpus gap rows are by construction records those
+    /// modules never held. Pointing this at the joined catalog would silently
+    /// turn a per-book ingest pin into a pin on the gap lane's size. The
+    /// joined total is pinned separately, immediately below.
     #[test]
     fn spans_every_ingested_book_with_their_real_counts() {
-        let books = all_feat_tables();
+        let books = hand_authored_feat_tables();
         assert_eq!(books.len(), 11);
         assert_eq!(books[0].rule_set, RuleSetId::Crb);
         assert_eq!(books[0].entries.len(), 185);
@@ -970,12 +1024,38 @@ mod tests {
         );
     }
 
+    /// The catalog a player actually sees: the hand-authored records plus the
+    /// corpus gap rows. Pinned per book so a regeneration that drops one
+    /// book's rows fails here rather than silently shrinking the picker.
+    #[test]
+    fn the_joined_catalog_is_the_hand_authored_one_plus_the_corpus_gap_rows() {
+        let hand = hand_authored_feat_tables();
+        let joined = all_feat_tables();
+        assert_eq!(joined.len(), hand.len());
+        for (j, h) in joined.iter().zip(hand.iter()) {
+            assert_eq!(j.rule_set, h.rule_set, "book order must be preserved");
+            let gaps = super::super::feat_gap_tables::feat_gap_rows_for(h.rule_set).len();
+            assert_eq!(
+                j.entries.len(),
+                h.entries.len() + gaps,
+                "{:?}: joined slice must be the book's own table plus exactly its gap rows",
+                h.rule_set
+            );
+        }
+        let total: usize = joined.iter().map(|book| book.entries.len()).sum();
+        assert_eq!(
+            total, 1661,
+            "1578 hand-authored + 83 corpus gap rows (16 CRB incl. core_essentials, \
+             48 ARG, 12 UM, 3 UI, 2 UC, 1 UPsi, 1 UW)"
+        );
+    }
+
     /// The projection must not lose or invent a record: each book's slice
     /// is exactly as long as the book's own table, checked against the
     /// per-book functions rather than against the numbers above.
     #[test]
     fn each_books_slice_is_exactly_its_own_table() {
-        let books = all_feat_tables();
+        let books = hand_authored_feat_tables();
         assert_eq!(books[0].entries.len(), super::super::crb::feats::feat_tables().len());
         assert_eq!(books[1].entries.len(), super::super::apg::feats::feat_tables().len());
         assert_eq!(books[2].entries.len(), super::super::acg::feats::feat_tables().len());
@@ -1054,8 +1134,12 @@ mod tests {
     /// them.
     #[test]
     fn the_per_book_prerequisite_coverage_is_the_real_one() {
+        // Over `hand_authored_feat_tables()`: every number here is a claim
+        // about what that book's own ingest gathered. The corpus gap rows
+        // carry their own `PRE` tokens and are covered by
+        // `tests/feat_gap_tables.rs`.
         let with_prerequisites = |rule_set: RuleSetId| -> usize {
-            all_feat_tables()
+            hand_authored_feat_tables()
                 .iter()
                 .filter(|book| book.rule_set == rule_set)
                 .flat_map(|book| book.entries.iter())
@@ -1080,7 +1164,13 @@ mod tests {
             .flat_map(|book| book.entries.iter())
             .filter(|entry| entry.prerequisites.is_some())
             .count();
-        assert_eq!(total, 1429, "1429 of the catalog's 1578 records have a prerequisite");
+        // Over the JOINED catalog, deliberately: this total is the one a
+        // prerequisite consumer actually faces. 1429 of the 1578
+        // hand-authored records, plus 63 of the 83 corpus gap rows — the gap
+        // rows carry their own `PRE`-family tokens verbatim, so they are
+        // gated by `feat_prereqs` exactly like every other record rather
+        // than being offered unconditionally.
+        assert_eq!(total, 1492, "1492 of the joined catalog's 1661 records have a prerequisite");
     }
 
     /// `Some(&[])` must never reach a consumer: an empty slice would read
@@ -1179,7 +1269,13 @@ mod tests {
     fn the_per_book_category_split_is_the_real_one() {
         let split = |rule_set: RuleSetId| -> BTreeMap<&'static str, usize> {
             let mut counts = BTreeMap::new();
-            for book in all_feat_tables().iter().filter(|book| book.rule_set == rule_set) {
+            // Over `hand_authored_feat_tables()`: these splits are each
+            // book's own `FeatCategory` enum roster. Gap rows carry the
+            // corpus `TYPE:` facet verbatim instead of an enum variant name
+            // (see `feat_gap_tables`' module doc), so folding them in here
+            // would mix two different classification systems in one map.
+            for book in hand_authored_feat_tables().iter().filter(|book| book.rule_set == rule_set)
+            {
                 for entry in book.entries {
                     *counts.entry(entry.category).or_insert(0) += 1;
                 }
@@ -1429,20 +1525,54 @@ mod tests {
     /// silently shadowing one book's record with another's.
     #[test]
     fn cross_book_key_collisions_are_exactly_the_known_set() {
-        let mut seen: BTreeMap<&'static str, RuleSetId> = BTreeMap::new();
-        let mut collisions: Vec<(&'static str, RuleSetId, RuleSetId)> = Vec::new();
-        for book in all_feat_tables() {
-            for entry in book.entries {
-                match seen.insert(entry.key, book.rule_set) {
-                    Some(previous) if previous != book.rule_set => {
-                        collisions.push((entry.key, previous, book.rule_set));
+        let collide = |tables: &'static [BookFeatTable]| {
+            let mut seen: BTreeMap<&'static str, RuleSetId> = BTreeMap::new();
+            let mut collisions: Vec<(&'static str, RuleSetId, RuleSetId)> = Vec::new();
+            for book in tables {
+                for entry in book.entries {
+                    match seen.insert(entry.key, book.rule_set) {
+                        Some(previous) if previous != book.rule_set => {
+                            collisions.push((entry.key, previous, book.rule_set));
+                        }
+                        _ => {}
                     }
-                    _ => {}
                 }
             }
-        }
+            collisions
+        };
 
-        assert_eq!(collisions, vec![("Endurance", RuleSetId::Crb, RuleSetId::Pu)]);
+        // The original review, kept intact: across the HAND-AUTHORED tables
+        // `Endurance` is still the only collision, so a *new* clash between
+        // two books' own ingests fails here exactly as it always did.
+        assert_eq!(
+            collide(hand_authored_feat_tables()),
+            vec![("Endurance", RuleSetId::Crb, RuleSetId::Pu)]
+        );
+
+        // The joined catalog carries two more, and both are correct rather
+        // than defects: a feat one book reprints out of another is a record
+        // in *both* books, and this lane's predicate is "a record this book's
+        // own table does not hold". Each was checked against its owning
+        // corpus record, not inferred from the shared name:
+        //
+        // * `Feral Combat Training` — `up_feats.lst` carries the comment
+        //   "Feral Combat Training copied from Ultimate Combat - consider
+        //   INCLUDEing (and .MODding) it" immediately above the record. The
+        //   corpus states the reprint itself.
+        // * `Extended Animal Focus` — one record in `uw_feats.lst`, the same
+        //   Hunter animal-focus feat ACG prints; Ultimate Wilderness reprints
+        //   it because it is the book that expands animal focus.
+        //
+        // Pinned exactly, so a THIRD collision — which might well be two
+        // different feats sharing a name — still fails here.
+        assert_eq!(
+            collide(all_feat_tables()),
+            vec![
+                ("Endurance", RuleSetId::Crb, RuleSetId::Pu),
+                ("Extended Animal Focus", RuleSetId::Acg, RuleSetId::Uw),
+                ("Feral Combat Training", RuleSetId::Uc, RuleSetId::Upsi),
+            ]
+        );
 
         // ... and it really is the same feat re-listed, not a name clash
         // between two different ones: both rows carry the corpus's own

@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-11T09:16:36Z",
+  "data": {
+    "ability_keys": [
+      "bonus_bestiary:monster_ability:shadow_mastiff_bay",
+      "bonus_bestiary:monster_ability:shadow_mastiff_shadow_blend"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Shadow Mastiff",
+    "external_ability_refs": [
+      "Scent",
+      "Trip"
+    ],
+    "key": "bonus_bestiary:monster:shadow_mastiff",
+    "monster_class": "Outsider (Fort/Ref):6",
+    "name": "Shadow Mastiff",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.16",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
+    "line": 19,
+    "record_key": "Shadow Mastiff"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Gibbering Mouther ~ Grab",
+    "delivery": "Extraordinary",
+    "description": "If a gibbering mouther hits with the indicated attack, it deals normal damage and can attempt to start a grapple as a free action without provoking an attack of opportunity. A gibbering mouther can use its grab attack against a foe of up to Medium size. A gibbering mouther has the option to conduct the grapple normally, or simply use the part of its body it used in the grab to hold the opponent. If it chooses to do the latter, it takes a -20 penalty on its CMB check to make and maintain the grapple, but does not gain the grappled condition itself. A successful hold does not deal any extra damage. Each successful grapple check you make during successive rounds automatically deals the damage indicated for the attack that established the hold. A gibbering mouther receives a +4 bonus on combat maneuver checks made to start and maintain a grapple.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:gibbering_mouther_grab",
+    "name": "Grab",
+    "owners": [
+      "beastiary:monster:gibbering_mouther"
+    ],
+    "source_page": "p.301",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 702,
+    "record_key": "Gibbering Mouther ~ Grab"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

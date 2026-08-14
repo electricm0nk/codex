@@ -1,6 +1,6 @@
 import { loadUpdateAction, type UpdateActionRequest } from './loadUpdateAction';
 import type { TesterChannelLabel } from '../testerWorkbench/update/updateActionModel';
-import { channelIndexUrl } from '../sd16/update/fetch';
+import { channelIndexUrl } from '../update/fetch';
 import { assert, assertEqual } from '../testSupport/asserts';
 
 /**

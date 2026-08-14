@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T22:19:24Z",
+  "data": {
+    "corpus_key": "Companion Advancement ~ Stag",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "facet": "CompanionAdvancement",
+    "key": "bestiary_4:companion:companion_advancement_stag",
+    "name": "Companion Advancement (Stag)",
+    "owners": [
+      "bestiary_4:companion:companion_stag"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -2
+      }
+    ],
+    "type_segments": [
+      "CompanionAdvancement"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+    "line": 11,
+    "record_key": "Companion Advancement ~ Stag"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

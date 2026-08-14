@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:khaei_lost_time",
+      "inner_sea_bestiary:monster_ability:khaei_spell_like_abilities"
+    ],
+    "challenge_rating": "3",
+    "corpus_key": "Khaei",
+    "external_ability_refs": [],
+    "key": "inner_sea_bestiary:monster:khaei",
+    "monster_class": "Monstrous Humanoid:4",
+    "name": "Khaei",
+    "natural_attacks": [],
+    "race_subtype": null,
+    "race_type": "Monstrous Humanoid",
+    "size": "S",
+    "source_page": "p.22",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 39,
+    "record_key": "Khaei"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

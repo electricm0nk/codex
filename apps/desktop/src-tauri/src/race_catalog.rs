@@ -36,9 +36,22 @@
 //! # Book attribution
 //!
 //! A row's `book` is the corpus directory its record was loaded from, which
-//! per `decisions.md §25.2` is its true source book. `core_essentials/` —
-//! PCGen's physical storage for shared race files — is never a book and never
-//! appears here. ARG contributes **zero** rows because it declares zero races
+//! per `decisions.md §25.2` is its true source book.
+//!
+//! **`core_essentials` is now one of those directories, and the reason is a
+//! narrow one.** PCGen uses `core_essentials/races/<race>/` as physical
+//! storage for the shared racial-trait files of races that *belong* to other
+//! books, and `ingest_races` correctly files those under `core_rulebook` and
+//! `beastiary` — so a Dwarf standard trait is still never attributed here to
+//! `core_essentials`, exactly as this note used to say of the whole
+//! directory. What changed (SD-29 race-trait lane, round 4) is that two files
+//! in that tree carry content belonging to no other book: Aasimar's and
+//! Tiefling's *heritage* traits, which no Paizo book outside this data set
+//! declares. Those 64 records are attributed to `core_essentials` because
+//! that is genuinely where they come from, and they contribute **zero**
+//! catalog rows here regardless — none is a racial default.
+//!
+//! ARG contributes **zero** rows because it declares zero races
 //! and zero racial defaults (`decisions.md §25`); that is asserted below
 //! rather than assumed.
 //!
@@ -55,7 +68,7 @@ use codex::rules_core::corpus_loader::BookCorpusRoot;
 use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, ResolvedTrait};
 use codex::rules_core::shape_b_v1::RawBonusChain;
 
-use crate::ge08_workbench::codex_repo_root;
+use crate::authoring_workbench::codex_repo_root;
 
 /// The corpus books that carry race content today. A book with no `race/`
 /// or `race_trait/` directory contributes nothing and is not an error, so
@@ -64,8 +77,16 @@ use crate::ge08_workbench::codex_repo_root;
 /// over exactly the books this catalog actually searches — including a book
 /// that is searched and contributes nothing (ARG), which is a measured zero
 /// rather than an omission.
-pub(crate) const RACE_CORPUS_BOOKS: &[&str] =
-    &["core_rulebook", "beastiary", "advanced_race_guide", "advanced_players_guide"];
+pub(crate) const RACE_CORPUS_BOOKS: &[&str] = &[
+    "core_rulebook",
+    "beastiary",
+    "advanced_race_guide",
+    "advanced_players_guide",
+    "monster_codex",
+    "inner_sea_races",
+    "horror_adventures",
+    "core_essentials",
+];
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
 /// form, identical to the ones `equipment_catalog.rs` and `spell_catalog.rs`
@@ -74,6 +95,31 @@ const BOOK_CRB: &str = "CRB";
 const BOOK_B1: &str = "B1";
 const BOOK_ARG: &str = "ARG";
 const BOOK_APG: &str = "APG";
+/// Monster Codex. Loadable like ARG and APG, and like them it contributes no
+/// *catalog* rows — the catalog serves racial-default traits and this book
+/// declares none. Its five records are all alternates, which reach a player
+/// through `race_trait_picker` instead. See SD-29 `decisions.md §43`.
+const BOOK_MC: &str = "MC";
+/// Inner Sea Races. Loadable like ARG, APG and MC, and like them it
+/// contributes no *catalog* rows — it declares no racial-default trait. Its 72
+/// records are 68 alternates plus 4 rows the resolver classifies from their
+/// gates. SD-29 race-trait lane, round 2.
+const BOOK_ISR: &str = "ISR";
+/// Horror Adventures. Loadable like ARG, APG, MC and ISR, and like them it
+/// contributes no *catalog* rows — it declares no racial-default trait. Its 43
+/// records are 41 alternates plus the two `Deep Jungle Halfling ~ …` rows the
+/// resolver classifies from their gates. SD-29 race-trait lane, round 3.
+const BOOK_HA: &str = "HA";
+/// Core Essentials. Loadable like ARG, APG, MC, ISR and HA, and like them it
+/// contributes no *catalog* rows here — its 64 records are Aasimar and
+/// Tiefling *heritage* traits, 16 selectable heritages plus the 48
+/// replacement rows those heritages grant, and none is a racial default. The
+/// book's ordinary standard racial traits are a different thing entirely and
+/// already reach this catalog under the `core_rulebook` and `beastiary` book
+/// ids, which is where `ingest_races` files them (`race_resolver`'s module
+/// doc: a record's book is the corpus directory it was loaded from).
+/// SD-29 race-trait lane, round 4.
+const BOOK_CE: &str = "CE";
 
 /// Every book code this catalog can emit. ARG is a *loadable* book here but
 /// contributes no rows — see this module's doc comment.
@@ -94,6 +140,10 @@ pub(crate) fn book_code(book_id: &str) -> String {
         "beastiary" => BOOK_B1.to_string(),
         "advanced_race_guide" => BOOK_ARG.to_string(),
         "advanced_players_guide" => BOOK_APG.to_string(),
+        "monster_codex" => BOOK_MC.to_string(),
+        "inner_sea_races" => BOOK_ISR.to_string(),
+        "horror_adventures" => BOOK_HA.to_string(),
+        "core_essentials" => BOOK_CE.to_string(),
         other => other.to_string(),
     }
 }
@@ -510,27 +560,54 @@ mod tests {
     /// so it contributes zero rows even though its corpus directory is loaded.
     /// The alternate traits it *does* declare are not catalog rows — see this
     /// module's doc comment — and are counted here so that gap stays measured
-    /// rather than forgotten. 153, derived: ARG's 156 corpus records are 153
+    /// rather than forgotten. 158, derived: ARG's 156 corpus records are 153
     /// `Alternate` plus 3 the resolver classifies otherwise (its
-    /// `FlagGranted`/`Unclassified` rows). APG contributes 0 alternates as of
-    /// this cycle: `decisions.md §37`'s first estimate of 50 real APG
-    /// alternates corrected to 1 genuinely new key (`decisions.md §39`), and
-    /// that 1 key is deliberately not yet ingested -- `race_resolver.rs`'s
-    /// `ALTERNATE_TRAIT_REPLACE_FLAGS` table (`§36` instance 15) does not
-    /// recognize it, and shipping the corpus record without updating that
-    /// table would offer it here and refuse it at character-save time.
-    /// APG likewise declares no races/defaults of its own, so it contributes
-    /// zero catalog rows either way.
+    /// `FlagGranted`/`Unclassified` rows), Monster Codex's 5 are 4
+    /// `Alternate` plus `Oversized Goblin` (`Unclassified`), and APG's 1 is
+    /// an `Alternate`.
+    ///
+    /// **APG's `Half-Orc ~ Plagueborn` is no longer deferred.** SD-27
+    /// `decisions.md §39` held it back because `race_resolver.rs`'s
+    /// `ALTERNATE_TRAIT_REPLACE_FLAGS` table did not know its key, so
+    /// shipping the corpus record would have offered it here and refused it
+    /// at character-save time. SD-29's race-trait extend lane landed both
+    /// halves together — the record and the table row — so the affordance is
+    /// live rather than a stub. APG declares no races/defaults of its own, so
+    /// it still contributes zero catalog rows.
     #[test]
-    fn arg_and_apg_contribute_no_rows_but_their_alternates_are_loaded_and_counted() {
+    fn alternate_only_books_contribute_no_catalog_rows_but_are_loaded_and_counted() {
         let response = build_race_catalog();
-        assert_eq!(response.entries.iter().filter(|e| e.book == BOOK_ARG).count(), 0);
-        assert_eq!(response.entries.iter().filter(|e| e.book == BOOK_APG).count(), 0);
+        // ISR and HA belong in this loop for the same reason ARG/APG/MC do:
+        // each is loaded and each declares no racial DEFAULT trait. Round 2
+        // added ISR's records without adding it here, so the loop was one book
+        // narrower than the list it is a statement about; round 3 adds both
+        // rather than leaving a gap it can see (`decisions.md §44.5`).
+        for book in [BOOK_ARG, BOOK_APG, BOOK_MC, BOOK_ISR, BOOK_HA] {
+            assert_eq!(
+                response.entries.iter().filter(|e| e.book == book).count(),
+                0,
+                "{book} declares no racial DEFAULT traits, so it contributes no catalog row"
+            );
+        }
 
         let corpus = race_corpus().as_ref().expect("race corpus loads in a source checkout");
         let alternates: usize =
             corpus.race_keys().iter().map(|key| corpus.alternate_traits(key).len()).sum();
-        assert_eq!(alternates, 153, "alternate racial traits, loaded but not yet surfaced");
+        assert_eq!(
+            alternates, 282,
+            "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
+             Codex's 4 (SD-29 decisions.md §43) + APG's 1 (`Half-Orc ~ Plagueborn`) + Inner Sea \
+             Races' 68 (§45) + Horror Adventures' 41 (§47) + Core Essentials' 16 heritages \
+             (§49). Two loaded records are not \
+             alternates at all and are correctly \
+             outside this count: Monster Codex's `Oversized Goblin` and Inner Sea Races' \
+             `Human ~ Tribalistic Languages`, both of which set no replace flag, so \
+             `race_resolver::classify` leaves them `Unclassified`. Core Essentials' other 48 \
+             records are outside it for a different and larger reason: they are \
+             `TraitRole::FlagGranted` replacement rows, granted by whichever heritage the \
+             player picks rather than chosen, so this book contributes 16 to this count and 64 \
+             to the loaded corpus"
+        );
     }
 
     /// The widening's most consequential user-visible correction: the

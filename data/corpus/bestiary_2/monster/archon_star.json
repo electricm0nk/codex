@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:star_archon_smite_evil"
+    ],
+    "challenge_rating": "19",
+    "corpus_key": "Archon (Star)",
+    "external_ability_refs": [
+      "Detect Evil ~ Constant",
+      "Flight Maneuverability",
+      "Immunity to Charm",
+      "Immunity to Compulsion",
+      "Immunity to Fear",
+      "Immunity to Fire",
+      "Magic Circle against Evil ~ Constant",
+      "Paladin ~ Aura of Courage",
+      "Regeneration ~ Evil",
+      "Star Archon ~ Explosive Rebirth",
+      "True Seeing ~ Constant"
+    ],
+    "key": "bestiary_2:monster:archon_star",
+    "monster_class": "Outsider (Fort/Ref):19",
+    "name": "Archon (Star)",
+    "natural_attacks": [],
+    "race_subtype": "Archon|Extraplanar|Good|Lawful",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.32",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 120,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 102,
+    "record_key": "Archon (Star)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

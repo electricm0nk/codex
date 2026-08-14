@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Bakekujira ~ Leviathan's Call",
+    "delivery": "Supernatural",
+    "description": "The tone of a bakekujira's eerie song varies from that of a wistful memory to a burning hatred. As a standard action, a bakekujira can sing. Living creatures within a 120-foot radius of a singing bakekujira must succeed at a DC 28 Will save or become fascinated or frightened (bakekujira's choice) for 1 round. Any creature that succeeds at this save cannot be affected by the same bakekujira's leviathan's call ability for 24 hours. This is a sonic mind-affecting effect. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:bakekujira_leviathan_s_call",
+    "name": "Leviathan's Call",
+    "owners": [
+      "bestiary_4:monster:bakekujira"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 293,
+    "record_key": "Bakekujira ~ Leviathan's Call"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

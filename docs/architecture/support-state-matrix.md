@@ -14,7 +14,7 @@ computes no character mechanics, parses no external files, projects no UI, seria
 nothing, and never promotes a row on its own — every row transition is a hand-authored source edit
 landed alongside the runtime evidence that justifies it.
 
-The seeding function, `seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix`, returns exactly 34
+The seeding function, `seeded_current_truth() -> SupportStateMatrix`, returns exactly 34
 rows as of this verification: 7 race, 12 class, 2 interaction, 9 school, 4 equipment — a count the
 function's own doc comment states explicitly and that this document's authors re-verified directly
 against the source (`grep -c "row_id:"` inside the function body). Race/class/interaction rows are
@@ -126,10 +126,10 @@ the carrier itself exposes — a narrow `find` by `row_id`.
 
 The desktop app's read-only bridge lives in two files, not one:
 
-- `apps/desktop/src-tauri/src/support_state_matrix_bridge.rs` (renamed from `sd13_support_state_matrix.rs` by SD-25 criterion 1.1's identifier cleanup) — `build_support_state_matrix_snapshot() -> SupportStateMatrixSnapshot`. This is a presentation adapter: it calls `seeded_sd13_e1_f1_current_truth()`, and for every row projects a `SupportStateRowPresentation` that mirrors the upstream fields verbatim plus two SD-13-owned derived-wording fields (`tester_facing_state_label`, `refresh_audit_label`) computed purely from `support_state`/`evidence_freshness` — the module's own doc comment is explicit that this bridge "deliberately does **not** compute rules, persist, mutate, promote/demote, recompute, filter, aggregate" anything.
+- `apps/desktop/src-tauri/src/support_state_matrix_bridge.rs` (renamed from `sd13_support_state_matrix.rs` by SD-25 criterion 1.1's identifier cleanup) — `build_support_state_matrix_snapshot() -> SupportStateMatrixSnapshot`. This is a presentation adapter: it calls `seeded_current_truth()`, and for every row projects a `SupportStateRowPresentation` that mirrors the upstream fields verbatim plus two SD-13-owned derived-wording fields (`tester_facing_state_label`, `refresh_audit_label`) computed purely from `support_state`/`evidence_freshness` — the module's own doc comment is explicit that this bridge "deliberately does **not** compute rules, persist, mutate, promote/demote, recompute, filter, aggregate" anything.
 - `apps/desktop/src-tauri/src/main.rs` — the actual `#[tauri::command] fn load_support_state_matrix() -> SupportStateMatrixSnapshot` lives here, and its body is a one-line call to `build_support_state_matrix_snapshot()`. This is the command the frontend invokes; it is registered in `apps/desktop/src-tauri/src/main.rs`'s `tauri::generate_handler!` list alongside the app's other commands.
 
-The round trip is: `support_state_matrix::seeded_sd13_e1_f1_current_truth()` (upstream typed truth)
+The round trip is: `support_state_matrix::seeded_current_truth()` (upstream typed truth)
 → `support_state_matrix_bridge::build_support_state_matrix_snapshot()` (serializable presentation
 projection) → `main.rs::load_support_state_matrix` (the Tauri IPC command) → the desktop frontend.
 No layer in that chain recomputes or reorders rows; the doc comment on the presentation struct
@@ -159,7 +159,7 @@ Landing new support for a race, class, level band, spell school, or equipment ca
 change, and both parts are required before a row may move:
 
 1. **Land the runtime evidence first.** Add the real computation (in `src/rules_core/pilot_compute.rs` or the relevant per-domain engine — see [rules-engine.md](./rules-engine.md)) and a test file that exercises it end to end. The row's eventual `grounding_ref` must name this real file; a row's `grounding_ref` is never written before the file it cites exists.
-2. **Then edit the row, or append a new one, in `seeded_sd13_e1_f1_current_truth()`.** What changes depends on the evidence tier reached:
+2. **Then edit the row, or append a new one, in `seeded_current_truth()`.** What changes depends on the evidence tier reached:
    - Moving from `Unverified`/`Observed` to any tier with real runtime evidence requires updating `evidence_tier` (to at least `Computed`) and `evidence_freshness` (to `RefreshableFromLiveProof`, since a live test now exists to refresh from).
    - Moving `support_state` toward `Supported` requires that `blocker_or_lossiness_note` either becomes empty or is rewritten to name only the semantics that are genuinely still missing — never left stale from a prior, less-complete state.
    - `next_required_uplift` must be rewritten to describe the next real gap, or explicitly state there is none.

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:spring_heeled_jack_breath_weapon",
+      "bestiary_4:monster_ability:spring_heeled_jack_frightening_gaze",
+      "bestiary_4:monster_ability:spring_heeled_jack_vault"
+    ],
+    "challenge_rating": "3",
+    "corpus_key": "Spring-Heeled Jack",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:spring_heeled_jack",
+    "monster_class": "Fey:4",
+    "name": "Spring-Heeled Jack",
+    "natural_attacks": [],
+    "race_subtype": null,
+    "race_type": "Fey",
+    "size": "S",
+    "source_page": "p.253",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 221,
+    "record_key": "Spring-Heeled Jack"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

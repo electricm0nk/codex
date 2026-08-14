@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Intellect Devourer ~ Detect Magic",
+    "delivery": "SpellLike",
+    "description": "The Intellect Devourer can Detect Magic as a constant ability.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:intellect_devourer_detect_magic",
+    "name": "Detect Magic",
+    "owners": [
+      "beastiary:monster:intellect_devourer"
+    ],
+    "source_page": "p.180",
+    "traits": [
+      "Sense"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 787,
+    "record_key": "Intellect Devourer ~ Detect Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

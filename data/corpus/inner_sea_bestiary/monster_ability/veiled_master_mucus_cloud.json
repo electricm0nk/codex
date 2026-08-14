@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Veiled Master ~ Mucus Cloud",
+    "delivery": "Extraordinary",
+    "description": "While underwater, all creatures within 30 feet lose ability to breathe air (but gain waterbreathing). DC 26 Fort negates, must be made each round.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:veiled_master_mucus_cloud",
+    "name": "Mucus Cloud",
+    "owners": [
+      "inner_sea_bestiary:monster:veiled_master"
+    ],
+    "source_page": "p.56",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 391,
+    "record_key": "Veiled Master ~ Mucus Cloud"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

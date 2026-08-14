@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Nymph ~ Inspirations",
+    "delivery": "Supernatural",
+    "description": "A nymph can choose an intelligent creature to inspire and serve as a muse by giving that creature some token of her affection (typically a lock of her hair). As long as the nymph retains her favor for this creature and as long as the creature carries the nymph's token, the creature gains a +4 insight bonus on all Will saving throws, Craft checks, and Perform checks. A bard who has a nymph for a muse in this way can use his bardic performance for an additional %1 rounds per day. The nymph retains a link to her token and its carrier as if she had cast a status spell on the carrier. The nymph can end this effect at any time as a free action. A single nymph may only inspire one creature at a time in this manner.",
+    "description_variables": [
+      "NymphBardicPerfTimesBonus"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:nymph_inspirations",
+    "name": "Inspirations",
+    "owners": [
+      "beastiary:monster:nymph"
+    ],
+    "source_page": "p.217",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 999,
+    "record_key": "Nymph ~ Inspirations"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

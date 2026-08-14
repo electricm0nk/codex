@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Graeae ~ Luck Ripple",
+    "delivery": "Supernatural",
+    "description": "A graeae can use her mystic eye to alter the circumstances of any creature within 30 feet. As a swift action, she can cast her eye on a single creature, causing the target to take a -2 penalty or gain a +2 bonus to one of the following (graeae's choice): AC, ability checks, attack rolls, saving throws, or skill checks. A successful DC %1 Will save negates the effect, which otherwise lasts for 1d6 rounds. This is a mind-affecting gaze effect.",
+    "description_variables": [
+      "INT+13"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:graeae_luck_ripple",
+    "name": "Luck Ripple",
+    "owners": [
+      "bestiary_4:monster:graeae"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 797,
+    "record_key": "Graeae ~ Luck Ripple"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

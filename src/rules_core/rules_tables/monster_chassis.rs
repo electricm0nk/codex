@@ -1,0 +1,512 @@
+//! The record types and the book registry shared by every `monster` /
+//! `monster_ability` book.
+//!
+//! # Why this module exists
+//!
+//! The Bonus Bestiary pilot (SD-29 Epic 5) defined these types inside
+//! `rules_tables::bonus_bestiary`, which was correct while exactly one book
+//! carried them. `../../../docs/release/corpus-work-channels.md §9.2` rules
+//! `monster` the chassis kind and `monster_ability` the features kind attached
+//! to it, and that is a property of the *corpus*, not of Bonus Bestiary: every
+//! monster-bearing book carries the same two `.lst` shapes. Leaving the types
+//! under one book's module would have made the second book import
+//! `bonus_bestiary::MonsterStatBlock` to describe Monster Codex rows.
+//!
+//! `bonus_bestiary` re-exports every type below, so paths written against the
+//! pilot still resolve; nothing about its records changed.
+//!
+//! # What a book costs, now that this exists
+//!
+//! A data module produced by `scripts/transcribe_monster_tables.py`, one
+//! [`MonsterBook`] row in [`MONSTER_BOOKS`], and the book's own `RuleSetId`.
+//! Every consumer below iterates the registry rather than naming books:
+//! `v06_work_inventory`'s classifier, `gen_book_cache`'s generator,
+//! `monster_catalog`'s wire mapping and `reach_gate`'s claims.
+//!
+//! # Identity is the `KEY:` token, never the display name
+//!
+//! Every book in the registry carries rows whose `KEY:` differs from the first
+//! column — Bonus Bestiary has 6 (`Caryatid Column ~ Immunity to Magic`),
+//! Monster Codex has all 3 of its abilities (`Seru ~ Poison`), and both Book of
+//! the Damned volumes have all of theirs (`Vermlek ~ Flesh Armor`, whose first
+//! column is just `Flesh Armor`). Joining on the display name would merge
+//! `Poison` — or `Breath Weapon`, which two registered books now both define —
+//! with every other book's rule of that name.
+//!
+//! # Only ability rows WITH an owner are registered
+//!
+//! `monster_ability` records reach a player only underneath the monster that
+//! owns them, so an ability row no monster row claims is a record that loads and
+//! is never shown. `scripts/classify_monster_ability_rows.py` classifies a
+//! candidate book's rows before a round commits to it.
+//!
+//! The first four books here (Bonus Bestiary, Monster Codex, both Book of the
+//! Damned volumes) have **zero** orphans, so registering them registered every
+//! row. Inner Sea World Guide, added in round 3, is the first that does not:
+//! 5 of its 30 ability rows are namespaced to a *template* (`Clockwork ~ …`,
+//! `Nascent Demon Lord ~ …`) that no monster row of this book defines. The rule
+//! from round 3 on is `kanban.md`'s — **transcribe the linked subset, and carry
+//! the orphans as an `OPEN_FINDINGS` entry naming their remedy** — rather than
+//! emitting rows that cannot be reached or skipping the book entirely. Those
+//! rows stay `not-ingested` in the work inventory, which is their honest status.
+//!
+//! That predicate is a ceiling on the lane, not a preference — 1,327 of the
+//! 4,233 remaining units are orphan ability rows, and 703 of those sit in ten
+//! books that carry no monster row at all.
+
+/// One movement mode from the row's `MOVE:` token, e.g. `Walk,30,Burrow,10`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Speed {
+    pub mode: &'static str,
+    pub feet: u32,
+}
+
+/// A natural attack named by the monster's row.
+///
+/// `damage_dice` is `None` when the corpus names the attack but carries no die
+/// expression for it. It is never a placeholder string.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct NaturalAttack {
+    pub name: &'static str,
+    pub damage_dice: Option<&'static str>,
+}
+
+/// Which of `monster_ability`'s facets a record is, read from the first segment
+/// of its corpus `TYPE:` token.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MonsterAbilityFacet {
+    SpecialAttack,
+    SpecialQuality,
+}
+
+impl MonsterAbilityFacet {
+    /// The wire/display token, spelled exactly as the corpus `TYPE:` segment.
+    pub fn corpus_token(self) -> &'static str {
+        match self {
+            MonsterAbilityFacet::SpecialAttack => "SpecialAttack",
+            MonsterAbilityFacet::SpecialQuality => "SpecialQuality",
+        }
+    }
+}
+
+/// How the ability is delivered — the `Supernatural` / `Extraordinary` /
+/// `SpellLike` segment of the same `TYPE:` token. `None` when the row does not
+/// say.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MonsterAbilityDelivery {
+    Supernatural,
+    Extraordinary,
+    SpellLike,
+}
+
+impl MonsterAbilityDelivery {
+    pub fn corpus_token(self) -> &'static str {
+        match self {
+            MonsterAbilityDelivery::Supernatural => "Supernatural",
+            MonsterAbilityDelivery::Extraordinary => "Extraordinary",
+            MonsterAbilityDelivery::SpellLike => "SpellLike",
+        }
+    }
+}
+
+/// One `monster_ability` record.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct MonsterAbilityRecord {
+    /// The corpus `KEY:` token — the identity. Falls back to the display name
+    /// only for rows that carry no `KEY:`, which is what PCGen itself does.
+    pub key: &'static str,
+    pub name: &'static str,
+    pub facet: MonsterAbilityFacet,
+    pub delivery: Option<MonsterAbilityDelivery>,
+    /// Remaining `TYPE:` segments that are neither facet nor delivery
+    /// (`Aura`, `Immunity`), kept verbatim.
+    pub traits: &'static [&'static str],
+    /// The row's `DESC:` text. `None` when the row carries none.
+    pub description: Option<&'static str>,
+    /// The `DESC:` token's trailing variable list, which is what the `%1`
+    /// placeholders in `description` refer to.
+    pub description_variables: &'static [&'static str],
+    pub source_page: Option<&'static str>,
+    /// Every monster in this book whose row (or whose namespace, for a
+    /// `<Monster> ~ <Ability>` key) claims this ability.
+    pub owners: &'static [&'static str],
+    /// The abilities-`.lst` file this record was read from, as a bare file
+    /// name relative to the book directory.
+    ///
+    /// The exact counterpart of [`MonsterStatBlock::source_file`], and added
+    /// for the same reason one book later: a book is not guaranteed one
+    /// abilities file either. Inner Sea Gods splits its 161 ability rows 145/16
+    /// across `isg_abilities_races.lst` and `support/isg_abilities_races_b4.lst`
+    /// — so `source_line` alone does not identify a row, and the generator that
+    /// re-reads the cited line to verify it must be told which file to open.
+    ///
+    /// Until this field existed the generator took the abilities file from a
+    /// single per-book spec string (`MonsterBookSpec::abilities_lst`), which is
+    /// correct only for a one-file book; the nine books registered before it
+    /// were all one-file, so the singular spelling was right by coincidence
+    /// rather than by rule.
+    pub source_file: &'static str,
+    /// The 1-based line of [`Self::source_file`] this record was read from.
+    pub source_line: u32,
+}
+
+/// One monster stat block.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct MonsterStatBlock {
+    pub key: &'static str,
+    pub name: &'static str,
+    pub size: Option<&'static str>,
+    pub speeds: &'static [Speed],
+    pub race_type: Option<&'static str>,
+    pub race_subtype: Option<&'static str>,
+    /// The `CR:` token verbatim (`"3"`, `"1"`), not a parsed number — the
+    /// corpus spells fractional CRs as `1/2`.
+    pub challenge_rating: Option<&'static str>,
+    /// The `MONSTERCLASS:` token (`"Undead:4"`), which is what AC/HP/saves are
+    /// computed from and this ingest deliberately does not compute.
+    pub monster_class: Option<&'static str>,
+    pub source_page: Option<&'static str>,
+    pub natural_attacks: &'static [NaturalAttack],
+    /// Keys into this book's `monster_abilities`, in row order.
+    pub ability_keys: &'static [&'static str],
+    /// Ability names this row cites that this book does not define.
+    pub external_ability_refs: &'static [&'static str],
+    /// The races-`.lst` file this record was read from, relative to the book
+    /// directory.
+    ///
+    /// A book is not guaranteed one monster file. Inner Sea World Guide splits
+    /// its 14 monsters 7/7 across `iswg_races.lst` and `iswg_races_bestiary.lst`
+    /// — so `source_line` alone does not identify a row, and the generator that
+    /// re-reads the cited line to verify it must be told which file to open.
+    /// Before this field existed the generator took the file from a single
+    /// per-book spec string, which is correct only for a one-file book.
+    pub source_file: &'static str,
+    /// The 1-based line of [`Self::source_file`] this record was read from.
+    pub source_line: u32,
+}
+
+/// One ingested monster book: its corpus directory id and its two tables.
+///
+/// Every field is *data*, never behaviour — the resolve/link rules below are
+/// identical across books because they are properties of PCGen's `.lst` format.
+/// That is what makes a row here the whole cost of registering a book.
+#[derive(Debug, Clone, Copy)]
+pub struct MonsterBook {
+    /// The corpus directory this book's records file under, which is also the
+    /// `engine_book` `v06_work_inventory` joins on and the namespace every
+    /// served key carries.
+    pub corpus_book: &'static str,
+    pub monsters: &'static [MonsterStatBlock],
+    pub monster_abilities: &'static [MonsterAbilityRecord],
+}
+
+impl MonsterBook {
+    /// The stat block with this corpus key, if this book defines one.
+    pub fn monster_resolve(&self, key: &str) -> Option<&'static MonsterStatBlock> {
+        self.monsters.iter().find(|m| m.key == key)
+    }
+
+    /// The ability record with this corpus key, if this book defines one.
+    pub fn monster_ability_resolve(&self, key: &str) -> Option<&'static MonsterAbilityRecord> {
+        self.monster_abilities.iter().find(|a| a.key == key)
+    }
+
+    /// The abilities a monster holds, resolved through its own `ability_keys`.
+    pub fn abilities_of(&self, monster: &MonsterStatBlock) -> Vec<&'static MonsterAbilityRecord> {
+        monster
+            .ability_keys
+            .iter()
+            .filter_map(|key| self.monster_ability_resolve(key))
+            .collect()
+    }
+}
+
+/// Every book whose `monster` / `monster_ability` rows this repo has ingested.
+///
+/// Adding a book here is what makes its records reach the work inventory, the
+/// corpus cache, the monster catalog and the reach gate at once — none of those
+/// consumers names a book of its own.
+pub const MONSTER_BOOKS: &[MonsterBook] = &[
+    MonsterBook {
+        corpus_book: "bonus_bestiary",
+        monsters: super::bonus_bestiary::monsters_static(),
+        monster_abilities: super::bonus_bestiary::monster_abilities_static(),
+    },
+    MonsterBook {
+        corpus_book: "monster_codex",
+        monsters: super::monster_codex::monsters_static(),
+        monster_abilities: super::monster_codex::monster_abilities_static(),
+    },
+    MonsterBook {
+        corpus_book: "book_of_the_damned_volume_1",
+        monsters: super::book_of_the_damned_volume_1::monsters_static(),
+        monster_abilities: super::book_of_the_damned_volume_1::monster_abilities_static(),
+    },
+    MonsterBook {
+        corpus_book: "book_of_the_damned_volume_2",
+        monsters: super::book_of_the_damned_volume_2::monsters_static(),
+        monster_abilities: super::book_of_the_damned_volume_2::monster_abilities_static(),
+    },
+    MonsterBook {
+        corpus_book: "inner_sea_world_guide",
+        monsters: super::inner_sea_world_guide::monsters_static(),
+        monster_abilities: super::inner_sea_world_guide::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, round 4. Bestiary 2 -- 316 monsters and 402 owned
+    // abilities, four times every book above it put together. The registry
+    // absorbs it as one more row, which is the property the chassis was built
+    // for; the book's own module records why 64 of its 466 ability rows are not
+    // here.
+    MonsterBook {
+        corpus_book: "bestiary_2",
+        monsters: super::bestiary_2::monsters_static(),
+        monster_abilities: super::bestiary_2::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, round 5. Bestiary 3 -- 261 monsters and 27 owned
+    // abilities, and the first book in the registry to lose no monster row at
+    // all: no Product Identity row, no `.COPY=` delta. Its 13 excluded ability
+    // rows are orphans, pinned by line in `rules_tables::bestiary_3`.
+    MonsterBook {
+        corpus_book: "bestiary_3",
+        monsters: super::bestiary_3::monsters_static(),
+        monster_abilities: super::bestiary_3::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, round 6. Bestiary 4 -- 206 monsters and 543 owned
+    // abilities, the largest reachable book left in the lane. It is the first
+    // book in the registry to lose monster rows to Product Identity: 14 of its
+    // 220 corpus rows declare `NAMEISPI:YES` and are unique named personas
+    // rather than species. That drop cascades -- 73 of its 225 excluded ability
+    // rows are well-formed and owned, and unreachable only because their owner
+    // is one of the 14. `rules_tables::bestiary_4` derives both figures.
+    MonsterBook {
+        corpus_book: "bestiary_4",
+        monsters: super::bestiary_4::monsters_static(),
+        monster_abilities: super::bestiary_4::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, round 7. Inner Sea Bestiary -- 38 monsters and 152
+    // owned abilities. The first book in the registry to lose monster rows to
+    // the Product Identity of the abilities they NAME rather than of their own
+    // name: the emitted `ability_keys` array carries the ability's key, so a
+    // monster naming a deity-namespaced ability cannot be emitted either.
+    // `rules_tables::inner_sea_bestiary` derives it, and records that this makes
+    // `classify_monster_ability_rows.py`'s `reachable remainder` an upper bound
+    // rather than an equality for any book with that shape.
+    MonsterBook {
+        corpus_book: "inner_sea_bestiary",
+        monsters: super::inner_sea_bestiary::monsters_static(),
+        monster_abilities: super::inner_sea_bestiary::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, round 9. Inner Sea Gods -- 39 monsters and 77 owned
+    // abilities. The first book in this registry whose corpus rows do not all
+    // live in the book's root directory: 3 monster rows come from
+    // `support/isg_races_b4.lst`, which is why both the transcriber and the
+    // generator now RESOLVE a `source_file` basename against the book tree
+    // instead of joining it onto the root. Its module header records the
+    // 16-row `Race Traits ~` bundle finding -- abilities with a real owner that
+    // the ownership pass cannot see because the corpus states the link through
+    // a `CATEGORY:Internal` row rather than on the monster row itself.
+    MonsterBook {
+        corpus_book: "inner_sea_gods",
+        monsters: super::inner_sea_gods::monsters_static(),
+        monster_abilities: super::inner_sea_gods::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, round 8. Bestiary 1 -- 284 monsters and 323 owned
+    // abilities, the largest single row in this registry and the only book
+    // served by TWO compiled monster tables. `rules_tables::beastiary1` (SD-22)
+    // holds 46 hand-modelled stat blocks of the same book; this chassis holds
+    // the complement, per `decisions.md §58.3`'s ALONGSIDE ruling, and
+    // `rules_tables::bestiary`'s `no_creature_is_served_by_both_bestiary_1_tables`
+    // is the guard that keeps the two disjoint.
+    //
+    // `corpus_book` is `beastiary`, NOT `bestiary`: every consumer of this field
+    // reads a `data/corpus/` directory -- `gen_book_cache`'s output root and
+    // `reach_gate`'s denominator -- and this book's directory has been spelled
+    // `beastiary` since SD-22. Registering the source spelling would write a
+    // SECOND corpus directory for a book that already has one, which is the
+    // defect `decisions.md §54.3` records the companion lane catching.
+    MonsterBook {
+        corpus_book: "beastiary",
+        monsters: super::bestiary::monsters_static(),
+        monster_abilities: super::bestiary::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, round 10. Ultimate Psionics (Dreamscarred Press) --
+    // 21 monsters and 13 owned abilities, and the first NON-PAIZO book in this
+    // registry. It is also the first whose `RuleSetId` was already compiled for
+    // other kinds: `RuleSetId::Upsi` has served this book's feats, equipment and
+    // archetypes since SD-28 E29, so registering its monsters added no rule set,
+    // no corpus directory and no work-inventory book entry.
+    //
+    // Both `.lst` files sit at the book root, so `resolve_book_file` is not
+    // load-bearing here. Its module header records this book's share of the
+    // `Racial Traits ~` bundle class (`decisions.md §62.4`, measured
+    // corpus-wide in `§64.1`): 2 of its 66 orphans are owned in the corpus
+    // through a `CATEGORY:Internal` row and are pinned by an executing test.
+    MonsterBook {
+        corpus_book: "ultimate_psionics",
+        monsters: super::ultimate_psionics::monsters_static(),
+        monster_abilities: super::ultimate_psionics::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, FINAL round. Horror Adventures -- 3 monsters and 6
+    // owned abilities, the smallest row in this registry and the last book in
+    // the lane with any workable unit at all.
+    //
+    // Like `ultimate_psionics` its `RuleSetId` was already compiled for other
+    // kinds (`RuleSetId::Ha`: `race_trait` since Epic 6 round 3, `companion`
+    // since Epic 7), so registering its monsters adds no rule set, no corpus
+    // directory and no work-inventory book entry.
+    //
+    // It is the first book in this registry whose monster rows state part of
+    // their ATTACK list through the `ABILITY:Internal|AUTOMATIC|` bundle token
+    // rather than through `NATURALATTACKS:` -- `ha_races.lst:4` prices one Claw
+    // attack and names Bite and Tail Slap only in the bundle. That is the same
+    // token `decisions.md §64.1` measures corpus-wide for OWNERSHIP; here it is
+    // read for its attack segments, and the two uses are independent.
+    MonsterBook {
+        corpus_book: "horror_adventures",
+        monsters: super::horror_adventures::monsters_static(),
+        monster_abilities: super::horror_adventures::monster_abilities_static(),
+    },
+];
+
+/// The registered book with this corpus directory id.
+pub fn monster_book(corpus_book: &str) -> Option<&'static MonsterBook> {
+    MONSTER_BOOKS.iter().find(|b| b.corpus_book == corpus_book)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// A book registered twice, or a book whose tables were wired to another
+    /// book's statics, is a copy-paste defect the registry cannot otherwise
+    /// see. Both are cheap to make and expensive to find on a screen.
+    #[test]
+    fn every_registered_book_is_distinct_and_non_empty() {
+        let mut ids: Vec<_> = MONSTER_BOOKS.iter().map(|b| b.corpus_book).collect();
+        let before = ids.len();
+        ids.sort_unstable();
+        ids.dedup();
+        assert_eq!(ids.len(), before, "a corpus book id is registered twice");
+        for book in MONSTER_BOOKS {
+            assert!(
+                !book.monsters.is_empty() || !book.monster_abilities.is_empty(),
+                "{} registers two empty tables",
+                book.corpus_book
+            );
+        }
+    }
+
+    /// Keys are namespaced per book on the wire, but a key must still be unique
+    /// *within* its book or `monster_resolve` silently returns the first of two.
+    #[test]
+    fn keys_are_unique_within_every_book() {
+        for book in MONSTER_BOOKS {
+            let mut keys: Vec<_> = book.monsters.iter().map(|m| m.key).collect();
+            let before = keys.len();
+            keys.sort_unstable();
+            keys.dedup();
+            assert_eq!(keys.len(), before, "{}: duplicate monster key", book.corpus_book);
+
+            let mut keys: Vec<_> = book.monster_abilities.iter().map(|a| a.key).collect();
+            let before = keys.len();
+            keys.sort_unstable();
+            keys.dedup();
+            assert_eq!(keys.len(), before, "{}: duplicate ability key", book.corpus_book);
+        }
+    }
+
+    /// The chassis link, held closed in both directions for every book: an
+    /// ability a monster names is defined here, an ability listed as external is
+    /// not, and every defined ability has at least one owner. An orphan means
+    /// the link was transcribed wrong in one direction and the catalog would
+    /// serve a record no monster row reaches.
+    #[test]
+    fn the_chassis_link_resolves_in_both_directions_for_every_book() {
+        for book in MONSTER_BOOKS {
+            for monster in book.monsters {
+                for key in monster.ability_keys {
+                    assert!(
+                        book.monster_ability_resolve(key).is_some(),
+                        "{}: {} names ability {key:?}, which the book does not define",
+                        book.corpus_book,
+                        monster.name
+                    );
+                }
+                for key in monster.external_ability_refs {
+                    assert!(
+                        book.monster_ability_resolve(key).is_none(),
+                        "{}: {} lists {key:?} as external, but the book defines it",
+                        book.corpus_book,
+                        monster.name
+                    );
+                }
+            }
+            for ability in book.monster_abilities {
+                assert!(
+                    !ability.owners.is_empty(),
+                    "{}: {} ({}) is owned by no monster row",
+                    book.corpus_book,
+                    ability.name,
+                    ability.key
+                );
+                for owner in ability.owners {
+                    let monster = book
+                        .monster_resolve(owner)
+                        .unwrap_or_else(|| panic!("{}: owner {owner:?} is not a monster in this book", book.corpus_book));
+                    assert!(
+                        monster.ability_keys.contains(&ability.key),
+                        "{}: {} claims owner {owner:?}, which does not name it back",
+                        book.corpus_book,
+                        ability.key
+                    );
+                }
+            }
+        }
+    }
+
+    /// A transcription that dropped a name would show an empty heading on the
+    /// catalog; a `damage_dice` of `""` would show a blank where a die
+    /// expression belongs. Neither is representable after this test.
+    #[test]
+    fn no_record_carries_an_empty_string_where_a_value_is_claimed() {
+        for book in MONSTER_BOOKS {
+            for monster in book.monsters {
+                assert!(!monster.key.trim().is_empty());
+                assert!(!monster.name.trim().is_empty());
+                for attack in monster.natural_attacks {
+                    assert!(!attack.name.trim().is_empty());
+                    if let Some(dice) = attack.damage_dice {
+                        assert!(!dice.trim().is_empty(), "{}: empty damage dice", book.corpus_book);
+                    }
+                }
+            }
+            for ability in book.monster_abilities {
+                assert!(!ability.key.trim().is_empty());
+                assert!(!ability.name.trim().is_empty());
+                if let Some(desc) = ability.description {
+                    assert!(!desc.trim().is_empty(), "{}: empty description", book.corpus_book);
+                }
+            }
+        }
+    }
+
+    /// Monster Codex's link shape is the one Bonus Bestiary never had: none of
+    /// its 3 ability rows is named by a monster row's `ABILITY:Special Ability`
+    /// token — the owner is the first segment of the ability's own namespaced
+    /// key. A transcriber that only read the monster row would have produced 3
+    /// orphans and a book with no reachable abilities.
+    #[test]
+    fn monster_codex_abilities_link_through_their_namespaced_key() {
+        let book = monster_book("monster_codex").expect("Monster Codex is registered");
+        assert_eq!(book.monsters.len(), 2);
+        assert_eq!(book.monster_abilities.len(), 3);
+        for ability in book.monster_abilities {
+            let (owner, leaf) = ability.key.split_once(" ~ ").expect("key is namespaced");
+            assert_eq!(ability.name, leaf);
+            assert_eq!(ability.owners, &[owner]);
+        }
+        let seru = book.monster_resolve("Seru").expect("Seru is in this book");
+        let names: Vec<_> = book.abilities_of(seru).iter().map(|a| a.name).collect();
+        assert_eq!(names, vec!["Poison", "Spit Venom"]);
+    }
+}

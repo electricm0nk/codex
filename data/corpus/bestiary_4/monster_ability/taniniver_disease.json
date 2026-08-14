@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Taniniver ~ Disease",
+    "delivery": "Extraordinary",
+    "description": "A taniniver's natural attacks infect its opponent with a random disease from the following list: blinding sickness, bubonic plague, cackle fever, leprosy, mindfire, or shakes. The initial saving throw against these diseases uses the breath weapon's DC.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:taniniver_disease",
+    "name": "Disease",
+    "owners": [
+      "bestiary_4:monster:taniniver"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1353,
+    "record_key": "Taniniver ~ Disease"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

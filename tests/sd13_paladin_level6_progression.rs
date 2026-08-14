@@ -85,7 +85,7 @@ use codex::rules_core::character_input::{CharacterInput, load_character_input_fi
 use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{SupportState, seeded_sd13_e1_f1_current_truth};
+use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 
 const PALADIN_LEVEL5_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_paladin_level5_sd13_deterministic_input.txt");
@@ -430,7 +430,7 @@ fn paladin_level5_values_stay_unaffected_after_the_level6_widening() {
 
 #[test]
 fn matrix_paladin_row_names_level_6_widening_and_effective_caster_level() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin row must exist");

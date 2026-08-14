@@ -33,7 +33,7 @@ use codex::rules_core::character_input::{CharacterInput, load_character_input_fi
 use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{SupportState, seeded_sd13_e1_f1_current_truth};
+use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 
 const BARD_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_bard_level1_sd13_deterministic_input.txt");
@@ -326,7 +326,7 @@ fn bard_level_4_was_later_widened_into_the_supported_tranche() {
 
 #[test]
 fn bard_row_stays_partial_and_cites_this_test_file_family() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let row = matrix
         .rows
         .iter()

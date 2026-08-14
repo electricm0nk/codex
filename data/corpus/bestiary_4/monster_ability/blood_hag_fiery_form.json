@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Blood Hag ~ Fiery Form",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a blood hag who has removed her skin by using mask evil can assume the form of a flying ball of fire for up to 12 rounds. After leaving fiery form, a blood hag must wait 1d4 rounds before assuming it again. A blood hag in this form who enters the same space as another creature stops moving for that round and deals 3d6 points of fire damage (Reflex DC 20 negates) to that creature. A blood hag can suppress her heat and dim her light to that of an ember if she chooses, and can pass through openings and cracks as though in  gaseous form.  A blood hag in fiery form retains her AC and also has immunity to nonmagical attacks and effects. A successful targeted  dispel magic  spell or 20 points of cold damage returns her from her fiery form to her normal form. A blood hag can assume fiery form a number of times per day equal to her Charisma modifier (typically 4). The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:blood_hag_fiery_form",
+    "name": "Fiery Form",
+    "owners": [
+      "bestiary_4:monster:blood_hag"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 313,
+    "record_key": "Blood Hag ~ Fiery Form"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T22:19:24Z",
+  "data": {
+    "corpus_key": "Drake (Shadow) ~ Stygian Breath",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a shadow drake can exhale a ball of black liquid that explodes into a cloud of frigid black mist. This attack has a range of 60 feet and deals 2d6 points of cold damage (Reflex DC %1 half) to all creatures within a 5-foot-radius spread. The mist snuffs out light sources in the area effect, extinguishing nonmagical light sources and dispelling light spells of 1st level or lower. Once a shadow drake has used its stygian breath, it cannot do so again for 1d6 rounds.",
+    "description_variables": [
+      "11+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:companion:drake_shadow_stygian_breath",
+    "name": "Stygian Breath",
+    "owners": [
+      "bestiary_4:companion:drake_shadow",
+      "bestiary_4:companion:familiar_shadow_drake"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "Supernatural",
+      "SpecialAttack"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+    "line": 81,
+    "record_key": "Drake (Shadow) ~ Stygian Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

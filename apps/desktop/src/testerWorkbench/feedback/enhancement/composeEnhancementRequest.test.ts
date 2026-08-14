@@ -12,7 +12,7 @@ function completeEnhancementPayload(surface: TesterWorkbenchSurface) {
       testerGoal: 'Author several Guard Stance packages back-to-back without re-walking each wizard step.',
       currentFriction: 'Every package forces the full multi-click wizard even when only one field differs.',
       requestedCapability: 'A duplicate-and-edit action that clones the last authored package as a starting point.',
-      affectedSurface: 'GE08 authoring workbench',
+      affectedSurface: 'authoring workbench',
     },
   });
 }
@@ -65,7 +65,7 @@ function draftHasEnhancementTypeAndRequiredLabels() {
   );
   // The affected-surface label is derived from the tester-entered affected surface.
   assert(
-    composed.draft.labels.includes('surface:ge08-authoring-workbench'),
+    composed.draft.labels.includes('surface:authoring-workbench'),
     'affected-surface label comes from the tester-entered affected surface'
   );
   assertEqual(new Set(composed.draft.labels).size, composed.draft.labels.length, 'labels are unique');
@@ -92,7 +92,7 @@ function bodyHasSevenSectionsInContractOrder() {
     assert(composed.draft.markdownBody.includes(`## ${heading}`), `markdown body keeps the ${heading} section`);
   }
   // Build/channel/platform/workflow metadata must never be omitted when available.
-  assert(composed.draft.markdownBody.includes('Codex 0.8.0-test'), 'build label present in body');
+  assert(composed.draft.markdownBody.includes('Codex 0.9.0-test'), 'build label present in body');
   assert(composed.draft.markdownBody.includes('alpha · Linux first-class'), 'channel/support label present in body');
   assert(composed.draft.markdownBody.includes('Linux'), 'platform present in body');
   assert(composed.draft.markdownBody.includes('Character-preview authoring check'), 'workflow present in body');
@@ -136,7 +136,7 @@ function goalFrictionCapabilityAndSurfaceStayDistinct() {
   assert(!!goal && goal.body.includes('back-to-back'), 'tester goal carries goal text');
   assert(!!friction && friction.body.includes('multi-click wizard'), 'friction carries friction text');
   assert(!!capability && capability.body.includes('duplicate-and-edit'), 'capability carries capability text');
-  assert(!!affected && affected.body.includes('GE08 authoring workbench'), 'affected surface carries surface text');
+  assert(!!affected && affected.body.includes('authoring workbench'), 'affected surface carries surface text');
 
   const bodies = new Set([goal!.body, friction!.body, capability!.body, affected!.body]);
   assertEqual(bodies.size, 4, 'goal, friction, capability and affected surface are four distinct fields');

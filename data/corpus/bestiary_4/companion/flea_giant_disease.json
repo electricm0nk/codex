@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T22:19:24Z",
+  "data": {
+    "corpus_key": "Flea (Giant) ~ Disease",
+    "delivery": "Extraordinary",
+    "description": "Bite-injury; save Fort DC %1; onset 1d3 days; frequency 1 day; effect 1 Con damage; cure 1 save.",
+    "description_variables": [
+      "10+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:companion:flea_giant_disease",
+    "name": "Disease",
+    "owners": [
+      "bestiary_4:companion:familiar_giant_flea"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+    "line": 84,
+    "record_key": "Flea (Giant) ~ Disease"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

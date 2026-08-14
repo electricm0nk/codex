@@ -40,10 +40,10 @@
 //! documents.
 //!
 //! Real per-record LST path/sha256/line citations are computed by
-//! `src/bin/sd27_gen_book_cache.rs` at generation time by reading the
+//! `src/bin/gen_book_cache.rs` at generation time by reading the
 //! live corpus file directly (never hand-transcribed here) -- this
 //! module supplies only the compiled data values, per the same
-//! generation discipline `src/bin/sd26_gen_core_rulebook_cache.rs`
+//! generation discipline `src/bin/gen_core_rulebook_cache.rs`
 //! already establishes ("never re-derives a data field's value from raw
 //! LST at generation time; every value comes from the compiled Rust
 //! module's own accessors").

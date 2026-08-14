@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T14:58:50Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_6:companion:companion_advancement_kentrosaurus"
+    ],
+    "corpus_key": "Companion (Kentrosaurus)",
+    "external_ability_refs": [
+      "Kentrosaurus ~ Impaling Strike"
+    ],
+    "key": "bestiary_6:companion:companion_kentrosaurus",
+    "monster_class": "Companion:2",
+    "name": "Companion (Kentrosaurus)",
+    "natural_armor": 2,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Tail"
+      }
+    ],
+    "race_subtype": "AnimalCompanionDinosaur",
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.312",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "DEX",
+        "amount": 6
+      },
+      {
+        "ability": "INT",
+        "amount": -8
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_races_companion.lst",
+    "sha256": "79889f4840da7eaffeefbe9ef7b91c349dc58f66e3fad9730e88d773cc345aa3",
+    "line": 11,
+    "record_key": "Companion (Kentrosaurus)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

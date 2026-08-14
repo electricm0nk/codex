@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Revenant ~ Baleful Shriek",
+    "delivery": "Supernatural",
+    "description": "Once every 1d4 rounds, a revenant can shriek as a standard action.  All creatures within a 60-foot spread must make a DC %1 Will save or cower in fear for 1d4 rounds.  This is a mind-affecting fear effect.",
+    "description_variables": [
+      "RevenantBalefulShriekDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:revenant_baleful_shriek",
+    "name": "Baleful Shriek",
+    "owners": [
+      "bestiary_2:monster:revenant"
+    ],
+    "source_page": "p.235",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1078,
+    "record_key": "Revenant ~ Baleful Shriek"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

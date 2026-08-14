@@ -39,21 +39,143 @@ case "$AGENT_ID" in
   *) DISPLAY_NUM=$(( 60 + $(cksum <<<"$AGENT_ID" | cut -d' ' -f1) % 30 )) ;;
 esac
 
+# Deterministic per-agent VITE DEV PORT, for exactly the same reason as
+# DISPLAY_NUM above -- and it was missing until SD-29 Epic 7 round 8
+# (`decisions.md §65.7`), which cost that cycle two false item-8 runs.
+#
+# THE FAILURE, precisely: `vite.config.ts` pinned `port: 1420, strictPort: true`
+# for every agent. A second concurrent agent's vite therefore could not bind and
+# died, and `tauri dev` -- which only needs *something* answering on its
+# configured `devUrl` -- happily attached to the FIRST agent's dev server. The
+# result is the worst possible shape of wrong: agent B's Rust backend serving
+# agent B's freshly-ingested records, painted by agent A's frontend source. The
+# window renders, every record is present, and the screenshot is evidence about
+# a tree the agent does not control. Round 8 caught it only because its new book
+# label was missing on screen while its 38 new records were present -- had it
+# changed no frontend string, the false artifact would have passed.
+#
+# The previous mitigation made it worse rather than better: the launch path
+# below used to `kill -9` whatever held 1420, which is a sibling agent's dev
+# server. So the two possible outcomes were "borrow another agent's frontend" or
+# "clobber another agent's app", with nothing in between.
+#
+# `default` keeps 1420 so a solo agent's behaviour is byte-identical to before.
+# Everything else derives from DISPLAY_NUM, which is already the per-agent
+# uniquifier, so two agents collide here only if they already collide there.
+if [ "$AGENT_ID" = "default" ]; then
+  DEV_PORT=1420
+else
+  DEV_PORT=$(( 14200 + DISPLAY_NUM ))
+fi
+export CODEX_DEV_PORT="$DEV_PORT"
+
 STATE_FILE="/tmp/run-desktop-driver-${AGENT_ID}.state"
 WINDOW_TITLE="Codex"
+APP_BIN_NAME="codex-desktop"
 LOG_FILE="/tmp/run-desktop-driver-${AGENT_ID}.tauri-dev.log"
 XVFB_LOG_FILE="/tmp/run-desktop-driver-${AGENT_ID}.xvfb.log"
+
+# How long to wait for WebKitGTK to create the app window after the binary
+# process appears. Measured on the 4-core CI box, idle and solo: ~35s. The
+# original budget was 45s, which left no headroom — and a run that put six
+# concurrent agents on those 4 cores (load average 9-12) blew through it every
+# time, then reported the app as crashed. Override for a slower box.
+WINDOW_TIMEOUT_SECS="${RUN_DESKTOP_WINDOW_TIMEOUT:-180}"
+
+# How long to wait for the binary to appear at all. `launch` runs
+# `npx tauri dev`, so this budget has to cover COMPILING the crate, not just
+# starting it. Observed on this box: a launch expired at 346s with the log
+# reading `Building 495/496: codex-desktop(bin)` — one crate unit short of
+# running. Any sibling commit touching a dependency forces that full rebuild,
+# which on 4 contended cores takes longer than the old 300s allowed.
+LAUNCH_TIMEOUT_SECS="${RUN_DESKTOP_LAUNCH_TIMEOUT:-900}"
+
+# Every process that is OUR app on OUR display.
+#
+# Two independent match sources, because neither alone is sufficient:
+#   - `pgrep -x "$APP_BIN_NAME"` matches on the process's own executable name,
+#     so it still finds the binary when CARGO_TARGET_DIR relocates it out of
+#     `target/debug/` (which a dispatched agent with a per-agent target dir
+#     always does — a path-only match silently finds nothing there);
+#   - the legacy `target/debug/codex` command-line match, kept for any build
+#     that lands under the old name.
+#
+# The DISPLAY filter is what makes this safe to act on. `pgrep -f` matches any
+# command line CONTAINING the pattern, which includes the caller's own shell
+# when the pattern appears in the command it is running; requiring the
+# candidate's own environ to carry our DISPLAY, and its executable name to be
+# a codex binary, excludes both that and every sibling agent's app.
+our_app_pids() {
+  local pid comm
+  {
+    pgrep -x "$APP_BIN_NAME" 2>/dev/null || true
+    pgrep -f "target/debug/codex" 2>/dev/null || true
+  } | sort -u | while read -r pid; do
+    [[ -n "$pid" && "$pid" != "$$" ]] || continue
+    comm="$(cat "/proc/$pid/comm" 2>/dev/null || true)"
+    case "$comm" in *codex*) ;; *) continue ;; esac
+    if tr '\0' '\n' < "/proc/$pid/environ" 2>/dev/null | grep -qx "DISPLAY=:$DISPLAY_NUM"; then
+      echo "$pid"
+    fi
+  done
+}
 
 # Kill only codex processes whose DISPLAY env matches ours, so one agent's
 # stop/cleanup can never reap another agent's running app even if both
 # somehow ended up with an unscoped process-name match.
 kill_our_codex_processes() {
   local pid
-  for pid in $(pgrep -f "target/debug/codex" 2>/dev/null || true); do
-    if tr '\0' '\n' < "/proc/$pid/environ" 2>/dev/null | grep -qx "DISPLAY=:$DISPLAY_NUM"; then
+  for pid in $(our_app_pids); do
+    kill -9 "$pid" 2>/dev/null || true
+  done
+}
+
+# Kill the Xvfb serving exactly our display, matched on its ARGUMENT rather
+# than on a substring of the whole command line. `pkill -f "Xvfb :$N "` reaps
+# anything whose command line merely contains that text — observed live: it
+# killed the shell that was invoking the driver, which then produced no output
+# and no error, and looked exactly like the app dying.
+kill_our_xvfb() {
+  local pid
+  for pid in $(pgrep -x Xvfb 2>/dev/null || true); do
+    if [ "$(tr '\0' '\n' < "/proc/$pid/cmdline" 2>/dev/null | sed -n 2p)" = ":$DISPLAY_NUM" ]; then
       kill -9 "$pid" 2>/dev/null || true
     fi
   done
+}
+
+# What the failure paths print BEFORE cleanup runs.
+#
+# This is the whole reason three separate agents concluded "the binary exits
+# before any window appears" when the binary was fine: `cmd_launch` traps EXIT
+# and calls `cmd_stop`, so a launch failure killed the app and the X server on
+# the way out. Every post-mortem `pgrep` then came back empty, which reads
+# exactly like a crash. Print the evidence while it still exists.
+cmd_diagnose() {
+  local pids window_count
+  pids="$(our_app_pids | tr '\n' ' ')"
+  if [ -n "${pids// /}" ]; then
+    echo "app process: ALIVE on :$DISPLAY_NUM (pid(s): ${pids% })"
+  else
+    echo "app process: none running on :$DISPLAY_NUM"
+  fi
+
+  echo "window inventory on :$DISPLAY_NUM (looking for WM_NAME exactly '$WINDOW_TITLE'):"
+  window_count=0
+  local w name
+  for w in $(DISPLAY=":$DISPLAY_NUM" xdotool search --name "" 2>/dev/null || true); do
+    name="$(DISPLAY=":$DISPLAY_NUM" xdotool getwindowname "$w" 2>/dev/null || true)"
+    echo "  window $w  WM_NAME=${name:-<unset>}"
+    window_count=$((window_count + 1))
+  done
+  [ "$window_count" -eq 0 ] && echo "  (no windows — X server unreachable or nothing mapped yet)"
+
+  if [ -f "$LOG_FILE" ]; then
+    echo "last 40 lines of $LOG_FILE:"
+    tail -n 40 "$LOG_FILE" | sed 's/^/  /'
+  else
+    echo "no launch log at $LOG_FILE"
+  fi
 }
 
 resolve_app_root() {
@@ -90,13 +212,23 @@ cmd_launch() {
   DISPLAY=":$DISPLAY_NUM" xdotool getdisplaygeometry >/dev/null 2>&1 \
     || { echo "Xvfb did not come up; see $XVFB_LOG_FILE" >&2; exit 1; }
 
-  # Vite's dev port must be free or `tauri dev` fails outright.
+  # Our OWN dev port must be free or `tauri dev` fails outright. Scoped to
+  # $DEV_PORT rather than a hardcoded 1420: this line used to kill whatever held
+  # 1420, which under concurrency is a sibling agent's dev server, not a stale
+  # process of ours (`decisions.md §65.7`). With a per-agent port the only thing
+  # this can now reap is our own leftover.
   local stale_port_pids
-  stale_port_pids="$(lsof -ti:1420 2>/dev/null || true)"
+  stale_port_pids="$(lsof -ti:"$DEV_PORT" 2>/dev/null || true)"
   [ -n "$stale_port_pids" ] && printf '%s\n' "$stale_port_pids" | xargs -r kill -9 2>/dev/null || true
 
-  echo "Launching npx tauri dev (first build can take several minutes) ..." >&2
-  (cd "$app_root" && DISPLAY=":$DISPLAY_NUM" npx tauri dev) >"$LOG_FILE" 2>&1 &
+  echo "Launching npx tauri dev on port $DEV_PORT (first build can take several minutes) ..." >&2
+  # `--config` merges over tauri.conf.json, so the window loads OUR vite rather
+  # than whatever answers on the shared default. `CODEX_DEV_PORT` (exported
+  # above) is what vite.config.ts reads for the matching listen port; both sides
+  # must move together or tauri waits forever on a port nothing serves.
+  (cd "$app_root" && DISPLAY=":$DISPLAY_NUM" \
+     npx tauri dev --config "{\"build\":{\"devUrl\":\"http://localhost:$DEV_PORT\"}}") \
+     >"$LOG_FILE" 2>&1 &
   local tauri_pid=$!
 
   # Readiness is checked by polling for the actual binary process, NOT by
@@ -106,20 +238,27 @@ cmd_launch() {
   # up and the window exists — a log-only check can report "timed out"
   # minutes after the app was already usable. Process-table state has no
   # such buffering delay. The log is still tailed on a genuine failure.
+  #
+  # Scoped to OUR display (see our_app_pids). The unscoped form matched any
+  # agent's app process, so a sibling's already-running app satisfied this poll
+  # instantly — and the window search below then spent its entire budget
+  # looking for a window on an empty display while our own binary was still
+  # compiling. That produced a "no window appeared" failure whose real cause
+  # was that the app had not started yet.
   local ready=""
-  for _ in $(seq 1 300); do
-    if pgrep -f "target/debug/codex" >/dev/null 2>&1; then
+  for _ in $(seq 1 "$LAUNCH_TIMEOUT_SECS"); do
+    if [ -n "$(our_app_pids)" ]; then
       ready=1
       break
     fi
     if grep -qi "error\[" "$LOG_FILE" 2>/dev/null || grep -q "panicked at" "$LOG_FILE" 2>/dev/null; then
       echo "Build/launch failed — see $LOG_FILE" >&2
-      tail -n 40 "$LOG_FILE" >&2
+      cmd_diagnose >&2
       exit 1
     fi
     sleep 1
   done
-  [ -n "$ready" ] || { echo "Timed out waiting for launch; see $LOG_FILE" >&2; tail -n 40 "$LOG_FILE" >&2; exit 1; }
+  [ -n "$ready" ] || { echo "Timed out after ${LAUNCH_TIMEOUT_SECS}s waiting for the app process to start (it may still have been compiling — check the log tail below for a 'Building N/M' line, and raise RUN_DESKTOP_LAUNCH_TIMEOUT if so); see $LOG_FILE" >&2; cmd_diagnose >&2; exit 1; }
 
   # Find the app window by its configured title (tauri.conf.json app.windows[0].title).
   # This also incidentally proves the window title is what it's supposed to be.
@@ -133,7 +272,8 @@ cmd_launch() {
   # this app. Filter candidates client-side against an exact, case-sensitive
   # WM_NAME match instead of trusting xdotool's own matching.
   local window_id=""
-  for _ in $(seq 1 90); do
+  local window_attempts=$(( WINDOW_TIMEOUT_SECS * 2 ))
+  for _ in $(seq 1 "$window_attempts"); do
     local candidate wm_name
     for candidate in $(DISPLAY=":$DISPLAY_NUM" xdotool search --name "$WINDOW_TITLE" 2>/dev/null || true); do
       wm_name="$(DISPLAY=":$DISPLAY_NUM" xdotool getwindowname "$candidate" 2>/dev/null || true)"
@@ -143,9 +283,23 @@ cmd_launch() {
       fi
     done
     [ -n "$window_id" ] && break
+    # If the app process died while we were waiting, stop waiting and say so —
+    # "no window appeared" and "the app crashed" need different fixes, and
+    # reporting the first when the second happened is what sent three agents
+    # after a nonexistent app bug.
+    if [ -z "$(our_app_pids)" ]; then
+      echo "App process exited before a window titled '$WINDOW_TITLE' appeared" >&2
+      cmd_diagnose >&2
+      exit 1
+    fi
     sleep 0.5
   done
-  [ -n "$window_id" ] || { echo "App process started but no window titled '$WINDOW_TITLE' appeared" >&2; exit 1; }
+  if [ -z "$window_id" ]; then
+    echo "App process is running but no window titled '$WINDOW_TITLE' appeared within ${WINDOW_TIMEOUT_SECS}s" >&2
+    echo "(raise the budget with RUN_DESKTOP_WINDOW_TIMEOUT=<seconds> on a loaded box)" >&2
+    cmd_diagnose >&2
+    exit 1
+  fi
 
   cat > "$STATE_FILE" <<EOF
 DISPLAY_NUM=$DISPLAY_NUM
@@ -255,8 +409,9 @@ cmd_stop() {
     rm -f "$STATE_FILE"
   fi
   # Belt-and-suspenders: a stale Xvfb on our fixed display from a previous
-  # crashed session, independent of whether a state file exists.
-  pkill -9 -f "Xvfb :$DISPLAY_NUM " 2>/dev/null || true
+  # crashed session, independent of whether a state file exists. Matched on
+  # the argument, not on a command-line substring — see kill_our_xvfb.
+  kill_our_xvfb
 }
 
 case "${1:-}" in
@@ -270,9 +425,18 @@ case "${1:-}" in
   title) shift; cmd_title "$@" ;;
   geometry) shift; cmd_geometry "$@" ;;
   logs) shift; cmd_logs "$@" ;;
+  diagnose) shift; cmd_diagnose "$@" ;;
   stop) shift; cmd_stop "$@" ;;
+  # Introspection hooks. Public enough to debug with, named with a leading
+  # underscore because they exist for scripts/tests/test_run_desktop_driver.sh
+  # to assert against the real derivation rather than re-implement it.
+  _display_num) echo "$DISPLAY_NUM" ;;
+  _app_pid) our_app_pids ;;
+  _window_timeout) echo "$WINDOW_TIMEOUT_SECS" ;;
+  _launch_timeout) echo "$LAUNCH_TIMEOUT_SECS" ;;
+  _diagnose) shift; cmd_diagnose "$@" ;;
   *)
-    echo "Usage: driver.sh {launch|screenshot|focus|click|scroll|type|key|title|geometry|logs|stop}" >&2
+    echo "Usage: driver.sh {launch|screenshot|focus|click|scroll|type|key|title|geometry|logs|diagnose|stop}" >&2
     exit 1
     ;;
 esac

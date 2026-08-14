@@ -201,7 +201,7 @@ fn repo_root() -> PathBuf {
 /// The real, completed, genuinely same-character PCGen `.pcg` fixture for
 /// this pilot case (see this module's doc comment for provenance).
 ///
-/// Resolution follows `ge08_workbench::resolve_package_path`'s contract —
+/// Resolution follows `authoring_workbench::resolve_package_path`'s contract —
 /// repo-relative paths anchor at the codex repo root. That helper lives in
 /// the separate `codex-desktop` crate and is not reachable from a `codex`
 /// root-crate integration test, so this uses the identical anchor its

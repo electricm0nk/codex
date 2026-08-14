@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T09:17:26Z",
+  "data": {
+    "corpus_key": "Hive Larva Swarm ~ Infest",
+    "delivery": "Extraordinary",
+    "description": "A hive larva swarm can enter the body of a single Small or larger helpless living creature. When it does so, a portion of the swarm enters a creature's mouth and gestates for 1d4 minutes. The gestated larvae ravage the host for 24 hours, during which time the infested creature falls unconscious and can't be woken by any means. During this period the larvae are vulnerable to expulsion by remove disease (DC %1). If successful, the hive larvae die inside of the host, dealing another 1d6 points of acid damage. In some cases, metabolized hive larvae corpses can infect the creature with the hive corruption (see page 24). After 24 hours, the hive larvae achieve symbiosis. The host awakens feeling healthy but hungry. Spells such as diagnose disease and Heal checks used to detect disease no longer detect the hive infestation, and the host creature is now treated as both its original creature type and an aberration for purposes of spells and effects (whichever is worse). A successful DC 25 Knowledge (dungeoneering) check can identify the symbiosis. If the host dies at this point, the larval infestation dies as well. However, if the host is then returned from the dead, the larvae are returned to life as well. The swarm fully matures 2d12 hours after symbiosis. By this point, there is no way to save the host short of a miracle or wish spell. Each round for 2d12 rounds, the host suffers agonizing pain and must succeed at a Fortitude save (DC %1) or be nauseated for 1 round. On each failed save, the host takes 4d6 points of damage as the mature hive creature forcibly separates itself. At the end of the 2d12 rounds, or after the host is slain by the damage, a fully formed hive creature (usually a hive warrior) explodes from within, destroying the host's body.",
+    "description_variables": [
+      "10+HD/2+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:hive_larva_swarm_infest",
+    "name": "Infest",
+    "owners": [
+      "horror_adventures:monster:hive_larva_swarm"
+    ],
+    "source_page": "p.236",
+    "traits": [
+      "HiveLarvaSwarm"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 277,
+    "record_key": "Hive Larva Swarm ~ Infest"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

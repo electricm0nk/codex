@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "1/2",
+    "corpus_key": "Dinosaur (Compsognathus)",
+    "external_ability_refs": [
+      "Compsognathus ~ Poison",
+      "Scent"
+    ],
+    "key": "bestiary_2:monster:dinosaur_compsognathus",
+    "monster_class": "Animal:1",
+    "name": "Dinosaur (Compsognathus)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Animal",
+    "size": "T",
+    "source_page": "p.90",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 285,
+    "record_key": "Dinosaur (Compsognathus)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

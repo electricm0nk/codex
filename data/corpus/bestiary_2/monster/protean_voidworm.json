@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "2",
+    "corpus_key": "Protean (Voidworm)",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Detect Law ~ Constant",
+      "Fast Healing",
+      "Flight Maneuverability",
+      "Voidworm ~ Change Shape",
+      "Voidworm ~ Confusion"
+    ],
+    "key": "bestiary_2:monster:protean_voidworm",
+    "monster_class": "Outsider (Ref/Will):3",
+    "name": "Protean (Voidworm)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d3",
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Chaotic|Extraplanar|Protean ~ Voidworm|Shapechanger",
+    "race_type": "Outsider",
+    "size": "T",
+    "source_page": "p.217",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 50,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 705,
+    "record_key": "Protean (Voidworm)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

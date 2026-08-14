@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Accuser Devil ~ Disease",
+    "delivery": "Extraordinary",
+    "description": "Devil Chills: Bite - injury; save Fort DC %1; onset 1d4 days; frequency 1 day; effect 1d4 Str damage; cure 3 consecutive saves.",
+    "description_variables": [
+      "AccuserDevilDiseaseDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:accuser_devil_disease",
+    "name": "Disease",
+    "owners": [
+      "bestiary_2:monster:devil_accuser"
+    ],
+    "source_page": "p.84",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 388,
+    "record_key": "Accuser Devil ~ Disease"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

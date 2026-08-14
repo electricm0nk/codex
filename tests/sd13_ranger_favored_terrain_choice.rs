@@ -40,7 +40,7 @@ use codex::rules_core::character_input::{CharacterInput, load_character_input_fi
 use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{SupportState, seeded_sd13_e1_f1_current_truth};
+use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 
 const RANGER_LEVEL2_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_ranger_level2_sd13_deterministic_input.txt");
@@ -253,7 +253,7 @@ fn ranger_level_4_was_later_widened_into_the_supported_tranche() {
 
 #[test]
 fn matrix_ranger_row_note_names_favored_terrain_as_grounded() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let ranger = matrix
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger row must exist");

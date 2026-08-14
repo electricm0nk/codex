@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Phoenix ~ Self-Resurrection",
+    "delivery": "Supernatural",
+    "description": "A slain phoenix remains dead for only 1d4 rounds unless its body is completely destroyed by an effect such as disintegrate. Otherwise, a fully healed phoenix emerges from the remains 1d4 rounds after death, as if brought back to life via resurrection. The phoenix gains 1 permanent negative level when this occurs, although most use greater restoration to remove this negative level as soon as possible. A phoenix can self-resurrect only once per year. If a phoenix dies a second time before that year passes, its death is permanent. A phoenix that dies within the area of a desecrate spell cannot self-resurrect until the desecrate effect ends, at which point the phoenix immediately resurrects. A phoenix brought back to life by other means never gains negative levels as a result.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:phoenix_self_resurrection",
+    "name": "Self-Resurrection",
+    "owners": [
+      "beastiary:monster:phoenix"
+    ],
+    "source_page": "p.227",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1032,
+    "record_key": "Phoenix ~ Self-Resurrection"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

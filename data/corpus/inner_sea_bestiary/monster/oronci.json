@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:oronci_frenzy",
+      "inner_sea_bestiary:monster_ability:oronci_poison",
+      "inner_sea_bestiary:monster_ability:oronci_spit",
+      "inner_sea_bestiary:monster_ability:oronci_undersized_weapons"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Oronci",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Ferocity",
+      "Light Sensitivity"
+    ],
+    "key": "inner_sea_bestiary:monster:oronci",
+    "monster_class": "Aberration:7",
+    "name": "Oronci",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Aberration",
+    "size": "M",
+    "source_page": "p.36",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 60,
+    "record_key": "Oronci"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

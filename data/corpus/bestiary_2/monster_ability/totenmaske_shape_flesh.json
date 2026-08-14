@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Totenmaske ~ Shape Flesh",
+    "delivery": "Supernatural",
+    "description": "By spending 1 minute in contact with a helpless creature, a totnmaske can reshape the target's face, causing flesh to cover vital features.  The target may attempt a DC %1 Fortitude save to resist.  Changes are permanent, but can be reversed with heal, restoration, or regeneration, or by surgically opening the flesh with a DC 15 Heal check that takes 1d3 rounds and deals 1d4 points of damage even if the check is not successful.  A totenmaske can use this ability on one of four different features per use: ears (target becomes deaf), eyes (target becomes blind), mouth (target cannot speak or eat), or nose (target cannot smell).  Multiple uses can have increasingly serious effects (such as sealing the mouth and nose, which causes suffocation).",
+    "description_variables": [
+      "TotenmaskeShapeFleshDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:totenmaske_shape_flesh",
+    "name": "Shape Flesh",
+    "owners": [
+      "bestiary_2:monster:totenmaske"
+    ],
+    "source_page": "p.269",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1291,
+    "record_key": "Totenmaske ~ Shape Flesh"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

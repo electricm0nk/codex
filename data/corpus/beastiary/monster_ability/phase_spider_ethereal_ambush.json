@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Phase Spider ~ Ethereal Ambush",
+    "delivery": null,
+    "description": "A phase spider that attacks foes on the Material Plane in a surprise round can take a full round of actions if it begins the combat by phasing into the Material Plane from the Ethereal Plane.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:phase_spider_ethereal_ambush",
+    "name": "Ethereal Ambush",
+    "owners": [
+      "beastiary:monster:phase_spider"
+    ],
+    "source_page": "p.226",
+    "traits": [
+      "Exraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1026,
+    "record_key": "Phase Spider ~ Ethereal Ambush"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

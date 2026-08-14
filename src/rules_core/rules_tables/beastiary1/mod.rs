@@ -119,6 +119,20 @@
 //! methodology, the register A8 codegen-path decision, and the register
 //! A13 finding that no spell-list concept exists for this book.
 
+//! **Companion tables (SD-29 Epic 7 round 3, companion lane extend):**
+//! `companion_data` holds Bestiary 1's 24 `b1_races_companion.lst`
+//! creature rows and its 35 `b1_abilities_companion.lst` ability rows,
+//! transcribed by `scripts/transcribe_companion_tables.py`. This is the
+//! first companion book that needed **no** new `RuleSetId` — the book was
+//! already `in_scope` through `RuleSetId::Bestiary1` — and the first whose
+//! companion tables sit beside another family's tables in one module.
+//!
+//! Its animal companions are a different population from this module's
+//! monsters: `Companion (Wolf)` is an advanceable companion chassis row,
+//! `Wolf` is a stat block. Both come from Bestiary 1 and neither is the
+//! other, so nothing here reconciles the two counts.
+
+mod companion_data;
 pub mod equipment_data;
 pub mod equipment_tables;
 pub mod natural_attack_provenance;
@@ -393,6 +407,137 @@ pub fn monster_key_resolve(key: &str, rule_set: RuleSetId) -> Option<MonsterStat
         }
     }
     None
+}
+
+pub use super::companion_chassis::{CompanionAbilityRecord, CompanionRecord};
+
+/// Every companion creature this book defines, in corpus row order.
+pub const fn companions_static() -> &'static [CompanionRecord] {
+    companion_data::COMPANIONS
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub const fn companion_abilities_static() -> &'static [CompanionAbilityRecord] {
+    companion_data::COMPANION_ABILITIES
+}
+
+/// Every companion creature this book defines, in corpus row order.
+pub fn companions() -> &'static [CompanionRecord] {
+    companions_static()
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
+    companion_abilities_static()
+}
+
+#[cfg(test)]
+mod companion_tests {
+    use super::*;
+
+    /// From `docs/work-inventory.json`'s own units for this book: 59 companion
+    /// units, 24 creature rows and 35 ability rows, none gated and none a
+    /// `*_classes_companion.lst` class row.
+    #[test]
+    fn the_book_defines_twenty_four_companions_and_thirty_five_abilities() {
+        assert_eq!(companions().len(), 24);
+        assert_eq!(companion_abilities().len(), 35);
+    }
+
+    /// The five rows that made this book look unregisterable, pinned BY NAME.
+    ///
+    /// `classify_companion_rows.py` reported them as orphans until
+    /// `decisions.md §54.1` added the granted-by shape: each is named by an
+    /// `ABILITY:Special Ability|AUTOMATIC|` token on a `CompanionAdvancement`
+    /// row, and that row — not the creature row — is what reaches them. A
+    /// regression that dropped the shape would leave these five with no owner,
+    /// and this test says so by name rather than by a count.
+    #[test]
+    fn the_five_granted_by_advancement_abilities_resolve_to_their_creature() {
+        for (ability_key, owner) in [
+            ("Ankylosaurus ~ Stun", "Companion (Dinosaur (Ankylosaurus))"),
+            ("Electric Eel ~ Electricity", "Companion (Eel (Electric))"),
+            ("Giant Moray Eel ~ Gnaw", "Companion (Eel (Giant Moray))"),
+            ("Lizard Monitor ~ Poison", "Companion (Lizard (Monitor))"),
+            ("Tyrannosaurus ~ Powerful Bite", "Companion (Dinosaur (Tyrannosaurus))"),
+        ] {
+            let ability = companion_abilities()
+                .iter()
+                .find(|a| a.key == ability_key)
+                .unwrap_or_else(|| panic!("{ability_key} is in this book"));
+            assert!(
+                ability.owners.contains(&owner),
+                "{ability_key} must be owned by {owner} (granted-by shape, decisions.md §54.1); \
+                 owners were {:?}",
+                ability.owners
+            );
+            let creature = companions()
+                .iter()
+                .find(|c| c.key == owner)
+                .unwrap_or_else(|| panic!("{owner} is in this book"));
+            assert!(
+                creature.ability_keys.contains(&ability_key),
+                "{owner} must name {ability_key} back"
+            );
+        }
+    }
+
+    /// Verbatim spot-check against `b1_races_companion.lst:7`.
+    #[test]
+    fn the_dire_bat_companion_matches_its_corpus_row() {
+        let companion = companions()
+            .iter()
+            .find(|c| c.key == "Companion (Bat (Dire))")
+            .expect("the dire bat is in this book");
+        assert_eq!(companion.size, Some("M"));
+        assert_eq!(companion.monster_class, Some("Companion:2"));
+        assert_eq!(companion.source_page, Some("p.30"));
+        assert_eq!(
+            companion.speeds,
+            &[
+                super::super::companion_chassis::Speed { mode: "Walk", feet: 20 },
+                super::super::companion_chassis::Speed { mode: "Fly", feet: 40 },
+            ]
+        );
+    }
+
+    /// Every ability row is owned by a creature row of this book, and every
+    /// owner names it back.
+    #[test]
+    fn every_ability_row_names_at_least_one_owner_in_this_book() {
+        let keys: Vec<_> = companions().iter().map(|c| c.key).collect();
+        for ability in companion_abilities() {
+            assert!(!ability.owners.is_empty(), "{} is an orphan", ability.key);
+            for owner in ability.owners {
+                assert!(
+                    keys.contains(owner),
+                    "{}: owner {owner} is not a creature in this book",
+                    ability.key
+                );
+            }
+        }
+    }
+
+    /// The companion population and the monster population are different
+    /// things that this book contributes under one `RuleSetId`. Nothing may
+    /// silently reconcile them: `Companion (Wolf)` is not the `Wolf` stat
+    /// block, and the 46 monsters are not 46 of the 24 companions.
+    #[test]
+    fn the_companion_rows_are_not_this_module_s_monster_rows() {
+        let monsters: Vec<String> = super::MonsterId::ALL
+            .iter()
+            .filter_map(|id| super::monster_resolve(*id, super::RuleSetId::Bestiary1))
+            .map(|block| super::monster_key(&block.name))
+            .collect();
+        assert_eq!(monsters.len(), super::MonsterId::ALL.len(), "every monster resolves");
+        for companion in companions() {
+            assert!(
+                !monsters.contains(&super::monster_key(companion.key)),
+                "{} collides with a monster key",
+                companion.key
+            );
+        }
+    }
 }
 
 #[cfg(test)]

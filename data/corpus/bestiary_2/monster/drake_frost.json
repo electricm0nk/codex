@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:frost_drake_cold",
+      "bestiary_2:monster_ability:frost_drake_freezing_mist_breath",
+      "bestiary_2:monster_ability:frost_drake_icewalking",
+      "bestiary_2:monster_ability:frost_drake_speed_surge"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Drake (Frost)",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Frost Drake ~ Burrow",
+      "Frost Drake ~ Snow Vision",
+      "Scent"
+    ],
+    "key": "bestiary_2:monster:drake_frost",
+    "monster_class": "Dragon:8",
+    "name": "Drake (Frost)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Cold",
+    "race_type": "Dragon",
+    "size": "L",
+    "source_page": "p.108",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 305,
+    "record_key": "Drake (Frost)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

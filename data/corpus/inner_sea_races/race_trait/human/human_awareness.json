@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:47:16Z",
+  "data": {
+    "key": "Human ~ Awareness",
+    "name": "Awareness",
+    "race_key": "Human",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Human Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Human_ReplaceBonusFeat"
+    ],
+    "description": "Humans raised within monastic traditions or communities that encourage mindfulness seem to shrug off many dangers more easily than other humans. They gain a +1 racial bonus on all saving throws and concentration checks. This racial trait replaces humans' bonus feat.",
+    "source_page": "p.213",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Human ~ Awareness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Human ~ Awareness],[!PREFACT:1,ABILITIES,Human_ReplaceBonusFeat=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Humans raised within monastic traditions or communities that encourage mindfulness seem to shrug off many dangers more easily than other humans. They gain a +1 racial bonus on all saving throws and concentration checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces humans' bonus feat.|!PREABILITY:1,CATEGORY=Special Ability,Human ~ Awareness"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 racial bonus on concentration checks."
+      },
+      {
+        "key": "FACT",
+        "value": "Human_ReplaceBonusFeat|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SAVE",
+          "ALL",
+          "1",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 201,
+    "record_key": "Human ~ Awareness"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

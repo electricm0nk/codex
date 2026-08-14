@@ -38,7 +38,7 @@ use codex::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory;
 use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 use codex::rules_core::support_state_matrix::{
-    EvidenceTier, MatrixSubjectType, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceTier, MatrixSubjectType, SupportState, seeded_current_truth,
 };
 
 fn corpus_root() -> Option<PathBuf> {
@@ -168,7 +168,7 @@ fn every_real_corpus_item_resolves_reaches_equipped_items_and_grounds_through_ta
 
 #[test]
 fn arms_armor_matrix_row_reflects_full_coverage() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let row = matrix
         .rows
         .iter()

@@ -1,0 +1,45 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "19",
+    "corpus_key": "Clockwork (Goliath)",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:clockwork_goliath",
+    "monster_class": "Construct:28",
+    "name": "Clockwork Goliath",
+    "natural_attacks": [
+      {
+        "damage_dice": "3d6",
+        "name": "Slams"
+      }
+    ],
+    "race_subtype": "Clockwork",
+    "race_type": "Construct",
+    "size": "G",
+    "source_page": "p.53",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 53,
+    "record_key": "Clockwork (Goliath)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

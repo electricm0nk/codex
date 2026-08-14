@@ -21,15 +21,17 @@ function readPackageJsonVersion(): string {
   return doc.version;
 }
 
-// The exact pre-bump literal these fixtures carried before SD-23's Epic 7
-// closure-epilogue build-number increment moved the three version files
-// from 0.5.96 to 0.5.97 (tranche stays at 5 — tranche/5-1 was a dash-release
-// within tranche 5, not a new tranche cut; the tranche digit only moves when
-// a new tranche/N branch is cut for the next bundle). Some files also carry
-// unrelated arbitrary version placeholders (e.g. '0.0.0-test') for isolated
-// formatter tests — those aren't "the current build" fixture and must not
-// be flagged here.
-const STALE_LABEL = 'Codex 0.5.96-test';
+// The exact pre-bump literal these fixtures carried before the most recent
+// version bump. Kept one bump behind on purpose: it is the literal a
+// half-applied bump would leave behind, so it is the one worth naming
+// explicitly. Updated to 0.8.0 by the tranche/9 cut (the version files moved
+// 0.8.0 -> 0.9.0 because a NEW tranche/N branch was cut; a bundle's own
+// closure on an unchanged tranche branch does not move the tranche digit).
+// The prior value named here was 'Codex 0.5.96-test', from SD-23's Epic 7
+// build-number increment. Some files also carry unrelated arbitrary version
+// placeholders (e.g. '0.0.0-test') for isolated formatter tests — those
+// aren't "the current build" fixture and must not be flagged here.
+const STALE_LABEL = 'Codex 0.8.0-test';
 
 function verifiesFixturesCarryCurrentTrancheBuildLabel() {
   const pkgVersion = readPackageJsonVersion();

@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_wilderness:companion:squid_vampire_photophores",
+      "ultimate_wilderness:companion:squid_vampire_pressure_adaptation",
+      "ultimate_wilderness:companion:squid_vampire_tentacles"
+    ],
+    "corpus_key": "Squid (Vampire)",
+    "external_ability_refs": [],
+    "key": "ultimate_wilderness:companion:squid_vampire",
+    "monster_class": "Animal:1",
+    "name": "Squid (Vampire)",
+    "natural_armor": null,
+    "natural_attacks": [
+      {
+        "damage_dice": "0",
+        "name": "Tentacles"
+      },
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Aquatic",
+    "race_type": "Animal",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.208",
+    "speeds": [
+      {
+        "feet": 0,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -4
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": -8
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": -8
+      }
+    ],
+    "type_segments": [
+      "Animal"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+    "line": 185,
+    "record_key": "Squid (Vampire)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

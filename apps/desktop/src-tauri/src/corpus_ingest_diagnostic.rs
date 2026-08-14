@@ -61,8 +61,12 @@
 //! would make that caption false in the other direction.
 //!
 //! They are accounted for elsewhere, so nothing is hidden: their compliance
-//! count is in `data/corpus/advanced_race_guide/LICENSE.json` (635 records,
-//! guarded by `tests/sd27_book_license_record_counts.rs`), and every one of
+//! count is in `data/corpus/advanced_race_guide/LICENSE.json` (649 records as
+//! of SD-29 Epic 7 round 9, which added the book's 14 companion records to the
+//! 635 it carried before; the artifact states the number and
+//! `tests/sd27_book_license_record_counts.rs` derives it from the files on
+//! disk, so neither this comment nor that field is the source of truth), and
+//! every one of
 //! ARG's 153 *alternate* traits reaches the player through
 //! `list_alternate_racial_traits`.
 //!
@@ -231,9 +235,21 @@ fn crb_counts() -> BTreeMap<String, u32> {
         "equipment".to_string(),
         crb_equipment_tables::equipment_tables().len() as u32,
     );
+    // SD-29 Epic 7 round 8. Merged in rather than inserted by hand, so this
+    // book's companion count is derived from the SAME registry every other
+    // companion book's row reads. Round 7 found Ultimate Wilderness present in
+    // this panel with a number that under-stated it threefold, because its row
+    // inserted `feats` and stopped; a book whose row is hand-built drifts the
+    // moment it gains a family. `crb` had five families before this round and
+    // is the most likely book in the corpus to gain a sixth again.
+    counts.extend(companion_book_counts("core_rulebook"));
     counts
 }
 
+/// SD-29 Epic 7 round 9 adds this book's `companion` family. The lookup key is
+/// the CORPUS book `advanced_players_guide`, not the engine module `apg` this
+/// function is named for — `companion_chassis::COMPANION_BOOKS` keys on the
+/// `data/corpus/` spelling, the same split `beastiary1_counts` documents.
 fn apg_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("classes".to_string(), ApgClassId::ALL.len() as u32);
@@ -243,6 +259,7 @@ fn apg_counts() -> BTreeMap<String, u32> {
         "equipment".to_string(),
         apg::equipment_tables::EQUIPMENT_TABLE.len() as u32,
     );
+    counts.extend(companion_book_counts("advanced_players_guide"));
     counts
 }
 
@@ -258,9 +275,102 @@ fn acg_counts() -> BTreeMap<String, u32> {
     counts
 }
 
-fn beastiary1_counts() -> BTreeMap<String, u32> {
+/// One chassis book's two record families, read from its own live tables
+/// (SD-29 Epic 5). `monster_abilities` is a kind this panel first reported
+/// with the Bonus Bestiary pilot -- Bestiary 1 ingests monsters only.
+///
+/// Read through `monster_chassis::monster_book` rather than from a named
+/// module, so a book registered in the chassis but forgotten here fails on
+/// its own row instead of reporting silently absent. The panel's own
+/// fail-closed test already treats an unreported book as an un-ingested one.
+fn chassis_book_counts(corpus_book: &str) -> BTreeMap<String, u32> {
+    use codex::rules_core::rules_tables::monster_chassis;
+    let table = monster_chassis::monster_book(corpus_book).unwrap_or_else(|| {
+        panic!("{corpus_book} is not registered in monster_chassis::MONSTER_BOOKS")
+    });
     let mut counts = BTreeMap::new();
-    counts.insert("monsters".to_string(), ALL_BESTIARY1_MONSTERS.len() as u32);
+    counts.insert("monsters".to_string(), table.monsters.len() as u32);
+    counts.insert(
+        "monster_abilities".to_string(),
+        table.monster_abilities.len() as u32,
+    );
+    counts
+}
+
+/// The `companion` counts a book contributes, read off the live companion
+/// chassis exactly as [`chassis_book_counts`] reads the monster one.
+///
+/// **Written independently and identically by two lanes, and kept once.** The
+/// companion lane added it here with its tables (`decisions.md §48`); the
+/// race-trait lane's round 4 added the same function for the same reason
+/// (`§49`) because the three books `bac2f569` landed left
+/// `every_book_landed_in_rules_tables_is_reported` — the drift guard written
+/// for exactly this defect — RED on `origin/tranche/9` until whichever lane got
+/// there first. Both reasons are kept because both are true, and the merge
+/// unioned them rather than picking a side (`§46.6` rule 1).
+///
+/// Kept separate from [`chassis_book_counts`] rather than merged into it: a
+/// book can be in either registry, both, or neither, and a single helper would
+/// have to guess which. `monster_codex` is in both, which is exactly the case
+/// that would have broken a merged one.
+fn companion_book_counts(corpus_book: &str) -> BTreeMap<String, u32> {
+    use codex::rules_core::rules_tables::companion_chassis;
+    let table = companion_chassis::companion_book(corpus_book).unwrap_or_else(|| {
+        panic!("{corpus_book} is not registered in companion_chassis::COMPANION_BOOKS")
+    });
+    // **One kind, not two**, matching `reach_gate::CORPUS_KIND_NAMES`'s
+    // deliberate single `companion -> companions` entry and the corpus's own
+    // single `data/corpus/<book>/companion/` directory, which holds creature
+    // records and ability records side by side. Splitting them here would
+    // invent a `companion_abilities` family the reach gate has no claim for,
+    // and `every_ingested_family_is_accounted_for` would correctly demand one
+    // -- an invented family is exactly the drift this diagnostic exists to
+    // report, not to create. The sum is the on-disk record count, verified per
+    // book: `find data/corpus/inner_sea_combat/companion -name '*.json' | wc -l`
+    // -> 10 = 4 creatures + 6 abilities; inner_sea_intrigue 11 = 2 + 9;
+    // horror_adventures 2 = 1 + 1; monster_codex 15 = 8 + 7.
+    let mut counts = BTreeMap::new();
+    counts.insert(
+        "companions".to_string(),
+        (table.companions.len() + table.companion_abilities.len()) as u32,
+    );
+    counts
+}
+
+/// A book carrying BOTH chassis registries' tables, merged into one row set.
+///
+/// `monster_codex` is the only such book today and the reason this exists: its
+/// panel row has to state its monsters, its monster abilities AND its 15
+/// companion units, and reporting only one registry would under-state a book
+/// the tester is looking at.
+fn monster_and_companion_book_counts(corpus_book: &str) -> BTreeMap<String, u32> {
+    let mut counts = chassis_book_counts(corpus_book);
+    counts.extend(companion_book_counts(corpus_book));
+    counts
+}
+
+/// Bestiary 1's compiled families: its SD-22 monsters, plus — since SD-29
+/// Epic 7 round 3 — its companion rows.
+///
+/// The companion half is looked up under `"beastiary"`, the `data/corpus/`
+/// spelling `companion_chassis::COMPANION_BOOKS` keys on, while this book's
+/// diagnostic id is `beastiary1`. Reporting only the monster half would
+/// under-state the book by 59 records, the same defect
+/// `monster_and_companion_book_counts` exists for.
+/// Since SD-29 Epic 5 round 8 the monster half is TWO tables, not one
+/// (`decisions.md §58.3`): `ALL_BESTIARY1_MONSTERS`' 46 hand-modelled blocks and
+/// the chassis's 284. The panel states the book, so it states the sum — reporting
+/// either alone under-states a book the tester is looking at by the size of the
+/// other, the same defect `monster_and_companion_book_counts` exists for. The
+/// chassis also contributes this book's first `monster_abilities` family.
+fn beastiary1_counts() -> BTreeMap<String, u32> {
+    let mut counts = chassis_book_counts("beastiary");
+    let chassis_monsters = counts.get("monsters").copied().unwrap_or_default();
+    counts.insert(
+        "monsters".to_string(),
+        ALL_BESTIARY1_MONSTERS.len() as u32 + chassis_monsters,
+    );
+    counts.extend(companion_book_counts("beastiary"));
     counts
 }
 
@@ -279,6 +389,8 @@ fn pu_class_feature_count() -> u32 {
         + pu::summoner_features::UnchainedSummonerFeature::ALL.len()) as u32
 }
 
+/// SD-29 Epic 7 round 9 adds this book's `companion` family, merged in rather
+/// than hand-inserted for the reason `ultimate_wilderness_counts` records.
 fn advanced_race_guide_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("feats".to_string(), arg::feats::feat_tables().len() as u32);
@@ -287,6 +399,7 @@ fn advanced_race_guide_counts() -> BTreeMap<String, u32> {
         "equipment".to_string(),
         arg::equipment_tables::equipment_tables().len() as u32,
     );
+    counts.extend(companion_book_counts("advanced_race_guide"));
     counts
 }
 
@@ -351,10 +464,30 @@ fn ultimate_equipment_counts() -> BTreeMap<String, u32> {
 /// Ultimate Wilderness: SD-28 Epic 26 (`epic-26-uw-complete`) from-scratch
 /// book ingest, first slice. 135 feat records -- see
 /// `ultimate_wilderness::feat_tables`'s own doc comment for the catalog.
+/// SD-29 Epic 7 round 6 added this book's `companion` family and did NOT add it
+/// here, so the panel reported Ultimate Wilderness's 135 feats and none of its
+/// 327 companion records (`decisions.md §63.4`). Corrected in round 7, which
+/// found it only because registering ITS book turned
+/// `every_book_landed_in_rules_tables_is_reported` red — that test asks whether
+/// a book appears at all, and Ultimate Wilderness already did.
 fn ultimate_wilderness_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("feats".to_string(), uw::feat_tables::feat_tables().len() as u32);
+    counts.extend(companion_book_counts("ultimate_wilderness"));
     counts
+}
+
+/// Core Essentials: SD-29 Epic 7 round 7 (`SD29-E7-F2-008`) — this book's
+/// `companion` family, 102 records (58 creature rows + 44 ability rows).
+///
+/// Its 64 heritage `race_trait` records are served OFF DISK from
+/// `data/corpus/core_essentials/race_trait/` by the race-trait lane
+/// (`RuleSetId::Ce`, `decisions.md §49`) rather than out of a compiled table,
+/// so they are not readable from `rules_tables` and are deliberately not
+/// counted here — this function reports what this book landed IN
+/// `src/rules_core/rules_tables/`, which is the companion family alone.
+fn core_essentials_counts() -> BTreeMap<String, u32> {
+    companion_book_counts("core_essentials")
 }
 
 /// Ultimate Combat: SD-28 Epic 27 (`epic-27-uc-complete`) from-scratch
@@ -371,10 +504,16 @@ fn ultimate_combat_counts() -> BTreeMap<String, u32> {
 /// own doc comment for the catalog. SD-28-E15's second slice adds 26
 /// equipment records (24 General + 2 ArmsArmor) -- see
 /// `ultimate_magic::equipment_tables`'s own doc comment.
+/// SD-29 Epic 7 round 9 adds this book's `companion` family, MERGED in via
+/// `companion_book_counts` rather than hand-inserted — the drift round 7 found
+/// in `ultimate_wilderness_counts` came from exactly the hand-built shape this
+/// function otherwise has, and a book that already reports two families is the
+/// most likely to gain a third silently.
 fn ultimate_magic_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("feats".to_string(), um::feat_tables::feat_tables().len() as u32);
     counts.insert("equipment".to_string(), um::equipment_tables::equipment_tables().len() as u32);
+    counts.extend(companion_book_counts("ultimate_magic"));
     counts
 }
 
@@ -384,6 +523,15 @@ fn ultimate_magic_counts() -> BTreeMap<String, u32> {
 /// the license-posture check. SD-28-E15's second slice adds 552 equipment
 /// records (326 equipment + 226 equipmods) -- see
 /// `ultimate_psionics::equipment_tables`'s own doc comment.
+///
+/// SD-29 Epic 5 extend, round 10 adds this book's monster families by CHAINING
+/// [`chassis_book_counts`] rather than by inserting two more literals. That is
+/// `decisions.md §63.4`'s finding applied prospectively: `ultimate_wilderness`
+/// had 327 companion records absent from this panel from the day they landed,
+/// because its per-book counts function listed only the families that existed
+/// when it was written and the row above it was the only place a later lane
+/// looked. Extending the map keeps every family this book has, whoever added
+/// it.
 fn ultimate_psionics_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("feats".to_string(), upsi::feat_tables::feat_tables().len() as u32);
@@ -392,6 +540,7 @@ fn ultimate_psionics_counts() -> BTreeMap<String, u32> {
         (upsi::equipment_tables::equipment_tables().len()
             + upsi::equipment_tables::equipmod_tables().len()) as u32,
     );
+    counts.extend(chassis_book_counts("ultimate_psionics"));
     counts
 }
 
@@ -469,6 +618,142 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             &races,
         ),
         book_status(
+            "bonus_bestiary",
+            "src/rules_core/rules_tables/bonus_bestiary",
+            chassis_book_counts("bonus_bestiary"),
+            &races,
+        ),
+        book_status(
+            "monster_codex",
+            "src/rules_core/rules_tables/monster_codex",
+            monster_and_companion_book_counts("monster_codex"),
+            &races,
+        ),
+        // SD-29 Epic 7 (companion lane). Three books whose only compiled family
+        // is `companion`; `inner_sea_combat` is the first book in this repo
+        // whose ONLY ingested family is companions at all.
+        //
+        // **Two lanes added these three rows independently and the merge kept
+        // both copies** (`decisions.md §46.6` rule 1: a non-conflicting hunk is
+        // exactly what an auto-merge duplicates without saying so). One copy is
+        // kept. The race-trait lane's version noted that `monster_codex`'s
+        // companion counts were NOT merged into its own row above; that gap is
+        // closed here by `monster_and_companion_book_counts`, so the note is
+        // corrected rather than dropped.
+        book_status(
+            "inner_sea_combat",
+            "src/rules_core/rules_tables/inner_sea_combat",
+            companion_book_counts("inner_sea_combat"),
+            &races,
+        ),
+        book_status(
+            "inner_sea_intrigue",
+            "src/rules_core/rules_tables/inner_sea_intrigue",
+            companion_book_counts("inner_sea_intrigue"),
+            &races,
+        ),
+        // SD-29 Epic 5 extend, FINAL round, changed this row from
+        // `companion_book_counts` to the merged helper: this book stopped being
+        // companion-ONLY when the monster lane registered its 3 monsters and 6
+        // abilities. Reporting only the companion registry would under-state a
+        // book the tester is looking at, which is `decisions.md §63.4`'s finding
+        // -- and that finding is about THIS function, so leaving the row alone
+        // would have repeated it in the file that records it.
+        book_status(
+            "horror_adventures",
+            "src/rules_core/rules_tables/horror_adventures",
+            monster_and_companion_book_counts("horror_adventures"),
+            &races,
+        ),
+        // SD-29 Epic 7 round 2 (companion lane, extend). Three more books whose
+        // only compiled family is `companion`. This panel's caption says it
+        // shows every rule book landed in `rules_tables`, so a book missing here
+        // reads to a tester as an un-ingested book — the defect
+        // `every_book_landed_in_rules_tables_is_reported` caught for round 1's
+        // three, and the reason these rows are written in the same commit that
+        // registers the books.
+        book_status(
+            "bestiary_5",
+            "src/rules_core/rules_tables/bestiary_5",
+            companion_book_counts("bestiary_5"),
+            &races,
+        ),
+        book_status(
+            "bestiary_6",
+            "src/rules_core/rules_tables/bestiary_6",
+            companion_book_counts("bestiary_6"),
+            &races,
+        ),
+        // SD-29 Epic 5 extend, round 4 turned this row into the SECOND book
+        // carrying both registries: B2's 16 familiars were already here, and the
+        // same book now compiles 316 monsters + 402 monster abilities. Reporting
+        // only the companion half would under-state it by 718 records, which is
+        // the exact defect `monster_and_companion_book_counts` was written for
+        // when `monster_codex` became the first such book.
+        book_status(
+            "bestiary_2",
+            "src/rules_core/rules_tables/bestiary_2",
+            monster_and_companion_book_counts("bestiary_2"),
+            &races,
+        ),
+        // SD-29 Epic 5 extend, round 5. Unlike the row above it, this book
+        // carries the monster registry ONLY -- it contributes no companion
+        // family -- so it reads through `chassis_book_counts` like the
+        // monster-only books below.
+        book_status(
+            "bestiary_3",
+            "src/rules_core/rules_tables/bestiary_3",
+            chassis_book_counts("bestiary_3"),
+            &races,
+        ),
+        // SD-29 Epic 5 extend, round 6. Monster registry only, like the row
+        // above it.
+        book_status(
+            "bestiary_4",
+            "src/rules_core/rules_tables/bestiary_4",
+            chassis_book_counts("bestiary_4"),
+            &races,
+        ),
+        // SD-29 Epic 5 extend, round 7. Monster registry only, like the two
+        // rows above it.
+        book_status(
+            "inner_sea_bestiary",
+            "src/rules_core/rules_tables/inner_sea_bestiary",
+            chassis_book_counts("inner_sea_bestiary"),
+            &races,
+        ),
+        // SD-29 Epic 5 extend, round 9. Monster registry only, like the rows
+        // above it.
+        book_status(
+            "inner_sea_gods",
+            "src/rules_core/rules_tables/inner_sea_gods",
+            chassis_book_counts("inner_sea_gods"),
+            &races,
+        ),
+        // SD-29 Epic 7 round 9 gave this book a `companion` family beside its
+        // monsters, so its row moves from `chassis_book_counts` to
+        // `monster_and_companion_book_counts` — the function that exists
+        // precisely because reporting one half of a two-chassis book under-states
+        // it by the size of the other.
+        book_status(
+            "book_of_the_damned_volume_1",
+            "src/rules_core/rules_tables/book_of_the_damned_volume_1",
+            monster_and_companion_book_counts("book_of_the_damned_volume_1"),
+            &races,
+        ),
+        book_status(
+            "book_of_the_damned_volume_2",
+            "src/rules_core/rules_tables/book_of_the_damned_volume_2",
+            chassis_book_counts("book_of_the_damned_volume_2"),
+            &races,
+        ),
+        book_status(
+            "inner_sea_world_guide",
+            "src/rules_core/rules_tables/inner_sea_world_guide",
+            chassis_book_counts("inner_sea_world_guide"),
+            &races,
+        ),
+        book_status(
             "advanced_race_guide",
             "src/rules_core/rules_tables/advanced_race_guide",
             advanced_race_guide_counts(),
@@ -502,6 +787,16 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             "ultimate_wilderness",
             "src/rules_core/rules_tables/ultimate_wilderness",
             ultimate_wilderness_counts(),
+            &races,
+        ),
+        // SD-29 Epic 7 round 7. Core Essentials — the NINTH registration point
+        // this lane pays per book, and the first round to discover it, because
+        // it is the first companion book whose directory did not already exist
+        // in `rules_tables/` for another family's sake.
+        book_status(
+            "core_essentials",
+            "src/rules_core/rules_tables/core_essentials",
+            core_essentials_counts(),
             &races,
         ),
         book_status(
@@ -544,13 +839,39 @@ mod tests {
     /// `rules_tables` books and this diagnostic kept reporting four, so the
     /// panel — whose caption reads "every rule book landed in `rules_tables`"
     /// — told a tester that two ingested books did not exist.
+    /// `rules_tables` module directories whose records are reported under
+    /// ANOTHER book's panel row, because they are the same book.
+    ///
+    /// `rules_tables::bestiary` is the chassis half of Bestiary 1 — the 280 rows
+    /// `rules_tables::beastiary1` does not hold (`decisions.md §58.3`) — and
+    /// `beastiary1_counts` folds its two families into that book's row. A second
+    /// row would tell a tester this repo had ingested two Bestiary 1s, which is
+    /// the same class of wrong reading this drift guard exists to prevent, in
+    /// the opposite direction.
+    ///
+    /// Each entry states the host row, and the host row's presence is asserted
+    /// below: an alias whose host stopped being reported would otherwise turn
+    /// this guard into a way to hide a book.
+    const MODULES_REPORTED_UNDER_ANOTHER_BOOK: &[(&str, &str)] = &[("bestiary", "beastiary1")];
+
     #[test]
     fn every_book_landed_in_rules_tables_is_reported() {
         let reported: BTreeSet<String> = build_corpus_ingest_diagnostic()
             .into_iter()
             .map(|book| book.book_id)
             .collect();
-        let landed = books_on_disk();
+        let mut landed = books_on_disk();
+        for (module, host) in MODULES_REPORTED_UNDER_ANOTHER_BOOK {
+            assert!(
+                landed.remove(*module),
+                "{module} is recorded as reported under {host} but is not landed in \
+                 rules_tables at all -- drop the alias rather than carrying a dead one"
+            );
+            assert!(
+                reported.contains(*host),
+                "{module}'s records are reported under {host}, and {host} has no panel row"
+            );
+        }
 
         let missing: Vec<&String> = landed.difference(&reported).collect();
         assert!(
@@ -596,12 +917,53 @@ mod tests {
                 "apg",
                 "acg",
                 "beastiary1",
+                // SD-29 Epic 5 -- placed next to the other bestiary rather
+                // than appended, so the panel reads in book-family order.
+                "bonus_bestiary",
+                // SD-29 Epic 5 extend round 1, for the same reason.
+                "monster_codex",
+                // SD-29 Epic 7 (companion lane) -- the three books whose only
+                // compiled family is `companion`, kept beside `monster_codex`,
+                // which now carries both chassis registries' tables in one row.
+                "inner_sea_combat",
+                "inner_sea_intrigue",
+                "horror_adventures",
+                // SD-29 Epic 7 round 2 -- three more companion books, kept in
+                // the same block for the same reason. Two are companion-ONLY;
+                // `bestiary_2` stopped being one at SD-29 Epic 5 extend round 4,
+                // which added its 316 monsters + 402 abilities to the same row.
+                "bestiary_5",
+                "bestiary_6",
+                "bestiary_2",
+                // SD-29 Epic 5 extend round 5 -- the monster lane's own, kept
+                // in this block so the bestiaries stay adjacent. Unlike
+                // `bestiary_2` it carries the monster registry ONLY.
+                "bestiary_3",
+                // SD-29 Epic 5 extend round 6 -- monster registry only, like
+                // `bestiary_3` above.
+                "bestiary_4",
+                // SD-29 Epic 5 extend round 7 -- monster registry only, like
+                // `bestiary_4` above.
+                "inner_sea_bestiary",
+                // SD-29 Epic 5 extend round 9 -- monster registry only, like
+                // `inner_sea_bestiary` above.
+                "inner_sea_gods",
+                // SD-29 Epic 5 extend round 2 -- the two Book of the Damned
+                // volumes, kept next to the other chassis books.
+                "book_of_the_damned_volume_1",
+                "book_of_the_damned_volume_2",
+                // SD-29 Epic 5 extend round 3 -- Inner Sea World Guide, the
+                // first chassis book served with only part of its ability rows.
+                "inner_sea_world_guide",
                 "advanced_race_guide",
                 "pathfinder_unchained",
                 "ultimate_campaign",
                 "ultimate_intrigue",
                 "ultimate_equipment",
                 "ultimate_wilderness",
+                // SD-29 Epic 7 round 7 -- companions only; this book's 64
+                // heritage race traits are served off disk, not from a table.
+                "core_essentials",
                 "ultimate_combat",
                 "ultimate_magic",
                 "ultimate_psionics"
@@ -762,7 +1124,7 @@ mod tests {
     /// difference, stated as a number here rather than waved at, so the two
     /// artifacts reconcile exactly.
     #[test]
-    fn the_two_sd27_books_totals_reconcile_with_their_license_artifacts() {
+    fn the_two_ingested_books_totals_reconcile_with_their_license_artifacts() {
         for (book_id, corpus_dir, corpus_only_records) in [
             ("advanced_race_guide", "advanced_race_guide", 156u32),
             ("pathfinder_unchained", "pathfinder_unchained", 0),
@@ -807,12 +1169,20 @@ mod tests {
         // monsters" figure predates this subset and is stale, flagged here
         // rather than edited -- that doc is outside this cycle's write
         // scope).
+        //
+        // SD-29 Epic 5 round 8 added the chassis half of the same book (280
+        // rows, `rules_tables::bestiary`, `decisions.md §58.3`), so the panel's
+        // monster count is now the SUM of the two tables serving Bestiary 1 —
+        // 46 + 280 — and the book gains its first `monster_abilities` family.
+        // Stated as the sum rather than as `326` so a divergence says which
+        // table moved.
         let response = build_corpus_ingest_diagnostic();
         let bestiary = response
             .iter()
             .find(|b| b.book_id == "beastiary1")
             .expect("beastiary1 present");
-        assert_eq!(bestiary.content_kind_counts["monsters"], 46);
+        assert_eq!(bestiary.content_kind_counts["monsters"], 46 + 280);
+        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 323);
     }
 
     #[test]
@@ -916,7 +1286,7 @@ mod tests {
             !status.content_kind_counts.contains_key("races"),
             "an unreachable corpus must omit the row, never report a fabricated zero"
         );
-        assert_eq!(status.content_kind_counts["monsters"], 46);
+        assert_eq!(status.content_kind_counts["monsters"], 46 + 280);
     }
 
     #[test]

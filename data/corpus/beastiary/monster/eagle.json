@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "1/2",
+    "corpus_key": "Eagle",
+    "external_ability_refs": [
+      "Flight Maneuverability"
+    ],
+    "key": "beastiary:monster:eagle",
+    "monster_class": "Animal:1",
+    "name": "Eagle",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d4",
+        "name": "Talons"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Animal",
+    "size": "S",
+    "source_page": "p.118",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 80,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 145,
+    "record_key": "Eagle"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

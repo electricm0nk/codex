@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T22:19:24Z",
+  "data": {
+    "corpus_key": "Beheaded ~ Screaming",
+    "delivery": "Supernatural",
+    "description": "This type of beheaded can scream out once every 1d4 rounds. Every creature within 30 feet must succeed at a Will save or be shaken for 1d4 rounds. The save DC is equal to 10 + 1/2 the screaming skull's racial Hit Dice + the screaming skull's Charisma modifier. This is a sonic mind-affecting fear effect. Whether or not the save is successful, any creature in the area can't be affected by that beheaded's scream for the next 24 hours.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:companion:beheaded_screaming",
+    "name": "Screaming",
+    "owners": [
+      "bestiary_4:companion:familiar_beheaded",
+      "bestiary_4:companion:beheaded"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Supernatural"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+    "line": 75,
+    "record_key": "Beheaded ~ Screaming"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

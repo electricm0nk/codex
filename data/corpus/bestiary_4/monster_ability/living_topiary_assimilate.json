@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Living Topiary ~ Assimilate",
+    "delivery": "Extraordinary",
+    "description": "As a full-round action, a living topiary can consume undergrowth or bushy plant matter it's currently touching and incorporate that material into its form. It can do this at a rate of 5 cubic feet per round, healing 1d8 points of damage each time. If the topiary is at maximum hit points, this ability has no effect.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:living_topiary_assimilate",
+    "name": "Assimilate",
+    "owners": [
+      "bestiary_4:monster:living_topiary"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1019,
+    "record_key": "Living Topiary ~ Assimilate"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

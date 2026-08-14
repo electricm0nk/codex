@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Rat King ~ Speak with Rats",
+    "delivery": "Extraordinary",
+    "description": "A rat king can communicate with normal rats (including rat swarms and dire rats) as if using speak with animals. It can use Diplomacy to alter a rat's attitude, and when so doing gains a +4 racial bonus on the check. Any ability that allows a creature to communicate with rats (such as speak with animals or a wererat's rat empathy) allows for communication with a rat king.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:rat_king_speak_with_rats",
+    "name": "Speak with Rats",
+    "owners": [
+      "bestiary_4:monster:rat_king"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1199,
+    "record_key": "Rat King ~ Speak with Rats"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

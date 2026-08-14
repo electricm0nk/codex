@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:zelishkar_bitter_flames",
+      "inner_sea_bestiary:monster_ability:zelishkar_corpse_cremation",
+      "inner_sea_bestiary:monster_ability:zelishkar_daemonic_harbinger_traits",
+      "inner_sea_bestiary:monster_ability:zelishkar_incandescent_body",
+      "inner_sea_bestiary:monster_ability:zelishkar_incendiary_grasp",
+      "inner_sea_bestiary:monster_ability:zelishkar_spell_like_abilities",
+      "inner_sea_bestiary:monster_ability:zelishker_fire_damage",
+      "inner_sea_bestiary:monster_ability:zelishker_summon"
+    ],
+    "challenge_rating": "21",
+    "corpus_key": "Zelishkar",
+    "external_ability_refs": [
+      "Immunity to Ability Damage",
+      "Maneuverability (Perfect)",
+      "Rake",
+      "Scent"
+    ],
+    "key": "inner_sea_bestiary:monster:zelishkar",
+    "monster_class": "Outsider (Fort/Will):24",
+    "name": "Zelishkar",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Daemon|Evil|Extraplanar|Fire",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.62",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 105,
+    "record_key": "Zelishkar"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

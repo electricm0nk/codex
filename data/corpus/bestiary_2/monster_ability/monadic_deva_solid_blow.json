@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Monadic Deva ~ Solid Blow",
+    "delivery": "Supernatural",
+    "description": "If a monadic deva strikes an opponent twice in 1 round with its mace, that creature takes an extra 1d8+%1 points of damage.",
+    "description_variables": [
+      "2*STR"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:monadic_deva_solid_blow",
+    "name": "Solid Blow",
+    "owners": [
+      "bestiary_2:monster:angel_monadic_deva"
+    ],
+    "source_page": "p.27",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 96,
+    "record_key": "Monadic Deva ~ Solid Blow"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

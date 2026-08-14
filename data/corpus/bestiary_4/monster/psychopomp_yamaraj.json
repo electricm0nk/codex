@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:psychopomp_yamaraj_breath_weapon",
+      "bestiary_4:monster_ability:psychopomp_yamaraj_final_judgment",
+      "bestiary_4:monster_ability:psychopomp_yamaraj_lightning_drinker",
+      "bestiary_4:monster_ability:psychopomp_yamaraj_poison"
+    ],
+    "challenge_rating": "20",
+    "corpus_key": "Psychopomp (Yamaraj)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:psychopomp_yamaraj",
+    "monster_class": "Outsider (Fort/Will):25",
+    "name": "Yamaraj",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      },
+      {
+        "damage_dice": null,
+        "name": "Tail Slap"
+      },
+      {
+        "damage_dice": null,
+        "name": "Wing"
+      }
+    ],
+    "race_subtype": "Extraplanar|Psychopomp",
+    "race_type": "Outsider",
+    "size": "H",
+    "source_page": "p.222",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      },
+      {
+        "feet": 40,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 187,
+    "record_key": "Psychopomp (Yamaraj)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

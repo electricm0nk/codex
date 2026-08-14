@@ -244,7 +244,29 @@ fn cross_book_feat_key_repeats_are_exactly_the_known_set() {
         }
     }
 
-    assert_eq!(cross_book, vec![("Endurance", RuleSetId::Crb, RuleSetId::Pu)]);
+    // Widened by the corpus feat gap lane (`epic-4-proven-feat-race-class`,
+    // commit `dde9dfc4`), whose 83 rows brought two more genuine upstream
+    // duplicates into the aggregate. Both were checked against the PCGen
+    // source before this pin moved — a shared key never implies a shared
+    // record, so each was confirmed to be a first-class definition in BOTH
+    // books rather than the gap generator mis-attributing one book's row to
+    // another:
+    //   grep -n '^Extended Animal Focus' \
+    //     .../advanced_class_guide/acg_feats.lst .../ultimate_wilderness/uw_feats.lst
+    //     -> acg_feats.lst:58 AND uw_feats.lst:46
+    //   grep -n '^Feral Combat Training' \
+    //     .../ultimate_combat/uc_feats.lst .../ultimate_psionics/up_feats.lst
+    //     -> uc_feats.lst:117 AND up_feats.lst:128
+    // A genuinely different feat arriving under an existing key still fails
+    // here; this pin is widened to the verified set, not relaxed.
+    assert_eq!(
+        cross_book,
+        vec![
+            ("Endurance", RuleSetId::Crb, RuleSetId::Pu),
+            ("Extended Animal Focus", RuleSetId::Acg, RuleSetId::Uw),
+            ("Feral Combat Training", RuleSetId::Uc, RuleSetId::Upsi),
+        ]
+    );
 }
 
 #[test]
@@ -260,20 +282,31 @@ fn the_aggregate_catalog_spans_every_ingested_book() {
             .entries
             .len()
     };
-    assert_eq!(entries_for(RuleSetId::Crb), 185);
-    assert_eq!(entries_for(RuleSetId::Apg), 172);
-    assert_eq!(entries_for(RuleSetId::Acg), 129);
-    assert_eq!(entries_for(RuleSetId::Arg), 187);
-    assert_eq!(entries_for(RuleSetId::Pu), 17);
-    assert_eq!(entries_for(RuleSetId::Uca), 23);
-    assert_eq!(entries_for(RuleSetId::Ui), 104);
-    assert_eq!(entries_for(RuleSetId::Uw), 135);
-    assert_eq!(entries_for(RuleSetId::Uc), 261);
-    assert_eq!(entries_for(RuleSetId::Um), 144);
-    assert_eq!(entries_for(RuleSetId::Upsi), 221);
+    // Each book is now `hand-authored + corpus gap rows`, since
+    // `feats_all::all_feat_tables` chains `feat_gap_tables`' rows after each
+    // book's own. The gap addends are the generated table's own per-book
+    // counts, tallied two independent ways so a single miscount cannot move
+    // a pin (`AGENTS.md` §"Concurrency and Measurement"):
+    //   grep -E '^/// [a-z_]+ - [0-9]+ record' src/rules_core/rules_tables/feat_gap_tables.rs
+    //   awk '/^pub static /{n=$3} /FeatCatalogRecord \{/{c[n]++} END{for(k in c) print c[k],k}' \
+    //     src/rules_core/rules_tables/feat_gap_tables.rs
+    // Both agree: CRB 16, ARG 48, UC 2, UI 3, UM 12, UPsi 1, UW 1 = 83 rows,
+    // matching that file's own stated total. APG/ACG/PU/UCA have no gap rows
+    // and are unmoved.
+    assert_eq!(entries_for(RuleSetId::Crb), 201); // 185 + 16
+    assert_eq!(entries_for(RuleSetId::Apg), 172); // unmoved
+    assert_eq!(entries_for(RuleSetId::Acg), 129); // unmoved
+    assert_eq!(entries_for(RuleSetId::Arg), 235); // 187 + 48
+    assert_eq!(entries_for(RuleSetId::Pu), 17); // unmoved
+    assert_eq!(entries_for(RuleSetId::Uca), 23); // unmoved
+    assert_eq!(entries_for(RuleSetId::Ui), 107); // 104 + 3
+    assert_eq!(entries_for(RuleSetId::Uw), 136); // 135 + 1
+    assert_eq!(entries_for(RuleSetId::Uc), 263); // 261 + 2
+    assert_eq!(entries_for(RuleSetId::Um), 156); // 144 + 12
+    assert_eq!(entries_for(RuleSetId::Upsi), 222); // 221 + 1
 
     let total: usize = books.iter().map(|b| b.entries.len()).sum();
-    assert_eq!(total, 1578, "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi");
+    assert_eq!(total, 1661, "201 CRB + 172 APG + 129 ACG + 235 ARG + 17 PU + 23 UCA + 107 UI + 136 UW + 263 UC + 156 UM + 222 UPsi = 1578 hand-authored + 83 corpus gap rows");
 }
 
 #[test]

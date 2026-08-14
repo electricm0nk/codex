@@ -48,12 +48,198 @@ use serde::{Deserialize, Serialize};
 use codex::rules_core::rules_tables::beastiary1::{
     self, natural_attack_provenance, MonsterId, MonsterStatBlock,
 };
+use codex::rules_core::rules_tables::monster_chassis::{self, MonsterBook};
 use codex::rules_core::rules_tables::RuleSetId;
 
 /// The one book this catalog serves. A wire code rather than a display label,
 /// matching `spell_catalog.rs`/`equipment_catalog.rs`'s convention; the
 /// frontend maps it to "Bestiary 1".
 const BOOK_B1: &str = "B1";
+
+/// Bonus Bestiary, the second book this catalog serves (SD-29 Epic 5 pilot).
+/// Its wire code is the book's own `SOURCESHORT:BB`; the frontend maps it to
+/// "Bonus Bestiary".
+const BOOK_BB: &str = "BB";
+
+/// Monster Codex, the third (SD-29 Epic 5 extend, round 1). Its wire code is
+/// the book's own `SOURCESHORT:MC`.
+const BOOK_MC: &str = "MC";
+
+/// Book of the Damned, Volumes 1 and 2 -- the fourth and fifth (SD-29 Epic 5
+/// extend, round 2). Wire codes are the books' own `SOURCESHORT:BOTD1` and
+/// `SOURCESHORT:BOTD2`, so they are the first codes here longer than two
+/// characters; nothing in the frontend's map assumes a width.
+const BOOK_BOTD1: &str = "BOTD1";
+const BOOK_BOTD2: &str = "BOTD2";
+
+/// Inner Sea World Guide, the sixth (SD-29 Epic 5 extend, round 3). Its wire
+/// code is the book's own `SOURCESHORT:ISWG`. The first book here served with
+/// only PART of its rows: 5 of its 14 monster rows carry `NAMEISPI:YES` (the
+/// corpus declaring its own name Product Identity) and 13 of its 30 ability
+/// rows end up owned by no shipped monster. The catalog therefore shows 9
+/// monsters and 14 abilities -- every record that is both shippable and
+/// reachable. See `rules_tables::inner_sea_world_guide` for the derivation.
+const BOOK_ISWG: &str = "ISWG";
+
+/// Bestiary 2, the seventh (SD-29 Epic 5 extend, round 4) and the first that
+/// serves more records than every book before it combined: 314 monsters and 401
+/// abilities against a prior total of 80 and 87. Its wire code is the book's own
+/// `SOURCESHORT:B2`, already used by the companion catalog for the same book's
+/// familiars -- one code per book, both catalogs. Of its 316 monster rows, 2 are
+/// `<Base>.COPY=<Variant>` deltas that state no stat block of their own; of its
+/// 466 ability rows, 65 are owned by no monster row this book ships. It is also
+/// the first book here whose abilities have SEVERAL owners -- 19 of them do, and
+/// each is rendered under every monster that claims it. See
+/// `rules_tables::bestiary_2` for the derivation.
+const BOOK_B2: &str = "B2";
+
+/// Bestiary 3, the eighth (SD-29 Epic 5 extend, round 5). Its wire code is the
+/// book's own `SOURCESHORT:B3`. Every one of its 261 corpus monster rows ships
+/// -- the first book in this catalog for which that is true -- and the 13
+/// ability rows that do not are owned by no monster row of this book. See
+/// `rules_tables::bestiary_3` for the derivation.
+const BOOK_B3: &str = "B3";
+
+/// Bestiary 4, the ninth (SD-29 Epic 5 extend, round 6). Its wire code is the
+/// book's own `SOURCESHORT:B4`. It is the first book in this catalog to lose
+/// monster rows to Product Identity: 14 of its 220 corpus rows declare
+/// `NAMEISPI:YES` and do not ship, and that drop is also why 73 of its 225
+/// excluded ability rows are excluded — they are well-formed and owned, and
+/// unreachable only because their owner is one of the 14. See
+/// `rules_tables::bestiary_4` for both derivations.
+const BOOK_B4: &str = "B4";
+
+/// Inner Sea Bestiary, the tenth (SD-29 Epic 5 extend, round 7). Its wire code
+/// is the book's own `SOURCESHORT:ISB`. It is the first book in this catalog to
+/// lose monster rows to the Product Identity of the abilities they NAME rather
+/// than of their own name — a monster's emitted `ability_keys` array carries
+/// each ability's key, so a row naming a deity-namespaced ability cannot ship
+/// either. See `rules_tables::inner_sea_bestiary` for the derivation.
+const BOOK_ISB: &str = "ISB";
+
+/// Inner Sea Gods, the eleventh (SD-29 Epic 5 extend, round 9). Its wire code
+/// is the book's own `SOURCESHORT:ISG`. It is the first book in this catalog
+/// whose corpus rows are not all at the book root -- 3 of its 39 monsters come
+/// from `support/isg_races_b4.lst`, loaded under
+/// `PRECAMPAIGN:1,INCLUDES=Bestiary 4`. See `rules_tables::inner_sea_gods`.
+const BOOK_ISG: &str = "ISG";
+
+/// Ultimate Psionics, the twelfth (SD-29 Epic 5 extend, round 10) and the first
+/// non-Paizo book in this catalog.
+///
+/// **This is the one wire code here that is NOT the book's own `SOURCESHORT`,
+/// and the divergence is deliberate.** `ultimate_psionics.pcc:17` declares
+/// `SOURCESHORT:UP`, but this app has served the same book's equipment under
+/// `equipment_resolver::EQUIPMENT_BOOK_UPSI` = `"UPSI"` since SD-28 E29, and its
+/// feats under the `Upsi` source token. The convention every other code here
+/// follows exists to stop a code being *invented*; serving one book under `UP`
+/// on the monster screen and `UPSI` on the equipment screen would produce
+/// exactly the mislabelling that convention protects against, so the code the
+/// app already ships for this book wins. Recorded rather than silently chosen —
+/// `decisions.md §64.2`.
+const BOOK_UPSI: &str = "UPSI";
+
+/// Horror Adventures, the thirteenth (SD-29 Epic 5 extend, FINAL round) and the
+/// smallest, at 3 monsters and 6 abilities.
+///
+/// Its wire code is the book's own `SOURCESHORT:HA`, and — unlike `BOOK_UPSI` —
+/// that is also the code this app already serves the same book under on three
+/// other screens: `race_catalog::BOOK_HA`, `companion_catalog`'s
+/// `"horror_adventures" => "HA"`, and `reach_gate`'s race-trait and companion
+/// rows. Convention and precedent agree here, which is why this constant needs
+/// no ruling of its own.
+const BOOK_HA: &str = "HA";
+
+/// Wire code for a chassis book's corpus directory.
+///
+/// A hard panic rather than a fallback: a book registered in
+/// `monster_chassis::MONSTER_BOOKS` with no wire code here would be served to
+/// the frontend under an empty or guessed label, which is exactly the silent
+/// mislabelling this program has paid for before. Adding a book to the registry
+/// and forgetting its label fails loudly on the first call rather than shipping
+/// an unlabelled row.
+/// The book's name as a reader sees it, for prose the catalog serves.
+///
+/// Separate from [`book_wire_code`] on purpose: the wire code is an identifier
+/// the frontend maps, and a sentence in a grounding note is read by a player
+/// who has never seen "BB". Both are exhaustive over the registry and both
+/// panic on an unregistered book rather than guessing.
+fn book_display_name(corpus_book: &str) -> &'static str {
+    match corpus_book {
+        "bonus_bestiary" => "Bonus Bestiary",
+        "monster_codex" => "Monster Codex",
+        "book_of_the_damned_volume_1" => "Book of the Damned, Volume 1",
+        "book_of_the_damned_volume_2" => "Book of the Damned, Volume 2",
+        "inner_sea_world_guide" => "Inner Sea World Guide",
+        "bestiary_2" => "Bestiary 2",
+        "bestiary_3" => "Bestiary 3",
+        "bestiary_4" => "Bestiary 4",
+        // SD-29 Epic 5 extend, round 8. The chassis half of Bestiary 1 — the
+        // 284 rows `rules_tables::beastiary1` does not hold. It serves under
+        // the SAME display name and the SAME wire code as that table, because
+        // it is the same book: a player filtering the catalog by "Bestiary 1"
+        // must see all 330 creatures, not 46 under one label and 284 under
+        // another. `decisions.md §58.3`.
+        "beastiary" => "Bestiary 1",
+        "inner_sea_bestiary" => "Inner Sea Bestiary",
+        "inner_sea_gods" => "Inner Sea Gods",
+        "ultimate_psionics" => "Ultimate Psionics",
+        "horror_adventures" => "Horror Adventures",
+        other => panic!(
+            "monster_catalog: no display name for chassis book {other:?}. Add one here before \
+             registering the book, or a player reads a sentence naming the wrong book."
+        ),
+    }
+}
+
+fn book_wire_code(corpus_book: &str) -> &'static str {
+    match corpus_book {
+        "bonus_bestiary" => BOOK_BB,
+        "monster_codex" => BOOK_MC,
+        "book_of_the_damned_volume_1" => BOOK_BOTD1,
+        "book_of_the_damned_volume_2" => BOOK_BOTD2,
+        "inner_sea_world_guide" => BOOK_ISWG,
+        "bestiary_2" => BOOK_B2,
+        "bestiary_3" => BOOK_B3,
+        "bestiary_4" => BOOK_B4,
+        // Bestiary 1's chassis half, under Bestiary 1's own wire code — see
+        // `book_display_name`. This is the only corpus book in the registry
+        // whose wire code is shared with a table outside the registry.
+        "beastiary" => BOOK_B1,
+        "inner_sea_bestiary" => BOOK_ISB,
+        "inner_sea_gods" => BOOK_ISG,
+        "ultimate_psionics" => BOOK_UPSI,
+        "horror_adventures" => BOOK_HA,
+        other => panic!(
+            "monster_catalog: no wire code for chassis book {other:?}. Add one here and its \
+             display label in the frontend's book map before registering the book."
+        ),
+    }
+}
+
+/// Reads a `CR:` token into the DTO's `f32`.
+///
+/// The corpus spells fractional challenge ratings `1/2`, `1/3`, `1/4`, and
+/// Monster Codex's `Bat (Sootwing)` is the first such row this catalog has ever
+/// served -- every previously ingested monster carried an integer CR, so the
+/// bare `str::parse::<f32>` this function replaces was sufficient and would now
+/// panic on a perfectly correct corpus value. The table keeps the token
+/// verbatim; only this wire projection reads it as a number.
+fn parse_challenge_rating(book: &str, key: &str, token: &str) -> f32 {
+    if let Some((numerator, denominator)) = token.split_once('/') {
+        let numerator: f32 = numerator.trim().parse().unwrap_or_else(|e| {
+            panic!("{book}/{key}: CR: token {token:?} has an unreadable numerator: {e}")
+        });
+        let denominator: f32 = denominator.trim().parse().unwrap_or_else(|e| {
+            panic!("{book}/{key}: CR: token {token:?} has an unreadable denominator: {e}")
+        });
+        assert!(denominator != 0.0, "{book}/{key}: CR: token {token:?} divides by zero");
+        return numerator / denominator;
+    }
+    token.trim().parse().unwrap_or_else(|e| {
+        panic!("{book}/{key}: CR: token {token:?} is not a number: {e}")
+    })
+}
 
 /// Where one natural attack's `damage_dice` came from.
 ///
@@ -64,6 +250,12 @@ const BOOK_B1: &str = "B1";
 const DICE_FROM_MONSTER_ROW: &str = "monsterRowToken";
 const DICE_FROM_CORPUS_CROSS_REFERENCE: &str = "corpusCrossReferenceToken";
 const DICE_FROM_PUBLISHED_TEXT: &str = "publishedText";
+/// The monster's row names the attack but the corpus carries no die
+/// expression for it anywhere, and this book's ingest did not ground one from
+/// published text. The row prints the attack's name alone; it never prints a
+/// stand-in value. 13 of Bonus Bestiary's 14 natural attacks are in this state
+/// -- see `rules_tables::bonus_bestiary`'s module doc comment.
+const DICE_ABSENT_FROM_CORPUS: &str = "notInCorpus";
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
@@ -73,7 +265,10 @@ pub struct NaturalAttackDto {
     /// The die expression only, with no Strength modifier (`"1d6"`, not
     /// `"1d6+1"`). `"0"` is a real attack that deals no damage — Cave Fisher's
     /// Filament, whose own corpus token ends `,*1,0`.
-    pub damage_dice: String,
+    /// `None` means the corpus states no dice at all, which is emphatically
+    /// not the same thing as the real `"0"` above
+    /// (`damage_dice_source == "notInCorpus"`).
+    pub damage_dice: Option<String>,
     /// One of [`DICE_FROM_MONSTER_ROW`], [`DICE_FROM_CORPUS_CROSS_REFERENCE`]
     /// or [`DICE_FROM_PUBLISHED_TEXT`].
     pub damage_dice_source: String,
@@ -82,6 +277,49 @@ pub struct NaturalAttackDto {
     /// attack transcribed from the monster's own row, which has nothing extra to
     /// show.
     pub grounding_note: Option<String>,
+}
+
+/// One movement mode from the monster's `MOVE:` token.
+///
+/// Served alongside [`MonsterCatalogEntryDto::speed_ft`] rather than replacing
+/// it: Bestiary 1's ingest only ever captured the land speed, so its rows have
+/// exactly one mode to offer and the existing field stays the truth for them.
+/// Bonus Bestiary's ingest captured the whole token, and a row whose only
+/// movement is `Fly,30` would otherwise reach the screen as "no speed".
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct SpeedDto {
+    /// The PCGen movement mode verbatim: `"Walk"`, `"Fly"`, `"Swim"`, ...
+    pub mode: String,
+    pub feet: u32,
+}
+
+/// One `monster_ability` record on a monster's chassis.
+///
+/// This is the wire half of `corpus-work-channels.md` §9.2's ruling: monster
+/// abilities are to a monster what race traits are to a race, so they are
+/// served attached to the chassis they belong to rather than as a free-floating
+/// second catalog.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct MonsterAbilityDto {
+    /// The corpus `KEY:` token — the identity, which for 6 of Bonus Bestiary's
+    /// 17 records is namespaced (`Caryatid Column ~ Immunity to Magic`) and
+    /// differs from `name`.
+    pub key: String,
+    /// The display name, which is not unique across books and is never an
+    /// identity.
+    pub name: String,
+    /// `"SpecialAttack"` or `"SpecialQuality"`, verbatim from the row's
+    /// `TYPE:` token.
+    pub facet: String,
+    /// `"Supernatural"` / `"Extraordinary"` / `"SpellLike"`, or `None` where
+    /// the row does not say.
+    pub delivery: Option<String>,
+    /// The row's `DESC:` text. `None` for the one record that carries none —
+    /// an absence the screen states, never an empty paragraph.
+    pub description: Option<String>,
+    pub source_page: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -136,6 +374,25 @@ pub struct MonsterCatalogEntryDto {
     /// Empty for a monster whose row declares none — Gnoll fights with a
     /// manufactured longspear, and an empty list says so honestly.
     pub natural_attacks: Vec<NaturalAttackDto>,
+    /// Every movement mode on the row. For a Bestiary 1 record this is the
+    /// single land-speed pair `speed_ft` already carries (empty when that
+    /// record has no `Walk` pair at all); for a Bonus Bestiary record it is the
+    /// whole `MOVE:` token.
+    pub speeds: Vec<SpeedDto>,
+    /// The `MONSTERCLASS:` token (`"Undead:4"`) — what PCGen computes AC, hit
+    /// points and saves from, served verbatim in place of totals this ingest
+    /// deliberately does not compute. `None` for Bestiary 1, whose ingest did
+    /// not capture it.
+    pub monster_class: Option<String>,
+    /// The `monster_ability` records this book defines for this monster, in row
+    /// order. Empty for every Bestiary 1 row: that book's abilities are not
+    /// ingested, and an empty list says so rather than implying the creature
+    /// has none.
+    pub abilities: Vec<MonsterAbilityDto>,
+    /// Ability names the row cites that the book does not define (universal
+    /// monster rules such as `Grab` or `Scent`). Kept so the screen can say the
+    /// creature has them without this catalog pretending to carry their text.
+    pub external_ability_refs: Vec<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -216,7 +473,7 @@ fn map_natural_attack(
 
     NaturalAttackDto {
         name: attack.name.clone(),
-        damage_dice: attack.damage_dice.clone(),
+        damage_dice: Some(attack.damage_dice.clone()),
         damage_dice_source: damage_dice_source.to_owned(),
         grounding_note,
     }
@@ -247,6 +504,169 @@ fn map_monster(monster_id: MonsterId) -> MonsterCatalogEntryDto {
         race_subtype: block.race_subtype.as_deref().map(serve_race_subtype),
         source_page: block.source_page,
         natural_attacks,
+        speeds: if block.speed_ft > 0 {
+            vec![SpeedDto { mode: "Walk".to_owned(), feet: block.speed_ft }]
+        } else {
+            Vec::new()
+        },
+        monster_class: None,
+        abilities: Vec::new(),
+        external_ability_refs: Vec::new(),
+    }
+}
+
+/// The canonical corpus identity of a Bonus Bestiary record, in the same
+/// `<book>:<kind>:<slug>` shape Bestiary 1's monsters already use, so both
+/// books' keys read the same way and `reach_gate`'s corpus denominator joins
+/// them without a translation table.
+fn chassis_key(book: &str, kind: &str, corpus_key: &str) -> String {
+    let lowered: String = corpus_key
+        .to_lowercase()
+        .chars()
+        .map(|c| if c.is_ascii_alphanumeric() { c } else { '_' })
+        .collect();
+    let mut collapsed = String::with_capacity(lowered.len());
+    for c in lowered.chars() {
+        if c == '_' && collapsed.ends_with('_') {
+            continue;
+        }
+        collapsed.push(c);
+    }
+    format!("{book}:{kind}:{}", collapsed.trim_matches('_'))
+}
+
+/// Renders one ability's `DESC:` token into text a player may read.
+///
+/// **Caught on screen, not by a test** (SD-29 Epic 5, DoD item 8): the first
+/// version served `record.description` verbatim and the catalog printed
+/// *"must succeed on a DC %1 Will save"* — a raw PCGen substitution
+/// placeholder, the same class of defect as the `RACESUBTYPE:` `|` separator
+/// this file already documents. `render_pcgen_desc` owns the treatment
+/// (`decisions.md §24`: a formula `%N` is DROPPED, never guessed, because
+/// there is no formula interpreter and `Babble`'s DC is genuinely
+/// `10+(HD/2)+CHA` — a number this ingest does not compute).
+///
+/// The leak check is the same guard `gen_book_cache.rs`'s own
+/// `render_player_facing_description` carries, kept as a hard panic: a token
+/// shape this renderer cannot handle must stop here rather than reach a
+/// screen.
+fn serve_ability_description(record: &monster_chassis::MonsterAbilityRecord) -> Option<String> {
+    let raw = record.description?;
+    let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw);
+    if let Some(leak) = codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text) {
+        panic!(
+            "monster ability {:?}: rendered description still carries {leak}. Raw token: {raw:?}",
+            record.key
+        );
+    }
+    Some(rendered.text)
+}
+
+fn map_chassis_ability(
+    book: &str,
+    record: &monster_chassis::MonsterAbilityRecord,
+) -> MonsterAbilityDto {
+    MonsterAbilityDto {
+        key: chassis_key(book, "monster_ability", record.key),
+        name: record.name.to_owned(),
+        facet: record.facet.corpus_token().to_owned(),
+        delivery: record.delivery.map(|d| d.corpus_token().to_owned()),
+        description: serve_ability_description(record),
+        source_page: record.source_page.map(str::to_owned),
+    }
+}
+
+/// Projects one Bonus Bestiary stat block onto the same wire shape Bestiary 1's
+/// rows use.
+///
+/// The `challenge_rating` parse is the one place this book's verbatim-token
+/// discipline meets the DTO's `f32`. It is a hard panic rather than a silent
+/// `0.0` default: a CR this cannot read is a transcription defect, and serving
+/// "CR 0" for it would put a wrong number on screen instead of failing.
+/// `every_bonus_bestiary_row_states_a_readable_challenge_rating` exercises all
+/// 14 rows.
+fn map_chassis_monster(
+    table: &MonsterBook,
+    block: &monster_chassis::MonsterStatBlock,
+) -> MonsterCatalogEntryDto {
+    let book = table.corpus_book;
+    let challenge_rating = parse_challenge_rating(
+        book,
+        block.key,
+        block
+            .challenge_rating
+            .unwrap_or_else(|| panic!("{book}/{} carries no CR: token", block.key)),
+    );
+
+    MonsterCatalogEntryDto {
+        key: chassis_key(book, "monster", block.key),
+        book: book_wire_code(book).to_owned(),
+        name: block.name.to_owned(),
+        challenge_rating,
+        size: block.size.unwrap_or_default().to_owned(),
+        speed_ft: block
+            .speeds
+            .iter()
+            .find(|s| s.mode == "Walk")
+            .map(|s| s.feet)
+            .unwrap_or(0),
+        race_type: block.race_type.unwrap_or_default().to_owned(),
+        race_subtype: block.race_subtype.map(serve_race_subtype),
+        source_page: block.source_page.unwrap_or_default().to_owned(),
+        natural_attacks: block
+            .natural_attacks
+            .iter()
+            .map(|attack| NaturalAttackDto {
+                name: attack.name.to_owned(),
+                damage_dice: attack.damage_dice.map(str::to_owned),
+                damage_dice_source: if attack.damage_dice.is_some() {
+                    DICE_FROM_MONSTER_ROW.to_owned()
+                } else {
+                    DICE_ABSENT_FROM_CORPUS.to_owned()
+                },
+                // Caught ON SCREEN, not by a test (SD-29 Epic 5 extend,
+                // round 1, DoD item 8): this sentence hard-coded both the
+                // book name and the token shape, so Monster Codex's Seru
+                // rendered "the Bonus Bestiary corpus carries no die
+                // expression" for a Monster Codex row whose attack is named
+                // by `NATURALATTACKS:Venom,...,Poison`, not by
+                // `ABILITY:Internal|AUTOMATIC|Venom`. Two false statements in
+                // one sentence, both player-visible, neither reachable by any
+                // test that did not read the words.
+                //
+                // It now names the real book and stops asserting a token
+                // shape the table does not record. The shape is recoverable
+                // from the record's own `source` citation in
+                // `data/corpus/<book>/monster/`; asserting it here was a
+                // detail this projection never had.
+                grounding_note: if attack.damage_dice.is_some() {
+                    None
+                } else {
+                    Some(format!(
+                        "This monster's row names the attack, and the {} corpus \
+                         carries no die expression for it at any hop. No value is shown \
+                         because none was ingested.",
+                        book_display_name(book)
+                    ))
+                },
+            })
+            .collect(),
+        speeds: block
+            .speeds
+            .iter()
+            .map(|s| SpeedDto { mode: s.mode.to_owned(), feet: s.feet })
+            .collect(),
+        monster_class: block.monster_class.map(str::to_owned),
+        abilities: table
+            .abilities_of(block)
+            .into_iter()
+            .map(|ability| map_chassis_ability(book, ability))
+            .collect(),
+        external_ability_refs: block
+            .external_ability_refs
+            .iter()
+            .map(|r| (*r).to_owned())
+            .collect(),
     }
 }
 
@@ -255,9 +675,12 @@ fn map_monster(monster_id: MonsterId) -> MonsterCatalogEntryDto {
 /// alphabetical within a band). A thin, testable wrapper behind the Tauri
 /// command below, mirroring `build_spell_catalog`'s command/pure-fn split.
 pub fn build_monster_catalog() -> MonsterCatalogResponse {
-    MonsterCatalogResponse {
-        entries: MonsterId::ALL.iter().copied().map(map_monster).collect(),
+    let mut entries: Vec<MonsterCatalogEntryDto> =
+        MonsterId::ALL.iter().copied().map(map_monster).collect();
+    for table in monster_chassis::MONSTER_BOOKS {
+        entries.extend(table.monsters.iter().map(|block| map_chassis_monster(table, block)));
     }
+    MonsterCatalogResponse { entries }
 }
 
 #[tauri::command]
@@ -269,29 +692,369 @@ pub fn list_monster_catalog() -> MonsterCatalogResponse {
 mod tests {
     use super::*;
 
+    /// The SD-22 half of Bestiary 1's rows on the wire.
+    ///
+    /// `book == BOOK_B1` stopped identifying that table at SD-29 Epic 5 round
+    /// 8, when the chassis half of the same book joined the same response under
+    /// the same wire code (`decisions.md §58.3`). Every assertion below that was
+    /// written about the hand-modelled 46 — its `speed_ft` scalar, its
+    /// `monster_key_resolve` round trip, its `RACESUBTYPE` population — is a
+    /// claim about that table and not about the book, so the filter is the key
+    /// namespace. This is the same fix the Epic 5 pilot applied when Bonus
+    /// Bestiary widened these denominators, one level finer: there a book code
+    /// separated the two tables, here only the key does.
+    fn hand_modelled_rows(entries: &[MonsterCatalogEntryDto]) -> Vec<&MonsterCatalogEntryDto> {
+        entries
+            .iter()
+            .filter(|e| e.book == BOOK_B1 && e.key.starts_with("beastiary1:monster:"))
+            .collect()
+    }
+
+    /// Bestiary 1 reaches the wire from TWO tables under one wire code since
+    /// SD-29 Epic 5 round 8 (`decisions.md §58.3`), so `book == BOOK_B1` is no
+    /// longer the SD-22 roster on its own. The two are told apart by their key
+    /// namespaces — `beastiary1:monster:` for the hand-modelled 46,
+    /// `beastiary:monster:` for the chassis's 284 — which is the same
+    /// distinction `reach_gate::monsters_reach` joins on.
+    ///
+    /// Both halves are pinned, and the sum is pinned against the corpus, so a
+    /// table that silently stopped reaching the wire fails here rather than
+    /// being absorbed by the other's count.
     #[test]
     fn the_catalog_serves_every_ingested_bestiary_1_monster() {
         let response = build_monster_catalog();
-        assert_eq!(response.entries.len(), MonsterId::ALL.len());
+        let b1: Vec<_> = response.entries.iter().filter(|e| e.book == BOOK_B1).collect();
+        let hand_modelled: Vec<_> =
+            b1.iter().filter(|e| e.key.starts_with("beastiary1:monster:")).collect();
+        let chassis: Vec<_> =
+            b1.iter().filter(|e| e.key.starts_with("beastiary:monster:")).collect();
+        assert_eq!(hand_modelled.len(), MonsterId::ALL.len());
         assert_eq!(
-            response.entries.len(),
+            hand_modelled.len(),
             46,
-            "Bestiary 1's ingested roster is 46 stat blocks (subsets 01-09, SD28-E16); if the \
+            "Bestiary 1's SD-22 roster is 46 stat blocks (subsets 01-09, SD28-E16); if the \
              roster grew, re-derive this from the corpus rather than relaxing it"
         );
-        for entry in &response.entries {
-            assert_eq!(entry.book, BOOK_B1);
+        assert_eq!(
+            chassis.len(),
+            280,
+            "the chassis holds the book's complement less its 4 `.MOD` overlay rows -- see \
+             `rules_tables::bestiary`"
+        );
+        assert_eq!(
+            b1.len(),
+            326,
+            "326 of the book's 330 monster units reach the wire; the 4 that do not are \
+             `.MOD` overlays, which state a delta rather than a stat block"
+        );
+    }
+
+    /// One creature, one row. The two tables serving Bestiary 1 are disjoint by
+    /// `rules_tables::bestiary`'s own test; this is the same claim made where a
+    /// player would see it break, on the served response rather than on the
+    /// tables.
+    #[test]
+    fn no_bestiary_1_creature_reaches_the_wire_twice() {
+        let response = build_monster_catalog();
+        let mut names: Vec<String> = response
+            .entries
+            .iter()
+            .filter(|e| e.book == BOOK_B1)
+            .map(|e| e.name.clone())
+            .collect();
+        names.sort_unstable();
+        let before = names.len();
+        names.dedup();
+        assert_eq!(names.len(), before, "a Bestiary 1 creature is served twice");
+    }
+
+    /// Bonus Bestiary joins the same command rather than getting a second one:
+    /// the screen already renders every row this response carries, so the
+    /// book's records reach the player the moment they are served here.
+    #[test]
+    fn the_catalog_serves_every_ingested_bonus_bestiary_monster_and_its_abilities() {
+        let response = build_monster_catalog();
+        let bb: Vec<_> = response.entries.iter().filter(|e| e.book == BOOK_BB).collect();
+        assert_eq!(
+            bb.len(),
+            14,
+            "re-derived from the corpus this cycle: \
+             `awk -F'\t' '!/^#/ && !/^SOURCELONG/ && NF>0' bb_races.lst | wc -l` -> 14"
+        );
+        let abilities: usize = bb.iter().map(|e| e.abilities.len()).sum();
+        assert_eq!(
+            abilities,
+            17,
+            "all 17 `bb_abilities_race.lst` rows reach the wire, each on its own monster"
+        );
+        for entry in &bb {
+            assert!(!entry.race_type.is_empty(), "{} serves no creature type", entry.name);
+            assert!(!entry.source_page.is_empty(), "{} serves no source page", entry.name);
+            assert!(!entry.speeds.is_empty(), "{} serves no movement mode", entry.name);
+            assert!(entry.monster_class.is_some(), "{} serves no MONSTERCLASS token", entry.name);
         }
+    }
+
+    /// `parse_challenge_rating` is the one lossy step on a chassis book's
+    /// path; this is the guard that says it is total across every registered
+    /// book. It runs the real parser, not `str::parse`: the old test asserted
+    /// `cr.parse::<f32>().is_ok()`, which Monster Codex's `CR:1/2` fails while
+    /// being a perfectly correct corpus token.
+    ///
+    /// **What it asserts is the token↔value correspondence, not a magnitude,
+    /// and that is a correction Ultimate Psionics forced.** Until round 10 this
+    /// read `parsed > 0.0` — which caught a token that failed to parse and fell
+    /// back to zero, but only because no registered book had a row whose real
+    /// CR *is* zero. Psicrystal's `up_races.lst:47` states `CR:0`, so the old
+    /// form flagged a correct transcription as a defect. The sharper property
+    /// is the one the old form was reaching for: a value of zero is admissible
+    /// exactly when the corpus token is `"0"`, and never as a silent fallback.
+    /// Same shape as the per-entry uniqueness correction Bestiary 2 forced on
+    /// `every_ability_key_is_the_corpus_key` below — a guard that encoded an
+    /// accidental property of the books registered when it was written.
+    #[test]
+    fn every_chassis_row_states_a_readable_challenge_rating() {
+        for table in monster_chassis::MONSTER_BOOKS {
+            for block in table.monsters {
+                let cr = block.challenge_rating.expect("every row carries CR:");
+                let parsed = parse_challenge_rating(table.corpus_book, block.key, cr);
+                if parsed == 0.0 {
+                    assert_eq!(
+                        cr.trim(),
+                        "0",
+                        "{}/{} reads CR {cr:?} as 0 -- a token that is not literally \"0\" \
+                         must never parse to zero, which is the silent-fallback defect this \
+                         guard exists to catch",
+                        table.corpus_book,
+                        block.key
+                    );
+                } else {
+                    assert!(
+                        parsed > 0.0,
+                        "{}/{} reads CR {cr:?} as {parsed}",
+                        table.corpus_book,
+                        block.key
+                    );
+                }
+            }
+        }
+    }
+
+    /// The fractional spelling itself, pinned on the row that introduced it.
+    /// `1/2` must reach the wire as `0.5`, not as a panic and not as `1.0`.
+    #[test]
+    fn a_fractional_challenge_rating_reaches_the_wire_as_a_fraction() {
+        let bat = build_monster_catalog()
+            .entries
+            .into_iter()
+            .find(|e| e.key == "monster_codex:monster:bat_sootwing")
+            .expect("Monster Codex's Sootwing Bat is served");
+        assert_eq!(bat.challenge_rating, 0.5);
+        assert_eq!(bat.book, BOOK_MC);
+    }
+
+    /// A served ability key is the corpus `KEY:`, so namespaced records stay
+    /// distinguishable on the wire. Serving the display name would collapse
+    /// `Caryatid Column ~ Immunity to Magic` onto any other `Immunity to Magic`.
+    ///
+    /// **The uniqueness asserted here is PER ENTRY, not global, and that is a
+    /// correction this book forced.** Until Bestiary 2 this test asserted that
+    /// no ability key was served twice anywhere in the response, and it passed
+    /// for five books — because in every one of them each ability had exactly
+    /// one owner. That was a property of those five books, not of the catalog:
+    /// an ability is rendered underneath *each* monster that claims it, so a
+    /// shared ability is served once per owner **by design**. Bestiary 2 is the
+    /// first book with any, and the old assertion read 522 against 488 and
+    /// failed on correct output. Re-derived over
+    /// `rules_tables::bestiary_2`'s table: **19** ability records carry more
+    /// than one owner and account for exactly **34** extra served rows.
+    ///
+    /// The two properties that DO hold are the ones the old assertion was really
+    /// standing in for: a monster never lists the same ability twice, and the
+    /// number of DISTINCT served keys equals the number of ability records the
+    /// registry holds. A key collapsed to a display name, or a record served
+    /// under two different keys, still fails here.
+    #[test]
+    fn bonus_bestiary_ability_keys_carry_the_namespace() {
+        let response = build_monster_catalog();
+        assert!(response.entries.iter().any(|e| e
+            .abilities
+            .iter()
+            .any(|a| a.key == "bonus_bestiary:monster_ability:caryatid_column_immunity_to_magic")));
+
+        for entry in &response.entries {
+            let keys: std::collections::BTreeSet<&String> =
+                entry.abilities.iter().map(|a| &a.key).collect();
+            assert_eq!(
+                keys.len(),
+                entry.abilities.len(),
+                "{} lists an ability twice",
+                entry.key
+            );
+        }
+
+        let distinct_served: std::collections::BTreeSet<&String> = response
+            .entries
+            .iter()
+            .flat_map(|e| e.abilities.iter().map(|a| &a.key))
+            .collect();
+        let records_held: usize = codex::rules_core::rules_tables::monster_chassis::MONSTER_BOOKS
+            .iter()
+            .map(|book| book.monster_abilities.len())
+            .sum();
+        assert_eq!(
+            distinct_served.len(),
+            records_held,
+            "every ability record the chassis holds reaches the wire under its own key, once"
+        );
+    }
+
+    /// No ability description reaches the wire carrying PCGen substitution
+    /// syntax. This is the defect the on-screen pass caught: `Babble` printed
+    /// "a DC %1 Will save" until `serve_ability_description` was introduced.
+    #[test]
+    fn no_ability_description_serves_raw_pcgen_substitution_syntax() {
+        let mut checked = 0usize;
+        for entry in build_monster_catalog().entries.iter().filter(|e| e.book == BOOK_BB) {
+            for ability in &entry.abilities {
+                let Some(description) = ability.description.as_deref() else { continue };
+                checked += 1;
+                assert!(
+                    !description.contains('%'),
+                    "{}'s description serves a raw substitution placeholder: {description}",
+                    ability.key
+                );
+                assert!(
+                    codex::rules_core::pcgen_desc::leaked_pcgen_syntax(description).is_none(),
+                    "{} leaks PCGen syntax",
+                    ability.key
+                );
+            }
+        }
+        // 16 of the book's 17 ability rows carry `DESC:` text; the 17th
+        // (`Magic Circle against Evil`) carries none at all.
+        assert_eq!(checked, 16);
+    }
+
+    /// An attack with no corpus dice serves `None` plus the sentence saying why
+    /// — never `"0"`, which is a real value elsewhere in this same response.
+    #[test]
+    fn an_attack_with_no_corpus_dice_serves_none_and_says_so() {
+        let response = build_monster_catalog();
+        let bb: Vec<_> = response.entries.iter().filter(|e| e.book == BOOK_BB).collect();
+        let mut absent = 0;
+        for entry in &bb {
+            for attack in &entry.natural_attacks {
+                if attack.damage_dice.is_none() {
+                    absent += 1;
+                    assert_eq!(attack.damage_dice_source, DICE_ABSENT_FROM_CORPUS);
+                    assert!(attack.grounding_note.is_some());
+                }
+            }
+        }
+        assert_eq!(absent, 13, "13 of this book's 14 named attacks carry no dice");
+        let allip = bb.iter().find(|e| e.name == "Allip").expect("Allip is served");
+        assert_eq!(allip.natural_attacks[0].damage_dice.as_deref(), Some("0"));
+        assert_eq!(allip.natural_attacks[0].damage_dice_source, DICE_FROM_MONSTER_ROW);
+    }
+
+    /// A grounding note names the book the row actually came from.
+    ///
+    /// **This test exists because the screen said otherwise.** Driving the app
+    /// (DoD item 8) showed Monster Codex's Seru rendering *"the Bonus Bestiary
+    /// corpus carries no die expression for it"* — the note hard-coded one
+    /// book's name and one token shape, and both were wrong on the second book.
+    /// A player reading that sentence would look the creature up in the wrong
+    /// book.
+    ///
+    /// Pinned in both directions: every note must name its own book, and no
+    /// note may name a book it does not belong to.
+    #[test]
+    fn a_grounding_note_never_names_another_books_corpus() {
+        let mut checked = 0;
+        for entry in build_monster_catalog().entries {
+            // Bestiary 1 serves its SD-22 notes from published-text provenance,
+            // which names a page rather than a book. Since round 8 that table's
+            // rows share `BOOK_B1` with the chassis half, so the wire code no
+            // longer separates them and the key namespace does.
+            if entry.key.starts_with("beastiary1:monster:") {
+                continue;
+            }
+            let Some(table) = monster_chassis::MONSTER_BOOKS
+                .iter()
+                .find(|t| book_wire_code(t.corpus_book) == entry.book)
+            else {
+                continue;
+            };
+            let own = book_display_name(table.corpus_book);
+            for attack in &entry.natural_attacks {
+                let Some(note) = attack.grounding_note.as_deref() else {
+                    continue;
+                };
+                checked += 1;
+                assert!(
+                    note.contains(own),
+                    "{}'s {} note does not name {own}: {note}",
+                    entry.name,
+                    attack.name
+                );
+                for other in monster_chassis::MONSTER_BOOKS {
+                    if other.corpus_book == table.corpus_book {
+                        continue;
+                    }
+                    let foreign = book_display_name(other.corpus_book);
+                    assert!(
+                        !note.contains(foreign),
+                        "{}'s {} note names {foreign}, a book it did not come from: {note}",
+                        entry.name,
+                        attack.name
+                    );
+                }
+            }
+        }
+        assert!(checked > 0, "no grounding note was examined, so this asserts nothing");
     }
 
     /// The key derivation is checked against the engine's own resolver rather
     /// than trusted, so a served key can never be one nothing can look up.
     #[test]
     fn every_served_key_resolves_back_to_its_record() {
-        for entry in &build_monster_catalog().entries {
+        let all = build_monster_catalog().entries;
+        for entry in hand_modelled_rows(&all) {
             let resolved = beastiary1::monster_key_resolve(&entry.key, RuleSetId::Bestiary1)
                 .unwrap_or_else(|| panic!("served key `{}` resolves to no record", entry.key));
             assert_eq!(resolved.name, entry.name);
+        }
+
+        // Bonus Bestiary has no key resolver of its own -- its identity is the
+        // corpus `KEY:` token -- so the round trip is the derivation itself:
+        // every served key must be one `chassis_key` produces from a record
+        // the table actually holds, and every record must produce one --
+        // checked per registered book, so a book whose rows never reach the
+        // response fails here rather than passing by being absent.
+        let response = build_monster_catalog();
+        // The keys served under a wire code by a table that is NOT in this
+        // registry. Bestiary 1's SD-22 half is the only one, and it is
+        // round-tripped above through its own resolver; without subtracting it
+        // this comparison would demand that the chassis derive keys it does not
+        // own. Subtracted by namespace rather than skipped by book, so a chassis
+        // key that drifted into a foreign namespace still fails here.
+        let foreign_namespaces = ["beastiary1:monster:"];
+        for table in monster_chassis::MONSTER_BOOKS {
+            let wire_code = book_wire_code(table.corpus_book);
+            let served: std::collections::BTreeSet<String> = response
+                .entries
+                .iter()
+                .filter(|e| e.book == wire_code)
+                .filter(|e| !foreign_namespaces.iter().any(|ns| e.key.starts_with(ns)))
+                .map(|e| e.key.clone())
+                .collect();
+            let derived: std::collections::BTreeSet<String> = table
+                .monsters
+                .iter()
+                .map(|m| chassis_key(table.corpus_book, "monster", m.key))
+                .collect();
+            assert_eq!(served, derived, "{} served keys", table.corpus_book);
         }
     }
 
@@ -308,9 +1071,45 @@ mod tests {
     /// Every row carries readable payload beyond its own identity — the bar
     /// `reach_gate.rs` applies, asserted here at the source so a regression
     /// names itself in this file first.
+    /// **`source_page` is the one field here that the corpus does not always
+    /// state**, and Bestiary 3 is the book that proved it. The invariant held
+    /// for seven books because every row in all seven happened to carry a
+    /// `SOURCEPAGE:` token — a property of those books' data, not of the
+    /// format. Re-derived against the corpus rather than inferred from the
+    /// failure:
+    ///
+    /// ```text
+    /// sed -n '215p;265p' b3_races.lst | tr '\t' '\n' | grep -c SOURCEPAGE   -> 0
+    /// ```
+    ///
+    /// The transcriber emits `None` for a token the row does not carry, which
+    /// is exactly right — the alternative is inventing a citation. Both records
+    /// state everything else the screen renders (name, size, type, challenge
+    /// rating, speeds, natural attacks), so dropping them for a missing page
+    /// reference would withhold real content over a bibliographic field. They
+    /// ship, the screen omits the page clause for them (`MonsterCatalogScreen`
+    /// renders it conditionally, as it has always done for ability rows), and
+    /// the two are pinned here BY CORPUS LINE so a third one cannot appear
+    /// silently.
     #[test]
     fn every_row_carries_the_fields_the_screen_renders() {
-        for entry in &build_monster_catalog().entries {
+        // The corpus rows that state no `SOURCEPAGE:` token, by the book and
+        // line each one is. Keyed by served key so a renamed record still
+        // matches the line it came from.
+        const NO_SOURCE_PAGE: &[&str] =
+            &["bestiary_3:monster:owl_giant", "bestiary_3:monster:spider_ogre"];
+
+        // The served rows whose challenge rating is genuinely zero, pinned the
+        // same way and for the same reason: a CR of 0 used to be impossible
+        // here, so `> 0.0` doubled as an "it parsed" check. Psicrystal states
+        // `CR:0` on `up_races.lst:47`. Pinning the set keeps that check alive —
+        // a row losing its rating still fails — while admitting the real value.
+        const ZERO_CHALLENGE_RATING: &[&str] = &["ultimate_psionics:monster:psicrystal"];
+
+        let mut seen_without_page: Vec<&str> = Vec::new();
+        let mut seen_zero_cr: Vec<&str> = Vec::new();
+        let response = build_monster_catalog();
+        for entry in &response.entries {
             assert!(!entry.name.trim().is_empty(), "{} has no name", entry.key);
             assert!(!entry.size.trim().is_empty(), "{} has no size", entry.key);
             assert!(
@@ -318,17 +1117,47 @@ mod tests {
                 "{} has no creature type",
                 entry.key
             );
-            assert!(
-                !entry.source_page.trim().is_empty(),
-                "{} has no source page",
-                entry.key
-            );
-            assert!(
-                entry.challenge_rating > 0.0,
-                "{} has no challenge rating",
-                entry.key
-            );
+            if entry.source_page.trim().is_empty() {
+                assert!(
+                    NO_SOURCE_PAGE.contains(&entry.key.as_str()),
+                    "{} has no source page, and is not one of the two corpus rows \
+                     (`b3_races.lst:215`, `:265`) known to state none. Check the row before \
+                     adding it here: a page that vanished from a row that used to have one is \
+                     a transcription defect, not a corpus fact.",
+                    entry.key
+                );
+                seen_without_page.push(entry.key.as_str());
+            }
+            if entry.challenge_rating == 0.0 {
+                assert!(
+                    ZERO_CHALLENGE_RATING.contains(&entry.key.as_str()),
+                    "{} serves challenge rating 0, and is not one of the corpus rows known to \
+                     state `CR:0`. Check the row before adding it here: a rating that vanished \
+                     from a row that used to have one is a transcription defect, not a corpus \
+                     fact.",
+                    entry.key
+                );
+                seen_zero_cr.push(entry.key.as_str());
+            } else {
+                assert!(
+                    entry.challenge_rating > 0.0,
+                    "{} has no challenge rating",
+                    entry.key
+                );
+            }
         }
+        seen_without_page.sort_unstable();
+        assert_eq!(
+            seen_without_page, NO_SOURCE_PAGE,
+            "the set of records serving no source page changed; a pinned one gaining a page is \
+             as much a signal as a new one losing it"
+        );
+        seen_zero_cr.sort_unstable();
+        assert_eq!(
+            seen_zero_cr, ZERO_CHALLENGE_RATING,
+            "the set of records serving challenge rating 0 changed; a pinned one gaining a \
+             rating is as much a signal as a new one losing it"
+        );
     }
 
     /// The three records whose land speed is genuinely `0`, pinned by name so
@@ -346,12 +1175,25 @@ mod tests {
         // whatsoever, not merely a walk speed of 0). `speed_ft` is 0
         // because the row states no walk movement, never a guessed value.
         let entries = build_monster_catalog().entries;
-        let landless: Vec<&str> = entries
-            .iter()
+        let landless: Vec<&str> = hand_modelled_rows(&entries)
+            .into_iter()
             .filter(|entry| entry.speed_ft == 0)
             .map(|entry| entry.name.as_str())
             .collect();
         assert_eq!(landless, vec!["Shark", "Squid", "Vargouille", "Shadow"]);
+
+        // Bonus Bestiary's own instance, and the reason `speeds` exists: Allip
+        // is `MOVE:Fly,30` with no `Walk` pair, so its land speed is genuinely
+        // 0 -- but unlike a Bestiary 1 row it still serves a movement mode, so
+        // the screen prints "No land speed, fly 30 ft." rather than nothing.
+        let bb_landless: Vec<&MonsterCatalogEntryDto> = entries
+            .iter()
+            .filter(|entry| entry.book == BOOK_BB && entry.speed_ft == 0)
+            .collect();
+        assert_eq!(bb_landless.len(), 1);
+        assert_eq!(bb_landless[0].name, "Allip");
+        assert_eq!(bb_landless[0].speeds, vec![SpeedDto { mode: "Fly".to_owned(), feet: 30 }]);
+
         for entry in entries.iter().filter(|entry| entry.speed_ft > 0) {
             assert!(entry.speed_ft >= 5, "{} has an implausible land speed", entry.key);
         }
@@ -376,7 +1218,7 @@ mod tests {
         assert_eq!(ankheg.source_page, "p.15");
         assert_eq!(ankheg.natural_attacks.len(), 1);
         assert_eq!(ankheg.natural_attacks[0].name, "Bite");
-        assert_eq!(ankheg.natural_attacks[0].damage_dice, "2d6");
+        assert_eq!(ankheg.natural_attacks[0].damage_dice.as_deref(), Some("2d6"));
     }
 
     /// A monster whose row genuinely declares no natural attack is served with
@@ -418,12 +1260,20 @@ mod tests {
             .iter()
             .filter(|attack| attack.damage_dice_source == DICE_FROM_PUBLISHED_TEXT)
             .count();
+        // The fourth label, added with Bonus Bestiary: the corpus states no
+        // dice and none were grounded. Counted here rather than excluded, so
+        // the "every attack is labelled" invariant stays total.
+        let absent = attacks
+            .iter()
+            .filter(|attack| attack.damage_dice_source == DICE_ABSENT_FROM_CORPUS)
+            .count();
 
         assert_eq!(
-            from_row + cross_reference + published,
+            from_row + cross_reference + published + absent,
             attacks.len(),
-            "every served attack must carry one of the three known provenance labels"
+            "every served attack must carry one of the four known provenance labels"
         );
+        assert!(absent > 0, "the no-dice label must be exercised by a real record");
         assert!(from_row > 0, "most attacks are transcribed corpus-row tokens");
         assert_eq!(
             cross_reference + published,
@@ -521,7 +1371,20 @@ mod tests {
             }
             for attack in &entry.natural_attacks {
                 check(&entry.key, "attack name", &attack.name);
-                check(&entry.key, "attack damage_dice", &attack.damage_dice);
+                // `damage_dice` is `None` for an attack the corpus never dices;
+                // there is no string to sweep, and skipping it here is not a
+                // gap -- the `checked` floor below still requires the sweep to
+                // have walked the whole catalog.
+                if let Some(dice) = attack.damage_dice.as_deref() {
+                    check(&entry.key, "attack damage_dice", dice);
+                }
+            }
+            for ability in &entry.abilities {
+                check(&entry.key, "ability name", &ability.name);
+                check(&entry.key, "ability facet", &ability.facet);
+                if let Some(description) = ability.description.as_deref() {
+                    check(&entry.key, "ability description", description);
+                }
             }
         }
 
@@ -551,9 +1414,18 @@ mod tests {
         // RACESUBTYPE rows -- Ogre ("Giant") and Shadow ("Incorporeal") --
         // moving the denominator 18 -> 20. The multi-valued (pipe-separated)
         // population is unchanged: still only Vargouille and Hell Hound.
+        //
+        // Scoped to Bestiary 1 (SD-29 Epic 5): Bonus Bestiary joined the same
+        // response and carries 3 subtype rows of its own, one of them
+        // multi-valued (Shadow Mastiff's `Evil|Extraplanar`). Widening the
+        // denominators would have made this assertion say nothing about the
+        // population it was written for, so the book filter is the fix and the
+        // new book gets its own assertion below.
         let entries = build_monster_catalog().entries;
-        let with_subtype: Vec<&MonsterCatalogEntryDto> =
-            entries.iter().filter(|entry| entry.race_subtype.is_some()).collect();
+        let with_subtype: Vec<&MonsterCatalogEntryDto> = hand_modelled_rows(&entries)
+            .into_iter()
+            .filter(|entry| entry.race_subtype.is_some())
+            .collect();
         let multi = with_subtype
             .iter()
             .filter(|entry| entry.race_subtype.as_deref().is_some_and(|s| s.contains(", ")))
@@ -561,6 +1433,22 @@ mod tests {
 
         assert_eq!(with_subtype.len(), 20, "rows carrying a RACESUBTYPE token");
         assert_eq!(multi, 2, "rows whose RACESUBTYPE token is multi-valued");
+
+        // Bonus Bestiary's own population, derived the same way: Allip
+        // (`Incorporeal`), Nixie (`Aquatic`) and Shadow Mastiff
+        // (`Evil|Extraplanar`), the last of which must reach the wire already
+        // joined as prose.
+        let bb_with_subtype: Vec<&MonsterCatalogEntryDto> = entries
+            .iter()
+            .filter(|entry| entry.book == BOOK_BB && entry.race_subtype.is_some())
+            .collect();
+        assert_eq!(bb_with_subtype.len(), 3);
+        let bb_multi: Vec<&str> = bb_with_subtype
+            .iter()
+            .filter_map(|entry| entry.race_subtype.as_deref())
+            .filter(|s| s.contains(", "))
+            .collect();
+        assert_eq!(bb_multi, vec!["Evil, Extraplanar"]);
     }
 
     /// The renderer itself, on shapes the corpus does not currently contain.

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "1/2",
+    "corpus_key": "Clockwork (Spy)",
+    "external_ability_refs": [
+      "Flight Maneuverability"
+    ],
+    "key": "bestiary_3:monster:clockwork_spy",
+    "monster_class": "Construct:1",
+    "name": "Clockwork Spy",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d2",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Clockwork",
+    "race_type": "Construct",
+    "size": "T",
+    "source_page": "p.57",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 57,
+    "record_key": "Clockwork (Spy)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

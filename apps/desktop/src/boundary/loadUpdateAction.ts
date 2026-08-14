@@ -1,9 +1,9 @@
-import { fetchChannelIndex, fetchUpdateManifest } from '../sd16/update/fetch';
+import { fetchChannelIndex, fetchUpdateManifest } from '../update/fetch';
 import type {
   UpdateManifestFile,
   FetchFailure,
-} from '../sd16/update/fetch';
-import { compareVersions } from '../sd16/update/eligibility';
+} from '../update/fetch';
+import { compareVersions } from '../update/eligibility';
 import { formatError, hasTauriRuntime } from './runtime';
 import type {
   TesterChannelLabel,

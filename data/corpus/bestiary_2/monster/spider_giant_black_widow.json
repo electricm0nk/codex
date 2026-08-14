@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:giant_black_widow_spider_poison",
+      "bestiary_2:monster_ability:giant_black_widow_spider_strong_webs"
+    ],
+    "challenge_rating": "3",
+    "corpus_key": "Spider (Giant Black Widow)",
+    "external_ability_refs": [
+      "Web"
+    ],
+    "key": "bestiary_2:monster:spider_giant_black_widow",
+    "monster_class": "Vermin:5",
+    "name": "Spider (Giant Black Widow)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "size": "L",
+    "source_page": "p.256",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 823,
+    "record_key": "Spider (Giant Black Widow)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

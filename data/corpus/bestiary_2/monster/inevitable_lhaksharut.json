@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:lhaksharut_cunning_reflexes",
+      "bestiary_2:monster_ability:lhaksharut_multiweapon_mastery",
+      "bestiary_2:monster_ability:lhaksharut_perfect_prediction",
+      "bestiary_2:monster_ability:lhaksharut_wounding_weapons"
+    ],
+    "challenge_rating": "20",
+    "corpus_key": "Inevitable (Lhaksharut)",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Detect Chaos ~ Constant",
+      "Detect Magic ~ Constant",
+      "Flight Maneuverability",
+      "Lhaksharut ~ Energy Bolt",
+      "Lhaksharut ~ Immunity to Energy Spells",
+      "Shield of Law ~ Constant",
+      "True Seeing ~ Constant"
+    ],
+    "key": "bestiary_2:monster:inevitable_lhaksharut",
+    "monster_class": "Outsider (Fort/Will):22",
+    "name": "Inevitable (Lhaksharut)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d8",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Extraplanar|Inevitable|Lawful",
+    "race_type": "Outsider",
+    "size": "H",
+    "source_page": "p.164",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 516,
+    "record_key": "Inevitable (Lhaksharut)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

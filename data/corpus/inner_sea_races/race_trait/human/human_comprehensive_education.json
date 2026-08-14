@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:47:16Z",
+  "data": {
+    "key": "Human ~ Comprehensive Education",
+    "name": "Comprehensive Education",
+    "race_key": "Human",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Human Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Human_ReplaceSkilled"
+    ],
+    "description": "Humans raised with skilled teachers draw upon vast swathes of knowledge gained over centuries of civilization. They gain all Knowledge skills as class skills, and they gain a +1 racial bonus on skill checks for each Knowledge skill that they gain as a class skill from their class levels. This racial trait replaces skilled.",
+    "source_page": "p.213",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Human ~ Comprehensive Education"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Human ~ Comprehensive Education],[!PREFACT:1,ABILITIES,Human_ReplaceSkilled=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Humans raised with skilled teachers draw upon vast swathes of knowledge gained over centuries of civilization. They gain all Knowledge skills as class skills, and they gain a +1 racial bonus on skill checks for each Knowledge skill that they gain as a class skill from their class levels."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces skilled.|!PREABILITY:1,CATEGORY=Special Ability,Human ~ Comprehensive Education"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|TYPE=Knowledge"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+1 racial bonus on skill checks for each Knowledge skill that you gain as a class skill from class levels."
+      },
+      {
+        "key": "FACT",
+        "value": "Human_ReplaceSkilled|true"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 202,
+    "record_key": "Human ~ Comprehensive Education"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:47:16Z",
+  "data": {
+    "key": "Gnome ~ Wright",
+    "name": "Wright",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gnome_ReplaceHatred",
+      "Gnome_ReplaceObsessive"
+    ],
+    "description": "Some gnomes prefer to use their natural talents with mechanisms to drive machines. These gnomes gain a +2 racial bonus on driving checks and on Craft checks to build or repair vehicles. This racial trait replaces hatred and obsessive.",
+    "source_page": "p.211",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Wright"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Wright],[!PREFACT:1,ABILITIES,Gnome_ReplaceHatred=true,Gnome_ReplaceObsessive=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some gnomes prefer to use their natural talents with mechanisms to drive machines. These gnomes gain a +2 racial bonus on driving checks and on Craft checks to build or repair vehicles."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces hatred and obsessive.|!PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Wright"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+2 racial bonus on driving checks and on Craft checks to build or repair vehicles."
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceHatred|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceObsessive|true"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 101,
+    "record_key": "Gnome ~ Wright"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

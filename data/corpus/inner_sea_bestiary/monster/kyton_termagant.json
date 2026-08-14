@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:termagant_poison",
+      "inner_sea_bestiary:monster_ability:termagant_regeneration",
+      "inner_sea_bestiary:monster_ability:termagant_rupture",
+      "inner_sea_bestiary:monster_ability:termagant_shared_rupture",
+      "inner_sea_bestiary:monster_ability:termagant_unnerving_gaze",
+      "inner_sea_bestiary:monster_ability:termagent_bleed_damage"
+    ],
+    "challenge_rating": "17",
+    "corpus_key": "Kyton (Termagant)",
+    "external_ability_refs": [
+      "Maneuverability (Perfect)",
+      "Can't Be Tripped",
+      "Grab",
+      "Immunity to Cold",
+      "Telepathy"
+    ],
+    "key": "inner_sea_bestiary:monster:kyton_termagant",
+    "monster_class": "Outsider (Fort/Will):17",
+    "name": "Kyton (Termagant)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Slam"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": "Evil|Lawful|Extraplanar|Kyton",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.24",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 41,
+    "record_key": "Kyton (Termagant)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

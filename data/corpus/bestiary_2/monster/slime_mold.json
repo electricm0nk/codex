@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:fungal_rot_disease"
+    ],
+    "challenge_rating": "2",
+    "corpus_key": "Slime Mold",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Engulf",
+      "Freeze",
+      "Resistance to Fire"
+    ],
+    "key": "bestiary_2:monster:slime_mold",
+    "monster_class": "Ooze:3",
+    "name": "Slime Mold",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Ooze",
+    "size": "L",
+    "source_page": "p.249",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 804,
+    "record_key": "Slime Mold"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

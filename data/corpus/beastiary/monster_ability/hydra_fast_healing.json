@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Hydra ~ Fast Healing",
+    "delivery": "Extraordinary",
+    "description": "A hydra's fast healing ability is equal to its current number of heads (minimum fast healing 5). This fast healing applies only to damage inflicted on the hydra's body. A hydra regains hit points at %1 per round. Fast healing does not restore hit points lost from starvation, thirst, or suffocation, nor does it allow a creature to regrow lost body parts. Unless otherwise stated, it does not allow lost body parts to be reattached. Fast healing continues to function (even at negative hit points) until a creature dies, at which point the effects of fast healing end immediately.",
+    "description_variables": [
+      "FastHealingRate"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:hydra_fast_healing",
+    "name": "Fast Healing",
+    "owners": [
+      "beastiary:monster:hydra"
+    ],
+    "source_page": "p.178",
+    "traits": [
+      "ModifyHP"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 781,
+    "record_key": "Hydra ~ Fast Healing"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

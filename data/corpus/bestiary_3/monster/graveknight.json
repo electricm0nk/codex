@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_3:monster_ability:graveknight_ruinous_revivification"
+    ],
+    "challenge_rating": "11",
+    "corpus_key": "Graveknight",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:graveknight",
+    "monster_class": "Undead:10",
+    "name": "Graveknight",
+    "natural_attacks": [],
+    "race_subtype": "Augmented Humanoid",
+    "race_type": "Undead",
+    "size": "M",
+    "source_page": "p.137",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 135,
+    "record_key": "Graveknight"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

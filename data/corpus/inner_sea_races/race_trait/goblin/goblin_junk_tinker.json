@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:47:16Z",
+  "data": {
+    "key": "Goblin ~ Junk Tinker",
+    "name": "Junk Tinker",
+    "race_key": "Goblin",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Goblin Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Goblin_ReplaceSkilled"
+    ],
+    "description": "Goblins use ramshackle equipment and vehicles that seem like they should never function. Goblins gain a +2 racial bonus on driving checks and on Craft checks to build or repair weapons or vehicles without the proper tools. They can make the attempt with any material that can hold the right shape for a few uses, but normally unfit materials produce items with the fragile quality. This racial trait alters skilled, replacing the racial bonus on Stealth checks.",
+    "source_page": "p.215",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Goblin ~ Junk Tinker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Goblin Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Goblin ~ Junk Tinker],[!PREFACT:1,ABILITIES,Goblin_ReplaceSkilled=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Goblins use ramshackle equipment and vehicles that seem like they should never function. Goblins gain a +2 racial bonus on driving checks and on Craft checks to build or repair weapons or vehicles without the proper tools. They can make the attempt with any material that can hold the right shape for a few uses, but normally unfit materials produce items with the fragile quality."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait alters skilled, replacing the racial bonus on Stealth checks.|!PREABILITY:1,CATEGORY=Special Ability,Goblin ~ Junk Tinker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Goblin Racial Trait|AUTOMATIC|Junk Tinker ~ Skilled"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+2 racial bonus on driving checks and on Craft checks to build or repair weapons or vehicles without the proper tools."
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Craft to build or repair weapons or vehicles without proper tools"
+      },
+      {
+        "key": "FACT",
+        "value": "Goblin_ReplaceSkilled|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 731,
+    "record_key": "Goblin ~ Junk Tinker"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

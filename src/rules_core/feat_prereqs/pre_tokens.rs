@@ -299,6 +299,7 @@ pub const MODELLED_KINDS: &[&str] = &[
     "PREMULT",
     "PREPCLEVEL",
     "PRERACE",
+    "PRESIZEGTEQ",
     "PRESIZELTEQ",
     "PRESKILL",
     "PRESTAT",
@@ -333,6 +334,13 @@ pub const UNMODELLED_KINDS: &[(&str, &str)] = &[
     ("PREWEAPONPROF", "weapon proficiency is not modelled"),
     ("PREMOVE", "movement-type prerequisites are not modelled"),
     ("PREDR", "damage-reduction prerequisites are not modelled"),
+    // Arrived with the corpus feat gap lane (2026-08-11). Unlike
+    // `PRESIZEGTEQ:`, which shares the size fact `PRESIZELTEQ:` already
+    // reads, a character's limb count is not a fact this engine holds
+    // anywhere: no ingested race records it and no chassis computes it.
+    // Guessing "2 hands" would deny or allow on an assumption, which is the
+    // exact failure the third `ClauseOutcome` variant exists to prevent.
+    ("PREHANDSGTEQ", "the number of a creature's hands is not modelled"),
     ("PRERULE", "PCGen house-rule-flag prerequisites are not modelled"),
 ];
 
@@ -359,7 +367,9 @@ pub fn evaluate_prerequisite_token(token: &str, facts: &CharacterPrereqFacts) ->
         "PRELEVEL" | "PREPCLEVEL" => evaluate_min_max(token, body, facts, "character level"),
         "PREMULT" => return evaluate_mult(token, body, facts, negated),
         "PRERACE" => evaluate_race(token, body, facts),
-        "PRESIZELTEQ" => evaluate_size_lteq(token, body, facts),
+        "PRESIZEGTEQ" | "PRESIZELTEQ" => {
+            evaluate_size_bound(token, body, facts, bare_kind == "PRESIZEGTEQ")
+        }
         "PRESKILL" => evaluate_skill(token, body, facts),
         "PRESTAT" => evaluate_stat(token, body, facts),
         "PRETOTALAB" => evaluate_total_ab(token, body, facts),
@@ -800,15 +810,32 @@ fn evaluate_min_max(
     }
 }
 
-/// `PRESIZELTEQ:<size code>` -- the character's size must be at most the
+/// `PRESIZELTEQ:<size code>` / `PRESIZEGTEQ:<size code>` -- the character's
+/// size must be at most (LTEQ) or at least (GTEQ) the
 /// named one.
-fn evaluate_size_lteq(token: &str, body: &str, facts: &CharacterPrereqFacts) -> ClauseOutcome {
+fn evaluate_size_bound(
+    token: &str,
+    body: &str,
+    facts: &CharacterPrereqFacts,
+    at_least: bool,
+) -> ClauseOutcome {
     let Some(limit) = size_from_code(body.trim()) else {
         return unmodelled(token, "unrecognised size code");
     };
-    let requirement = format!("size {} or smaller", size_label(limit));
+    let requirement = if at_least {
+        format!("size {} or larger", size_label(limit))
+    } else {
+        format!("size {} or smaller", size_label(limit))
+    };
+    let satisfied = |size: SizeCategory| {
+        if at_least {
+            size_rank(size) >= size_rank(limit)
+        } else {
+            size_rank(size) <= size_rank(limit)
+        }
+    };
     match facts.size {
-        Some(size) if size_rank(size) <= size_rank(limit) => ClauseOutcome::Met { requirement },
+        Some(size) if satisfied(size) => ClauseOutcome::Met { requirement },
         Some(size) => ClauseOutcome::Unmet {
             reason: format!("requires {requirement} (you are {})", size_label(size)),
             requirement,
@@ -1055,6 +1082,43 @@ mod tests {
             skill_ranks: Vec::new(),
             size: Some(SizeCategory::Medium),
         }
+    }
+
+    /// `PRESIZEGTEQ:` arrived with the corpus feat gap lane (2026-08-11):
+    /// `core_essentials`' `Awesome Blow` carries `PRESIZEGTEQ:L`, and the
+    /// engine already models character size for `PRESIZELTEQ:`. Reporting it
+    /// `Unmodelled` when the exact fact it needs is in hand would be a
+    /// fabricated gap, so the two comparisons share one arm.
+    #[test]
+    fn size_at_least_is_evaluated_against_the_characters_real_size() {
+        let medium = fighter(1, 13, &[]);
+        // A Medium character does not meet "Large or larger", and is told why.
+        match evaluate_prerequisite_token("PRESIZEGTEQ:L", &medium) {
+            ClauseOutcome::Unmet { reason, .. } => {
+                assert!(reason.contains("Large or larger"), "{reason}");
+                assert!(reason.contains("Medium"), "{reason}");
+            }
+            other => panic!("expected Unmet, got {other:?}"),
+        }
+        // ... and does meet "Small or larger".
+        assert!(matches!(
+            evaluate_prerequisite_token("PRESIZEGTEQ:S", &medium),
+            ClauseOutcome::Met { .. }
+        ));
+        // The existing `LTEQ` direction is unchanged by sharing the arm.
+        assert!(matches!(
+            evaluate_prerequisite_token("PRESIZELTEQ:M", &medium),
+            ClauseOutcome::Met { .. }
+        ));
+        assert!(matches!(
+            evaluate_prerequisite_token("PRESIZELTEQ:S", &medium),
+            ClauseOutcome::Unmet { .. }
+        ));
+        // An unrecognised size code is still a gap, never a guess.
+        assert!(matches!(
+            evaluate_prerequisite_token("PRESIZEGTEQ:Z", &medium),
+            ClauseOutcome::Unmodelled { .. }
+        ));
     }
 
     /// The exact defect this work exists to close, at the clause level.

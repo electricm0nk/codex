@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:18:41Z",
+  "data": {
+    "corpus_key": "Apostate Devil ~ Evangelization",
+    "delivery": "Supernatural",
+    "description": "The words of deimaviggas are poison to the mind. Every round a deimavigga speaks (a free action), all non-devils with an Intelligence score of 3 or higher within 30 feet must make a DC %1 Will save or become vulnerable to its blasphemous discourse. The DC of this Will save increases by +1 for each consecutive round a creature has listened to the same deimavigga speak. Creatures must be listening to a deimavigga to be affected by its oration. Deafened creatures and those in combat-either with the deimavigga or other creatures-are not considered to be listening. Victims cannot simply declare they are not listening without taking steps to impede their hearing. Upon failing this save, a victim can be affected by the heretical power of a deimavigga's words. The devil may use its speech to affect a listener in ways that mimic any of the following spells: calm emotions (DC %2), charm monster (DC %3), command (DC %4), confusion (DC %5), crushing despair (DC %6), deep slumber (DC %7), enthrall (DC %8), modify memory (DC %9), rage (DC %10), or suggestion (DC %11). Victims still receive saving throws against these spell effects, but if they fail their saves they are not aware the devil is working its power upon them. A deimavigga can affect multiple victims with different spell effects in the same round. A creature that makes its save against this ability is immune to that particular devil's evangelization for the next 24 hours. This is a sonic mind-affecting effect. The base save DC is Charisma-based.",
+    "description_variables": [
+      "Evangelization_DC",
+      "DC_Calm_Emotions",
+      "DC_charm_monster",
+      "DC_command",
+      "DC_confusion",
+      "DC_crushing_despair",
+      "DC_deep_slumber",
+      "DC_enthrall",
+      "DC_modify_memory",
+      "DC_rage",
+      "DC_suggestion"
+    ],
+    "facet": "SpecialQuality",
+    "key": "book_of_the_damned_volume_1:monster_ability:apostate_devil_evangelization",
+    "name": "Evangelization",
+    "owners": [
+      "book_of_the_damned_volume_1:monster:devil_apostate"
+    ],
+    "source_page": "p.54",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
+    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177",
+    "line": 10,
+    "record_key": "Apostate Devil ~ Evangelization"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

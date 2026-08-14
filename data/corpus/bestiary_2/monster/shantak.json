@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:shantak_share_defenses",
+      "bestiary_2:monster_ability:shantak_starflight"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Shantak",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Grab ~ Talon",
+      "Immunity to Cold",
+      "Immunity to Disease",
+      "No Breath",
+      "Shantak ~ Slippery"
+    ],
+    "key": "bestiary_2:monster:shantak",
+    "monster_class": "Magical Beast:11",
+    "name": "Shantak",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Talons"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "size": "H",
+    "source_page": "p.244",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 80,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 783,
+    "record_key": "Shantak"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

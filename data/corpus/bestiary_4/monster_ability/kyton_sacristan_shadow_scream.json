@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Kyton (Sacristan) ~ Shadow Scream",
+    "delivery": "Supernatural",
+    "description": "Once per hour as a standard action, a sacristan can burst the bonds sealing its mouth and unleash a cacophony of darkness and soul-shaking howls from the pits of the Shadow Plane. The area within 25 feet of the sacristan is affected by deeper darkness. All creatures within the area are deafened for as long as they remain in the area and must succeed at a DC %1 Will save or be confused. The confusion effect lasts for as long as the creature is in the shadow scream's area of effect and for 1d4 rounds after leaving. Any creature that falls unconscious while under the effects of this confusion effect must succeed at an additional DC %1 Will save or be afflicted by a random insanity-roll on the insanity table on page 250 of the GameMastery Guide to determine which. A sacristan's shadow scream lasts for 3 rounds and remains centered on the kyton even if it moves. The sacristan can end the shadow scream at will. The scream also ends if the sacristan is killed or is affected by the spell dimensional lock, which prevents this ability's use for as long as the spell in effect.",
+    "description_variables": [
+      "CHA+16"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:kyton_sacristan_shadow_scream",
+    "name": "Shadow Scream",
+    "owners": [
+      "bestiary_4:monster:kyton_sacristan"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 996,
+    "record_key": "Kyton (Sacristan) ~ Shadow Scream"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

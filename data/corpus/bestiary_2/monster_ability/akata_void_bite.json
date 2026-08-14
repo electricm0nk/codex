@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Akata ~ Void Bite",
+    "delivery": "Extraordinary",
+    "description": "Akatas hold hundreds of invisibly small larval young within their mouths, spreading these parasitic creatures to hosts through their bite.  Only humanoids make suitable hosts for akata young - all other creature types are immune to this parasitic infection.  The disease itself is known as void death.  Disease: Void Death: Bite - injury; save Fort DC %1; onset 1 hour; frequency 1/day; effect 1d2 Dex and 1d2 Con damage; an infected creature who dies rises as a void zombie 2d4 hours later; cure 2 consecutive saves.",
+    "description_variables": [
+      "AkataVoidBiteDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:akata_void_bite",
+    "name": "Void Bite",
+    "owners": [
+      "bestiary_2:monster:akata"
+    ],
+    "source_page": "p.23",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 76,
+    "record_key": "Akata ~ Void Bite"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

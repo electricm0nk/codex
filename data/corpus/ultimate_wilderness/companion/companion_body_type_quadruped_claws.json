@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Companion Body Type ~ Quadruped (Claws)",
+    "delivery": null,
+    "description": "Available Magic Item Slots; armor, belt (saddle), chest, eyes, head, headband, neck, shoulders, wrist",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": null,
+    "key": "ultimate_wilderness:companion:companion_body_type_quadruped_claws",
+    "name": "Quadruped (Claws)",
+    "owners": [
+      "ultimate_wilderness:companion:companion_capybara",
+      "ultimate_wilderness:companion:companion_grizzly_bear",
+      "ultimate_wilderness:companion:companion_marsupial_devil",
+      "ultimate_wilderness:companion:companion_marsupial_lion",
+      "ultimate_wilderness:companion:companion_mole_giant",
+      "ultimate_wilderness:companion:companion_panda",
+      "ultimate_wilderness:companion:companion_porcupine_giant",
+      "ultimate_wilderness:companion:companion_saber_toothed_cat",
+      "ultimate_wilderness:companion:companion_skunk_giant",
+      "ultimate_wilderness:companion:companion_wolfdog",
+      "ultimate_wilderness:companion:familiar_arctic_fox",
+      "ultimate_wilderness:companion:familiar_arctic_hare",
+      "ultimate_wilderness:companion:familiar_armadillo",
+      "ultimate_wilderness:companion:familiar_ermine",
+      "ultimate_wilderness:companion:familiar_jerboa",
+      "ultimate_wilderness:companion:familiar_koala",
+      "ultimate_wilderness:companion:familiar_lemming",
+      "ultimate_wilderness:companion:familiar_margay",
+      "ultimate_wilderness:companion:familiar_meerkat",
+      "ultimate_wilderness:companion:familiar_mole",
+      "ultimate_wilderness:companion:familiar_mongoose",
+      "ultimate_wilderness:companion:familiar_platypus",
+      "ultimate_wilderness:companion:familiar_rabbit",
+      "ultimate_wilderness:companion:familiar_skunk",
+      "ultimate_wilderness:companion:familiar_squirrel"
+    ],
+    "record_type": "ability",
+    "source_page": "p.176",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuaility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 395,
+    "record_key": "Companion Body Type ~ Quadruped (Claws)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

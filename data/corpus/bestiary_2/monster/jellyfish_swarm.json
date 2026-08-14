@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:jellyfish_poison_swarm"
+    ],
+    "challenge_rating": "6",
+    "corpus_key": "Jellyfish Swarm",
+    "external_ability_refs": [
+      "Distraction ~ Swarm",
+      "No Combat Maneuvers",
+      "Swarm Traits"
+    ],
+    "key": "bestiary_2:monster:jellyfish_swarm",
+    "monster_class": "Vermin:12",
+    "name": "Jellyfish Swarm",
+    "natural_attacks": [
+      {
+        "damage_dice": "3d6",
+        "name": "Swarm"
+      }
+    ],
+    "race_subtype": "Aquatic|Swarm",
+    "race_type": "Vermin",
+    "size": "D",
+    "source_page": "p.170",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 544,
+    "record_key": "Jellyfish Swarm"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

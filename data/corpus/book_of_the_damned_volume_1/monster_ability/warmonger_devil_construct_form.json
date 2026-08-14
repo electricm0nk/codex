@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:18:41Z",
+  "data": {
+    "corpus_key": "Warmonger Devil ~ Construct Form",
+    "delivery": null,
+    "description": "Despite being true devils, levalochs possess a number of immunities common to constructs, including immunity to ability damage, ability drain, death effects, death from massive damage, disease, energy drain, exhaustion, fatigue, necromancy effects, nonlethal damage, paralysis, sleep effects, and stunning. Upon being reduced to 0 hit points, they are immediately destroyed.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "book_of_the_damned_volume_1:monster_ability:warmonger_devil_construct_form",
+    "name": "Construct Form",
+    "owners": [
+      "book_of_the_damned_volume_1:monster:devil_warmonger"
+    ],
+    "source_page": "p.60",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
+    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177",
+    "line": 47,
+    "record_key": "Warmonger Devil ~ Construct Form"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

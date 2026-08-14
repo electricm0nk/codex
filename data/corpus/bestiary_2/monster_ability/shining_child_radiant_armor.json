@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Shining Child ~ Radiant Armor",
+    "delivery": "Supernatural",
+    "description": "The light that surrounds a shining child grants a deflection bonus to its AC equal to its Charisma bonus.  The bonus is negated as long as the shining child is in the area of effect of a spell with the darkness descriptor that is at least 3rd level.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:shining_child_radiant_armor",
+    "name": "Radiant Armor",
+    "owners": [
+      "bestiary_2:monster:shining_child"
+    ],
+    "source_page": "p.245",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1143,
+    "record_key": "Shining Child ~ Radiant Armor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

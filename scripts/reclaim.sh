@@ -20,7 +20,13 @@
 #   cargo-target   Abandoned CARGO_TARGET_DIRs (identified by CACHEDIR.TAG,
 #                   which cargo writes into every target dir it creates)
 #                   under the Claude scratchpad root and under the repo's
-#                   own $HOME/.cache/codex-* convention.
+#                   own $HOME/.cache/codex-* convention — plus, since the
+#                   2026-08-10 finding that this script reported "0 item(s),
+#                   0.0B" while ~40G of orphans sat on disk, directories
+#                   named `codex-target-*` directly under $HOME/workspace
+#                   and /tmp: the per-agent convention the SD-29 operating
+#                   discipline mandates, whose dirs are orphaned whenever an
+#                   agent dies or is stopped before its own cleanup runs.
 #   verify-logs    Stale scripts/verify.sh log directories under /tmp
 #                   (codex-verify-XXXXXX).
 #   worktrees      git worktrees whose branch is merged into develop or
@@ -40,6 +46,20 @@
 #      times) — that is the self-match trap, and `comm` cannot be spoofed by
 #      our own argv content. Self and all ancestor PIDs are excluded on top
 #      of that, belt-and-braces.
+#      On top of the build-process check, two further liveness signals guard
+#      every cargo-target candidate (a live agent BETWEEN builds shows no
+#      cargo/rustc process at all — codex-target-sd29-monster-r1 was 2h
+#      mtime-stale with a live owner, and an mtime heuristic alone would
+#      have destroyed a 30-minute rebuild's worth of work):
+#        a. an open file handle anywhere under the dir, held by any live
+#           process (scanned via /proc/<pid>/fd, which stays readable for
+#           same-uid processes where /proc/<pid>/environ does not); and
+#        b. a `.reclaim-claim` file in the dir naming a PID — skipped while
+#           that PID is alive, and skipped too if the file is unparseable
+#           (default to NOT deleting when uncertain). Agents that want
+#           positive protection write `echo <agent-pid> > "$CARGO_TARGET_DIR/.reclaim-claim"`.
+#      The mtime age floor (safety point 6) remains the backstop for live
+#      agents idle between builds that wrote no claim file.
 #   3. NEVER delete a git worktree with uncommitted changes or unpushed
 #      commits — checked via `git status --porcelain` and the upstream
 #      ahead-count, not assumed from branch name or PR state alone.
@@ -60,6 +80,9 @@
 #   scripts/reclaim.sh --apply            # actually delete
 #   scripts/reclaim.sh --only cargo-target --apply
 #   scripts/reclaim.sh --older-than 12    # raise the age floor to 12h
+#   scripts/reclaim.sh --workspace-root <p> --orphan-tmp-root <p>
+#                                         # override the codex-target-* scan
+#                                         # roots (defaults: ~/workspace, /tmp)
 #   scripts/reclaim.sh --help
 #
 # Emits a retro.py `incident` event (recurrence-key `disk-full`, the same key
@@ -99,12 +122,17 @@ ONLY_CATEGORIES=()
 SCRATCHPAD_ROOT="${RECLAIM_SCRATCHPAD_ROOT:-/tmp/claude-1000}"
 CACHE_ROOT="${RECLAIM_CACHE_ROOT:-$HOME/.cache}"
 VERIFY_TMP_ROOT="${RECLAIM_VERIFY_TMP_ROOT:-${TMPDIR:-/tmp}}"
+WORKSPACE_ROOT="${RECLAIM_WORKSPACE_ROOT:-$HOME/workspace}"
+ORPHAN_TMP_ROOT="${RECLAIM_ORPHAN_TMP_ROOT:-/tmp}"
 DEVELOP_REF="${RECLAIM_DEVELOP_REF:-origin/develop}"
 
 ALL_CATEGORIES=(cargo-target verify-logs worktrees branches)
 
 usage() {
-    sed -n '3,66p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
+    # Print the whole header comment block (everything before `set -uo`),
+    # so the help text cannot silently truncate when the header grows.
+    awk 'NR < 3 { next } /^set -uo pipefail/ { exit } { print }' "${BASH_SOURCE[0]}" \
+        | sed 's/^# \{0,1\}//'
 }
 
 while [[ $# -gt 0 ]]; do
@@ -125,6 +153,12 @@ while [[ $# -gt 0 ]]; do
         --verify-tmp-root)
             [[ $# -ge 2 ]] || { printf 'reclaim.sh: --verify-tmp-root needs a path\n' >&2; exit 2; }
             VERIFY_TMP_ROOT="$2"; shift ;;
+        --workspace-root)
+            [[ $# -ge 2 ]] || { printf 'reclaim.sh: --workspace-root needs a path\n' >&2; exit 2; }
+            WORKSPACE_ROOT="$2"; shift ;;
+        --orphan-tmp-root)
+            [[ $# -ge 2 ]] || { printf 'reclaim.sh: --orphan-tmp-root needs a path\n' >&2; exit 2; }
+            ORPHAN_TMP_ROOT="$2"; shift ;;
         --develop-ref)
             [[ $# -ge 2 ]] || { printf 'reclaim.sh: --develop-ref needs a ref\n' >&2; exit 2; }
             DEVELOP_REF="$2"; shift ;;
@@ -286,6 +320,71 @@ any_verify_running() {
     live_build_pids | grep -q .
 }
 
+# True (0) if any live process (other than this script and its ancestors)
+# holds an open file handle on the dir or anything under it. This is the
+# liveness signal that survives DURING long builds and file reads even when
+# the process is not cargo/rustc by comm. Scanned via /proc/<pid>/fd
+# readlinks: same-uid fd links stay readable in this environment where
+# /proc/<pid>/environ of sibling agents does not (verified empirically
+# 2026-08-11 against a live sibling agent's target dir).
+OPEN_FD_TARGETS=""
+OPEN_FD_TARGETS_COLLECTED=0
+
+# One pass over every /proc/<pid>/fd, collected lazily on first use and
+# reused for the whole run: a per-candidate scan is O(candidates × open
+# fds) and blew a 60s test timeout when a scan root contained dozens of
+# candidate dirs. Slight staleness within a single run only errs toward
+# skipping (a handle closed mid-run still protects its dir), never toward
+# deleting.
+collect_open_fd_targets() {
+    (( OPEN_FD_TARGETS_COLLECTED == 1 )) && return
+    OPEN_FD_TARGETS_COLLECTED=1
+    local excluded fddir pid
+    excluded=$'\n'$(self_and_ancestor_pids)$'\n'
+    OPEN_FD_TARGETS=$(
+        for fddir in /proc/[0-9]*/fd; do
+            pid=${fddir#/proc/}; pid=${pid%/fd}
+            [[ "$excluded" == *$'\n'"$pid"$'\n'* ]] && continue
+            # shellcheck disable=SC2012
+            find "$fddir" -maxdepth 1 -type l -print0 2>/dev/null \
+                | xargs -0 -r readlink 2>/dev/null
+        done
+    )
+}
+
+dir_has_open_handle() {
+    local dir="$1"
+    collect_open_fd_targets
+    [[ -n "$OPEN_FD_TARGETS" ]] || return 1
+    # awk with index(), not a regex: $dir is a filesystem path, not a
+    # pattern. Fed via herestring, NOT a pipe: awk's early `exit` on a hit
+    # would SIGPIPE the feeding printf, and under `set -o pipefail` the
+    # pipeline then reports 141 — turning every HIT into a miss. Caught by
+    # the open-handle case of test_reclaim_orphan_targets.sh going red.
+    awk -v d="$dir" '
+        index($0, d) == 1 {
+            rest = substr($0, length(d) + 1)
+            if (rest == "" || substr(rest, 1, 1) == "/") { found = 1; exit }
+        }
+        END { exit found ? 0 : 1 }' <<< "$OPEN_FD_TARGETS"
+}
+
+# Claim-file protocol: a `.reclaim-claim` file at the top of a target dir
+# containing a PID marks the dir as owned by that process. Returns 0
+# (claimed — do not delete) while the PID is alive, or when the file exists
+# but cannot be parsed: an unreadable claim is uncertainty, and the default
+# under uncertainty is to NOT delete. A claim naming a dead PID is positive
+# evidence of orphanhood and does not protect the dir.
+dir_claimed_by_live_pid() {
+    local dir="$1" claim="$dir/.reclaim-claim" pid
+    [[ -f "$claim" ]] || return 1
+    pid=$(head -n1 "$claim" 2>/dev/null | tr -d '[:space:]')
+    if [[ ! "$pid" =~ ^[0-9]+$ ]]; then
+        return 0
+    fi
+    kill -0 "$pid" 2>/dev/null
+}
+
 # ---------------------------------------------------------------------------
 # Age check: nothing under `dir` (up to a bounded depth, for speed on large
 # target trees) newer than --older-than hours. A directory that has been
@@ -315,75 +414,146 @@ older_than_threshold() {
 # only to find candidates fast; this is what confirms one.
 # ---------------------------------------------------------------------------
 
+is_cargo_target_shape() {
+    local dir="$1"
+    [[ -f "$dir/.rustc_info.json" || -d "$dir/debug" || -d "$dir/release" ]]
+}
+
 is_cargo_target_dir() {
     local dir="$1"
     [[ -f "$dir/CACHEDIR.TAG" ]] || return 1
-    if [[ -f "$dir/.rustc_info.json" || -d "$dir/debug" || -d "$dir/release" ]]; then
-        return 0
-    fi
-    return 1
+    is_cargo_target_shape "$dir"
 }
 
 # ---------------------------------------------------------------------------
 # Category: cargo-target
 # ---------------------------------------------------------------------------
 
+# Runs the full skip/remove ladder on one confirmed-real cargo-target path.
+# Shared by both scan passes below; every liveness guard lives here so a
+# candidate cannot reach rm via one pass with fewer checks than the other.
+#
+# $2 (confirmed_by_name) is set to 1 by Pass 2, the codex-target-* name-scan.
+# Real cargo builds do not reliably write CACHEDIR.TAG on every run (an
+# incremental build can leave it absent while `debug/`/`release/` build
+# output is very much present) — the 2026-08-13 finding was five real,
+# 8-50G codex-target-* dirs silently invisible to this function for exactly
+# that reason. For a name-matched candidate, build-output shape alone
+# (is_cargo_target_shape) is sufficient confirmation: the naming convention
+# already rules out fontconfig/uv/man-db sharing the scan root, which is the
+# false-positive CACHEDIR.TAG exists to prevent for the untargeted Pass 1
+# sweep. A name-matched candidate that also fails the shape check is
+# reported explicitly, never silently dropped — see the "considered" count
+# in reclaim_cargo_target().
+consider_cargo_target_dir() {
+    local real="$1" confirmed_by_name="${2:-0}" size
+
+    if ! is_cargo_target_dir "$real"; then
+        if (( confirmed_by_name == 1 )) && is_cargo_target_shape "$real"; then
+            : # codex-target-* dir with real build output but no
+              # CACHEDIR.TAG this run — confirmed by shape instead, fall
+              # through to the safety ladder below.
+        elif (( confirmed_by_name == 1 )); then
+            say "    SKIP  $real  — matches codex-target-* naming convention but has neither CACHEDIR.TAG nor cargo build output (debug/release/.rustc_info.json); not a cargo target dir"
+            SKIPPED_LINES+=("cargo-target  $real  SKIPPED (not a cargo target dir)")
+            return
+        else
+            # A CACHEDIR.TAG from some other tool (fontconfig, uv,
+            # man-db, ...) sharing the scan root. Not our business.
+            return
+        fi
+    fi
+
+    if is_forbidden_path "$real"; then
+        SKIPPED_LINES+=("cargo-target  $real  SKIPPED (forbidden path)")
+        return
+    fi
+
+    size=$(dir_size_bytes "$real")
+    [[ "$size" =~ ^[0-9]+$ ]] || size=0
+
+    if target_dir_in_use "$real"; then
+        say "    SKIP  $real  ($(human_size "$size"))  — a live cargo/rustc process is using it"
+        SKIPPED_LINES+=("cargo-target  $real  $(human_size "$size")  SKIPPED (in use)")
+        return
+    fi
+
+    if dir_has_open_handle "$real"; then
+        say "    SKIP  $real  ($(human_size "$size"))  — a live process holds an open file handle under it"
+        SKIPPED_LINES+=("cargo-target  $real  $(human_size "$size")  SKIPPED (open file handle)")
+        return
+    fi
+
+    if dir_claimed_by_live_pid "$real"; then
+        say "    SKIP  $real  ($(human_size "$size"))  — claimed by live pid via .reclaim-claim"
+        SKIPPED_LINES+=("cargo-target  $real  $(human_size "$size")  SKIPPED (claimed by live pid)")
+        return
+    fi
+
+    if ! older_than_threshold "$real" "$OLDER_THAN_HOURS"; then
+        say "    SKIP  $real  ($(human_size "$size"))  — modified within the last ${OLDER_THAN_HOURS}h"
+        SKIPPED_LINES+=("cargo-target  $real  $(human_size "$size")  SKIPPED (too young)")
+        return
+    fi
+
+    if (( APPLY == 1 )); then
+        if safe_rm_rf "$real" "cargo-target"; then
+            say "    REMOVED  $real  ($(human_size "$size"))"
+            RECLAIMED_LINES+=("cargo-target  $real  $(human_size "$size")")
+            TOTAL_RECLAIMED_BYTES=$(( TOTAL_RECLAIMED_BYTES + size ))
+            ANY_APPLIED=1
+        fi
+    else
+        say "    WOULD REMOVE  $real  ($(human_size "$size"))"
+        RECLAIMED_LINES+=("cargo-target  $real  $(human_size "$size")")
+        TOTAL_RECLAIMED_BYTES=$(( TOTAL_RECLAIMED_BYTES + size ))
+    fi
+}
+
 reclaim_cargo_target() {
     say "== cargo-target — abandoned CARGO_TARGET_DIRs =="
     local roots=("$SCRATCHPAD_ROOT" "$CACHE_ROOT")
     local seen=""
-    local root tag dir size age_ok in_use
+    local root tag dir real
 
+    # Pass 1: CACHEDIR.TAG discovery under the scratchpad and cache roots.
     for root in "${roots[@]}"; do
         [[ -d "$root" ]] || { say "    (root does not exist, skipping: $root)"; continue; }
         while IFS= read -r -d '' tag; do
             dir=$(dirname -- "$tag")
-            # De-dupe: the two roots can overlap in principle (e.g. via a
+            # De-dupe: the roots can overlap in principle (e.g. via a
             # symlink); never process the same real path twice.
-            local real; real=$(cd -- "$dir" 2>/dev/null && pwd -P) || real="$dir"
+            real=$(cd -- "$dir" 2>/dev/null && pwd -P) || real="$dir"
             [[ "$seen" == *"|$real|"* ]] && continue
             seen="$seen|$real|"
-
-            if ! is_cargo_target_dir "$real"; then
-                # A CACHEDIR.TAG from some other tool (fontconfig, uv,
-                # man-db, ...) sharing the scan root. Not our business.
-                continue
-            fi
-
-            if is_forbidden_path "$real"; then
-                SKIPPED_LINES+=("cargo-target  $real  SKIPPED (forbidden path)")
-                continue
-            fi
-
-            size=$(dir_size_bytes "$real")
-            [[ "$size" =~ ^[0-9]+$ ]] || size=0
-
-            if target_dir_in_use "$real"; then
-                say "    SKIP  $real  ($(human_size "$size"))  — a live cargo/rustc process is using it"
-                SKIPPED_LINES+=("cargo-target  $real  $(human_size "$size")  SKIPPED (in use)")
-                continue
-            fi
-
-            if ! older_than_threshold "$real" "$OLDER_THAN_HOURS"; then
-                say "    SKIP  $real  ($(human_size "$size"))  — modified within the last ${OLDER_THAN_HOURS}h"
-                SKIPPED_LINES+=("cargo-target  $real  $(human_size "$size")  SKIPPED (too young)")
-                continue
-            fi
-
-            if (( APPLY == 1 )); then
-                if safe_rm_rf "$real" "cargo-target"; then
-                    say "    REMOVED  $real  ($(human_size "$size"))"
-                    RECLAIMED_LINES+=("cargo-target  $real  $(human_size "$size")")
-                    TOTAL_RECLAIMED_BYTES=$(( TOTAL_RECLAIMED_BYTES + size ))
-                    ANY_APPLIED=1
-                fi
-            else
-                say "    WOULD REMOVE  $real  ($(human_size "$size"))"
-                RECLAIMED_LINES+=("cargo-target  $real  $(human_size "$size")")
-                TOTAL_RECLAIMED_BYTES=$(( TOTAL_RECLAIMED_BYTES + size ))
-            fi
+            consider_cargo_target_dir "$real"
         done < <(find "$root" -maxdepth 6 -name CACHEDIR.TAG -print0 2>/dev/null)
     done
+
+    # Pass 2: the per-agent `codex-target-*` convention, directly under the
+    # workspace root and /tmp. Name-restricted (never a bare CACHEDIR.TAG
+    # sweep of /tmp or the workspace — repos/*/target and other tools' cache
+    # dirs live there) and depth-1: the convention puts the dir itself at
+    # the root, never nested.
+    #
+    # Every dir this find turns up is a "candidate" and gets a disposition
+    # line — REMOVED/WOULD REMOVE, a SKIP reason, or the not-a-cargo-target
+    # SKIP from consider_cargo_target_dir — so the "0 item(s)" failure mode
+    # this pass was added to catch (real orphans present, tool reports none)
+    # cannot recur unnoticed: the candidate count below and the per-category
+    # skip/reclaim counts in SUMMARY must always add up.
+    local candidates=0
+    for root in "$WORKSPACE_ROOT" "$ORPHAN_TMP_ROOT"; do
+        [[ -d "$root" ]] || { say "    (root does not exist, skipping: $root)"; continue; }
+        while IFS= read -r -d '' dir; do
+            real=$(cd -- "$dir" 2>/dev/null && pwd -P) || real="$dir"
+            [[ "$seen" == *"|$real|"* ]] && continue
+            seen="$seen|$real|"
+            candidates=$(( candidates + 1 ))
+            consider_cargo_target_dir "$real" 1
+        done < <(find "$root" -maxdepth 1 -type d -name 'codex-target-*' -print0 2>/dev/null)
+    done
+    say "    considered $candidates codex-target-* candidate(s) under $WORKSPACE_ROOT and $ORPHAN_TMP_ROOT"
 }
 
 # ---------------------------------------------------------------------------
@@ -623,6 +793,8 @@ say "repo:              $REPO_ROOT"
 say "scratchpad root:    $SCRATCHPAD_ROOT"
 say "cache root:         $CACHE_ROOT"
 say "verify-tmp root:    $VERIFY_TMP_ROOT"
+say "workspace root:     $WORKSPACE_ROOT"
+say "orphan-tmp root:    $ORPHAN_TMP_ROOT"
 hr
 
 for cat in "${SELECTED[@]}"; do

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Jinkin ~ Tinker",
+    "delivery": "SpellLike",
+    "description": "A group of six jinkins working together over the course of an hour can create an effect identical to bestow curse on any living creature.  This effect functions at CL 6th, and the target creature must be either willing or helpless (but still gets a saving throw to resist).  The save DC is 14 + the Charisma modifier of the jinkin with the highest Charisma score (DC 16 for most groups of jinkins).  Alternatively, the group of jinkins can attempt to infuse a magic item with a curse.  The nature of this curse is determined randomly; half of these curses make the magic item unreliable (each time the item is used, there is a 20%% chance it does not function), while the other half give the item a random requirement (see page 537 of the Pathfinder RPG Core Rulebook).  A jinkin can take part in a tinkering only once per day, and may only tinker with a creature or object that isn't already cursed.  Once a tinkering curse is in place, it is permanent until removed via an effect like remove curse.  All jinkin tinkerings function as a curse created by a 6th-level caster.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:jinkin_tinker",
+    "name": "Tinker",
+    "owners": [
+      "bestiary_2:monster:gremlin_jinkin"
+    ],
+    "source_page": "p.142",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 630,
+    "record_key": "Jinkin ~ Tinker"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

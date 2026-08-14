@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Mummy ~ Despair",
+    "delivery": "Supernatural",
+    "description": "All creatures within a 30-foot radius that see you must make a DC %1 Will save or be paralyzed by fear for 1d4 rounds. Whether or not the save is successful, that creature cannot be affected again by the same mummy's despair ability for 24 hours. This is a paralysis and a mind-affecting fear affect. The save DC is Charisma-based.",
+    "description_variables": [
+      "MummyDespairDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:mummy_despair",
+    "name": "Despair",
+    "owners": [
+      "beastiary:monster:mummy"
+    ],
+    "source_page": "P.210",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 950,
+    "record_key": "Mummy ~ Despair"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Shredskin ~ Grab",
+    "delivery": "Extraordinary",
+    "description": "A shredskin that hits with the indicated attack deals normal damage and can attempt to start a grapple as a free action without provoking an attack of opportunity. It has the option to conduct the grapple normally, or simply use the part of its body it used in the grab to hold the opponent. If the shredskin chooses to do the latter, it takes a -20 penalty on its CMB check to make and maintain the grapple, but does not gain the grappled condition itself. If the shredskin does not constrict, each successful grapple check it makes during successive rounds automatically deals the damage indicated for the attack that established the hold. Otherwise, it deals constriction damage as well. A shredskin receives a +4 bonus on combat maneuver checks made to start and maintain a grapple. A shredskin can grab only creatures up to Medium size.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:shredskin_grab",
+    "name": "Grab",
+    "owners": [
+      "bestiary_4:monster:shredskin"
+    ],
+    "source_page": "p.301",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1282,
+    "record_key": "Shredskin ~ Grab"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

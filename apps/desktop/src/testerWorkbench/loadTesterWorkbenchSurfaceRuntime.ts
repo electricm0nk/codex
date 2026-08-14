@@ -1,4 +1,4 @@
-import { loadGe08AuthoringWorkbench } from '../boundary/loadGe08AuthoringWorkbench';
+import { loadAuthoringWorkbench } from '../boundary/loadAuthoringWorkbench';
 import { loadPilotShellSnapshot } from '../boundary/loadPilotShellSnapshot';
 import { loadReleaseTruth } from '../boundary/loadReleaseTruth';
 import { loadSupportStateMatrix } from '../boundary/loadSupportStateMatrix';
@@ -13,7 +13,7 @@ export async function loadTesterWorkbenchSurfaceRuntime(
   context: WorkbenchRuntimeContext
 ): Promise<TesterWorkbenchSurface> {
   return loadTesterWorkbenchSurface(context, {
-    loadGe08AuthoringWorkbench,
+    loadAuthoringWorkbench,
     loadPilotShellSnapshot,
     loadReleaseTruth,
     loadSupportStateMatrix,

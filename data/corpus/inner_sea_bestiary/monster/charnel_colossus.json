@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:charnel_colossus_corporate_will",
+      "inner_sea_bestiary:monster_ability:charnel_colossus_mind_feed",
+      "inner_sea_bestiary:monster_ability:charnel_colossus_spell_like_abilities",
+      "inner_sea_bestiary:monster_ability:charnel_colossus_voice_of_the_ancients",
+      "inner_sea_bestiary:monster_ability:immunity_to_turning"
+    ],
+    "challenge_rating": "19",
+    "corpus_key": "Charnel Colossus",
+    "external_ability_refs": [
+      "Amorphous",
+      "Can't Be Tripped",
+      "Channel Resistance",
+      "Grab",
+      "Immunity to Critical Hits",
+      "Immunity to Precision Damage",
+      "Pull"
+    ],
+    "key": "inner_sea_bestiary:monster:charnel_colossus",
+    "monster_class": "Undead:30",
+    "name": "Charnel Colossus",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d8",
+        "name": "Slam"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Tendril"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Undead",
+    "size": "C",
+    "source_page": "p.10",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 20,
+    "record_key": "Charnel Colossus"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

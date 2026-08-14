@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "20",
+    "corpus_key": "Div (Akvan)",
+    "external_ability_refs": [
+      "Flight Maneuverability"
+    ],
+    "key": "bestiary_3:monster:div_akvan",
+    "monster_class": "Outsider (Ref/Will):24",
+    "name": "Akvan",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "2d10",
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Div|Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "G",
+    "source_page": "p.84",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      },
+      {
+        "feet": 120,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 82,
+    "record_key": "Div (Akvan)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

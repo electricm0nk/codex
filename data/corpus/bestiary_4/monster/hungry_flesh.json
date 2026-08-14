@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:hungry_flesh_disease",
+      "bestiary_4:monster_ability:hungry_flesh_monstrous_growth",
+      "bestiary_4:monster_ability:hungry_flesh_reactive_regeneration",
+      "bestiary_4:monster_ability:hungry_flesh_slime_trail"
+    ],
+    "challenge_rating": "3",
+    "corpus_key": "Hungry Flesh",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:hungry_flesh",
+    "monster_class": "Ooze:5",
+    "name": "Hungry Flesh",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Ooze",
+    "size": "L",
+    "source_page": "p.152",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 124,
+    "record_key": "Hungry Flesh"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

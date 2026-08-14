@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:jabberwock_burble",
+      "bestiary_2:monster_ability:jabberwock_eye_rays",
+      "bestiary_2:monster_ability:jabberwock_planar_acclimation",
+      "bestiary_2:monster_ability:jabberwock_whiffling"
+    ],
+    "challenge_rating": "20",
+    "corpus_key": "Jabberwock (Lesser)",
+    "external_ability_refs": [
+      "Burn",
+      "Fast Healing",
+      "Flight Maneuverability",
+      "Frightful Presence",
+      "Grab ~ Claw",
+      "Immunity to Fire",
+      "Jabberwock ~ Fear of Vorpal Weapons",
+      "Resistance to Acid",
+      "Resistance to Electricity",
+      "Resistance to Sonic",
+      "Scent"
+    ],
+    "key": "bestiary_2:monster:jabberwock_lesser",
+    "monster_class": "Dragon:23",
+    "name": "Jabberwock (Lesser)",
+    "natural_attacks": [
+      {
+        "damage_dice": "4d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "3d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "2d8",
+        "name": "Tail Slap"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Wing"
+      },
+      {
+        "damage_dice": "15d6",
+        "name": "Eye Ray"
+      }
+    ],
+    "race_subtype": "Air|Fire",
+    "race_type": "Dragon",
+    "size": "H",
+    "source_page": "p.169",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 80,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 529,
+    "record_key": "Jabberwock (Lesser)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

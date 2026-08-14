@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Soulbound Doll ~ Soul Focus",
+    "delivery": "Supernatural",
+    "description": "The soul bound to the doll lives within a focus integrated into the doll or its apparel, typically one of the doll's eyes or a gem embedded into its neck or chest.  As long as this soul focus remains intact, it can be used to animate another doll, using the same cost as creating a new construct.  Once bound into the soul focus, the soul continues to learn, and so if later it is put into a new doll body, the soul retains its personality and memories from its previous body or bodies.  A soul focus has hardness 8, 12 hit points, and a break DC of 20.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:soulbound_doll_soul_focus",
+    "name": "Soul Focus",
+    "owners": [
+      "bestiary_2:monster:soulbound_doll"
+    ],
+    "source_page": "p.255",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1202,
+    "record_key": "Soulbound Doll ~ Soul Focus"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

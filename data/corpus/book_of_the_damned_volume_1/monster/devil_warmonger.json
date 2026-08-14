@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T11:18:41Z",
+  "data": {
+    "ability_keys": [
+      "book_of_the_damned_volume_1:monster_ability:warmonger_devil_construct_form",
+      "book_of_the_damned_volume_1:monster_ability:warmonger_devil_hellstrider",
+      "book_of_the_damned_volume_1:monster_ability:warmonger_devil_merciless_blow",
+      "book_of_the_damned_volume_1:monster_ability:warmonger_devil_phalanx",
+      "book_of_the_damned_volume_1:monster_ability:warmonger_devil_skills",
+      "book_of_the_damned_volume_1:monster_ability:warmonger_devil_spell_like_abilities",
+      "book_of_the_damned_volume_1:monster_ability:warmonger_devil_stability",
+      "book_of_the_damned_volume_1:monster_ability:warmonger_devil_summon_devil"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Devil (Warmonger)",
+    "external_ability_refs": [
+      "Warmonger Devil ~ Trample"
+    ],
+    "key": "book_of_the_damned_volume_1:monster:devil_warmonger",
+    "monster_class": "Outsider (Fort/Ref):8",
+    "name": "Devil, Warmonger (Levaloch)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Leg"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Devil|Evil|Extraplanar|Lawful",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.60",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_races.lst",
+    "sha256": "7ac566b98c1300b3c9c5d0be1b6940712c130d79ebaddd5efcb2ab223c27c6d6",
+    "line": 13,
+    "record_key": "Devil (Warmonger)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

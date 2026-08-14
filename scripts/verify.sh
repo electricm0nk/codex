@@ -99,8 +99,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk root-lib root-full desktop reach frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -325,7 +325,43 @@ run_root_lib() {
 # and the summary still reads like a completed pass. The executed-binary count
 # is checked for the same reason — a run can be green and still have skipped
 # most of the suite.
+#
+# The aggregate counts above (total passed, total binaries) cannot catch one
+# specific suite being silently dropped from execution: a suite disappearing
+# and a different suite appearing in the same run holds both numbers steady.
+# That is exactly what happened for a full tranche
+# (docs/retro/events/tranche8-incident-retro.jsonl, 2026-08-01): root-full was
+# RED on 29 of 33 runs, always attributed to the same "environmental"
+# fixture bucket, and that normalized red concealed two parity suites that
+# never executed once across the whole tranche while the aggregate pass/
+# binary counts looked unremarkable. `expected_test_suites`/
+# `executed_test_suites` below name the gap directly instead of hoping a
+# floor on a total catches it.
+#
+# The expected suite list is DERIVED from the filesystem — every top-level
+# `tests/*.rs` file is one cargo integration-test binary by cargo's own
+# auto-discovery convention (subdirectories like tests/fixtures and
+# tests/sd16-e5-f1 are not auto-discovered, so `-maxdepth 1` already excludes
+# them correctly) — never hand-maintained. A hand-kept list of "critical"
+# suites rots exactly like the roster and allowlist failures already in this
+# log; this one can't drift because it IS the filesystem at check time.
 # ---------------------------------------------------------------------------
+
+expected_test_suites() {
+    find "$REPO_ROOT/tests" -maxdepth 1 -name '*.rs' -printf '%f\n' 2>/dev/null \
+        | sed 's/\.rs$//' | sort
+}
+
+# Cargo prints "     Running tests/<name>.rs (target/.../deps/<name>-<hash>)"
+# for every integration-test binary it actually runs, name included in the
+# line itself (verified against this repo's own cargo output before relying
+# on it). Sorted+uniqued so a suite run under `--test-threads` retries once
+# still diffs cleanly.
+executed_test_suites() {
+    grep -E '^[[:space:]]*Running tests/' "$1" 2>/dev/null \
+        | sed -E 's#^[[:space:]]*Running tests/([^[:space:]]+)\.rs.*#\1#' \
+        | sort -u
+}
 
 run_root_full() {
     stage_start "root-full — cargo test --locked --no-fail-fast -j $JOBS  (repo root)"
@@ -338,6 +374,11 @@ run_root_full() {
     passed=$(count_passed "$log")
     binaries=$(count_running "$log")
 
+    local missing missing_n
+    missing=$(comm -23 <(expected_test_suites) <(executed_test_suites "$log"))
+    missing_n=0
+    [[ -n "$missing" ]] && missing_n=$(printf '%s\n' "$missing" | grep -c .)
+
     if (( status != 0 )); then
         stage_fail root-full "cargo exit $status; $passed passed across $binaries suites — $log"
         return
@@ -346,11 +387,16 @@ run_root_full() {
     local ok=0
     check_floor "root full tests" "$passed" "$BASELINE_ROOT_FULL_TESTS" BASELINE_ROOT_FULL_TESTS || ok=1
     check_floor "root test binaries executed" "$binaries" "$BASELINE_ROOT_TEST_BINARIES" BASELINE_ROOT_TEST_BINARIES || ok=1
+    if (( missing_n > 0 )); then
+        printf '    %s tests/*.rs file(s) present but NEVER EXECUTED (no "Running" line in the log): %s\n' \
+            "$missing_n" "$(printf '%s' "$missing" | tr '\n' ' ')"
+        ok=1
+    fi
     if (( ok != 0 )); then
-        stage_fail root-full "$passed passed across $binaries suites — $log"
+        stage_fail root-full "$passed passed across $binaries suites, $missing_n suite(s) never ran — $log"
         return
     fi
-    stage_pass root-full "$passed passed across $binaries suites"
+    stage_pass root-full "$passed passed across $binaries suites, all $(expected_test_suites | grep -c .) tests/*.rs suites executed"
 }
 
 # ---------------------------------------------------------------------------
@@ -596,6 +642,302 @@ run_clippy() {
 # zero match.
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Stage: audit-selftest
+#
+# Runs scripts/tests/test_identifier_discipline_audit.sh — the detection
+# self-test for scripts/identifier-discipline-audit.sh.
+#
+# Why this is a gate stage and not a script somebody remembers to run: the
+# audit script's own header records TWO occasions on which the gate passed
+# clean over a real planted bundle tag (the misplaced `\b`, and the missing
+# `:(glob)` pathspec magic). Both were found by hand, neither by a test. A
+# gate whose detection power is untested emits `OK_NO_BUNDLE_TAGS` with the
+# same confidence whether it is working or broken — which makes the token
+# worthless exactly when it matters. Added 2026-08-10 by SD-29 Epic 1, whose
+# acceptance criterion is that this audit "returns 0 findings".
+#
+# No build, no baseline, seconds to run: it operates on throwaway git repos
+# under mktemp, never on this checkout.
+# ---------------------------------------------------------------------------
+
+run_pi_sweep() {
+    stage_start "pi-sweep — Product-Identity blacklist over src/rules_core/rules_tables"
+    local log="$LOG_DIR/pi-sweep.log"
+
+    # The provenance gate for kind-lane ingestion
+    # (docs/release/SD-29-corpus-wide-catch-up-lanes/decisions.md §37.3,
+    # AT-29-003a). Cheap — reads ~137 source files, builds one small bin — so
+    # it runs in `quick` too: a lane must not be able to land a PI leak in a
+    # generated table on a fast loop and discover it only on a full sweep.
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin pi_sweep_rules_tables ) >"$log" 2>&1
+    local status=$?
+
+    local summary
+    summary=$(sed -n 's/^pi-sweep: \([0-9]* hits .*\)$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail pi-sweep "unbaselined PI hit or stale baseline row (exit $status) — $log"
+        return
+    fi
+
+    # A sweep that examined nothing asserts nothing — the same 0-matched
+    # failure mode `reach` and `audit-selftest` each guard against.
+    if ! grep -q '^pi-sweep: CLEAN' "$log"; then
+        stage_fail pi-sweep "binary exited 0 without reporting CLEAN — $log"
+        return
+    fi
+
+    stage_pass pi-sweep "${summary:-clean}"
+}
+
+# Stage: driver-selftest
+#
+# Runs scripts/tests/test_run_desktop_driver.sh — the self-test for
+# apps/desktop/.claude/skills/run-desktop/driver.sh.
+#
+# Why this is a gate stage. The driver is the only mechanism that satisfies the
+# "drive it on screen" acceptance item, and the tranche/7 retrospective ranks
+# on-screen driving as the sole mechanism reaching the "wired into a twin the
+# sheet doesn't read" defect class — 14% of that tranche's corrections, a class
+# no passing test can reach by construction. When the driver breaks, that whole
+# class stops being detectable and nothing says so: five agents invoked
+# `driver.sh launch` during the first corpus-wide catch-up run, not one left a
+# state file, three independently reported the same wrong root cause, and every
+# player-visible family that run ingested shipped without on-screen
+# verification. Nothing in the gate noticed.
+#
+# No build, no display, seconds to run: it drives throwaway decoy processes.
+# ---------------------------------------------------------------------------
+run_driver_selftest() {
+    stage_start "driver-selftest — scripts/tests/test_run_desktop_driver.sh"
+    local log="$LOG_DIR/driver-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_run_desktop_driver.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail driver-selftest "self-test script missing at scripts/tests/test_run_desktop_driver.sh"
+        return
+    fi
+
+    bash "$script" >"$log" 2>&1
+    local status=$?
+
+    local tally
+    tally=$(sed -n 's/^passed: \([0-9]*\)  failed: \([0-9]*\)$/\1 passed, \2 failed/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail driver-selftest "self-test exit $status${tally:+; $tally} — $log"
+        return
+    fi
+
+    # Same 0-matched guard the other self-test stages carry: a self-test that
+    # discovered no cases proves nothing while looking identical to one that
+    # passed them all.
+    local passed
+    passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
+    if [[ -z "$passed" || "$passed" -eq 0 ]]; then
+        stage_fail driver-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass driver-selftest "${tally:-$passed cases passed}"
+}
+
+run_audit_selftest() {
+    stage_start "audit-selftest — scripts/tests/test_identifier_discipline_audit.sh"
+    local log="$LOG_DIR/audit-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_identifier_discipline_audit.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail audit-selftest "self-test script missing at scripts/tests/test_identifier_discipline_audit.sh"
+        return
+    fi
+
+    bash "$script" >"$log" 2>&1
+    local status=$?
+
+    local tally
+    tally=$(sed -n 's/^passed: \([0-9]*\)  failed: \([0-9]*\)$/\1 passed, \2 failed/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail audit-selftest "self-test exit $status${tally:+; $tally} — $log"
+        return
+    fi
+
+    # A self-test that discovers no cases proves nothing — same failure mode
+    # the `reach` stage guards with its 0-tests-matched check.
+    local passed
+    passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
+    if [[ -z "$passed" || "$passed" -eq 0 ]]; then
+        stage_fail audit-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass audit-selftest "${tally:-$passed cases passed}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: reclaim-selftest
+#
+# Runs scripts/tests/test_reclaim_orphan_targets.sh — the self-test for
+# scripts/reclaim.sh's orphaned codex-target-* coverage and its liveness
+# guards. Sits next to audit-selftest because it holds the same lesson: an
+# unverified gate is worth little, and reclaim.sh guarding the #1 recorded
+# incident class (disk-full/disk-pressure, 43 of ~60 incidents as of
+# 2026-08-11) must not become another one. The safety property under test —
+# never delete a live agent's target dir — is the difference between a
+# reclaimed 27G and a destroyed 30-minute rebuild.
+# ---------------------------------------------------------------------------
+
+run_reclaim_selftest() {
+    stage_start "reclaim-selftest — scripts/tests/test_reclaim_orphan_targets.sh"
+    local log="$LOG_DIR/reclaim-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_reclaim_orphan_targets.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail reclaim-selftest "self-test script missing at scripts/tests/test_reclaim_orphan_targets.sh"
+        return
+    fi
+
+    bash "$script" >"$log" 2>&1
+    local status=$?
+
+    local tally
+    tally=$(sed -n 's/^passed: \([0-9]*\)  failed: \([0-9]*\)$/\1 passed, \2 failed/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail reclaim-selftest "self-test exit $status${tally:+; $tally} — $log"
+        return
+    fi
+
+    # A self-test that discovers no cases proves nothing — same guard the
+    # audit-selftest stage carries.
+    local passed
+    passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
+    if [[ -z "$passed" || "$passed" -eq 0 ]]; then
+        stage_fail reclaim-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass reclaim-selftest "${tally:-$passed cases passed}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: corpus-sweep-selftest
+#
+# Runs scripts/tests/test_corpus_literal_sweep.sh — the detection self-test
+# for the `corpus_literal_sweep` binary. Same lesson as audit-selftest and
+# reclaim-selftest, and the reason it is a stage rather than something someone
+# remembers to run: the sweep below is the ONLY instrument that can confirm a
+# `static` unit's bar, and an instrument whose ability to say NO is untested
+# emits its CLEAN token with identical confidence whether it is working or
+# dead. Two gates in this repo have already shipped with exactly that defect.
+#
+# Cheap after the first build, and it never reads the real corpus — every case
+# runs against a synthetic repo root and a synthetic PCGen corpus under mktemp.
+# ---------------------------------------------------------------------------
+
+run_corpus_sweep_selftest() {
+    stage_start "corpus-sweep-selftest — scripts/tests/test_corpus_literal_sweep.sh"
+    local log="$LOG_DIR/corpus-sweep-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_corpus_literal_sweep.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail corpus-sweep-selftest "self-test script missing at scripts/tests/test_corpus_literal_sweep.sh"
+        return
+    fi
+
+    bash "$script" >"$log" 2>&1
+    local status=$?
+
+    local tally
+    tally=$(sed -n 's/^passed: \([0-9]*\)  failed: \([0-9]*\)$/\1 passed, \2 failed/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail corpus-sweep-selftest "self-test exit $status${tally:+; $tally} — $log"
+        return
+    fi
+
+    # A self-test that discovers no cases proves nothing — the same guard
+    # audit-selftest and reclaim-selftest each carry.
+    local passed
+    passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
+    if [[ -z "$passed" || "$passed" -eq 0 ]]; then
+        stage_fail corpus-sweep-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass corpus-sweep-selftest "${tally:-$passed cases passed}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: corpus-sweep
+#
+# Runs `corpus_literal_sweep` over every shipped record in `data/corpus/` and
+# the real PCGen corpus. This is the corpus-literal byte-equality check a
+# `static` unit's bar names: `wiring_class` calls a record `static` when its
+# whole token closure is literal magnitudes, which makes "the shipped bytes
+# equal the corpus bytes" a bar that is knowable WITHOUT any consumer-delta
+# probe — and that nothing checked until this stage existed.
+#
+# FULL only, and deliberately a FAILURE rather than a skip when the corpus is
+# absent: `v06_corpus_trap_report` prints `SKIP: no PCGen corpus`, and a skip
+# is exactly how a gate dies without anyone noticing. The corpus location is
+# `PCGEN_CORPUS_ROOT`, defaulting to `$HOME/workspace/repos/pcgen/data` — the
+# same HOME-relative default `v06_work_inventory` uses, per SD-27 decisions.md
+# §30 (workspace/ is Syncthing-synced; an absolute other-user path is not).
+#
+# The record count is a FLOOR in scripts/verify-baselines.env, same direction
+# as the test counts: the population growing is fine, the population silently
+# shrinking is the failure this repo has actually suffered.
+# ---------------------------------------------------------------------------
+
+run_corpus_sweep() {
+    stage_start "corpus-sweep — cargo run --locked --bin corpus_literal_sweep  (repo root)"
+    local log="$LOG_DIR/corpus-sweep.log"
+
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin corpus_literal_sweep ) >"$log" 2>&1
+    local status=$?
+
+    local summary
+    summary=$(sed -n 's/^corpus-literal-sweep: \([0-9]* records examined.*\)$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail corpus-sweep "byte-level mismatch, absent corpus, or malformed record (exit $status) — $log"
+        return
+    fi
+
+    # Exit 0 without the CLEAN token means the binary took a path nobody
+    # intended — the pi-sweep stage carries the identical guard for the
+    # identical reason.
+    if ! grep -q '^corpus-literal-sweep: CLEAN' "$log"; then
+        stage_fail corpus-sweep "binary exited 0 without reporting CLEAN — $log"
+        return
+    fi
+
+    # A sweep that examined nothing asserts nothing. The binary exits 2 on a
+    # zero population on its own; this is the second, independent reading of
+    # the same fact, because the one failure this check exists to prevent is
+    # the binary silently changing what it counts.
+    local examined tokens
+    examined=$(sed -n 's/^corpus-literal-sweep: \([0-9]*\) records examined.*$/\1/p' "$log" | tail -1)
+    tokens=$(sed -n 's/^corpus-literal-sweep: .* \([0-9]*\) tokens compared.*$/\1/p' "$log" | tail -1)
+    if [[ -z "$examined" || "$examined" -eq 0 || -z "$tokens" || "$tokens" -eq 0 ]]; then
+        stage_fail corpus-sweep "0 records or 0 tokens compared — the sweep asserts nothing — $log"
+        return
+    fi
+    if (( examined < BASELINE_CORPUS_LITERAL_RECORDS )); then
+        stage_fail corpus-sweep "population shrank: $examined records examined, baseline floor is $BASELINE_CORPUS_LITERAL_RECORDS — $log"
+        return
+    fi
+    if (( examined > BASELINE_CORPUS_LITERAL_RECORDS )); then
+        note "BASELINE_CORPUS_LITERAL_RECORDS=$examined (was $BASELINE_CORPUS_LITERAL_RECORDS)"
+    fi
+    actual "BASELINE_CORPUS_LITERAL_RECORDS=$examined"
+
+    stage_pass corpus-sweep "${summary:-clean}"
+}
+
 run_class_dump() {
     stage_start "class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)"
     local log="$LOG_DIR/class-dump.log"
@@ -666,6 +1008,12 @@ say "logs:  $LOG_DIR"
 for stage in "${SELECTED[@]}"; do
     case "$stage" in
         preflight-disk)      run_preflight_disk ;;
+        pi-sweep)            run_pi_sweep ;;
+        audit-selftest)      run_audit_selftest ;;
+        reclaim-selftest)    run_reclaim_selftest ;;
+        driver-selftest)     run_driver_selftest ;;
+        corpus-sweep-selftest) run_corpus_sweep_selftest ;;
+        corpus-sweep)        run_corpus_sweep ;;
         root-lib)            run_root_lib ;;
         root-full)           run_root_full ;;
         desktop)             run_desktop ;;

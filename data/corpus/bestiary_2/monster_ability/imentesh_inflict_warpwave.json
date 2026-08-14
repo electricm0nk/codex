@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Imentesh ~ Inflict Warpwave",
+    "delivery": "Supernatural",
+    "description": "As a standard action, an imentesh can inflict a warpwave upon any corporeal creature within 100 feet.  The target can resist the warpwave's effects with a DC %1 Fortitude save.  If the imentesh wishes, it can use this ability as a swift action, but if it does so, it is affected by the warpwave as well unless it resists the effects with its own Fortitude save.  See page 213 for a list of possible effects caused by a warpwave.",
+    "description_variables": [
+      "ImenteshWarpwaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:imentesh_inflict_warpwave",
+    "name": "Inflict Warpwave",
+    "owners": [
+      "bestiary_2:monster:protean_imentesh"
+    ],
+    "source_page": "p.214",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 972,
+    "record_key": "Imentesh ~ Inflict Warpwave"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

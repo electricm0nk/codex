@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Gibbering Mouther ~ Gibbering",
+    "delivery": "Extraordinary",
+    "description": "As a free action, a gibbering mouther can emit a cacophony of maddening sound. All creatures other than gibbering mouthers within 60 feet must succeed on a DC %1 Will save or be confused for 1 round. This is a mind affecting compulsion insanity effect. A creature that saves cannot be affected by the same mouther's gibbering for 24 hours.",
+    "description_variables": [
+      "GibberingDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:gibbering_mouther_gibbering",
+    "name": "Gibbering",
+    "owners": [
+      "beastiary:monster:gibbering_mouther"
+    ],
+    "source_page": "p.153",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 701,
+    "record_key": "Gibbering Mouther ~ Gibbering"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

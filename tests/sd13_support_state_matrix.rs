@@ -8,7 +8,7 @@
 
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, MatrixSubjectType, SupportState, SupportStateMatrix,
-    SupportStateRow, seeded_sd13_e1_f1_current_truth,
+    SupportStateRow, seeded_current_truth,
 };
 
 /// The exact, ordered set of seeded row ids. The seed must expose these and no
@@ -68,7 +68,7 @@ const EXPECTED_ROW_IDS: [&str; 34] = [
 ];
 
 fn matrix() -> SupportStateMatrix {
-    seeded_sd13_e1_f1_current_truth()
+    seeded_current_truth()
 }
 
 fn row<'a>(matrix: &'a SupportStateMatrix, row_id: &str) -> &'a SupportStateRow {

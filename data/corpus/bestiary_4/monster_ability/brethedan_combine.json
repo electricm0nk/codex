@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Brethedan ~ Combine",
+    "delivery": "Extraordinary",
+    "description": "Thanks to their perfect communication, Brethedans can combine to work together as parts of a larger organism. As a swift action, a Brethedan adjacent to another can merge with it, becoming a single creature occupying both spaces. The merging Brethedan forfeits its actions to augment the other, and adds its hit points (though not its Hit Dice) to the new creature's collective total. At this time, it also chooses one adaptation-the combined creature gains this benefit, and it cannot be changed unless the combined creature uses its single adaptation action each round to do so. Any number of Brethedans can merge in this fashion, but each adaptation can be gained only once (though resistances to multiple energy types are allowed). The combined creature retains the ability to swap one adaptation each round (not once per component creature). Splitting into the component creatures again is a full-round action, in which all component creatures are released and the remaining hit points are divided evenly. For the purposes of Hit Dice-related effects, the Hit Dice of a combined Brethedan are equal to those of the component creature with the highest CR.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:brethedan_combine",
+    "name": "Combine",
+    "owners": [
+      "bestiary_4:monster:brethedan"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 357,
+    "record_key": "Brethedan ~ Combine"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

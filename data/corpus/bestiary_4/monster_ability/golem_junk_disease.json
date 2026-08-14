@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Golem (Junk) ~ Disease",
+    "delivery": "Extraordinary",
+    "description": "[Tetanus] Slam-injury; save Fort DC 12; onset 1d6 days; frequency 1 day; effect 1d4 Dex damage. Each time someone takes Dexterity damage from tetanus, there's a 50%% chance his jaw muscles stiffen, preventing speech and the use of spells with verbal components for 24 hours; cure 2 consecutive saves. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:golem_junk_disease",
+    "name": "Disease",
+    "owners": [
+      "bestiary_4:monster:golem_junk"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 785,
+    "record_key": "Golem (Junk) ~ Disease"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

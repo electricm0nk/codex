@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:colour_out_of_space_aura_of_lassitude",
+      "bestiary_4:monster_ability:colour_out_of_space_disintegrating_touch",
+      "bestiary_4:monster_ability:colour_out_of_space_feed",
+      "bestiary_4:monster_ability:colour_out_of_space_susceptiblity"
+    ],
+    "challenge_rating": "10",
+    "corpus_key": "Colour Out of Space",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:colour_out_of_space",
+    "monster_class": "Ooze:12",
+    "name": "Colour Out of Space",
+    "natural_attacks": [],
+    "race_subtype": "Incorporeal",
+    "race_type": "Ooze",
+    "size": "H",
+    "source_page": "p.38",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 50,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 33,
+    "record_key": "Colour Out of Space"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

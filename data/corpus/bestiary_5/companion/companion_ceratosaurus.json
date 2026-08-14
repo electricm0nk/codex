@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T14:58:45Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_5:companion:companion_advancement_ceratosaurus"
+    ],
+    "corpus_key": "Companion (Ceratosaurus)",
+    "external_ability_refs": [
+      "Scent",
+      "Trip"
+    ],
+    "key": "bestiary_5:companion:companion_ceratosaurus",
+    "monster_class": "Companion:2",
+    "name": "Companion (Ceratosaurus)",
+    "natural_armor": 4,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "AnimalCompanionDinosaur",
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.312",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 4
+      },
+      {
+        "ability": "DEX",
+        "amount": 6
+      },
+      {
+        "ability": "INT",
+        "amount": -8
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
+    "sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d",
+    "line": 7,
+    "record_key": "Companion (Ceratosaurus)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

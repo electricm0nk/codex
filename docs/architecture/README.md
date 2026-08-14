@@ -15,7 +15,7 @@ the new reality; it is never appended to with a changelog entry.
 ## Provenance note (the one place history is acknowledged)
 
 Modules, tests, and directories across this repo carry `sdNN`/`geNN`
-prefixes (e.g. `ge08_workbench.rs`, the `apps/desktop/src/sd16/` frontend
+prefixes (e.g. `authoring_workbench.rs`, the `apps/desktop/src/sd16/` frontend
 directory, `tests/sd25_sorcerer_level_up_explanation_coverage.rs`). These prefixes name the
 originating spec-domain or grand-epic bundle that created the file — they
 are **proper nouns**, not documentation of what the code currently does.

@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:45:25Z",
+  "data": {
+    "ability_keys": [
+      "beastiary:companion:squid_ink_cloud",
+      "beastiary:companion:squid_jet",
+      "beastiary:companion:companion_advancement_squid"
+    ],
+    "corpus_key": "Companion (Squid)",
+    "external_ability_refs": [
+      "Grab"
+    ],
+    "key": "beastiary:companion:companion_squid",
+    "monster_class": "Companion:2",
+    "name": "Companion (Squid)",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d4",
+        "name": "Tentacles"
+      }
+    ],
+    "race_subtype": "Aquatic",
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.259",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Swim"
+      },
+      {
+        "feet": 240,
+        "mode": "Jet"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 4
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "INT",
+        "amount": -8
+      },
+      {
+        "ability": "CHA",
+        "amount": -8
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "AnimalCompanion"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_companion.lst",
+    "sha256": "3fe313f8e8a6327555fb01d34bf2cf2509d638a3005563d66fb1c81d8a9b715c",
+    "line": 30,
+    "record_key": "Companion (Squid)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

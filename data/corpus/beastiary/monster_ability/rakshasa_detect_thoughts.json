@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Rakshasa ~ Detect Thoughts",
+    "delivery": "Supernatural",
+    "description": "A rakshasa can detect thoughts as per the spell of the same name (CL 18th). It can suppress or resume this ability as a free action. When a rakshasa uses this ability, it always functions as if it had spent three rounds concentrating and thus gains the maximum amount of information possible. A creature can resist this effect with a DC %1 Will save.",
+    "description_variables": [
+      "DetectThoughtsDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:rakshasa_detect_thoughts",
+    "name": "Detect Thoughts",
+    "owners": [
+      "beastiary:monster:rakshasa"
+    ],
+    "source_page": "p.231",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1053,
+    "record_key": "Rakshasa ~ Detect Thoughts"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_expr"
+  ]
+}

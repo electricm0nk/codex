@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Ningyo ~ Poison Flesh",
+    "delivery": "Extraordinary",
+    "description": "Any creature that bites a ningyo or swallows any part of it becomes poisoned. Ningyo Flesh: Ingested; save Fort DC 12; onset 1 minute; frequency 1/minute for 4 minutes; effect 1d2 Int damage; cure 2 saves.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:ningyo_poison_flesh",
+    "name": "Poison Flesh",
+    "owners": [
+      "bestiary_4:monster:ningyo"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1132,
+    "record_key": "Ningyo ~ Poison Flesh"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

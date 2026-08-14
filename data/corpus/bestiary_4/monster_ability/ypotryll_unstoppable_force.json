@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Ypotryll ~ Unstoppable Force",
+    "delivery": "Extraordinary",
+    "description": "A ypotryll's bonus on a charge attack is +4, and it may add this bonus on overrun combat maneuver checks attempted using Charge Through. A ypotryll may charge over difficult terrain, provided the terrain does not cost more than 2 squares to enter.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:ypotryll_unstoppable_force",
+    "name": "Unstoppable Force",
+    "owners": [
+      "bestiary_4:monster:ypotryll"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1487,
+    "record_key": "Ypotryll ~ Unstoppable Force"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

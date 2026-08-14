@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T14:58:57Z",
+  "data": {
+    "ability_keys": [],
+    "corpus_key": "Familiar (Silvanshee)",
+    "external_ability_refs": [
+      "Flight ~ Su",
+      "Flight Maneuverability",
+      "Know Direction ~ Constant",
+      "Pounce",
+      "Silvanshee ~ Cat's Luck",
+      "Silvanshee ~ Heroic Strength",
+      "Silvanshee ~ Spectral Mist"
+    ],
+    "key": "bestiary_2:companion:familiar_silvanshee",
+    "monster_class": "Outsider (Fort/Ref):2",
+    "name": "Familiar (Silvanshee)",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Agathion|Extraplanar|Good",
+    "race_type": "Outsider",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.21",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 90,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -8
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": 2
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Outsider"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
+    "sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6",
+    "line": 10,
+    "record_key": "Familiar (Silvanshee)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

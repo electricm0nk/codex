@@ -43,7 +43,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const CLERIC_FIXTURE: &str =
@@ -681,7 +681,7 @@ fn cleric_level_5_was_later_widened_into_the_supported_tranche() {
 
 #[test]
 fn matrix_cleric_row_is_partial_computed_and_names_grounded_and_remaining_burdens() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let cleric = matrix
         .row("class.cleric.progression_and_spell_burden")
         .expect("cleric row must exist");
@@ -725,7 +725,7 @@ fn matrix_cleric_row_is_partial_computed_and_names_grounded_and_remaining_burden
 
 #[test]
 fn matrix_preserves_wizard_hybrid_blocked_computed_and_sorcerer_bard_supported_truth() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
 
     // Paladin was later promoted to Partial/Computed by its own SD13-E5
     // level-gate slice (lay on hands / divine grace / mercy grounded as
@@ -796,7 +796,7 @@ fn matrix_preserves_wizard_hybrid_blocked_computed_and_sorcerer_bard_supported_t
 
 #[test]
 fn matrix_does_not_promote_any_row_to_supported_or_lossy() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     assert!(
         !matrix
             .rows

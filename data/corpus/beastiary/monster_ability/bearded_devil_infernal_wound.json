@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Bearded Devil ~ Infernal Wound",
+    "delivery": "Supernatural",
+    "description": "The damage a bearded devil deals with its glaive inflicts persistent wounds that cause 2 points of bleed damage. Bleed caused from an infernal wound is particularly difficult to stanch--a DC 17 Heal check stops the damage, and any attempt to heal a creature suffering from an infernal wound must succeed on a DC 16 caster level check or the spell does not function. Success indicates the healing works normally and stops all bleed effects on the victim. The infernal wounds caused by a bearded devil are a supernatural ability of the devil, not of the weapon.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:bearded_devil_infernal_wound",
+    "name": "Infernal Wound",
+    "owners": [
+      "beastiary:monster:devil_bearded"
+    ],
+    "source_page": "p.73",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 339,
+    "record_key": "Bearded Devil ~ Infernal Wound"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

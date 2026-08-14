@@ -714,7 +714,7 @@ pub(crate) fn map_chosen_feat_targets_dto(
 }
 
 /// The `kind` tag stays PascalCase (`Saved` / `Blocked`) — no container-level
-/// `rename_all` — matching the `Ge08BaselineArmorClass` precedent so the TS
+/// `rename_all` — matching the `BaselineArmorClass` precedent so the TS
 /// boundary can match on those exact strings. v0.6 alpha swarm (real
 /// render-staleness root cause, frontend-found): a bare
 /// `#[serde(rename_all = "camelCase")]` on this enum would ALSO camelCase
@@ -4790,7 +4790,20 @@ mod tests {
                 accepted += 1;
             }
         }
-        assert_eq!(accepted, 93, "the 7 CRB races' ARG alternates: 17+13+12+9+14+13+15");
+        assert_eq!(
+            accepted, 188,
+            "the 7 CRB races' alternates: 30+27+23+20+28+27+33 (**Elf 28 -> 27 on 2026-08-12**, \
+             SD-29 `decisions.md` 53: ISR's `Elf ~ Sovyrian-Born` carries `NAMEISPI:YES` and is \
+             dropped at ingest, because a name cannot be redacted), i.e. round 2's \
+             24+21+18+16+22+20+27 plus Horror Adventures' 6+7+5+4+6+7+6 (SD-29's race-trait \
+             extend lane, round 3). Round 2's own figure was the previous \
+             17+13+12+9+15+13+15 plus Inner Sea Races' 7+8+6+7+7+7+12. Half-Orc's total \
+             includes APG's `Half-Orc ~ Plagueborn`, landed by the same lane's round 1 -- \
+             and this test is exactly the one that \
+             would have caught either book being shipped without its \
+             `ALTERNATE_TRAIT_REPLACE_FLAGS` rows, because it saves a real character \
+             holding each alternate in turn and reloads it"
+        );
     }
 
     /// **The full end-to-end proof**, through the same `create_character`
@@ -6293,7 +6306,14 @@ mod tests {
         // equipmods (39 raw `uc_equipmods.lst` lines minus 20 VISIBLE:NO
         // .COPY= legacy aliases, the identical hazard UPsi's own table
         // found).
-        assert_eq!(offered.len(), 1082, "the picker's real offered-row count");
+        // SD-29 `epic-4-proven-equip-mod`: +584 corpus gap-lane Equipmods rows
+        // (CRB 332 + UPsi 113 + ACG 48 + APG 37 + UC 20 + ARG 14 + UE 10 + UI 7
+        // + UW 3), every one of them an `equipment_modifier` unit
+        // `docs/work-inventory.json` reported `not-ingested` until this cycle.
+        // The point of this test is the assertion BELOW, not this count: an
+        // offered row the attach gate refuses is a dead affordance, and 584
+        // newly offered rows is 584 new chances to ship one.
+        assert_eq!(offered.len(), 1666, "the picker's real offered-row count");
 
         let refused: Vec<&str> = offered
             .iter()
@@ -6388,7 +6408,7 @@ mod tests {
             "the widening must not add a display-vs-charge divergence outside the two named books"
         );
         assert_eq!(
-            priced_non_crb, 116,
+            priced_non_crb, 129,
             "the 20 rows from the ACG/ARG widening (ACG 11 + ARG 9), plus 69 real non-zero-priced \
              UE equipmods (75 UE equipmod rows carry a real cost, 6 of them Some(0.0) and so \
              excluded here), plus 1 more: `Masterwork Tool`'s own resolved row is UE's 50 gp \
@@ -6396,7 +6416,11 @@ mod tests {
              24 real non-zero-priced UPsi equipmods (of 113, the rest are `None` or `Some(0.0)`; \
              UM contributes none, it has no equipment-modifier file), plus 2 real non-zero-priced \
              UC equipmods (Dry Load COST:30, Throwing Shield COST:50; of 19, the rest are `None` \
-             or `Some(0.0)`), every one a row a recognition-only fix would have attached for free"
+             or `Some(0.0)`), every one a row a recognition-only fix would have attached for free, \
+             plus 13 from SD-29's corpus gap lane -- of its 584 newly offered non-CRB Equipmods \
+             rows only 13 carry a real non-zero `COST:` token, the rest being `None` (no COST \
+             token, or a PCGen formula the table does not evaluate) or `Some(0.0)`, which is the \
+             ordinary shape of an equipment MODIFIER and not a gap in the ingest"
         );
     }
 
@@ -7110,7 +7134,10 @@ mod tests {
             list_feats_for_character_at_root(&root, &crate::feat_catalog::FeatCatalogFilter::default())
                 .expect("listing should succeed");
 
-        assert_eq!(response.entries.len(), 1578, "no record may be filtered away");
+        // 1578 hand-authored + the 83 corpus gap rows. This is the character
+        // sheet's own feat list, so this number moving is the evidence that
+        // the gap lane's rows reach a player and not only a table.
+        assert_eq!(response.entries.len(), 1661, "no record may be filtered away");
         for entry in &response.entries {
             let eligibility = entry
                 .eligibility
@@ -7155,7 +7182,7 @@ mod tests {
     #[test]
     fn the_character_less_catalog_sends_no_eligibility_key() {
         let response = crate::feat_catalog::build_feat_catalog();
-        assert_eq!(response.entries.len(), 1578);
+        assert_eq!(response.entries.len(), 1661);
         assert!(response.entries.iter().all(|entry| entry.eligibility.is_none()));
         let json = serde_json::to_string(&response.entries[0]).expect("serialises");
         assert!(!json.contains("eligibility"), "{json}");

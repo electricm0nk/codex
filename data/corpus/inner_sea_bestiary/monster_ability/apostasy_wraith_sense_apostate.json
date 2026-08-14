@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Apostasy Wraith ~ Sense Apostate",
+    "delivery": "Supernatural",
+    "description": "Can sense the presence and direction of Razmiri priests as if using the locate creature spell (CL 20th).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:apostasy_wraith_sense_apostate",
+    "name": "Sense Apostate",
+    "owners": [
+      "inner_sea_bestiary:monster:apostasy_wraith"
+    ],
+    "source_page": "p.4",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 33,
+    "record_key": "Apostasy Wraith ~ Sense Apostate"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T14:58:45Z",
+  "data": {
+    "ability_keys": [],
+    "corpus_key": "Familiar (Air Wysp)",
+    "external_ability_refs": [],
+    "key": "bestiary_5:companion:familiar_air_wysp",
+    "monster_class": "Outsider (Fort/Ref):3",
+    "name": "Familiar (Air Wysp)",
+    "natural_armor": null,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Tendrils"
+      }
+    ],
+    "race_subtype": "Air|Elemental",
+    "race_type": "Outsider",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.282",
+    "speeds": [
+      {
+        "feet": 100,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "DEX",
+        "amount": 8
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": 2
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Outsider"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
+    "sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d",
+    "line": 38,
+    "record_key": "Familiar (Air Wysp)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Crag Linnorm ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "Once every 1d4 rounds as a standard action, a crag linnorm can expel a %1-foot line of magma, dealing %2d%3 points of fire damage to all creatures struck (Reflex DC %4 halves). This line of magma remains red-hot for 1 round after the linnorm creates it. Creatures that took damage on the first round take 6d6 fire damage the second round (Reflex DC %4 negates), as does any creature that walks across the line of magma. If the magma was expelled while the linnorm was airborne, it instead rains downward during the second round as a sheet of fire no more than 60 feet high that does 6d6 damage (Reflex DC %4 negates) to any creature that passes through it. On the third round, the line of magma cools to a thin layer of brittle stone that quickly degrades to powder and sand over the course of several hours; magma that's turned to a sheet of fire is consumed entirely during the second round, leaving behind only a stain of smoke in the air that swiftly disperses.",
+    "description_variables": [
+      "BreathWeaponLine",
+      "BreathWeaponDice",
+      "BreathWeaponDamageDie",
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:crag_linnorm_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [
+      "beastiary:monster:linnorm_crag"
+    ],
+    "source_page": "p.190",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 841,
+    "record_key": "Crag Linnorm ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

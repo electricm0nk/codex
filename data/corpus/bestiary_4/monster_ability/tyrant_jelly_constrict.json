@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Tyrant Jelly ~ Constrict",
+    "delivery": "Extraordinary",
+    "description": "You can crush an opponent, dealing %1d%2+%3 bludgeoning damage, when you make a successful grapple check (in addition to any other effects caused by a successful check, including additional damage).",
+    "description_variables": [
+      "ConstrictDice",
+      "ConstrictDieSize",
+      "ConstrictBonusDamage"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:tyrant_jelly_constrict",
+    "name": "Constrict",
+    "owners": [
+      "bestiary_4:monster:tyrant_jelly"
+    ],
+    "source_page": "p.298",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1390,
+    "record_key": "Tyrant Jelly ~ Constrict"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

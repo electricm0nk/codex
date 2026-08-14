@@ -37,7 +37,7 @@ Lints the crate including its test targets, failing the build on any warning. Ve
 ```
 cd apps/desktop/src-tauri && cargo test --locked
 ```
-`apps/desktop/src-tauri` is a separate crate (`apps/desktop/src-tauri/Cargo.toml`, name `codex-desktop`) that depends on the root crate via a path dependency (`codex = { path = "../../.." }`). Its tests are **inline `#[cfg(test)]` modules**, not separate `tests/*.rs` files — the source files that carry one include `support_state_matrix_bridge.rs` (renamed from `sd13_support_state_matrix.rs` by SD-25 criterion 1.1), `spell_catalog.rs`, `corpus_fixtures.rs`, `race_catalog.rs`, `equipment_catalog.rs`, `main.rs`, `character_hub.rs`, `browser_handoff.rs`, `campaign_drive.rs`, `ge08_workbench.rs`, `class_catalog.rs`, `update/transaction.rs`, `characterHub/appendToCharacter.rs`, `characterHub/recomputeCharacter.rs`, `characterHub/reSaveCharacter.rs`, and — added by SD-25 Epic 3/5 — `rule_system_adapter.rs`, `pf1_adapter.rs`, `stub_adapter.rs`, `corpus_ingest_diagnostic.rs` (confirmed via `grep -rl "#\[cfg(test)\]" apps/desktop/src-tauri/src/`). SD-24 criterion 1.1 renamed the six `sd16_*`/`sd19_*`-prefixed files in this list to their current bare names (e.g. `sd19_spell_catalog.rs` → `spell_catalog.rs`, `sd16_browser_handoff.rs` → `browser_handoff.rs`); the command names they register (`list_spell_catalog`, `handoff_defect_report_to_browser`, etc.) did not change.
+`apps/desktop/src-tauri` is a separate crate (`apps/desktop/src-tauri/Cargo.toml`, name `codex-desktop`) that depends on the root crate via a path dependency (`codex = { path = "../../.." }`). Its tests are **inline `#[cfg(test)]` modules**, not separate `tests/*.rs` files — the source files that carry one include `support_state_matrix_bridge.rs` (renamed from `sd13_support_state_matrix.rs` by SD-25 criterion 1.1), `spell_catalog.rs`, `corpus_fixtures.rs`, `race_catalog.rs`, `equipment_catalog.rs`, `main.rs`, `character_hub.rs`, `browser_handoff.rs`, `campaign_drive.rs`, `authoring_workbench.rs`, `class_catalog.rs`, `update/transaction.rs`, `characterHub/appendToCharacter.rs`, `characterHub/recomputeCharacter.rs`, `characterHub/reSaveCharacter.rs`, and — added by SD-25 Epic 3/5 — `rule_system_adapter.rs`, `pf1_adapter.rs`, `stub_adapter.rs`, `corpus_ingest_diagnostic.rs` (confirmed via `grep -rl "#\[cfg(test)\]" apps/desktop/src-tauri/src/`). SD-24 criterion 1.1 renamed the six `sd16_*`/`sd19_*`-prefixed files in this list to their current bare names (e.g. `sd19_spell_catalog.rs` → `spell_catalog.rs`, `sd16_browser_handoff.rs` → `browser_handoff.rs`); the command names they register (`list_spell_catalog`, `handoff_defect_report_to_browser`, etc.) did not change.
 
 ### Desktop frontend (TypeScript)
 
@@ -47,8 +47,8 @@ cd apps/desktop && npm run typecheck
 Runs `tsc --noEmit` (`apps/desktop/package.json` `scripts.typecheck`) and
 passes cleanly on a fresh `npm ci`. `@types/node` is a declared
 devDependency so the `node:fs`/`node:path`/`node:url` imports in the
-doc-guard test files resolve; `apps/desktop/src/sd16/update/fetch.ts` and
-`apps/desktop/src/sd16/update/index.ts` re-export their shared types
+doc-guard test files resolve; `apps/desktop/src/update/fetch.ts` and
+`apps/desktop/src/update/index.ts` re-export their shared types
 without duplicate declarations.
 
 ```
@@ -79,6 +79,15 @@ None of these are auto-discovered by `cargo test` or `npm test`. Run each direct
 | `python3 scripts/release/check_promotion_evidence.py --self-test` | The promotion-evidence gate's own built-in RED-GREEN test harness (`_run_self_tests`, ~30 `_t_*` functions covering release-notes validation, manifest binding, PR-body keys, evidence parsing, and full lane evaluation). This is also the first step `promotion-gates.yml` runs on every PR before evaluating a real one. Verified: `SELF-TEST PASSED`. |
 
 All `jsonschema`-based validators (`validate_manifest.py`, `emit_channel_index.py`, `check_release_manifest_against_dev_schema.py`, and the test files that exercise them) need the `jsonschema` pip package; CI pins `jsonschema==4.21.1` (e.g. `.github/workflows/publish-tester-release.yml:324`, `.github/workflows/check-release-manifest.yml:82`). It is already importable in this workspace (`python3 -c "import jsonschema"` exits 0).
+
+### `scripts/verify.sh` and `scripts/reclaim.sh` (operational gate + disk reclamation)
+
+`scripts/verify.sh` is the single verification command for this repo (`--quick` / full / `--only <stage>`; see the script's own header for the full stage list and why each exists). Two properties added 2026-08-10 (retrospective Fix 1/Fix 2, `docs/release/SD-29-corpus-wide-catch-up-lanes/decisions.md` §39-40):
+
+- **No normalized red.** A gate stage that fails twice with the same attribution (e.g. "environmental fixture") is treated as an incident, not an environment quirk — see `decisions.md` §39. This exists because `root-full` was RED on 29 of 33 SD-27-tranche runs, always attributed to the same cause, and that normalized red hid two parity suites that never executed for the whole tranche (`docs/retro/events/tranche8-incident-retro.jsonl`).
+- **Per-suite non-execution check on `root-full`.** The stage derives the expected `tests/*.rs` suite set from the filesystem and diffs it against the `Running tests/<name>.rs` lines cargo's own log actually produced (`comm -23`), failing by name if any suite present in `tests/` never ran — a floor on the aggregate pass/binary count cannot catch one suite silently dropping out while another appears in the same run. Mutation-tested 2026-08-10 by disabling `tests/sd24_release_notes_structure.rs` via a temporary `Cargo.toml` `[[test]] test = false` block: the stage FAILED naming that suite, then passed again once reverted.
+
+`scripts/reclaim.sh` (dry-run by default; `--apply` deletes) reclaims abandoned `CARGO_TARGET_DIR`s, stale `verify.sh` log dirs, merged worktrees, and merged/gone branches — see the script's own `--help` for full safety-guard detail (never touches an in-use target dir, an uncommitted/unpushed worktree, this repo's own checkout, or the `pcgen` oracle). As of 2026-08-10 it also runs unattended via cron: `0 */4 * * * /home/ubuntu/workspace/repos/codex/scripts/reclaim.sh --apply >> /home/ubuntu/workspace/reclaim-cron.log 2>&1` in the `ubuntu` user's crontab (installed alongside the pre-existing dashboard/heartbeat/usage-tick entries, none of which were touched), because disk exhaustion was this program's second-largest recorded incident cluster (6 `disk-full` + 2 `disk-pressure` events, `docs/retro/events/*.jsonl`) and the reclaim script previously only ran when a human remembered to invoke it. Verified to run correctly under a cron-like environment (`env -i HOME=... PATH=/usr/bin:/bin bash scripts/reclaim.sh` — minimal `PATH`, no TTY, no login shell) before being installed.
 
 ## Test conventions
 
@@ -232,7 +241,7 @@ Nine files, documented by their own README (`tests/fixtures/update/README.md`): 
 
 Unlike the wire fixtures, these are **not read from disk by any test at run time**. Their two live connections are:
 - `apps/desktop/tsconfig.json`'s `include` array literally globs them (`"../../tests/fixtures/update/**/*.json"`, `apps/desktop/tsconfig.json:23`) — this affects the TypeScript project's compilation/typecheck scope, not test execution.
-- The TS parser tests (`apps/desktop/src/sd16/update/parseChannelIndex.test.ts`, `parseUpdateManifest.test.ts`) inline byte-for-byte copies of these fixtures as JSON string literals rather than reading the files, and document a manual duplication discipline: if you edit a fixture here, the Python lane and the TS lane must both be re-run and their verdicts must agree (`tests/fixtures/update/README.md:24-32`, "Duplication discipline"). This is a documented-but-manual parity contract, not an automated one.
+- The TS parser tests (`apps/desktop/src/update/parseChannelIndex.test.ts`, `parseUpdateManifest.test.ts`) inline byte-for-byte copies of these fixtures as JSON string literals rather than reading the files, and document a manual duplication discipline: if you edit a fixture here, the Python lane and the TS lane must both be re-run and their verdicts must agree (`tests/fixtures/update/README.md:24-32`, "Duplication discipline"). This is a documented-but-manual parity contract, not an automated one.
 
 ## Related docs
 

@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:giant_dragonfly_darting_charge"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Dragonfly (Giant)",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Grab ~ Bite"
+    ],
+    "key": "bestiary_2:monster:dragonfly_giant",
+    "monster_class": "Vermin:7",
+    "name": "Dragonfly (Giant)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d8",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "size": "M",
+    "source_page": "p.105",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 80,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 297,
+    "record_key": "Dragonfly (Giant)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

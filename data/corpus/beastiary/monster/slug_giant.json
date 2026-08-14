@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "ability_keys": [
+      "beastiary:monster_ability:giant_slug_malleable",
+      "beastiary:monster_ability:giant_slug_spit_acid"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Slug (Giant)",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Giant Slug ~ Susceptible to Salt",
+      "Immunity to Acid",
+      "Immunity to Mind-Affecting Effects",
+      "Vermin Traits Output"
+    ],
+    "key": "beastiary:monster:slug_giant",
+    "monster_class": "Vermin:12",
+    "name": "Slug (Giant)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d10",
+        "name": "Tongue"
+      },
+      {
+        "damage_dice": "10d6",
+        "name": "Spit Acid"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "size": "H",
+    "source_page": "p.254",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 367,
+    "record_key": "Slug (Giant)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

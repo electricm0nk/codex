@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "1",
+    "corpus_key": "Leshy (Gourd)",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:leshy_gourd",
+    "monster_class": "Plant:1",
+    "name": "Gourd Leshy",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Slam"
+      },
+      {
+        "damage_dice": null,
+        "name": "Ranged Seed"
+      }
+    ],
+    "race_subtype": "Leshy|Shapechanger",
+    "race_type": "Plant",
+    "size": "S",
+    "source_page": "p.177",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 173,
+    "record_key": "Leshy (Gourd)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

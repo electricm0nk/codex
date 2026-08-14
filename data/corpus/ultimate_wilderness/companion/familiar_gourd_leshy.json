@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_wilderness:companion:gourd_leshy_ensnare",
+      "ultimate_wilderness:companion:gourd_leshy_keepsake",
+      "ultimate_wilderness:companion:gourd_leshy_seed"
+    ],
+    "corpus_key": "Familiar (Gourd Leshy)",
+    "external_ability_refs": [],
+    "key": "ultimate_wilderness:companion:familiar_gourd_leshy",
+    "monster_class": "Plant:1",
+    "name": "Familiar (Gourd Leshy)",
+    "natural_armor": null,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Slam"
+      },
+      {
+        "damage_dice": null,
+        "name": "Seed"
+      }
+    ],
+    "race_subtype": "Familiar|Augmented|Leshy|Shapechanger",
+    "race_type": "Plant",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "S",
+    "source_page": "B3 p.177",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -4
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": 4
+      },
+      {
+        "ability": "INT",
+        "amount": -4
+      },
+      {
+        "ability": "WIS",
+        "amount": 0
+      },
+      {
+        "ability": "CHA",
+        "amount": 4
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Plant"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+    "line": 306,
+    "record_key": "Familiar (Gourd Leshy)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

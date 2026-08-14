@@ -27,7 +27,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
-    EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const LEVEL_5_FIXTURE: &str =
@@ -239,7 +239,7 @@ fn level_6_fighter_was_later_widened_into_the_supported_tranche() {
 fn matrix_levels_2_10_names_level_5_as_proven() {
     // Levels 6-10 are a separate, later concern (tests/sd13_fighter_level6_progression.rs
     // widened level 6); this test only asserts that level 5's own proof landed.
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let row = matrix
         .row("class.fighter.levels_2_10")
         .expect("row must exist");
@@ -266,7 +266,7 @@ fn matrix_levels_2_10_names_level_5_as_proven() {
 
 #[test]
 fn matrix_preserves_fighter_level_1_and_other_accepted_rows() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
 
     let level_1 = matrix
         .row("class.fighter.level_1_pilot")

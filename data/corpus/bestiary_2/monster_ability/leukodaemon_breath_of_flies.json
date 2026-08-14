@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Leukodaemon ~ Breath of Flies",
+    "delivery": "Supernatural",
+    "description": "Once per minute as a standard action, a leukodaemon can unleash a cloud of corpse-bloated, biting black flies in a 20-foot cone.  Those caught in the cone take 8d6 points of slashing damage.  A DC %1 Reflex save halves this damage.  Those who take any damage are also sickened for 1 minute.  In addition, the flies linger for 1d4+1 rounds, congealing into a buzzing 20-foot-square cloud centered on the cone's original point of origin.  Any creature that ends its turn in this cloud must make a DC %1 Reflex save to avoid taking 4d6 points of damage and becoming sickened for 1 minute.  This cloud of flies may be dispersed by any area effect that does damage or creates wind of at least strong wind force.  All daemons are immune to this effect.",
+    "description_variables": [
+      "LeukodaemonBreathOfFliesDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:leukodaemon_breath_of_flies",
+    "name": "Breath of Flies",
+    "owners": [
+      "bestiary_2:monster:daemon_leukodaemon"
+    ],
+    "source_page": "p.68",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 300,
+    "record_key": "Leukodaemon ~ Breath of Flies"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

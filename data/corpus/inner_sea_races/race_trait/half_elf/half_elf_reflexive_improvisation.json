@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:47:16Z",
+  "data": {
+    "key": "Half-Elf ~ Reflexive Improvisation",
+    "name": "Reflexive Improvisation",
+    "race_key": "Half-Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Elf Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "HalfElf_ReplaceAdaptability",
+      "HalfElf_ReplaceMultitalented"
+    ],
+    "description": "Half-elves raised among elves often stumble unprepared into each new stage of life because their elven relatives are unaccustomed to the speed of their maturation. They gain a +2 racial bonus on untrained skill checks. This racial trait replaces adaptability and multitalented.",
+    "source_page": "p.212",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf ~ Reflexive Improvisation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Reflexive Improvisation],[!PREFACT:1,ABILITIES,HalfElf_ReplaceAdaptability=true,HalfElf_ReplaceMultitalented=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Half-elves raised among elves often stumble unprepared into each new stage of life because their elven relatives are unaccustomed to the speed of their maturation. They gain a +2 racial bonus on untrained skill checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces adaptability and multitalented.|!PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Reflexive Improvisation"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+2 racial bonus on untrained skill checks."
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceAdaptability|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceMultitalented|true"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 126,
+    "record_key": "Half-Elf ~ Reflexive Improvisation"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

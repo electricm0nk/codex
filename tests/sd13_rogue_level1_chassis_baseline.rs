@@ -56,7 +56,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const ROGUE_FIXTURE: &str =
@@ -504,7 +504,7 @@ fn rogue_still_produces_a_claim_blocking_diagnostic_and_total_saves_are_now_comp
 
 #[test]
 fn matrix_rogue_row_is_partial_computed_with_all_four_pillars_grounded() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let rogue = matrix
         .row("class.rogue.bounded_progression")
         .expect("rogue bounded_progression row must exist");
@@ -556,7 +556,7 @@ fn matrix_rogue_row_is_partial_computed_with_all_four_pillars_grounded() {
 
 #[test]
 fn matrix_preserves_accepted_truth_and_unchanged_rows() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
 
     // Fighter, Monk, and Barbarian rows were later promoted to Supported/ProductVisible
     // by SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-16).

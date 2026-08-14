@@ -19,6 +19,79 @@ gates chassis sweep. 9 epics total, matching `kanban.md`'s 9 cards.
 Epic 1 fires FIRST. Closure fires LAST. Epic 4 (measurement) gates Epic 5 (mechanism) and Epic 6
 (chassis sweep) **per class**, not bundle-wide — see `decisions.md §37`.
 
+**Widened 2026-08-13 (`decisions.md §43`).** SD-30's charter now drives all kinds, corpus-wide, to
+`done`, absorbing SD-32's former package. A new epic, **Epic 0 (SD30-E0) — Apply Existing Instruments
+to `held`**, is inserted ahead of Epic 1 because it moves the most units to `done` per unit of effort
+in the entire bundle: the corpus-sweep, derived-evaluator, and spell-probe instruments already exist
+(landed by the former SD-32) and the 9,455 `held` units already have their data sitting in the
+engine — no new ingest, no new corpus content, just applying/building the missing `done` rungs and
+consumer-delta probes. This is cheaper than any per-book ingest work in every other epic below, so it
+is ordered first. Everything from Epic 1 onward (the `class_feature`-specific 9-epic chain) is
+unchanged and continues to operate exactly as before the widening — Epic 0 does not gate or delay it,
+the two tracks are independent (Epic 0 touches instrument/dashboard-producer code and cross-kind
+application; Epics 1-9 touch `class_feature` content only) and may run concurrently once dispatched.
+
+## Epic 0 (SD30-E0) — Apply Existing Instruments to `held` (NEW, 2026-08-13, `decisions.md §43`)
+
+**Objective:** Close the gap between `held` (9,455 units, data already in the engine) and `done` by
+building the still-missing `done` rungs and consumer-delta probes, then applying them, corpus-wide,
+across every kind — not just `class_feature`.
+
+**Derived from:** `decisions.md §43` (operator ruling, widened charter); the movable-mass bucket
+breakdown in `scope-draft.md`'s "Widened charter" section.
+
+**Ordering rationale:** cheapest lever in the bundle. No new ingest required. Ordered ahead of Epic 1
+because unlike identifier cleanup (process hygiene) this epic moves real `done`-count mass, and ahead
+of the `class_feature` chain (Epics 4-6) because those gate on per-class hand measurement, a slower
+and more expensive path than applying an instrument that already exists.
+
+### Feature seeds
+
+#### SD30-E0-F1 — `static`/`derived` `done` rung
+
+Acceptance:
+
+- The dashboard producer's `doneness_verdict()` table gains a `done` rung for `wiring_class in
+  (static, derived)` when the corpus-sweep / derived-evaluator gate has actually examined and passed
+  the record (not merely `held`).
+- Re-running `derive-movable-mass.py` after the rung lands shows the `static`/`derived` `held`
+  population (6,619 units, per the B3 bucket in this session's run) move to `done` for records the
+  gate has passed.
+- No relaxation of what "passed" means — a record the gate has not examined stays `held`, not `done`.
+
+#### SD30-E0-F2 — `computed`-bucket consumer-delta probes, corpus-wide
+
+Acceptance:
+
+- For every kind with a `computed`-wiring-class population and no existing `probe_*` function in
+  `src/bin/v06_work_inventory.rs` (starting with `class_feature`, the largest such population at
+  4,178 units; extending to any other kind found lacking one), a consumer-delta probe is built,
+  modeled on `probe_spell_effect_wiring`'s shape.
+- The `NO_GROUNDING_PROBE` cap (`spell`, `companion`) is removed for a kind once its probe lands and
+  is confirmed reaching a nonzero `grounded` count under the `computed` class for that kind.
+- This absorbs the flagged-not-decided question former Decision §41 raised (owned outright by SD-30
+  now, no cross-bundle ownership question remains).
+
+#### SD30-E0-F3 — `unknown`-residue characterization, corpus-wide
+
+Acceptance:
+
+- `feat`'s 329-unit `unknown` residue (previously uncharacterized — `class_feature`'s 3,218-unit
+  residue already has a method, Decision §38) gets a characterization pass using the same
+  option-pool/genuinely-unreachable/unclustered-remainder method Decision §38 established.
+- Any other kind's `unknown` residue found nonzero at a future re-derivation gets the same treatment.
+- PI-gate discipline is not touched by this feature — characterization is a read-only classification
+  pass, not ingest.
+
+#### SD30-E0-F4 — Re-derivation and reporting
+
+Acceptance:
+
+- Every cycle in this epic re-runs `derive-movable-mass.py` before and after its change and cites both
+  runs in its `progress.md` receipt.
+- `acceptance-and-verification.md AT-30-015`'s per-kind floor table is updated at epic closure with
+  the actual `done` figures achieved.
+
 ## Epic 1 (SD30-E1) — Code-Side Identifier Cleanup
 
 **Objective:** Establish identifier discipline across all code this bundle introduces.
@@ -105,6 +178,70 @@ Acceptance:
 - The sweep's output (clean, or hits found) is recorded in the cycle's first receipt per book, in
   `progress.md`.
 - A hit is a hard stop for that record (`loop-instruction.md` "Stop vs. press on"), not routed around.
+
+#### SD30-E3-F2 — Declared-PI reader wired into the `class_feature` ingest/transcription path (2026-08-13, `decisions.md §39`)
+
+**Blocks Epic 6 entirely — no per-book chassis-sweep cycle may claim its class until this feature
+seed is `COMPLETE`.** `decisions.md §39.2` re-derived 464 source rows across 6 of the 23 in-scope
+books (`adventurers_guide` 276, `inner_sea_magic` 67, `inner_sea_world_guide` 49, `inner_sea_intrigue`
+45, `book_of_the_damned_volume_2` 18, `inner_sea_combat` 9) that declare `NAMEISPI:YES` or
+`DESCISPI:YES` in PCGen source and would ship past the 55-term blacklist the same way SD-29's
+race-trait lane's 8 undeclared-term rows did before its own fix (`SD-29-corpus-wide-catch-up-lanes/decisions.md §53`).
+
+Acceptance:
+
+- Whichever ingest binary or Python transcriber Epic 6 builds for `class_feature` calls
+  `pi_screening::{declared_product_identity, classify_optional_field_declared}` (already implemented,
+  7 unit tests, `src/rules_core/pi_screening.rs`) — the same reader `ingest_race_traits` already
+  uses, not a new implementation.
+- `NAMEISPI:YES` rows are dropped **before** the scope filter, named by file:line in the run receipt
+  (mirrors `ingest_race_traits`'s `dropped, NAMEISPI:YES : N` line).
+- `DESCISPI:YES` descriptions are redacted through the shared reader and counted in the receipt
+  (mirrors `descriptions redacted by DESCISPI:YES : N`).
+- This is a **production-path** change to the ingest/transcription binary itself — not a fixture, not
+  a script run by hand outside the pipeline that generates `data/corpus/`.
+- Reclassifying a specific declared-PI row as shippable is `ogl-pi-blacklist.md` §3's per-book
+  override — an operator decision a cycle may request but not make unilaterally.
+
+#### SD30-E3-F3 — Corpus-wide declared-PI backfill sweep, every already-shipped kind
+
+`decisions.md §53.7`'s own scope finding named this as "the successor's first move": the shared
+reader is placed in `pi_screening` but only `ingest_race_traits` calls it; every other Pipeline A
+writer and the entire Pipeline B transcription pipeline (`transcribe_monster_tables.py` — drops
+`NAMEISPI:YES`, per lines 780/818, but has never read `DESCISPI:YES`; `transcribe_companion_tables.py`
+— reads neither token) still screen on the term list alone or not at all.
+
+Acceptance:
+
+- Run `decisions.md §39.2`'s corpus-wide sweep command (`raw_tokens` scan over
+  `data/corpus/*/*/*/*.json`, all kinds) at the start of this feature seed's cycle, not transcribed
+  from `§39.2`'s 2026-08-13 result (currently zero hits outside the already-fixed `race_trait`, but
+  this is a point-in-time fact that must be re-checked at time of use, per this program's own
+  standing-defect pattern).
+- Any hit found is resolved the same way `§53` resolved race-trait's: `DESCISPI:YES` → redact and
+  regenerate that book's corpus files; `NAMEISPI:YES` → drop the row, re-derive every pinned count the
+  drop touches (mirrors `§53.3`'s nine-file re-pin), do not decrement by hand.
+- `transcribe_monster_tables.py` gains `DESCISPI:YES` handling (redaction) alongside its existing
+  `NAMEISPI:YES` drop; `transcribe_companion_tables.py` gains both, scoped to whatever ISPI exposure
+  its own source sweep finds (1 `NAMEISPI:YES` row measured in `decisions.md §39` at
+  `dtt_races_companion.lst`, re-derive at time of use).
+
+#### SD30-E3-F4 — Regression gate: a future ingest cannot reintroduce a declared-PI leak
+
+`scripts/verify.sh`'s `pi-sweep` stage and `docs/governance/ogl-pi-blacklist.md` are both
+term-blacklist mechanisms; neither reads `NAMEISPI`/`DESCISPI`. Reading a declaration and scanning for
+undeclared terms are different questions (`decisions.md §53.1` — "the two are now a union") and need
+a sibling check, not a merge into either existing mechanism.
+
+Acceptance:
+
+- A corpus-level test, following `tests/sd29_declared_product_identity_in_shipped_race_traits.rs`'s
+  shape exactly (reads shipped files, not source rows, so both ends read the same bytes), extended to
+  walk `*/class_feature/*` once that path exists under `data/corpus/`.
+- The test is wired into `scripts/verify.sh` (either as its own stage or folded into an existing
+  full-corpus stage — cycle's choice, but it must run in `verify.sh full`, mirroring `pi-sweep`'s
+  "cheap enough to also run in `quick`" reasoning if the walk stays cheap).
+- The gate fails RED, not warns, if a declared-PI row is found unredacted/undropped in shipped output.
 
 ## Epic 4 (SD30-E4) — Per-Class Archetype Measurement (GATES Epics 5 and 6)
 
@@ -219,6 +356,17 @@ Acceptance:
   designs.
 - Oracle/Arcanist/Sorcerer's measured wireable mechanisms wire through it, proven reachable the same
   way as the supersession shape.
+
+**Instrument-coverage note (2026-08-13, `decisions.md §41`).** Sibling bundle SD-32 landed corpus-wide
+`static`/`derived` gates on `tranche/9` today (`scripts/verify.sh` `corpus-sweep`/
+`corpus-sweep-selftest`; `tests/derived_evaluator_fixture_check.rs`). Neither this epic nor Epic 6 was
+ever scoped to build its own such gate — re-read of this file and `acceptance-and-verification.md`
+found no prior criterion naming one — so there is no stale acceptance criterion to rewrite here.
+Recorded so a future cycle does not duplicate that instrument: once Epic 6 ships `class_feature`
+records, running `./scripts/verify.sh` (already `AT-30-002`/Decision §18's standing requirement)
+exercises both gates against them for free. The `computed` bucket (4,178 of 15,472 `class_feature`
+units) has no equivalent gate — SD-32's spell consumer-delta probe is a precedent for the shape, not
+a `class_feature` instrument — and building one is flagged for the operator, not scheduled here.
 
 ## Epic 6 (SD30-E6) — Per-Class Chassis Sweep (the `class_feature` ingest, gated per class on Epics 4/5)
 
@@ -343,6 +491,87 @@ Acceptance:
   require a second removal.
 - The canonical repo-resident home is `docs/release/SD-30-class-feature-archetype-bundle/`.
 
+## Epic 10 (SD30-E10) — Corpus-Wide Ingest Lanes, folded from SD-29 (NEW, 2026-08-13, `decisions.md §44`)
+
+**Objective:** the real per-book ingest that instrument-application (Epic 0) cannot substitute for.
+SD-29 closed (`SD-29-corpus-wide-catch-up-lanes/decisions.md §70`) with its corpus-wide kind lanes at
+a *measured* ceiling, not an exhausted one — real `not-started`/chassis-open residue remains in every
+lane it measured. Per `decisions.md §44`, those lanes have no other live owner; SD-30 inherits them.
+This is the expensive lane — new corpus content lands, not just wiring against what is already
+ingested.
+
+**Ordering: hard-gated behind Epic 3 (PI-Screening Provenance Gate), exactly like Epic 6.** No card
+below may claim a book until that book's declared-PI screen (SD30-E3-F2/F3) is `COMPLETE`. The fold
+widens which kinds' ingest is subject to the gate; it does not relax it (`decisions.md §39`, §44).
+Also gated behind Epic 1/Epic 2 (identifier cleanup, pre-launch trap-report) for the same reasons
+Epic 4/6 are.
+
+**Per-kind cards.** Scoped to the four kinds `decisions.md §43`'s table shows the operator is most
+frustrated by and that Epic 6 does not already cover (`class_feature` stays Epic 6's). Every card
+below must run the raw-vs-workable split and the pre-cycle row-classifier screen (SD-29 lessons 1-2,
+`decisions.md §44`) **before** planning cycles, and record the command used — this is a card-opening
+precondition, not an optional step.
+
+#### SD30-E10-F1 — `monster` ingest lane (1,242 grounded / 7 done, 0.6%; 21,303 corpus-wide `not-started` pool contributes here)
+
+- Pilot book selection runs `scripts/screen_pcc_load_gates.py` and a monster-count check
+  (`cargo run --locked --bin v06_work_inventory` per-book breakdown) **before** committing a round —
+  `bestiary_5`/`bestiary_6` are confirmed **zero-monster** books (`SD-29 decisions.md §34/§36`,
+  player-options datasets only) and are a hard stop for this card, not a candidate.
+- Splits `not-started`/`not-ingested` `monster` units into workable (real stat-block content this
+  repo's pipeline can transcribe) vs. structurally blocked (negated-PCC-gate exclusions per
+  `scripts/screen_pcc_load_gates.py`, `SD-29 decisions.md §68`) before scheduling any cycle.
+- Mirrors SD-29 Epic 3's monster-ingest pipeline (same `rules_tables/*.rs` shape, same zero-drift
+  discipline) — not reinvented.
+
+#### SD30-E10-F2 — `spell` ingest lane (623 grounded / 47 done, 1.7%; capped separately by `NO_GROUNDING_PROBE` per §43 — ingest alone does not clear this kind past `held`)
+
+- Because `spell`'s `computed` bucket has no consumer-delta probe corpus-wide (`decisions.md §43`),
+  this card's ingest work raises `grounded`/`held`, not `done`, until Epic 0's probe-building work
+  lands a spell probe. Recorded here so a future cycle does not expect ingest alone to move the
+  `done` needle for this kind.
+- Runs the same pre-cycle screen as F1 before selecting a book.
+
+#### SD30-E10-F3 — `race` ingest lane (7 grounded / 0 done, 0.0% — smallest, most ingest-starved kind in the corpus)
+
+- **Runs `scripts/classify_race_trait_rows.py` before selecting any book or committing a round** —
+  the checked-in classifier SD-29 built specifically because a raw-remainder read produced a
+  backwards queue (`SD-29 decisions.md §45.1`).
+- `race` (the chassis record) and `race_trait` (F4 below) are related but distinct kinds; a chassis
+  gap blocks both — see F4's note on the 2,894-unit ceiling.
+
+#### SD30-E10-F4 — `race_trait` ingest lane (513 grounded / 264 done, 7.7%; 3,447 raw units, only 553 workable)
+
+- **Raw remainder is not workload, restated as a card precondition, not a caveat**
+  (`SD-29 decisions.md §44.4`): of 3,447 corpus `race_trait` units, only 553 carry a
+  `TYPE:<Race> Racial Trait` component naming one of the 18 races the engine models. The other 2,894
+  belong to races with no modeled chassis; `RaceCorpus::resolve` returns `None` for them and no
+  amount of ingest grounds them. This card's workable pool is 553 minus whatever F3's `race`-chassis
+  work has not yet landed, not 3,447.
+- Runs `scripts/classify_race_trait_rows.py` and `scripts/screen_pcc_load_gates.py` before selecting
+  a book (SD-29's own pilot on `inner_sea_intrigue` found it carried zero genuine race traits,
+  `decisions.md §45.1` — this card must not repeat that miss).
+
+**Acceptance (per card):** the raw-vs-workable split is recorded with its command before any cycle
+claims; the pre-cycle classifier/screen ran against the candidate book before the round was committed
+(not after); PI screen clean for the book (Epic 3, F2/F3) before any record is written;
+reach-gate-satisfied per record ingested (`decisions.md §18`); units found structurally unreachable
+are named findings routed to a successor, not silently ingested as if grounded (mirrors Epic 6-F1's
+own discipline).
+
+**Not in this epic:** `class_feature` ingest — stays Epic 6, unaffected by this fold.
+`equipment`/`equipment_modifier`/`companion`/`feat`/`monster_ability` — not named in the operator's
+cited frustration list (`decisions.md §44`); their `not-started` residue remains real but is not
+prioritized into a card by this pass. A future pass may open cards for them under this same epic
+without a new operator ruling, since the epic's charter ("corpus-wide ingest lanes folded from
+SD-29") already covers every non-`class_feature` kind — F1-F4 are the first four cards, not an
+exhaustive set.
+
+**Derived from:** `decisions.md §44` (the fold ruling and its four inherited SD-29 lessons);
+`SD-29-corpus-wide-catch-up-lanes/decisions.md §34/§36` (zero-monster books), `§44.4/§45.1/§49.2`
+(race-trait chassis split and pilot-book correction), `§68/§68.1` (negated-PCC-gate screen),
+`§50.1`/this package's own `§39` (declared-PI gate).
+
 ## Recommended sequencing (dependency order, not exclusive scope)
 
 ```
@@ -357,6 +586,12 @@ E4/E5/E6 triples can run concurrently (file-disjoint by class and by `src/rules_
 path) under operator-pinned concurrency, the same way the old per-book epics were file-disjoint by
 book. E3 (PI-screening) is a standing gate re-invoked by every E6 cycle, not a one-time epic.
 
+**Added 2026-08-13 (`decisions.md §44`):** E10 (Corpus-Wide Ingest Lanes, folded from SD-29) runs
+independently of the `class_feature` E4/E5/E6 chain — different kinds, different corpus books in the
+common case — but shares E3's PI-screening gate exactly as E6 does, and is likewise gated on E1/E2.
+E10's per-kind cards (F1-F4) are themselves file-disjoint by kind and can run concurrently with each
+other and with the E4/E5/E6 chain.
+
 ## Completion gate
 
 SD-30 closes when:
@@ -367,7 +602,12 @@ SD-30 closes when:
   whatever Epic 4 adds, and has either wired or explicitly deferred the chooser-interaction shape for
   Oracle/Arcanist/Sorcerer.
 - Epic 6's chassis sweep has ingested and reach-gated every class Epic 4/5 cleared.
-- Epic 3's PI-screening gate ran clean (or recorded and resolved hits) on every book touched.
+- Epic 3's PI-screening gate ran clean (or recorded and resolved hits) on every book touched,
+  including the declared-PI reader (SD30-E3-F2), the corpus-wide backfill sweep (SD30-E3-F3), and the
+  regression gate (SD30-E3-F4) — not the 55-term blacklist sweep alone (`decisions.md §39`).
+- Epic 10's per-kind ingest cards (F1-F4) have each either reached their measured workable-pool
+  ceiling or named a successor for the remainder — mirroring Epic 4's own closure pattern, not a
+  100%-or-nothing bar (`decisions.md §44`).
 - Epic 8 (Bundle Code Review) closed, all findings triaged with named owners for deferrals.
 - Epic 9 (Closure) fires.
 - `progress.md` carries the closure receipt.

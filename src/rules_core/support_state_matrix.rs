@@ -284,7 +284,7 @@ const HUMAN_ROW_GROUNDING_REF: &str =
 
 /// GE-06 deterministic pilot input contract proof (race/class identity, Human
 /// bonus-feat and ability-bonus selections).
-const GE06_INPUT_CONTRACT_TEST: &str = "tests/ge06_pilot_input_contract.rs";
+const INPUT_CONTRACT_TEST: &str = "tests/ge06_pilot_input_contract.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Rogue
 /// level-1/level-2/level-3/level-4 chassis baseline (mirroring the
@@ -938,7 +938,7 @@ const EQUIPMODS_EQUIPMENT_TEST: &str = "tests/sd19_equipment_equipmods.rs";
 /// fixed and grounded from SD-13; SD-19 cycles append one school or
 /// equipment row per landed cycle, never rewriting an existing row's
 /// identity.
-pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
+pub fn seeded_current_truth() -> SupportStateMatrix {
     SupportStateMatrix {
         rows: vec![
             // ----- Race rows (7) -----
@@ -6892,7 +6892,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: GE06_INPUT_CONTRACT_TEST,
+                grounding_ref: INPUT_CONTRACT_TEST,
                 blocker_or_lossiness_note: "the named deterministic Human Fighter pilot \
                     seam is grounded and product-visible: the human_bonus_feat -> feat:dodge and \
                     human_ability_bonus -> ability:strength selections surface as explicit \

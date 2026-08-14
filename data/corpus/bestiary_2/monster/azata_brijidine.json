@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:brijidine_heat_stone",
+      "bestiary_2:monster_ability:brijidine_lava_blast",
+      "bestiary_2:monster_ability:brijidine_obsidian_blade"
+    ],
+    "challenge_rating": "17",
+    "corpus_key": "Azata (Brijidine)",
+    "external_ability_refs": [
+      "Brijidine ~ Entrap",
+      "Brijidine ~ Flaming Body",
+      "Burn",
+      "Flight Maneuverability",
+      "Holy Aura ~ Constant",
+      "Resistance to Cold",
+      "Trample"
+    ],
+    "key": "bestiary_2:monster:azata_brijidine",
+    "monster_class": "Outsider (Fort/Will):19",
+    "name": "Azata (Brijidine)",
+    "natural_attacks": [],
+    "race_subtype": "Azata|Earth|Extraplanar|Fire",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.37",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 119,
+    "record_key": "Azata (Brijidine)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Devilfish ~ Unholy Blood",
+    "delivery": "Supernatural",
+    "description": "A devilfish's blood is infused with fiendish magic. Once per day, as a swift action, a devilfish can emit a night-black cloud of this foul liquid, filling a 20-foot-radius cloud if underwater, or a 20-foot-radius burst on land. In water, the blood provides total concealment for everything but a devilfish (which can see through the blood with ease); on land the slippery blood coats the ground, making the area difficult terrain. The blood persists for 1 minute before fading. Anyone who enters a cloud of the blood in the water or who is within the area of a burst of blood on land must make a DC %1 Fortitude save or be nauseated for 1d4 rounds - this save need be made only once per cloud.",
+    "description_variables": [
+      "DevilfishUnholyBloodDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:devilfish_unholy_blood",
+    "name": "Unholy Blood",
+    "owners": [
+      "bestiary_2:monster:devilfish"
+    ],
+    "source_page": "p.88",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 408,
+    "record_key": "Devilfish ~ Unholy Blood"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

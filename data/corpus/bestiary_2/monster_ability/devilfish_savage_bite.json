@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Devilfish ~ Savage Bite",
+    "delivery": "Extraordinary",
+    "description": "A devilfish can attack with its savage bite whenever it makes a successful grapple check.  This attack is in place of any other action made with a successful grapple check.  The bite threatens a critical hit on a roll of 18-20, and injects the target with poison as well.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:devilfish_savage_bite",
+    "name": "Savage Bite",
+    "owners": [
+      "bestiary_2:monster:devilfish"
+    ],
+    "source_page": "p.88",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 407,
+    "record_key": "Devilfish ~ Savage Bite"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

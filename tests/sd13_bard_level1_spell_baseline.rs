@@ -50,7 +50,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const BARD_FIXTURE: &str =
@@ -716,7 +716,7 @@ fn bard_level_4_was_later_widened_into_the_supported_tranche() {
 
 #[test]
 fn matrix_bard_row_is_partial_computed_and_names_remaining_burdens() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let bard = matrix
         .row("class.bard.progression_and_spell_burden")
         .expect("bard row must exist");
@@ -774,7 +774,7 @@ fn matrix_wizard_row_reflects_current_truth_after_bard_slice() {
     // Class Progression Catalog browser UI-surfacing work (2026-07-17) promoted it
     // again to Supported/ProductVisible. This negative control now pins that
     // current truth rather than the Bard-slice-only snapshot.
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let wizard = matrix
         .row("class.wizard.progression_and_spell_burden")
         .expect("wizard row must exist");
@@ -792,7 +792,7 @@ fn matrix_wizard_row_reflects_current_truth_after_bard_slice() {
 
 #[test]
 fn matrix_keeps_sorcerer_and_paladin_supported_after_bard_slice() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
 
     // Sorcerer was later promoted to Partial/Computed by its own SD13-E4 Sorcerer
     // decomposition slice (Eschew Materials grounded for real), then to
@@ -836,7 +836,7 @@ fn matrix_keeps_sorcerer_and_paladin_supported_after_bard_slice() {
 
 #[test]
 fn matrix_does_not_promote_any_row_to_supported_or_lossy_after_bard_slice() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     assert!(
         !matrix
             .rows

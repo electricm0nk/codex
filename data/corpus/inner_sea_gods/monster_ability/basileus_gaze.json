@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "corpus_key": "Basileus ~ Gaze",
+    "delivery": "Supernatural",
+    "description": "Death (if 6 HD or less) or 6d6 damage and panicked for 2d4 rounds (7 HD or more), range 30 feet, Will DC %1 negates the death or panicked effect. This gaze is a mind-affecting fear effect that causes its targets to perceive Basileus as the most terrifying thing that it can imagine.",
+    "description_variables": [
+      "BaslieusGazeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:basileus_gaze",
+    "name": "Gaze",
+    "owners": [
+      "inner_sea_gods:monster:basileus"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 98,
+    "record_key": "Basileus ~ Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_expr"
+  ]
+}

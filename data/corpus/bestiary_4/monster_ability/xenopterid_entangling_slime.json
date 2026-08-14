@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Xenopterid ~ Entangling Slime",
+    "delivery": "Extraordinary",
+    "description": "A xenopterid can produce a sticky, slimy secretion it uses to protect its territory and eggs. The xenopterid can slime up to a 10-foot-square area per day at a rate of 1 square foot per minute. For 1 week thereafter, any creature coming in direct contact with the slime must succeed at a DC %1 Strength check or be entangled and glued to it as if it had failed its save against a tanglefoot bag.",
+    "description_variables": [
+      "15+CON"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:xenopterid_entangling_slime",
+    "name": "Entangling Slime",
+    "owners": [
+      "bestiary_4:monster:xenopterid"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1469,
+    "record_key": "Xenopterid ~ Entangling Slime"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

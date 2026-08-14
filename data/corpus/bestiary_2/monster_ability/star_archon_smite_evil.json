@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Star Archon ~ Smite Evil",
+    "delivery": "Supernatural",
+    "description": "You can call out to the powers of good to aid you in your struggle against evil %1 times per day. As a swift action, you choose one target within sight to smite. If this target is evil, you add +%2 to your attack rolls and +%3 to all damage rolls made against the target of your smite. If the target of Smite Evil is an outsider with the evil subtype, an evil-aligned dragon, or an undead creature, the bonus to damage on the first successful attack increases to +%4. Regardless of the target, Smite Evil attacks automatically bypass any DR the creature might possess. In addition, while smite evil is in effect, you gain a +%5 deflection bonus to your AC against attacks made by the target of the smite. If you target a creature that is not evil, the smite is wasted with no effect. The Smite Evil effect remains until the target of the smite is dead or the next time you rest and regain your uses of this ability.",
+    "description_variables": [
+      "SmiteEvilTimes",
+      "SmiteEvilAttackBonus",
+      "SmiteEvilDamageBonus",
+      "SmiteEvilDamageBonus*2",
+      "SmiteEvilACBonus"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:star_archon_smite_evil",
+    "name": "Smite Evil",
+    "owners": [
+      "bestiary_2:monster:archon_star"
+    ],
+    "source_page": "p.60",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 123,
+    "record_key": "Star Archon ~ Smite Evil"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Squid (Vampire) ~ Photophores",
+    "delivery": "Extraordinary",
+    "description": "Once per day as a standard action while underwater, the vampire squid can release a 15-foot cone of disorienting bioluminescent mucus from its photophores, illuminating the area with dim light. A creature within this shimmering cloud of blue light must succeed at a DC %1 Fortitude save or be dazzled for as long as it remains in the cloud and for 1 round thereafter. The cloud persists for 1d4+1 rounds.",
+    "description_variables": [
+      "10+HD/2+CON"
+    ],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:squid_vampire_photophores",
+    "name": "Photophores",
+    "owners": [
+      "ultimate_wilderness:companion:squid_vampire"
+    ],
+    "record_type": "ability",
+    "source_page": "p.209",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "VampireSquidRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 380,
+    "record_key": "Squid (Vampire) ~ Photophores"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

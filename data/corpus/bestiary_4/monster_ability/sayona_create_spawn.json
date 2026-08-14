@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Sayona ~ Create Spawn",
+    "delivery": "Supernatural",
+    "description": "When a sayona kills a humanoid or fey of Medium or Small size with its absorb blood or blood drain ability, the victim rises 24 hours later as a ghoul with the advanced creature simple template and the blood drain ability. The spawn is the sayona's slave until its master is destroyed.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:sayona_create_spawn",
+    "name": "Create Spawn",
+    "owners": [
+      "bestiary_4:monster:sayona"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1219,
+    "record_key": "Sayona ~ Create Spawn"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

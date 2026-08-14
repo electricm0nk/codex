@@ -28,7 +28,7 @@ use codex::rules_core::pilot_compute::{
     ComputationDiagnostic, ComputationExplanation, PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{SupportState, seeded_sd13_e1_f1_current_truth};
+use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 
 const PALADIN_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_paladin_level1_sd13_deterministic_input.txt");
@@ -182,7 +182,7 @@ fn paladin_effective_caster_level_gate_does_not_leak_to_ranger_or_fighter() {
 
 #[test]
 fn matrix_paladin_row_note_still_names_the_partial_caster_facts_and_stays_partial() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin hybrid row must exist");

@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "corpus_key": "Arcanotheign ~ Eldritch Blast",
+    "delivery": "Supernatural",
+    "description": "The herald chooses an additional effect for its eldritch blasts each round (DC %1 negates). A creature that fails its saves against both blasts in the same round suffers an increased effect. Dement (Will): The creature is confused for 1 minute. Increased effect: The creature goes insane (as insanity). Displace (Fortitude): The creature teleports (as dimension door) 5 feet in a random horizontal direction at the end of its turn each round for the next 10 rounds. Increased effect: The creature is affected by maze. Ignite (Reflex): The creature takes 2d6 points of fire damage. Increased effect: The creature catches on fire.",
+    "description_variables": [
+      "EldritchDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:arcanotheign_eldritch_blast",
+    "name": "Eldritch Blast",
+    "owners": [
+      "inner_sea_gods:monster:arcanotheign"
+    ],
+    "source_page": null,
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 213,
+    "record_key": "Arcanotheign ~ Eldritch Blast"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

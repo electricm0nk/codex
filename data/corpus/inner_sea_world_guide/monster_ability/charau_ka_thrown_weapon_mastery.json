@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T15:01:53Z",
+  "data": {
+    "corpus_key": "Charau-ka ~ Thrown-Weapon Mastery",
+    "delivery": "Extraordinary",
+    "description": "Charau-ka are masters of thrown weapons. All charau-ka gain Throw Anything as a bonus feat. In addition, a charau-ka gains a +1 racial bonus on all thrown weapons, and their threat range for thrown weapons is doubled, as if the charau-ka possessed the Improve Critical feat for all thrown weapons. This effect doesn't stack with any other effect that expands the threat range of a weapon.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_world_guide:monster_ability:charau_ka_thrown_weapon_mastery",
+    "name": "Thrown-Weapon Mastery",
+    "owners": [
+      "inner_sea_world_guide:monster:charau_ka"
+    ],
+    "source_page": "p.309",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
+    "line": 20,
+    "record_key": "Charau-ka ~ Thrown-Weapon Mastery"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

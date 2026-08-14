@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Shadow Demon ~ Shadow Blend",
+    "delivery": "Supernatural",
+    "description": "During any conditions other than bright light, a shadow demon can disappear into the shadows as a move equivalent action, effectively becoming invisible. Artificial illumination or light spells of 2nd level or lower do not negate this ability.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:shadow_demon_shadow_blend",
+    "name": "Shadow Blend",
+    "owners": [
+      "beastiary:monster:demon_shadow"
+    ],
+    "source_page": "p.67",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 307,
+    "record_key": "Shadow Demon ~ Shadow Blend"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

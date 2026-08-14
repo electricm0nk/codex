@@ -47,7 +47,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const SORCERER_FIXTURE: &str =
@@ -658,7 +658,7 @@ fn sorcerer_level_5_was_later_widened_into_the_supported_tranche() {
 
 #[test]
 fn matrix_sorcerer_row_is_partial_computed_and_names_choice_arcane_bond_and_spontaneous() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let sorcerer = matrix
         .row("class.sorcerer.progression_and_spell_burden")
         .expect("sorcerer row must exist");
@@ -714,7 +714,7 @@ fn matrix_wizard_row_reflects_current_truth_and_preserves_bard_supported_state()
     // and SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-17)
     // promoted it again to Supported/ProductVisible; this negative control now pins
     // that current truth.
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
 
     let wizard = matrix
         .row("class.wizard.progression_and_spell_burden")
@@ -756,7 +756,7 @@ fn matrix_wizard_row_reflects_current_truth_and_preserves_bard_supported_state()
 
 #[test]
 fn matrix_preserves_paladin_hybrid_supported_product_visible_truth() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     // Paladin was later promoted to Partial/Computed by its own SD13-E5
     // level-gate slice (lay on hands / divine grace / mercy grounded as
     // correct level-1 absences), then to Supported/ProductVisible by SD-19's
@@ -786,7 +786,7 @@ fn matrix_preserves_paladin_hybrid_supported_product_visible_truth() {
 
 #[test]
 fn matrix_does_not_promote_any_row_to_supported_or_lossy() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     assert!(
         !matrix
             .rows

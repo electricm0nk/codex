@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Spitting Cobra ~ Poison",
+    "delivery": "Extraordinary",
+    "description": null,
+    "description_variables": [],
+    "description_variants": [
+      {
+        "conditions": [
+          "PREVARLT:CompanionAdvancement,1"
+        ],
+        "text": "Spit; frequency 1 round [6]; effect blurred vision [20%% miss chance] 1 round; cure 1 save; Fort DC %1",
+        "variables": [
+          "10+HD/2+CON"
+        ]
+      },
+      {
+        "conditions": [
+          "PREVARGTEQ:CompanionAdvancement,1"
+        ],
+        "text": "Spit; frequency 1 round [6]; effect blindness 1 round; cure 1 save; Fort DC %1",
+        "variables": [
+          "10+HD/2+CON."
+        ]
+      }
+    ],
+    "facet": "SpecialAttack",
+    "key": "ultimate_wilderness:companion:spitting_cobra_poison",
+    "name": "Poison",
+    "owners": [
+      "ultimate_wilderness:companion:companion_spitting_cobra"
+    ],
+    "record_type": "ability",
+    "source_page": "p.182",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary",
+      "SpittingCobraRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 360,
+    "record_key": "Spitting Cobra ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

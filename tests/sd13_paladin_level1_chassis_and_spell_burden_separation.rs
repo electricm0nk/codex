@@ -44,7 +44,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const PALADIN_FIXTURE: &str =
@@ -540,7 +540,7 @@ fn paladin_level1_still_yields_blocked_headless_receipt_and_view_model() {
 
 #[test]
 fn matrix_paladin_row_is_promoted_to_partial_with_honest_burden_note() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin hybrid row must exist");
@@ -606,7 +606,7 @@ fn matrix_paladin_row_is_promoted_to_partial_with_honest_burden_note() {
 fn matrix_ranger_row_does_not_borrow_paladin_separated_burden_note() {
     // The non-goal is explicit: do not collapse Paladin into Ranger. The
     // matrix must keep them on distinct rows with their own burden notes.
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let ranger = matrix
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger hybrid row must exist");
@@ -632,7 +632,7 @@ fn matrix_ranger_row_does_not_borrow_paladin_separated_burden_note() {
 
 #[test]
 fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
 
     // Fighter rows were later promoted to Supported/ProductVisible by SD-19's
     // Class Progression Catalog browser UI-surfacing work (2026-07-16).

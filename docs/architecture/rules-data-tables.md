@@ -133,18 +133,93 @@ ingests. Both figures are pinned in `class_spell_levels.rs`'s tests.
 
 ## `RuleSetId` and per-book resolution
 
-`RuleSetId` (`src/rules_core/rules_tables/mod.rs`) currently has four
-populated variants plus a placeholder comment for future books:
+`RuleSetId` (`src/rules_core/rules_tables/mod.rs`) currently has **30**
+populated variants. **Corrected twice.** The 2026-08-11 pass raised this from
+"four populated variants plus a placeholder comment for future books" to 14,
+but that pass belonged to a closure the operator rescinded the same day
+(`SD-29 decisions.md §42`); sixteen further lane rounds ran afterwards and
+registered sixteen more rule sets. Re-derived at SD-29's real closure
+(2026-08-13) from the source with
+`sed -n '/pub enum RuleSetId/,/^}/p' src/rules_core/rules_tables/mod.rs` —
+each arm's own doc comment in that file is the authority on what it compiles,
+and several compile only ONE record family:
 
 ```rust
 pub enum RuleSetId {
-    Crb,
-    Apg,
-    Acg,
-    Bestiary1,
-    // future: Um, ...
+    Crb,            // Core Rulebook
+    Apg,            // Advanced Player's Guide
+    Acg,            // Advanced Class Guide
+    Bestiary1,      // Bestiary 1
+    Arg,            // Advanced Race Guide          (SD-27)
+    Pu,             // Pathfinder Unchained         (SD-27)
+    Uca,            // Ultimate Campaign            (SD-28)
+    Ui,             // Ultimate Intrigue            (SD-28)
+    Ue,             // Ultimate Equipment           (SD-28)
+    Uw,             // Ultimate Wilderness          (SD-28)
+    Uc,             // Ultimate Combat              (SD-28)
+    Um,             // Ultimate Magic               (SD-28)
+    Upsi,           // Ultimate Psionics (Dreamscarred Press, not Paizo)
+    BonusBestiary,  // Bonus Bestiary               (SD-29 E5 pilot: monster + monster_ability)
+    MonsterCodex,   // Monster Codex                (SD-29 E6 pilot; monster + disk-served race_trait)
+    Isr,            // Inner Sea Races              (SD-29 E6 r2; race_trait only)
+    Ha,             // Horror Adventures            (SD-29 E6 r3; race_trait + E5 r11 monster_ability)
+    Botd1,          // Book of the Damned, Vol. 1   (SD-29 E5 r2)
+    Botd2,          // Book of the Damned, Vol. 2   (SD-29 E5 r2)
+    Iswg,           // Inner Sea World Guide        (SD-29 E5 r3)
+    Ce,             // Core Essentials              (SD-29 E6 r4; race_trait heritage rows)
+    Isc,            // Inner Sea Combat             (SD-29 E7 pilot; companion ONLY)
+    Isi,            // Inner Sea Intrigue           (SD-29 E7 pilot extend; familiars)
+    B5,             // Bestiary 5                   (SD-29 E7 r2; companion ONLY — zero monsters)
+    B6,             // Bestiary 6                   (SD-29 E7 r2; companion ONLY — zero monsters)
+    B2,             // Bestiary 2                   (SD-29 E7 r2; companion family only)
+    B3,             // Bestiary 3                   (SD-29 E5 r5; monster + monster_ability)
+    B4,             // Bestiary 4                   (SD-29 E5 r6; monster + monster_ability)
+    Isb,            // Inner Sea Bestiary           (SD-29 E5 r7)
+    Isg,            // Inner Sea Gods               (SD-29 E5 r9)
 }
 ```
+
+**Registering a rule set is not the same as compiling a whole book**, and
+seven of the arms above prove it: `Isc`, `Isi`, `B5`, `B6` and `B2` compile a
+`companion` family and nothing else; `Isr` and `Ce` compile a disk-served
+`race_trait` family and nothing else. A book's presence in this enum states
+which families the engine has ingested from it, not that the book is done.
+Two of them — `B5` and `B6` — carry **zero** monsters at all, which is why
+their "bestiary" names are misleading and why a subtree check that assumes
+otherwise reports a false absence.
+
+`BonusBestiary` was the first arm to carry the merged `monster` +
+`monster_ability` chassis (`corpus-work-channels.md §9.2`); it is SD-29's Epic 5
+pilot book, and every monster-bearing book since has inherited that chassis
+rather than rebuilding it. The registry is
+`rules_tables::monster_chassis::MONSTER_BOOKS`, and it is iterated by every
+consumer — the work inventory, the corpus cache generator, the monster catalog,
+the reach gate — so registering a book there is the whole of the wiring cost.
+
+**One book is served by two tables, deliberately.** Bestiary 1's records live in
+`rules_tables::beastiary1` (SD-22: 46 hand-modelled stat blocks with
+natural-attack provenance, keyed `beastiary1:monster:<slug>`) *and* in
+`rules_tables::bestiary` (SD-29 Epic 5 round 8: the book's other 280 rows in the
+ordinary chassis shape, keyed `beastiary:monster:<slug>`). The two are disjoint
+and both reach the player under one wire code, `B1`. `decisions.md §58.3` records
+why the chassis sits alongside rather than absorbing: absorbing means retiring a
+shipped, grounded, player-visible key space across bundles. Three consequences
+are load-bearing for anyone touching this area:
+
+* `data/corpus/beastiary/monster/` holds **both** tables' records. They are told
+  apart by field — SD-22's carry `data.id`, chassis records carry `data.key` —
+  and `gen_book_cache` sweeps only the records whose key is in its own namespace
+  rather than clearing the directory.
+* `v06_work_inventory::EngineFacts::holds_key` grounds `bestiary_1` monsters from
+  the **union** of the two tables. Either half alone silently reports the other
+  half's records as `not-ingested`.
+* Assertions written about "Bestiary 1" before round 8 mean "the SD-22 table";
+  the wire code no longer separates them, so those tests filter on the key
+  namespace.
+
+The counts in this section's Bestiary 1 paragraphs below (41 monsters, subsets
+01-08) predate SD28-E16 subset 09 and this round; they are flagged rather than
+edited here, and `beastiary1::mod.rs`'s own roster doc comments are current.
 
 Each book's resolver function takes a book-scoped ID enum plus a
 `RuleSetId` and returns `None` immediately if the `RuleSetId` does not
@@ -269,6 +344,13 @@ book directories — `core_rulebook/`, `advanced_players_guide/`,
 `advanced_class_guide/`, `beastiary/`, plus `advanced_race_guide/` (637 JSON
 files) and `pathfinder_unchained/` (129 JSON files), the latter two added by
 SD-27/SD-28 ingest — and there are **eight** distinct writers, not four.
+
+**Updated 2026-08-11 (SD-29 Epic 11 closure).** `data/corpus/` now holds
+**seven** book directories: SD-29's Epic 5 monster-lane pilot added
+`bonus_bestiary/` (**32** JSON files across `monster/`, `monster_ability/`,
+plus its `LICENSE.json`), written by the existing `src/bin/gen_book_cache.rs`
+— no ninth writer was minted. Re-derived with `ls data/corpus/` and
+`find data/corpus/bonus_bestiary -name '*.json' | wc -l`.
 `ultimate_campaign` (the `Uca` rule set) has no corpus cache directory yet;
 its 23 feat records live only in `rules_tables::ultimate_campaign`.
 
@@ -277,8 +359,8 @@ Enumerated directly (grep every `CorpusRecordV1 {` / `CorpusRecord {` /
 
 - `src/rules_core/cache_gen/acg.rs`, `apg.rs`, `beastiary1.rs` — the three
   original per-book dump generators (SD-26 Epic 3 shape).
-- `src/bin/sd26_gen_core_rulebook_cache.rs` — CRB.
-- `src/bin/sd27_gen_book_cache.rs` — Pathfinder Unchained + Advanced Race
+- `src/bin/gen_core_rulebook_cache.rs` — CRB.
+- `src/bin/gen_book_cache.rs` — Pathfinder Unchained + Advanced Race
   Guide (both books share one binary).
 - `src/bin/ingest_races.rs`, `src/bin/ingest_pu_classes.rs`,
   `src/bin/ingest_race_traits_arg.rs` — the three later single-purpose
@@ -286,7 +368,7 @@ Enumerated directly (grep every `CorpusRecordV1 {` / `CorpusRecord {` /
 
 (`src/bin/gen_cache_apg.rs`, `gen_cache_acg.rs`, `gen_cache_beastiary.rs` are
 older, still-present binaries retained for historical/manual regeneration;
-`sd26_gen_core_rulebook_cache.rs` is the one wired into the current
+`gen_core_rulebook_cache.rs` is the one wired into the current
 regeneration path for CRB.)
 
 This is a **dump of the already-landed `rules_tables` module state, not a
@@ -312,7 +394,7 @@ Every one of the eight writers above now calls
 (`PI_BLACKLIST_TERMS`, asserted at exactly 55 by its own unit test). Before
 this convergence, the `license`/`pi_field`/`pi_marker` fields existed on disk
 **only** because a one-off post-hoc script
-(`scripts/sd27_apg_license_retrofit.py`) had stamped them after the fact —
+(`scripts/apg_license_retrofit.py`) had stamped them after the fact —
 any full regeneration silently destroyed that stamping, including
 un-redacting a record that had been marked `PI-REDACTED`. Five of the eight
 writers lacked the screening call before this cycle (`fix(ge): screen

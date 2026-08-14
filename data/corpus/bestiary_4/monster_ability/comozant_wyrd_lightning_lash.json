@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Comozant Wyrd ~ Lightning Lash",
+    "delivery": "Supernatural",
+    "description": "As a standard action that doesn't provoke attacks of opportunity, a comozant wyrd can shock any creature or object within 30 feet to which it has line of effect, dealing 2d8 electricity damage. The wyrd can choose for this damage to be nonlethal. If the target is also affected by the wyrd's illuminating flames, it is stunned for 1 round (Fortitude DC %1 negates) and the flames are dispelled.",
+    "description_variables": [
+      "12+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:comozant_wyrd_lightning_lash",
+    "name": "Lightning Lash",
+    "owners": [
+      "bestiary_4:monster:comozant_wyrd"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 421,
+    "record_key": "Comozant Wyrd ~ Lightning Lash"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

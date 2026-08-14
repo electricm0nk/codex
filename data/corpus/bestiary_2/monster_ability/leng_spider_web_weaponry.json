@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Leng Spider ~ Web Weaponry",
+    "delivery": "Extraordinary",
+    "description": "A Leng spider is talented at using its webs to construct masterwork weapons.  This technique of weapon creation allows the spider to effectively create a flail or bolas by attaching a heavy object such as a rock or chunk of metal to a cord of webbing.  The spider attaches one end of this webbing to a leg and can then wield the weighted cords as a masterwork flail or a masterwork bolas.  It can only wield one such weapon at a time - it must use its other legs to walk.  If a Leng spider drops or loses a web weapon, it can create a new one as a full-round action, provided it has access to heavy-weight objects of the correct size (such as loose rocks or skulls).",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:leng_spider_web_weaponry",
+    "name": "Web Weaponry",
+    "owners": [
+      "bestiary_2:monster:leng_spider"
+    ],
+    "source_page": "p.176",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 769,
+    "record_key": "Leng Spider ~ Web Weaponry"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

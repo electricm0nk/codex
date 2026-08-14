@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:18:46Z",
+  "data": {
+    "corpus_key": "Vermlek ~ Inhabit Body",
+    "delivery": "Supernatural",
+    "description": "A vermlek can crawl into the body of any dead Medium humanoid, consuming and replacing the bulk of the humanoid's skeleton and internal organs as it does so. This process takes 1d4 rounds for the vermlek to complete, during which it is considered flat-footed. Once the process is complete, the vermlek appears for all practical purposes to be a living but hideously obese version of the previous humanoid--it gains a +8 racial bonus on Disguise checks to appear as a normal humanoid while wearing a dead body in this manner, but does not gain any of the abilities that the dead creature possessed in life, including natural attacks, unusual movement types, or bonuses to natural armor. It loses its own burrow speed while inhabiting a body, but gains the ability to wield weapons or wear armor shaped for humanoids (although note that the armor bonus granted by wearing armor does not stack with the bonus granted by the vermlek's flesh armor ability).",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "book_of_the_damned_volume_2:monster_ability:vermlek_inhabit_body",
+    "name": "Inhabit Body",
+    "owners": [
+      "book_of_the_damned_volume_2:monster:demon_vermlek"
+    ],
+    "source_page": "p.54",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
+    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf",
+    "line": 31,
+    "record_key": "Vermlek ~ Inhabit Body"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

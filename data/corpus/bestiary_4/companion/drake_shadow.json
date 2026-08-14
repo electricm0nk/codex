@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T22:19:24Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:companion:drake_shadow_shadow_blend",
+      "bestiary_4:companion:drake_shadow_speed_surge",
+      "bestiary_4:companion:drake_shadow_stygian_breath"
+    ],
+    "corpus_key": "Drake (Shadow)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:companion:drake_shadow",
+    "monster_class": "Dragon:3",
+    "name": "Shadow Drake",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Cold",
+    "race_type": "Dragon",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.80",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 90,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -2
+      },
+      {
+        "ability": "DEX",
+        "amount": 10
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": 6
+      }
+    ],
+    "type_segments": [
+      "Dragon"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_companion.lst",
+    "sha256": "a25e07ccc8202a4b84238383d652ae7e30128569cb949455c7c621d1743146c5",
+    "line": 40,
+    "record_key": "Drake (Shadow)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

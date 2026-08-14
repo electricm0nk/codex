@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Hypnalis ~ Poison",
+    "delivery": "Supernatural",
+    "description": "If a hypnalis poisons an ethereal creature while on the Ethereal Plane (including creatures under the effects of spells or effects that grant etherealness such as ethereal jaunt), the creature is immediately forced onto the Material Plane and takes the specified Constitution damage. Creatures on the Material Plane are affected by this poison as normal. Hypnalis Venom: Bite-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d3 Con and effects listed above; cure 2 consecutive saves.",
+    "description_variables": [
+      "13+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:hypnalis_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_4:monster:hypnalis"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 883,
+    "record_key": "Hypnalis ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

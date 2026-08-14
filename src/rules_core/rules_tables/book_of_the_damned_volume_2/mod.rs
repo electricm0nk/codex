@@ -1,0 +1,182 @@
+//! Lords of Chaos — Book of the Damned, Volume 2 (`SOURCESHORT:BOTD2`) —
+//! `monster` + `monster_ability`.
+//!
+//! # Why this book
+//!
+//! The second of exactly two remaining books in the lane with **zero orphan
+//! ability rows**. Re-derived rather than transcribed:
+//!
+//! ```text
+//! python3 scripts/classify_monster_ability_rows.py book_of_the_damned_volume_2
+//! book                          mon  abil row-named prefix ORPHAN
+//! book_of_the_damned_volume_2     4    17        17      0      0
+//! ```
+//!
+//! # The token shape this book found: a row with TWO `DESC:` tokens
+//!
+//! **15 of its 17 ability rows carry two**, one gated
+//! `!PRERULE:1,DisplayFullAbility` (a one-line summary) and one gated
+//! `PRERULE:1,DisplayFullAbility` (the complete rules text). Bonus Bestiary and
+//! Monster Codex carry one `DESC:` per row, so the transcriber took the first
+//! match — which on these rows is the **summary**.
+//!
+//! Left unhandled, `Seraptis ~ Gaze of Despair`
+//! (`botd2_abilities_race.lst:17`) would have reached the catalog as *"fills
+//! the minds of those within %1 feet with overwhelming and soul-crushing
+//! despair"* and never mentioned the Will save, the Charisma drain, or the
+//! suicidal state the ability actually causes. A player would have read a
+//! caption where the rule belongs. `parse_desc` now selects the full-text token
+//! when a row states both, and refuses to pick by position when a row carries
+//! several `DESC:` tokens under some other gate.
+//!
+//! The same rows found a second, quieter defect in the same parser: it filtered
+//! `PRERULE:…` out of the trailing variable list but not `!PRERULE:…`, so the
+//! negated gate landed in
+//! [`MonsterAbilityRecord::description_variables`] as though it were a formula
+//! variable. Neither previously ingested book carries the shape; corpus-wide it
+//! occurs on 650 `DESC:` tokens across the `*_abilities_race*.lst` files.
+//!
+//! # `TYPE:` traits beyond facet and delivery
+//!
+//! This is also the first chassis book whose rows carry trait segments —
+//! `Aura` (2 rows) and `Defensive` (5) — which the chassis keeps verbatim in
+//! [`MonsterAbilityRecord::traits`] rather than discarding.
+
+mod monster_data;
+
+pub use super::monster_chassis::{
+    MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
+    NaturalAttack, Speed,
+};
+
+/// Every monster stat block this book defines, in corpus row order.
+pub const fn monsters_static() -> &'static [MonsterStatBlock] {
+    monster_data::MONSTERS
+}
+
+/// Every monster-ability record this book defines, in corpus row order.
+pub const fn monster_abilities_static() -> &'static [MonsterAbilityRecord] {
+    monster_data::MONSTER_ABILITIES
+}
+
+/// Every monster stat block this book defines, in corpus row order.
+pub fn monsters() -> &'static [MonsterStatBlock] {
+    monsters_static()
+}
+
+/// Every monster-ability record this book defines, in corpus row order.
+pub fn monster_abilities() -> &'static [MonsterAbilityRecord] {
+    monster_abilities_static()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Both counts come from `docs/work-inventory.json`'s units for this book,
+    /// never a line count over the `.lst`:
+    /// `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+    /// print(sum(1 for u in d['units'] if
+    /// u['book']=='book_of_the_damned_volume_2' and u['kind']=='monster'))"`
+    /// -> 4, and the same for `monster_ability` -> 17.
+    #[test]
+    fn the_book_defines_four_monsters_and_seventeen_abilities() {
+        assert_eq!(monsters().len(), 4);
+        assert_eq!(monster_abilities().len(), 17);
+    }
+
+    /// Verbatim spot-check against `botd2_races.lst:7`.
+    #[test]
+    fn the_vermlek_matches_its_corpus_row() {
+        let demon = monsters()
+            .iter()
+            .find(|m| m.key == "Demon (Vermlek)")
+            .expect("Demon (Vermlek) is in this book");
+        assert_eq!(demon.source_line, 7);
+        assert_eq!(demon.size, Some("M"));
+        assert_eq!(demon.challenge_rating, Some("3"));
+        assert_eq!(demon.monster_class, Some("Outsider (Fort/Will):4"));
+        assert_eq!(demon.race_subtype, Some("Chaotic|Demon|Evil|Extraplanar"));
+        assert_eq!(demon.source_page, Some("p.54"));
+        assert_eq!(
+            demon.speeds,
+            &[
+                Speed { mode: "Walk", feet: 30 },
+                Speed { mode: "Burrow", feet: 20 },
+            ]
+        );
+        assert_eq!(
+            demon.ability_keys,
+            &[
+                "Vermlek ~ Abandon Flesh",
+                "Vermlek ~ Flesh Armor",
+                "Vermlek ~ Inhabit Body",
+                "Vermlek ~ Negative Energy Affinity",
+            ]
+        );
+    }
+
+    /// The two-`DESC:` row, pinned by content rather than by length: the served
+    /// text is the one that states the mechanic, and the summary the corpus
+    /// gates on `!PRERULE:1,DisplayFullAbility` is NOT what reaches a player.
+    ///
+    /// Checkable against `botd2_abilities_race.lst:17`, which carries both.
+    #[test]
+    fn a_two_desc_row_serves_the_full_rules_text_not_the_summary() {
+        let gaze = monster_abilities()
+            .iter()
+            .find(|a| a.key == "Seraptis ~ Gaze of Despair")
+            .expect("Gaze of Despair is in this book");
+        assert_eq!(gaze.source_line, 17);
+        let description = gaze.description.expect("the row carries a DESC: token");
+        assert!(
+            description.contains("Will save") && description.contains("Charisma drain"),
+            "the summary DESC: was served instead of the full rules text: {description}"
+        );
+        // The summary's variable list is `GazeAuraRange` alone; the full text's
+        // `%2` needs the DC as well, so the variable list moves with the text.
+        assert_eq!(gaze.description_variables, &["GazeAuraRange", "GazeAuraDC"]);
+    }
+
+    /// No record's variable list carries a prerequisite in either polarity. The
+    /// negated spelling is the one that leaked, and a record whose "variables"
+    /// include `!PRERULE:1,DisplayFullAbility` is stating something false about
+    /// what its `%N` refer to.
+    #[test]
+    fn no_variable_list_carries_a_prerequisite_token() {
+        for ability in monster_abilities() {
+            for variable in ability.description_variables {
+                assert!(
+                    !variable.trim_start_matches('!').starts_with("PRE"),
+                    "{}: {variable:?} is a prerequisite, not a description variable",
+                    ability.key
+                );
+            }
+        }
+    }
+
+    /// `Aura` and `Defensive` are `TYPE:` segments that are neither facet nor
+    /// delivery. This is the first chassis book to carry any, and they are kept
+    /// rather than discarded.
+    #[test]
+    fn type_segments_beyond_facet_and_delivery_are_kept() {
+        let traits: Vec<&str> = monster_abilities()
+            .iter()
+            .flat_map(|a| a.traits.iter().copied())
+            .collect();
+        assert!(traits.contains(&"Aura"), "expected an Aura-typed row");
+        assert!(traits.contains(&"Defensive"), "expected a Defensive-typed row");
+    }
+
+    /// Every ability row of this book is owned by a monster row of this book.
+    #[test]
+    fn no_ability_row_of_this_book_is_an_orphan() {
+        for ability in monster_abilities() {
+            assert!(
+                !ability.owners.is_empty(),
+                "{} reaches no monster and would load without ever being shown",
+                ability.key
+            );
+        }
+    }
+}

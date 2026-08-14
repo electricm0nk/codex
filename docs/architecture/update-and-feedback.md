@@ -8,7 +8,7 @@ Both subsystems share one ethos, stated verbatim in multiple places in the sourc
 
 ## Self-update chain
 
-All paths below are under `apps/desktop/src/sd16/update/` unless noted.
+All paths below are under `apps/desktop/src/update/` unless noted.
 
 **`updateModel.ts`** is the shared contract the UI renders against: `UPDATE_CHANNEL_OPTIONS = ['alpha', 'beta', 'stable']` (this exact order — the release-promotion order, not a stability order); `InstalledState`, `LastCheckState`, and `PendingRollbackState` are the three state shapes threaded through `UpdateControllerDeps`. The `UpdateController` interface (`runCheck`/`computeEligibility`/`disabledReason`/`releaseNotes`) is the dependency seam: the UI (`Ui.tsx`) never calls a fetcher or `invoke()` itself, only this interface. Until a real controller is supplied, `buildUnwiredUpdateDeps()` provides a deterministic "not wired" controller so the UI never fabricates an eligibility verdict before a real one exists.
 

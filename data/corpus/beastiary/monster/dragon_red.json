@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "6",
+    "corpus_key": "Dragon (Red)",
+    "external_ability_refs": [],
+    "key": "beastiary:monster:dragon_red",
+    "monster_class": "Dragon:7",
+    "name": "Dragon (Red)",
+    "natural_attacks": [],
+    "race_subtype": "Fire",
+    "race_type": "Dragon",
+    "size": "T",
+    "source_page": "p.98",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 131,
+    "record_key": "Dragon (Red)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

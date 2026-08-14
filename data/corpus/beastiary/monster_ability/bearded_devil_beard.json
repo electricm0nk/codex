@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Bearded Devil ~ Beard",
+    "delivery": "Extraordinary",
+    "description": "If a bearded devil hits a single opponent with both claw attacks, it also lashes at the same target with its spiky, filthy beard. The victim takes 1d8+2 points of damage and must succeed on a DC %1 Fortitude save or contract devil chills. Devil Chills: Disease--injury; save Fort DC %1; onset 1d4 days; frequency 1/day; effect 1d4 Str damage; cure 3 consecutive saves.",
+    "description_variables": [
+      "BeardDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:bearded_devil_beard",
+    "name": "Beard",
+    "owners": [
+      "beastiary:monster:devil_bearded"
+    ],
+    "source_page": "p.73",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 338,
+    "record_key": "Bearded Devil ~ Beard"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

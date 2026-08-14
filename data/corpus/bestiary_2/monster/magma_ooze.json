@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:magma_ooze_fire",
+      "bestiary_2:monster_ability:magma_ooze_lava_body"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Magma Ooze",
+    "external_ability_refs": [
+      "Burn",
+      "Can't Be Tripped",
+      "Constrict",
+      "Grab ~ Slam",
+      "Immunity to Fire",
+      "Magma Ooze ~ Vulnerability to Water",
+      "Split ~ Magma Ooze"
+    ],
+    "key": "bestiary_2:monster:magma_ooze",
+    "monster_class": "Ooze:9",
+    "name": "Magma Ooze",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Fire",
+    "race_type": "Ooze",
+    "size": "L",
+    "source_page": "p.184",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 10,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 591,
+    "record_key": "Magma Ooze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

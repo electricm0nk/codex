@@ -1,0 +1,110 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:47:16Z",
+  "data": {
+    "key": "Half-Elf ~ Kindred-Raised",
+    "name": "Kindred-Raised",
+    "race_key": "Half-Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Elf Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "HalfElf_ReplaceAbilityScores",
+      "HalfElf_ReplaceAdaptability",
+      "HalfElf_ReplaceElvenImmunities",
+      "HalfElf_ReplaceKeenSenses",
+      "HalfElf_ReplaceMultitalented"
+    ],
+    "description": "While most think of people with one human and one elven parent when they think of half-elves, some half-elves are raised by two half-elven parents. Such half-elves feel less like outsiders, making them more confident, but less adaptable without the exposure to a human parent. They gain a +2 bonus to Charisma and one other ability score of their choice. This racial trait replaces the half-elf's usual racial ability score modifiers, as well as adaptability, elven immunities, keen senses, and multitalented.",
+    "source_page": "p.212",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf ~ Kindred-Raised"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Kindred-Raised],[!PREFACT:1,ABILITIES,HalfElf_ReplaceAbilityScores=true,HalfElf_ReplaceAdaptability=true,HalfElf_ReplaceElvenImmunities=true,HalfElf_ReplaceKeenSenses=true,HalfElf_ReplaceMultitalented=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "While most think of people with one human and one elven parent when they think of half-elves, some half-elves are raised by two half-elven parents. Such half-elves feel less like outsiders, making them more confident, but less adaptable without the exposure to a human parent. They gain a +2 bonus to Charisma and one other ability score of their choice."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the half-elf's usual racial ability score modifiers, as well as adaptability, elven immunities, keen senses, and multitalented.|!PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Kindred-Raised"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Bonus|AUTOMATIC|+2 Charisma"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceAbilityScores|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceAdaptability|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceElvenImmunities|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceKeenSenses|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceMultitalented|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Ability Bonus",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 125,
+    "record_key": "Half-Elf ~ Kindred-Raised"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

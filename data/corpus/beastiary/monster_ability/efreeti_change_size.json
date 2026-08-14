@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Efreeti ~ Change Size",
+    "delivery": "SpellLike",
+    "description": "Twice per day, an efreeti can magically change a creature's size. This works just like an enlarge person or reduce person spell (the efreeti chooses when using the ability), except that the ability can work on the efreeti. A DC %1 Fortitude save negates the effect. This is the equivalent of a 2nd-level spell.",
+    "description_variables": [
+      "EfreetiChangeSizeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:efreeti_change_size",
+    "name": "Change Size",
+    "owners": [
+      "beastiary:monster:genie_efreeti",
+      "beastiary:monster:genie_efreeti_noble"
+    ],
+    "source_page": "p.140",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 644,
+    "record_key": "Efreeti ~ Change Size"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

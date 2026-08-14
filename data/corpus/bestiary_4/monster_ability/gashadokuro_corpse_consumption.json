@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Gashadokuro ~ Corpse Consumption",
+    "delivery": "Supernatural",
+    "description": "A gashadokuro that kills creature by using its swallow whole special ability automatically consumes its victim's body and regains a number of hit points equal to the victim's Constitution score. Consumed creatures cannot be resurrected by any effect short of a miracle or wish spell until the gashadokuro is destroyed.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:gashadokuro_corpse_consumption",
+    "name": "Corpse Consumption",
+    "owners": [
+      "bestiary_4:monster:gashadokuro"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 745,
+    "record_key": "Gashadokuro ~ Corpse Consumption"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

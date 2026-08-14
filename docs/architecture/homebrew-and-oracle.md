@@ -81,7 +81,7 @@ to write anything unless `validation_state == PackageValidationState::Valid`.
 that this three-way split exists so the bridge "never" returns "a counterfeit
 success." `classify_posture` decides which: `Blocked` if the manifest's
 `ProofBinding` doesn't match the one fixed GE08-E1 binding
-(`GE08_E1_CASE_ID`/`SLOT`/`REMOVE`/`ADD` constants), or the feat/effect
+(`HOMEBREW_PROOF_CASE_ID`/`SLOT`/`REMOVE`/`ADD` constants), or the feat/effect
 records are missing, or (checked after the widening test below) the package
 still carries any other claim-blocking diagnostic from `recompute_validation`;
 `Unsupported` if a structurally valid effect targets a recognized
@@ -89,7 +89,7 @@ derived-value family (`RECOGNIZED_DERIVED_FAMILIES`) other than
 the one this slice supports, `"armor_class"`; `Supported` otherwise.
 
 On `Supported`, the bounded AC computation is:
-`GE06_BASE_ARMOR_CLASS_WITHOUT_BONUS_FEAT_SLOT (16) + effect.modifier_value`.
+`BASE_ARMOR_CLASS_WITHOUT_BONUS_FEAT_SLOT (16) + effect.modifier_value`.
 The doc comment on that constant and the module-level doc comment both explain
 why 16, not a re-run of the real combat path: GE-06's deterministic AC
 baseline of 17 is grounded with Dodge already selected into the bonus-feat
@@ -106,10 +106,10 @@ the preview itself is refused.
 No UI beyond the one headless workbench-snapshot command described below; no
 plugin runtime; no widened package-authoring surface beyond the one proof
 package's feat/effect/prerequisite shape. The desktop reaches this substrate
-through exactly one command: `load_ge08_authoring_workbench_snapshot` in
+through exactly one command: `load_authoring_workbench_snapshot` in
 `apps/desktop/src-tauri/src/main.rs`, a thin wrapper around
-`ge08_workbench::build_ge08_workbench_snapshot` (in
-`apps/desktop/src-tauri/src/ge08_workbench.rs`), which itself calls
+`authoring_workbench::build_ge08_workbench_snapshot` (in
+`apps/desktop/src-tauri/src/authoring_workbench.rs`), which itself calls
 `PreviewBridge::preview_from_root` and `PackageStore::load` and maps the
 result into desktop DTOs, deriving only two UI lifecycle-gate booleans
 (`preview_allowed`, `export_allowed`) directly from the headless validation
@@ -266,5 +266,5 @@ drives the full comparator harness against a real `.pcg` build;
 `tests/ge08_preview_bridge.rs`,
 `tests/ge08_package_file_lifecycle.rs`, and
 `tests/ge08_validation_and_diagnostics.rs` cover `homebrew_authoring/`, with
-fixture data under `tests/fixtures/ge08/`. See
+fixture data under `tests/fixtures/authoring_workbench/`. See
 [testing.md](./testing.md) for the repo's test-layout conventions generally.

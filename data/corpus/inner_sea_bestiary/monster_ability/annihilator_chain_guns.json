@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Annihilator ~ Chain Guns",
+    "delivery": "Extraordinary",
+    "description": "These advanced firearms have a range increment of 200 feet, automatically reload as a free action, and never misfire. An annihilator's core can process scrap metal into new ammunition, effectively giving the annihilator infinite ammo with these weapons.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:annihilator_chain_guns",
+    "name": "Chain Guns",
+    "owners": [
+      "inner_sea_bestiary:monster:robot_annihilator"
+    ],
+    "source_page": "p.43",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 290,
+    "record_key": "Annihilator ~ Chain Guns"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

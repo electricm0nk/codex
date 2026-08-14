@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Peluda ~ Vulnerable Tail",
+    "delivery": "Supernatural",
+    "description": "A peluda is vulnerable to attacks against its tail. Any attack that is not an attempt to sever the peluda's tail (including area attacks or attacks that cause piercing or bludgeoning damage) affects its body. To sever the tail, an opponent must target the tail and attempt a sunder combat maneuver with a slashing weapon. The tail is considered a separate weapon with hardness 5 and %1 hit points. The opponent must deal enough damage on a single blow to reduce the tail's hit points to 0 or fewer. If the tail is severed, the peluda can no longer attack with it and takes 2d6 points of bleed damage each round.",
+    "description_variables": [
+      "HD"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:peluda_vulnerable_tail",
+    "name": "Vulnerable Tail",
+    "owners": [
+      "bestiary_4:monster:peluda"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1161,
+    "record_key": "Peluda ~ Vulnerable Tail"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -39,17 +39,25 @@ never fully "completes" in the sense of blocking dispatch — it clears classes
 incrementally and epic-5/epic-6 cycles begin per class as soon as their class
 is cleared).
 
+**Widened 2026-08-13 (`decisions.md §43`):** `epic-0-instrument-apply` is inserted at the top of the
+claim-priority order — cheapest lever in the bundle (data already in the engine, instruments already
+built by the former SD-32, no new ingest required). It runs independently of the `epic-1`..`epic-9`
+`class_feature` chain below (different files: dashboard-producer/instrument code and cross-kind
+application vs. `class_feature` rules-tables content) and does not gate or get gated by it.
+
 | ID | Status | Epic | Cycle-type | Claimed-by | Claimed-at | Cycle-id |
 |----|--------|------|-----------|------------|------------|----------|
+| `epic-0-instrument-apply` | READY | Apply Existing Instruments to `held` | `done`-rung build (static/derived) + computed-bucket consumer-delta probes, corpus-wide + `unknown`-residue characterization (`feat`) + re-derivation reporting | — | — | — |
 | `epic-1-identifier` | READY | Code-Side Identifier Cleanup | identifier-discipline audit pass | — | — | — |
 | `epic-2-prelaunch` | READY (gated on epic-1) | Operator Pre-Launch | local-file dispatch readiness + cycle-0 trap-report + work-inventory (23-book `class_feature` re-derivation) | — | — | — |
-| `epic-3-pi-gate` | READY (gated on epic-1, epic-2) | PI-Screening Provenance Gate | per-class PI-blacklist sweep wired in, standing gate for epic-6 | — | — | — |
+| `epic-3-pi-gate` | READY (gated on epic-1, epic-2) | PI-Screening Provenance Gate | per-class PI-blacklist sweep (SD30-E3-F1) + declared-PI reader wired into class_feature ingest (SD30-E3-F2, `decisions.md §39`) + corpus-wide declared-PI backfill (SD30-E3-F3) + regression gate (SD30-E3-F4) — F2 hard-blocks epic-6, no chassis-sweep cycle may claim a class before F2 is COMPLETE | — | — | — |
 | `epic-4-measurement` | READY (gated on epic-1, epic-2) | Per-Class Archetype Measurement | class inventory + per-class hand-verification + chooser-primitive design + `unknown`-bucket characterization | — | — | — |
 | `epic-5-mechanism` | READY (per-class, gated on epic-3, epic-4 clearing the target class) | Archetype Mechanism | supersession-shape wiring per cleared class; chooser-shape wiring once epic-4-F3 lands | — | — | — |
 | `epic-6-chassis-sweep` | READY (per-class, gated on epic-3, epic-4 and epic-5 clearing the target class) | Per-Class Chassis Sweep | per-class `class_feature` ingest across the 23 in-scope books, reach-gate claim per record | — | — | — |
 | `epic-7-version` | READY (gated on epic-1) | Build Version Numbering | first concrete value `0.10.<build>` | — | — | — |
 | `epic-8-code-review` | READY (gated on epic-5, epic-6, epic-7) | Bundle Code Review | full-bundle diff review vs. branch point (`decisions.md §26`) | — | — | — |
 | `epic-9-closure` | READY (gated on every other card) | Closure Epilogue | tranche promotion PR | — | — | — |
+| `epic-10-ingest-lanes` | READY (gated on epic-1, epic-2; each F-card hard-blocked on epic-3 for its target book, `decisions.md §44`) | Corpus-Wide Ingest Lanes, folded from SD-29 | per-kind ingest: SD30-E10-F1 `monster`, F2 `spell`, F3 `race`, F4 `race_trait` — each runs the raw-vs-workable split + pre-cycle classifier screen before claiming a book (SD-29 lessons, `decisions.md §44`) | — | — | — |
 
 ## Retired cards (sixteen-book era, 2026-08-01 to 2026-08-10) — historical record, not claimable
 
@@ -79,6 +87,23 @@ When a cycle claims a card:
    clearance before claiming — the card-level `IN-FLIGHT`/`COMPLETE` status
    tracks the epic as a whole; individual class slices are tracked in
    `progress.md`.
+
+## Ordering check (2026-08-13, `decisions.md §44`) — Epic 10 fold
+
+`epic-10-ingest-lanes` and its four F-cards are hard-gated on `epic-3-pi-gate` exactly as
+`epic-6-chassis-sweep` is — the fold widens which kinds' ingest is subject to the PI-screening gate,
+it does not create a bypass. `epic-10` is otherwise independent of the `class_feature` E4/E5/E6 chain
+(different kinds; file-disjoint in the common case) and does not gate or get gated by it, mirroring
+`epic-0-instrument-apply`'s standing independence.
+
+## Ordering check (2026-08-13, `decisions.md §41-§42`)
+
+Re-verified: `epic-3-pi-gate` (PI-screening, including the 2026-08-13 declared-PI cards
+SD30-E3-F2/F3/F4) still hard-blocks `epic-6-chassis-sweep` in the table above, and `epic-4-measurement`
+still gates both `epic-5-mechanism` and `epic-6-chassis-sweep` per class. SD-32's corpus-wide
+`static`/`derived` gates (`decisions.md §41`) do not change this order — they are consumed by running
+`./scripts/verify.sh` per `AT-30-002`, already a standing per-cycle requirement, not a new card. No
+reordering needed.
 
 ## Operator override slot
 

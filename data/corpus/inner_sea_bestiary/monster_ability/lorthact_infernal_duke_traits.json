@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Lorthact ~ Infernal Duke Traits",
+    "delivery": null,
+    "description": "An infernal duke is a powerful devil that has not yet made the full transition from unique devil to full archdevil. Lorthact's natural weapons, as well as any weapon he wields, are treated as evil and lawful for the purpose of overcoming damage reduction.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:lorthact_infernal_duke_traits",
+    "name": "Infernal Duke Traits",
+    "owners": [
+      "inner_sea_bestiary:monster:lorthact"
+    ],
+    "source_page": "p.26",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 195,
+    "record_key": "Lorthact ~ Infernal Duke Traits"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

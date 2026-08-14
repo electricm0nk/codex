@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Kraken ~ Ink Cloud",
+    "delivery": "Extraordinary",
+    "description": "A kraken can emit a cloud of black, venomous ink in an 80-foot spread once per minute as a free action while underwater. This cloud provides total concealment, which the kraken can use to escape a fight that is going badly. Creatures within the cloud are considered to be in darkness. In addition, the ink is toxic, functioning as contact poison against all creatures caught within it. The ink cloud persists for 1 minute before dispersing. Kraken Ink; Ink cloud--contact; save Fort DC %1; frequency 1/round for 10 rounds; effect 1 Str damage plus nausea; cure 2 consecutive saves.",
+    "description_variables": [
+      "InkCloudDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:kraken_ink_cloud",
+    "name": "Ink Cloud",
+    "owners": [
+      "beastiary:monster:kraken"
+    ],
+    "source_page": "p.184",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 808,
+    "record_key": "Kraken ~ Ink Cloud"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

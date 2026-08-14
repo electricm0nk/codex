@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "corpus_key": "Yethazmari ~ Poison Gout",
+    "delivery": "Supernatural",
+    "description": "The Yethazmari's snake tail can shoot a gout of poison as a ranged touch attack against a single foe, dealing 6d10 acid damage plus exposing them to its poison.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:yethazmari_poison_gout",
+    "name": "Poison Gout",
+    "owners": [
+      "inner_sea_gods:monster:yethazmari"
+    ],
+    "source_page": null,
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 201,
+    "record_key": "Yethazmari ~ Poison Gout"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

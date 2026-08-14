@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Cauchemar Nightmare ~ Smoke",
+    "delivery": "Supernatural",
+    "description": "In battle, a nightmare exhales smoke that chokes and blinds foes, filling a 15-foot cone each round as a free action. Anyone in the cone must succeed on a DC %1 Fortitude save or become sickened until 1d6 minutes after leaving the area. This smoke acts as obscuring mist for the purposes of concealment. The smoke persists for 1 round. The save DC is Constitution-based.",
+    "description_variables": [
+      "NightmareSmokeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:cauchemar_nightmare_smoke",
+    "name": "Smoke",
+    "owners": [
+      "beastiary:monster:nightmare_cauchemar"
+    ],
+    "source_page": "p.216",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 993,
+    "record_key": "Cauchemar Nightmare ~ Smoke"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

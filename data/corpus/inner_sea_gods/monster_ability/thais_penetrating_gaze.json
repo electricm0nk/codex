@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "corpus_key": "Thais ~ Penetrating Gaze",
+    "delivery": "Supernatural",
+    "description": "Lawful opponents within 30 feet take 5d6 damage and are dazed for 1 round. A successful DC %1 Will save halves the damage and negates the daze effect.",
+    "description_variables": [
+      "ThaisGazeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:thais_penetrating_gaze",
+    "name": "Penetrating Gaze",
+    "owners": [
+      "inner_sea_gods:monster:thais"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 125,
+    "record_key": "Thais ~ Penetrating Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

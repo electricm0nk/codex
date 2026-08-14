@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:swan_maiden_feather_cloak",
+      "bestiary_4:monster_ability:swan_maiden_transformation_ritual"
+    ],
+    "challenge_rating": "6",
+    "corpus_key": "Swan Maiden",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:swan_maiden",
+    "monster_class": "Fey:10",
+    "name": "Swan Maiden",
+    "natural_attacks": [],
+    "race_subtype": "Shapechanger",
+    "race_type": "Fey",
+    "size": "M",
+    "source_page": "p.257",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 224,
+    "record_key": "Swan Maiden"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

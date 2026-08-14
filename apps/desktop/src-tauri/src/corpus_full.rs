@@ -33,7 +33,7 @@ use codex::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
 use codex::rules_core::source_content::{SourceContentKind, SourcePackageContent};
 
 use crate::corpus_fixtures::corpus_fixture_bundle;
-use crate::ge08_workbench::codex_repo_root;
+use crate::authoring_workbench::codex_repo_root;
 
 const BOOKS: &[&str] = &[
     "core_rulebook",

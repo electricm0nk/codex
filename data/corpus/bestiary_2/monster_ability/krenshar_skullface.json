@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Krenshar ~ Skullface",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a krenshar can pull the skin back from its face, revealing the musculature and bony structures of its skull.  This counts as using Intimidate to demoralize an opponent, and is an extraordinary ability.  The krenshar can emit a loud screech while peeling back its skin, causing potent fear in a single creature within 100 feet that can see the krenshar.  The target creature must make a DC %1 Will save or become frightened (if the target has 6 or fewer Hit Dice) or shaken (if the target has more than 6 Hit Dice) for 1d4 rounds.  A creature that successfully saves cannot be affected again by the same krenshar's skullface ability for 24 hours.  This is a sonic, mind-affecting fear effect.",
+    "description_variables": [
+      "KrensharSkullfaceDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:krenshar_skullface",
+    "name": "Skullface",
+    "owners": [
+      "bestiary_2:monster:krenshar"
+    ],
+    "source_page": "p.174",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 758,
+    "record_key": "Krenshar ~ Skullface"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

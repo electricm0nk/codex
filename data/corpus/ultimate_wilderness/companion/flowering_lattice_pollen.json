@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Flowering Lattice ~ Pollen",
+    "delivery": "Extraordinary",
+    "description": "Once every 1d4 rounds, a flowering lattice can expel a cloud of pollen in a 10-foot cone. Creatures in the area are dazzled for 2 rounds (Fortitude DC %1 negates). If a creature currently dazzled by the pollen is affected again, it is blinded for 1 round (Fortitude DC %1 negates).",
+    "description_variables": [
+      "12+HD/2+CON"
+    ],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:flowering_lattice_pollen",
+    "name": "Pollen",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_flowering_lattice",
+      "ultimate_wilderness:companion:flowering_lattice"
+    ],
+    "record_type": "ability",
+    "source_page": "p.196",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "FloweringLatticeRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 238,
+    "record_key": "Flowering Lattice ~ Pollen"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

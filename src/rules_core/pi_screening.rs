@@ -2,11 +2,11 @@
 //! `docs/governance/ogl-pi-blacklist.md` and `decisions.md §17`.
 //!
 //! **Why this module exists.** Before it did, the same 54-term blacklist
-//! (`sd27_gen_book_cache.rs`'s `PI_BLACKLIST_TERMS`/`classify_field`,
+//! (`gen_book_cache.rs`'s `PI_BLACKLIST_TERMS`/`classify_field`,
 //! `ingest_pu_classes.rs`'s and `ingest_races.rs`'s own
 //! `PI_BLACKLIST_TERMS`/`pi_hits`) was forked three times, independently.
 //! Three of the five corpus-cache writers had NO screening at all
-//! (CRB's `sd26_gen_core_rulebook_cache.rs`, ACG/APG/Bestiary 1's
+//! (CRB's `gen_core_rulebook_cache.rs`, ACG/APG/Bestiary 1's
 //! `cache_gen::{acg,apg,beastiary1}`), so their `license`/`pi_field`/
 //! `pi_marker` fields only ever existed on disk via a post-hoc retrofit
 //! pass the generator itself knew nothing about — the exact failure
@@ -22,13 +22,13 @@
 //! The term list itself is a bounded, documented heuristic
 //! (`docs/governance/ogl-pi-blacklist.md` — DRAFT, operator-reviewable),
 //! not an exhaustive legal review. It is reproduced here byte-for-byte
-//! from `sd27_gen_book_cache.rs::PI_BLACKLIST_TERMS`, the most complete
+//! from `gen_book_cache.rs::PI_BLACKLIST_TERMS`, the most complete
 //! of the three existing copies (20 deities + 34 place/nation names).
 
 use crate::rules_core::shape_b_v1::{License, PI_MARKER_REDACTED, REDACTED_PI_MARKER};
 
 /// The 20 canonical core Golarion deities plus 34 sampled setting
-/// place/nation names — byte-identical to `sd27_gen_book_cache.rs`'s copy.
+/// place/nation names — byte-identical to `gen_book_cache.rs`'s copy.
 pub const PI_BLACKLIST_TERMS: &[&str] = &[
     "Iomedae", "Sarenrae", "Asmodeus", "Cayden Cailean", "Abadar", "Calistria", "Desna", "Erastil", "Gorum", "Gozreh",
     "Irori", "Lamashtu", "Nethys", "Norgorber", "Pharasma", "Rovagug", "Shelyn", "Torag", "Urgathoa", "Zon-Kuthon",
@@ -52,7 +52,7 @@ pub const PI_BLACKLIST_TERMS: &[&str] = &[
 /// value, per the PI-blacklist screen. A substring hit on any blacklist
 /// term redacts the whole value to the literal marker
 /// [`REDACTED_PI_MARKER`]; no hit is plain OGL. Mirrors
-/// `sd27_gen_book_cache.rs::classify_field` exactly.
+/// `gen_book_cache.rs::classify_field` exactly.
 pub fn classify_field(field_name: &str, value: &str) -> (License, Option<String>, Option<String>, String) {
     for term in PI_BLACKLIST_TERMS {
         if value.contains(term) {
@@ -88,6 +88,109 @@ pub fn classify_optional_field(
 /// per `ogl-pi-blacklist.md` §2.2, nothing to scan.
 pub fn blanket_ogl() -> (License, Option<String>, Option<String>) {
     (License::Ogl, None, None)
+}
+
+// --- PCGen's own per-record declaration ------------------------------------
+
+/// What a PCGen row says about *itself*, read from its own tokens.
+///
+/// [`PI_BLACKLIST_TERMS`] above is a heuristic this program assembled — 55
+/// names, documented as a bounded sample rather than a legal review. The corpus
+/// states the same fact directly, per record, in two tokens the ingest path had
+/// never read: `NAMEISPI:YES` and `DESCISPI:YES`.
+///
+/// **The two disagree, one-directionally.** Over the shipped `race_trait` tree
+/// on 2026-08-12, 26 records declared `DESCISPI:YES`; the term list happened to
+/// redact 18 of them because their prose contains a Golarion place name it
+/// knows, and the remaining 8 published text the publisher had marked as
+/// Product Identity (`Kodar Mountains`, `Earthfall`, `Ekujae`, `Gogpodda`,
+/// `Omesta`, `Droskar`, `Abaddon`, `Inner Sea` — none on the list). A
+/// declaration is not a heuristic and does not need to agree with one: where
+/// the row declares, the row wins.
+///
+/// `NAMEISPI:YES` was first read by the monster lane for one book, in a
+/// hand-built table (`rules_tables/inner_sea_world_guide/`), and reported to
+/// this lane as corpus-wide territory. This is the shared reader that closes it
+/// for every kind rather than for a second book.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub struct DeclaredProductIdentity {
+    /// `NAMEISPI:YES` — the record's **name** is Product Identity. A name
+    /// cannot be redacted (it is the record's identity on every screen and half
+    /// of its key), so the only way not to publish it is not to publish the
+    /// row. See `docs/governance/ogl-pi-blacklist.md` §3 for the per-book
+    /// override that could reclassify one, which is an operator decision.
+    pub name: bool,
+    /// `DESCISPI:YES` — the record's **description** is Product Identity. A
+    /// description *can* be redacted and the record still works, so the row
+    /// ships with [`REDACTED_PI_MARKER`] in place of its prose.
+    pub description: bool,
+}
+
+impl DeclaredProductIdentity {
+    /// `true` when the row declares anything at all — the cheap guard a caller
+    /// uses before paying for a redaction path.
+    pub fn any(self) -> bool {
+        self.name || self.description
+    }
+}
+
+/// Reads [`DeclaredProductIdentity`] off a row's `(key, value)` tokens.
+///
+/// Keys are matched case-insensitively and values are trimmed, because a PCGen
+/// row is hand-maintained text: nothing guarantees the token is spelled exactly
+/// `DESCISPI:YES` with no trailing whitespace, and a screen that silently
+/// misses a declaration over a space is the failure this reader exists to
+/// prevent. Any value other than `YES` is not a declaration — PCGen writes
+/// `NAMEISPI:NO` explicitly on rows that are OGL — so it is read as absent
+/// rather than as a hit.
+pub fn declared_product_identity<I, K, V>(tokens: I) -> DeclaredProductIdentity
+where
+    I: IntoIterator<Item = (K, V)>,
+    K: AsRef<str>,
+    V: AsRef<str>,
+{
+    let mut declared = DeclaredProductIdentity::default();
+    for (key, value) in tokens {
+        if !value.as_ref().trim().eq_ignore_ascii_case("YES") {
+            continue;
+        }
+        let key = key.as_ref();
+        if key.eq_ignore_ascii_case("NAMEISPI") {
+            declared.name = true;
+        } else if key.eq_ignore_ascii_case("DESCISPI") {
+            declared.description = true;
+        }
+    }
+    declared
+}
+
+/// [`classify_optional_field`], with the row's own declaration taking
+/// precedence over the term list.
+///
+/// `declared` is the value of the matching [`DeclaredProductIdentity`] field
+/// for `field_name`. When it is `true` the field is redacted whatever the term
+/// scan says; when it is `false` the term scan still runs, because a row that
+/// declares nothing can still contain a deity name (`ogl-pi-blacklist.md` §2 is
+/// explicit that the corpus's own markers are incomplete, which is why the term
+/// list exists at all). The two screens are a union, never a substitution.
+pub fn classify_optional_field_declared(
+    field_name: &str,
+    value: Option<&str>,
+    declared: bool,
+) -> (License, Option<String>, Option<String>, Option<String>) {
+    match (value, declared) {
+        (None, _) => (License::Ogl, None, None, None),
+        (Some(_), true) => (
+            License::PiRedacted,
+            Some(field_name.to_string()),
+            Some(PI_MARKER_REDACTED.to_string()),
+            Some(REDACTED_PI_MARKER.to_string()),
+        ),
+        (Some(v), false) => {
+            let (license, pi_field, pi_marker, stored) = classify_field(field_name, v);
+            (license, pi_field, pi_marker, Some(stored))
+        }
+    }
 }
 
 #[cfg(test)]
@@ -146,5 +249,74 @@ mod tests {
     fn jarn_is_redacted() {
         let (license, ..) = classify_field("description", "an NPC named Jarn appears here");
         assert_eq!(license, License::PiRedacted);
+    }
+
+    // --- PCGen's own per-record declaration --------------------------------
+
+    #[test]
+    fn a_row_with_no_pi_tokens_declares_nothing() {
+        let declared = declared_product_identity([("KEY", "Elf ~ Keen Senses"), ("DESC", "+2 Perception.")]);
+        assert_eq!(declared, DeclaredProductIdentity::default());
+        assert!(!declared.any());
+    }
+
+    #[test]
+    fn nameispi_and_descispi_are_read_independently() {
+        let name_only = declared_product_identity([("NAMEISPI", "YES")]);
+        assert!(name_only.name && !name_only.description);
+        let desc_only = declared_product_identity([("DESCISPI", "YES")]);
+        assert!(desc_only.description && !desc_only.name);
+        let both = declared_product_identity([("NAMEISPI", "YES"), ("DESCISPI", "YES")]);
+        assert!(both.name && both.description && both.any());
+    }
+
+    /// PCGen writes `NAMEISPI:NO` explicitly on OGL rows. Reading any non-`YES`
+    /// value as a hit would redact the whole corpus.
+    #[test]
+    fn an_explicit_no_is_not_a_declaration() {
+        let declared = declared_product_identity([("NAMEISPI", "NO"), ("DESCISPI", "NO")]);
+        assert_eq!(declared, DeclaredProductIdentity::default());
+    }
+
+    /// A `.lst` row is hand-maintained text; a screen that misses a declaration
+    /// over a space or a lowercase key is the failure this reader exists to
+    /// prevent.
+    #[test]
+    fn the_token_is_matched_case_insensitively_and_trimmed() {
+        let declared = declared_product_identity([("descispi", " yes ")]);
+        assert!(declared.description);
+    }
+
+    /// The point of the whole reader: this description carries no blacklist
+    /// term, so the term scan alone publishes it.
+    #[test]
+    fn a_declared_description_is_redacted_even_though_no_blacklist_term_appears_in_it() {
+        let prose = "these tieflings are tied to the daemons of Abaddon";
+        assert_eq!(classify_field("description", prose).0, License::Ogl, "the term list does not know it");
+
+        let (license, pi_field, pi_marker, stored) =
+            classify_optional_field_declared("description", Some(prose), true);
+        assert_eq!(license, License::PiRedacted);
+        assert_eq!(pi_field.as_deref(), Some("description"));
+        assert_eq!(pi_marker.as_deref(), Some(PI_MARKER_REDACTED));
+        assert_eq!(stored.as_deref(), Some(REDACTED_PI_MARKER));
+    }
+
+    /// The two screens are a union, never a substitution: a row declaring
+    /// nothing is still scanned.
+    #[test]
+    fn an_undeclared_description_still_goes_through_the_term_scan() {
+        let (license, ..) =
+            classify_optional_field_declared("description", Some("blessed by Iomedae"), false);
+        assert_eq!(license, License::PiRedacted);
+        let (clean, ..) = classify_optional_field_declared("description", Some("Deals 1d6 fire."), false);
+        assert_eq!(clean, License::Ogl);
+    }
+
+    #[test]
+    fn a_declared_but_absent_field_has_nothing_to_redact() {
+        let (license, pi_field, pi_marker, stored) = classify_optional_field_declared("description", None, true);
+        assert_eq!(license, License::Ogl);
+        assert_eq!((pi_field, pi_marker, stored), (None, None, None));
     }
 }

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T09:20:33Z",
+  "data": {
+    "corpus_key": "Companion Advancement ~ Carnivorous Flower",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "CompanionAdvancement",
+    "key": "advanced_race_guide:companion:companion_advancement_carnivorous_flower",
+    "name": "Companion Advancement (Carnivorous Flower)",
+    "owners": [
+      "advanced_race_guide:companion:companion_carnivorous_flower"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 4
+      },
+      {
+        "ability": "DEX",
+        "amount": -2
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      }
+    ],
+    "type_segments": [
+      "CompanionAdvancement"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83",
+    "line": 56,
+    "record_key": "Companion Advancement ~ Carnivorous Flower"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

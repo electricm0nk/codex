@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "7",
+    "corpus_key": "Giant (Hill)",
+    "external_ability_refs": [
+      "Rock Catching",
+      "Rock Throwing"
+    ],
+    "key": "beastiary:monster:giant_hill",
+    "monster_class": "Humanoid:10",
+    "name": "Giant (Hill)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Giant",
+    "race_type": "Humanoid",
+    "size": "L",
+    "source_page": "p.150",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 207,
+    "record_key": "Giant (Hill)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

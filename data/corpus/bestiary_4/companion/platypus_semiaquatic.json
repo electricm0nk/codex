@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T22:19:24Z",
+  "data": {
+    "corpus_key": "Platypus ~ Semiaquatic",
+    "delivery": "Extraordinary",
+    "description": "Platypuses can hold their breath underwater for up to 5 minutes before they must start attempting Constitution checks to avoid suffocation.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:companion:platypus_semiaquatic",
+    "name": "Semiaquatic",
+    "owners": [
+      "bestiary_4:companion:familiar_platypus"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+    "line": 42,
+    "record_key": "Platypus ~ Semiaquatic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

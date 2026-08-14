@@ -23,14 +23,14 @@ use codex::rules_core::character_input::load_character_input_fixture;
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, SupportStateMatrix, SupportStateRow,
-    seeded_sd13_e1_f1_current_truth,
+    seeded_current_truth,
 };
 
 const HALF_ORC_ROW_ID: &str = "race.half_orc.bounded_semantics";
 const HALF_ORC_SUBJECT_ID: &str = "race:half-orc";
 
 fn matrix() -> SupportStateMatrix {
-    seeded_sd13_e1_f1_current_truth()
+    seeded_current_truth()
 }
 
 fn row<'a>(matrix: &'a SupportStateMatrix, row_id: &str) -> &'a SupportStateRow {

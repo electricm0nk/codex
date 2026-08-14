@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:47:16Z",
+  "data": {
+    "key": "Gnome ~ Vivacious",
+    "name": "Vivacious",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gnome_ReplaceGnomeMagic",
+      "Gnome_ReplaceKeenSenses"
+    ],
+    "description": "Some gnomes retain a trace of the vitality of the First World. These gnomes recover 50% more hit points (minimum 1) whenever they recover hit points from rest. Whenever they are healed of hit point damage by a spell, they heal an additional amount equal to 1/2 the spell's caster level (minimum 0). The extra healing does not apply to spells that grant fast healing or similar effects. This racial trait replaces gnome magic and keen senses.",
+    "source_page": "p.211",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Vivacious"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Utilitarian Magic],[!PREFACT:1,ABILITIES,Gnome_ReplaceGnomeMagic=true,Gnome_ReplaceKeenSenses=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some gnomes retain a trace of the vitality of the First World. These gnomes recover 50%% more hit points (minimum 1) whenever they recover hit points from rest. Whenever they are healed of hit point damage by a spell, they heal an additional amount equal to 1/2 the spell's caster level (minimum 0). The extra healing does not apply to spells that grant fast healing or similar effects."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces gnome magic and keen senses.|!PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Vivacious"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceGnomeMagic|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceKeenSenses|true"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 100,
+    "record_key": "Gnome ~ Vivacious"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

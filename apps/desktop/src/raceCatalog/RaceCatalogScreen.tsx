@@ -78,7 +78,14 @@ const MAX_RENDERED_ROWS = 200;
 
 /**
  * The two things this screen can show. "Standard" is the flat catalog of every
- * racial default trait; "alternates" is the Advanced Race Guide's swap picker.
+ * racial default trait; "alternates" is the swap picker.
+ *
+ * The picker is NOT one book's. It serves whatever
+ * `race_catalog::RACE_CORPUS_BOOKS` loads — the Advanced Race Guide first,
+ * then the Advanced Player's Guide, and since SD-29's race-trait lane pilot
+ * Monster Codex's Duergar and Goblin alternates too. The tab said "(ARG)"
+ * through two of those additions; it now names none of them, so it cannot go
+ * stale again by a book being added.
  *
  * They live behind one landing-page entry on purpose: an alternate racial trait
  * is only meaningful next to the standard trait it replaces, so putting the
@@ -89,7 +96,7 @@ export type RaceCatalogView = 'standard' | 'alternates';
 
 export const RACE_CATALOG_VIEWS: readonly { view: RaceCatalogView; label: string }[] = [
   { view: 'standard', label: 'Standard traits' },
-  { view: 'alternates', label: 'Alternate racial traits (ARG)' },
+  { view: 'alternates', label: 'Alternate racial traits' },
 ];
 
 /**

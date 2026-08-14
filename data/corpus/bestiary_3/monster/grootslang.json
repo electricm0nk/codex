@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "16",
+    "corpus_key": "Grootslang",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:grootslang",
+    "monster_class": "Magical Beast:21",
+    "name": "Grootslang",
+    "natural_attacks": [
+      {
+        "damage_dice": "4d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Stomps"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "size": "G",
+    "source_page": "p.143",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 139,
+    "record_key": "Grootslang"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

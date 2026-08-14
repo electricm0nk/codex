@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Ghaele ~ Gaze",
+    "delivery": "Supernatural",
+    "description": "In humanoid form, a ghaele's gaze attack slays evil creatures of 5 HD or less (range 60 feet, Will DC %1 negates, shaken for 2d10 rounds on a successful save). Nonevil creatures, and evil creatures with more than 5 HD, must succeed on a DC %1 Will save or be shaken for 2d10 rounds. A creature that saves against a ghaele's gaze is immune to that particular ghaele's gaze for 24 hours. This is a mindaffecting fear effect.",
+    "description_variables": [
+      "GazeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:ghaele_gaze",
+    "name": "Gaze",
+    "owners": [
+      "beastiary:monster:azata_ghaele"
+    ],
+    "source_page": "p.25",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 134,
+    "record_key": "Ghaele ~ Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -2,7 +2,7 @@ import type {
   ReleaseTruthRequest,
   ReleaseTruthSnapshot,
 } from '../boundary/loadReleaseTruth';
-import type { Ge08AuthoringWorkbenchRequest, Ge08AuthoringWorkbenchSnapshot } from '../boundary/loadGe08AuthoringWorkbench';
+import type { AuthoringWorkbenchRequest, AuthoringWorkbenchSnapshot } from '../boundary/loadAuthoringWorkbench';
 import type { PilotShellSnapshot } from '../boundary/loadPilotShellSnapshot';
 import type {
   SupportStateMatrixSnapshot,
@@ -12,9 +12,9 @@ import type { BackendHealthSnapshot } from '../boundary/loadBackendHealth';
 import {
   buildFallbackDiagnostics,
   buildFallbackExplanationRefs,
-  buildGe08Diagnostics,
-  buildGe08ExplanationRefs,
-  buildGe08ProvenanceRefs,
+  buildDiagnostics,
+  buildExplanationRefs,
+  buildProvenanceRefs,
   type WorkbenchDiagnostic,
   type WorkbenchReference,
 } from './diagnostics/buildWorkbenchEvidence';
@@ -32,9 +32,9 @@ export interface WorkbenchRuntimeContext {
 }
 
 export interface WorkbenchDependencies {
-  loadGe08AuthoringWorkbench: (
-    request: Ge08AuthoringWorkbenchRequest
-  ) => Promise<Ge08AuthoringWorkbenchSnapshot>;
+  loadAuthoringWorkbench: (
+    request: AuthoringWorkbenchRequest
+  ) => Promise<AuthoringWorkbenchSnapshot>;
   loadPilotShellSnapshot: () => Promise<PilotShellSnapshot>;
   loadReleaseTruth: (
     request: ReleaseTruthRequest
@@ -413,8 +413,8 @@ async function loadBackendHealthPresentation(
   }
 }
 
-const DEFAULT_REQUEST: Ge08AuthoringWorkbenchRequest = {
-  packageRoot: 'resources/ge08/guard-stance-package',
+const DEFAULT_REQUEST: AuthoringWorkbenchRequest = {
+  packageRoot: 'resources/authoring_workbench/guard-stance-package',
 };
 
 export async function loadTesterWorkbenchSurface(
@@ -475,10 +475,10 @@ export async function loadTesterWorkbenchSurface(
 
   try {
     const [snapshot, releaseTruth] = await Promise.all([
-      dependencies.loadGe08AuthoringWorkbench(DEFAULT_REQUEST),
+      dependencies.loadAuthoringWorkbench(DEFAULT_REQUEST),
       releaseTruthPromise,
     ]);
-    return mapGe08Snapshot(context, snapshot, releaseTruth, await supportStatePromise, await backendHealthPromise);
+    return mapSnapshot(context, snapshot, releaseTruth, await supportStatePromise, await backendHealthPromise);
   } catch (cause: unknown) {
     const [fallbackSnapshot, releaseTruth] = await Promise.all([
       dependencies.loadPilotShellSnapshot(),
@@ -548,9 +548,9 @@ function buildReleaseTruthRequest(context: WorkbenchRuntimeContext): ReleaseTrut
   };
 }
 
-function mapGe08Snapshot(
+function mapSnapshot(
   context: WorkbenchRuntimeContext,
-  snapshot: Ge08AuthoringWorkbenchSnapshot,
+  snapshot: AuthoringWorkbenchSnapshot,
   releaseTruth: ReleaseTruthSnapshot,
   supportState: SupportStateWorkbenchPresentations,
   backendHealth: BackendHealthPresentation
@@ -593,10 +593,10 @@ function mapGe08Snapshot(
         value: formatBaselineArmorClass(snapshot.preview.baselineArmorClass),
       },
     ],
-    diagnostics: buildGe08Diagnostics(snapshot.preview.diagnostics),
+    diagnostics: buildDiagnostics(snapshot.preview.diagnostics),
     blockedClaims: snapshot.preview.blockedClaims,
-    explanationRefs: buildGe08ExplanationRefs(snapshot.preview.explanationRefs),
-    provenanceRefs: buildGe08ProvenanceRefs(snapshot.preview.provenanceRefs),
+    explanationRefs: buildExplanationRefs(snapshot.preview.explanationRefs),
+    provenanceRefs: buildProvenanceRefs(snapshot.preview.provenanceRefs),
     supportDebt: supportState.supportDebt,
     breadthClaimAudit: supportState.breadthClaimAudit,
     backendHealth,
@@ -685,7 +685,7 @@ function mapPilotFallback(
 }
 
 function formatBaselineArmorClass(
-  baselineArmorClass: Ge08AuthoringWorkbenchSnapshot['preview']['baselineArmorClass']
+  baselineArmorClass: AuthoringWorkbenchSnapshot['preview']['baselineArmorClass']
 ): string {
   if (baselineArmorClass.kind === 'Computed') {
     return `${baselineArmorClass.value}`;

@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "ability_keys": [
+      "beastiary:monster_ability:retriever_eye_rays",
+      "beastiary:monster_ability:retriever_relentless"
+    ],
+    "challenge_rating": "11",
+    "corpus_key": "Retriever",
+    "external_ability_refs": [
+      "Cannot Speak",
+      "Fast Healing"
+    ],
+    "key": "beastiary:monster:retriever",
+    "monster_class": "Construct:15",
+    "name": "Retriever",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Extraplanar",
+    "race_type": "Construct",
+    "size": "H",
+    "source_page": "p.234",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 336,
+    "record_key": "Retriever"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

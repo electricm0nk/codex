@@ -21,7 +21,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
-    EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const LEVEL_2_FIXTURE: &str =
@@ -332,7 +332,7 @@ fn rogue_replacing_the_fighter_chassis_never_leaks_fighter_seams() {
 
 #[test]
 fn matrix_keeps_fighter_level_1_and_levels_2_10_as_separate_rows() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let level_1 = matrix
         .row("class.fighter.level_1_pilot")
         .expect("level-1 pilot row must exist");
@@ -352,7 +352,7 @@ fn matrix_keeps_fighter_level_1_and_levels_2_10_as_separate_rows() {
 
 #[test]
 fn matrix_levels_2_10_is_partial_but_not_supported_and_names_what_remains() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let levels_2_10 = matrix
         .row("class.fighter.levels_2_10")
         .expect("levels-2-10 row must exist");
@@ -380,7 +380,7 @@ fn matrix_keeps_rogue_supported_after_fighter_widens() {
     // Rogue was later promoted to Supported/ProductVisible by SD-19's Class
     // Progression Catalog browser UI-surfacing work (2026-07-17); this
     // Fighter-widening snapshot preserves that.
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let rogue = matrix
         .row("class.rogue.bounded_progression")
         .expect("rogue row must exist");

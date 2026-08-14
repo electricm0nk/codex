@@ -807,6 +807,47 @@ fn main() {
             RuleSetId::Uc => "ultimate_combat",
             RuleSetId::Um => "ultimate_magic",
             RuleSetId::Upsi => "ultimate_psionics",
+            RuleSetId::BonusBestiary => "bonus_bestiary",
+            RuleSetId::MonsterCodex => "monster_codex",
+            // Inner Sea Races has no feats file this repo compiles either; the
+            // arm exists for exhaustiveness, exactly as `Ue`'s above does.
+            RuleSetId::Isr => "inner_sea_races",
+            // Horror Adventures has no feats file this repo compiles either;
+            // the arm exists for exhaustiveness, as `Isr`'s and `Ue`'s do.
+            RuleSetId::Ha => "horror_adventures",
+            RuleSetId::Ce => "core_essentials",
+            RuleSetId::Iswg => "inner_sea_world_guide",
+            RuleSetId::Botd1 => "book_of_the_damned_volume_1",
+            RuleSetId::Botd2 => "book_of_the_damned_volume_2",
+            // SD-29 Epic 7 (companion lane). Neither book has a feats file this
+            // repo compiles; both arms exist for exhaustiveness, exactly as
+            // `Ha`'s, `Isr`'s and `Ue`'s above do. This match going red is the
+            // enum doing its designed job -- `decisions.md §45.2` records the
+            // same thing happening when `Isr` was added.
+            //
+            // **They were missing on `origin/tranche/9` at `bac2f569`**, which
+            // is a compile error in this bin and therefore `0 passed across 0
+            // suites` for the whole `root-full` stage -- the failure mode
+            // `AGENTS.md` records as "one broken bin meant 0 of 502 suites
+            // ran". Both lanes found it and both wrote these arms; the merge
+            // keeps one copy and both reasons (`§46.6` rule 1).
+            RuleSetId::Isc => "inner_sea_combat",
+            RuleSetId::Isi => "inner_sea_intrigue",
+            // SD-29 Epic 7 round 2. Same disposition as `Isc`/`Isi` above: no
+            // feats file this repo compiles, so these three arms exist for
+            // exhaustiveness only. Written in the same commit that adds the
+            // variants, because a missing arm here is a compile error in this
+            // bin and therefore `0 passed across 0 suites` for the entire
+            // `root-full` stage.
+            RuleSetId::B5 => "bestiary_5",
+            RuleSetId::B6 => "bestiary_6",
+            RuleSetId::B2 => "bestiary_2",
+            RuleSetId::B3 => "bestiary_3",
+            RuleSetId::B4 => "bestiary_4",
+            // SD-29 Epic 5 extend, round 7. No feats file this repo compiles;
+            // the arm exists for exhaustiveness, as `B4`'s above does.
+            RuleSetId::Isb => "inner_sea_bestiary",
+            RuleSetId::Isg => "inner_sea_gods",
         };
         let records = table.entries.len();
         let wired_here = table

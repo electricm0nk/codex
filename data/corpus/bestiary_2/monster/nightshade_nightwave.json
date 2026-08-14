@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:nightwave_cold",
+      "bestiary_2:monster_ability:nightwave_energy_drain"
+    ],
+    "challenge_rating": "20",
+    "corpus_key": "Nightshade (Nightwave)",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Detect Magic ~ Constant",
+      "Fly ~ Constant",
+      "Grab ~ Bite",
+      "Immunity to Cold",
+      "Magic Fang ~ Constant",
+      "Nightwave ~ Blackest Depths",
+      "See Invisibility ~ Constant",
+      "Swallow Whole",
+      "Telepathy"
+    ],
+    "key": "bestiary_2:monster:nightshade_nightwave",
+    "monster_class": "Undead:29",
+    "name": "Nightshade (Nightwave)",
+    "natural_attacks": [
+      {
+        "damage_dice": "5d10",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "4d8",
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Aquatic|Extraplanar|Nightshade",
+    "race_type": "Undead",
+    "size": "C",
+    "source_page": "p.202",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 648,
+    "record_key": "Nightshade (Nightwave)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

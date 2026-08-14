@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Gibbering Mouther ~ Spittle",
+    "delivery": "Extraordinary",
+    "description": "Each round as a free action, a gibbering mouther can emit a stream of acidic spittle at one target within 30 feet. On a successful attack, the target is blinded for 1d4 rounds unless he succeeds on a DC %1 Fortitude save.",
+    "description_variables": [
+      "SpittleDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:gibbering_mouther_spittle",
+    "name": "Spittle",
+    "owners": [
+      "beastiary:monster:gibbering_mouther"
+    ],
+    "source_page": "p.153",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 704,
+    "record_key": "Gibbering Mouther ~ Spittle"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

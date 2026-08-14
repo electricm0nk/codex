@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:18:46Z",
+  "data": {
+    "corpus_key": "Brimorak ~ Smoke Breath",
+    "delivery": "Supernatural",
+    "description": "A brimorak's breath manifests as clouds of foul-smelling smoke when it exhales. This breath surrounds the brimorak out to a radius of %1 feet--while the smoke isn't thick enough to obscure vision or choke foes, it is enough to sicken breathing foes who are not immune to poison. A DC %2 Fortitude save grants immunity to a particular brimorak's breath for 24 hours. The save DC is Constitution-based.",
+    "description_variables": [
+      "SmokeAuraRange",
+      "SmokeAuraDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "book_of_the_damned_volume_2:monster_ability:brimorak_smoke_breath",
+    "name": "Smoke Breath",
+    "owners": [
+      "book_of_the_damned_volume_2:monster:demon_brimorak"
+    ],
+    "source_page": "p.56",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
+    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf",
+    "line": 11,
+    "record_key": "Brimorak ~ Smoke Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Fleshwarp (Ghonhatine) ~ Filth Fever",
+    "delivery": "Extraordinary",
+    "description": "Disease-injury; save Fort DC %1; onset 1d3 days; frequency 1 day; effect 1d3 Dex damage and 1d3 Con damage; cure 2 consecutive saves.",
+    "description_variables": [
+      "16+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:fleshwarp_ghonhatine_filth_fever",
+    "name": "Filth Fever",
+    "owners": [
+      "bestiary_4:monster:fleshwarp_ghonhatine"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 665,
+    "record_key": "Fleshwarp (Ghonhatine) ~ Filth Fever"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

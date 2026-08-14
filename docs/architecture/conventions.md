@@ -188,7 +188,7 @@ gated tests."
 ## Provenance naming (`sdNN`/`geNN` prefixes)
 
 Module and test file names carry the originating spec-domain/grand-epic
-bundle as a prefix (`ge08_workbench.rs`,
+bundle as a prefix (`authoring_workbench.rs`,
 `tests/sd25_sorcerer_level_up_explanation_coverage.rs`) — one behavior per file. These
 prefixes are proper nouns naming provenance, not documentation of current
 function (see [README.md](./README.md)'s provenance note). **When adding a

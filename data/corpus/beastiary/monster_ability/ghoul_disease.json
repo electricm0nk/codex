@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Ghoul ~ Disease",
+    "delivery": "Supernatural",
+    "description": "Ghoul Fever: Bite--injury; save Fort DC %1; onset 1 day; frequency 1 day; effect 1d3 Con and 1d3 Dex damage; cure 2 consecutive saves. A humanoid who dies of ghoul fever rises as a ghoul at the next midnight. A humanoid who becomes a ghoul in this way retains none of the abilities it possessed in life. It is not under the control of any other ghouls, but it hungers for the flesh of the living and behaves like a normal ghoul in all respects. A humanoid of 4 Hit Dice or more rises as a ghast.",
+    "description_variables": [
+      "GhoulFeverDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:ghoul_disease",
+    "name": "Disease",
+    "owners": [
+      "beastiary:monster:ghoul_ghast",
+      "beastiary:monster:ghoul_lacedon"
+    ],
+    "source_page": "p.146",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 668,
+    "record_key": "Ghoul ~ Disease"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

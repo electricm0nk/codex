@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Naunet ~ Confusion",
+    "delivery": "Supernatural",
+    "description": "A creature struck by a naunet's tentacle attack is infused with raw chaos, and must make a DC %1 Will save or be confused for 1 round.  Rounds of confusion dealt in this manner stack.  A creature with a chaotic component to its alignment gains a +4 bonus on saves against this effect, and creatures with the chaotic subtype are immune.  This is a mind-affecting effect.",
+    "description_variables": [
+      "NaunetConfusionDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:naunet_confusion",
+    "name": "Confusion",
+    "owners": [
+      "bestiary_2:monster:protean_naunet"
+    ],
+    "source_page": "p.216",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 986,
+    "record_key": "Naunet ~ Confusion"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

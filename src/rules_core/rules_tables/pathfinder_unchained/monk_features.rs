@@ -111,7 +111,7 @@
 //! `crb::class_tables`
 //!
 //! This module is reached two ways: through the library crate, and through
-//! `src/bin/sd27_gen_book_cache.rs`, which pulls
+//! `src/bin/gen_book_cache.rs`, which pulls
 //! `rules_tables/pathfinder_unchained/mod.rs` in with `#[path]` (a
 //! workaround from a cycle that could not touch `rules_tables/mod.rs`;
 //! that binary is outside this cycle's write scope, so the include stays).

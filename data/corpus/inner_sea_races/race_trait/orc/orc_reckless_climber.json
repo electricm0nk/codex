@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:47:16Z",
+  "data": {
+    "key": "Orc ~ Reckless Climber",
+    "name": "Reckless Climber",
+    "race_key": "Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Orc Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Orc_ReplaceFerocity"
+    ],
+    "description": "Mountain-dwelling orcs thrive on taking insane risks to defeat foes and show up rivals. They gain a +4 racial bonus on Climb checks without rope and on Acrobatics checks to maintain balance. This racial trait replaces ferocity.",
+    "source_page": "p.216",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Orc ~ Reckless Climber"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Orc Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Orc ~ Reckless Climber],[!PREFACT:1,ABILITIES,Orc_ReplaceFerocity=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Mountain-dwelling orcs thrive on taking insane risks to defeat foes and show up rivals. They gain a +4 racial bonus on Climb checks without rope and on Acrobatics checks to maintain balance."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces ferocity.|!PREABILITY:1,CATEGORY=Special Ability,Orc ~ Reckless Climber"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+4 Climb without rope, +4 Acrobatics to maintain balance"
+      },
+      {
+        "key": "FACT",
+        "value": "Orc_ReplaceFerocity|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Climb=without rope",
+          "+4",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Acrobatics=to maintain balance",
+          "+4",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 987,
+    "record_key": "Orc ~ Reckless Climber"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

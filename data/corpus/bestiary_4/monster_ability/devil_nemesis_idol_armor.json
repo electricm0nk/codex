@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Devil (Nemesis) ~ Idol Armor",
+    "delivery": "Supernatural",
+    "description": "Advodazas armor themselves in fallen idols and ornaments of devotion. This armor grants an advodaza a +7 armor bonus to AC and immunity to cold, electricity, and sonic damage, as well as immunity to the spell dismissal. The spells chaos hammer, holy smite, holy word, and word of chaos destroy this armor, removing the devil's armor bonus to AC and its immunities (its cold immunity is replaced with the devil's normal cold resistance of 10). The armor is automatically destroyed if the advodaza is slain. If uninterrupted for 1 hour, an advodaza can summon new armor to replace its destroyed protection.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:devil_nemesis_idol_armor",
+    "name": "Idol Armor",
+    "owners": [
+      "bestiary_4:monster:devil_nemesis"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 474,
+    "record_key": "Devil (Nemesis) ~ Idol Armor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

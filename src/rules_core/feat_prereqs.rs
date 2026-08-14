@@ -411,7 +411,7 @@ pub fn character_prereq_facts(
 }
 
 #[cfg(test)]
-mod sd27_prerequisite_tests {
+mod prerequisite_tests {
     use super::*;
     use crate::rules_core::character_input::{
         AbilityScores, CharacterClassLevel, ChosenCharacterState,
@@ -499,7 +499,12 @@ mod sd27_prerequisite_tests {
         let facts = character_prereq_facts(&input, 1);
         let reports = evaluate_every_catalog_feat(&facts);
 
-        assert_eq!(reports.len(), 1578);
+        // 1578 hand-authored records + the 83 corpus gap rows the feat gap
+        // lane joined on. Every gap row's own `PRE`-family tokens are carried
+        // verbatim into `FeatCatalogRecord::prerequisites`, so the new rows
+        // are evaluated by this gate exactly like every other record — they
+        // are not offered unconditionally.
+        assert_eq!(reports.len(), 1661);
         let eligible = reports.iter().filter(|report| report.is_eligible).count();
         // 211 (of the original 690) + all 23 UCA Story Feats: every one of
         // UCA's records carries only a `PRETEXT:` prose prerequisite, which
@@ -508,7 +513,19 @@ mod sd27_prerequisite_tests {
         // `unmet`, exactly the same non-blocking treatment PU's own
         // `PRETEXT:` rows already get. Re-derived with this test after
         // SD28-E13 landed the UCA catalog (2026-08-03).
-        assert_eq!(eligible, 509, "a starting Fighter's real eligible-feat count");
+        // +44 with the feat gap lane's 83 corpus rows joined on (2026-08-11).
+        // The load-bearing half of that figure is the other half: **39 of the
+        // 83 new rows are NOT eligible** for a level-1 Fighter, each with a
+        // stated reason, because the gap rows carry their corpus `PRE`-family
+        // tokens verbatim. A lane that shipped rows the prerequisite gate
+        // could not see would have moved this number by the full 83.
+        // 553 with the gap rows alone; **552** once `PRESIZEGTEQ:` became a
+        // modelled kind in the same cycle. `Awesome Blow` carries
+        // `PRESIZEGTEQ:L`, and a Medium Fighter is now correctly DENIED it
+        // with a stated reason instead of being offered it under an
+        // unverifiable prerequisite. Modelling a token can only ever move
+        // this number down, and that direction is the point.
+        assert_eq!(eligible, 552, "a starting Fighter's real eligible-feat count");
 
         for report in reports.iter().filter(|report| !report.is_eligible) {
             let reason = report.unavailable_reason().unwrap_or_default();

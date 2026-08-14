@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Sea Hag ~ Evil Eye",
+    "delivery": "Supernatural",
+    "description": "Three times per day, a sea hag can cast her dire gaze upon any single creature within 30 feet. The target must succeed on a DC %1 Will save or be staggered as strange nebulous distress and a gnawing sense of impending doom plagues the victim. If a sea hag uses her evil eye on someone already afflicted by this curse, the victim must make a DC %2 Fortitude save or be overwhelmed with fright and collapse into a comatose state for 3 days. Each day that passes, the comatose victim must make a DC %3 Fortitude save or perish. The evil eye is a mind-affecting fear effect.",
+    "description_variables": [
+      "EvilEyeSaveDC",
+      "EvilEyeSaveDC",
+      "EvilEyeSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:sea_hag_evil_eye",
+    "name": "Evil Eye",
+    "owners": [
+      "beastiary:monster:sea_hag"
+    ],
+    "source_page": "p.243",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1095,
+    "record_key": "Sea Hag ~ Evil Eye"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

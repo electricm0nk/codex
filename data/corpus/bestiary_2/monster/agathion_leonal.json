@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:leonal_roar"
+    ],
+    "challenge_rating": "12",
+    "corpus_key": "Agathion (Leonal)",
+    "external_ability_refs": [
+      "Grab ~ Bite",
+      "Leonal ~ Protective Aura",
+      "Leonal ~ Rake",
+      "Pounce",
+      "Scent"
+    ],
+    "key": "bestiary_2:monster:agathion_leonal",
+    "monster_class": "Outsider (Fort/Ref):14",
+    "name": "Agathion (Leonal)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Agathion|Extraplanar|Good",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.20",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 48,
+    "record_key": "Agathion (Leonal)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

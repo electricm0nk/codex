@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Shard Slag ~ Molten Form",
+    "delivery": "Extraordinary",
+    "description": "A shard slag's molten metal body is hot enough to melt stone. Creatures that begin their turn within 5 feet of a shard slag take 1d6 points of fire damage. Anyone striking a shard slag with a natural weapon or unarmed strike takes 2d6 points of fire damage. A creature that grapples a shard slag or is grappled by one takes 3d6 points of fire damage each round the grapple persists. A creature that strikes a shard slag with a weapon can attempt a DC %1 Reflex save; if it fails, it's unable to pull the weapon away from the shard slag's molten body quickly enough, and the weapon takes 2d6 points of fire damage. Unattended objects in contact with a shard slag take 2d6 points of fire damage per round. Damage caused to weapons and unattended objects is not halved, and ignores the first 5 points of hardness.",
+    "description_variables": [
+      "CON+16"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:shard_slag_molten_form",
+    "name": "Molten Form",
+    "owners": [
+      "bestiary_4:monster:shard_slag"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1271,
+    "record_key": "Shard Slag ~ Molten Form"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

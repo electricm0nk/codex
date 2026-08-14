@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Dossenus ~ Swarming",
+    "delivery": "Extraordinary",
+    "description": "Dossenuses are brutally efficient at swarming foes and often skitter atop one another in their haste to overwhelm and devour prey. Up to two dossenuses can share the same square at the same time. If two dossenuses sharing the same square attack the same foe, they are considered to be flanking that foe as if they were in two opposite squares.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:dossenus_swarming",
+    "name": "Swarming",
+    "owners": [
+      "bestiary_4:monster:dossenus"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 510,
+    "record_key": "Dossenus ~ Swarming"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

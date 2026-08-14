@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T18:45:25Z",
+  "data": {
+    "corpus_key": "Companion Advancement ~ Goblin Dog",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "facet": "CompanionAdvancement",
+    "key": "beastiary:companion:companion_advancement_goblin_dog",
+    "name": "Companion Advancement (Goblin Dog)",
+    "owners": [
+      "beastiary:companion:companion_goblin_dog"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [
+      {
+        "ability": "CON",
+        "amount": 2
+      }
+    ],
+    "type_segments": [
+      "CompanionAdvancement"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
+    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8",
+    "line": 20,
+    "record_key": "Companion Advancement ~ Goblin Dog"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

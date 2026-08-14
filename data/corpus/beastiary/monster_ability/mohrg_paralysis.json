@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Mohrg ~ Paralysis",
+    "delivery": null,
+    "description": "You can render your victims immobile for 1d4 minutes, DC %1 negates.",
+    "description_variables": [
+      "ParalysisDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:mohrg_paralysis",
+    "name": "Paralysis",
+    "owners": [
+      "beastiary:monster:mohrg"
+    ],
+    "source_page": "p.208",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 939,
+    "record_key": "Mohrg ~ Paralysis"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

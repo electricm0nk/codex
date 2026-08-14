@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T18:45:25Z",
+  "data": {
+    "corpus_key": "Squid ~ Ink Cloud",
+    "delivery": "Extraordinary",
+    "description": "A squid can emit a %1 foot-radius cloud of ink once per minute as a free action while underwater. This cloud provides total concealment. The ink persists for 1 minute.",
+    "description_variables": [
+      "InkCloudRadius"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:companion:squid_ink_cloud",
+    "name": "Ink Cloud",
+    "owners": [
+      "beastiary:companion:companion_squid"
+    ],
+    "record_type": "ability",
+    "source_page": "p.259",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
+    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8",
+    "line": 41,
+    "record_key": "Squid ~ Ink Cloud"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

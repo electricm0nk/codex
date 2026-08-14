@@ -24,7 +24,7 @@ use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const LEVEL_1_FIXTURE: &str =
@@ -128,7 +128,7 @@ fn level_1_base_attack_bonus_still_equals_fighter_chassis_value() {
 
 #[test]
 fn matrix_level_1_row_is_partial_and_computed_and_cites_f5_proof_surface() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let level_1 = matrix
         .row("class.fighter.level_1_pilot")
         .expect("level-1 pilot row must exist");
@@ -158,7 +158,7 @@ fn matrix_level_1_row_is_partial_and_computed_and_cites_f5_proof_surface() {
 
 #[test]
 fn matrix_level_1_blocker_note_enumerates_proven_milestones() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let level_1 = matrix
         .row("class.fighter.level_1_pilot")
         .expect("level-1 pilot row must exist");
@@ -197,7 +197,7 @@ fn matrix_level_1_blocker_note_enumerates_proven_milestones() {
 
 #[test]
 fn matrix_level_1_blocker_note_enumerates_remaining_unproven_milestones() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let level_1 = matrix
         .row("class.fighter.level_1_pilot")
         .expect("level-1 pilot row must exist");
@@ -232,7 +232,7 @@ fn matrix_level_1_blocker_note_enumerates_remaining_unproven_milestones() {
 
 #[test]
 fn matrix_level_1_row_keeps_a_concrete_next_required_uplift() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let level_1 = matrix
         .row("class.fighter.level_1_pilot")
         .expect("level-1 pilot row must exist");
@@ -259,7 +259,7 @@ fn matrix_level_1_row_keeps_a_concrete_next_required_uplift() {
 
 #[test]
 fn matrix_level_1_and_levels_2_10_remain_distinct_rows() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let level_1 = matrix
         .row("class.fighter.level_1_pilot")
         .expect("level-1 pilot row must exist");
@@ -293,7 +293,7 @@ fn matrix_keeps_rogue_supported_after_fighter_l1_widening() {
     // Rogue was later promoted to Supported/ProductVisible by SD-19's Class
     // Progression Catalog browser UI-surfacing work (2026-07-17); this
     // Fighter-L1-widening snapshot preserves that.
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let rogue = matrix
         .row("class.rogue.bounded_progression")
         .expect("Rogue row must exist");
@@ -309,7 +309,7 @@ fn matrix_keeps_rogue_supported_after_fighter_l1_widening() {
 fn matrix_keeps_human_race_partial_seam() {
     // Later promoted to Supported/ProductVisible by SD-19's Race Trait
     // Catalog browser UI-surfacing work (2026-07-16).
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let human = matrix
         .row("race.human.pilot_semantics")
         .expect("Human race row must exist");

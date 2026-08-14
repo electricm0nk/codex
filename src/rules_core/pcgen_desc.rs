@@ -4,7 +4,7 @@
 //! ## Why this exists as a shared module rather than a fourth private copy
 //!
 //! Three ingest binaries already carry their own private copy of this
-//! treatment (`src/bin/ingest_races.rs`, `src/bin/ingest_race_traits_arg.rs`,
+//! treatment (`src/bin/ingest_races.rs`, `src/bin/ingest_race_traits.rs`,
 //! `src/bin/ingest_pu_classes.rs`). Each of those reads a `.lst` row and can
 //! resolve `%N` against that row's own `DEFINE:`/`BONUS:VAR` literals, so the
 //! copies are genuinely row-shaped and are left alone.
@@ -38,7 +38,7 @@
 //!   forbids — taking the `+`/`-` sign that introduced it with it, closing the
 //!   whitespace, and **reporting** the dropped argument rather than guessing a
 //!   value. This is the identical discipline
-//!   `ingest_race_traits_arg::substitute_placeholders` already ships (its
+//!   `ingest_race_traits::substitute_placeholders` already ships (its
 //!   `Halfling ~ Adaptable Luck` record reads "they only gain a bonus" for
 //!   exactly this reason);
 //! * removes the `|`-delimited argument tail in all cases;
@@ -64,7 +64,7 @@
 //!
 //! ## The `|` rule differs from the race-trait binary's, deliberately
 //!
-//! `ingest_race_traits_arg::leaked_pcgen_syntax` treats *any* `|` as a raw
+//! `ingest_race_traits::leaked_pcgen_syntax` treats *any* `|` as a raw
 //! argument tail. That is safe for racial-trait prose and **wrong** for spell
 //! prose: CRB and APG spell text renders rulebook tables inline with ` | `
 //! column separators. Derived over all four spell tables rather than assumed:
@@ -160,6 +160,25 @@ fn max_arg_reference(raw: &str) -> usize {
     let mut i = 0;
     while i < chars.len() {
         if chars[i] == '%' && chars.get(i + 1) == Some(&'%') {
+            // `%%<digit>` is counted as a CANDIDATE reference, not as an
+            // escape, and this is the half of the `%%N` reading that decides
+            // the other half. `render_pcgen_desc_with_values` treats `%%N` as
+            // an argument only when argument N exists — but "exists" is decided
+            // by this function, so skipping the digit here would make that
+            // branch permanently unreachable and leave the four corpus rows
+            // that write `DC %%1 … |<DC var>` rendering `DC %1` on a player's
+            // screen (`decisions.md §61.3`).
+            //
+            // Counting it is safe in the other direction: a token with no
+            // `|` tail yields zero arguments no matter what this returns, so
+            // `20%%1 chance` still renders its literal per cent sign.
+            if let Some(digit) = chars.get(i + 2).and_then(|c| c.to_digit(10))
+                && digit >= 1
+            {
+                max = max.max(digit as usize);
+                i += 3;
+                continue;
+            }
             i += 2;
             continue;
         }
@@ -476,9 +495,51 @@ pub fn render_pcgen_desc_with_values(raw: &str, values: &PcgenDisplayValues) -> 
     let mut i = 0;
 
     while i < chars.len() {
-        // The escape is checked first: `%%` is never an argument reference,
-        // and `%%1` would otherwise be misread as one.
+        // The escape is checked first: `%%` is a literal per cent sign, so
+        // `%% spell failure chance` must not be read as an argument.
+        //
+        // With ONE exception, and it is an upstream escaping defect rather than
+        // a syntax this renderer chose to support. Four `DESC:` tokens in the
+        // whole Paizo tree write `%%<digit>` where the row's own argument list
+        // supplies that argument and nothing else could consume it:
+        //
+        // ```text
+        // grep -rl '%%[0-9]' --include='*.lst' ~/workspace/repos/pcgen/data/pathfinder/paizo/
+        //   bestiary_3/b3_abilities_race.lst
+        //   ultimate_wilderness/uw_abilities_companion.lst   (2 rows)
+        //   player_companion/familiar_folio/ff_abilities_race.lst
+        // ```
+        //
+        // all of the shape `... must make a DC %%1 Fortitude save ...|<DC var>`.
+        // Read as an escape the row renders "DC %1", which is PCGen syntax on a
+        // player's screen -- `leaked_pcgen_syntax` rejects it, and until Ultimate
+        // Wilderness's companions landed no ingested book carried one, so the
+        // renderer and the guard had been in silent contradiction for the whole
+        // program (`decisions.md §61.3`).
+        //
+        // The narrow reading is what ships: `%%N` is an argument reference ONLY
+        // when argument N exists. Everything else keeps the literal per cent,
+        // so no text that renders correctly today can change.
         if chars[i] == '%' && chars.get(i + 1) == Some(&'%') {
+            let escaped_arg = chars
+                .get(i + 2)
+                .and_then(|c| c.to_digit(10))
+                .filter(|digit| *digit >= 1)
+                .and_then(|digit| args.get(digit as usize - 1).map(|arg| (digit, arg)));
+            if let Some((_, arg)) = escaped_arg {
+                match resolve_desc_argument(arg, values) {
+                    Some(value) => out.push_str(&value.to_string()),
+                    None => {
+                        dropped_args.push(arg.trim().to_string());
+                        while out.ends_with('+') || out.ends_with('-') {
+                            out.pop();
+                        }
+                        dropped_any = true;
+                    }
+                }
+                i += 3;
+                continue;
+            }
             out.push('%');
             i += 2;
             continue;
@@ -607,6 +668,37 @@ mod tests {
         assert_eq!(rendered.text, "any spellcasting with a verbal component has a 20% spell failure chance.");
         assert!(rendered.dropped_args.is_empty());
         assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+    }
+
+    /// The upstream `%%N` escaping defect, and both halves of the narrow
+    /// reading that resolves it (`decisions.md §61.3`).
+    ///
+    /// Ultimate Wilderness's `Seaweed Leshy ~ Water Jet` is the row that made
+    /// this reachable: read as an escape it renders `DC %1 Fortitude save`,
+    /// which `leaked_pcgen_syntax` rejects and `companion_catalog` panics on.
+    #[test]
+    fn a_double_percent_before_a_digit_is_an_argument_when_the_row_supplies_one() {
+        let rendered = render_pcgen_desc("must make a DC %%1 Fortitude save|WaterJetDC");
+        assert_eq!(
+            rendered.text, "must make a DC Fortitude save",
+            "an unresolvable formula argument is dropped, exactly as a plain %N is"
+        );
+        assert_eq!(rendered.dropped_args, vec!["WaterJetDC".to_string()]);
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+
+        let substituted = render_pcgen_desc("must make a DC %%1 Fortitude save|17");
+        assert_eq!(substituted.text, "must make a DC 17 Fortitude save");
+        assert!(substituted.dropped_args.is_empty());
+    }
+
+    /// The other half: with NO argument to consume it, `%%` stays a literal per
+    /// cent sign even before a digit. Nothing that renders correctly today
+    /// changes.
+    #[test]
+    fn a_double_percent_before_a_digit_with_no_such_argument_stays_a_literal_sign() {
+        let rendered = render_pcgen_desc("a 20%%1 chance");
+        assert_eq!(rendered.text, "a 20%1 chance");
+        assert!(rendered.dropped_args.is_empty());
     }
 
     #[test]

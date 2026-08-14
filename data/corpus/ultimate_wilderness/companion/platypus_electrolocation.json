@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Platypus ~ Electrolocation",
+    "delivery": "Extraordinary",
+    "description": "While underwater, platypuses can sense the tiny electrical currents that trigger muscle movement. This allows them to locate living prey and distinguish it from inanimate objects. Treat electrolocation as blindsight 30 feet, but platypuses can sense only living creatures, and it functions only underwater.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:platypus_electrolocation",
+    "name": "Electrolocation",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_platypus",
+      "ultimate_wilderness:companion:platypus"
+    ],
+    "record_type": "ability",
+    "source_page": "p.203",
+    "stat_adjustments": [],
+    "type_segments": [
+      "Extraordinary",
+      "SpecialQuality",
+      "PlatypusRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 307,
+    "record_key": "Platypus ~ Electrolocation"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

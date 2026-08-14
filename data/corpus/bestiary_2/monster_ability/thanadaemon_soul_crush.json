@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Thanadaemon ~ Soul Crush",
+    "delivery": "Supernatural",
+    "description": "A thanadaemon can crush a soul gem (see caco&nl;daemon) as a standard action to gain fast healing 15 for 15 rounds (this is a standard action).  This action condemns the crushed sould to Abaddon - resurrecting this victim requires a DC 28 caster level check.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:thanadaemon_soul_crush",
+    "name": "Soul Crush",
+    "owners": [
+      "bestiary_2:monster:daemon_thanadaemon"
+    ],
+    "source_page": "p.74",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 329,
+    "record_key": "Thanadaemon ~ Soul Crush"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T22:19:24Z",
+  "data": {
+    "corpus_key": "Almiraj ~ Magic Horn",
+    "delivery": "Supernatural",
+    "description": "While on the creature's head, an almiraj's horn is treated as a +1 weapon. Any living creature slain by an almiraj's gore attack immediately turns to stone (as if by the flesh to stone spell, with no saving throw, and the creature is still dead). A severed almiraj horn retains a wisp of its former magic, and counts as a masterwork weapon if used to create a magical dagger or similar small piercing weapon.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:companion:almiraj_magic_horn",
+    "name": "Magic Horn",
+    "owners": [
+      "bestiary_4:companion:familiar_almiraj",
+      "bestiary_4:companion:almiraj"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Supernatural"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+    "line": 68,
+    "record_key": "Almiraj ~ Magic Horn"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

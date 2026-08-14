@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:golem_coral_aquatic_reconstruction",
+      "bestiary_4:monster_ability:golem_coral_immunity_to_magic"
+    ],
+    "challenge_rating": "9",
+    "corpus_key": "Golem (Coral)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:golem_coral",
+    "monster_class": "Construct:12",
+    "name": "Coral Golem",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Construct",
+    "size": "L",
+    "source_page": "p.131",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 106,
+    "record_key": "Golem (Coral)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

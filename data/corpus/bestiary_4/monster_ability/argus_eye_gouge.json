@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Argus ~ Eye Gouge",
+    "delivery": "Extraordinary",
+    "description": "If an argus rends or pins an opponent, as a swift action it can attempt a dirty trick maneuver to blind the target. If its combat maneuver check exceeds the DC by 10 or more, the opponent is permanently blinded.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:argus_eye_gouge",
+    "name": "Eye Gouge",
+    "owners": [
+      "bestiary_4:monster:argus"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 284,
+    "record_key": "Argus ~ Eye Gouge"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

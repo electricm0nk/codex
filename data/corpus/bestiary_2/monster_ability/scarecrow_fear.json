@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Scarecrow ~ Fear",
+    "delivery": "Supernatural",
+    "description": "A scarecrow's touch infuses its target with overwhelming waves of fear.  If the victim fails a DC %1 Will sve, she cowers and can take no actions other than attempting a new DC %1 Will save at the end of the following round (and each round thereafter) to end this fear.  A successful first save leaves the victim shaken for 1 round.  This is a mind-affecting fear effect.",
+    "description_variables": [
+      "ScarecrowFearDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:scarecrow_fear",
+    "name": "Fear",
+    "owners": [
+      "bestiary_2:monster:scarecrow"
+    ],
+    "source_page": "p.238",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1100,
+    "record_key": "Scarecrow ~ Fear"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

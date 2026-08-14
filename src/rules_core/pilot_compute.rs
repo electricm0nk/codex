@@ -9022,26 +9022,72 @@ const HALF_ELF_ABILITY_BONUS_CHOICE_ID: &str = "choice:half_elf_ability_bonus";
 /// The standard trait it replaces is `Half-Elf ~ Adaptability` (a Skill Focus
 /// bonus feat), which this engine grounds no record for, so this is a pure
 /// addition rather than a swap of one number for another.
-const HALF_ELF_DUAL_MINDED_TRAIT_KEY: &str = "Half-Elf ~ Dual Minded";
-const HALF_ELF_DUAL_MINDED_WILL_SAVE_BONUS: i16 = 2;
-
-/// `Half-Elf ~ Dual Minded`'s +2 on all Will saving throws, or 0.
+/// Every alternate racial trait that declares a plain-integer `BONUS:SAVE` on
+/// a saving throw `compute_total_saves` actually totals, as
+/// `(trait key, owning race id, Fortitude, Reflex, Will)`.
 ///
-/// Race-gated by construction: the trait key is a Half-Elf record, and this
-/// additionally requires `race_id == race:half-elf` so a selection copied onto
-/// another race can never contribute. Unconditional once held — the corpus
-/// chain carries no situational qualifier — so it layers into
-/// `compute_total_saves` exactly the way `feat_effects::save_bonuses_from_feats`
-/// already does for Iron Will.
-fn half_elf_dual_minded_will_save_bonus(input: &CharacterInput) -> i16 {
-    if input.chosen.race_id != HALF_ELF_RACE_ID {
-        return 0;
+/// # This list is a measurement, not a selection
+///
+/// The sibling of [`ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`], and derived the
+/// same way: `tests/sd27_alternate_racial_trait_reachability.rs` rescans every
+/// alternate's `raw_bonus_chains` against the engine's computed-total surface
+/// and fails, naming the trait, if this table and the corpus disagree in
+/// either direction.
+///
+/// **This used to be a single hardcoded constant** for ARG's
+/// `Half-Elf ~ Dual Minded`, documented as "the one alternate across all 153
+/// whose declared bonus lands on a saving throw". That was true of ARG and
+/// stopped being true the moment SD-29's race-trait lane added books: Inner Sea
+/// Races' `Dwarf ~ Unstoppable` and Horror Adventures' `Half-Elf ~ Mismatched`
+/// both land here, and with the constant in place both were offered in the
+/// picker, persisted on the character, and moved no number on the sheet — the
+/// browse-only stub class `decisions.md §44.2` describes. Round 3 replaced the
+/// constant with this table (`decisions.md §47`).
+///
+/// # Stacking
+///
+/// The contributions are **summed**, and the pinned invariant that makes that
+/// correct is that no race contributes twice to the same save — asserted by
+/// `no_race_contributes_two_alternate_trait_bonuses_to_one_save` below, so a
+/// future book that breaks it fails here rather than silently choosing between
+/// summing a typed pair (wrong) and maximising a penalty away (also wrong).
+/// `Half-Elf ~ Mismatched`'s **negative** entry is why maximising is not the
+/// default the skill table uses: a -2 penalty must apply, never be discarded
+/// as "not the highest".
+const ALTERNATE_TRAIT_SAVE_BONUSES: &[(&str, &str, i16, i16, i16)] = &[
+    // (trait key, race id, Fortitude, Reflex, Will)
+    //
+    // ARG p.42, `arg_abilities_race.lst:158`, `BONUS:SAVE|Will|2`. Untyped in
+    // the corpus (no `TYPE=` token at all), so PF1's same-type rule does not
+    // reach it. Replaces `Half-Elf ~ Adaptability`, a bonus feat this engine
+    // grounds no record for, so it is a pure addition rather than a swap.
+    ("Half-Elf ~ Dual Minded", "race:half-elf", 0, 0, 2),
+    // Inner Sea Races, `BONUS:SAVE|Fortitude|1|TYPE=Racial`.
+    ("Dwarf ~ Unstoppable", "race:dwarf", 1, 0, 0),
+    // Horror Adventures, `BONUS:SAVE|Reflex|-2`. The only negative magnitude
+    // in either alternate-trait bonus table. Its chain also carries
+    // `BONUS:COMBAT|INITIATIVE|4|TYPE=Racial`, which this engine totals no
+    // initiative for and therefore deliberately does not model here.
+    ("Half-Elf ~ Mismatched", "race:half-elf", 0, -2, 0),
+];
+
+/// The Fortitude / Reflex / Will contribution of this character's chosen
+/// alternate racial traits.
+///
+/// Race-gated by construction: a trait key is matched only against its owning
+/// race, so a selection copied onto another race contributes nothing.
+fn alternate_trait_save_bonuses(input: &CharacterInput) -> BaseSaves {
+    let selected = selected_alternate_trait_keys(input);
+    let mut total = BaseSaves { fortitude: 0, reflex: 0, will: 0 };
+    for (key, race_id, fortitude, reflex, will) in ALTERNATE_TRAIT_SAVE_BONUSES {
+        if input.chosen.race_id != *race_id || !selected.iter().any(|chosen| chosen == key) {
+            continue;
+        }
+        total.fortitude += *fortitude;
+        total.reflex += *reflex;
+        total.will += *will;
     }
-    if selected_alternate_trait_keys(input).iter().any(|key| key == HALF_ELF_DUAL_MINDED_TRAIT_KEY) {
-        HALF_ELF_DUAL_MINDED_WILL_SAVE_BONUS
-    } else {
-        0
-    }
+    total
 }
 
 /// SD13-E2/SD18 Half-Elf racial trait bundle explanation seam (mirroring the
@@ -9821,6 +9867,12 @@ const ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES: &[(&str, &str, i16, i16, i16)] = &
     ("Elf ~ Spirit of the Waters", "race:elf", 0, 0, 4),
     ("Gnome ~ Explorer", "race:gnome", 2, 0, 0),
     ("Goblin ~ Tree Runner", "race:goblin", 4, 0, 0),
+    // Inner Sea Races (SD-29 race-trait lane round 2). Round 2 landed the
+    // records without these rows, so all three were offered and moved nothing
+    // until round 3 (`decisions.md §47`).
+    ("Gnome ~ Intrepid Settler", "race:gnome", 2, 0, 2),
+    ("Half-Elf ~ Sea Legs", "race:half-elf", 0, 0, 2),
+    ("Hobgoblin ~ Authoritative", "race:hobgoblin", 0, 2, 0),
     ("Half-Elf ~ Water Child", "race:half-elf", 0, 0, 4),
     ("Half-Orc ~ Forest Walker", "race:half-orc", 2, 0, 0),
     ("Half-Orc ~ Rock Climber", "race:half-orc", 1, 0, 0),
@@ -37036,7 +37088,7 @@ fn wizard_has_canonical_abjuration_selection(input: &CharacterInput) -> bool {
 /// burdens legible on the runtime path. The matrix file row transition
 /// (Unverified/Observed → Blocked/Computed, then Blocked → Partial once Scribe
 /// Scroll is grounded) is recorded by this proof surface and applied to the
-/// in-source carrier directly (see `seeded_sd13_e1_f1_current_truth`).
+/// in-source carrier directly (see `seeded_current_truth`).
 ///
 /// A further SD13-E5 slice widens the level-1-only gate (`supported_wizard_level`,
 /// 1..=2) and extends every one of the formulas above to level 2 via the same
@@ -41895,26 +41947,29 @@ fn compute_total_saves(
     // Applies to REFLEX ONLY, unlike the all-three-saves bonuses above.
     let sidestep_secret_reflex_bonus =
         active_oracle_sidestep_secret_reflex_bonus(input, ability_modifiers).unwrap_or(0);
-    // SD-27 (alternate racial traits reach compute): ARG's `Half-Elf ~ Dual
-    // Minded` grants an unconditional +2 on all Will saving throws
-    // (`arg_abilities_race.lst:158`, `BONUS:SAVE|Will|2`). Race-gated and
-    // selection-gated by `half_elf_dual_minded_will_save_bonus` construction,
-    // 0 for every character who did not take it. See that function's own doc
-    // comment for why this is the only one of the 153 alternates that layers
-    // onto a total this engine computes.
-    let dual_minded_will_bonus = half_elf_dual_minded_will_save_bonus(input);
+    // SD-27 (alternate racial traits reach compute), widened by SD-29's
+    // race-trait lane round 3 (`decisions.md §47`). Every alternate racial
+    // trait whose corpus chain declares a plain-integer `BONUS:SAVE` on a save
+    // this engine totals. Race-gated and selection-gated by
+    // `alternate_trait_save_bonuses` construction, all-zero for every character
+    // who took none of them. This replaced a single hardcoded Half-Elf
+    // constant, which had silently become wrong: two later books' alternates
+    // land here too, and were being offered while moving nothing.
+    let alternate_trait_saves = alternate_trait_save_bonuses(input);
     let total_saves = BaseSaves {
         fortitude: base_saves.fortitude
             + ability_modifiers.constitution
             + feat_save_bonuses.fortitude
             + touch_of_good_save_bonus
-            + purity_judgment_save_bonus,
+            + purity_judgment_save_bonus
+            + alternate_trait_saves.fortitude,
         reflex: base_saves.reflex
             + ability_modifiers.dexterity
             + feat_save_bonuses.reflex
             + touch_of_good_save_bonus
             + purity_judgment_save_bonus
-            + sidestep_secret_reflex_bonus,
+            + sidestep_secret_reflex_bonus
+            + alternate_trait_saves.reflex,
         will: base_saves.will
             + ability_modifiers.wisdom
             + feat_save_bonuses.will
@@ -41923,7 +41978,7 @@ fn compute_total_saves(
             + bloodrage_will_bonus
             + touch_of_good_save_bonus
             + purity_judgment_save_bonus
-            + dual_minded_will_bonus,
+            + alternate_trait_saves.will,
     };
 
     let class_label = class_summary_label(input);
@@ -41934,9 +41989,11 @@ fn compute_total_saves(
             "Total Fortitude save: {class_label} base Fortitude save (+{}) + Constitution modifier \
              (+{}) + feat bonus (+{}, Great Fortitude if selected) + Good domain Touch of Good sacred \
              bonus (+{}, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+{}, \
-             only while actively, validly judging Purity) = {}",
+             only while actively, validly judging Purity) + alternate racial trait (+{}, only \
+             for a character who took one that declares a Fortitude bonus) = {}",
             base_saves.fortitude, ability_modifiers.constitution, feat_save_bonuses.fortitude,
-            touch_of_good_save_bonus, purity_judgment_save_bonus, total_saves.fortitude
+            touch_of_good_save_bonus, purity_judgment_save_bonus,
+            alternate_trait_saves.fortitude, total_saves.fortitude
         ),
     });
     explanations.push(ComputationExplanation {
@@ -41948,9 +42005,12 @@ fn compute_total_saves(
              (+{}, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+{}, only \
              while actively, validly judging Purity) + Oracle Sidestep Secret Charisma-for-\
              Dexterity substitution (+{sidestep_secret_reflex_bonus}, only for a Lore-Mystery \
-             Oracle who took that revelation) = {}",
+             Oracle who took that revelation) + alternate racial trait ({:+}, only for a \
+             character who took one that declares a Reflex modifier -- this one can be \
+             NEGATIVE, e.g. Horror Adventures' Half-Elf Mismatched at -2) = {}",
             base_saves.reflex, ability_modifiers.dexterity, feat_save_bonuses.reflex,
-            touch_of_good_save_bonus, purity_judgment_save_bonus, total_saves.reflex
+            touch_of_good_save_bonus, purity_judgment_save_bonus,
+            alternate_trait_saves.reflex, total_saves.reflex
         ),
     });
     explanations.push(ComputationExplanation {
@@ -41963,8 +42023,9 @@ fn compute_total_saves(
              while actively, validly singing) + Bloodrager Bloodrage morale bonus (+{}, only \
              while actively, validly bloodraging) + Good domain Touch of Good sacred bonus (+{}, \
              self-applied) + Inquisitor Purity judgment sacred/profane bonus (+{}, only while \
-             actively, validly judging Purity) + Half-Elf Dual Minded alternate racial trait \
-             (+{}, Advanced Race Guide p.42, only for a Half-Elf who took it) = {}",
+             actively, validly judging Purity) + alternate racial trait (+{}, only for a \
+             character who took one that declares a Will bonus -- ARG p.42's Half-Elf Dual \
+             Minded is the one such trait in the corpus today) = {}",
             base_saves.will,
             ability_modifiers.wisdom,
             feat_save_bonuses.will,
@@ -41973,7 +42034,7 @@ fn compute_total_saves(
             bloodrage_will_bonus,
             touch_of_good_save_bonus,
             purity_judgment_save_bonus,
-            dual_minded_will_bonus,
+            alternate_trait_saves.will,
             total_saves.will
         ),
     });
@@ -45341,7 +45402,7 @@ mod wizard_abjuration_protective_ward_ac_claim_tests {
     /// Human Wizard at level 6 (past Protective Ward's level-1 unlock,
     /// giving a real nonzero deflection bonus of (6/5)+1=2), with the
     /// canonical Abjuration school + opposed-schools selection.
-    fn abjuration_wizard_with_ge06_posture(level: u8) -> CharacterInput {
+    fn abjuration_wizard_with_pilot_posture(level: u8) -> CharacterInput {
         let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
         assert!(result.diagnostics.is_empty(), "fixture should load cleanly");
         let mut input = result.character_input.expect("valid fixture");
@@ -45365,7 +45426,7 @@ mod wizard_abjuration_protective_ward_ac_claim_tests {
     #[test]
     fn protective_ward_detail_no_longer_falsely_claims_no_ac_total_exists() {
         let computation =
-            compute_pilot_base_chassis(&abjuration_wizard_with_ge06_posture(6));
+            compute_pilot_base_chassis(&abjuration_wizard_with_pilot_posture(6));
 
         let deflection = computation
             .explanations
@@ -59382,7 +59443,7 @@ mod investigator_dispatch_widening_safety_tests {
 /// The nine non-Life Spirits' base abilities (task #12, stage 3).
 #[cfg(test)]
 mod bloodrager_remaining_features_tests {
-    use super::{build_pilot_headless_receipt, CharacterClassLevel, CharacterInput};
+    use super::{build_pilot_headless_receipt, CharacterClassLevel};
     use crate::rules_core::character_input::load_character_input_fixture;
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
@@ -59620,7 +59681,7 @@ mod per_weapon_attack_total_tests {
     /// Stage 2 is additive: the pre-existing GE-06 baseline total must be
     /// untouched and still present alongside the new record.
     #[test]
-    fn the_existing_ge06_baseline_total_is_left_intact() {
+    fn the_existing_pilot_baseline_total_is_left_intact() {
         let receipt = build_pilot_headless_receipt(&fixture());
         assert!(
             receipt

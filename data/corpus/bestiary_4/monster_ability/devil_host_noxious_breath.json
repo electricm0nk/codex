@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Devil (Host) ~ Noxious Breath",
+    "delivery": "Supernatural",
+    "description": "Three times per day, as a standard action a magaav can exhale a breath that reeks of pure corruption upon a creature within 5 feet. The target must succeed at a DC %1 Fortitude save or be sickened for 1d4 rounds. Creatures that successfully save cannot be affected by the same magaav's noxious breath for 24 hours. This is a poison effect.",
+    "description_variables": [
+      "13+Con"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:devil_host_noxious_breath",
+    "name": "Noxious Breath",
+    "owners": [
+      "bestiary_4:monster:devil_host"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 468,
+    "record_key": "Devil (Host) ~ Noxious Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

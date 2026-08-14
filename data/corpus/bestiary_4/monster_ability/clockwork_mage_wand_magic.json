@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Clockwork Mage ~ Wand Magic",
+    "delivery": "Supernatural",
+    "description": "A clockwork mage's wand crystal allows it to cast spells as if using a spell trigger magic item. The arcane school of the wand crystal determines a clockwork mage's spells. They cast 1st-level spells at will, 2nd-level spells 3 times per day, and 3rd level spells 1 time per day.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:clockwork_mage_wand_magic",
+    "name": "Wand Magic",
+    "owners": [
+      "bestiary_4:monster:clockwork_mage"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 389,
+    "record_key": "Clockwork Mage ~ Wand Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

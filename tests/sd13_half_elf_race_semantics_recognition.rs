@@ -27,7 +27,7 @@ use codex::rules_core::pilot_compute::{
     compute_pilot_base_chassis,
 };
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const HALF_ELF_FIXTURE: &str = include_str!(
@@ -256,7 +256,7 @@ fn other_non_human_race_still_gets_the_generic_unverified_diagnostic() {
 
 #[test]
 fn matrix_half_elf_row_is_partial_computed_and_names_four_recognized_families() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let half_elf = matrix
         .row("race.half_elf.bounded_semantics")
         .expect("half-elf row must exist");
@@ -293,7 +293,7 @@ fn matrix_half_elf_row_is_partial_computed_and_names_four_recognized_families() 
 
 #[test]
 fn matrix_preserves_accepted_truth_and_unchanged_rows() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
 
     // Later promoted to Supported/ProductVisible alongside every other race
     // row by SD-19's Race Trait Catalog browser UI-surfacing work (2026-07-16).

@@ -708,20 +708,43 @@ fn every_corpus_book_appears_in_the_inventory() {
          campaign_setting books)"
     );
 
-    // And every un-ingested book must contribute real, named units rather than
-    // being skipped: that is what makes `not-started` a measurement.
-    let unstarted_books: std::collections::HashSet<String> = doc["units"]
+    // And every book must contribute real, named units rather than being
+    // skipped: that is what makes the inventory a measurement rather than a
+    // roster.
+    //
+    // **This was a count and the count was wrong for a structural reason.** It
+    // read `unstarted_books.len() >= 15`, i.e. it asserted that at least 15
+    // books are still un-ingested -- a floor that this bundle's own success
+    // walks straight through. It went RED on `tranche/9` when SD-29's companion
+    // lane grounded three bestiaries (12 books remained, `git show
+    // 5164bf36:docs/work-inventory.json` reproduces the 12 with none of the
+    // monster lane's round-3 changes present), which is a test failing for a
+    // job well done.
+    //
+    // The property it was reaching for does not need a constant: **no in-scope
+    // book is enumerated and then left unmeasured.** That holds no matter how
+    // much of the corpus is ingested, and it fails for the case the count was
+    // written to catch -- a book that lands in the roster and contributes
+    // nothing.
+    let books_with_units: std::collections::HashSet<String> = doc["units"]
         .as_array()
         .expect("units array")
         .iter()
-        .filter(|u| u["status"].as_str() == Some("not-started"))
         .filter_map(|u| u["book"].as_str().map(|s| s.to_string()))
         .collect();
+    let unmeasured: Vec<String> = doc["books"]
+        .as_array()
+        .expect("books array")
+        .iter()
+        .filter(|b| b["scope"].as_str() != Some("out_of_scope"))
+        .filter_map(|b| b["id"].as_str().map(|s| s.to_string()))
+        .filter(|id| !books_with_units.contains(id))
+        .collect();
     assert!(
-        unstarted_books.len() >= 15,
-        "expected the large majority of un-ingested books to contribute \
-         not-started units, saw {}",
-        unstarted_books.len()
+        unmeasured.is_empty(),
+        "these in-scope books appear in the roster and contribute NO units at all -- \
+         a book that is listed but not measured is exactly what this check exists to \
+         catch: {unmeasured:?}"
     );
 }
 
@@ -729,6 +752,63 @@ fn every_corpus_book_appears_in_the_inventory() {
 /// World Guide + nine Inner Sea modules). Kept in one place so the roster
 /// assertions above and the per-book assertions below can never disagree
 /// about which books SD-30 added.
+/// The subset of [`SD30_CAMPAIGN_SETTING_BOOKS`] that SD-29's lanes have since
+/// ingested, so the inventory registers them `in_scope` rather than
+/// `future_state`. Named individually rather than derived from the inventory,
+/// because deriving the expectation from the artifact under test would make the
+/// assertion vacuous.
+const SD29_INGESTED_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
+    // SD-29 race-trait lane round 2 (`decisions.md §45`): 72 race-trait records.
+    "inner_sea_races",
+    // SD-29 monster lane round 2 (`decisions.md §46`): 5 + 36 and 4 + 17
+    // `monster`/`monster_ability` records. The first `campaign_setting/` books
+    // to carry the monster chassis. Added when the two lanes' branches merged
+    // -- this entry and the one above were each written by the lane that
+    // ingested the book, and the merge is the first point at which the list
+    // had to be complete. A third lane ingesting a thirteenth book adds a line.
+    "book_of_the_damned_volume_1",
+    "book_of_the_damned_volume_2",
+    // SD-29 companion lane, pilot round (`decisions.md §48`): 10 and 11
+    // `companion` records. `inner_sea_combat` is the lane's pilot book and the
+    // first book in this repo whose ONLY ingested family is `companion`;
+    // `inner_sea_intrigue`'s 11 units are the ones the race-trait lane's
+    // classifier fix handed back. Added here rather than relaxing the check,
+    // for the reason §47.3 states: the roster assertion is about SD-30's
+    // sixteen books existing, not about them staying un-ingested forever.
+    "inner_sea_combat",
+    "inner_sea_intrigue",
+    // SD-29 monster lane round 3 (`decisions.md §50`): 9 `monster` + 14
+    // `monster_ability` records. A PARTIAL ingest, and it belongs on this list
+    // anyway -- a book's scope is `in_scope` the moment any of its units are
+    // grounded. 21 of its 44 monster-family units are deliberately not ingested
+    // (5 monster rows carry the corpus's own `NAMEISPI:YES` Product Identity
+    // declaration, and 13 ability rows are then owned by no shipped monster),
+    // so "ingested" here means "no longer future_state", never "complete".
+    "inner_sea_world_guide",
+    // SD-29 monster lane round 7 (`decisions.md §58`): 38 `monster` + 152
+    // `monster_ability` records. Like `inner_sea_world_guide` above this is a
+    // PARTIAL ingest and belongs here anyway -- 40 of its 230 monster-family
+    // units are deliberately not ingested (26 orphan ability rows, 7 Product
+    // Identity ability rows, and the 2 monster rows that NAME those 7 and so
+    // cannot be emitted either, plus the 5 abilities orphaned by losing them).
+    // A book's scope is `in_scope` the moment any of its units are grounded.
+    "inner_sea_bestiary",
+    // SD-29 monster lane round 9: 39 `monster` + 77 `monster_ability` records.
+    // A PARTIAL ingest for the same reason as the two above -- 84 of its 200
+    // monster-family units are deliberately not ingested (79 orphan ability
+    // rows and 5 Product Identity ability rows) -- and it belongs here anyway,
+    // because a book's scope is `in_scope` the moment any of its units are
+    // grounded. Every one of its 39 corpus monster rows ships, which is a first
+    // for this lane. **79 of the 81 remaining orphans** have a real owner the
+    // corpus states through a `CATEGORY:Internal` bundle row that no ownership
+    // pass follows yet -- re-derived by round 10 with
+    // `scripts/scan_monster_ability_bundle_rows.py` (`decisions.md §64.1`).
+    // `§62.4` wrote 16 here, which is the `support/isg_abilities_races_b4.lst`
+    // subset it was reading, not the book's figure; see
+    // `rules_tables::inner_sea_gods`'s header.
+    "inner_sea_gods",
+];
+
 const SD30_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
     "book_of_the_damned_volume_1",
     "book_of_the_damned_volume_2",
@@ -767,12 +847,27 @@ fn sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books() {
             .iter()
             .find(|b| b["id"].as_str() == Some(id))
             .unwrap_or_else(|| panic!("{id} must appear in the inventory's books list"));
+        // A book SD-29 has since ingested is `in_scope`, not `future_state`, and
+        // that is the correct state rather than a regression -- the roster
+        // assertion above is about SD-30's sixteen books existing, not about
+        // them staying un-ingested forever. SD-29's race-trait lane round 2
+        // ingested `inner_sea_races` on 2026-08-11 and left this assertion RED
+        // on the branch; round 3 states the exemption as its own claim rather
+        // than dropping the book from the roster or relaxing the check
+        // (`decisions.md §47.3`). The `else` branch is deliberately a hard
+        // assertion too, so a book flipping scope silently still fails here.
+        let expected_scope =
+            if SD29_INGESTED_CAMPAIGN_SETTING_BOOKS.contains(id) { "in_scope" } else { "future_state" };
         assert_eq!(
             book["scope"].as_str(),
-            Some("future_state"),
-            "{id} must be registered as future_state (data/stubs/{id}.json), got {:?}",
+            Some(expected_scope),
+            "{id} must be registered {expected_scope} (data/stubs/{id}.json for future_state), \
+             got {:?}",
             book["scope"]
         );
+        if expected_scope == "in_scope" {
+            continue;
+        }
         let enumerated = book["files_enumerated"].as_u64().unwrap_or(0);
         let not_enumerated = book["files_not_enumerated"]
             .as_array()

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Sea Serpent ~ Elusive",
+    "delivery": null,
+    "description": "As a full-round action while in water, a sea serpent can move up to its run speed (300 ft.) without leaving any trace of its passing (identical in effect to a pass without trace). An elusive sea serpent gains a +40 circumstance bonus to its Stealth check. In addition, except when in combat, a sea serpent is considered to be under the effects of a nondetection spell. Both of these spell effects are at caster level 20th and cannot be dispelled.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:sea_serpent_elusive",
+    "name": "Elusive",
+    "owners": [
+      "beastiary:monster:sea_serpent"
+    ],
+    "source_page": "p.244",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1101,
+    "record_key": "Sea Serpent ~ Elusive"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

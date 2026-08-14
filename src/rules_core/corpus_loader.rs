@@ -212,6 +212,17 @@ fn find_json_files(dir: &Path) -> Vec<std::path::PathBuf> {
             }
         }
     }
+    // Sorted, because the ORDER records are pushed into a
+    // `SourcePackageContent` is significant -- a resolver reading that package
+    // decides a key collision by position. Unsorted, that order is `read_dir`
+    // order, which is the filesystem's, which is stable for one directory on
+    // one machine and NOT stable across two checkouts of the same corpus. That
+    // is the shape of nondeterminism that looks like a code change when two
+    // agents compare measurements taken in different worktrees. Path order is a
+    // property of the corpus itself, so every checkout of it agrees.
+    // `race_resolver::find_json_files`, which copied this traversal, already
+    // sorts for the same reason.
+    out.sort();
     out
 }
 

@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T16:45:13Z",
+  "data": {
+    "key": "Oversized Goblin ~ Size",
+    "name": "Medium",
+    "race_key": "Goblin",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Goblin Racial Trait",
+      "SpecialQuality",
+      "Racial Size"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Goblin_ReplaceSize"
+    ],
+    "description": "Oversized goblins are Medium creatures and receive no bonuses or penalties due to their size.",
+    "source_page": "p.104",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oversized Goblin ~ Size"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Goblin Racial Trait.SpecialQuality.Racial Size"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "Oversized goblins are Medium creatures and receive no bonuses or penalties due to their size."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "SIZE_M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "FACT",
+        "value": "Goblin_ReplaceSize|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
+    "sha256": "2cde87583641aec61ec0da397064c651fefd27d679ac0cc6368930ded84e5e30",
+    "line": 36,
+    "record_key": "Oversized Goblin ~ Size"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

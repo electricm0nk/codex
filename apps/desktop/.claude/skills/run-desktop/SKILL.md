@@ -80,6 +80,7 @@ persistent driver process to keep a shell attached to.
 | `title` | Prints `WM_NAME` — the window's titlebar text. |
 | `geometry` | Prints window position + size. |
 | `logs [n]` | Tails the `npx tauri dev` output log. |
+| `diagnose` | App-process liveness on our display, the full window inventory with each `WM_NAME`, and the launch-log tail. Every `launch` failure path prints this automatically, **before** cleanup runs. |
 | `stop` | Kills the app binary, Vite, and Xvfb by pattern match; removes the state file. Safe to call even if nothing is running. |
 
 Example end-to-end sequence (create a character, confirm it computed):
@@ -130,14 +131,18 @@ summary, before relying on it):**
   `DISPLAY=:$DISPLAY_NUM` matching *this* agent's display — so a correctly
   distinct `RUN_DESKTOP_AGENT` genuinely prevents one agent's `stop` from
   reaping another's app.
-- **Known gap, still live:** the *readiness* poll inside `cmd_launch`
-  (`pgrep -f "target/debug/codex"`, used to detect that the binary has
-  started) is **not** filtered by `DISPLAY` the way the kill loop is. If a
-  sibling agent's app process is already running when you `launch`, your
-  own readiness check can pass against a process you don't own, before your
-  own binary has even started. Confirm you actually got your own window with
-  `driver.sh title` (expect exactly `Codex`) before trusting `launch`'s
-  success and moving on to `screenshot`/`click`.
+- **Closed 2026-08-11** (was: "known gap, still live"). The *readiness* poll
+  inside `cmd_launch` used to use an unfiltered `pgrep -f "target/debug/codex"`,
+  so a sibling agent's already-running app satisfied it before your own binary
+  had started — and the window search then burned its whole budget on an empty
+  display. Readiness now goes through `our_app_pids()`, which filters every
+  candidate by its own `DISPLAY` environ exactly as the kill loop does, and
+  matches on the executable's name rather than a path (a dispatched agent with
+  its own `CARGO_TARGET_DIR` builds the binary outside `target/debug/`, where
+  the old pattern matched nothing at all). Covered by
+  `scripts/tests/test_run_desktop_driver.sh` cases 1-2 and by the
+  `driver-selftest` stage of `scripts/verify.sh`. See
+  `docs/release/SD-29-corpus-wide-catch-up-lanes/decisions.md` Decision 43.
 
 **Practical rule:** pick a short, stable, role-named value —
 `RUN_DESKTOP_AGENT=frontend`, `RUN_DESKTOP_AGENT=qa`, or the dispatched
@@ -145,6 +150,48 @@ agent's own name — and export it in the agent's environment before the first
 `driver.sh` call. Do this for every concurrently-dispatched desktop agent,
 not only when you know another one is already running: the whole point of
 the mechanism is that agents cannot see each other's assignments in advance.
+
+## On-screen verification (DoD item 8) — `verify-on-screen.sh`
+
+The repeatable entry point for Definition-of-done item 8: prove a record
+family's value actually renders on the player-visible screen, not merely
+that a code path exists. One command per record:
+
+```bash
+export RUN_DESKTOP_AGENT=<your-cycle-id>   # REQUIRED — script refuses 'default'
+./.claude/skills/run-desktop/verify-on-screen.sh \
+  --family race_trait --record "Ironskinned" \
+  --expect "Duergar" --expect "natural armor" \
+  --out docs/release/<bundle>/artifacts/<cycle>/item8
+```
+
+What it does: launch (or reuse this agent's already-running app), click the
+hub's "Browse …" link for the family, filter the catalog via its search box
+to `--record`, screenshot, then **select-all + copy in the webview and read
+the X clipboard back** (`read-clipboard.py`, python3-gi — no xclip in this
+container). The record name, every `--expect` string, and a per-family
+screen marker must all be present in the *rendered text* — a screenshot
+alone can't be machine-checked, and the extraction is what catches the
+"gate green, screen empty" defect class.
+
+- Families: `equipment` · `spell` · `race_trait` · `monster`.
+- **PASS** (exit 0): `<out>/<slug>.png` + `<out>/<slug>.verify.md` — the
+  report carries family/record/expects, UTC time, HEAD, agent id, and the
+  rendered lines that matched. Cite both paths in the cycle receipt.
+- **FAIL** (exit nonzero): artifacts are renamed `<slug>.FAILED.png` /
+  `<slug>.FAILED.verify.md` so they can never be mistaken for passing
+  evidence. Failure paths: launch failure, wrong-screen navigation (marker
+  guard — catches coordinate drift loudly), empty clipboard, record not
+  rendered, expect string missing. Zero `--expect` strings is itself an
+  error: a check that expects nothing verifies nothing.
+- The app is **left running** after each record so a cycle can verify many
+  records cheaply; run `driver.sh stop` once at cycle end. `--fresh` forces
+  a relaunch; `--slug` overrides the derived artifact basename.
+- Do not run concurrently with `scripts/verify.sh` (memory note below).
+- Coordinates in the script's nav table were calibrated on the driver's
+  1920x1200 Xvfb screen; if UI layout changes move a hub link or search
+  box, the marker/record guards fail loudly — recalibrate from a
+  screenshot and update the table in `verify-on-screen.sh`.
 
 ## Run (human path)
 
@@ -223,23 +270,38 @@ cd ../.. && cargo test   # root rules-core/persistence suite
 
 ## Troubleshooting
 
-- **`Timed out waiting for launch; see ...log`**: check
-  `driver.sh logs 60` — if it ends mid-build with no `error[`/`panicked`,
-  the container may just be slow; re-run `launch` (it's idempotent) or
-  raise the retry budget (`seq 1 300` near the top of `cmd_launch` in
-  `driver.sh`).
-- **`App process started but no window titled '...' appeared`**: two
-  possible causes. (1) The binary is running but the window title
-  doesn't match — check whether `tauri.conf.json`'s
-  `app.windows[0].title` changed, and update `WINDOW_TITLE` at the top
-  of `driver.sh` to match; confirm with
-  `DISPLAY=:99 xdotool search --name "" | xargs -I{} xprop -id {} WM_NAME`.
-  (2) WebKitGTK's cold-start window creation legitimately took longer
-  than the retry budget this run (observed once, taking a little over
-  15s when the budget was 15s) — check with the same `xprop` command
-  above; if the window is there now, just re-run `launch` (it's
-  idempotent) or raise the budget (`seq 1 90` in the window-search loop
-  in `cmd_launch`).
+**Read the `diagnose` block first.** Every `launch` failure path prints app
+liveness, the window inventory, and the log tail before cleanup runs. Do not
+reason from a post-mortem `pgrep`: `cmd_launch` traps `EXIT` and calls
+`cmd_stop`, so by the time the command returns, the app and the X server are
+gone *whatever* went wrong. An empty process table after a failed launch is the
+driver's cleanup, not evidence about the app. Three cycles read it as a crash
+and spent their budgets on a nonexistent app bug (Decision 43).
+
+- **`libEGL warning: DRI3 error: Could not get DRI3 device`** is **not** an
+  error and not a cause of anything. It appears on every successful launch on a
+  headless box: there is no GPU under Xvfb, so WebKitGTK falls back to software
+  rendering and carries on. Ignore it.
+- **`Timed out waiting for the app process to start`**: the binary never
+  started. The `diagnose` log tail names the real reason. Two common ones:
+  a build error (look for `error[`), or the `beforeDevCommand` (vite) dying —
+  `Killed` there means the OOM killer, see the memory note below.
+- **`App process exited before a window ... appeared`**: the binary really did
+  die. Look for `panicked at` in the log tail. `Failed to initialize gtk
+  backend!` means the process had no usable `DISPLAY` — check that Xvfb for
+  your display number is actually alive.
+- **`App process is running but no window titled '...' appeared within Ns`**:
+  the app is up but the window search failed. Either the title changed (compare
+  the `diagnose` window inventory's `WM_NAME`s against `tauri.conf.json`'s
+  `app.windows[0].title`, and update `WINDOW_TITLE` in `driver.sh`), or the box
+  is loaded enough that WebKitGTK's cold start exceeded the budget. Measured
+  idle and solo on the 4-core CI box: **~35s**. Default budget is **180s**;
+  raise it with `RUN_DESKTOP_WINDOW_TIMEOUT=<seconds>`.
+- **Memory, not disk, is the binding constraint for launching.** The CI box has
+  **22 GiB RAM and zero swap**. A concurrent cargo build will get vite
+  OOM-killed and the launch fails at `beforeDevCommand`. **Do not run
+  `driver.sh launch` and `scripts/verify.sh` at the same time** — serialize
+  them.
 - **A `type`/`key` command appears to do nothing**: you likely skipped
   `click` (which sets focus) before it, or a dropdown/select still has
   focus and is eating the key — see Gotchas above.

@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Kalavakus ~ Enslave Soul",
+    "delivery": "Supernatural",
+    "description": "A kalavakus can attempt to enslave the soul of any mortal creature within 60 feet as a swift action.  The kalavakus must have line of sight to the target.  The target can resist this special attack with a DC %1 Will save, but is staggered for 1 round even if the save is successful.  If the save is successful, the creature is immune to this ability for 24 hours.  If the save is a failure, the target's soul is enslaved - this creature takes a =6 penalty on all attack rolls and saving throws against that kalavakus.  If a creature with an enslaved soul is slain by that kalavakus, the soul immediately infuses the demon's body, affecting it with a heal spell (CL 12th).  A kalavakus can have only one mortal soul enslaved at a time - if it enslaves a second soul, the first is released.  This is a mind-affecting death effect.",
+    "description_variables": [
+      "KalavakusEnslaveSoulDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:kalavakus_enslave_soul",
+    "name": "Enslave Soul",
+    "owners": [
+      "bestiary_2:monster:demon_kalavakus"
+    ],
+    "source_page": "p.78",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 352,
+    "record_key": "Kalavakus ~ Enslave Soul"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_expr"
+  ]
+}

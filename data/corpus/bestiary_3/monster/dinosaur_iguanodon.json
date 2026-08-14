@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "6",
+    "corpus_key": "Dinosaur (Iguanodon)",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:dinosaur_iguanodon",
+    "monster_class": "Animal:9",
+    "name": "Iguanodon",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Animal",
+    "size": "H",
+    "source_page": "p.77",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 76,
+    "record_key": "Dinosaur (Iguanodon)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

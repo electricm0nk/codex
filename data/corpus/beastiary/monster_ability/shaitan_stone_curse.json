@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Shaitan ~ Stone Curse",
+    "delivery": "Supernatural",
+    "description": "If a shaitan wins a bull rush check by 5 or more and pushes its target into a stone barrier, the target must make a DC %1 Reflex save or be forced into the barrier as if the target had cast meld into stone until the victim makes a successful DC %1 Fortitude save as a full-round action to exit the stone.",
+    "description_variables": [
+      "StoneCurseDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:shaitan_stone_curse",
+    "name": "Stone Curse",
+    "owners": [
+      "beastiary:monster:genie_shaitan",
+      "beastiary:monster:genie_shaitan_noble"
+    ],
+    "source_page": "p.143",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 663,
+    "record_key": "Shaitan ~ Stone Curse"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

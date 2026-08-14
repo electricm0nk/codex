@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Formian Worker ~ Peerless Bearer",
+    "delivery": "Extraordinary",
+    "description": "Workers are able to bear remarkable burdens for their size. They have a +5 racial bonus to Strength when calculating the effects of encumbrance.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:formian_worker_peerless_bearer",
+    "name": "Peerless Bearer",
+    "owners": [
+      "bestiary_4:monster:formian_worker"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 707,
+    "record_key": "Formian Worker ~ Peerless Bearer"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

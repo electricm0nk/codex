@@ -13,9 +13,35 @@ pub mod advanced_race_guide;
 pub mod apg;
 pub mod archetype_swap;
 pub mod beastiary1;
+/// Bestiary 1's monster/monster-ability **chassis**, holding the 284 rows
+/// [`beastiary1`] does not — SD-29 Epic 5 extend round 8, `decisions.md §58.3`.
+/// The two modules serve one book from two tables on purpose; see this one's
+/// header. The near-homograph with `beastiary1` is the corpus's own spelling
+/// split (`decisions.md §54.3` lists all four), not a typo in either name.
+pub mod bestiary;
+pub mod bestiary_2;
+pub mod bestiary_3;
+pub mod bestiary_4;
+pub mod bestiary_5;
+pub mod bestiary_6;
+pub mod bonus_bestiary;
+pub mod book_of_the_damned_volume_1;
+pub mod book_of_the_damned_volume_2;
 pub mod class_spell_levels;
+pub mod companion_chassis;
+pub mod core_essentials;
 pub mod crb;
+pub mod equipment_gap_tables;
+pub mod feat_gap_tables;
 pub mod feats_all;
+pub mod horror_adventures;
+pub mod inner_sea_bestiary;
+pub mod inner_sea_combat;
+pub mod inner_sea_gods;
+pub mod inner_sea_intrigue;
+pub mod inner_sea_world_guide;
+pub mod monster_chassis;
+pub mod monster_codex;
 pub mod pathfinder_unchained;
 pub mod ultimate_campaign;
 pub mod ultimate_equipment;
@@ -49,4 +75,181 @@ pub enum RuleSetId {
     /// Ultimate Psionics. SD-28 Epic 29 -- first record family (feats).
     /// Dreamscarred Press, not Paizo -- the last Ultimate book.
     Upsi,
+    /// Bonus Bestiary. SD-29 Epic 5 pilot -- first book to ingest the merged
+    /// `monster` + `monster_ability` chassis (`corpus-work-channels.md §9.2`).
+    BonusBestiary,
+    /// Monster Codex. SD-29 Epic 6 pilot (race-trait lane, `decisions.md §43`)
+    /// and Epic 5's second monster book (`rules_tables::monster_codex`, 2
+    /// monsters + 3 monster abilities).
+    ///
+    /// Its `race_trait` records are still served off disk from
+    /// `data/corpus/monster_codex/race_trait/` rather than from a compiled
+    /// table: `decisions.md §24` rules out the formula interpreter a compiled
+    /// race-trait table would need. So this book is the one place where the two
+    /// halves of "the engine has compiled this book" are visibly different
+    /// kinds of thing -- a compiled monster table and a disk-served race-trait
+    /// family -- and `COMPILED_RULE_SETS` answers for both.
+    MonsterCodex,
+    /// Inner Sea Races. SD-29 Epic 6 round 2 (race-trait lane, extend). Like
+    /// `MonsterCodex`, its one ingested family is `race_trait`, served off disk
+    /// from `data/corpus/inner_sea_races/race_trait/` rather than from a
+    /// compiled table (`decisions.md §24` rules out the formula interpreter a
+    /// compiled race-trait table would need). It is the largest single
+    /// alternate-racial-trait contribution after ARG's.
+    Isr,
+    /// Horror Adventures. SD-29 Epic 6 round 3 (race-trait lane, extend).
+    /// Like `MonsterCodex` and `Isr`, its one ingested family is `race_trait`,
+    /// served off disk from `data/corpus/horror_adventures/race_trait/` rather
+    /// than from a compiled table (`decisions.md §24` rules out the formula
+    /// interpreter a compiled race-trait table would need).
+    ///
+    /// **Only the book's main `ha_abilities_race.lst` is ingested.** Its
+    /// `support/ha_abilities_race_oa.lst` is loaded by the pcc under
+    /// `PRECAMPAIGN:1,INCLUDES=Occult Adventures`, a book this repo has not
+    /// ingested, so that file's one further in-scope row is out of this rule
+    /// set's scope by construction rather than by omission.
+    Ha,
+    /// Princes of Darkness -- Book of the Damned, Volume 1. SD-29 Epic 5
+    /// extend, round 2 (`rules_tables::book_of_the_damned_volume_1`, 5
+    /// monsters + 36 monster abilities). The first `campaign_setting/` book to
+    /// carry the monster chassis, and one of only two remaining books in the
+    /// lane whose ability rows are ALL owned by a monster row of the same book
+    /// (`scripts/classify_monster_ability_rows.py`).
+    Botd1,
+    /// Lords of Chaos -- Book of the Damned, Volume 2. SD-29 Epic 5 extend,
+    /// round 2 (`rules_tables::book_of_the_damned_volume_2`, 4 monsters + 17
+    /// monster abilities). The book that found the two-`DESC:`-token row shape
+    /// -- see its module doc.
+    Botd2,
+    /// Inner Sea World Guide. SD-29 Epic 5 extend, round 3
+    /// (`rules_tables::inner_sea_world_guide`, 14 monsters + 25 LINKED monster
+    /// abilities). The first book in this lane that is not orphan-free -- 5
+    /// further ability rows are namespaced to an `iswg_templates.lst` template
+    /// no monster row of this book applies, and are deliberately not ingested
+    /// (`OPEN_FINDINGS`) rather than shipped as records nothing can reach. Also
+    /// the first whose monsters live in two races files with colliding line
+    /// numbers, which is why `MonsterStatBlock` carries a `source_file`.
+    Iswg,
+    /// Core Essentials. SD-29 Epic 6 round 4 (race-trait lane, extend). Like
+    /// `MonsterCodex`, `Isr` and `Ha`, its one ingested family is `race_trait`,
+    /// served off disk from `data/corpus/core_essentials/race_trait/` rather
+    /// than from a compiled table (`decisions.md §24` rules out the formula
+    /// interpreter a compiled race-trait table would need).
+    ///
+    /// **Only the two `<race>_abilities_race_subrace.lst` files are ingested,
+    /// and that is a narrower claim than the book id suggests.** PCGen uses
+    /// `core_essentials/races/<race>/` as physical storage for the shared
+    /// racial-trait files of races that belong to Core Rulebook and Bestiary
+    /// 1, and `ingest_races` correctly attributes those to `core_rulebook` and
+    /// `beastiary`. What belongs to this rule set is the content no other book
+    /// declares: Aasimar's and Tiefling's heritage (subrace) traits -- 16
+    /// selectable heritages plus the 48 replacement rows they grant.
+    ///
+    /// `races/skinwalker/` carries the same shape and is deliberately out of
+    /// scope: Skinwalker is not one of the 18 races this project models, so
+    /// `RaceCorpus::resolve` would return `None` for its chassis whatever the
+    /// ingest wrote.
+    Ce,
+    /// Inner Sea Combat. SD-29 Epic 7 pilot (companion lane,
+    /// `rules_tables::inner_sea_combat`, 4 companion creatures + 6 companion
+    /// abilities). The first book whose ONLY ingested family is `companion`, and
+    /// therefore the first proof that the companion chassis stands on its own
+    /// rather than riding a book some other lane had already compiled.
+    Isc,
+    /// Inner Sea Intrigue. SD-29 Epic 7 pilot round, extend half
+    /// (`rules_tables::inner_sea_intrigue`, 2 familiars + 9 abilities).
+    ///
+    /// Its 11 units are the ones the race-trait lane handed back: they were
+    /// typed `race_trait` by `file_kind`'s `_abilities_race` substring until
+    /// that lane's round-2 classifier fix moved them, which left them owned by
+    /// no lane at all. This is the lane that owns them.
+    Isi,
+    /// Bestiary 5. SD-29 Epic 7 round 2 (companion lane, extend;
+    /// `rules_tables::bestiary_5`, 33 companion creatures + 22 companion
+    /// abilities). A "bestiary" with **zero** monsters — its pcc's `CAMPAIGN`
+    /// line says "Only Player Options Implemented" — so this rule set exists
+    /// for its companion rows and no other family.
+    ///
+    /// **Two of the book's 57 `companion` units are out of this rule set's
+    /// scope by construction.** `_bestiary_5.pcc:69` loads
+    /// `support/b5_races_companion_oa.lst` under
+    /// `PRECAMPAIGN:1,Occult Adventures`, a book this repo has not ingested, so
+    /// `Familiar (Brain Mole)` and `Familiar (Chuspiki)` are not ingested — the
+    /// same ruling `RuleSetId::Ha` records for the same gate on `race_trait`
+    /// (`decisions.md §47.2`).
+    B5,
+    /// Bestiary 6. SD-29 Epic 7 round 2 (companion lane, extend;
+    /// `rules_tables::bestiary_6`, 14 companion creatures + 12 companion
+    /// abilities). The second monster-less bestiary, and the book on which both
+    /// of the chassis's `named` and `prerace` ownership shapes fire on all
+    /// twelve ability rows at once.
+    B6,
+    /// Bestiary 2. SD-29 Epic 7 round 2 (companion lane, extend;
+    /// `rules_tables::bestiary_2`, 15 familiars + 1 ability). The lane's first
+    /// FAMILIAR book: its creature rows are `*_races_familiar.lst`
+    /// `TYPE:Companion.Familiar.Animal` rows rather than animal companions.
+    ///
+    /// **This rule set compiles the book's `companion` family and nothing
+    /// else.** B2's 782 `monster` / `monster_ability` units belong to the
+    /// monster lane (`decisions.md §46`); registering this rule set moves them
+    /// from `not-started` to `not-ingested`, which states the engine's real
+    /// relationship to the book more precisely and claims nothing about them.
+    B2,
+    /// Bestiary 3. SD-29 Epic 5 extend, round 5 (monster lane;
+    /// `rules_tables::bestiary_3`, 261 monsters + 27 monster abilities). The
+    /// cleanest book the lane has taken: no Product Identity row, no `.COPY=`
+    /// delta, and every one of its 261 corpus monster rows ships.
+    ///
+    /// **This rule set compiles the book's `monster` and `monster_ability`
+    /// families.** The book's 799 `race_trait` units are a separate question,
+    /// and `rules_tables::bestiary_3`'s header records the finding that 341 of
+    /// them are namespaced abilities of the monsters this rule set compiles —
+    /// filed under `race_trait` only because `file_kind` reads the first
+    /// `TYPE:` segment.
+    B3,
+    /// Bestiary 4. SD-29 Epic 5 extend, round 6 (monster lane;
+    /// `rules_tables::bestiary_4`, 206 monsters + 543 monster abilities) — the
+    /// largest reachable book left in the lane when round 6 took it.
+    ///
+    /// **This rule set compiles the book's `monster` and `monster_ability`
+    /// families.** 14 of its 220 corpus monster rows declare `NAMEISPI:YES` and
+    /// do not ship; they are unique named personas rather than species, which is
+    /// what `ogl-pi-blacklist.md` §2.1's per-record predicate screens on. Their
+    /// removal is also why 73 of the book's 225 orphan abilities are orphans —
+    /// see `rules_tables::bestiary_4`'s header for both derivations.
+    B4,
+    /// Inner Sea Bestiary. SD-29 Epic 5 extend, round 7 (monster lane;
+    /// `rules_tables::inner_sea_bestiary`, 38 monsters + 152 monster
+    /// abilities) — the first `campaign_setting/` book in this lane that is a
+    /// bestiary in its own right rather than a setting book with creatures in
+    /// it.
+    ///
+    /// **This rule set compiles the book's `monster` and `monster_ability`
+    /// families.** Two of its 40 corpus monster rows do not ship, and the
+    /// reason is the one this book contributed to the lane: a monster row's
+    /// emitted `ability_keys` array carries the KEYS of the abilities it names,
+    /// and seven of this book's ability rows are namespaced to a named deity of
+    /// this setting — a `pi_screening::PI_BLACKLIST_TERMS` term, deliberately
+    /// not spelled here because `pi-sweep` does not read intent
+    /// (`decisions.md §52.5`). The abilities are Product Identity, so the
+    /// monsters that name them cannot be emitted either — `decisions.md §57.2`'s cascade
+    /// running backwards, from ability to owner. See
+    /// `rules_tables::inner_sea_bestiary`'s header.
+    Isb,
+    /// Inner Sea Gods. SD-29 Epic 5 extend, round 9 (monster lane;
+    /// `rules_tables::inner_sea_gods`, 39 monsters + 77 monster abilities) —
+    /// the first book in this lane whose corpus rows do NOT all live in the
+    /// book's root directory.
+    ///
+    /// **This rule set compiles the book's `monster` and `monster_ability`
+    /// families.** 3 of its 39 monster rows and 16 of its 161 ability rows sit
+    /// under `support/`, loaded by `_inner_sea_gods.pcc:68`/`:70` under
+    /// `PRECAMPAIGN:1,INCLUDES=Bestiary 4` — a gate this repo satisfies since
+    /// round 6 registered `bestiary_4`, so those rows are in scope rather than
+    /// excluded. The work inventory records every unit's `source_file` as a
+    /// bare basename, so both the transcriber and the generator resolve a
+    /// citation by searching the book directory rather than joining onto its
+    /// root; see `rules_tables::inner_sea_gods`'s header for the derivation and
+    /// for the 16-row `Race Traits ~` bundle finding it records.
+    Isg,
 }

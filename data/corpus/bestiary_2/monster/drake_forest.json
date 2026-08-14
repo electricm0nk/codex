@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:forest_drake_acidic_cloud",
+      "bestiary_2:monster_ability:forest_drake_aquatic_adaptation",
+      "bestiary_2:monster_ability:forest_drake_speed_surge"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Drake (Forest)",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Immunity to Acid",
+      "Scent"
+    ],
+    "key": "bestiary_2:monster:drake_forest",
+    "monster_class": "Dragon:5",
+    "name": "Drake (Forest)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Earth",
+    "race_type": "Dragon",
+    "size": "L",
+    "source_page": "p.107",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      },
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 304,
+    "record_key": "Drake (Forest)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

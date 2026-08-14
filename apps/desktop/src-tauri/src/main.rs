@@ -12,7 +12,8 @@ mod corpus_full;
 mod corpus_ingest_diagnostic;
 mod equipment_catalog;
 mod feat_catalog;
-mod ge08_workbench;
+mod authoring_workbench;
+mod companion_catalog;
 mod monster_catalog;
 mod pf1_adapter;
 mod race_catalog;
@@ -54,6 +55,7 @@ use class_spell_levels::list_class_spell_levels;
 use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
 use feat_catalog::{list_feat_catalog, list_feats, list_weapon_targets};
+use companion_catalog::list_companion_catalog;
 use monster_catalog::list_monster_catalog;
 use race_catalog::list_race_catalog;
 use race_trait_picker::{list_alternate_racial_traits, resolve_race_alternate_selection};
@@ -63,8 +65,8 @@ use update::transaction::{
     is_install_eligible, perform_install, perform_restore_previous, verify_relaunch_artifact,
 };
 
-use ge08_workbench::{
-    build_ge08_workbench_snapshot, Ge08AuthoringWorkbenchRequest, Ge08AuthoringWorkbenchSnapshot,
+use authoring_workbench::{
+    build_authoring_workbench_snapshot, AuthoringWorkbenchRequest, AuthoringWorkbenchSnapshot,
 };
 
 #[derive(Serialize)]
@@ -98,10 +100,10 @@ fn load_pilot_shell_snapshot() -> PilotShellSnapshot {
 }
 
 #[tauri::command]
-fn load_ge08_authoring_workbench_snapshot(
-    request: Ge08AuthoringWorkbenchRequest,
-) -> Result<Ge08AuthoringWorkbenchSnapshot, String> {
-    build_ge08_workbench_snapshot(request)
+fn load_authoring_workbench_snapshot(
+    request: AuthoringWorkbenchRequest,
+) -> Result<AuthoringWorkbenchSnapshot, String> {
+    build_authoring_workbench_snapshot(request)
 }
 
 /// Read-only SD-13 support-state/debt bridge for the SD-11 tester workbench.
@@ -144,7 +146,7 @@ fn main() {
         })
         .invoke_handler(tauri::generate_handler![
             load_pilot_shell_snapshot,
-            load_ge08_authoring_workbench_snapshot,
+            load_authoring_workbench_snapshot,
             load_support_state_matrix,
             load_backend_health,
             browser_handoff::handoff_defect_report_to_browser,
@@ -195,6 +197,7 @@ fn main() {
             // SD-27: Bestiary 1's 41 ingested monster stat blocks, which
             // reached no surface at all until this catalog landed.
             list_monster_catalog,
+            list_companion_catalog,
             list_equipment,
             list_spells,
             list_feats,
@@ -217,15 +220,15 @@ fn main() {
 
 #[cfg(test)]
 mod path_resolution_tests {
-    use crate::ge08_workbench::resolve_package_path;
+    use crate::authoring_workbench::resolve_package_path;
 
     #[test]
     fn resolves_repo_relative_fixture_from_src_tauri_runtime() {
-        let resolved = resolve_package_path("tests/fixtures/ge08/guard-stance-package")
+        let resolved = resolve_package_path("tests/fixtures/authoring_workbench/guard-stance-package")
             .expect("fixture path should resolve from repo root");
 
         assert!(
-            resolved.ends_with("tests/fixtures/ge08/guard-stance-package"),
+            resolved.ends_with("tests/fixtures/authoring_workbench/guard-stance-package"),
             "resolved path should end with the repo fixture path, got {}",
             resolved.display()
         );

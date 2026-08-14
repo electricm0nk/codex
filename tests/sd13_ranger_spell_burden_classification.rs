@@ -69,7 +69,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
-    seeded_sd13_e1_f1_current_truth, EvidenceFreshness, EvidenceTier, SupportState,
+    seeded_current_truth, EvidenceFreshness, EvidenceTier, SupportState,
 };
 
 const RANGER_LEVEL1_FIXTURE: &str =
@@ -420,7 +420,7 @@ fn matrix_ranger_row_is_partial_computed_and_names_remaining_burdens() {
     // by SD-19's Class Progression Catalog browser UI-surfacing work
     // (2026-07-17) — condition 2 (every named grounded milestone) was already
     // satisfied, so only the UI surface was missing.
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let ranger = matrix
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger hybrid row must exist in the SD-13 support-state matrix");
@@ -473,7 +473,7 @@ fn matrix_ranger_row_is_not_misattributed_to_paladin() {
     // Supported/ProductVisible (SD-19 Class Progression Catalog browser
     // UI-surfacing work, 2026-07-17) is its own intentional, named move, not
     // a Paladin side effect.
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     // Paladin was later promoted to Partial/Computed by its own SD13-E5
     // level-gate slice (lay on hands / divine grace / mercy grounded as
     // correct level-1 absences), then to Supported/ProductVisible by SD-19's

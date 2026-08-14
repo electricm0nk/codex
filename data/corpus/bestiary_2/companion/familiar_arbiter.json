@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T14:58:57Z",
+  "data": {
+    "ability_keys": [],
+    "corpus_key": "Familiar (Arbiter)",
+    "external_ability_refs": [
+      "Arbiter ~ Constant Vigilance",
+      "Arbiter ~ Electrical Burst",
+      "Arbiter ~ Locate Inevitable",
+      "Detect Chaos ~ Constant",
+      "Flight Maneuverability"
+    ],
+    "key": "bestiary_2:companion:familiar_arbiter",
+    "monster_class": "Outsider (Fort/Will):2",
+    "name": "Familiar (Arbiter)",
+    "natural_armor": null,
+    "natural_attacks": [],
+    "race_subtype": "Extraplanar|Inevitable|Lawful",
+    "race_type": "Outsider",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.162",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 50,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "DEX",
+        "amount": 6
+      },
+      {
+        "ability": "CON",
+        "amount": 4
+      },
+      {
+        "ability": "CHA",
+        "amount": 4
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Outsider"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
+    "sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6",
+    "line": 19,
+    "record_key": "Familiar (Arbiter)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

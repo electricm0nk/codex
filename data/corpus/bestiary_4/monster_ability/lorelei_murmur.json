@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Lorelei ~ Murmur",
+    "delivery": "Supernatural",
+    "description": "A lorelei's murmur has the power to infect the minds of those that hear it. This effect even influences undead creatures despite their usual immunity to mind-affecting effects. When a lorelei murmurs, all creatures aside from other lorelei within a 300-foot spread must succeed on a DC %1 Will saving throw or become captivated. A creature that successfully saves is not subject to the same lorelei's song for 24 hours. A victim under the effects of the murmur moves toward the lorelei using the most direct means available. If the path leads them into a dangerous area such as through fire or off a cliff, that creature receives a second saving throw to end the effect before moving into peril. Affected creatures can take no actions other than to defend themselves. A victim within 5 feet of the lorelei simply stands and offers no resistance to its attacks. This effect continues for as long as the lorelei murmurs and for 1 round thereafter. This is a sonic mind-affecting charm effect.",
+    "description_variables": [
+      "CHA+15"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:lorelei_murmur",
+    "name": "Murmur",
+    "owners": [
+      "bestiary_4:monster:lorelei"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1038,
+    "record_key": "Lorelei ~ Murmur"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

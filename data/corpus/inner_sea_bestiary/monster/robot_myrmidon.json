@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:myrmidon_combined_arms",
+      "inner_sea_bestiary:monster_ability:myrmidon_laser_rifle",
+      "inner_sea_bestiary:monster_ability:myrmidon_quantum_lash",
+      "inner_sea_bestiary:monster_ability:myrmidon_resilient",
+      "inner_sea_bestiary:monster_ability:myrmidon_rockets",
+      "inner_sea_bestiary:monster_ability:myrmidon_superior_optics",
+      "inner_sea_bestiary:monster_ability:robot_critical_hit_vulnerability",
+      "inner_sea_bestiary:monster_ability:robot_electricity_vulnerability",
+      "inner_sea_bestiary:monster_ability:robot_force_field",
+      "inner_sea_bestiary:monster_ability:robot_intelligent"
+    ],
+    "challenge_rating": "11",
+    "corpus_key": "Robot (Myrmidon)",
+    "external_ability_refs": [
+      "Maneuverability (Perfect)",
+      "Can't Be Tripped",
+      "Constrict",
+      "Immunity to Cold"
+    ],
+    "key": "inner_sea_bestiary:monster:robot_myrmidon",
+    "monster_class": "Construct:15",
+    "name": "Robot (Myrmidon)",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Robot",
+    "race_type": "Construct",
+    "size": "L",
+    "source_page": "p.45",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 90,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 73,
+    "record_key": "Robot (Myrmidon)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

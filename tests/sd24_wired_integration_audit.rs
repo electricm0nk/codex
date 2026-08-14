@@ -244,9 +244,20 @@ fn placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral() {
     // exactly bucket E's already-reviewed shape rather than a new stub. The
     // `p.xx` literal requirement is unchanged, so an ordinary "placeholder"
     // stub marker in either of those files still fails.
+    //
+    // Widened again 2026-08-12 to `race_trait_picker.rs`, which carries the
+    // identical guard for the identical upstream token on a third family:
+    // Core Essentials states `SOURCEPAGE:p.xx` on all 40 Tiefling heritage rows
+    // and `xx` on all 24 Aasimar ones, `ingest_race_traits::is_placeholder_source_page`
+    // drops them at ingest, and the picker's pin proves the panel therefore
+    // shows no page rather than a fake one. That is bucket E's shape exactly —
+    // an assertion message ABOUT the upstream placeholder, which is the
+    // opposite of a stub marker. The `p.xx` literal requirement is unchanged,
+    // so an ordinary "placeholder" stub marker in that file still fails.
     let is_pcgen_pxx_source_page_token = |line: &str| {
         let in_scoped_path = line.starts_with("src/bin/ingest_races.rs:")
-            || line.starts_with("src/rules_core/rules_tables/pathfinder_unchained/");
+            || line.starts_with("src/rules_core/rules_tables/pathfinder_unchained/")
+            || line.starts_with("apps/desktop/src-tauri/src/race_trait_picker.rs:");
         in_scoped_path && line.contains("p.xx")
     };
 

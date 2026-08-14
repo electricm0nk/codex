@@ -86,7 +86,7 @@ use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const RANGER_LEVEL14_FIXTURE: &str = include_str!(
@@ -412,7 +412,7 @@ fn multiclass_ranger_level15_is_not_promoted_by_this_slice() {
 
 #[test]
 fn matrix_ranger_row_names_level_15_widening() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let ranger = matrix
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger hybrid_chassis_and_spell_burden row must exist");

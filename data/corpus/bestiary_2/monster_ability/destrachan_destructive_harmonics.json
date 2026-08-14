@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Destrachan ~ Destructive Harmonics",
+    "delivery": "Supernatural",
+    "description": "A destrachan can project a blast of sonic energy in a cone up to 80 feet long or in a 30-foot-radius burst centered on itself as a standard action. It can adjust the harmonics of its sonic cry to generate one of two different effects on targets within the area of effect, but can only create one of these effects with each use of this ability. Destruction: All creatures within the area of effect of the destructive harmonics take 8d6 points of sonic damage - a DC %1 Reflex save halves this damage. If the destrachan wishes, this damage can instead deal nonlethal damage rather than sonic damage. Alternatively, the destrachan can target a single crystal, metal, stone, or wooden object within 80 feet with this attack - that object takes 8d6 points of damage. This damage is not halved when applied to the object's hit points, but is reduced by the object's hardness.  A magical or attended object can attempt a DC %1 Reflex save to halve the damage. Pain: Rather than deal damage, the destrachan can cause intense pain and overwhelming sound to affect all creatures within the area. Targets in the area must succeed on a DC %1 Fortitude save to avoid being stunned for 1 round and deafened for 1d6 rounds.",
+    "description_variables": [
+      "DestrachanDestructiveHarmonicsDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:destrachan_destructive_harmonics",
+    "name": "Destructive Harmonics",
+    "owners": [
+      "bestiary_2:monster:destrachan"
+    ],
+    "source_page": "p.83",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 382,
+    "record_key": "Destrachan ~ Destructive Harmonics"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

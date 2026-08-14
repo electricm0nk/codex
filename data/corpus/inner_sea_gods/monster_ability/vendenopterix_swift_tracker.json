@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "corpus_key": "Vendenopterix ~ Swift Tracker",
+    "delivery": "Extraordinary",
+    "description": "A Vendenopterix can move at normal speed while using Survival to follow tracks without taking the normal -5 penalty. She takes only a -10 penalty (instead of the normal -20) when moving at up to twice normal speed while tracking.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:vendenopterix_swift_tracker",
+    "name": "Swift Tracker",
+    "owners": [
+      "inner_sea_gods:monster:vendenopterix"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 117,
+    "record_key": "Vendenopterix ~ Swift Tracker"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

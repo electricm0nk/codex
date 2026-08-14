@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:18:41Z",
+  "data": {
+    "corpus_key": "Lesser Host Devil ~ Shared Senses",
+    "delivery": "Supernatural",
+    "description": "All gaavs and magaavs within 100 feet of one another share the same senses. Thus, if one individual perceives something (for example, with a successful Perception check), all others within range are immediately aware of it. Senses are instantly relayed from one gaav or magaav to the next, allowing for the senses of a single devil to potentially spread through and inform an entire massive swarm instantly. It is still possible for a gaav to be surprised or flat-footed even if other gaavs nearby are not.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "book_of_the_damned_volume_1:monster_ability:lesser_host_devil_shared_senses",
+    "name": "Shared Senses",
+    "owners": [
+      "book_of_the_damned_volume_1:monster:devil_lesser_host"
+    ],
+    "source_page": "p.58",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
+    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177",
+    "line": 31,
+    "record_key": "Lesser Host Devil ~ Shared Senses"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

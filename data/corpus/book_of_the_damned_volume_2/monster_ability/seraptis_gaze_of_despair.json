@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:18:46Z",
+  "data": {
+    "corpus_key": "Seraptis ~ Gaze of Despair",
+    "delivery": "Supernatural",
+    "description": "A seraptis' gaze fills the minds of those within %1 feet with overwhelming and soul-crushing despair. Anyone who fails a DC %2 Will save upon being exposed to a seraptis's gaze immediately takes 1d6 points of Charisma drain and is staggered for 1d6 rounds. If the Charisma drain would normally reduce to creature's Charisma to 0, that creature instead succumbs to overwhelming suicidal urges and attempts to end its life by the most convenient method at hand, subject to GM discretion (in most cases, this effect causes a creature to make a coup de grace attempt on itself, but if a more dramatic method of self-destruction is available, the creature takes that action). Once a creature reaches this suicidal state of despair, it remains in that state until its Charisma score is restored to its normal maximum--if methods of restoring lost Charisma are not available, the suicidal victim must be restrained at all times to prevent attempts to kill itself. This is a mind-affecting effect. The save DC is Charisma-based.",
+    "description_variables": [
+      "GazeAuraRange",
+      "GazeAuraDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "book_of_the_damned_volume_2:monster_ability:seraptis_gaze_of_despair",
+    "name": "Gaze of Despair",
+    "owners": [
+      "book_of_the_damned_volume_2:monster:demon_seraptis"
+    ],
+    "source_page": "p.58",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
+    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf",
+    "line": 17,
+    "record_key": "Seraptis ~ Gaze of Despair"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

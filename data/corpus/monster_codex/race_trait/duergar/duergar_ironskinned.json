@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T16:45:13Z",
+  "data": {
+    "key": "Duergar ~ Ironskinned",
+    "name": "Ironskinned",
+    "race_key": "Duergar",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Duergar Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Duergar_ReplaceSLAEnlargePerson"
+    ],
+    "description": "The soul of the earth infuses some duergar, giving them the ability to harden their skin. Duergar with this racial trait can use ironskin once per day as a spell-like ability, using their character level as their caster level. This racial trait replaces the enlarge person spell-like ability.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Duergar ~ Ironskinned"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Duergar Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Duergar ~ Ironskinned],[!PREFACT:1,ABILITIES,Duergar_ReplaceSLAEnlargePerson=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The soul of the earth infuses some duergar, giving them the ability to harden their skin. Duergar with this racial trait can use ironskin once per day as a spell-like ability, using their character level as their caster level."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the enlarge person spell-like ability.|!PREABILITY:1,CATEGORY=Special Ability,Duergar ~ Ironskinned"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Ironskin"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Duergar_ReplaceSLAEnlargePerson|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
+    "sha256": "2cde87583641aec61ec0da397064c651fefd27d679ac0cc6368930ded84e5e30",
+    "line": 16,
+    "record_key": "Duergar ~ Ironskinned"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

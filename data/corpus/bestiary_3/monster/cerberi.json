@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "6",
+    "corpus_key": "Cerberi",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:cerberi",
+    "monster_class": "Outsider (Fort/Ref):8",
+    "name": "Cerberi",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bites"
+      }
+    ],
+    "race_subtype": "Evil|Extraplanar|Lawful",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.50",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 51,
+    "record_key": "Cerberi"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

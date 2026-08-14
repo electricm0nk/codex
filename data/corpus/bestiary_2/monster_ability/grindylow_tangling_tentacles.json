@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Grindylow ~ Tangling Tentacles",
+    "delivery": "Extraordinary",
+    "description": "Although a grindylow can't attack to cause damage with its six tentacles, these wriggling legs constantly writhe and reach out to tug at and trip adjacent foes.  During the grindylow's turn, it can make a single trip attack against any adjacent foe as a swift action.  It gains a +4 racial bonus on trip attacks made with its tangling tentacles, and if it fails to trip a foe, that creature can't attempt to trip the grindylow in retaliation.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:grindylow_tangling_tentacles",
+    "name": "Tangling Tentacles",
+    "owners": [
+      "bestiary_2:monster:grindylow"
+    ],
+    "source_page": "p.148",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 653,
+    "record_key": "Grindylow ~ Tangling Tentacles"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Moxix ~ Mindshatter",
+    "delivery": "Supernatural",
+    "description": "If a creature fails its save against Moxix's eyebite spell-like ability, as a standard action before the end of his turn he may unravel the target's mind and spirit. This acts as greater dispel magic (caster level 23rd) against effects that protect against mind-affecting or necromantic effects and automatically affects the target as enervation and touch of idiocy (duration 24 hours).",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:moxix_mindshatter",
+    "name": "Mindshatter",
+    "owners": [
+      "inner_sea_bestiary:monster:moxix"
+    ],
+    "source_page": "p.32",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 229,
+    "record_key": "Moxix ~ Mindshatter"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

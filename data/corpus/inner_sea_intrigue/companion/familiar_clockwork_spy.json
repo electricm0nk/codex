@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T13:12:30Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_intrigue:companion:clockwork_spy_record_audio",
+      "inner_sea_intrigue:companion:clockwork_spy_self_destruct",
+      "inner_sea_intrigue:companion:clockwork_spy_tinkering"
+    ],
+    "corpus_key": "Familiar (Clockwork Spy)",
+    "external_ability_refs": [
+      "Flight Maneuverability"
+    ],
+    "key": "inner_sea_intrigue:companion:familiar_clockwork_spy",
+    "monster_class": "Construct:1",
+    "name": "Familiar (Clockwork Spy)",
+    "natural_armor": null,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Clockwork",
+    "race_type": "Construct",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.47",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 0
+      },
+      {
+        "ability": "DEX",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 0
+      },
+      {
+        "ability": "INT",
+        "amount": 0
+      },
+      {
+        "ability": "WIS",
+        "amount": 0
+      },
+      {
+        "ability": "CHA",
+        "amount": -10
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Construct"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_races_companion.lst",
+    "sha256": "b13394744cae53294d36d3c5724f7ea8f2e9b5e21ac87324227f194c44526c51",
+    "line": 8,
+    "record_key": "Familiar (Clockwork Spy)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

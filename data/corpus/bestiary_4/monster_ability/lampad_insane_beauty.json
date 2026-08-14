@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Lampad ~ Insane Beauty",
+    "delivery": "Supernatural",
+    "description": "This ability affects all humanoids within 30 feet who are viewing a lampad in conditions brighter than dim light. Those who look directly upon the lampad must succeed at a DC %1 Will save or gain the confused condition for 1d6 rounds. A creature that succeeds at the save is immune to the same lampad's insane beauty for 24 hours. A lampad can suppress or resume this ability as a free action.",
+    "description_variables": [
+      "CHA+13"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:lampad_insane_beauty",
+    "name": "Insane Beauty",
+    "owners": [
+      "bestiary_4:monster:lampad"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1001,
+    "record_key": "Lampad ~ Insane Beauty"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

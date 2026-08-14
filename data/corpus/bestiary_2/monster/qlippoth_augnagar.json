@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:augnagar_horrific_appearance",
+      "bestiary_2:monster_ability:augnagar_rotting_curse"
+    ],
+    "challenge_rating": "14",
+    "corpus_key": "Qlippoth (Augnagar)",
+    "external_ability_refs": [
+      "Bleed",
+      "Flight Maneuverability",
+      "Scent",
+      "True Seeing ~ Constant"
+    ],
+    "key": "bestiary_2:monster:qlippoth_augnagar",
+    "monster_class": "Outsider (Fort/Ref):14",
+    "name": "Qlippoth (Augnagar)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Chaotic|Evil|Extraplanar|Qlippoth",
+    "race_type": "Outsider",
+    "size": "H",
+    "source_page": "p.219",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      },
+      {
+        "feet": 50,
+        "mode": "Climb"
+      },
+      {
+        "feet": 50,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 710,
+    "record_key": "Qlippoth (Augnagar)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

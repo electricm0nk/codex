@@ -40,7 +40,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const RANGER_FIXTURE: &str =
@@ -664,7 +664,7 @@ fn ranger_level1_still_yields_blocked_headless_receipt_and_view_model() {
 
 #[test]
 fn matrix_ranger_row_is_promoted_to_supported_and_names_remaining_pillars() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let ranger = matrix
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger hybrid row must exist");
@@ -739,7 +739,7 @@ fn matrix_ranger_row_is_promoted_to_supported_and_names_remaining_pillars() {
 
 #[test]
 fn matrix_preserves_sibling_rows_after_ranger_promotion() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
 
     // Paladin was later promoted to Partial/Computed by its own SD13-E5
     // level-gate slice (lay on hands / divine grace / mercy grounded as

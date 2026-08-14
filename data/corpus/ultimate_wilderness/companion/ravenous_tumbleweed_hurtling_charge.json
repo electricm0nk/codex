@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Ravenous Tumbleweed ~ Hurtling Charge",
+    "delivery": "Extraordinary",
+    "description": "A ravenous tumbleweed that travels at least 20 feet as part of a charge action does not provoke an attack of opportunity when it enters an opponent's space to make a melee attack.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "ultimate_wilderness:companion:ravenous_tumbleweed_hurtling_charge",
+    "name": "Hurtling Charge",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_ravenous_tumbleweed",
+      "ultimate_wilderness:companion:ravenous_tumbleweed"
+    ],
+    "record_type": "ability",
+    "source_page": "p.205",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary",
+      "RavenousTumbleweedRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 321,
+    "record_key": "Ravenous Tumbleweed ~ Hurtling Charge"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

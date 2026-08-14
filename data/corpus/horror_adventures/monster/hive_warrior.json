@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T09:17:26Z",
+  "data": {
+    "ability_keys": [
+      "horror_adventures:monster_ability:hive_warrior_acid_spit",
+      "horror_adventures:monster_ability:hive_warrior_rending_mandibles"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Hive Warrior",
+    "external_ability_refs": [],
+    "key": "horror_adventures:monster:hive_warrior",
+    "monster_class": "Aberration:8",
+    "name": "Hive Warrior",
+    "natural_attacks": [
+      {
+        "damage_dice": "7d6",
+        "name": "Acid Spit"
+      },
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      },
+      {
+        "damage_dice": null,
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Hive",
+    "race_type": "Aberration",
+    "size": "M",
+    "source_page": "p.237",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_races.lst",
+    "sha256": "09976b6c9e77606c0b7d76da9fff38a80148242e22f02896d0c44bdaa3140d89",
+    "line": 5,
+    "record_key": "Hive Warrior"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:poltergeist_frightener",
+      "bestiary_2:monster_ability:poltergeist_site_bound",
+      "bestiary_2:monster_ability:poltergeist_telekinesis"
+    ],
+    "challenge_rating": "2",
+    "corpus_key": "Poltergeist",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Natural Invisibility ~ Ex",
+      "No Combat Maneuvers",
+      "Poltergeist ~ Rejuvenation"
+    ],
+    "key": "bestiary_2:monster:poltergeist",
+    "monster_class": "Undead:3",
+    "name": "Poltergeist",
+    "natural_attacks": [],
+    "race_subtype": "Incorporeal",
+    "race_type": "Undead",
+    "size": "M",
+    "source_page": "p.211",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 678,
+    "record_key": "Poltergeist"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

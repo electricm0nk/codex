@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Basidirond ~ Hallucination Cloud",
+    "delivery": "Extraordinary",
+    "description": "As a standard action once per minute, a basidirond can release a cloud of invisible spores in a 20-foot radius. All creatures within the area must succeed on a DC %1 Fortitude save or be affected by powerful hallucinations as long as they remain in the cloud plus 1d4 rounds after leaving the area. A new save must be made each round a creature remains within the affected area. A hallucination cloud persists for 5 rounds before dispersing--a strong wind causes it to disperse immediately.",
+    "description_variables": [
+      "HallucinationCloudDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:basidirond_hallucination_cloud",
+    "name": "Hallucination Cloud",
+    "owners": [
+      "beastiary:monster:basidirond"
+    ],
+    "source_page": "p.28",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 145,
+    "record_key": "Basidirond ~ Hallucination Cloud"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

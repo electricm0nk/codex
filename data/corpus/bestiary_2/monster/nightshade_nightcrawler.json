@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:nightcrawler_cold",
+      "bestiary_2:monster_ability:nightcrawler_energy_drain",
+      "bestiary_2:monster_ability:nightcrawler_poison"
+    ],
+    "challenge_rating": "18",
+    "corpus_key": "Nightshade (Nightcrawler)",
+    "external_ability_refs": [
+      "Air Walk ~ Constant",
+      "Can't Be Tripped",
+      "Detect Magic ~ Constant",
+      "Grab ~ Bite",
+      "Immunity to Cold",
+      "Magic Fang ~ Constant",
+      "Swallow Whole",
+      "Telepathy"
+    ],
+    "key": "bestiary_2:monster:nightshade_nightcrawler",
+    "monster_class": "Undead:25",
+    "name": "Nightshade (Nightcrawler)",
+    "natural_attacks": [
+      {
+        "damage_dice": "4d10",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "4d6",
+        "name": "Sting"
+      }
+    ],
+    "race_subtype": "Extraplanar|Nightshade",
+    "race_type": "Undead",
+    "size": "G",
+    "source_page": "p.200",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Burrow"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 642,
+    "record_key": "Nightshade (Nightcrawler)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

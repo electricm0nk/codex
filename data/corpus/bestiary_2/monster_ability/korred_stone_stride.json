@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Korred ~ Stone Stride",
+    "delivery": "Supernatural",
+    "description": "This ability works like tree stride, except it requires loose boulders at least as large as the korred, and only has a range of 30 feet.  The korred can use this ability once per round as a standard action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:korred_stone_stride",
+    "name": "Stone Stride",
+    "owners": [
+      "bestiary_2:monster:korred"
+    ],
+    "source_page": "p.173",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 753,
+    "record_key": "Korred ~ Stone Stride"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

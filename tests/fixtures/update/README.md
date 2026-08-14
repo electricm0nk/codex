@@ -26,7 +26,7 @@ relocated 2026-07-20 from `programs/codex/requirements/`).
 Every fixture here is the byte-faithful copy of the canonical fixture
 that ships to both lanes. If you edit any fixture, BOTH the Python
 release-tooling tests (F3a's `tests/release/test_update_metadata_schemas.py`)
-and the TS parser tests (F3b's `apps/desktop/src/sd16/update/*test.ts`)
+and the TS parser tests (F3b's `apps/desktop/src/update/*test.ts`)
 must be re-run; the AJV and jsonschema verdicts MUST match. Divergence
 is a schema-drift bug caught by the F4 merge receipt's dual-validator
 verification command.

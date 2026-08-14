@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:cayhound_righteous_bite",
+      "inner_sea_bestiary:monster_ability:cayhound_spell_like_abilities",
+      "inner_sea_bestiary:monster_ability:cayhound_thunderous_bark",
+      "inner_sea_bestiary:monster_ability:cayhound_unbound"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Cayhound",
+    "external_ability_refs": [
+      "Scent"
+    ],
+    "key": "inner_sea_bestiary:monster:cayhound",
+    "monster_class": "Outsider (Ref/Will):6",
+    "name": "Cayhound",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d10",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.8",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 18,
+    "record_key": "Cayhound"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:grendel_brutal_surge",
+      "bestiary_4:monster_ability:grendel_gruesome_dismemberment",
+      "bestiary_4:monster_ability:grendel_frightful_presence"
+    ],
+    "challenge_rating": "19",
+    "corpus_key": "Grendel",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:grendel",
+    "monster_class": "Monstrous Humanoid:20",
+    "name": "Grendel",
+    "natural_attacks": [
+      {
+        "damage_dice": "3d10",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "4d8",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Mythic",
+    "race_type": "Monstrous Humanoid",
+    "size": "L",
+    "source_page": "p.145",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 116,
+    "record_key": "Grendel"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

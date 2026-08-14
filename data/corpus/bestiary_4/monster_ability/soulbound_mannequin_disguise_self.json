@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Soulbound Mannequin ~ Disguise Self",
+    "delivery": "SpellLike",
+    "description": "The soulbound mannequin can only disguise itself as the living person it used to be at approximately the age it was when its soul was used to make the mannequin (this allows it to take the appearance of another creature type).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:soulbound_mannequin_disguise_self",
+    "name": "Disguise Self",
+    "owners": [
+      "bestiary_4:monster:soulbound_mannequin"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1304,
+    "record_key": "Soulbound Mannequin ~ Disguise Self"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Slurk ~ Belly Grease",
+    "delivery": "Extraordinary",
+    "description": "The slurk exudes a slippery grease from its belly that grants it a +4 bonus on Escape Artist skill checks and to its CMD versus grapples.  One per minute, a slurk may wallow on a solid surface as a full-round action to coat the floor in a 5-foot radius with this grease.  The smear created turns that area of floor into difficult terrain for 10 minutes, after which the grease dries to a nasty crust.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:slurk_belly_grease",
+    "name": "Belly Grease",
+    "owners": [
+      "bestiary_2:monster:slurk"
+    ],
+    "source_page": "p.251",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1179,
+    "record_key": "Slurk ~ Belly Grease"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -27,7 +27,7 @@ use codex::rules_core::pilot_compute::{
     compute_pilot_base_chassis,
 };
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const DWARF_FIXTURE: &str =
@@ -160,7 +160,7 @@ fn dwarf_bounded_semantics_note_moves_stonecunning_out_of_unproven_list() {
 
 #[test]
 fn matrix_dwarf_row_stays_partial_computed_and_grounding_ref_names_this_slice() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let dwarf = matrix
         .row("race.dwarf.bounded_semantics")
         .expect("dwarf row must exist");

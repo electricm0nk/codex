@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:47:16Z",
+  "data": {
+    "key": "Halfling ~ Human Shadow",
+    "name": "Human Shadow",
+    "race_key": "Halfling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Halfling Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Halfling_ReplaceKeenSenses",
+      "Halfling_ReplaceSureFooted"
+    ],
+    "description": "Halflings seem to pop up wherever humans are found, in part because they actively support and move with human explorers, settlers, and travelers without drawing attention to themselves. These halflings can use Stealth to hide behind creatures at least one size category larger than themselves, without any other source of concealment or cover. As long as the halflings are within 30 feet of a human, they gain a +2 racial bonus on Sleight of Hand checks and Stealth checks. This racial trait replaces keen senses and sure-footed.",
+    "source_page": "p.213",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halfling ~ Human Shadow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Human Shadow],[!PREFACT:1,ABILITIES,Halfling_ReplaceKeenSenses=true,Halfling_ReplaceSureFooted=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Halflings seem to pop up wherever humans are found, in part because they actively support and move with human explorers, settlers, and travelers without drawing attention to themselves. These halflings can use Stealth to hide behind creatures at least one size category larger than themselves, without any other source of concealment or cover. As long as the halflings are within 30 feet of a human, they gain a +2 racial bonus on Sleight of Hand checks and Stealth checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces keen senses and sure-footed.|!PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Human Shadow"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|You can use Stealth to hide behind creatures at least one size category larger than yourself."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+2 racial bonus on Sleight of Hand checks and Stealth checks while within 30 feet of a human."
+      },
+      {
+        "key": "FACT",
+        "value": "Halfling_ReplaceKeenSenses|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Halfling_ReplaceSureFooted|true"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 179,
+    "record_key": "Halfling ~ Human Shadow"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -57,8 +57,7 @@ build_version_target: 0.9.<build>
 > Both bodies of work are preserved here in full — nothing was deleted, only moved
 > and (where the corpus figures were disproven) corrected in place with the old
 > value left visible. See §"Unresolved: planning-readiness" and §"Unresolved: scope
-> width (4 books vs. 7 books)" below — **the operator must resolve both**; this
-> consolidation does not pick a winner.
+> width (4 books vs. 7 books)" below — **RESOLVED 2026-08-02 (operator directive):** both questions were adjudicated by `decisions.md §34`, which resolved planning-readiness by confirming the chassis planning-ready at seven-book width, and scope-width by pinning SD-29 to the seven-book cut. The seven-book boundary was further re-scoped to corpus-wide 2026-08-10 per `decisions.md §38`; see the re-scope banner above.
 
 > **⚠️ Inherited status banner, as authored by the scope-pass package:**
 > **SCOPE PASS ONLY — NOT PLANNING-READY, NOT EXECUTION-READY.** This package
@@ -99,11 +98,7 @@ between them:
   `acceptance-and-verification.md`) are even authored.
 
 Both claims are preserved verbatim in this directory (frontmatter above; banner
-above; `forward-scope-register.md` unchanged). **The operator must resolve this
-contradiction** — this consolidation neither deletes either claim, nor averages
-them, nor silently prefers one process over the other. Whichever way it resolves,
-note that Package A's corpus-figure errors (below) are now corrected in place
-regardless of which package's planning-readiness claim stands.
+above; `forward-scope-register.md` unchanged). **RESOLVED 2026-08-02 (operator directive `decisions.md §34`):** The operator confirmed Package B's register sign-off; the existing chassis is planning-ready at seven-book width. The bundle subsequently ran to completion and closed 2026-08-13 per `decisions.md §70`, closure run 3. Package A's corpus-figure errors (below) are now corrected in place.
 
 ## RESOLVED: scope width (4 books vs. 7 books) (operator directive 2026-08-02)
 
@@ -130,8 +125,7 @@ scope**.
 This consolidation does not narrow or widen either package's stated scope. Both
 scope statements are preserved as-authored in their respective files
 (`scope-draft.md` for the four-book claim, `forward-scope-register.md` for the
-seven-book claim). **The operator must decide which scope width SD-29 actually
-carries** before cycle dispatch.
+seven-book claim). **RESOLVED 2026-08-02 (operator directive `decisions.md §34`):** SD-29's scope is the wider seven-book cut. This resolution was further superseded 2026-08-10 when the operator re-scoped SD-29 corpus-wide per `decisions.md §38` — see the re-scope banner at the top of this README.
 
 ## Corpus-figure corrections applied during consolidation
 

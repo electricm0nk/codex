@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "1",
+    "corpus_key": "Amoeba Swarm",
+    "external_ability_refs": [
+      "Amphibious",
+      "Distraction ~ Swarm",
+      "No Combat Maneuvers",
+      "Swarm Traits"
+    ],
+    "key": "bestiary_2:monster:amoeba_swarm",
+    "monster_class": "Ooze:2",
+    "name": "Amoeba Swarm",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Swarm"
+      }
+    ],
+    "race_subtype": "Aquatic|Swarm",
+    "race_type": "Ooze",
+    "size": "F",
+    "source_page": "p.24",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 10,
+        "mode": "Climb"
+      },
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 71,
+    "record_key": "Amoeba Swarm"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

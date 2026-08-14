@@ -113,7 +113,7 @@ use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const RANGER_LEVEL19_FIXTURE: &str = include_str!(
@@ -483,7 +483,7 @@ fn fighter_does_not_gain_ranger_level20_recognition() {
 
 #[test]
 fn matrix_ranger_row_names_level_20_widening() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let ranger = matrix
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger hybrid_chassis_and_spell_burden row must exist");

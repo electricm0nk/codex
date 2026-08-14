@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Wickerman ~ Hardness",
+    "delivery": "Extraordinary",
+    "description": "The wickerman can ignore the first %1 points of damage from an attack.",
+    "description_variables": [
+      "Hardness"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:wickerman_hardness",
+    "name": "Hardness",
+    "owners": [
+      "bestiary_4:monster:wickerman"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1452,
+    "record_key": "Wickerman ~ Hardness"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

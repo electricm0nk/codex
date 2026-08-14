@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:01:26Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_3:companion:companion_advancement_basilosaurus"
+    ],
+    "corpus_key": "Companion (Basilosaurus)",
+    "external_ability_refs": [
+      "Hold Breath"
+    ],
+    "key": "bestiary_3:companion:companion_basilosaurus",
+    "monster_class": "Companion:2",
+    "name": "Companion (Basilosaurus)",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": null,
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Swim"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 0
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "WIS",
+        "amount": 4
+      },
+      {
+        "ability": "CHA",
+        "amount": -4
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_companion.lst",
+    "sha256": "7daa4e30be5659884ac06587264a899d801b61d1a9bd316a2e3a2c380958c374",
+    "line": 10,
+    "record_key": "Companion (Basilosaurus)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

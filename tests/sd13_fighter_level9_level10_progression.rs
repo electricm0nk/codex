@@ -26,7 +26,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
-    EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const LEVEL_9_FIXTURE: &str =
@@ -389,7 +389,7 @@ fn non_fighter_class_does_not_leak_level_10_seams() {
 
 #[test]
 fn matrix_levels_2_10_names_levels_9_and_10_as_proven_and_the_honest_remaining_burdens() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let row = matrix
         .row("class.fighter.levels_2_10")
         .expect("row must exist");
@@ -438,7 +438,7 @@ fn matrix_levels_2_10_names_levels_9_and_10_as_proven_and_the_honest_remaining_b
 
 #[test]
 fn matrix_preserves_fighter_level_1_and_other_accepted_rows() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
 
     let level_1 = matrix
         .row("class.fighter.level_1_pilot")

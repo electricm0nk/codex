@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T11:18:41Z",
+  "data": {
+    "ability_keys": [
+      "book_of_the_damned_volume_1:monster_ability:heresy_devil_blasphemous_bile",
+      "book_of_the_damned_volume_1:monster_ability:heresy_devil_corpulence",
+      "book_of_the_damned_volume_1:monster_ability:heresy_devil_devil_summoner",
+      "book_of_the_damned_volume_1:monster_ability:heresy_devil_searing_word",
+      "book_of_the_damned_volume_1:monster_ability:heresy_devil_spell_like_abilities",
+      "book_of_the_damned_volume_1:monster_ability:heresy_devil_summon_devil",
+      "book_of_the_damned_volume_1:monster_ability:heresy_devil_throne_of_skulls"
+    ],
+    "challenge_rating": "12",
+    "corpus_key": "Devil (Heresy)",
+    "external_ability_refs": [
+      "Fast Healing",
+      "Flight Maneuverability"
+    ],
+    "key": "book_of_the_damned_volume_1:monster:devil_heresy",
+    "monster_class": "Outsider (Fort/Will):13",
+    "name": "Devil, Heresy (Ayngavhaul)",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Devil|Evil|Extraplanar|Lawful",
+    "race_type": "Outsider",
+    "size": "H",
+    "source_page": "p.56",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_races.lst",
+    "sha256": "7ac566b98c1300b3c9c5d0be1b6940712c130d79ebaddd5efcb2ab223c27c6d6",
+    "line": 10,
+    "record_key": "Devil (Heresy)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

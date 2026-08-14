@@ -32,7 +32,7 @@ use codex::rules_core::character_input::{CharacterInput, load_character_input_fi
 use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{SupportState, seeded_sd13_e1_f1_current_truth};
+use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 
 const CLERIC_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_cleric_level1_sd13_deterministic_input.txt");
@@ -281,7 +281,7 @@ fn fighter_and_druid_do_not_gain_cleric_base_attack_or_save_grounding() {
 
 #[test]
 fn matrix_cleric_row_note_names_base_attack_and_base_save_as_grounded() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let cleric = matrix
         .row("class.cleric.progression_and_spell_burden")
         .expect("cleric row must exist");

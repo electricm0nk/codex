@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Yeth Hound ~ Sinister Bite",
+    "delivery": "Supernatural",
+    "description": "A yeth hound's bite is treated as evil-aligned for the purpose of overcoming damage reduction. In addition, a good-aligned creature bitten by a yeth hound must make a DC %1 Will save or be shaken for 1 round. If the victim is already suffering from a fear effect (such as the hound's bay attack), the victim is instead completely overcome with fear and can do nothing but cower for 1 round. This is a mind-affecting fear effect.",
+    "description_variables": [
+      "SinisterBiteDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:yeth_hound_sinister_bite",
+    "name": "Sinister Bite",
+    "owners": [
+      "beastiary:monster:yeth_hound"
+    ],
+    "source_page": "p.286",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1284,
+    "record_key": "Yeth Hound ~ Sinister Bite"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

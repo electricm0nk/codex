@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T22:19:24Z",
+  "data": {
+    "corpus_key": "Read Magic ~ Constant",
+    "delivery": "SpellLike",
+    "description": "You can read magic, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:companion:read_magic_constant",
+    "name": "Read Magic",
+    "owners": [
+      "bestiary_4:companion:familiar_ratling",
+      "bestiary_4:companion:ratling"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "SpellLike"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race_ce_companion.lst",
+    "sha256": "818d474333f914f8a18e72ce4f6f1f5a34078d1aa0a7e895300210a21afa2100",
+    "line": 8,
+    "record_key": "Read Magic ~ Constant"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

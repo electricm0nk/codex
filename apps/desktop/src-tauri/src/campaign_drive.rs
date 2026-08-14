@@ -95,7 +95,7 @@ fn require_drive_folder_path(drive_folder_path: &str) -> Result<(), String> {
 
 /// Pure implementation, unit-testable without a `tauri::AppHandle` — the
 /// command below is a thin wrapper, mirroring this codebase's established
-/// command/pure-fn split (e.g. `ge08_workbench::build_ge08_workbench_snapshot`).
+/// command/pure-fn split (e.g. `authoring_workbench::build_authoring_workbench_snapshot`).
 ///
 /// A thin adapter over `CampaignStore`: `request.campaign_config_json` is
 /// the already-JSON `Campaign` record (no `assets` field — those travel

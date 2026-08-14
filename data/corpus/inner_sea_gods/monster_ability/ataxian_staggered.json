@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "corpus_key": "Ataxian ~ Staggered",
+    "delivery": "Supernatural",
+    "description": "Any creature struck by an Ataxian's ray attack must succeed at a DC %1 Fortitude save or be staggered for 1d4 rounds.",
+    "description_variables": [
+      "AtaxianStagDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:ataxian_staggered",
+    "name": "Staggered",
+    "owners": [
+      "inner_sea_gods:monster:ataxian"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 130,
+    "record_key": "Ataxian ~ Staggered"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}
