@@ -175,6 +175,22 @@ re-derived by importing the dashboard producer's own `doneness_verdict()` and re
 matching `state-goals-and-lessons.md §1.1`'s figure exactly. `retro.py correction` event id
 `1786738386633-sd30-e0-f1-rung-012e3f` (`docs/retro/events/sd30-e0-f1-rung.jsonl`).
 
+## Update (2026-08-14, SD30-E0-F3-001) — `unknown`-residue characterization: F3 sub-scope COMPLETE
+
+Re-derived per-kind `unknown` residue fresh against the committed `docs/work-inventory.json`
+(unchanged this cycle): only `class_feature` (3,622, already owned by `decisions.md #38` /
+`SD-31-corpus-closure-grind epic-1-measurement`) and `feat` (367, previously uncharacterized) are
+nonzero — every other kind is 0. Characterized `feat`'s residue into `decisions.md #38`'s three
+buckets (option-pool / genuinely-unreachable / unclustered-remainder), read per-unit off the PCGen
+`.lst` source line: **100 option-pool, 217 genuinely-unreachable (needs a probe-fixture capability
+expansion, not ingest), 50 unclustered-remainder.** Durable artifact landed at
+`artifacts/sd30-e0-f3-unknown-residue/` (README with an explicit SD-31 invocation contract,
+per-unit JSON, reproducible classifier script). Two of this bundle's own inherited figures corrected
+in place: F3's own acceptance text's "329 units" claim for feat -> re-derived **367**; `decisions.md
+#38`'s "3,218" claim for class_feature -> re-derived **3,622** (not re-characterized, out of F3
+scope, drift flagged for SD-31). Full receipt: `progress.md`, cycle `SD30-E0-F3-001`. This row stays
+`READY` — F4 (re-derivation and reporting) remains open under it.
+
 ## Operator override slot
 
 Operator may add or remove cards directly by editing this file. Cycle

@@ -999,3 +999,148 @@ and 2 both PASS on a clean, three-times-verified `verify.sh --full` run (`VERIFY
 number moved by lowering a bar: `done` is unchanged (5,837); the
 132-unit `held`→`in-progress` movement is a bar being applied MORE strictly (the excuse for exempting
 `spell` no longer holds), and `companion`'s cap removal is inert by direct proof, not by assumption.
+
+## Cycle `SD30-E0-F3-001` — 2026-08-14 — `unknown`-residue characterization, corpus-wide (`epic-0-instrument-apply`, F3 sub-scope)
+
+**Actor:** `sd30-e0-f3-unknown`. **HEAD at start:** `5010641f` (tip of `tranche/10`;
+`git log --oneline -1` matched `git rev-parse HEAD`). Working tree had two pre-existing, unrelated
+dirty entries at start (`.gitignore` modified, `.github/workflows/deploy-site.yml` untracked) —
+neither touched by this cycle, neither staged, neither committed by this cycle; recorded per
+shared-checkout discipline, not investigated further (out of this card's scope, another agent's
+live work per `state-goals-and-lessons.md`'s "idle does not mean dead" doctrine — the safer default,
+flagged here).
+
+### 1. Scope
+
+Read-only classification pass over `docs/work-inventory.json` and the PCGen `.lst` source tree —
+**no** `data/corpus/`, no engine (`src/`, `apps/`) code, no dashboard-producer code touched. PI gate
+not engaged, per the card's own framing.
+
+### 2. Which kinds have a nonzero `unknown` residue — re-derived fresh
+
+```
+python3 -c "
+import json, collections
+d = json.load(open('docs/work-inventory.json'))
+c = collections.Counter()
+for u in d['units']:
+    if u['status'] == 'unknown':
+        c[u['kind']] += 1
+print(c)
+"
+```
+Against the committed `docs/work-inventory.json` (`generated_at: 2026-08-14T20:03:13Z`, unchanged by
+this cycle — the SD30-E0-F1-001 regen, confirmed byte-identical before/after by `git status
+--porcelain` showing no modification to that file): **`class_feature` 3,622, `feat` 367, every other
+kind 0.** No kind besides `feat` newly needs this card's treatment.
+
+**Two corrections, both re-derived not transcribed** (`retro.py correction` events
+`1786742550660-sd30-e0-f3-unknown-700ea4` / `1786742550773-sd30-e0-f3-unknown-8fe35c`):
+- The card's own acceptance text (`epic-breakdown.md` SD30-E0-F3) claims feat's residue is "329
+  units" — live re-derivation is **367**, not 329.
+- `decisions.md #38` characterized class_feature's residue at "3,218" (itself already a
+  correction of an earlier "2,958") — live re-derivation is **3,622**. **Not** re-characterized this
+  cycle (out of F3 scope — owned by the class_feature measurement chain, moved to
+  `SD-31-corpus-closure-grind/kanban.md epic-1-measurement` under `decisions.md §51`); the drift is
+  recorded so SD-31 does not inherit a stale count.
+
+### 3. Method — `decisions.md #38`'s three buckets, applied to `feat`
+
+Full method, per-unit signal detection, and worked examples are in the artifact README
+(`artifacts/sd30-e0-f3-unknown-residue/README.md §2`). Summary: every one of the 367 `feat` `unknown`
+units shares one `evidence` value (`in_catalog_with_corpus_magnitude_but_no_observed_consumer` — the
+feat-effect probe, `probe_feat_effect_wiring` at `src/bin/v06_work_inventory.rs:1574`, found the feat
+in-catalog with real corpus magnitude but no computed delta across its swept postures:
+`PROBE_CLASSES = {fighter, barbarian, monk, wizard, swashbuckler}` × `PROBE_LEVELS = {1, 12}` × 4
+generic `PROBE_SELECTIONS`). Applied decisions.md #38's three buckets by reading each unit's own
+PCGen `.lst` line (not the stored `reason` text alone) for a structural signal — PCGen's `" ~ "`
+named-sub-choice `KEY` marker, `BONUS:ABILITYPOOL` grants, inline `CHOOSE:`, positive `PREABILITY`
+(polarity-checked), `PRESTAT`/`PRESKILL` floors.
+
+**One near-miss caught before the count was taken** (`retro.py near-miss` event
+`1786742559117-sd30-e0-f3-unknown-49d7c2`): the first classifier pass matched `PREABILITY` as a bare
+substring, which also matches `!PREABILITY` (negated — "you must NOT already have X", trivially
+satisfied by the probe's synthetic characters, not the same shape as a positive requirement).
+`Amateur Investigator` (`!PREABILITY:1,CATEGORY=Special Ability,Investigator ~ Inspiration`) was
+caught misrouted into the chooser-pre-selection-gap bucket on manual spot-check against its raw
+`.lst` line, before publish. Fixed to a polarity-aware regex (`(?<!!)PREABILITY:`).
+
+**One residual flagged, not smoothed over**: 4 of the 68 `resource-pool-expansion` units (`Extra
+Rage Power`, `Extra Arcana` x2, `Extra Cantrips or Orisons`) name an owning class already inside
+`PROBE_CLASSES` — for these four, "the fixture doesn't cover the owning class" is not the actual
+explanation. Their true cause is un-diagnosed by this pass and called out by name in the JSON
+artifact rather than folded silently into the other 64 units' explanation.
+
+### 4. Result
+
+| top bucket (decisions.md #38 taxonomy) | units | share |
+|---|---:|---:|
+| genuinely-unreachable (needs new probe-fixture capability) | 217 | 59.1% |
+| option-pool (mechanism real, specific pool-slot ungrounded) | 100 | 27.2% |
+| unclustered-remainder | 50 | 13.6% |
+| **total** | **367** | 100% |
+
+Shape sub-counts: chooser-pre-selection-gap 194, resource-pool-expansion 68, no-structural-signal
+(unclustered) 50, prereq-stat-or-skill-gap 23, inline-choose 16, named-sub-choice-key 16. All 367
+units accounted for (0 unresolved source-line lookups after the `KEY:` sub-choice fix — 16 units
+were unresolved on the first pass because `corpus_key` for named-sub-choice rows is the PCGen `KEY:`
+value, not the leading Ability-Name field; fixed in the lookup helper, caught by the artifact's own
+"units whose source line could not be re-located" self-check going from 16 to 0, not asserted).
+
+### 5. Artifact landed (durable, for SD-31)
+
+`docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e0-f3-unknown-residue/`:
+- `README.md` — method, results, and an explicit "invocation contract for SD-31" section per this
+  package's SCOPE NOTE (the 217-unit genuinely-unreachable bucket needs a probe-fixture capability
+  expansion, engine-capability-shaped work for SD-32/SD-31 successor scope, not new ingest; the
+  100-unit option-pool bucket needs no further action beyond decisions.md #38's existing standing
+  ruling; the 50-unit unclustered remainder is inherited unfinished characterization work, SD-31
+  measurement-shaped).
+- `feat_unknown_characterization.json` — per-unit detail (id, name, book, source file/line, bucket,
+  shape, sub-reason) for all 367 units.
+- `characterize_feat_unknown.py` — the classifier itself, read-only over `docs/work-inventory.json`
+  and the PCGen `.lst` tree, reproducible against a future inventory regen.
+
+### 6. Definition of done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **N/A — measurement-only cycle, no Rust/Python production code changed.** No file under `src/`, `apps/`, `scripts/`, or `tests/` touched (`git status --porcelain` before/after: only the new `artifacts/sd30-e0-f3-unknown-residue/` dir and the retro log are new/untracked; the two pre-existing unrelated dirty entries noted above are unchanged by this cycle). Per loop-instruction's "Doc-only or measurement-only cycles run the relevant `--only` stages instead and state exactly which" — the relevant checks run instead are items 5 (wired-integration audit, below) and direct JSON/Python syntax validation of the two new artifact files (`python3 -c "import json; json.load(open(...))"` and `python3 -c "import ast; ast.parse(open(...).read())"`, both OK). |
+| 2 | reach claim, nonzero | **N/A.** This card adds no new player-facing reach claim and touches no `reach_gate.rs` family — a read-only classification artifact under `docs/release/` has no reach surface to claim. |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **N/A.** No corpus, generator, or ingest code touched this cycle; the pre-existing 177-defect finding F1/F2 already flagged (`wiring-class-mismatch`, unrelated to this card) is neither caused nor re-verified by this cycle since no `data/corpus/` or `v06_work_inventory.rs` file was read for write purposes — only `docs/work-inventory.json` (the generator's already-committed OUTPUT) was read. |
+| 4 | Guarded work-inventory regen | **N/A.** No corpus, generator, or inventory-affecting code touched. `docs/work-inventory.json` was read only, confirmed unmodified by `git status --porcelain` (absent from the diff). |
+| 5 | Four-check wired-integration audit | **PASS, scoped to this cycle's own files.** The four `git diff develop...HEAD` checks are branch-wide (whole-tranche history) and check 1 (`OK_NO_TOKENS`) surfaces pre-existing hits from prior commits in `src/**/*.rs`, none from this cycle (this cycle touched no file matching any of the four checks' globs — `docs/release/**` matches none of them). Direct grep of this cycle's two actually-changed files (`characterize_feat_unknown.py`, `README.md`) for the STUB/MOCK/placeholder/todo/fixme/hack token set: clean (`OK_NO_TOKENS_MY_FILES`). Checks 2/3/4 (`OK_NO_NOOP_HANDLERS`/`OK_NO_MOCK_LEAKS`/`OK_NO_WOULD_STRINGS`) all clean branch-wide. |
+| 6 | `OPEN_FINDINGS` in `reach_gate.rs` | **N/A.** No family surfaced or left unsurfaced this cycle — not a reach-scope card. The unresolvable subset (217-unit genuinely-unreachable bucket) is recorded as an explicit "invocation contract for SD-31" section in the artifact README instead, the correct registry for a characterization-scope (not reach-scope) finding, matching F2's own precedent for instrument-scope findings. |
+| 7 | Baseline movements | **N/A.** No baseline-affecting code or test changed. |
+| 8 | On-screen verification | **N/A.** No player-visible desktop-app surface touched — this cycle produced a documentation/classification artifact only, read by SD-31 planning, not by the character-sheet app. |
+
+### 7. Retro events emitted
+
+- `1786742550660-sd30-e0-f3-unknown-700ea4` — correction, feat-unknown-residue count (329 claimed -> 367 actual).
+- `1786742550773-sd30-e0-f3-unknown-8fe35c` — correction, class_feature-unknown-residue drift (3,218 claimed -> 3,622 actual, not re-characterized, flagged for SD-31).
+- `1786742559117-sd30-e0-f3-unknown-49d7c2` — near-miss, polarity-blind PREABILITY substring match caught before publish.
+
+### 8. Card disposition
+
+`epic-0-instrument-apply`'s **F3 sub-scope is COMPLETE**: the one kind (besides the already-owned
+`class_feature`) carrying a nonzero `unknown` residue (`feat`, 367 units) is characterized into
+`decisions.md #38`'s three buckets, with per-unit detail and an explicit SD-31 invocation contract
+landed as a durable artifact. No other kind needed treatment (re-derived fresh, all zero). `kanban.md`'s
+`epic-0-instrument-apply` row is left `READY` — **F4** (re-derivation and reporting) remains open
+under the same row, matching SD30-E0-F1-001/F2-001's own precedent for this multi-feature row.
+
+### 9. Reclaim
+
+`./scripts/reclaim.sh` (dry run) then `./scripts/reclaim.sh --apply`: **0.0B reclaimed, 0 items**
+(all candidates skipped — young verify-logs, forbidden worktree paths, unmerged/checked-out
+branches). Disk at 22% used / 758G available (`df -h /`), well inside `verify.sh`'s preflight floor —
+0.0B reclaimed reads as "nothing stale to reclaim," not "structurally full," consistent with the
+low disk-utilization reading this cycle.
+
+**Verdict: SD30-E0-F3 COMPLETE.** DoD items 1-4, 6-8 N/A with stated reasons (measurement-only,
+read-only classification cycle; no code, corpus, engine, or reach-surface change). Item 5 PASS,
+scoped correctly to this cycle's own two changed files plus the branch-wide check run for the
+record. No number moved by lowering a bar — both bucket boundaries (option-pool vs
+genuinely-unreachable) are structural signals read from the corpus source line, not a convenient
+split chosen to make a total look better, and two of this bundle's own inherited figures (329, 3,218)
+were corrected upward (367, 3,622) rather than left comfortable.
