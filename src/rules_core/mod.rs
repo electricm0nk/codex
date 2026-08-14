@@ -8,6 +8,7 @@ pub mod contract;
 pub mod corpus_literal_sweep;
 pub mod corpus_loader;
 pub mod damage_total;
+pub mod derived_evaluator_fixture_check;
 pub mod description_completion;
 pub mod durability;
 pub mod encounters;

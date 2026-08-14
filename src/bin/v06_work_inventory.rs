@@ -2903,6 +2903,17 @@ const STATUS_VOCABULARY: &[(&str, &str)] = &[
          leaves every unit at its ordinary status -- this word is never assigned on trust.",
     ),
     (
+        "fixture-verified",
+        "A `derived` unit whose engine evaluator was run, this run, over the real corpus record \
+         through `compute_equipment_effects` and matched a pinned, independently-derived fixture \
+         value exactly, by `derived_evaluator_fixture_check --json-out`. Strictly stronger than \
+         `ingested-magnitude`/`grounded`/`text-complete`, which it supersedes for a unit the \
+         fixture actually covers: only the producer's `static`/`derived` doneness rung (operator \
+         directive 2026-08-13) maps this to `done`. Coverage is 94 of 2,879 held `derived` units \
+         by the fixture's own design, not a sample -- a unit outside that coverage, or one the \
+         check ran and failed, keeps its ordinary status and stays `held`.",
+    ),
+    (
         "ingested-magnitude",
         "The engine holds the record WITH its real numeric fields, but this generator observes no \
          consumer delta for this kind (spells, equipment). Strictly weaker than `grounded` and \
@@ -3662,6 +3673,39 @@ fn load_sweep_verified(path: &Path) -> BTreeSet<(String, String, usize)> {
     out
 }
 
+/// Parses `derived_evaluator_fixture_check --json-out`'s report into the
+/// `unit_id`s it verified.
+///
+/// Shape: `{"fixtures_total":<n>,"cleared":<n>,"failed":<n>,
+/// "not_ingested":<n>,"verified":["id1","id2",...]}`. Unlike the sweep's
+/// report, there is no whole-report `clean` gate to check: this instrument's
+/// coverage is deliberately partial by design (94 of 2,879 held `derived`
+/// units), and a unit failing does not cast doubt on any other unit's
+/// result the way one mismatched book does for the byte-equality sweep, so
+/// the `verified` array alone -- built by `run_bar_check` from a per-unit
+/// pass, never on trust -- is the whole of what this function needs.
+fn load_derived_fixture_verified(path: &Path) -> BTreeSet<String> {
+    let Ok(text) = std::fs::read_to_string(path) else {
+        return BTreeSet::new();
+    };
+    let mut out = BTreeSet::new();
+    let Some(list_start) = text.find("\"verified\":[") else {
+        return BTreeSet::new();
+    };
+    let mut rest = &text[list_start + "\"verified\":[".len()..];
+    while let Some(quote_start) = rest.find('"') {
+        let after_open = &rest[quote_start + 1..];
+        let Some(quote_end) = after_open.find('"') else { break };
+        let id = &after_open[..quote_end];
+        out.insert(id.replace("\\\"", "\"").replace("\\\\", "\\"));
+        rest = &after_open[quote_end + 1..];
+        if rest.trim_start().starts_with(']') {
+            break;
+        }
+    }
+    out
+}
+
 fn json_field_str(obj: &str, key: &str) -> Option<String> {
     let needle = format!("\"{key}\":\"");
     let start = obj.find(&needle)? + needle.len();
@@ -4137,13 +4181,31 @@ fn main() {
     // by default, so an inventory generated without first running the sweep
     // carries no `literal-verified` units at all -- it never fabricates
     // evidence it was not handed. Only used for `wiring_class == Static`
-    // below; `derived`'s `fixture-verified` rung is not wired here yet.
+    // below.
     let sweep_verified: BTreeSet<(String, String, usize)> =
         std::env::var("CORPUS_LITERAL_SWEEP_REPORT")
             .ok()
             .map(PathBuf::from)
             .map(|p| load_sweep_verified(&p))
             .unwrap_or_default();
+
+    // The `derived` done-rung evidence, same operator directive:
+    // `derived_evaluator_fixture_check --json-out`'s report of which
+    // `unit_id`s the engine's evaluator actually matched against the pinned
+    // fixture (coverage is 94 of 2,879 held `derived` units by the fixture's
+    // own design -- see `tests/derived_evaluator_fixture_check.rs`'s module
+    // doc; every unit not in this set keeps its ordinary status and stays
+    // `held`). `DERIVED_FIXTURE_CHECK_REPORT` is opt-in and unset by
+    // default, same reason as the static rung above. The report's
+    // `verified` array carries `unit_id`s directly -- unlike the sweep's
+    // triples, `Fixture::unit_id` is spelled identically to this
+    // generator's own `InventoryUnit::id`, so the join is a direct set
+    // membership test with no book/file/line reconstruction needed.
+    let derived_fixture_verified: BTreeSet<String> = std::env::var("DERIVED_FIXTURE_CHECK_REPORT")
+        .ok()
+        .map(PathBuf::from)
+        .map(|p| load_derived_fixture_verified(&p))
+        .unwrap_or_default();
 
     let fixture = load_probe_fixture(&repo_root);
 
@@ -4433,6 +4495,28 @@ fn main() {
             ))
         {
             item.verdict.status = "literal-verified";
+        }
+    }
+
+    // The `derived` done rung, same operator directive: upgrade a unit's
+    // status to `fixture-verified` when, and only when, `wiring_class ==
+    // Derived`, its existing status is one of the three the fixture check's
+    // bar supersedes, AND its own `id` is in
+    // `derived_evaluator_fixture_check --json-out`'s verified set --
+    // `run_bar_check` only ever inserts a `unit_id` there after the
+    // engine's evaluator matched the pinned fixture exactly, so this is a
+    // direct join, unlike the static rung's book/file/line reconstruction.
+    // A unit outside the fixture's 94-entry coverage, or one the check ran
+    // and failed, keeps its ordinary status and stays `held` -- most of the
+    // 2,879 held `derived` units are NOT in `derived_fixture_verified` and
+    // this loop does nothing for them, which is the honest, intended
+    // outcome, not a bug.
+    for item in &mut inventory {
+        if item.wiring_class == wiring_class::WiringClass::Derived
+            && matches!(item.verdict.status, "ingested-magnitude" | "grounded" | "text-complete")
+            && derived_fixture_verified.contains(&item.id)
+        {
+            item.verdict.status = "fixture-verified";
         }
     }
 

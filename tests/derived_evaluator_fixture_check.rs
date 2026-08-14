@@ -66,13 +66,11 @@
 //! instrument means building the missing evaluators, not loosening this check.
 
 use std::collections::{BTreeMap, BTreeSet};
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 use sha2::{Digest, Sha256};
 
-use codex::rules_core::character_input::{ActiveState, EquipmentSelection};
-use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
-use codex::rules_core::equipment_effects::compute_equipment_effects;
+use codex::rules_core::derived_evaluator_fixture_check::run_bar_check;
 
 const FIXTURE: &str = "tests/fixtures/rules_core/derived-evaluator-fixtures.json";
 
@@ -517,81 +515,13 @@ fn pinned_corpus_field_is_byte_identical_to_the_upstream_lst() {
 /// it is not excused, and its units stay `held`.
 #[test]
 fn engine_evaluator_output_equals_the_corpus_derived_expected_value() {
-    let fixtures = load_fixtures();
-    let books: BTreeSet<String> = fixtures.iter().map(|f| f.book.clone()).collect();
+    // Delegates to `codex::rules_core::derived_evaluator_fixture_check::run_bar_check`
+    // -- the exact function `v06_work_inventory` calls to emit the `derived`
+    // done-rung evidence, so this test and the generator can never disagree
+    // about which units cleared the bar.
+    let report = run_bar_check(&repo_root());
 
-    let mut cleared = 0usize;
-    let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let mut not_ingested_books: BTreeSet<String> = BTreeSet::new();
-    let mut not_ingested_entries = 0usize;
-
-    for book in &books {
-        let Some(dir) = ingested_equipment_dir(book) else {
-            not_ingested_books.insert(book.clone());
-            not_ingested_entries += fixtures.iter().filter(|f| &f.book == book).count();
-            continue;
-        };
-        // One book's ingest, alone — the same book-scoping the existing
-        // equipment probe uses, so a key two books both reprint cannot be
-        // credited to the wrong one.
-        let roots = [BookCorpusRoot { book_id: book.as_str(), dir: Path::new(&dir) }];
-        let corpus = load_equipment_corpus(&roots);
-
-        for fixture in fixtures.iter().filter(|f| &f.book == book) {
-            let selection = vec![EquipmentSelection {
-                item_id: fixture.record_key.clone(),
-                equipped_or_active: true,
-                active_state: ActiveState::EquippedActive,
-                applied_modifiers: Vec::new(),
-            }];
-            let effects = compute_equipment_effects(&selection, &corpus);
-            let Some(item) = effects.per_item.first() else {
-                failures.insert(
-                    fixture.unit_id.clone(),
-                    format!("{:?} does not resolve against its own ingested book", fixture.record_key),
-                );
-                continue;
-            };
-            let Some(bonus) = &item.ability_bonus else {
-                failures.insert(
-                    fixture.unit_id.clone(),
-                    format!(
-                        "corpus row states {} but the evaluator produced no ability bonus at all",
-                        fixture.corpus_field
-                    ),
-                );
-                continue;
-            };
-            // The evaluator reports the corpus's ability list verbatim, so a
-            // multi-ability grant arrives comma-joined exactly as the corpus
-            // wrote it. Split, and compare against the list the corpus states.
-            let abilities: Vec<String> =
-                bonus.ability.split(',').map(str::trim).map(str::to_string).collect();
-            if abilities != fixture.expected_abilities || bonus.bonus != fixture.expected_bonus {
-                failures.insert(
-                    fixture.unit_id.clone(),
-                    format!(
-                        "corpus row {:?} states {:?} {:+}, evaluator produced {:?} {:+}",
-                        fixture.corpus_field,
-                        fixture.expected_abilities,
-                        fixture.expected_bonus,
-                        abilities,
-                        bonus.bonus
-                    ),
-                );
-                continue;
-            }
-            assert!(
-                uncleared_reason(&fixture.unit_id).is_none(),
-                "{} clears its `derived` bar but is still on the `UNCLEARED` record — \
-                 delete the entry",
-                fixture.unit_id
-            );
-            cleared += 1;
-        }
-    }
-
-    for book in &not_ingested_books {
+    for book in report.not_ingested.values().collect::<BTreeSet<_>>() {
         assert!(
             !repo_root().join("data").join("corpus").join(book).join("equipment").is_dir(),
             "{book} was skipped as un-ingested, but its equipment corpus exists — the \
@@ -599,17 +529,26 @@ fn engine_evaluator_output_equals_the_corpus_derived_expected_value() {
         );
     }
 
-    assert_uncleared_set_is_exact(&failures, "derived bar");
+    for unit_id in report.cleared.iter().filter(|id| uncleared_reason(id).is_some()) {
+        panic!(
+            "{unit_id} clears its `derived` bar but is still on the `UNCLEARED` record — \
+             delete the entry"
+        );
+    }
+
+    assert_uncleared_set_is_exact(&report.failures, "derived bar");
     assert!(
-        cleared > 0,
+        !report.cleared.is_empty(),
         "no fixture entry reached the evaluator, which would make this bar vacuous"
     );
     eprintln!(
-        "derived evaluator-vs-fixture: {cleared} of {} covered units cleared the bar; \
-         {} did NOT and stay `held` (see `UNCLEARED`); {not_ingested_entries} belong to \
-         books with no ingest in this repo ({not_ingested_books:?})",
-        fixtures.len(),
-        failures.len()
+        "derived evaluator-vs-fixture: {} of {} covered units cleared the bar; \
+         {} did NOT and stay `held` (see `UNCLEARED`); {} belong to \
+         books with no ingest in this repo",
+        report.cleared.len(),
+        report.fixtures_total,
+        report.failures.len(),
+        report.not_ingested.len()
     );
 }
 
