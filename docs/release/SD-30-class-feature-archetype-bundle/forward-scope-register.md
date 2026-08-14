@@ -82,6 +82,36 @@ callers, `gen_feat_gap_tables.rs`/`gen_equipment_gap_tables.rs`), and proven thi
 table text, hard-stop on a non-empty result, and record the outcome in that book's cycle's first
 receipt — the contract, not a re-derivation of it, per `decisions.md §52.3`.
 
+### C1.5 — Declared-PI reader wired into `class_feature`'s one existing production ingest binary; contract for the 6 still-exposed books (2026-08-14, `SD30-E3-F2-001`)
+
+**Owner:** `SD-31-corpus-closure-grind` (its Epic 3, ex-SD-30 Epic 6 — `decisions.md §51`), for the 6
+books this item's own `decisions.md §39.2` measured real declared-PI exposure in
+(`adventurers_guide`, `inner_sea_magic`, `inner_sea_world_guide`, `inner_sea_intrigue`,
+`book_of_the_damned_volume_2`, `inner_sea_combat`).
+
+**What SD-30 delivers:** `SD30-E3-F2` closed (`decisions.md §53`). `decisions.md §39.2`'s "no
+`class_feature` ingest path exists" premise was itself corrected this cycle
+(`decisions.md §53.1`): `src/bin/ingest_pu_classes.rs` (SD-27) already is one, for
+`pathfinder_unchained`. `pi_screening::{declared_product_identity, classify_optional_field_declared}`
+— the shared reader `ingest_race_traits.rs` already used, no forked implementation — is now wired into
+that binary's `class_feature`-writing loop (`NAMEISPI:YES` drop before other processing, `DESCISPI:YES`
+redact through the shared reader, both counted/named in the run receipt, `license`/`pi_field`/
+`pi_marker` genuinely populated). `pathfinder_unchained`'s own source carries zero live declared-PI
+tokens today (`decisions.md §53.2`), so two new unit tests in `src/bin/ingest_pu_classes.rs` prove the
+wiring against real-shaped synthetic rows replayed through the real production functions.
+
+**What SD-31 must do:** for each of the 6 named books, whichever `class_feature` ingest lane Epic 3
+builds must (1) preserve every source token verbatim in `raw_tokens`; (2) call
+`pi_screening::declared_product_identity` on the row's own tokens **before any other per-row
+processing, before any scope/eligibility filter**; (3) drop `NAMEISPI:YES` rows, naming
+`{source_file}:{line}: {key}` in the cycle's own `progress.md` receipt; (4) redact `DESCISPI:YES`
+descriptions through `classify_optional_field_declared`, populating the record's `license`/`pi_field`/
+`pi_marker` from its return rather than a hardcoded `Ogl`; (5) run this as a sibling to whichever
+blacklist-term screen the lane also runs (`C1.4`'s contract), never a substitute, and never let it
+silently weaken an already-shipped stricter policy for the sake of a simpler diff; (6) reclassifying a
+specific declared-PI row as shippable is `ogl-pi-blacklist.md` §3's per-book override, an operator
+decision the lane may request but not make unilaterally. Full six-step contract: `decisions.md §53.5`.
+
 ## Class 2 — RETIRED 2026-08-10 (book-list deferrals, moot under the `class_feature` re-scope)
 
 **The four book-specific deferrals below (C2.1-C2.4) are retired, not merely stale.** They deferred

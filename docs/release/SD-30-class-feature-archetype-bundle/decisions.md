@@ -1997,3 +1997,159 @@ gen_feat_gap_tables.rs`, `src/bin/gen_equipment_gap_tables.rs` (the two live pro
 `tests/pi_table_sweep.rs` (this cycle's two new tests plus the five pre-existing); `docs/governance/
 pi-sweep-baseline.tsv`; `docs/governance/no-stub-mvp-doctrine.md` (the "not wired only by its own test"
 bar this finding satisfies).
+
+## Decision 53 — SD30-E3-F2 closed: the declared-PI reader is wired into `class_feature`'s one existing production ingest binary; `§39.2`'s "no ingest path exists" premise corrected (2026-08-14)
+
+**Status:** New. Card `SD30-E3-F2`. Every figure below re-derived this cycle, not transcribed.
+
+### 53.1 Correction: `§39.2`'s "no `class_feature` ingest path exists yet" is wrong
+
+`decisions.md §39.2` stated: *"No `class_feature` ingest path exists yet (`ls src/bin/ | grep ingest`
+and `ls scripts/*.py | grep -E 'ingest|transcribe'` show no `class_feature` writer)."* Re-run this
+cycle, corrected:
+
+```bash
+$ grep -rln "ClassFeatureCacheData" src/bin/
+src/bin/ingest_pu_classes.rs
+```
+
+`src/bin/ingest_pu_classes.rs` (SD-27) is a live, already-shipping `class_feature` ingest binary. It
+reads `pathfinder_unchained/pu_abilities_class.lst` and writes
+`data/corpus/pathfinder_unchained/{class,class_feature}/*.json` via `CorpusRecordV1<ClassFeatureCacheData>`
+— it just carries no `class_feature`/`ingest_class_feature`-shaped binary *name*, so `§39.2`'s `grep
+ingest` found it (it matches `ingest`) but the eye reading the result did not connect it to the
+`class_feature` kind, and its Python-transcriber framing ("Pipeline B: `transcribe_monster_tables.py`
+...") never considered a Pipeline A Rust writer for this kind at all. `retro.py correction`
+`1786747577757-sd30-e3-f2-declared-541af1` (`docs/retro/events/sd30-e3-f2-declared.jsonl`). This is
+`§39.2`'s own premise turning out wrong, corrected in place per this bundle's "press on" rule — not a
+scope dispute.
+
+This does not change `§39.2`'s 464-row PCGen-source finding across the 6 named books
+(`adventurers_guide` etc.) — those 6 books still have no ingest binary (Epic 6/its successor, now
+SD-31's Epic 3, is what will read them) and remain future exposure. It changes only the "the fix has
+no current production consumer" framing: it has exactly one, today, for one already-in-scope book
+(`pathfinder_unchained`).
+
+### 53.2 Re-derived: `pathfinder_unchained`'s own declared-PI exposure is zero, today
+
+```bash
+$ grep -o 'NAMEISPI:[A-Za-z]*\|DESCISPI:[A-Za-z]*' \
+    ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst
+(no output)
+```
+
+Zero `NAMEISPI`/`DESCISPI` tokens anywhere in the one source file `ingest_pu_classes.rs` reads. Wiring
+the reader into this binary is a mechanism-correctness fix with no live behavioral change today (the
+real ingest run's own new report lines print `dropped, NAMEISPI:YES : 0` /
+`descriptions redacted by DESCISPI:YES : 0`) — exactly SD30-E3-F1's own shape (a real mechanism, zero
+current live hits, proven against synthetic-but-real-shaped rows built through the production parsing
+functions because no real hit exists to demonstrate against). Re-running the binary and diffing
+against `HEAD` confirms byte-identical output except `ingested_at` (reverted, not committed — the
+regenerating hazard `state-goals-and-lessons.md §1.3`/this card's own brief warns about; `git checkout
+-- data/corpus/pathfinder_unchained` after the proof run, confirmed clean by `git status --porcelain`).
+
+### 53.3 What was wired, exactly
+
+`src/bin/ingest_pu_classes.rs`'s `class_feature`-writing loop (the `ClassFeatureCacheData` block) now:
+
+1. Calls `declared_product_identity_of(frow)` — a thin wrapper over
+   `pi_screening::declared_product_identity(row.tokens())`, the same shared reader
+   `ingest_race_traits.rs` uses, no forked implementation — **before any other per-row processing**,
+   mirroring `ingest_race_traits.rs`'s ordering.
+2. `NAMEISPI:YES` → the row is dropped (`continue`), named `{LST_RELATIVE}:{line}: {key}` in a
+   `pi_dropped` vec printed as `  dropped, NAMEISPI:YES  : N` in the run's stdout report, mirroring
+   `ingest_race_traits.rs`'s identical line.
+3. `DESCISPI:YES` → the description is redacted through
+   `pi_screening::classify_optional_field_declared("description", rendered.text.as_deref(), true)`,
+   whose `(license, pi_field, pi_marker, stored)` now populate the record's own `license`/`pi_field`/
+   `pi_marker` fields (previously hardcoded `Some(License::Ogl), None, None` for every `class_feature`
+   record, unconditionally — a second, independent finding this fix also closes: the binary was never
+   capable of shipping a non-`Ogl` `class_feature` license value at all before this change). Counted
+   in a `pi_declared_descriptions` counter, printed as
+   `  descriptions redacted by DESCISPI:YES : N`, mirroring `ingest_race_traits.rs`.
+4. An undeclared row is unaffected: `rendered.text` flows through exactly as before, and the binary's
+   own pre-existing 54-term `PI_BLACKLIST_TERMS`/`pi_hits` fatal-on-hit check (unrelated to this card,
+   left untouched) still runs against the final description text — the two screens are a **sibling
+   union**, not a merge (`§39.4`/SD-29 `§53.1`), and this cycle deliberately did not route a
+   non-declared description through `classify_field`'s own silent-redact branch, because
+   `ingest_pu_classes.rs`'s existing, documented design treats *any* blacklist hit as fatal
+   (`"Class features are pure game mechanics ... a hit fails the run loudly"`) — a stricter policy than
+   `ingest_race_traits.rs`'s silent-redact-on-blacklist-hit design for the same term list. Routing an
+   undeclared description through the shared reader's non-declared branch would have silently replaced
+   that fatal-stop with a silent redact, weakening an existing, stricter, already-shipped gate to make
+   this card's own diff simpler — exactly the anti-gaming rule this bundle is built to prevent
+   (`decisions.md §50(a)`-equivalent, this package's own standing convention). The declared-PI branch
+   only ever fires on `declared.description == true`.
+
+Scoped to the `class_feature` block only (`ClassFeatureCacheData`) — this binary's sibling `class`-kind
+block (`ClassVariantCacheData`) was deliberately left untouched: `§53.2`'s zero-hit measurement means
+there is no live behavior difference either way, and touching a second, differently-shaped record kind
+(a class chassis, not a feature) that this card's acceptance does not name would be scope creep this
+card's own SCOPE NOTE warns against, not scope this bundle needs. Named here as an open item for
+whichever future cycle re-derives declared-PI exposure for the `class` kind corpus-wide (that is
+`SD30-E3-F3`'s acceptance, not this card's).
+
+### 53.4 Proof: two new tests replay the real production functions against real-shaped rows
+
+`pu_abilities_class.lst` carries zero live `NAMEISPI`/`DESCISPI` tokens (`§53.2`), so — same
+constraint SD30-E3-F1 hit — there is no already-shipped hit to regression-test against inside this
+book. Two new `#[cfg(test)]` tests in `src/bin/ingest_pu_classes.rs` build rows in the exact
+tab-delimited shape `parse_rows` already parses (the binary's own `row()` test helper, used by its 21
+pre-existing tests) and replay them through the real production call chain:
+
+- `declared_product_identity_of_reads_nameispi_and_descispi_off_the_row` — `NAMEISPI:YES`,
+  `DESCISPI:YES`, both together, neither, and PCGen's explicit `NAMEISPI:NO`/`DESCISPI:NO` (not a
+  declaration — `declared_product_identity`'s own documented rule).
+- `a_descispi_row_is_redacted_through_the_shared_reader_even_with_no_blacklist_term` — the exact defect
+  shape `§39.1`/SD-29 `§53.1` found (a declared description naming nothing the 54-term blacklist
+  knows, "Ekujae" chosen specifically because it is not on either the shared reader's 55-term list or
+  this binary's own 54-term local copy) — asserts `pi_hits` alone would ship it clean, then asserts the
+  declared-PI reader redacts it anyway.
+
+```
+$ CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-e3-f2-declared cargo test --locked --bin ingest_pu_classes
+running 23 tests
+...
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+```
+
+21 pre-existing + 2 new, all green.
+
+### 53.5 Invocation contract for the successor (unchanged from `§52.3`, restated for this reader)
+
+`§52.3` already documents the six-step contract for the blacklist-sweep half. This decision adds the
+declared-PI half's own contract, for whichever ingest/transcription lane SD-31's Epic 3 (or any future
+Pipeline A `class_feature` writer) builds for the 6 books `§39.2` found real exposure in:
+
+1. Preserve every source token verbatim in the row's `raw_tokens` (already required by every existing
+   Pipeline A writer's own doc comments) — the declared-PI reader depends on reading the *shipped*
+   tokens, not re-parsing the source line, so both ends agree.
+2. Call `pi_screening::declared_product_identity(row.tokens())` (or the row's own preserved
+   `raw_tokens`, whichever the writer's own row type exposes) **before any other per-row processing,
+   before any scope/eligibility filter.**
+3. `NAMEISPI:YES` → drop the row (`continue`), name it `{source_file}:{line}: {key}` in the cycle's
+   receipt, mirroring `ingest_race_traits.rs`'s and this binary's own printed line.
+4. `DESCISPI:YES` → redact through `pi_screening::classify_optional_field_declared("description", ...,
+   true)`; populate the record's `license`/`pi_field`/`pi_marker` from its return, not a hardcoded
+   `Ogl`/`None`/`None`. Count it.
+5. This is a **sibling** check to whichever blacklist-term screen (`pi_hits`/`classify_field`/
+   `screen_generated_table`) the writer already runs or will run — never a substitute, and never
+   allowed to silently weaken an existing stricter policy (`§53.3`'s point 4) for the sake of a
+   simpler diff.
+6. Reclassifying a specific declared-PI row as shippable is `ogl-pi-blacklist.md` §3's per-book
+   override, an operator decision a cycle may request but not make unilaterally.
+
+**Pointer landed in both directions**, per this card's dispatch instruction: SD-30's own
+`forward-scope-register.md` (Class 1, new item C1.5) and `SD-31-corpus-closure-grind/
+forward-scope-register.md` (new row) both cite this section.
+
+### 53.6 Definition of done
+
+See `progress.md`, cycle `SD30-E3-F2-001`, for the full item-by-item table with commands.
+
+**Authority:** `decisions.md §39` (the finding this card answers), `§52`/`§52.3` (SD30-E3-F1, the
+sibling blacklist-sweep card, invocation-contract precedent); `src/rules_core/pi_screening.rs` (the
+shared reader); `src/bin/ingest_race_traits.rs` (the only other current caller, the pattern mirrored);
+`src/bin/ingest_pu_classes.rs` (this card's own change — the reader, the two new tests, the corrected
+`license`/`pi_field`/`pi_marker` population); `docs/governance/ogl-pi-blacklist.md` §3 (the per-book
+override, an operator decision).

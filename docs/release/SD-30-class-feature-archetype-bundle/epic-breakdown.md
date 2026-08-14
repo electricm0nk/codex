@@ -224,6 +224,20 @@ Acceptance:
 - Reclassifying a specific declared-PI row as shippable is `ogl-pi-blacklist.md` §3's per-book
   override — an operator decision a cycle may request but not make unilaterally.
 
+**Status: COMPLETE (`SD30-E3-F2-001`, 2026-08-14, `decisions.md §53`).** Epic 6 (this card's own
+framing, "whichever ingest binary Epic 6 builds") moved to `SD-31-corpus-closure-grind` before this
+cycle fired; `decisions.md §53.1` also corrected `§39.2`'s own premise that no `class_feature` ingest
+path exists at all — `src/bin/ingest_pu_classes.rs` (SD-27) already is one, already production-wired,
+already shipping `data/corpus/pathfinder_unchained/class_feature/`. This cycle wired the shared reader
+(`pi_screening::{declared_product_identity, classify_optional_field_declared}`) into that binary's
+`class_feature`-writing loop exactly as this card's acceptance bullets specify (NAMEISPI-drop before
+other processing, DESCISPI-redact through the shared reader, both counted/named in the run receipt,
+license/pi_field/pi_marker now genuinely populated instead of a hardcoded `Ogl`), proved it against
+real-shaped synthetic rows built through the binary's own production parsing functions (its one real
+source file carries zero live `NAMEISPI`/`DESCISPI` tokens today — `decisions.md §53.2`), and
+documented the invocation contract SD-31's Epic 3 (or any future `class_feature` writer for the 6
+still-exposed books) must follow — see `decisions.md §53.5`.
+
 #### SD30-E3-F3 — Corpus-wide declared-PI backfill sweep, every already-shipped kind
 
 `decisions.md §53.7`'s own scope finding named this as "the successor's first move": the shared

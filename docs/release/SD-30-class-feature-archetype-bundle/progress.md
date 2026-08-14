@@ -1870,3 +1870,236 @@ family, no corpus/inventory change, no baseline commit, no player-visible surfac
 PASS: `VERIFY_EXIT=0` (16/16 stages), `v06_corpus_trap_report -- --audit` exit 2 (177 pre-existing,
 byte-identical, unrelated defects — recorded honestly, not weakened), four-check wired-integration
 audit clean. No STOP condition encountered; no `decision-blocked` recorded.
+
+## Cycle `SD30-E3-F2-001` — 2026-08-14 — Declared-PI reader wired into `class_feature`'s one existing production ingest binary (`epic-3-pi-gate`, SD30-E3-F2 sub-scope)
+
+`RETRO_ACTOR=sd30-e3-f2-declared`, `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-e3-f2-declared`.
+**HEAD at start:** `cb3d8661` (`feat(sd30): SD30-E3-F1-001 — per-class PI-blacklist sweep: mechanism
+proven, contract documented`) — `git rev-parse HEAD`, `git log --oneline -1`. `git status --porcelain`
+showed `M .gitignore`, `?? .github/workflows/deploy-site.yml` — the same pre-existing, unrelated,
+live site-deploy work `SD30-E2-F1-001`/`SD30-E3-F1-001` already investigated and left untouched
+(`.wrangler/` cache-ignore + Cloudflare-Pages workflow, out of SD-30 scope, another concurrent
+session's own files, not `git add -A`'d). Package present; no reset performed. `kanban.md`
+confirmed `epic-3-pi-gate` `IN-FLIGHT`, `SD30-E3-F1` sub-scope `COMPLETE`, `SD30-E3-F2` `READY` to
+claim.
+
+### 1. Required reads
+
+`state-goals-and-lessons.md`, `loop-instruction.md` (skimmed for anything not already in the
+dispatch brief — nothing new found), `AGENTS.md`/`CLAUDE.md`, `kanban.md` (epic-3 row + F1's own
+"Update" narrative), the tail of `progress.md` (`SD30-E3-F1-001`'s full receipt, read in full since
+F2 is F1's direct sibling and shares the shared-reader/invocation-contract shape), the `SD30-E3-F2`
+section of `epic-breakdown.md`, and `decisions.md §39` (the finding), `§52`/`§52.3` (F1's sibling
+closure, precedent for the "no live consumer, prove against synthetic real-shaped content" shape).
+
+### 2. Finding: `decisions.md §39.2`'s "no `class_feature` ingest path exists" premise is wrong — corrected in place
+
+`decisions.md §39.2` (2026-08-13) stated: *"No `class_feature` ingest path exists yet (`ls src/bin/ |
+grep ingest` and `ls scripts/*.py | grep -E 'ingest|transcribe'` show no `class_feature` writer)."*
+Re-derived this cycle, not transcribed:
+
+```
+$ grep -rln "ClassFeatureCacheData" src/bin/
+src/bin/ingest_pu_classes.rs
+```
+
+`src/bin/ingest_pu_classes.rs` (SD-27, `git log --oneline -- src/bin/ingest_pu_classes.rs` shows it
+predates this decision) is a live, already-shipping `class_feature` ingest binary — it reads
+`pathfinder_unchained/pu_abilities_class.lst` and writes
+`data/corpus/pathfinder_unchained/{class,class_feature}/*.json` via
+`CorpusRecordV1<ClassFeatureCacheData>`. `§39.2`'s own `ls src/bin/ | grep ingest` command *would*
+have matched it (its filename contains `ingest`) — the miss was in reading the result, plus a framing
+that assumed the only remaining gap was a Python transcriber ("Pipeline B") and never considered a
+Pipeline A Rust writer already existed for this kind. This is the package's own stated premise
+turning out wrong — corrected in place per this bundle's "press on" rule (`loop-instruction.md` "Stop
+vs. press on"), not a scope dispute, not insubordination. `retro.py correction`
+`1786747577757-sd30-e3-f2-declared-541af1` (`docs/retro/events/sd30-e3-f2-declared.jsonl`).
+`pathfinder_unchained` is confirmed in-scope for SD-30's `class_feature` population (`decisions.md`
+line 671's book-count table; `decisions.md` line 778 lists it explicitly among the 23 books). Full
+correction text and re-derivation commands: `decisions.md §53.1`.
+
+This does **not** change `§39.2`'s 464-row finding across the 6 named books
+(`adventurers_guide`/`inner_sea_magic`/`inner_sea_world_guide`/`inner_sea_intrigue`/
+`book_of_the_damned_volume_2`/`inner_sea_combat`) — none of those 6 has an ingest binary yet; that
+remains SD-31's Epic 3 to build. It changes only "this card has no production consumer to wire into
+today" — it has exactly one, for one already-in-scope book.
+
+### 3. Re-derived: `pathfinder_unchained`'s own declared-PI exposure is zero, today
+
+```
+$ grep -o 'NAMEISPI:[A-Za-z]*\|DESCISPI:[A-Za-z]*' \
+    ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst
+(no output — zero matches)
+```
+
+Wiring the reader into this binary is a mechanism-correctness fix with no live behavior change today
+— confirmed by running the binary before committing and diffing its output against `HEAD`:
+
+```
+$ cargo run --locked --bin ingest_pu_classes
+...
+  dropped, NAMEISPI:YES  : 0
+  descriptions redacted by DESCISPI:YES : 0
+$ git status --porcelain data/corpus/pathfinder_unchained | head -3
+ M data/corpus/pathfinder_unchained/class/barbarian_unchained_class.json
+ ...
+$ git diff data/corpus/pathfinder_unchained/class_feature/barbarian_unchained_class/unchained_barbarian_rage.json
+-  "ingested_at": "2026-08-03T17:43:07Z",
++  "ingested_at": "2026-08-14T22:44:06Z",
+```
+
+Only `ingested_at` differs, byte-for-byte identical otherwise (license/pi_field/pi_marker/raw_tokens
+all survived — the regenerating hazard this card's own brief warns about, checked by content, not
+assumed). **Reverted, not committed:** `git checkout -- data/corpus/pathfinder_unchained`, confirmed
+clean by a second `git status --porcelain data/corpus/pathfinder_unchained` (no output). This cycle
+ships the mechanism change only; regenerating and re-committing 68 corpus files over a timestamp-only
+diff is not this card's acceptance and is exactly the naive-regen hazard to avoid.
+
+### 4. What was wired
+
+`src/bin/ingest_pu_classes.rs`'s `class_feature`-writing loop now:
+
+1. Calls a new `declared_product_identity_of(row: &LstRow)` helper — a thin wrapper over
+   `pi_screening::declared_product_identity(row.tokens())`, the same shared reader
+   `ingest_race_traits.rs` already uses, no forked implementation — **before any other per-row
+   processing**, mirroring `ingest_race_traits.rs`'s ordering (before its scope filter; this binary
+   has no per-race scope filter, so "before any other processing" is the equivalent point).
+2. `NAMEISPI:YES` → the row is dropped (`continue`), pushed to a new `pi_dropped: Vec<String>` as
+   `{LST_RELATIVE}:{line}: {key}`, printed as `  dropped, NAMEISPI:YES  : N` — mirrors
+   `ingest_race_traits.rs`'s identical line exactly.
+3. `DESCISPI:YES` → the description now routes through
+   `pi_screening::classify_optional_field_declared("description", rendered.text.as_deref(), true)`.
+   Its `(license, pi_field, pi_marker, stored)` now populate the written record's own
+   `license`/`pi_field`/`pi_marker` fields — **previously hardcoded `Some(License::Ogl), None, None`
+   for every `class_feature` record, unconditionally.** This is a second, independent finding this
+   same change closes: the binary was structurally incapable of ever shipping a non-`Ogl` license
+   value for this kind before this cycle, regardless of what the row declared. A new
+   `pi_declared_descriptions: usize` counter, printed as
+   `  descriptions redacted by DESCISPI:YES : N`, mirrors `ingest_race_traits.rs`.
+4. **An undeclared row's description is deliberately left untouched by the shared reader.** This
+   binary's own pre-existing 54-term `PI_BLACKLIST_TERMS`/`pi_hits` check treats *any* blacklist hit
+   as fatal (`std::process::exit(1)` via the `errors` vec — "Class features are pure game mechanics
+   ... a hit fails the run loudly", the file's own doc comment, unchanged by this cycle). Routing a
+   non-declared description through `classify_optional_field_declared`'s `(Some(v), false)` branch
+   would silently redact on a blacklist hit via `classify_field` internally, **replacing this
+   binary's existing stricter fatal-stop policy with a silent redact** — weakening an already-shipped
+   gate to make this card's own diff simpler, exactly the anti-gaming rule this bundle exists to
+   police (`state-goals-and-lessons.md §3.2`, "never move a number by lowering a bar"). The new code
+   branches explicitly: `declared.description == true` → call the shared reader's redact path;
+   `false` → keep `rendered.text` exactly as before and let the existing `pi_hits` fatal check run
+   unchanged over the final text. The two screens remain a **sibling union**
+   (`decisions.md §39.4`/SD-29 `decisions.md §53.1`), not a merge, and neither weakens the other.
+5. Scoped to the `class_feature` block (`ClassFeatureCacheData`) only. The binary's sibling `class`
+   kind block (`ClassVariantCacheData`) was deliberately left untouched — §3's zero-hit measurement
+   means no live behavior difference either way, and touching a second, differently-shaped record
+   kind this card's acceptance does not name would be scope creep the card's own SCOPE NOTE warns
+   against. Recorded as an open item for `SD30-E3-F3` (corpus-wide declared-PI backfill, every
+   already-shipped kind) to pick up when it re-derives `class`-kind exposure corpus-wide.
+
+### 5. Proof: two new tests replay the real production functions against real-shaped rows
+
+`pu_abilities_class.lst` carries zero live `NAMEISPI`/`DESCISPI` tokens (§3), so — the same
+constraint `SD30-E3-F1-001` hit — there is no already-shipped hit to regression-test against inside
+this book. Two new `#[cfg(test)]` tests added to `src/bin/ingest_pu_classes.rs`, both using the
+binary's own pre-existing `row()` test helper (already used by its 21 pre-existing tests) to build
+rows in the exact tab-delimited shape `parse_rows` parses, replayed through the real production call
+chain (`declared_product_identity_of`, `pi_screening::classify_optional_field_declared`):
+
+- `declared_product_identity_of_reads_nameispi_and_descispi_off_the_row` — `NAMEISPI:YES`,
+  `DESCISPI:YES`, both together, neither, and PCGen's explicit `NAMEISPI:NO`/`DESCISPI:NO` (not a
+  declaration — `pi_screening::declared_product_identity`'s own documented rule, re-tested here at
+  this binary's own call site rather than assumed from the shared module's existing tests).
+- `a_descispi_row_is_redacted_through_the_shared_reader_even_with_no_blacklist_term` — the exact
+  defect shape `§39.1`/SD-29 `decisions.md §53.1` found: a declared description naming nothing the
+  54-term blacklist knows. Prose built around "Ekujae" — deliberately chosen because it is on
+  neither `pi_screening::PI_BLACKLIST_TERMS` (55 terms) nor this binary's own local 54-term copy.
+  Asserts `pi_hits` alone would ship it clean, then asserts the declared-PI reader redacts it anyway.
+  (First draft used "Worldwound," which *is* on the shared blacklist — caught by the test itself
+  failing for the wrong reason, corrected before this receipt, not left as a false-positive proof.)
+
+```
+$ CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-e3-f2-declared cargo test --locked --bin ingest_pu_classes
+running 23 tests
+test tests::a_descispi_row_is_redacted_through_the_shared_reader_even_with_no_blacklist_term ... ok
+test tests::declared_product_identity_of_reads_nameispi_and_descispi_off_the_row ... ok
+... (21 pre-existing tests) ... ok
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+```
+
+### 6. Invocation contract for the successor
+
+Documented in full as `decisions.md` Decision 53 §53.5 (six numbered steps: preserve every source
+token verbatim in `raw_tokens`; call `declared_product_identity` before any other per-row processing,
+before any scope/eligibility filter; drop `NAMEISPI:YES` rows, name file:line in the receipt; redact
+`DESCISPI:YES` through `classify_optional_field_declared`, populate `license`/`pi_field`/`pi_marker`
+from its return; run as a sibling to whichever blacklist-term screen the lane runs, never a
+substitute, never silently weakening an existing stricter policy; reclassifying a declared-PI row as
+shippable is `ogl-pi-blacklist.md` §3's per-book override, an operator decision). Mirrors
+`ingest_race_traits.rs`'s exact, already-shipped pattern — not a new shape invented for this card.
+
+**Pointer landed in both directions**, per the dispatch instruction:
+
+- `SD-30-.../forward-scope-register.md` — new item **C1.5** (Class 1, "Predecessor-deferred, named
+  successor owns"), owner `SD-31-corpus-closure-grind`.
+- `SD-31-corpus-closure-grind/forward-scope-register.md` — new row **G1.5**, owner "This package's
+  Epic 3 (chassis-sweep ingest binary)."
+
+`epic-breakdown.md`'s own `SD30-E3-F2` feature-seed section updated with a `Status: COMPLETE`
+pointer to `decisions.md §53`, per this package's "original text stays, corrections point forward"
+convention — the acceptance bullets themselves left as written, not rewritten.
+
+### 7. Definition of done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **PASS. `VERIFY_EXIT=0`**, captured directly per `./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"` (log: `docs/release/SD-30-.../artifacts/sd30-e3-f2-verify.log`). All 16 stages PASS: `preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump`. `root-full`: 6402 passed across 547 suites, all 526 `tests/*.rs` suites executed (6398 baseline + F1's own 2 + this cycle's 2 new tests = 6402, arithmetic checked, matching the run's own report). `clippy`: pre-existing baseline warning counts, 0 new errors introduced by this cycle's diff. One informational baseline note, not a failure: `BASELINE_ROOT_FULL_TESTS` stale (6398 recorded vs 6402 measured) — this cycle did not touch `scripts/verify-baselines.env`; the +4 (F1's own unrecorded +2 plus this cycle's own +2) is correctly reflected as a note, not landed as a baseline-bump commit (DoD item 7 stays N/A for this cycle — the bump is a future cycle's routine housekeeping). |
+| 2 | Reach stage claim | **N/A for a new claim** — this cycle surfaced no new player-visible record family; the mechanism it proved is a build-time ingest/provenance screen. The full gate's `reach` stage still ran as part of item 1 and its own pass/fail is captured there. |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **Run, exit 2** (`cargo run --locked --bin v06_corpus_trap_report -- --audit`, exit code captured directly). 177 pre-existing `wiring-class-mismatch` defects (companion/monster kinds, `display` vs freshly-derived `derived` disagreement) — `grep -c '\[wiring-class-mismatch\]'` = 177, byte-identical count to `SD30-E3-F1-001`'s own reproduction and every prior cycle's. `grep -c class_feature` on the same log = 0 (this cycle's own kind is untouched by this defect class). Confirmed pre-existing, neither caused nor worsened. Recorded per instruction, not weakened to a false PASS. |
+| 4 | Guarded work-inventory regen, zero stamp loss | **N/A** — no corpus content or `docs/work-inventory.json` data changed this cycle. The one real ingest run (§3) was performed to prove the mechanism and its output diff, then reverted (`git checkout -- data/corpus/pathfinder_unchained`), confirmed clean by `git status --porcelain`. The two new tests read no corpus data at all — synthetic in-memory rows only. |
+| 5 | Four-check wired-integration audit | **PASS, all four commands run against `git diff --unified=0 HEAD -- ...` (this cycle's uncommitted diff — `src/bin/ingest_pu_classes.rs` is the only code file touched):** `OK_NO_TOKENS`, `OK_NO_NOOP_HANDLERS`, `OK_NO_MOCK_LEAKS`, `OK_NO_WOULD_STRINGS`, all four clean. Independently, "not wired only by its own test": `declared_product_identity_of`/the shared reader are called from `main()`'s live `class_feature`-writing loop (§4), not from `#[cfg(test)]` code alone — the loop runs on every real invocation of the binary, proven by the real `cargo run` in §3. |
+| 6 | `OPEN_FINDINGS` for any unsurfaced family | **N/A** — no family surfaced or left unsurfaced this cycle. |
+| 7 | Baseline movements own commit | **N/A** — `scripts/verify-baselines.env` not touched this cycle. |
+| 8 | On-screen verification | **N/A** — no player-visible desktop-app surface touched this cycle. The mechanism is a build-time ingest-path provenance screen with zero live corpus change (§3); nothing new for `driver.sh` to capture. A future re-ingest of the 6 books with real declared-PI content would be player-visible and would owe DoD-8 at that time — not this cycle's. |
+
+### 8. Retro events
+
+- `retro.py correction` `1786747577757-sd30-e3-f2-declared-541af1` (`docs/retro/events/sd30-e3-f2-declared.jsonl`) — `§2` above, `decisions.md §39.2`'s wrong premise.
+- Auto-emitted by `./scripts/verify.sh`: a `verification` event, pass or fail, per the standing convention.
+
+### 9. Reclaim
+
+```
+$ ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+# VERIFY_EXIT=0, all 16 stages PASS (see §7 item 1)
+$ ./scripts/reclaim.sh              # dry run, at cycle end, gate already exited
+  would reclaim: 0 item(s), 0.0B total — items skipped: this repo's own worktrees (forbidden path),
+  two unmerged site-deploy branches, several worktree-checked-out branches — none belonging to this
+  cycle
+$ ./scripts/reclaim.sh --apply
+  reclaimed: 0 item(s), 0.0B total
+```
+
+0.0B reads as "nothing stale to reclaim, all live/unmerged, correctly refused" (disk 26% used / 724G
+available before this cycle's own `CARGO_TARGET_DIR` cleanup), not "structurally full" — same reading
+`SD30-E3-F1-001` recorded. This cycle's own `CARGO_TARGET_DIR`
+(`/home/ubuntu/cargo-targets/sd30-e3-f2-declared`, 28G) manually deleted at cycle end per the
+per-agent-target-dir cleanup rule (too young for `reclaim.sh`'s window): `df -h /` before/after this
+cleanup: 245G used (26%) → 217G used (23%).
+
+### 10. Card disposition
+
+**`SD30-E3-F2` sub-scope flipped to `COMPLETE`** in `kanban.md` (`epic-3-pi-gate` row: `Status`
+`IN-FLIGHT (SD30-E3-F1/F2 sub-scopes COMPLETE; F3/F4 still open)`, `Claimed-by:
+sd30-e3-f2-declared`, `Cycle-id: SD30-E3-F2-001`). The card-level `epic-3-pi-gate` stays
+`IN-FLIGHT`, not `COMPLETE` — F3/F4 remain open and still hard-block `SD-31-corpus-closure-grind`'s
+Epic 3 (ex-`epic-6-chassis-sweep`) exactly as `kanban.md`'s own "Ordering check" sections already
+state.
+
+**Verdict: SD30-E3-F2 COMPLETE.** DoD items 2, 4, 6, 7, 8 N/A with stated reasons (no new player-
+visible record family, no corpus/inventory data change landed, no unsurfaced family, no baseline
+commit, no player-visible surface touched). Items 1, 3, 5 all PASS: `VERIFY_EXIT=0` (16/16 stages,
+`root-full` 6402 passed), `v06_corpus_trap_report -- --audit` exit 2 (177 pre-existing,
+byte-identical, unrelated `wiring-class-mismatch` defects, 0 `class_feature`-kind hits), four-check
+wired-integration audit clean. No STOP condition encountered; no `decision-blocked` recorded. One
+premise correction recorded and reflected in `decisions.md §53.1`/`kanban.md`/`epic-breakdown.md`/
+both packages' `forward-scope-register.md`.
