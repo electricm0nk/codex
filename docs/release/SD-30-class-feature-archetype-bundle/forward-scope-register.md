@@ -112,6 +112,39 @@ silently weaken an already-shipped stricter policy for the sake of a simpler dif
 specific declared-PI row as shippable is `ogl-pi-blacklist.md` §3's per-book override, an operator
 decision the lane may request but not make unilaterally. Full six-step contract: `decisions.md §53.5`.
 
+### C1.6 — Declared-PI reader wired into BOTH Pipeline-B Rust-literal-table transcribers (`monster`/`monster_ability`/`companion`), the corpus-wide backfill sweep re-confirmed zero-hit (2026-08-14, `SD30-E3-F3-001`)
+
+**Owner:** `SD-31-corpus-closure-grind`'s `epic-4-ingest-lanes` (ex-SD-30 Epic 10) F1 `monster`, for any
+future monster/monster-ability book carrying declared-PI content; and this package's own `G1.3` slot
+(companion ingest, unclaimed) for any future companion book, for the same reason.
+
+**What SD-30 delivers:** `SD30-E3-F3` closed (`progress.md`, this cycle's receipt). `decisions.md
+§39.2`'s corpus-wide sweep re-run at the start of this cycle reproduced its zero-hits-outside-
+`race_trait` result byte-identically — no corpus file needed redaction or regeneration this cycle.
+Unlike `C1.5` (a `pi_screening`-routed JSON-record writer), these two scripts emit Rust literal
+tables directly (`MonsterAbilityRecord`/`CompanionAbilityRecord` static arrays), so the two rulings
+are hand-applied rather than routed through `classify_optional_field_declared`: `NAMEISPI:YES` drops
+the row (unchanged shape, already existed for monster, newly added for companion); `DESCISPI:YES`
+now redacts every free-text rendering of the row's description (`description`,
+`description_variables`, and — companion only — every gated `description_variants` entry) to
+`shape_b_v1::REDACTED_PI_MARKER`, read from source via a `redacted_pi_marker()` helper (never
+hand-typed) added to both scripts. A row declaring both tokens drops, never redacts. Proven against
+every book either script currently registers (6 monster, 17 companion — all regenerate byte-identical
+to `HEAD`, i.e. zero live behavior change today) and against synthetic rows replayed through each
+script's own real `transcribe()` function (15/15 checks pass across both scripts, `progress.md §5`).
+`decisions.md §39`'s own 1-row `dtt_races_companion.lst` finding re-confirmed but found to belong to
+a book (`dirty_tactics_toolbox`) neither script's `book_dirs()` currently registers — out of this
+item's scope, a `SD-31` book-onboarding concern if that book is ever added.
+
+**What SD-31 must do:** when `epic-4-ingest-lanes` F1 (or a future companion-ingest card under this
+package's `G1.3`) onboards a book whose source rows carry `NAMEISPI:YES`/`DESCISPI:YES` — the current
+6-monster/17-companion registered scope has none, so this is dormant until a new book lands — the
+mechanism already applies automatically (both screens run on every `transcribe()` call over any
+registered book, no per-book opt-in). Nothing further to wire; confirm the run's own stderr /
+module-doc listing names the expected rows for that book, per the six-step contract restated in
+`progress.md`, cycle `SD30-E3-F3-001` §8 (mirrors `C1.5`'s `§53.5`, restated for the Rust-literal-table
+shape).
+
 ## Class 2 — RETIRED 2026-08-10 (book-list deferrals, moot under the `class_feature` re-scope)
 
 **The four book-specific deferrals below (C2.1-C2.4) are retired, not merely stale.** They deferred

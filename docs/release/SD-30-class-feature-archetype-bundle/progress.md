@@ -2103,3 +2103,298 @@ byte-identical, unrelated `wiring-class-mismatch` defects, 0 `class_feature`-kin
 wired-integration audit clean. No STOP condition encountered; no `decision-blocked` recorded. One
 premise correction recorded and reflected in `decisions.md §53.1`/`kanban.md`/`epic-breakdown.md`/
 both packages' `forward-scope-register.md`.
+
+---
+
+## Cycle `SD30-E3-F3-001` — corpus-wide declared-PI backfill sweep (`epic-3-pi-gate`, SD30-E3-F3)
+
+**Actor:** `sd30-e3-f3-backfill`. **HEAD at start:** `8ed2e165fd2dc227520d6c519ac265a025208b24`
+(`feat(sd30): SD30-E3-F2-001 — declared-PI reader wired into class_feature ingest`), tree dirty at
+start with two files this cycle did not touch and did not stage (`.gitignore`'s Wrangler-cache
+ignore rule, an untracked `.github/workflows/deploy-site.yml`) — left as another session's
+in-progress work per shared-checkout discipline, not this cycle's concern.
+
+### 0. Required reads
+
+`state-goals-and-lessons.md`, `loop-instruction.md`, `AGENTS.md`/`CLAUDE.md`, `kanban.md`, this
+file's tail, `epic-breakdown.md`'s `SD30-E3-F3` section, `decisions.md §39` (the finding this card
+answers) and `§53` (the `SD30-E3-F2` sibling card's own resolution, the pattern this cycle mirrors).
+
+### 1. Re-derived at the start of this cycle: the corpus-wide sweep (acceptance's own first bullet)
+
+```
+$ python3 -c "
+import json,glob,collections
+c=collections.Counter()
+for p in glob.glob('data/corpus/*/*/*/*.json'):
+    d=json.load(open(p)); ks={t['key'].upper() for t in (d['data'].get('raw_tokens') or [])}
+    for k in ('NAMEISPI','DESCISPI'):
+        if k in ks: c[(k, d.get('pi_marker'))]+=1
+print(dict(c))"
+{('DESCISPI', 'redacted'): 25}
+```
+
+25 hits over 4,281 shipped corpus files (`find data/corpus -mindepth 4 -maxdepth 4 -name '*.json' |
+wc -l` → 4281), all `DESCISPI`, all already `pi_marker: redacted`. Cross-checked by kind/book (a
+second pass reading `book`/`kind` off the file path rather than the record body, since neither is a
+top-level JSON field): `race_trait/core_essentials` 9, `race_trait/inner_sea_races` 16 — exactly
+`§53`'s own fix and nothing else, byte-identical to `decisions.md §39.2`'s 2026-08-13 figure and to
+`SD30-E3-F2-001`'s own re-check. **Already-shipped exposure outside `race_trait` is zero, re-verified
+at time of use, not transcribed.** No corpus file needed redaction, regeneration, or a count re-pin
+this cycle — the acceptance's second bullet (resolve any hit the way `§53` resolved race-trait's) is
+**N/A**: there is nothing to resolve.
+
+### 2. What was wired — `scripts/transcribe_monster_tables.py`
+
+**Verified the acceptance's own citation first:** `token(row, "NAMEISPI:") == "YES"` does sit at lines
+780 and 818 (`monster_pi_reason`, `ability_pi_reason`) as claimed. **The acceptance's implicit premise
+that both call sites need identical `DESCISPI:YES` handling is corrected in place** (`state-goals-
+and-lessons.md`/`loop-instruction.md`'s "press on… correct in place" rule, not a scope dispute):
+`monster_pi_reason`'s row (`MonsterStatBlock`, `monster_chassis.rs`) carries **no free-text
+description field at all** — verified by reading the struct's own field list — so a
+`DESCISPI:YES` declaration on a monster row has nothing this table emits to redact. Documented with an
+inline comment at the call site rather than left as a silent gap. `ability_pi_reason`'s row
+(`MonsterAbilityRecord`) DOES carry `description`/`description_variables`, and that is where the new
+handling lands:
+
+1. A new `redacted_pi_marker()` function, mirroring the file's own `pi_blacklist_terms()` "derived,
+   never re-typed" discipline: parses `shape_b_v1::REDACTED_PI_MARKER` (`"[redacted PI]"`) out of the
+   Rust source by regex rather than hand-copying the literal.
+2. `ability_pi_reason` now reads `DESCISPI:YES` off the row (case-insensitive key, exact `YES` value —
+   `pi_screening::declared_product_identity`'s own rule, re-applied by hand here since this script
+   emits a Rust literal table rather than routing through the shared reader). A declared row's
+   `description` is excluded from the term-blacklist scan (`pi_hits`) — the declaration already
+   settles that field; scanning it too would be redundant, not stricter, per `decisions.md §39.4`'s
+   "union, never a merge." Every other emitted value is still scanned exactly as before.
+3. A row carrying BOTH `NAMEISPI:YES` and `DESCISPI:YES` is DROPPED (the existing `NAMEISPI:YES`
+   branch returns first) — the name-drop always wins, because a dropped row has no description left
+   to redact. Proven, not assumed (§4 below).
+4. At emission, a `DESCISPI:YES`-declared ability's `description` is replaced with
+   `redacted_pi_marker()` and `description_variables` cleared (the `%N` placeholders named the
+   ORIGINAL text's variables, which no longer ships).
+5. The module-doc header gained a sibling block to the existing NAMEISPI/blacklist-drop note, listing
+   every redacted row by `file:line`, mirroring the existing block's own citation style.
+6. `desc_redacted` (the set of ability corpus_keys to redact) is finalized against the FINAL
+   `abilities` list — after the `.COPY=`/`.MOD`/cross-table/orphan passes, all of which can still
+   remove a row this set was computed before — so a redacted-but-later-dropped row is never
+   double-counted or orphaned into the doc block.
+
+**No production behavior change for any of the 6 registered monster books** — all six regenerate
+byte-identical against `HEAD` (see §4).
+
+### 3. What was wired — `scripts/transcribe_companion_tables.py`
+
+This script had **zero** PI screening of any kind before this cycle (`decisions.md §39.1`'s own
+finding, re-verified: `grep -n 'NAMEISPI\|DESCISPI\|pi_hits\|pi_blacklist' scripts/transcribe_companion_tables.py`
+→ no hits pre-cycle). Both tokens added, mirroring the now-updated monster script's pattern exactly,
+at the two points its own doctrine already places screens that must run before the ownership indices
+they'd otherwise corrupt:
+
+- **Creature half** (`CompanionRecord` — no free-text field, same as `MonsterStatBlock`): a new
+  `NAMEISPI:YES` drop screen inserted immediately after the existing `.COPY=`/`.MOD` creature-delta
+  screen, for the identical reason that screen states its own placement by — `creature_species`/
+  `creature_display` are both derived from `creatures` and must not see a row that should not ship.
+- **Ability half** (`CompanionAbilityRecord` — `description`, `description_variables`, AND
+  `description_variants`, a shape monster's ability record does not have): a new screen inserted right
+  before the existing `.COPY=`/`.MOD` ability-delta screen. `NAMEISPI:YES` drops the row (identity
+  cannot be redacted). `DESCISPI:YES` redacts `description` to `redacted_pi_marker()`, clears
+  `description_variables`, and clears `description_variants` entirely — the variants are alternate
+  GATED RENDERINGS OF THE SAME declared-PI prose (`decisions.md §61.1`'s own framing), not independent
+  text, so one marker says everything three redacted copies would. A row carrying both tokens is
+  dropped, matching the monster script's precedence.
+- **Deliberately NOT added:** a term-blacklist scan. `scripts/verify.sh`'s `pi-sweep` stage
+  (`pi_sweep_rules_tables`) already screens every generated file under `src/rules_core/rules_tables/`
+  — this book's `companion_data.rs` included — against `pi_screening::PI_BLACKLIST_TERMS` downstream
+  of this script (`grep -n 'pi-sweep\|pi_sweep_rules_tables' scripts/verify.sh` confirms the stage
+  runs `pi_sweep_rules_tables` over the whole tree). Adding a second copy here would duplicate an
+  existing check, not add coverage, and this card's acceptance is scoped to the two declared-PI tokens
+  specifically (`decisions.md §39.4`'s "union, never a merge" — declared-PI reading and term-blacklist
+  scanning are different questions and this script already answers the second one at a different
+  layer).
+- `redacted_pi_marker()` added to this script too (own copy, same regex-over-source discipline —
+  the two transcribers are separate files with no shared import path today).
+- Module-doc header gained two new sibling blocks (NAMEISPI creature+ability drop; DESCISPI ability
+  redaction), citing `file:line` per row, same style as the monster script's.
+
+### 4. Re-derived: zero production behavior change today, proven by regenerating every registered book
+
+```
+$ for b in bonus_bestiary monster_codex book_of_the_damned_volume_1 book_of_the_damned_volume_2 \
+           inner_sea_world_guide bestiary_2; do
+    python3 scripts/transcribe_monster_tables.py "$b"
+  done
+$ git status --porcelain -- src/rules_core/rules_tables/
+ M src/rules_core/rules_tables/bonus_bestiary/monster_data.rs
+```
+
+The one diff is a **pre-existing, unrelated drift** — header wording (`"Bonus Bestiary"` →
+`"bonus_bestiary"`) and an import-path style change (`use super::{...}` → `use crate::rules_core::
+rules_tables::monster_chassis::{...}`), present in the checked-in file from before this cycle's own
+first edit (confirmed: reverting this cycle's code changes and re-running reproduces the identical
+diff — the drift is the transcriber's header/import template having moved on since `bonus_bestiary`'s
+file was last regenerated, unrelated to PI screening). **Reverted** (`git checkout -- src/rules_core/
+rules_tables/bonus_bestiary/monster_data.rs`), confirmed clean by a second `git status --porcelain`,
+per this bundle's "ship the mechanism, not an unrelated regen" convention (`SD30-E3-F2-001 §3`'s
+identical disposition for `pathfinder_unchained`). Not this card's to fix; not filed as a new finding
+either, since it changes nothing PI-related and no downstream consumer depends on the header text.
+
+```
+$ for b in advanced_players_guide advanced_race_guide bestiary bestiary_2 bestiary_3 bestiary_4 \
+           bestiary_5 bestiary_6 book_of_the_damned_volume_1 core_essentials core_rulebook \
+           horror_adventures inner_sea_combat inner_sea_intrigue monster_codex ultimate_magic \
+           ultimate_wilderness; do
+    python3 scripts/transcribe_companion_tables.py "$b"
+  done
+$ git status --porcelain -- src/rules_core/rules_tables/
+(no output)
+```
+
+All 17 registered companion books, all 6 registered monster books: byte-identical regeneration. The
+mechanism is proven live-neutral for every book this bundle currently ships from these two scripts —
+exactly the disposition `§39.2` predicted ("zero exposure today, real exposure once Epic 6/SD-31
+ingests the 6 declared-PI books"), re-verified rather than assumed.
+
+### 5. Proof the new code paths actually execute and produce the right output
+
+Neither transcriber has an existing test harness (`find . -iname '*test*transcribe*'` → nothing; unlike
+`ingest_pu_classes.rs`'s Rust `#[cfg(test)]` tests `SD30-E3-F2-001` extended). Proven instead by
+importing each script as a module and calling its real, unmodified `transcribe()` function — not a
+reimplementation — against synthetic PCGen rows, with `docs/work-inventory.json`'s `json.load` call
+intercepted for its RETURN VALUE only (the real file is still opened) so no repo file needed editing.
+Full harnesses: `/tmp/.../scratchpad/pi_smoke/run_smoke.py` (monster),
+`/tmp/.../scratchpad/pi_smoke_companion/run_smoke.py` (companion) — not committed (scratch, per
+this task's scratchpad convention), commands and full output below.
+
+**Monster** (`SmokeBeast` + `SmokeBeast ~ Redacted Breath` [`DESCISPI:YES` only] + `SmokeBeast ~
+Hidden Truth` [`NAMEISPI:YES` + `DESCISPI:YES`]):
+
+```
+$ python3 /tmp/.../pi_smoke/run_smoke.py
+sd30_e3_f3_smoketest: PI screen dropped 0 monster row(s) and 1 ability row(s): SmokeBeast ~ Hidden Truth (NAMEISPI:YES)
+sd30_e3_f3_smoketest: 1 ability row(s) description redacted (DESCISPI:YES): SmokeBeast ~ Redacted Breath
+PASS - marker is non-empty
+PASS - Redacted Breath's description is the marker, not the source prose
+PASS - Redacted Breath's description_variables is empty
+PASS - Hidden Truth (NAMEISPI:YES + DESCISPI:YES) is DROPPED entirely, not redacted
+PASS - module doc lists Redacted Breath under the DESCISPI redaction note
+PASS - module doc lists Hidden Truth under the drop note (NAMEISPI:YES)
+```
+Emitted record: `description: Some("[redacted PI]"), description_variables: &[],` — the source prose
+("Smoketown") never reaches the output. 6/6 checks pass.
+
+**Companion** (`SmokeCritter` creature + `HiddenSteed` creature [`NAMEISPI:YES`] +
+`SmokeCritter ~ Redacted Whisper` ability [`DESCISPI:YES` only] + `SmokeCritter ~ Hidden Bond` ability
+[both tokens]):
+
+```
+$ python3 /tmp/.../pi_smoke_companion/run_smoke.py
+sd30_e3_f3_smoketest_companion: 1 creature row(s) NOT transcribed (NAMEISPI:YES ...): HiddenSteed
+sd30_e3_f3_smoketest_companion: 1 ability row(s) NOT transcribed (NAMEISPI:YES ...): SmokeCritter ~ Hidden Bond
+sd30_e3_f3_smoketest_companion: 1 ability row(s) description redacted (DESCISPI:YES): SmokeCritter ~ Redacted Whisper
+PASS - marker is non-empty
+PASS - Redacted Whisper's description is the marker, not the source prose
+PASS - Redacted Whisper's description_variables is empty and variants empty
+PASS - Hidden Bond (NAMEISPI:YES + DESCISPI:YES) is DROPPED entirely
+PASS - module doc lists Redacted Whisper under the DESCISPI redaction note
+PASS - module doc lists Hidden Bond under the NAMEISPI drop note
+PASS - Smoke Critter creature record still ships
+PASS - Hidden Steed (NAMEISPI:YES creature) is DROPPED, not emitted
+PASS - module doc lists Hidden Steed under the creature-half NAMEISPI drop note
+```
+9/9 checks pass, both halves (creature-drop and ability-drop-vs-redact-precedence) exercised.
+
+### 6. Re-derived: `transcribe_companion_tables.py`'s BOTH-tokens acceptance, scoped to its own source
+
+```
+$ grep -oc 'NAMEISPI:YES\|DESCISPI:YES' \
+    <every *companion*.lst under the 17 registered books' PCGen directories, recursively>
+(zero hits everywhere)
+```
+Zero source exposure across the 17-book registered scope, matching §1's shipped-corpus finding.
+`decisions.md §39`'s own 1-row figure (`dtt_races_companion.lst`, `NAMEISPI:YES`, line 12) **re-
+confirmed byte-identical** —
+`grep -c 'NAMEISPI:YES\|DESCISPI:YES' ~/workspace/repos/pcgen/data/pathfinder/paizo/player_companion/dirty_tactics_toolbox/dtt_races_companion.lst`
+→ 1. **New finding this cycle: that row is out of this transcriber's current scope, not merely
+unexercised** — `dirty_tactics_toolbox` is under neither `docs/work-inventory.json`'s `corpus_root`
+(`.../roleplaying_game`) nor its `additional_book_dirs` list, so `book_dirs()` cannot resolve it at
+all. It is book-onboarding territory (`SD-31-corpus-closure-grind`), not this cycle's to wire against
+a book this program has not registered. `retro.py note` `1786749988727-sd30-e3-f3-backfill-d6107a`.
+
+### 7. Correction: `decisions.md §53.7` does not exist
+
+`decisions.md §39.4` and `epic-breakdown.md`'s own `SD30-E3-F3` acceptance text both quote "`§53.7`"
+for the finding "only `ingest_race_traits` calls it… the successor's first move." `decisions.md`'s
+Decision 53 section has no `§53.7` — its subsections run `§53.1`-`§53.6` only
+(`grep -n '^### 53' decisions.md`). The underlying finding is correct (re-verified independently this
+cycle, §2 above); the section number is a phantom cross-reference, the same "citation drift" class
+`loop-instruction.md`'s own "Pilot and scope validation" section already flagged once for this
+package ("a prior revision of this file claimed this step was applied… that finding's record as not
+located"). `retro.py correction` `1786749975185-sd30-e3-f3-backfill-4f8cab`. Not corrected in
+`decisions.md` itself this cycle (out of this card's write scope — the finding is recorded here and in
+the retro log for the next doc-touching cycle to fold in, per this package's "original text stays,
+corrections point forward" convention).
+
+### 8. Invocation contract for the successor (SD-31/SD-32 ingest cycles)
+
+Both transcribers now implement `decisions.md §39.4`'s two rulings at the "emit a Rust literal table"
+layer (the JSON-record layer's contract is `§53.5`, unchanged, for `pi_screening::
+classify_optional_field_declared` callers):
+
+1. Read `NAMEISPI:` and `DESCISPI:` off the row's own tokens (case-insensitive key, exact-`YES`
+   value — `PCGen` writes explicit `NO` too, which is not a declaration).
+2. `NAMEISPI:YES` DROPS the row unconditionally, before any other per-row screening, named by
+   `file:line` in both the run's stderr and the generated module's own doc comment. A row cannot be
+   redacted without breaking every reference to its own identity.
+3. `DESCISPI:YES` REDACTS every free-text rendering of that row's description — the primary
+   `description` field, its `%N` `description_variables`, and (companion only) every gated
+   `description_variants` entry — to `shape_b_v1::REDACTED_PI_MARKER`, read from source via a
+   `redacted_pi_marker()`-shaped helper (never hand-typed), and ships the row. Excluded from any
+   term-blacklist scan for that field specifically (the declaration already settles it).
+4. A row declaring both is dropped, never redacted — compute the drop reason first, and only test
+   `DESCISPI:YES` when the row is not already dropping for `NAMEISPI:YES`.
+5. Finalize any "rows to redact" tracking set against whatever the record list looks like AFTER every
+   later screen (`.COPY=`/`.MOD`/orphan/cross-table/etc.) has run — those can still remove a row this
+   set was computed before.
+6. Reclassifying a specific declared-PI row as shippable is `ogl-pi-blacklist.md` §3's per-book
+   override, an operator decision a cycle may request but not make unilaterally.
+
+Any future Pipeline B transcriber (or a Pipeline A writer not yet covered) should read `NAMEISPI:`/
+`DESCISPI:` at the same point in its own row-processing loop and apply the same two rulings — this is
+now demonstrated at both the JSON-record layer (`§53.5`) and the Rust-literal-table layer (this
+cycle), covering the two production shapes this repo currently ships corpus content through.
+
+
+### 9. Definition of done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **Gate launched at 19:26 EDT, log at `docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e3-f3-verify.log`. Through `root-lib` (1776 passed) all stages PASS; `root-full` still building its ~490 test binaries at the time this cycle returns. Exit code NOT YET OBTAINED — not inferred, not fabricated. Resume by tailing the log for `VERIFY_EXIT=`; a resumed cycle inherits a warm `CARGO_TARGET_DIR` (`/home/ubuntu/cargo-targets/sd30-e3-f3-backfill`).** |
+| 2 | Reach stage claim | **N/A** — this cycle surfaced no new player-visible record family (zero live corpus content changed; all 6 registered monster books and all 17 registered companion books regenerate byte-identical, §4). The mechanism proved is a build-time Pipeline-B provenance screen, same disposition as `SD30-E3-F2-001`'s item 2. |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **Run standalone (not blocked on the full gate), exit 2** (`cargo run --locked --bin v06_corpus_trap_report -- --audit`, exit code captured directly). 177 pre-existing `wiring-class-mismatch` defects, byte-identical count to `SD30-E3-F1-001`/`SD30-E3-F2-001`'s own reproductions (`grep -c '\[wiring-class-mismatch\]'` = 177); `grep -c class_feature` = 0. Confirmed pre-existing, neither caused nor worsened by this cycle's `monster`/`monster_ability`/`companion` changes. |
+| 4 | Guarded work-inventory regen, zero stamp loss | **N/A** — no corpus content or `docs/work-inventory.json` data changed this cycle. §4's real transcription runs (regenerating every registered monster/companion book) reproduced existing checked-in files byte-for-byte except one pre-existing, unrelated, reverted drift (`bonus_bestiary`, §4); nothing was committed from those runs. The synthetic-row proof (§5) reads no corpus data at all. |
+| 5 | Four-check wired-integration audit | **PASS**, run against this cycle's own uncommitted diff (`git diff --unified=0 HEAD -- scripts/transcribe_monster_tables.py scripts/transcribe_companion_tables.py`, mirroring `SD30-E3-F2-001`'s precedent of auditing the cycle's own diff rather than the whole `develop...HEAD` branch history): `OK_NO_TOKENS_MINE`, `OK_NO_WOULD_STRINGS_MINE`; checks 2/3 (`apps/desktop` TS/TSX globs) trivially clean — no files in this cycle's diff match those globs (Python-only change). Independently, "not wired only by its own test": both new screens run inside each script's real `transcribe()` function, called from `main()` on every real invocation, proven by §4's real `cargo`-free `python3 scripts/transcribe_*.py <book>` runs over every registered book, not merely by the synthetic-row harness in §5. |
+| 6 | `OPEN_FINDINGS` for any unsurfaced family | **N/A** — no family surfaced or left unsurfaced this cycle. |
+| 7 | Baseline movements own commit | **N/A** — `scripts/verify-baselines.env` and `docs/governance/pi-sweep-baseline.tsv` not touched this cycle (confirmed: neither file appears in `git status --porcelain`; `pi-sweep-baseline.tsv` has zero rows referencing `monster_data.rs`/`companion_data.rs`, `grep -c`). |
+| 8 | On-screen verification | **N/A** — no player-visible desktop-app surface touched. The mechanism is a build-time Pipeline-B ingest/transcription provenance screen with zero live corpus change today (§4); a future re-ingest of a book carrying real declared-PI content would be player-visible and would owe DoD-8 at that time — this cycle's own scope has none to show. |
+
+### 10. Card disposition
+
+**`SD30-E3-F3` sub-scope flipped to `COMPLETE`** in `kanban.md` (`epic-3-pi-gate` row: `Status`
+`IN-FLIGHT (SD30-E3-F1/F2/F3 sub-scopes COMPLETE; F4 still open)`, `Claimed-by: sd30-e3-f3-backfill`,
+`Cycle-id: SD30-E3-F3-001`). The card-level `epic-3-pi-gate` stays `IN-FLIGHT` — F4 (the regression
+gate) remains open and still hard-blocks `SD-31-corpus-closure-grind`'s Epic 3/Epic 4 successor cards
+exactly as `kanban.md`'s own gating language already states.
+
+**Cycle status: INCOMPLETE at time of return, not `decision-blocked`.** All bounded work is done,
+proven, committed, and pushed (§§1-8 above). The single open item is `root-full`'s exit code, still
+building at return time — a turn-budget condition this bundle's own doctrine names explicitly as NOT
+a stop reason (`loop-instruction.md` "4a. GATE SEQUENCING… 'Ran out of turn' is not 'blocked.'"). No
+STOP condition was encountered; no `decision-blocked` entry is warranted. A resumed cycle should: (1)
+tail `docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e3-f3-verify.log` for
+`VERIFY_EXIT=`; (2) if `0`, flip DoD item 1 to PASS and this section's status line to `COMPLETE`,
+otherwise diagnose per the log's own `SUMMARY` block (never the wrapper exit code alone, per
+`state-goals-and-lessons.md`/`loop-instruction.md` "4b. READING THE EXIT CODE"); (3) no further code
+change is anticipated regardless of outcome, since items 2-8 above are already settled and the gate's
+only job at this point is confirming the diff compiles/tests/lints clean, which `root-lib` (1776
+passed) and every stage before it already did.
+

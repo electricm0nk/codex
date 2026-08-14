@@ -276,6 +276,31 @@ def pi_blacklist_terms() -> list[str]:
     return terms
 
 
+PI_MARKER_RS = "src/rules_core/shape_b_v1.rs"
+
+
+def redacted_pi_marker() -> str:
+    """`shape_b_v1::REDACTED_PI_MARKER`, parsed out of the Rust source.
+
+    **Derived, never re-typed** -- same discipline as [`pi_blacklist_terms`]
+    above, for the same reason: a hand-copied literal drifts silently the first
+    time the const changes, and this is the exact string a `DESCISPI:YES`
+    ability's redacted `description` field ships instead of its declared-PI
+    prose (`pi_screening::classify_optional_field_declared`'s own redaction
+    value, `decisions.md §39.4`/`§53`, applied by hand here because this
+    transcriber emits a Rust literal table rather than a JSON record with a
+    `license`/`pi_field`/`pi_marker` trio to route through the shared reader).
+    """
+    text = open(PI_MARKER_RS, encoding="utf-8").read()
+    match = re.search(r'REDACTED_PI_MARKER:\s*&str\s*=\s*"([^"]*)"', text)
+    if not match:
+        raise SystemExit(
+            f"{PI_MARKER_RS}: could not find `REDACTED_PI_MARKER` -- the const's "
+            "shape changed and this parser must be updated with it"
+        )
+    return match.group(1)
+
+
 def pi_hits(terms: list[str], *values: str | None) -> list[str]:
     """Every blacklist term appearing in any of these emitted values."""
     joined = " ".join(v for v in values if v)
@@ -779,6 +804,15 @@ def transcribe(book: str) -> str:
         row = monster_rows[unit["corpus_key"]]
         if token(row, "NAMEISPI:") == "YES":
             return "NAMEISPI:YES"
+        # No `DESCISPI:YES` check here, deliberately: `MonsterStatBlock`
+        # (`monster_chassis.rs`) carries no free-text description field at
+        # all -- a monster row's own `DESC:` token, if it has one, is never
+        # read or emitted by this half of the transcriber (only
+        # `ability_pi_reason` below calls `parse_desc`). A declaration on a
+        # field this table never serializes has nothing to redact, so there
+        # is no silent gap here to close -- verified by reading
+        # `MonsterStatBlock`'s own field list, not assumed
+        # (`SD30-E3-F3-001`).
         # Only the values this transcription EMITS are screened, because those
         # are the values `gen_book_cache` serializes and screens in turn. An
         # earlier draft screened every token of the row and dropped the
@@ -813,6 +847,18 @@ def transcribe(book: str) -> str:
     # transcription, because they are about to be emitted.
     unscreenable: set[str] = set()
 
+    # Ability rows whose `DESC:` text is declared Product Identity
+    # (`DESCISPI:YES`) but whose ROW is not otherwise dropped -- these ship,
+    # with `description` (and its variables) replaced by
+    # `REDACTED_PI_MARKER` at emission time below, mirroring
+    # `ingest_race_traits.rs`/`ingest_pu_classes.rs`'s "a description CAN be
+    # redacted and the record still works" rule (`decisions.md §39.4`). A row
+    # that is ALSO `NAMEISPI:YES` is dropped outright by `ability_pi_reason`
+    # below and never reaches this set -- the name-drop always takes priority
+    # over the description-redact, because a dropped row has no description
+    # to redact.
+    desc_redacted: set[str] = set()
+
     def ability_pi_reason(unit: dict) -> str | None:
         row = read_row(resolve_book_file(root, unit["source_file"]), unit["source_line"])
         if token(row, "NAMEISPI:") == "YES":
@@ -831,11 +877,24 @@ def transcribe(book: str) -> str:
             # the reason the header should state.
             unscreenable.add(unit["corpus_key"])
             return None
+        # `DESCISPI:YES` -- the row's OWN declaration that its description is
+        # Product Identity, read the same way `pi_screening::declared_product_
+        # identity` reads it off a corpus row's tokens (case-sensitive-value
+        # `YES`, `NAMEISPI:NO`/`DESCISPI:NO` are not declarations). The
+        # declared field is excluded from the term-blacklist scan below --
+        # the row's own declaration already settles the question for that
+        # field, and scanning it too would be redundant, not stricter,
+        # exactly the "union, never a merge" rule `decisions.md §39.4` states
+        # for the two screens. Every OTHER emitted value is still screened
+        # exactly as before.
+        desc_declared = token(row, "DESCISPI:") == "YES"
+        if desc_declared:
+            desc_redacted.add(unit["corpus_key"])
         hits = pi_hits(
             terms,
             unit["corpus_key"],
             unit["name"],
-            description,
+            None if desc_declared else description,
             token(row, "SOURCEPAGE:"),
             *traits,
             *variables,
@@ -866,6 +925,14 @@ def transcribe(book: str) -> str:
             monster_ability_keys[key] = [
                 a for a in monster_ability_keys[key] if a not in dropped_ability_keys
             ]
+        # An ability that both declared `DESCISPI:YES` and was dropped for a
+        # SEPARATE reason (`NAMEISPI:YES`, or a term-blacklist hit on a
+        # non-description field) has no description left to redact -- it has
+        # no row left at all. `ability_pi_reason` never reaches the
+        # `desc_redacted.add` line on the `NAMEISPI:YES` path (it returns
+        # first), but a term-blacklist hit on another field runs AFTER that
+        # line, so this cleanup is not a no-op.
+        desc_redacted -= dropped_ability_keys
         # stderr may name the keys: it is a console message, not a checked-in
         # file, and an operator ruling on the exclusion needs to know what was
         # excluded.
@@ -1047,6 +1114,18 @@ def transcribe(book: str) -> str:
             "Widen it deliberately."
         )
 
+    # Finalized against whatever `abilities` actually ships after every screen
+    # above (the `.COPY=`/`.MOD`/cross-table/orphan passes can each remove a
+    # row this set was computed before) -- an ability no longer shipping has
+    # no description left to redact either.
+    desc_redacted &= {u["corpus_key"] for u in abilities}
+    if desc_redacted:
+        print(
+            f"{book}: {len(desc_redacted)} ability row(s) description redacted "
+            f"(DESCISPI:YES): " + ", ".join(sorted(desc_redacted)),
+            file=sys.stderr,
+        )
+
     def source_files(units: list[dict]) -> list[str]:
         """Distinct `.lst` files these units were read from, in first-seen order.
 
@@ -1111,6 +1190,28 @@ def transcribe(book: str) -> str:
                 f"//!   * `{unit['source_file']}:{unit['source_line']}` "
                 f"({'monster' if unit['kind'] == 'monster' else 'ability'} row, {reason})"
             )
+    if desc_redacted:
+        out.append("//!")
+        out.append(
+            f"//! {len(desc_redacted)} ability row(s) of this book DECLARE `DESCISPI:YES` --"
+        )
+        out.append(
+            "//! their `description` (and its `%N` variables) SHIP REDACTED to"
+        )
+        out.append(
+            "//! `shape_b_v1::REDACTED_PI_MARKER` rather than dropped, because a description"
+        )
+        out.append(
+            "//! (unlike a name) can be redacted and the record still works. Reclassifying is"
+        )
+        out.append(
+            "//! `docs/governance/ogl-pi-blacklist.md` §3's per-book override, an operator"
+        )
+        out.append("//! decision, not a transcriber's:")
+        redacted_units = {u["corpus_key"]: u for u in abilities}
+        for key in sorted(desc_redacted):
+            unit = redacted_units[key]
+            out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}` ({key})")
     if copy_monsters:
         out.append("//!")
         out.append(
@@ -1253,6 +1354,14 @@ def transcribe(book: str) -> str:
         row = read_row(resolve_book_file(root, unit["source_file"]), unit["source_line"])
         facet, delivery, traits = parse_type(row)
         description, variables = parse_desc(row)
+        if unit["corpus_key"] in desc_redacted:
+            # `DESCISPI:YES` -- the redaction promised by the module doc's
+            # own listing above. The `%N` placeholders in `description` name
+            # variables from the ORIGINAL text, which no longer ships, so
+            # they are cleared too rather than left dangling against a marker
+            # string that contains no `%N` for them to refer to.
+            description = redacted_pi_marker()
+            variables = []
         out.append("    MonsterAbilityRecord {")
         out.append(f"        key: {rust_str(unit['corpus_key'])},")
         out.append(f"        name: {rust_str(unit['name'])},")

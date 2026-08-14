@@ -261,6 +261,22 @@ Acceptance:
   its own source sweep finds (1 `NAMEISPI:YES` row measured in `decisions.md §39` at
   `dtt_races_companion.lst`, re-derive at time of use).
 
+**Status: COMPLETE (`SD30-E3-F3-001`, 2026-08-14).** The corpus-wide sweep re-run at the start of the
+cycle reproduced `§39.2`'s zero-hits-outside-`race_trait` result byte-identically, so the second
+acceptance bullet is N/A (nothing to resolve). Both transcribers gained the declared-PI reader:
+`transcribe_monster_tables.py`'s `DESCISPI:YES` handling landed at `ability_pi_reason` (line 818) as
+specified — `monster_pi_reason` (line 780) does not, because `MonsterStatBlock` carries no free-text
+field for `DESCISPI:YES` to redact, a correction to this section's own premise recorded in
+`progress.md`'s cycle receipt, not a shortfall. `transcribe_companion_tables.py` gained both tokens at
+both its creature and ability halves; the 1-row `dtt_races_companion.lst` exposure this section names
+re-confirmed byte-identical but turned out to belong to a book (`dirty_tactics_toolbox`) this
+transcriber's `book_dirs()` does not register at all — out of this card's scope, owned by SD-31 book
+onboarding. All 6 registered monster books and all 17 registered companion books regenerate
+byte-identical to `HEAD`, proving zero live behavior change; the new code paths are proven via a
+synthetic-row harness replaying each script's own unmodified `transcribe()` function (15/15 checks
+pass across both scripts). Full detail, commands, and the `§53.7`-citation correction:
+`progress.md`, cycle `SD30-E3-F3-001`.
+
 #### SD30-E3-F4 — Regression gate: a future ingest cannot reintroduce a declared-PI leak
 
 `scripts/verify.sh`'s `pi-sweep` stage and `docs/governance/ogl-pi-blacklist.md` are both
