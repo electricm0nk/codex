@@ -379,3 +379,20 @@ Executed the SD-30 pre-launch checklist (loop-instruction.md pre-launch items) a
 two-run/one-fix sequence), no live claims, disk/hardware nominal, dashboard cron healthy. Ready
 for the operator's VM resize and Phase 1 orchestrator launch per `sd30-launch-readiness`
 sequencing.
+
+## 2026-08-14 — Split: Phase 3 to SD-31, Phase 4 to SD-32 (`decisions.md §51`)
+
+Operator ruling, verbatim: "ok, let's split phase 3 and phase 4 into their own SD's. SD-31 and SD-32.
+Take the existing SD-31 and rename it to SD-33." Executed as three commits: (1) rename
+`SD-31-pcgen-character-import` → `SD-33-pcgen-character-import` (git mv, history preserved, internal
+identifiers updated, live SD-31 owner citations in SD-29's forward-scope register/release-notes updated
+to SD-33); (2) create `docs/release/SD-31-corpus-closure-grind/` (former Epics 4/5/6/10/11 + grind-lane
+Epic 14) and `docs/release/SD-32-engine-capability-builds/` (former Epics 12/13 + capability-lane Epic
+14), each a full compliant package chassis with binding rules reproduced verbatim; (3) this package's
+own `decisions.md §51`, `README.md`, `kanban.md`, `epic-breakdown.md`, and
+`acceptance-and-verification.md` updated to record the narrowed scope — moved epics marked, not
+deleted, per this package's standing convention. SD-30's remaining live scope: Epic 0 (instrument-apply),
+Epic 1 (identifier cleanup), Epic 2 (pre-launch), Epic 3 (PI-screening gate, now a cross-SD dependency
+consumed by both successors), Epic 7 (version numbering), Epic 8 (bundle code review), Epic 9 (closure).
+The `§45` 100%-mandate exit bar is unchanged in substance — it becomes the joint SD-30→SD-31→SD-32
+program's exit criterion.

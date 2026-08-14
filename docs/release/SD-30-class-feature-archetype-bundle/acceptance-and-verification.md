@@ -241,7 +241,16 @@ Evidence: cycle's `verify.sh` full-run log shows `corpus-sweep`, `corpus-sweep-s
 `derived_evaluator_fixture_check` test suite passing over a corpus that includes the cycle's new
 records (examined-record count increases, per `scripts/verify.sh`'s own floor checks).
 
-## AT-30-015 — Widened charter: criteria are `done`, never `ingested`/`grounded`, corpus-wide (NEW, 2026-08-13, `decisions.md §43`)
+## AT-30-015 — MOVED to `SD-31-corpus-closure-grind/acceptance-and-verification.md AT-31-005` (2026-08-14, `decisions.md §51`)
+
+Every kind this criterion's floor table covers (`class_feature`, `monster`, `spell`, `race`,
+`race_trait`) is now owned by `SD-31-corpus-closure-grind`'s ingest epics (`decisions.md §51`'s split).
+The table is reproduced there as `AT-31-005`, with the `race`/`race_trait` rows annotated as depending
+on `SD-32-engine-capability-builds`'s race-chassis epic for their full ceiling. Text below is left
+visible as this criterion's original form, per this package's standing convention — not this package's
+live acceptance criterion.
+
+## AT-30-015 (historical) — Widened charter: criteria are `done`, never `ingested`/`grounded`, corpus-wide (NEW, 2026-08-13, `decisions.md §43`)
 
 Given the widened charter (`decisions.md §43`, `scope-draft.md`'s "Widened charter" section) —
 SD-30 now drives all kinds, corpus-wide, to `done`, not merely `grounded` or `ingested`.
@@ -326,18 +335,37 @@ Evidence: per-cycle receipt re-runs the movable-mass derivation command and cite
 
 ## Exit gate checklist
 
-- [ ] All Epic 3+ per-book cycles complete with reach-gate claims.
-- [ ] All trap-reports recorded.
-- [ ] AT-30-002 reach-gate claims have `> 0` matched-tests per cycle.
+**Narrowed 2026-08-14 (`decisions.md §51`).** Items below that referred to the moved Epic 4/5/6/10/11
+scope (per-book/per-class cycles, per-class measurement gate, the per-kind floor table) are struck and
+pointed at `SD-31-corpus-closure-grind/acceptance-and-verification.md`'s own exit-gate checklist, which
+carries the live version. SD-30's own closure checks only its narrowed Epic 0/1/2/3/7/8/9 scope.
+
+- [ ] ~~All Epic 3+ per-book cycles complete with reach-gate claims.~~ MOVED — see
+  `SD-31-corpus-closure-grind/acceptance-and-verification.md`.
+- [ ] ~~All trap-reports recorded.~~ Cycle-0 trap-reports for books Epic 4/6 claimed stay in scope only
+  for whatever SD-30's own Epic 2 (pre-launch) ran before the split; ongoing per-book trap-reports are
+  `SD-31-corpus-closure-grind`'s concern going forward.
+- [ ] AT-30-002 reach-gate claims have `> 0` matched-tests per cycle (still SD-30's own standing
+  requirement for whatever this package's narrowed Epic 0/1/2/3/7/8/9 scope itself ingests, if any).
 - [ ] AT-30-005 build version reads `0.10.<build>`.
-- [ ] AT-30-006 identifier discipline exits 0 across the 23-book `class_feature` roster's surface code.
+- [ ] AT-30-006 identifier discipline exits 0 across the 23-book `class_feature` roster's surface code
+  (Epic 1, unaffected by the split — identifier cleanup covers the whole roster regardless of which
+  package later ingests it).
 - [ ] AT-30-007 cross-book precedence (SD-28/SD-29 doctrine) verified across shared records.
-- [ ] AT-30-010 rules-as-data verified across the 23-book `class_feature` roster's numerical effects.
+- [ ] AT-30-010 rules-as-data verified across the 23-book `class_feature` roster's numerical effects
+  (applies to whatever SD-30's narrowed scope itself touches; the bulk of this check now runs inside
+  `SD-31-corpus-closure-grind`'s own Epic 3 closure).
 - [ ] AT-30-011 move-not-copy publish landed.
-- [ ] AT-30-012 per-class measurement gate cross-referenced for every Epic 5/6 cycle's claim this closure (added 2026-08-14 — previously absent from this checklist).
+- [ ] ~~AT-30-012 per-class measurement gate cross-referenced for every Epic 5/6 cycle's claim this
+  closure.~~ MOVED — Epic 5/6 are now `SD-31-corpus-closure-grind`'s Epic 2/3; see that package's own
+  AT-31-001/AT-31-003.
 - [ ] AT-30-016 local-file dispatch verified by Epic 2's pre-flight + Closure.
-- [ ] AT-30-013 bundle code review (Epic 21) closed; all findings triaged with named owners for deferrals.
+- [ ] AT-30-013 bundle code review (Epic 8) closed; all findings triaged with named owners for
+  deferrals — narrowed scope: reviews this package's own Epic 0/1/2/3/7/8/9 diff. SD-31 and SD-32 run
+  their own code-review deferral per their `README.md`'s "Out of scope" convention (deferred to this
+  package's Epic 8 by design — see both packages' README).
 - [ ] `release-notes.md` populated.
 - [ ] `forward-scope-register.md` reviewed for successor work.
 - [ ] The four deferred books (NPC Codex, Planar Adventures, Occult Origins, Haunted Heroes) recorded as future-acquisition candidates.
-- [ ] AT-30-015 (NEW, 2026-08-13) per-kind `done` figures re-derived and checked against the floor table for every kind touched this closure; no kind sitting at or near 0% `done` reported as "in progress" without naming it a structural blocker.
+- [ ] ~~AT-30-015 per-kind `done` figures re-derived and checked against the floor table.~~ MOVED to
+  `SD-31-corpus-closure-grind/acceptance-and-verification.md AT-31-005`.

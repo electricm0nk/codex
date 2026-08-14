@@ -1779,3 +1779,93 @@ SD-32-shaped review/closure pass would be duplicate work, not missing work). No 
 without a stated home.
 
 **Authority:** operator directive, verbatim above, 2026-08-14.
+
+## Decision 51 — SD-30 splits: Phase 3 ("the grind") to SD-31, Phase 4 ("capability builds") to SD-32; existing SD-31 renamed to SD-33 (2026-08-14, operator ruling)
+
+**Status:** New. Operator ruling, 2026-08-14, verbatim:
+
+> ok, let's split phase 3 and phase 4 into their own SD's. SD-31 and SD-32. Take the existing SD-31 and
+> rename it to SD-33.
+
+**Background — what "phase 3" and "phase 4" name.** This session's launch plan grouped SD-30's epics
+into phases: Phase 0-2 (remediation, already closed before this ruling), Epic 0 (instrument-apply,
+Job 1 per `§46`), Epics 1-3/7-9 (identifier cleanup, pre-launch, PI-screening gate, version numbering,
+bundle code review, closure — the gate/process epics). **Phase 3, "the grind,"** named the
+high-volume, expensive content work: Epic 4 (per-class measurement), Epic 5 (archetype mechanism),
+Epic 6 (per-class chassis sweep), Epic 10 (corpus-wide ingest lanes folded from SD-29, `§44`), and
+Epic 11 (7-book onboarding, `§45` item 3). **Phase 4, "capability builds,"** named the two net-new
+engine-capability epics `§45` authorized as the route to the 100% mandate rather than descoping: Epic
+12 (race chassis, `§45` item 1) and Epic 13 (verdict-path capability, `§45` item 2). Epic 14 (cloud
+fan-out protocol, `§47`) served both phases' lane shapes and is split between the two successors,
+scoped to each one's own lanes.
+
+**Naming collision, resolved.** `docs/release/SD-31-pcgen-character-import/` already existed (created
+2026-08-11, unrelated PCGen-import scope). The operator's ruling explicitly resolves the collision:
+that package is renamed to `SD-33-pcgen-character-import` first (git mv, history preserved, internal
+`SD-31`/`SD31` identifiers renamed in place to `SD-33`/`SD33`), freeing `SD-31` for reuse. `SD-32` was
+already free — the prior holder of that number,
+`SD-32-instrument-coverage-and-consumer-wiring`, was deleted from the repo tree by this same session's
+Decision §50, and its number was already flagged there as reusable by operator direction.
+
+**Disposition:**
+
+1. `docs/release/SD-31-pcgen-character-import/` → `docs/release/SD-33-pcgen-character-import/` (rename,
+   landed as its own commit ahead of the split, per this program's standing "renames land cleanest
+   alone" discipline).
+2. `docs/release/SD-31-corpus-closure-grind/` created — carries SD-30's former Epics 4, 5, 6, 10, 11,
+   and the grind-lane scope of Epic 14 (renumbered Epics 1-6 in that package's own
+   `epic-breakdown.md`/`kanban.md`; full renumber map recorded there). Full compliant package chassis
+   (README, scope-draft, decisions, epic-breakdown, kanban, acceptance-and-verification,
+   loop-instruction, progress, forward-scope-register, risks-and-open-questions, release-notes,
+   state-goals-and-lessons, technical-requirements, technical-design, artifacts/) — modeled on this
+   package's own structure. Binding rules this package established (anti-gaming rule `§50(a)`,
+   table-sheet doctrine `§49`, concurrency/cloud protocol `§47`) are reproduced verbatim in that
+   package's own `decisions.md` Decision 1, not merely cited by reference — this program has already
+   been burned once by a cross-package reference outliving the referenced package's own scope (`§50`'s
+   own reasoning for absorbing SD-32's rules the same way).
+3. `docs/release/SD-32-engine-capability-builds/` created — carries SD-30's former Epics 12 and 13
+   (renumbered Epics 1-2), plus a scoped copy of Epic 14 for its own capability-build lane shapes
+   (Epic 3). Same full chassis convention. The classifier accuracy-not-movement rule (`§50(c)`) is
+   reproduced verbatim there as the binding constraint on its Epic 2. This package's `README.md` opens
+   with an explicit disambiguation note against the deleted `SD-32-instrument-coverage-and-
+   consumer-wiring` package (`§50`, pre-deletion SHA `b88b18fa3700125f992e67b0ae29e1d5b70de3c0`) — same
+   number, unrelated content, reused by this same operator ruling.
+4. **Cross-SD gate, unchanged in substance:** SD-31's ingest epics (its own Epic 3/4/5) remain
+   hard-gated on **this package's** Epic 3 (PI-Screening Provenance Gate) — the gate itself does not
+   move; only the epics that *consume* it move to a sibling package. SD-31's Epic 4-F3/F4 (`race`/
+   `race_trait` ingest) and Epic 1-F4/Epic 3-F3 (`class_feature` `unknown`-bucket disposal) gain a new
+   cross-SD dependency on SD-32's Epic 1 (race chassis) and Epic 2 (verdict paths) respectively —
+   recorded as an explicit two-sided handoff discipline in both new packages' `decisions.md`/
+   `acceptance-and-verification.md`, not an implicit assumption.
+
+**SD-30's own scope, narrowed.** SD-30 retains Epic 0 (instrument-apply, Job 1), Epic 1 (identifier
+cleanup), Epic 2 (pre-launch), Epic 3 (PI-screening gate — now consumed cross-SD by both successors,
+not just this package's own Epic 6/Epic 10), Epic 7 (version numbering), Epic 8 (bundle code review),
+Epic 9 (closure epilogue). SD-30's own remaining exit criterion narrows to: **instruments applied
+(Epic 0) + gates green (Epics 1/2/3/7/8/9)** — it no longer includes the per-class measurement,
+mechanism, chassis-sweep, ingest-lane, book-onboarding, race-chassis, or verdict-path criteria that
+moved to SD-31/SD-32. `README.md`, `kanban.md`, `epic-breakdown.md`, and
+`acceptance-and-verification.md` are updated in this same commit to reflect the narrowed scope; the
+retired epics' text is left visible with a "moved to SD-31/SD-32" pointer rather than deleted, per this
+package's standing convention (original text stays visible, corrections point forward).
+
+**The 100% dashboard mandate does not shrink.** `§45`'s 100%-across-the-board mandate remains fully in
+force — it becomes the **joint exit criterion of the SD-30 → SD-31 → SD-32 program**, unchanged in
+substance from `§45`'s original framing. Splitting the work into three packages is an organizational
+change, not a scope reduction: every unit `§43`'s per-kind table named is still owned by exactly one of
+the three packages, and the dashboard reads the same live `docs/work-inventory.json` regardless of
+which package's cycle moved a given unit.
+
+**AT-30-015 per-kind floor table, moved.** The full table (`acceptance-and-verification.md AT-30-015`)
+moves to SD-31 as `AT-31-005`, since every kind it covers (`class_feature`, `monster`, `spell`, `race`,
+`race_trait`) is now owned by SD-31's ingest epics — with the `race`/`race_trait` rows explicitly
+annotated as depending on SD-32's race-chassis epic for their full ceiling. SD-30's own
+`acceptance-and-verification.md` retains only the criteria for its narrowed Epic 0/1/2/3/7/8/9 scope
+(AT-30-002, AT-30-005, AT-30-006, AT-30-007, AT-30-010, AT-30-011, AT-30-012, AT-30-013, AT-30-016 —
+unaffected by the split) and a pointer to `SD-31-corpus-closure-grind/acceptance-and-verification.md
+AT-31-005` for the moved floor table.
+
+**Authority:** operator ruling, 2026-08-14, transcribed verbatim above; `decisions.md §43-§50` (the
+epics and rules this split divides); `SD-31-corpus-closure-grind/` and
+`SD-32-engine-capability-builds/` (the two new packages this decision creates, cited for their own
+decisions.md Decision 1, which records the split from the receiving side).

@@ -246,7 +246,18 @@ Acceptance:
   "cheap enough to also run in `quick`" reasoning if the walk stays cheap).
 - The gate fails RED, not warns, if a declared-PI row is found unredacted/undropped in shipped output.
 
+**Scope narrowed 2026-08-14 (`decisions.md §51`, operator ruling).** Epics 4, 5, 6, 10, and 11 below
+are **MOVED** to `SD-31-corpus-closure-grind/epic-breakdown.md` (renumbered Epics 1-5 there). Epics
+12 and 13 are **MOVED** to `SD-32-engine-capability-builds/epic-breakdown.md` (renumbered Epics 1-2
+there). Epic 14 is **SPLIT**: its grind-lane scope moves to `SD-31-corpus-closure-grind/epic-breakdown.md`
+Epic 6, its capability-build-lane scope to `SD-32-engine-capability-builds/epic-breakdown.md` Epic 3.
+Their text below is left visible as historical record of what this package originally scoped, per this
+package's standing convention (original text stays, corrections point forward) — it is not this
+package's live scope. SD-30's own live epics are 0, 1, 2, 3, 7, 8, 9.
+
 ## Epic 4 (SD30-E4) — Per-Class Archetype Measurement (GATES Epics 5 and 6)
+
+**MOVED to `SD-31-corpus-closure-grind/epic-breakdown.md Epic 1` (`decisions.md §51`, 2026-08-14). Text below is historical.**
 
 **Objective:** Extend SD-28 `§63`/`§64`'s hand-verification method — find each named archetype slot's
 base computation in `pilot_compute.rs`, confirm it is unconditional (level-gated only), confirm the
@@ -325,6 +336,8 @@ Acceptance:
 
 ## Epic 5 (SD30-E5) — Archetype Mechanism (supersession shape now, chooser shape when Epic 4 funds it)
 
+**MOVED to `SD-31-corpus-closure-grind/epic-breakdown.md Epic 2` (`decisions.md §51`, 2026-08-14). Text below is historical.**
+
 **Objective:** Wire the 175-mechanism / ~5,775-line supersession shape (`archetype_claims_slot`) for
 each of the 25 measured classes as Epic 4 clears them for scheduling; design and wire the
 chooser-interaction shape for Oracle/Arcanist/Sorcerer once Epic 4-F3 resolves its primitive.
@@ -372,6 +385,8 @@ units) has no equivalent gate — SD-32's spell consumer-delta probe is a preced
 a `class_feature` instrument — and building one is flagged for the operator, not scheduled here.
 
 ## Epic 6 (SD30-E6) — Per-Class Chassis Sweep (the `class_feature` ingest, gated per class on Epics 4/5)
+
+**MOVED to `SD-31-corpus-closure-grind/epic-breakdown.md Epic 3` (`decisions.md §51`, 2026-08-14). Text below is historical.**
 
 **Objective:** The actual per-book, per-class `class_feature` ingest cycles across all 23 in-scope
 books — the direct successor to the old per-book epics 3-18, but scoped by class and gated by
@@ -496,6 +511,8 @@ Acceptance:
 
 ## Epic 10 (SD30-E10) — Corpus-Wide Ingest Lanes, folded from SD-29 (NEW, 2026-08-13, `decisions.md §44`)
 
+**MOVED to `SD-31-corpus-closure-grind/epic-breakdown.md Epic 4` (`decisions.md §51`, 2026-08-14). Text below is historical.**
+
 **Objective:** the real per-book ingest that instrument-application (Epic 0) cannot substitute for.
 SD-29 closed (`SD-29-corpus-wide-catch-up-lanes/decisions.md §70`) with its corpus-wide kind lanes at
 a *measured* ceiling, not an exhausted one — real `not-started`/chassis-open residue remains in every
@@ -577,6 +594,8 @@ exhaustive set.
 
 ## Epic 11 (SD30-E11) — Book Onboarding, 100% mandate (NEW, 2026-08-14, `decisions.md §45`)
 
+**MOVED to `SD-31-corpus-closure-grind/epic-breakdown.md Epic 5` (`decisions.md §51`, 2026-08-14). Text below is historical.**
+
 **Objective:** onboard the 7 `future_state` books — `occult_adventures`, `adventurers_guide`,
 `mythic_adventures`, `inner_sea_magic`, `inner_sea_temples`, `inner_sea_taverns`,
 `inner_sea_faiths` — the population these books add is not yet in the engine at all; closing to
@@ -592,6 +611,8 @@ its PI screen (declared-PI reader, SD30-E3-F2/F3) is clean.
 
 ## Epic 12 (SD30-E12) — Race Chassis, 100% mandate (NEW, 2026-08-14, `decisions.md §45`)
 
+**MOVED to `SD-32-engine-capability-builds/epic-breakdown.md Epic 1` (`decisions.md §51`, 2026-08-14). Text below is historical.**
+
 **Objective:** build the missing race chassis that Decision §44 (citing `SD-29 §44.4/§45.1/§49.2`)
 found absent for ~2,894 of the corpus's 3,447 `race_trait` units, plus the `race` kind itself
 (103 units, 0% done). That absence was previously ruled structurally unreachable; this epic reverses
@@ -604,6 +625,8 @@ original chassis-absence finding, `RaceCorpus::resolve` returning `None` without
 accepted from static/derived instrument output alone.
 
 ## Epic 13 (SD30-E13) — Verdict-Path Capability, 100% mandate (NEW, 2026-08-14, `decisions.md §45`)
+
+**MOVED to `SD-32-engine-capability-builds/epic-breakdown.md Epic 2` (`decisions.md §51`, 2026-08-14). Text below is historical.**
 
 **Objective:** give every currently-unmeasurable unit a real, non-placeholder verdict — the ~3,547
 `unknown`/unmeasurable population, including the 2,109-unit `ambiguous` bucket, that
@@ -618,6 +641,8 @@ before it is trusted to move counts, mirroring this package's own proxy-validati
 (`state-goals-and-lessons.md` §3.1's "validate a proxy where it makes its confident claim").
 
 ## Epic 14 (SD30-E14) — Cloud Fan-Out Protocol (NEW, 2026-08-14, `decisions.md §47`)
+
+**MOVED to `SD-31-corpus-closure-grind/epic-breakdown.md Epic 6 (grind lanes) / SD-32-engine-capability-builds/epic-breakdown.md Epic 3 (capability-build lanes)` (`decisions.md §51`, 2026-08-14). Text below is historical.**
 
 **Objective:** the local-proof-then-cloud-scale protocol that lets build-heavy, self-contained lanes
 (Epic 10's per-kind ingest, Epic 11's book onboarding) scale to cloud agents after one local proof
