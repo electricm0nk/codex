@@ -1357,3 +1357,158 @@ item 3 an honest, byte-identical-reproduced pre-existing FAIL, not this card's s
 as a pass. Two real defects found and corrected in this package's own reporting surfaces (a
 `beginner_box`-exclusion bug and a row-copy-paste error), not merely re-stated as stale — both
 verified against the live dashboard producer, not against each other.
+
+## Cycle `SD30-E1-F1-001` — 2026-08-14 — Code-Side Identifier-Disclosure Audit Pass (`epic-1-identifier`)
+
+**HEAD at start:** `ed7327bd2f38ed2ac9fd0a8604cd90a03a030d6a` (tip of `tranche/10` at claim time; tree
+had two pre-existing, not-mine changes — `M .gitignore` and `?? .github/workflows/deploy-site.yml` —
+left untouched throughout this cycle per shared-checkout discipline; package directory was present so
+no `git reset --hard` recovery was needed). `RETRO_ACTOR=sd30-e1-identifier`,
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-e1-identifier`.
+
+### 1. What this cycle did
+
+Epic 1 fires first in the gate chain (epic-2/3/7 depend on it). Card acceptance
+(`epic-breakdown.md` SD30-E1-F1): no `sd30_*`/`SD30_*`/`Sd30*`/`sd30-*` patterns in surface code, no
+`t_<hex>` kanban tokens, and `scripts/identifier-discipline-audit.sh` returns 0 findings — enumerating
+the real surface fresh rather than trusting the card's own named-file snapshot, and treating a
+disagreement between the audit script and the doctrine (`decisions.md §7`) as a finding to report,
+not to silently resolve either way.
+
+### 2. Figures re-derived this cycle, each with its command
+
+**a. Tree-wide pattern sweep, `src/` + `apps/desktop/` (not diff-scoped — the widest possible read):**
+```
+grep -rnE '\bsd30_[A-Za-z0-9_]*|\bSD30_[A-Za-z0-9_]*|\bSd30[A-Za-z0-9_]*|\bsd30-[A-Za-z0-9-]*' \
+  --include='*.rs' --include='*.ts' --include='*.tsx' src apps/desktop | grep -v '__tests__' | grep -v '\.test\.'
+```
+→ **0 matches.** Same command with `\bt_[0-9a-f]{8,}\b` in place of the `sd30` alternation → **0
+matches.** `SD-30-E[0-9]` and `AV-PAY-[0-9]` patterns (the other two doctrine-forbidden shapes) →
+**0 matches**, same pathspec.
+
+**b. Real surface, enumerated fresh (not transcribed from the card):**
+```
+find src/rules_core/rules_tables -maxdepth 1 -type d   # 30 book dirs, current roster
+find src -iname 'archetype_resolver.rs' -o -iname 'pilot_compute.rs'   # both present, src/rules_core/
+```
+The card's named surface (`src/rules_core/rules_tables/<book>/`, `archetype_resolver.rs`,
+`pilot_compute.rs`) still resolves; both named files exist at `src/rules_core/`. 30 rules-tables book
+directories currently exist (a superset of the 23 `class_feature`-bearing ones; the widest read, not a
+narrowed one).
+
+**c. The audit script itself:**
+```
+git fetch origin --quiet && bash scripts/identifier-discipline-audit.sh origin/develop
+```
+→ `OK_NO_BUNDLE_TAGS`, exit `0`.
+
+**d. Broader repo-wide sweep (`src`, `apps`, `scripts`, `tests` — beyond the audit script's own
+pathspec, to surface the disagreement case the card asked me to check for) found four hit clusters,
+all resolved as non-violations or a reported-not-actioned finding — see §3.**
+
+### 3. Two checks the acceptance text does not mechanically cover, done by hand
+
+**3a. Proved the audit script can fail (card's explicit instruction).** A gate that cannot fail
+proves nothing (`state-goals-and-lessons.md §3.1`; this repo has shipped three such gates already).
+In a disposable `git worktree` (`sd30-e1-audit-proof-scratch`, never pushed, deleted after):
+```
+git worktree add -B sd30-e1-audit-proof-scratch <scratch-path> HEAD
+echo 'pub const sd30_leak_marker: &str = "violation";' >> src/rules_core/pilot_compute.rs
+git add src/rules_core/pilot_compute.rs && git commit -m "scratch: prove audit can fail"
+bash scripts/identifier-discipline-audit.sh origin/develop
+```
+→ caught it: `168:+pub const sd30_leak_marker...`, `FAIL: bundle identifier(s) above leaked into
+shipping code.`, exit `1`. Worktree and scratch branch then removed
+(`git worktree remove --force`, `git branch -D`); `git worktree list` / `git status --porcelain`
+confirmed no residue. `retro.py near-miss` event
+`1786744212064-sd30-e1-identifier-6704a3` records this (`--verified-by`-equivalent is the planted
+diff and the printed FAIL line itself).
+
+**3b. Audit-script-vs-doctrine disagreement found and reported, not silently resolved.** A repo-wide
+sweep beyond the audit script's own pathspec (`src/**/*.rs`, `apps/desktop/**/*.ts*` only — `scripts/`
+is out of scope by the script's own design) found:
+```
+grep -rnE '\bsd30_[A-Za-z0-9_]*|...' --include='*.py' ... .
+```
+→ `scripts/observer/pf1e_dashboard_producer.py:2278-2279`: a dict key/value
+`"sd30_book_pre_build": {"manifest_id": "sd30_book_pre_build", ...}`, with parallel
+`sd28_book_pre_build`/`sd29_book_pre_build` entries alongside it (same file, tracked in git,
+confirmed by `git ls-files`/`git log` — this is the in-repo source copy, not the cron-deployed one at
+`/home/ubuntu/swarm-observer/` the hazard note in `state-goals-and-lessons.md §1.3` hazard 4 warns
+about). Read literally, `decisions.md §7`'s headline ("source-code identifiers describe WHAT the
+artifact does, NOT which release/spec domain it came from... Forbidden patterns: `sd30_*`...")
+flags this. The audit script's own pathspec never sees it (`scripts/` excluded by design), and
+`decisions.md §26` (Epic 8 code review) explicitly delegates identifier-discipline enforcement to
+that same script/pathspec at bundle-diff scope — **the two authorities disagree on whether this counts.**
+
+**Not renamed, reported instead** (`retro.py deferral` event
+`1786744223492-sd30-e1-identifier-4b01f0`): (i) `sd28_`/`sd29_` analogs of the identical shape
+already exist unremediated in the same file, so a targeted `sd30_` rename alone would be
+inconsistent, not principled; (ii) these are per-bundle *tracking-manifest* keys whose entire
+semantic content is "which workchannel this record belongs to" — the same shape as the doctrine's own
+carved-out exception for test file names legitimately citing their bundle, not the shipping-surface
+leakage (a rules-engine function secretly named after its release) the doctrine's rationale targets;
+(iii) `pf1e_dashboard_producer.py` is the file `state-goals-and-lessons.md §1.3` hazard 4 flags as
+RAISING on an unrecognised status word and requiring synchronized generator+producer changes — an
+unreviewed, out-of-card-scope rename here is exactly the unsynced-edit shape that hazard warns
+against; (iv) it sits outside this card's named acceptance surface (`src/rules_core/rules_tables/`,
+`archetype_resolver.rs`, `pilot_compute.rs`) and outside the audit script's own definition of
+"surface code." Recorded for an operator ruling on whether the forbidden-pattern list is meant to
+reach devops/observability tooling or is scoped to shipping game-rules/UI surface only.
+
+The other three hit clusters found by the broad sweep are non-violations on inspection, not
+deferrals: `tests/v06_work_inventory.rs`'s `SD30_CAMPAIGN_SETTING_BOOKS` constant and
+`tests/sd13_*_bounded_semantics.rs`'s `t_<hex>` slice-id comments are test-file content, explicitly
+carved out both by `decisions.md §7`'s own scope note (this card's brief: "test names that
+legitimately reference the bundle are not violations") and by the audit script's design (tests
+excluded by its own `SHIPPING_PATHSPEC`); `scripts/tests/test_identifier_discipline_audit.sh` is the
+audit script's own test fixture, containing a deliberately-planted mock violation string as test
+data, not a live identifier.
+
+### 4. Definition of done
+
+No `src/`, `apps/`, or `scripts/` file was changed by this cycle (0 renames needed — the audit found
+0 findings within its own scope). `git status --porcelain` at cycle end: only
+`docs/release/SD-30-class-feature-archetype-bundle/kanban.md` (claim/complete edit),
+`docs/release/SD-30-class-feature-archetype-bundle/progress.md` (this receipt), and
+`docs/retro/events/sd30-e1-identifier.jsonl` (the two events above) — plus the two pre-existing,
+not-mine changes noted at the top, left untouched.
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **N/A — measurement/audit-only cycle, no Rust/Python production code changed.** Ran the relevant `--only` stages instead (items 2-3 below) plus `--only preflight-disk` (PASS, 23% used / 754G available) before starting. |
+| 2 | reach claim, nonzero | **PASS.** `./scripts/verify.sh --only reach` → `PASS reach (27 passed)`, `VERIFY_EXIT=0`. This card adds no new reach family; ran it as this program's standing honest-reporting practice. |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **FAIL, exit 2 — pre-existing, out of this card's scope, byte-identical to the F1/F2/F4 receipts' figures.** 177 defects (33 `companion`, 3 `monster`, 141 `monster_ability`), all `wiring-class-mismatch` in `ultimate_wilderness`'s companion-ability corpus JSON, already traced by `SD30-E0-F1-001` to the `%N` prose-formula classifier fix landing without a matching re-ingest. Re-derived this cycle (`cargo run --locked --bin v06_corpus_trap_report -- --audit`, counts grepped from its own output) and confirmed byte-identical — this cycle touched no corpus or classifier file, so it neither caused nor worsened it. Flagged, not fabricated as a pass; same dedicated follow-up already on record. |
+| 4 | Guarded work-inventory regen | **N/A.** No corpus, classifier, or ingest code changed this cycle (identifier-discipline audit only); nothing this cycle would move `docs/work-inventory.json`, so a regen would be a no-op churn, not a proof of anything this card claims. |
+| 5 | Four-check wired-integration audit | **PASS.** `bash scripts/wired-integration-audit.sh origin/develop` → all four checks (`OK_NO_TOKENS`, `OK_NO_NOOP_HANDLERS`, `OK_NO_MOCK_LEAKS`, `OK_NO_WOULD_STRINGS`) clean, exit 0. This cycle's own diff touches no `.rs`/`.ts`/`.tsx` file (only `.md`/`.jsonl`), so it is doubly clean by construction. |
+| 6 | `OPEN_FINDINGS` in `reach_gate.rs` | **N/A.** No record family surfaced or left unsurfaced this cycle — an identifier-audit card, not a reach-scope card. |
+| 7 | Baseline movements | **N/A.** No baseline-affecting code or test changed. |
+| 8 | On-screen verification | **N/A.** No player-visible desktop-app surface touched — 0 renames landed, nothing new to see on a sheet. |
+
+### 5. Retro events emitted
+
+- `1786744212064-sd30-e1-identifier-6704a3` — near-miss: proved
+  `scripts/identifier-discipline-audit.sh` can actually fail (planted-violation test in a disposable
+  worktree) before trusting its 0-finding result on the real diff.
+- `1786744223492-sd30-e1-identifier-4b01f0` — deferral: `pf1e_dashboard_producer.py`'s
+  `sd28_`/`sd29_`/`sd30_book_pre_build` manifest keys not renamed, reported instead — see §3b above
+  for the full reasoning and the revisit condition (operator ruling on doctrine scope).
+
+### 6. Reclaim
+
+`./scripts/reclaim.sh` (dry run): all candidates skipped — 8 verify-log dirs too young, 10 sibling
+worktrees under `.claude/worktrees/` forbidden paths (other live agents' work, correctly not touched),
+2 branches not merged/upstream-present, 10 branches checked out in a worktree. `./scripts/reclaim.sh
+--apply`: **0.0 B reclaimed** — consistent with the box carrying multiple live concurrent agents
+right now (confirmed by `git worktree list` showing 10 active worktrees beyond this checkout), not a
+"structurally full" reading (disk itself is 23% used / 754G available per the preflight-disk run
+above) — reclaim.sh correctly refused every candidate rather than touching live work.
+
+**Verdict: SD30-E1-F1 COMPLETE, `epic-1-identifier` COMPLETE.** DoD items 1, 4, 6-8 N/A with stated
+reasons (audit-only cycle, 0 renames landed, nothing corpus/reach/UI-affecting to prove); items 2, 5
+PASS; item 3 an honest, byte-identical-reproduced pre-existing FAIL, not this card's scope, not
+fabricated as a pass. Tree-wide (not diff-scoped) pattern sweep and the audit script both independently
+confirm 0 identifier-discipline findings within the doctrine's shipping-surface scope; one
+audit-script-vs-doctrine disagreement found in `scripts/` (out of the shipping-surface scope both the
+script and `decisions.md §26` define) is reported via `retro.py deferral`, not silently resolved
+either way; the audit script's own soundness was proven, not assumed.

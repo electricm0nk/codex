@@ -53,7 +53,7 @@ surface the operator and orchestrator both read for live progress. No card outra
 | ID | Status | Epic | Cycle-type | Claimed-by | Claimed-at | Cycle-id |
 |----|--------|------|-----------|------------|------------|----------|
 | `epic-0-instrument-apply` | COMPLETE | **Order 1 — Apply Existing Instruments to `held` (dashboard/reporting, Job 1)** | `done`-rung build (static/derived) + computed-bucket consumer-delta probes, corpus-wide + `unknown`-residue characterization (`feat`) + re-derivation reporting | sd30-e0-f4-report | 2026-08-14T17:40:31-04:00 | `SD30-E0-F4-001` |
-| `epic-1-identifier` | READY | Code-Side Identifier Cleanup | identifier-discipline audit pass | — | — | — |
+| `epic-1-identifier` | COMPLETE | Code-Side Identifier Cleanup | identifier-discipline audit pass | sd30-e1-identifier | 2026-08-14T21:49:20Z | `SD30-E1-F1-001` |
 | `epic-2-prelaunch` | READY (gated on epic-1) | Operator Pre-Launch | local-file dispatch readiness + cycle-0 trap-report + work-inventory (23-book `class_feature` re-derivation) | — | — | — |
 | `epic-3-pi-gate` | READY (gated on epic-1, epic-2) | PI-Screening Provenance Gate | per-class PI-blacklist sweep (SD30-E3-F1) + declared-PI reader wired into class_feature ingest (SD30-E3-F2, `decisions.md §39`) + corpus-wide declared-PI backfill (SD30-E3-F3) + regression gate (SD30-E3-F4) — F2 hard-blocks epic-6, no chassis-sweep cycle may claim a class before F2 is COMPLETE | — | — | — |
 | `epic-4-measurement` | **MOVED to `SD-31-corpus-closure-grind/kanban.md` `epic-1-measurement` (`decisions.md §51`, 2026-08-14)** | Per-Class Archetype Measurement | class inventory + per-class hand-verification + chooser-primitive design + `unknown`-bucket characterization | — | — | — |
