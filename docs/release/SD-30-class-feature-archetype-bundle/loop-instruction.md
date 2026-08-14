@@ -42,10 +42,13 @@
 6. **Pilot/scope validation performed for every book-or-class a first cycle will claim** — see
    "Pilot and scope validation" below. Applied to SD-30's own pinned scope 2026-08-11; findings are
    recorded in `decisions.md §39` and must be read before Epic 6 pins a first book.
-7. **Desktop-driver card status known.** `epic-0-desktop-driver` (`kanban.md` Order 0) is either
-   `COMPLETE`, or every cycle that follows records its DoD-item-8 disposition under the interim rule
-   in "Definition of done" item 8 below. No player-visible lane cycle may be dispatched while that
-   card is open **unless** its receipt carries the interim disposition explicitly.
+7. **`epic-0-instrument-apply` card status known.** `epic-0-instrument-apply` (`kanban.md` Order 0,
+   `decisions.md §43`) runs independently of the `class_feature` chain (`epic-1`..`epic-9`) and does
+   not gate or get gated by it — no player-visible lane cycle waits on its completion. This item is
+   satisfied by confirming that fact against `kanban.md`'s own claim-priority note before the first
+   cycle fires; no interim disposition is needed because no gate exists to disposition. (Corrected
+   2026-08-14: the prior text named a nonexistent `epic-0-desktop-driver` card and a DoD-item-8
+   interim rule that does not exist in this file; see `retro.py correction`.)
 
 If any of these is false, the cycle refuses to launch and reports the gap.
 
@@ -172,9 +175,13 @@ PY
 ```
 
 **If step 3 returns a shape the lane's mechanism cannot act on, the book is not a pilot** — record
-the finding, pick another, and do not weaken the lane to fit the book. **This step was applied to
-SD-30's own pinned scope on 2026-08-11 and it found four books that fail it — see `decisions.md §39`.
-Read that decision before pinning Epic 6's first book.**
+the finding, pick another, and do not weaken the lane to fit the book. **A prior revision of this
+file claimed this step was applied to SD-30's own pinned scope on 2026-08-11 and found four books
+that fail it, citing `decisions.md §39` — that section is about declared-PI reading and contains no
+such finding, and no four-failing-books finding was located anywhere else in `decisions.md` on a
+2026-08-14 search. Treat that finding's record as not located: it must be re-derived (re-run this
+step's process for every book Epic 6 is about to pin) before Epic 6 pins its first book, not assumed
+still valid.** (`retro.py correction` emitted for this citation, 2026-08-14.)
 
 ## Cycle mechanics
 
@@ -205,10 +212,11 @@ each book.
    the book's `books[]` entry in `docs/work-inventory.json` — `kinds`,
    `files_not_enumerated`, `trap_hits`, `reconciliation`. The shape decides the
    cycle; do not assume a template. **Confirm the book has a corpus directory
-   at all** — all sixteen pinned books verified present 2026-08-01 (4 under
-   `roleplaying_game/`, 12 under `campaign_setting/`), so a missing directory
-   now means corpus drift, not expected absence; treat it as the hard stop
-   below. Done once per book, not once per cycle.
+   at all** — the current 23-book `class_feature` roster (`decisions.md §33`,
+   corrected 2026-08-14 from the old sixteen-pinned-books figure, which was
+   retired 2026-08-10) all have verified corpus directories, so a missing
+   directory now means corpus drift, not expected absence; treat it as the
+   hard stop below. Done once per book, not once per cycle.
 0b. **Trap-report** the book, before writing a line of ingest code:
    `cargo run --locked --bin v06_corpus_trap_report -- <book_dir>`. A bare
    book name resolves across all known corpus subtrees (`roleplaying_game`,
@@ -458,7 +466,7 @@ ordering this section previously described is retired; the current 9-epic depend
   - The build crashes in a way that requires a non-book-list fix.
   - A cross-bundle reference yields a missing class / monster id that the source bundle's progress file shows as not yet landed.
   - The operator-pinned branch / board diverges from the in-flight branch / board.
-  - **A book on the recorded list has no corpus directory to ingest from.** The cycle reports; the operator re-pins the book list. No known instances as of 2026-08-01 — all sixteen pinned books have verified corpus directories. (An earlier revision named Occult Origins and Haunted Heroes Handbook here; that finding was a bad check — wrong search root and wrong identifier — and both books exist under `player_companion/`. They are deferred by operator choice, not absence; see `scope-draft.md` and `decisions.md` Decision 1.)
+  - **A book on the recorded list has no corpus directory to ingest from.** The cycle reports; the operator re-pins the book list. No known instances as of 2026-08-14 — all 23 `class_feature`-bearing corpus dirs (`decisions.md §33`) have verified corpus directories. (An earlier revision named Occult Origins and Haunted Heroes Handbook here; that finding was a bad check — wrong search root and wrong identifier — and both books exist under `player_companion/`. They are deferred by operator choice, not absence; see `scope-draft.md` and `decisions.md` Decision 1. That earlier revision also referred to "sixteen pinned books," language retired 2026-08-10 by the widened `class_feature` re-scope.)
   - **A record family cannot be surfaced without work outside this bundle's epic structure** (Decision 11's open question). The cycle reports the gap; it does not add an epic and it does not ingest without a reach claim.
   - **A figure derived this cycle disagrees with a figure recorded in this package.** Investigate which is wrong and report; do not overwrite either on the assumption that the newer one wins.
 

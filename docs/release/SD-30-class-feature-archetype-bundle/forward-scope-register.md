@@ -20,7 +20,7 @@ named; it's recorded here as **Class 1**. SD-30-specific retrofits land in
 |--------|------|------|
 | Per-book ingest pipeline | `docs/governance/book-ingestion-playbook.md` | Doctrine-of-record; pre-cycle trap-report is mandatory |
 | Reach gate | `apps/desktop/src-tauri/src/reach_gate.rs` | Definition-of-done per `decisions.md §18` (prime rule); gate's `OPEN_FINDINGS` carries missing-surface prerequisites |
-| Identifier discipline | `~/workspace/governance/identifier-discipline.md` | SD-30 inherits; Epic 1 enforces |
+| Identifier discipline | `docs/doctrine-external/identifier-discipline.md` | SD-30 inherits; Epic 1 enforces |
 | Build-version scheme | `<major>.<tranche-base>.<build>` (2026-07-17 amendment) | SD-30 first concrete value `0.10.<build>` |
 | Source STC chassis | `spec-domain-bundle-authoring` skill | 13-file shape per the modern chassis |
 | Move-not-copy publish | `release-package-promotion` skill | Workspace tree removed on publish commit |

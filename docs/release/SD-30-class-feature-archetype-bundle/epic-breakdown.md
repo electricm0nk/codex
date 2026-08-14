@@ -54,7 +54,7 @@ Acceptance:
 - The dashboard producer's `doneness_verdict()` table gains a `done` rung for `wiring_class in
   (static, derived)` when the corpus-sweep / derived-evaluator gate has actually examined and passed
   the record (not merely `held`).
-- Re-running `derive-movable-mass.py` after the rung lands shows the `static`/`derived` `held`
+- Re-running `docs/release/SD-32-instrument-coverage-and-consumer-wiring/artifacts/derive-movable-mass.py` after the rung lands shows the `static`/`derived` `held`
   population (6,619 units, per the B3 bucket in this session's run) move to `done` for records the
   gate has passed.
 - No relaxation of what "passed" means — a record the gate has not examined stays `held`, not `done`.
@@ -87,7 +87,7 @@ Acceptance:
 
 Acceptance:
 
-- Every cycle in this epic re-runs `derive-movable-mass.py` before and after its change and cites both
+- Every cycle in this epic re-runs `docs/release/SD-32-instrument-coverage-and-consumer-wiring/artifacts/derive-movable-mass.py` before and after its change and cites both
   runs in its `progress.md` receipt.
 - `acceptance-and-verification.md AT-30-015`'s per-kind floor table is updated at epic closure with
   the actual `done` figures achieved.

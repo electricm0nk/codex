@@ -19,7 +19,7 @@ no longer a sixteen-book content bundle. SD-29's re-scope to corpus-wide kind
 lanes (`SD-29-corpus-wide-catch-up-lanes/decisions.md §38`) claims every kind
 corpus-wide **except `class_feature`** — SD-29's own `§38.4` names
 `class_feature` as staying out of its scope, funded instead through
-`corpus-work-channels.md §9.1`'s per-class archetype-measurement effort,
+`docs/release/corpus-work-channels.md §9.1`'s per-class archetype-measurement effort,
 unassigned to any SD number until now. **SD-30 is that assignment.**
 
 SD-30's new scope is the one kind lane SD-29 cannot take:
