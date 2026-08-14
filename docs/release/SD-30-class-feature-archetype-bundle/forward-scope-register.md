@@ -145,6 +145,46 @@ module-doc listing names the expected rows for that book, per the six-step contr
 `progress.md`, cycle `SD30-E3-F3-001` §8 (mirrors `C1.5`'s `§53.5`, restated for the Rust-literal-table
 shape).
 
+### C1.7 — Regression gate: a future `class_feature` ingest cannot reintroduce a declared-PI leak (2026-08-14, `SD30-E3-F4-001`)
+
+**Owner:** `SD-31-corpus-closure-grind`'s `epic-3-chassis-sweep` (ex-SD-30 Epic 6) — the first cycle
+that lands a `class_feature` record for any of the 22 not-yet-ingested books in the 23-book roster.
+
+**What SD-30 delivers:** a permanent, always-on `cargo test` regression suite,
+`tests/sd30_declared_product_identity_in_shipped_class_features.rs`, following
+`tests/sd29_declared_product_identity_in_shipped_race_traits.rs`'s shape exactly (reads shipped
+`data/corpus/*/class_feature/**.json`, the same bytes a player-facing record ships, not source
+`.lst` rows). Two enforcement tests: no shipped record may publish a `NAMEISPI:YES`-declared name
+(must be dropped, never redacted — a name can't be redacted without breaking the record's own
+identity/key); no shipped record may ship a `DESCISPI:YES`-declared description unredacted (must
+carry `pi_marker: "redacted"` and `description: "[redacted PI]"`, the same
+`shape_b_v1::PI_MARKER_REDACTED`/`REDACTED_PI_MARKER` constants `C1.5`/`C1.6`'s writers already
+emit through). Neither test requires `class_feature`'s live corpus to currently contain a positive
+case (it doesn't — only `pathfinder_unchained` is ingested today, and it declares zero PI); a third
+test, `the_leak_detectors_actually_fire_on_a_planted_leak_and_clear_on_a_redacted_row`, proves the
+detection logic itself can both fail and pass against synthetic planted rows, independent of live
+corpus content — closing the "a gate that cannot fail because its target is empty" defect class this
+package's own `loop-instruction.md` "Pilot and scope validation" section names as having shipped
+three times already. Proven live against real shipped output this cycle, not only synthetically: a
+`NAMEISPI:YES` row was planted as a scratch copy inside
+`data/corpus/pathfinder_unchained/class_feature/summoner_unchained_class/`, confirmed the suite goes
+RED (`no_shipped_class_feature_record_publishes_a_name_the_corpus_declares_product_identity`
+`FAILED`), the scratch file removed, confirmed GREEN again (all 3 tests `ok`) — commands and output
+verbatim in `progress.md`, cycle `SD30-E3-F4-001`. Wired into `scripts/verify.sh`'s existing
+`root-full` stage (not a new stage): every top-level `tests/*.rs` file is auto-discovered by
+`expected_test_suites()`/`executed_test_suites()`, which already fails `root-full` if a suite is
+present but never executed — no separate wiring commit needed.
+
+**What SD-31 must do:** nothing to invoke — this is a passive regression gate, not a function a
+cycle calls. The moment `epic-3-chassis-sweep` (or any future `class_feature` writer) lands a record
+in `data/corpus/<any book>/class_feature/` whose corpus row declared `NAMEISPI:YES` and still
+shipped, or `DESCISPI:YES` and shipped unredacted, this suite's first two tests fail `root-full` —
+diagnose per the failing test's own assertion message (it names the offending record's `key` and
+file path directly) and route the fix through `C1.5`'s declared-PI reader
+(`pi_screening::{declared_product_identity, classify_optional_field_declared}`), not around this
+gate. Reclassifying a specific declared-PI row as shippable remains `ogl-pi-blacklist.md` §3's
+per-book override, an operator decision, never a lane's own call.
+
 ## Class 2 — RETIRED 2026-08-10 (book-list deferrals, moot under the `class_feature` re-scope)
 
 **The four book-specific deferrals below (C2.1-C2.4) are retired, not merely stale.** They deferred

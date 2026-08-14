@@ -2153,3 +2153,111 @@ shared reader); `src/bin/ingest_race_traits.rs` (the only other current caller, 
 `src/bin/ingest_pu_classes.rs` (this card's own change — the reader, the two new tests, the corrected
 `license`/`pi_field`/`pi_marker` population); `docs/governance/ogl-pi-blacklist.md` §3 (the per-book
 override, an operator decision).
+
+## Decision 54 — SD30-E3-F4 closed: the `class_feature` PI regression gate; `epic-3-pi-gate` closes (2026-08-14)
+
+### 54.1 What this card delivers
+
+`scripts/verify.sh`'s `pi-sweep` stage and `docs/governance/ogl-pi-blacklist.md` are both
+term-blacklist mechanisms; neither reads the corpus's own `NAMEISPI`/`DESCISPI` declarations.
+`§53.1` established the two are a union, not a merge — a declaration and an undeclared-term hit are
+different questions and need a sibling check. `SD30-E3-F1`-`F3` wired the declared-PI reader into
+every production writer this repo currently has for `class_feature`-shaped content
+(`gen_*_gap_tables.rs`'s blacklist sweep, `ingest_pu_classes.rs`'s declared-PI reader, both Pipeline-B
+transcribers). This card is the standing regression gate that keeps all three honest going forward: a
+permanent `cargo test` suite, `tests/sd30_declared_product_identity_in_shipped_class_features.rs`,
+following `tests/sd29_declared_product_identity_in_shipped_race_traits.rs`'s shape exactly — it reads
+shipped `data/corpus/*/class_feature/**.json`, the same bytes a player-facing record ships, not
+source `.lst` rows.
+
+### 54.2 The empty-target problem, and how this suite avoids being a gate that cannot fail
+
+`class_feature`'s 23-book roster has exactly one book with an actual `data/corpus/<book>/
+class_feature/` directory today (`pathfinder_unchained`, `SD30-E3-F2`'s `ingest_pu_classes.rs`); the
+other 22 are `SD-31-corpus-closure-grind`'s `epic-3-chassis-sweep`, not yet run. Unlike the
+race-trait suite this mirrors (26 live `DESCISPI:YES` rows and 1 live `NAMEISPI:YES` row when it was
+written), `class_feature`'s live corpus declares **zero** PI today, re-derived this cycle:
+
+```
+$ grep -rl 'NAMEISPI\|DESCISPI' data/corpus/pathfinder_unchained/class_feature/*/*.json
+(no hits)
+```
+
+Mirroring the reference suite's `declared > 0` assertion here would make this gate permanently red
+on its own current corpus — the wrong failure mode, and exactly the class of defect
+`state-goals-and-lessons.md §3.1` names ("a gate that cannot fail proves nothing," three prior
+instances this program has shipped). Three independent guards close the hole instead:
+
+1. `shipped_class_feature_records()` asserts it found at least one record before either test's loop
+   runs — a corpus-drift regression (every `class_feature` directory vanishing) fails loudly instead
+   of both tests passing vacuously over an empty iterator.
+2. The DESCISPI test states its zero-count explicitly every run (`eprintln!`) rather than letting a
+   zero-iteration loop pass silently.
+3. `the_leak_detectors_actually_fire_on_a_planted_leak_and_clear_on_a_redacted_row` calls the exact
+   `name_leak`/`description_leak` functions the two corpus-scanning tests use, against synthetic
+   planted-leak and correctly-redacted rows — proving the detection logic itself can fail and pass,
+   independent of what the live corpus happens to contain right now
+   (`state-goals-and-lessons.md §3.1`: "prove new instruments fail by corrupting input, before
+   trusting a pass").
+
+### 54.3 Proof against real shipped output, not only synthetic rows
+
+Per this card's own acceptance ("plant a declared-PI row in a scratch copy of shipped output,
+confirm the gate goes red, remove it, confirm green"), run live this cycle against the real corpus
+tree, not a synthetic fixture:
+
+```
+$ SRC=data/corpus/pathfinder_unchained/class_feature/summoner_unchained_class/unchained_summoner_maker_s_call.json
+$ python3 -c "... append {'key':'NAMEISPI','value':'YES'} to raw_tokens ..." \
+    > data/corpus/pathfinder_unchained/class_feature/summoner_unchained_class/zz_scratch_planted_leak.json
+$ cargo test --locked --test sd30_declared_product_identity_in_shipped_class_features
+test no_shipped_class_feature_record_publishes_a_name_the_corpus_declares_product_identity ... FAILED
+  panicked: "...still shipped: [\"Unchained Summoner ~ Maker's Call (.../zz_scratch_planted_leak.json)\"]"
+test result: FAILED. 2 passed; 1 failed
+
+$ rm data/corpus/pathfinder_unchained/class_feature/summoner_unchained_class/zz_scratch_planted_leak.json
+$ cargo test --locked --test sd30_declared_product_identity_in_shipped_class_features
+test result: ok. 3 passed; 0 failed
+```
+
+The scratch file was untracked throughout (`git status --porcelain` confirmed no tracked file was
+touched) and was removed before this receipt was written — nothing was ever committed with the
+planted leak in it.
+
+### 54.4 Wiring into `scripts/verify.sh`
+
+No new stage. `root-full`'s existing `expected_test_suites()`/`executed_test_suites()` mechanism
+auto-discovers every top-level `tests/*.rs` file from the filesystem
+(`scripts/verify.sh:350-352`) and already fails `root-full` if a discovered suite is present but
+never executed — landing the new file is sufficient; nothing else needed editing in `verify.sh`
+itself.
+
+### 54.5 `epic-3-pi-gate` closes
+
+Per this card's own closing instruction ("close the epic-3-pi-gate card only if F1-F4 are all on
+tranche/10 by content — grep for the symbols, do not read the card statuses"), re-verified fresh this
+cycle, at `HEAD` == `origin/tranche/10`:
+
+```
+$ grep -rl pi_table_sweep tests/*.rs                                            # F1
+tests/pi_table_sweep.rs
+$ grep -c 'declared_product_identity\|classify_optional_field_declared' src/bin/ingest_pu_classes.rs   # F2
+17
+$ grep -c 'DESCISPI\|redacted_pi_marker' scripts/transcribe_monster_tables.py scripts/transcribe_companion_tables.py  # F3
+scripts/transcribe_monster_tables.py:12
+scripts/transcribe_companion_tables.py:11
+$ grep -c 'name_leak\|description_leak' tests/sd30_declared_product_identity_in_shipped_class_features.rs  # F4 (this cycle)
+11
+```
+
+All four present by content. `epic-3-pi-gate` flips `IN-FLIGHT` -> `COMPLETE` in `kanban.md`. Epic
+3's own gating relationship is now fully discharged for SD-30's own scope; the successor consumer
+(`SD-31-corpus-closure-grind`'s `epic-3-chassis-sweep`) inherits all four mechanisms plus this
+standing regression gate, per `forward-scope-register.md` `C1.4`-`C1.7` / `SD-31-.../
+forward-scope-register.md` `G1.4`-`G1.7`.
+
+**Authority:** `decisions.md §53.1` (declaration-vs-blacklist is a union, not a merge — this card's
+own premise); `§52.3`/`§53.5` (the two invocation contracts this gate enforces compliance with);
+`tests/sd29_declared_product_identity_in_shipped_race_traits.rs` (the shape mirrored exactly);
+`state-goals-and-lessons.md §3.1` ("a gate that cannot fail proves nothing" — the defect class §54.2
+avoids). Full DoD table, all commands verbatim: `progress.md`, cycle `SD30-E3-F4-001`.

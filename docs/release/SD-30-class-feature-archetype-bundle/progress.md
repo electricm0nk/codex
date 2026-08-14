@@ -2515,3 +2515,249 @@ agent — left as-is (accurate). `Claimed-by`/`Cycle-id` unchanged (`sd30-e3-f3-
 item from the prior return (`root-full`'s then-pending exit code) is now resolved: `VERIFY_EXIT=0`,
 full 16/16 gate PASS. No code changed in this resumption — it was a pure gate-watch-to-completion plus
 independent re-derivation of DoD item 3 and receipt/kanban closure.
+
+## Cycle `SD30-E3-F4-001` — `epic-3-pi-gate` / SD30-E3-F4 (regression gate) — 2026-08-14
+
+**Actor:** `sd30-e3-f4-regression`. **`CARGO_TARGET_DIR`:** `/home/ubuntu/cargo-targets/sd30-e3-f4-regression`.
+
+### 0. Checkout assertion (mandatory first action)
+
+```
+$ git rev-parse HEAD && git log --oneline -1 && git status --porcelain
+1450ad7378633fdecf0c15f2f129839d4a6c0ca7
+1450ad73 docs(sd30): SD30-E3-F3-001 — gate closure, cycle COMPLETE
+ M .gitignore
+?? .github/workflows/deploy-site.yml
+$ ls docs/release/SD-30-class-feature-archetype-bundle/loop-instruction.md
+docs/release/SD-30-class-feature-archetype-bundle/loop-instruction.md
+```
+
+Package present, `HEAD` = `1450ad73` on `tranche/10`. Tree dirty but **not from this cycle** — the
+`.gitignore`/`deploy-site.yml` pair is pre-existing, unrelated `site-deploy` work on this shared
+checkout, already identified and left alone by `SD30-E2-F1-001` and `SD30-E3-F3-001`'s own
+resumption receipt (both confirm-and-skip precedents). Confirmed again this cycle:
+`git log -3 -- .gitignore` shows its last touching commit (`462c40bc`) long predates this cycle. No
+recovery needed (package present, no reset). **`head_before = 1450ad73`.**
+
+### 1. Required reads
+
+`state-goals-and-lessons.md`, `loop-instruction.md` (full), `AGENTS.md`/`CLAUDE.md`, `kanban.md`,
+tail of `progress.md`, Epic 3's section of `epic-breakdown.md` (`SD30-E3-F4`'s acceptance text,
+byte-identical to this card's own dispatch brief — no divergence found).
+
+### 2. Re-derived: does `*/class_feature/*` exist under `data/corpus/` yet?
+
+```
+$ find data/corpus -maxdepth 2 -type d -name 'class_feature'
+data/corpus/pathfinder_unchained/class_feature
+$ find data/corpus/pathfinder_unchained/class_feature -type f | wc -l
+64
+```
+
+Yes — one book (`SD30-E3-F2-001`'s `ingest_pu_classes.rs`), 64 records. The "path does not exist yet"
+branch of this card's acceptance is not the live case, but the suite is written to handle it
+correctly regardless (§4 below) since the other 22 of 23 `class_feature`-bearing books are
+`SD-31-corpus-closure-grind`'s `epic-3-chassis-sweep`, not yet run.
+
+```
+$ grep -rl 'NAMEISPI\|DESCISPI' data/corpus/pathfinder_unchained/class_feature/*/*.json
+(no hits)
+$ grep -c 'NAMEISPI:YES\|DESCISPI:YES' ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst
+0
+```
+
+Zero declared-PI exposure in the one registered book's source and shipped output alike — re-derived,
+not transcribed from `SD30-E3-F2-001`'s figure.
+
+### 3. The reference test's shape, read before writing anything
+
+`tests/sd29_declared_product_identity_in_shipped_race_traits.rs` read in full (see `git show
+HEAD:tests/sd29_declared_product_identity_in_shipped_race_traits.rs`): reads shipped
+`data/corpus/*/race_trait/**.json`, two tests (NAMEISPI-drop enforcement, DESCISPI-redaction
+enforcement), the latter asserting `declared > 0` because 26 live race-trait rows declared it when
+the suite was written. **This card's own acceptance says to follow that shape "exactly," but §2's
+re-derivation shows `class_feature`'s live corpus has 0 declared rows today** — a literal
+`declared > 0` assertion here would make the suite permanently red on landing, not a live gate. See
+the near-miss event below and §5's design note for how this was resolved without weakening the gate.
+
+### 4. Delivered: `tests/sd30_declared_product_identity_in_shipped_class_features.rs`
+
+Three tests, all reading real shipped `data/corpus/*/class_feature/**.json`:
+
+1. `no_shipped_class_feature_record_publishes_a_name_the_corpus_declares_product_identity` — mirrors
+   the reference suite's NAMEISPI test exactly (offenders list, asserted empty).
+2. `every_class_feature_description_the_corpus_declares_product_identity_ships_redacted` — mirrors
+   the reference suite's DESCISPI test's leak-detection logic exactly, but **without** the
+   `declared > 0` assertion (see §3); states the live declared-count via `eprintln!` every run
+   instead of asserting a floor that doesn't hold for this kind's corpus today.
+3. `the_leak_detectors_actually_fire_on_a_planted_leak_and_clear_on_a_redacted_row` — new, not in the
+   reference suite. Calls the exact `name_leak`/`description_leak` functions tests 1/2 use, against
+   four synthetic rows (planted NAMEISPI leak, planted unredacted-DESCISPI leak, correctly-redacted
+   DESCISPI row, clean row with no declaration) — proves the detection logic itself can fail (fires
+   on both planted leaks) and pass (clears the redacted and clean rows), independent of what the live
+   corpus currently contains. This is what makes tests 1/2's current "0 offenders because 0 records
+   declare PI" state trustworthy rather than vacuous — the mechanism is proven live, not only inferred
+   from an empty result.
+
+The walk function (`shipped_class_feature_records()`) carries the same `assert!(!out.is_empty(), ...)`
+structural guard the reference suite's `shipped_race_trait_records()` has — if every `class_feature`
+directory vanished (a corpus-drift regression), both tests 1/2 fail loudly rather than passing
+vacuously over an empty iterator. This is the acceptance's "make the empty case explicit and assert
+on it" requirement, satisfied at the collection layer since the directory-emptiness case is not the
+live one to design the primary tests' assertions around.
+
+```
+$ cargo test --locked --test sd30_declared_product_identity_in_shipped_class_features
+running 3 tests
+test the_leak_detectors_actually_fire_on_a_planted_leak_and_clear_on_a_redacted_row ... ok
+test no_shipped_class_feature_record_publishes_a_name_the_corpus_declares_product_identity ... ok
+test every_class_feature_description_the_corpus_declares_product_identity_ships_redacted ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+```
+
+### 5. Wiring into `scripts/verify.sh`
+
+No new stage added — `root-full`'s existing `expected_test_suites()` (`scripts/verify.sh:350-352`)
+auto-discovers every top-level `tests/*.rs` file from the filesystem and `run_root_full()` already
+fails the stage if a discovered suite is present but never executed (`missing_n > 0` check,
+`scripts/verify.sh:388-397`). Landing the file is sufficient; verified by inspection of that code
+path, not assumed — quoted above from the live script.
+
+### 6. Prove it — plant a declared-PI row in a scratch copy of shipped output, confirm RED, remove it, confirm GREEN
+
+Run against the real, already-shipped corpus tree (not a fixture), per this card's own acceptance
+wording:
+
+```
+$ DIR=data/corpus/pathfinder_unchained/class_feature/summoner_unchained_class
+$ python3 -c "
+import json
+d = json.load(open('$DIR/unchained_summoner_maker_s_call.json'))
+d['data']['raw_tokens'].append({'key':'NAMEISPI','value':'YES'})
+print(json.dumps(d, indent=2))
+" > "$DIR/zz_scratch_planted_leak.json"
+$ git status --porcelain data/corpus/pathfinder_unchained/class_feature/
+?? data/corpus/pathfinder_unchained/class_feature/summoner_unchained_class/zz_scratch_planted_leak.json
+
+$ cargo test --locked --test sd30_declared_product_identity_in_shipped_class_features
+running 3 tests
+test the_leak_detectors_actually_fire_on_a_planted_leak_and_clear_on_a_redacted_row ... ok
+test no_shipped_class_feature_record_publishes_a_name_the_corpus_declares_product_identity ... FAILED
+test every_class_feature_description_the_corpus_declares_product_identity_ships_redacted ... ok
+
+---- no_shipped_class_feature_record_publishes_a_name_the_corpus_declares_product_identity stdout ----
+thread '...' panicked: a record NAME cannot be redacted, so a row whose name PCGen declares Product
+Identity must not ship at all (`decisions.md §50`, `ogl-pi-blacklist.md` §3); still shipped: [
+    "Unchained Summoner ~ Maker's Call (.../summoner_unchained_class/zz_scratch_planted_leak.json)",
+]
+test result: FAILED. 2 passed; 1 failed
+
+$ rm data/corpus/pathfinder_unchained/class_feature/summoner_unchained_class/zz_scratch_planted_leak.json
+$ git status --porcelain data/corpus/pathfinder_unchained/class_feature/
+(clean)
+
+$ cargo test --locked --test sd30_declared_product_identity_in_shipped_class_features
+running 3 tests
+test the_leak_detectors_actually_fire_on_a_planted_leak_and_clear_on_a_redacted_row ... ok
+test every_class_feature_description_the_corpus_declares_product_identity_ships_redacted ... ok
+test no_shipped_class_feature_record_publishes_a_name_the_corpus_declares_product_identity ... ok
+test result: ok. 3 passed; 0 failed
+```
+
+RED confirmed on the planted leak, GREEN confirmed after removal. The scratch file was untracked
+throughout and never committed — `git status --porcelain` shown clean both before planting and after
+removal.
+
+### 7. Retro event
+
+Emitted `near-miss` `1786751858080-sd30-e3-f4-regression-a3eb57`
+(`docs/retro/events/sd30-e3-f4-regression.jsonl`): mirroring the reference suite's literal
+`declared > 0` assertion onto `class_feature` would have shipped a permanently-red gate (0 declared
+today, vs. 26 for race_trait when that suite was written); caught by re-deriving the live count
+before writing the assertion, resolved by stating the zero case explicitly plus adding the synthetic
+self-test (§4 item 3).
+
+### 8. Forward-scope pointers
+
+Added `C1.7` to this package's `forward-scope-register.md` (Class 1) and `G1.7` to
+`SD-31-corpus-closure-grind/forward-scope-register.md`, cross-pointing, per this card's "document its
+invocation contract for the successor" instruction — the gate is passive (fires automatically inside
+the standing `verify.sh` run), so the "invocation contract" is "nothing to invoke; diagnose per the
+failing test's own message if it goes red."
+
+Added `decisions.md §54` (this closes both `SD30-E3-F4` and, per its own closing instruction,
+`epic-3-pi-gate` as a whole — §54.5 re-derives all four F1-F4 symbols present at `HEAD` by content).
+
+### 9. Wired-integration audit (four-check)
+
+Run against this cycle's own diff (one new untracked file, `tests/sd30_declared_product_identity_in_shipped_class_features.rs`, plus doc edits):
+
+```
+$ git diff --unified=0 -- 'apps/desktop/**/*.ts*' 'apps/desktop/src-tauri/**/*.rs' 'src/**/*.rs' ':!**/__tests__/**' ':!**/*.test.ts' ':!**/*.test.rs' | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS
+OK_NO_TOKENS
+$ git diff --unified=0 -- 'apps/desktop/**/*.tsx' 'apps/desktop/**/*.jsx' | grep -nE 'onClick=\{\s*\(\)\s*=>\s*\{\s*\}\s*\}|onClick=\{undefined' || echo OK_NO_NOOP_HANDLERS
+OK_NO_NOOP_HANDLERS
+$ git diff --unified=0 -- 'apps/desktop/**/*.{ts,tsx,jsx,rs}' ':!**/__tests__/**' ':!**/*.test.*' | grep -nE 'mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__' || echo OK_NO_MOCK_LEAKS
+OK_NO_MOCK_LEAKS
+$ git diff --unified=0 -- 'apps/desktop/**/*.{ts,tsx}' 'src/**/*.rs' | grep -nE '"Would [^"]*"' || echo OK_NO_WOULD_STRINGS
+OK_NO_WOULD_STRINGS
+```
+
+All four clean (the new file is untracked so `git diff` doesn't see it directly; none of the four
+globs match `tests/*.rs` anyway — direct grep of the new file confirms clean independently:
+`grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b|"Would [^"]*"|mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__' tests/sd30_declared_product_identity_in_shipped_class_features.rs` → `OK_FILE_CLEAN`).
+
+### 10. `v06_corpus_trap_report -- --audit` (run standalone, not blocked on the full gate)
+
+```
+$ cargo run --locked --bin v06_corpus_trap_report -- --audit
+(exit 2)
+$ grep -c '\[wiring-class-mismatch\]' <log>
+177
+$ grep -c class_feature <log>
+0
+```
+
+Byte-identical to `SD30-E2-F1-001`/`SD30-E3-F1-001`/`SD30-E3-F2-001`/`SD30-E3-F3-001`'s own
+reproductions. Confirmed pre-existing, unrelated to this cycle's diff.
+
+### 11. `epic-3-pi-gate` closure — F1-F4 confirmed by content, not card status
+
+```
+$ grep -rl pi_table_sweep tests/*.rs                                                                   # F1
+tests/pi_table_sweep.rs
+$ grep -c 'declared_product_identity\|classify_optional_field_declared' src/bin/ingest_pu_classes.rs   # F2
+17
+$ grep -c 'DESCISPI\|redacted_pi_marker' scripts/transcribe_monster_tables.py scripts/transcribe_companion_tables.py  # F3
+scripts/transcribe_monster_tables.py:12
+scripts/transcribe_companion_tables.py:11
+$ grep -c 'name_leak\|description_leak' tests/sd30_declared_product_identity_in_shipped_class_features.rs  # F4 (this cycle)
+11
+```
+
+All four present. `epic-3-pi-gate` flips `IN-FLIGHT` -> `COMPLETE` in `kanban.md`.
+
+### 12. Definition of done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **Gate launched at 19:54 EDT, log at `docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e3-f4-verify.log`. Through `root-lib` (1776 passed) all stages PASS; `root-full` still building its ~490 test binaries at receipt-write time. Exit code NOT YET OBTAINED — not inferred, not fabricated.** A resumed cycle should tail the log for `VERIFY_EXIT=`, corroborate against the log's own `SUMMARY` block per "4b. READING THE EXIT CODE" (never the wrapper/harness status alone), and flip this row. |
+| 2 | Reach stage claim | **N/A** — this cycle adds a regression test, not a new player-visible record family; zero live corpus content changed (the planted-leak file was untracked and removed, §6). Same disposition as `SD30-E3-F1/F2/F3-001`'s item 2. Independently: the gate's own `reach` stage is expected to reproduce its prior 27-test PASS (`SD30-E3-F3-001`'s figure), since this cycle touches no `apps/desktop` code — to be confirmed once the gate reaches that stage. |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **Run standalone, exit 2** (§10), 177 pre-existing `wiring-class-mismatch`, 0 `class_feature` — byte-identical to every prior F-card's reproduction this epic, confirmed pre-existing. |
+| 4 | Guarded work-inventory regen, zero stamp loss | **N/A** — no corpus content or `docs/work-inventory.json` data changed this cycle (the scratch plant/revert in §6 touched only an untracked, non-shipped-by-git scratch file, and was reverted before this receipt). |
+| 5 | Four-check wired-integration audit | **PASS** (§9). |
+| 6 | `OPEN_FINDINGS` for any unsurfaced family | **N/A** — no family surfaced or left unsurfaced this cycle. |
+| 7 | Baseline movements own commit | **N/A directly** — `scripts/verify-baselines.env` not touched this cycle. Note (not owed by this card, same disposition `SD30-E3-F3-001 §12` already recorded): `BASELINE_ROOT_FULL_TESTS` is 6398 recorded vs. a measured 6402 as of `SD30-E3-F3-001`; this cycle's 3 new tests push the real count further above that floor (a rising floor gap, not a shrinking one — the gate's own `check_floor` only fails on going *below* a floor), so this cycle does not make the pre-existing staleness worse and does not owe the dedicated bump commit. |
+| 8 | On-screen verification | **N/A** — no player-visible desktop-app surface touched. The mechanism is a build-time regression test with zero live corpus change (the scratch plant/revert was untracked and reverted, §6); a future ingest cycle that lands real `class_feature` content would be player-visible and would owe DoD-8 at that time, not this one. |
+
+### 13. Card disposition
+
+`SD30-E3-F4` sub-scope: work delivered, proven (both synthetically and against real shipped output),
+committed (pending §14), and the epic-level closure (§11) confirmed by content. **Cycle status at
+time of this receipt: INCOMPLETE, not `decision-blocked`** — the sole open item is `root-full`'s
+exit code, still building. This is the turn-budget condition this bundle's own doctrine names
+explicitly as NOT a stop reason ("Ran out of turn is not blocked"). No STOP condition was
+encountered. If a resumption is needed: tail the verify log for `VERIFY_EXIT=`, corroborate via the
+log's `SUMMARY` block, and flip DoD item 1 (and this section) accordingly — items 2-11 above are
+already settled regardless of the gate's remaining stages' outcome, since this cycle's diff is
+Rust-test-only and adds no new production code path beyond the test file itself.
