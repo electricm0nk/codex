@@ -1512,3 +1512,173 @@ confirm 0 identifier-discipline findings within the doctrine's shipping-surface 
 audit-script-vs-doctrine disagreement found in `scripts/` (out of the shipping-surface scope both the
 script and `decisions.md §26` define) is reported via `retro.py deferral`, not silently resolved
 either way; the audit script's own soundness was proven, not assumed.
+
+## Cycle `SD30-E2-F1-001` — 2026-08-14 — `epic-2-prelaunch` closure (SD30-E2-F1 + SD30-E2-F2)
+
+`RETRO_ACTOR=sd30-e2-prelaunch`, `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-e2-prelaunch`
+(deleted at cycle end, 682M). **HEAD at start:** `aa248507` (`docs(sd30): SD30-E1-F1 — code-side
+identifier-disclosure audit pass, epic-1-identifier COMPLETE`) — `git rev-parse HEAD`,
+`git log --oneline -1`, `git status --porcelain` (dirty — see "Tree state" below),
+`ls docs/release/SD-30-class-feature-archetype-bundle/loop-instruction.md` (present). Package
+present and tree not fully clean, but the dirt is pre-existing, out-of-scope, and not from a bundle
+crash — no reset performed (see below). `epic-1-identifier` gate: `COMPLETE` per `kanban.md`,
+confirmed by content in the same read.
+
+### Tree state at cycle start — investigated, not ignored
+
+`git status --porcelain` showed `M .gitignore`, `?? .github/workflows/deploy-site.yml` before this
+cycle touched anything. Investigated rather than assumed benign: `git diff .gitignore` shows a
+3-line `.wrangler/` cache-ignore addition; the untracked workflow file is a Cloudflare-Pages
+site-deploy GitHub Action, both unrelated to SD-30's `class_feature`/instrument-apply scope.
+`./scripts/reclaim.sh`'s branch-skip listing (this cycle's own §"Reclaim" below) independently
+confirms live, unmerged `site-deploy` and `fix/site-deploy-page-workflow` branches with upstream
+present — a concurrent, unrelated agent's live work on this shared checkout, not stranded SD-30
+debris. Per shared-checkout discipline this cycle did not touch, stage, or commit either file.
+
+### 1. SD30-E2-F1 — Local-file dispatch readiness
+
+**Acceptance 1 — `kanban.md` vs `epic-breakdown.md` agreement post-split.** Read both files fresh
+(not from the P0.5/`SD30-PRELAUNCH-002` receipts, which predate `epic-1-identifier`'s close).
+`kanban.md`'s per-epic table rows and `epic-breakdown.md`'s "Scope narrowed 2026-08-14" section
+(`decisions.md §51`) both independently state the same partition:
+
+- Live: `0` (COMPLETE), `1` (COMPLETE), `2` (this cycle), `3`, `7`, `8`, `9`.
+- MOVED to `SD-31-corpus-closure-grind`: `4, 5, 6, 10, 11` (renumbered `1-5` there).
+- MOVED to `SD-32-engine-capability-builds`: `12, 13` (renumbered `1-2` there).
+- SPLIT: `14` (grind-lane to SD-31 Epic 6, capability-build-lane to SD-32 Epic 3).
+
+**No disagreement between the two files.** One stale sub-detail found and reported, not silently
+fixed: `epic-breakdown.md:135`'s SD30-E2-F1 acceptance bullet itself reads "the 9 re-cut epics" —
+correct as of 2026-08-10 (when SD-30 had exactly Epics 1-9) but now undercounts the file's own
+current epic set (7 live + 8 moved/split = 15 numbered epics, 0-14). This is stale wording on one
+acceptance bullet, not a disagreement between the two files' actual card lists (both of which
+already independently state the current 7-epic live scope elsewhere in the same files, correctly) —
+left as historical text per this package's own "original text stays, corrections point forward"
+convention (the same one `decisions.md §51` itself follows two paragraphs later in the same file),
+rather than edited, to avoid two documents claiming authorship of the same correction.
+
+**Acceptance 2 — re-scope receipt in `progress.md`.** Present: `## 2026-08-14 — Split: Phase 3 to
+SD-31, Phase 4 to SD-32 (`decisions.md §51`)`, this file, confirmed by `grep`.
+
+**Acceptance 3 — working tree clean.** Not literally empty (see "Tree state" above); the non-empty
+state is pre-existing, out-of-scope, unrelated-agent work, not SD-30 debris left by a prior cycle.
+No SD-30-scoped uncommitted work found at cycle start.
+
+### 2. SD30-E2-F2 — Branch state + cycle-0 trap-report + work-inventory
+
+**Branch pushed:** `git rev-parse HEAD` = `git rev-parse origin/tranche/10` = `aa248507...` — already
+pushed, no divergence.
+
+**Guarded work-inventory regen (DoD item 4 procedure, never a bare run):**
+
+```
+$ cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/.../sweep.json
+corpus-literal-sweep: 3516 records examined of 9328 read, 36105 tokens compared (9 synthesized),
+8903 digests checked, 0 findings
+corpus-literal-sweep: CLEAN                                                    # exit 0
+
+$ cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/.../fixture.json
+derived-evaluator-fixture-check: 49 of 94 covered units cleared; 1 failed; 44 not ingested
+derived-evaluator-fixture-check: FAIL advanced_players_guide:equipment:spindle_of_perfect_knowledge:
+corpus row states BONUS:STAT|INT,WIS,CHA|4|TYPE=Enhancement but the evaluator produced no ability
+bonus at all                                                                   # exit 0 (known, live-confirmed pre-existing fail, same unit F1/F4 already recorded — instrument correctly refuses to stamp it)
+
+$ CORPUS_LITERAL_SWEEP_REPORT=/tmp/.../sweep.json DERIVED_FIXTURE_CHECK_REPORT=/tmp/.../fixture.json \
+  cargo run --locked --bin v06_work_inventory                                  # exit 0
+```
+
+`git diff --stat docs/work-inventory.json` → 1 line changed (`generated_at` only); `git diff
+docs/work-inventory.json | grep -v generated_at` → 0 non-generated_at lines. **Zero stamp loss**,
+the guard's own success condition. Stamp count confirmed by grep of the regenerated file:
+`"literal-verified": 2322`, `"fixture-verified": 49` — `2371` total, byte-match to `SD30-E0-F1-001`/
+`SD30-E0-F4-001`'s own figure.
+
+**Book roster re-derived fresh, not transcribed from `decisions.md §33`:**
+
+```python
+d = json.load(open('docs/work-inventory.json'))['units']
+cf = [u for u in d if u['kind']=='class_feature']
+# len(cf) = 15472; len(set(u['book'] for u in cf)) = 23
+```
+
+Result: **15,472 `class_feature` units across 23 books**, per-book counts (2396 advanced_class_guide,
+2055 advanced_players_guide, 1422 ultimate_psionics, 1412 ultimate_combat, 1070 ultimate_magic, 979
+occult_adventures, 959 core_rulebook, 866 ultimate_wilderness, 777 ultimate_intrigue, 700
+adventurers_guide, 645 advanced_race_guide, 577 pathfinder_unchained, 419 horror_adventures, 314
+inner_sea_combat, 218 inner_sea_magic, 212 book_of_the_damned_volume_2, 171 inner_sea_world_guide,
+169 inner_sea_intrigue, 68 monster_codex, 18 bestiary_6, 11 inner_sea_taverns, 10
+book_of_the_damned_volume_1, 4 bestiary_4) — **identical, book-for-book and unit-for-unit, to
+`decisions.md §33`'s table.** No discrepancy found; no correction needed; this package's own figure
+is confirmed current, not just re-asserted. Per the card's SCOPE NOTE and this cycle's own read of
+`kanban.md`, `epic-6-chassis-sweep` (the only card that ever pins a book) is `MOVED` to
+`SD-31-corpus-closure-grind` — **this cycle, and no other live SD-30 card, targets any book.**
+Stating that instead of running 23 no-op trap-reports; the re-derived 23-book roster above is the
+deliverable `SD-31-corpus-closure-grind` consumes at its own cycle-0 (its own `epic-1-measurement`
+inherits this exact figure as its starting-state citation).
+
+**`v06_corpus_trap_report -- --audit` (DoD item 3):**
+
+```
+TRAP   DEFECT
+259        0  mod-record
+  0      177  wiring-class-mismatch
+```
+Exit **2**. All 177 defects are `wiring-class-mismatch` findings (stored `display` vs freshly-computed
+`derived`, all `prose_formula_segment` signals) split 33 `companion` / 3 `monster` / 141
+`monster_ability` — byte-identical in total and in the by-kind split to `SD30-E0-F1-001`/
+`SD30-E0-F2-001`/`SD30-E0-F4-001`'s own prior reproduction of this exact defect set. Confirmed
+pre-existing (predates this cycle, predates Epic 0's own closure), neither caused nor worsened by
+this cycle's regen. Not this card's scope to remediate (it is an Epic-0-owned wiring-class
+classifier finding on `companion`/`monster`/`monster_ability` kinds, already characterized and
+tracked by that epic's own closed cycles) — recorded honestly per the exit code, not silently
+absorbed into a claimed PASS.
+
+### 3. Definition of done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **N/A as a full run.** No Rust/Python production code changed this cycle (only the guarded regen of the generated `docs/work-inventory.json` via existing sanctioned binaries, plus doc/kanban edits). `./scripts/verify.sh --only preflight-disk` run per this cycle's own preflight step: exit 0 (`23% used, 751G available`). |
+| 2 | Reach stage claim | **N/A** — no code touched, no family surfaced or changed this cycle. |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **Run, exit 2** (177 pre-existing `wiring-class-mismatch` defects, byte-identical to F1/F2/F4's own prior reproduction — not caused or worsened by this cycle). Recorded per instruction, not weakened to a false PASS. |
+| 4 | Guarded work-inventory regen, zero stamp loss | **PASS.** Sanctioned three-binary procedure run in order; second-run diff shows only `generated_at` changed; 2,322 + 49 = 2,371 stamps intact. |
+| 5 | Four-check wired-integration audit | **N/A** — no production code changed this cycle. |
+| 6 | `OPEN_FINDINGS` for any unsurfaced family | **N/A** — no family left unsurfaced by this cycle; the 177 `wiring-class-mismatch` defects are a pre-existing, already-tracked (by Epic 0's own closed cycles) classifier finding outside this card's scope, not a new gap this cycle introduced. |
+| 7 | Baseline movements own commit | **N/A** — `scripts/verify-baselines.env` not touched. |
+| 8 | On-screen verification | **N/A** — no player-visible desktop-app surface touched; this cycle regenerated a generated data file and edited two Markdown docs. |
+
+### 4. Retro events
+
+Auto-emitted by `./scripts/verify.sh --only preflight-disk`:
+`1786744697403-sd30-e2-prelaunch-3af596` (`verification`, PASS, `docs/retro/events/sd30-e2-prelaunch.jsonl`).
+No `correction` event emitted this cycle — every figure re-derived (the 23-book roster, the 2,371
+stamp count, the 177-defect trap-report figure) matched the package's existing record exactly; no
+competing claim was found to correct.
+
+### 5. Reclaim
+
+```
+$ ./scripts/reclaim.sh              # dry run: 0 reclaimable items (10 worktrees + 2 branches
+                                     #   correctly skipped as live/unmerged, matching the site-deploy
+                                     #   finding above)
+$ ./scripts/reclaim.sh --apply
+  reclaimed: 0 item(s), 0.0B total
+```
+Disk at 23% used / 752G available (`df -h /`) both before and after — 0.0B reads as "nothing stale to
+reclaim," not "structurally full," consistent with the low-utilization reading. This cycle's own
+`CARGO_TARGET_DIR` (682M, `/home/ubuntu/cargo-targets/sd30-e2-prelaunch`) manually deleted at cycle
+end per the per-agent-target-dir cleanup rule (too young for `reclaim.sh`'s 6h window, not covered
+by the automated pass).
+
+### 6. Card disposition
+
+**`epic-2-prelaunch` flipped to `COMPLETE`** in `kanban.md` (`Claimed-by: sd30-e2-prelaunch`,
+`Cycle-id: SD30-E2-F1-001`). Both SD30-E2-F1 and SD30-E2-F2 acceptance criteria re-verified fresh
+against the current HEAD (post-`epic-1-identifier`), not assumed still true from the pre-epic-1
+P0.5/`SD30-PRELAUNCH-002` receipts. `epic-3-pi-gate` (gated on epic-1, epic-2) and
+`epic-7-version` (gated on epic-1) are now unblocked by this card's closure per `kanban.md`'s own
+gating notation.
+
+**Verdict: SD30-E2-F1 + SD30-E2-F2 COMPLETE.** DoD items 1-2, 5-8 N/A with stated reasons
+(measurement/doc-only cycle, no code or corpus content change, no book targeted). Item 3 run and
+recorded honestly at its true exit code (2, pre-existing, out of this card's remediation scope).
+Item 4 PASS. No STOP condition encountered; no `decision-blocked` recorded.

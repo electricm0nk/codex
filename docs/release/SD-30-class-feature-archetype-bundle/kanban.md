@@ -54,7 +54,7 @@ surface the operator and orchestrator both read for live progress. No card outra
 |----|--------|------|-----------|------------|------------|----------|
 | `epic-0-instrument-apply` | COMPLETE | **Order 1 — Apply Existing Instruments to `held` (dashboard/reporting, Job 1)** | `done`-rung build (static/derived) + computed-bucket consumer-delta probes, corpus-wide + `unknown`-residue characterization (`feat`) + re-derivation reporting | sd30-e0-f4-report | 2026-08-14T17:40:31-04:00 | `SD30-E0-F4-001` |
 | `epic-1-identifier` | COMPLETE | Code-Side Identifier Cleanup | identifier-discipline audit pass | sd30-e1-identifier | 2026-08-14T21:49:20Z | `SD30-E1-F1-001` |
-| `epic-2-prelaunch` | READY (gated on epic-1) | Operator Pre-Launch | local-file dispatch readiness + cycle-0 trap-report + work-inventory (23-book `class_feature` re-derivation) | — | — | — |
+| `epic-2-prelaunch` | COMPLETE | Operator Pre-Launch | local-file dispatch readiness + cycle-0 trap-report + work-inventory (23-book `class_feature` re-derivation) | sd30-e2-prelaunch | 2026-08-14T22:10:00Z | `SD30-E2-F1-001` |
 | `epic-3-pi-gate` | READY (gated on epic-1, epic-2) | PI-Screening Provenance Gate | per-class PI-blacklist sweep (SD30-E3-F1) + declared-PI reader wired into class_feature ingest (SD30-E3-F2, `decisions.md §39`) + corpus-wide declared-PI backfill (SD30-E3-F3) + regression gate (SD30-E3-F4) — F2 hard-blocks epic-6, no chassis-sweep cycle may claim a class before F2 is COMPLETE | — | — | — |
 | `epic-4-measurement` | **MOVED to `SD-31-corpus-closure-grind/kanban.md` `epic-1-measurement` (`decisions.md §51`, 2026-08-14)** | Per-Class Archetype Measurement | class inventory + per-class hand-verification + chooser-primitive design + `unknown`-bucket characterization | — | — | — |
 | `epic-5-mechanism` | **MOVED to `SD-31-corpus-closure-grind/kanban.md` `epic-2-mechanism` (`decisions.md §51`)** | Archetype Mechanism | supersession-shape wiring per cleared class; chooser-shape wiring once epic-4-F3 lands | — | — | — |
@@ -222,6 +222,48 @@ content** (grepped the landed symbols fresh this cycle, not read from card statu
 `artifacts/sd30-e0-f3-unknown-residue/` artifact directory (F3), and this update plus the re-derived
 figures above (F4) — all present at `HEAD` (`3a3b89d1` before this cycle's own doc commit), confirmed
 an ancestor of `origin/tranche/10`.
+
+## Update (2026-08-14, `SD30-E2-F1-001`) — `epic-2-prelaunch` COMPLETE
+
+Re-verified every SD30-E2-F1/F2 acceptance criterion fresh rather than trusting the P0.5
+(2026-08-14, pre-epic-1) and `SD30-PRELAUNCH-002` (2026-08-14, HEAD `e39a7f47`) receipts still held
+after `epic-1-identifier` closed (HEAD now `aa248507`):
+
+- **F1 — kanban.md vs `epic-breakdown.md` agreement, post-split:** confirmed by direct read of both
+  files, not by re-trusting either's own claim. `kanban.md`'s per-epic rows and `epic-breakdown.md`
+  §"Scope narrowed 2026-08-14" both independently state the identical live/moved/split partition:
+  live `0,1,2,3,7,8,9`; MOVED `4,5,6,10,11` -> `SD-31-corpus-closure-grind`; MOVED `12,13` ->
+  `SD-32-engine-capability-builds`; `14` SPLIT across both. **No disagreement found — neither file
+  needed a fix.** (The SD30-E2-F1 acceptance text's own "9 re-cut epics" phrasing in
+  `epic-breakdown.md` line 135 predates Epic 0/10-14 and the split; it is stale wording on a
+  sub-bullet, not a disagreement between the two files' actual card lists, so left as historical
+  text per this package's standing convention rather than edited — the same convention `decisions.md
+  §51` itself uses.) Working tree: `git status --porcelain` shows only pre-existing, out-of-scope
+  changes (`.gitignore`, `.github/workflows/deploy-site.yml`) belonging to a live, unrelated
+  `site-deploy`/`fix/site-deploy-page-workflow` branch effort on this shared checkout (confirmed via
+  `./scripts/reclaim.sh`'s branch-skip list) — not SD-30 debris, not touched by this cycle.
+  Re-scope receipt in `progress.md`: present (`## 2026-08-14 — Split: Phase 3 to SD-31, Phase 4 to
+  SD-32`).
+- **F2 — branch/trap-report/work-inventory:** `tranche/10` local HEAD `aa248507` == `origin/tranche/10`
+  (`git rev-parse`, both sides). Guarded work-inventory regen run (DoD item 4 procedure, not a bare
+  run): `corpus_literal_sweep` exit 0 (CLEAN, 3516/9328 records, 0 findings), 
+  `derived_evaluator_fixture_check` exit 0 (49/94 cleared, 1 known pre-existing fail —
+  `spindle_of_perfect_knowledge`, same as F1/F4's own prior finding), `v06_work_inventory` guarded
+  run exit 0. `git diff --stat docs/work-inventory.json` — 1 line changed (`generated_at` only),
+  **zero stamp loss confirmed** (`2322 literal-verified + 49 fixture-verified = 2371`, byte-match to
+  F1/F4). Book roster **re-derived fresh** from the regenerated file
+  (`python3 -c "... kind=='class_feature' ..."`): **15,472 units, 23 books**, per-book counts
+  identical to `decisions.md §33`'s table down to the unit — **no discrepancy, no correction
+  needed.** Since Epic 6 (the only card that ever pins a book) is `MOVED` to SD-31, **this cycle
+  targets no book** — stating that rather than running 23 no-op trap-reports; the re-derived roster
+  above is the artifact SD-31 consumes. `v06_corpus_trap_report -- --audit`: exit 2, 177 pre-existing
+  `wiring-class-mismatch` defects (33 companion / 3 monster / 141 monster_ability), byte-identical in
+  count and kind-split to F1/F2/F4's own prior reproduction — confirmed pre-existing, not caused or
+  worsened by this cycle.
+
+Full receipt, all commands verbatim, DoD table: `progress.md`, cycle `SD30-E2-F1-001`.
+
+**`epic-2-prelaunch` flipped to `COMPLETE`.**
 
 ## Operator override slot
 
