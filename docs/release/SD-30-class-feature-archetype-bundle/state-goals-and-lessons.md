@@ -109,6 +109,15 @@ SD-30 owns the **full path to closure for every kind**: instrument application A
 3. **Epic 10 — ingest lanes** (F1 monster, F2 spell, F3 race, F4 race_trait), each gated behind the
    PI screen per book.
 
+### 2.2.1 Pointer (2026-08-14, `decisions.md §49`) — table-sheet doneness doctrine
+
+> **Correction/addition:** the operator ratified SD-32 `decisions.md §2`'s open `static`/`derived`
+> "no `done` rung" measurement gate on 2026-08-14, unblocking E5/E6, and stated the underlying
+> doctrine: `done` means the character sheet exposes the end rule with a true resolved value for
+> this character (parameters resolved, rule displayed) — not that the engine simulates the
+> mechanism (dice-rolling, arithmetic happen at the table). See `decisions.md §49` for the verbatim
+> ruling and full consequences; this section's Epic 0/ordering material is otherwise unchanged.
+
 ### 2.3 The honest ceiling
 
 > **Correction (2026-08-14, `decisions.md §45`, operator directive, launch session):** this

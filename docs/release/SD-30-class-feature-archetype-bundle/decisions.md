@@ -1603,3 +1603,57 @@ mechanical/housekeeping work, Opus reserved for adversarial-verification or judg
 
 **Authority:** operator directive, launch session, transcribed 2026-08-14; `decisions.md §25` (the
 setting being superseded, kept visible per this package's standing convention).
+
+## Decision 49 — The table-sheet doneness doctrine (operator ruling) — SD-32 `§2` answered, E5/E6 unblocked (2026-08-14, operator directive, launch session)
+
+**Status:** New. Operator ruling, launch session, 2026-08-14.
+
+**The ruling, verbatim:**
+
+> I would rather bring SD-32 into the SD-30 scope. I think the gist of what I was
+> saying with "done rung for static and derived" was basically that some things do
+> not require computation. If a fireball is 1d6 per spellcaster level - you don't
+> need to compute 6d6 for a 6th level caster - you need to display that the
+> fireball spell is 6d6 because the character in question is 6th level. That's
+> just printed in the character sheet. The actual rolling of 6d6 happens on a
+> table, with dice, and the additions are added by the player's brain. Our goal
+> here is to print a character sheet that the user can use at the table - we are
+> not making a video game. So in many cases we just need to expose the end rule -
+> once we can do that it's done. If a spell says 1d6 per character level, you just
+> need to be able to determine the character level and say the true value when the
+> character sheet is created.
+
+**Operative consequences:**
+
+(a) SD-32 `decisions.md §2` — the open "no `done` rung for `static`/`derived`" measurement gate
+blocking epics E5 (`e5-static-sweep`) and E6 (`e6-derived-check`) — is **ANSWERED**. The
+`literal-verified`/`fixture-verified` status word and its verdict-table mapping
+(`static`/`derived` + that word → `done`) proposed in SD-32 `decisions.md §2` are ratified,
+retroactively covering the rung's actual landing during the SD-29 → SD-30 handoff. E5 and E6 are
+unblocked, owned as SD-30 scope under `epic-0-instrument-apply` (`kanban.md`, this package;
+SD-32's own kanban also records the two cards `READY` directly).
+
+(b) The doneness bar, product-wide, is: **the character sheet exposes the end rule with its true
+resolved values for this character.** Parameter resolution (e.g. resolving caster level) plus
+truthful display (e.g. printing "6d6") is the bar — not simulating the mechanism (rolling the dice,
+summing the result). Rolling and arithmetic happen at the table, in the player's hands, by design;
+this product prints a sheet, it does not run a video-game engine.
+
+(c) This bar governs Epic 4/5/6 `class_feature` acceptance directly: a feature is accepted once its
+rule is resolved to a true, character-specific value and displayed — not once its mechanism is
+internally simulated. It also governs Epic 13's verdict-path design for unmeasurable/ambiguous
+units: the operative verdict question is "can the sheet print the true end rule for this character,"
+not "can the engine compute the outcome."
+
+(d) **This does not relax anything.** A resolved value must still be **true** — `static` values pass
+byte-equality against the corpus literal, `derived` values pass evaluator-vs-fixture verification,
+per SD-32 `decisions.md §2`'s original mechanism, unchanged — and **displayed** — reach/on-screen
+verification still applies to every player-visible surface. A unit that fails either check stays
+`held` and is reported, not stamped; Decision §1's anti-gaming rule (no reclassifying, no loosening a
+check, no counting `held` as `done`, no bar-editing to move a number) is untouched. Zero-magnitude
+text `display` features shown to the player remain `done` per the standing v0.6 ruling
+(`v06-text-only-features-are-complete`), unchanged and consistent with (b).
+
+**Authority:** operator directive, launch session, transcribed 2026-08-14, quoted verbatim above;
+SD-32 `decisions.md §2` (the decision answered); SD-30 `decisions.md §43` (the fold of SD-32 into
+SD-30, under which this ruling's SD-32-scoped consequences are recorded).

@@ -37,8 +37,8 @@ Rows are in claim-priority order, matching `scope-draft.md §5`'s dispatch order
 | `e4-classifier-calibration` | READY | Classifier — hand-labelled sample (E4-F1, gate) | 0 (gates 1,776) | 2a | — | — | — |
 | `e3-effect-wiring` | READY (gated on e2-probe-coverage) | Equipment Effect Wiring for Inert Items | 375 | **3** / 125 | — | — | — |
 | `e4-classifier` | READY (gated on e4-classifier-calibration opening the gate) | Wiring-Class Classifier (E4-F2, E4-F3) | 1,776 | **2** / 444 ceiling | — | — | — |
-| `e5-static-sweep` | BLOCKED (decision) — `decisions.md §2` | Static Corpus-Literal Byte-Equality Sweep | 4,805 | 0 today (1,602 if gate opens) | — | — | — |
-| `e6-derived-check` | BLOCKED (decision) — `decisions.md §2` | Derived Evaluator-vs-Fixture Check | 2,674 | 0 today (535 if gate opens) | — | — | — |
+| `e5-static-sweep` | READY (`decisions.md §2` answered 2026-08-14; SD-32 folded into SD-30, `SD-30 decisions.md §49`) | Static Corpus-Literal Byte-Equality Sweep | 4,805 | 1,602 | — | — | — |
+| `e6-derived-check` | READY (`decisions.md §2` answered 2026-08-14; SD-32 folded into SD-30, `SD-30 decisions.md §49`) | Derived Evaluator-vs-Fixture Check | 2,674 | 535 | — | — | — |
 | `e7-structural-report` | READY | Structural-Block Report | 0 (by design) | — | — | — | — |
 | `e8-code-review` | READY (gated on e2, e3, e4, e7) | Bundle Code Review | — | — | — | — | — |
 | `e9-closure` | READY (gated on every other claimable card) | Closure | — | — | — | — | — |

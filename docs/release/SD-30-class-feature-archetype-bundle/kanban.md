@@ -114,6 +114,18 @@ still gates both `epic-5-mechanism` and `epic-6-chassis-sweep` per class. SD-32'
 `./scripts/verify.sh` per `AT-30-002`, already a standing per-cycle requirement, not a new card. No
 reordering needed.
 
+## Update (2026-08-14, `decisions.md §49`) — SD-32's E5/E6 unblocked, now part of `epic-0-instrument-apply`
+
+SD-32 `decisions.md §2` (the `static`/`derived` "no `done` rung" measurement gate, formerly `BLOCKED
+(decision)` on the SD-32 board's `e5-static-sweep`/`e6-derived-check` cards) is **ANSWERED** by
+operator ruling, 2026-08-14 (the table-sheet doneness doctrine — `decisions.md §49`). The
+`literal-verified`/`fixture-verified` rung and its verdict-table mapping are ratified. Those two
+cards' work — the static corpus-literal byte-equality sweep (4,805 ceiling, 1,602 movable) and the
+derived evaluator-vs-fixture check (2,674 ceiling, 535 movable) — is corpus-wide instrument-application
+work with no `class_feature`-only scope, so it is claimed under **`epic-0-instrument-apply`** above
+(already `READY`, already Order 1) rather than as separate cards on this board; SD-32's own kanban
+records their `READY` status directly for cycles that read that package's queue.
+
 ## Operator override slot
 
 Operator may add or remove cards directly by editing this file. Cycle

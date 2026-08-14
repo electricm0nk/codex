@@ -53,8 +53,9 @@ exists under; every other decision in this file is subordinate to it.
 
 ## Decision 2 — The verdict table has no `done` rung for `static`/`derived` (MEASUREMENT GATE)
 
-**Status:** OPEN — decision request to the operator / dashboard owner. Gates
-epics E5 and E6. No cycle may act on it unilaterally.
+**Status:** ANSWERED (2026-08-14). Gated epics E5 and E6; both now unblocked as
+SD-30 scope (SD-32 folded into SD-30 per SD-30 `decisions.md §43`). See the
+answer block below.
 
 **Finding, re-derived.** The producer's `doneness_verdict()` table maps
 `static` and `derived` to `held` for **every** status it accepts
@@ -93,6 +94,50 @@ above.**
 **Until this is answered:** E5 and E6 stay `BLOCKED` on the kanban. Their work
 is real and their instruments are worth building on the merits — but this
 package does not pretend they move the number.
+
+**Answer (operator, 2026-08-14, launch session).** The operator ratified the
+`literal-verified`/`fixture-verified` rung proposed above — and its verdict-table
+mapping (`static`/`derived` + that word → `done`) — retroactively covering the
+rung's actual landing during the SD-29 → SD-30 handoff, and brought SD-32's
+remaining scope formally into SD-30 (this decision is recorded here, in the
+SD-32 package, because it answers an SD-32-numbered decision; the operative
+consequences are also recorded in SD-30 `decisions.md §49`). E5
+(`e5-static-sweep`) and E6 (`e6-derived-check`) are unblocked.
+
+The operator's words, verbatim:
+
+> I would rather bring SD-32 into the SD-30 scope. I think the gist of what I was
+> saying with "done rung for static and derived" was basically that some things do
+> not require computation. If a fireball is 1d6 per spellcaster level - you don't
+> need to compute 6d6 for a 6th level caster - you need to display that the
+> fireball spell is 6d6 because the character in question is 6th level. That's
+> just printed in the character sheet. The actual rolling of 6d6 happens on a
+> table, with dice, and the additions are added by the player's brain. Our goal
+> here is to print a character sheet that the user can use at the table - we are
+> not making a video game. So in many cases we just need to expose the end rule -
+> once we can do that it's done. If a spell says 1d6 per character level, you just
+> need to be able to determine the character level and say the true value when the
+> character sheet is created.
+
+**Reasoning, as ratified.** The product bar is a table-usable character sheet,
+not a simulation engine. `done` for a `static` or `derived` unit means the sheet
+exposes the end rule with a true resolved value for *this* character — the
+parameters (e.g. caster level) are resolved and the rule is displayed correctly
+(e.g. "6d6"); the rolling of the dice and the arithmetic of applying the result
+happen at the table, in the player's hands, and are explicitly out of scope for
+the engine to simulate. This is the same reasoning already ratified for
+zero-magnitude `display` text features (`v06-...` standing ruling) extended to
+`static`/`derived` numeric rules: a correctly resolved and displayed formula is
+as complete as a computed one, for this product.
+
+**The constraint that stands, unrelaxed.** Only units that genuinely pass the
+byte-equality (`static`) or fixture-verification (`derived`) check earn the new
+status word and the `done` verdict; a unit that fails either check stays `held`
+and is reported, not stamped. Decision §1's anti-gaming rule — no reclassifying,
+no loosening a check, no counting `held` as done, no editing a bar to move a
+number — is untouched by this answer; the rung was added because it was earned
+on the merits (per the "why this is not a §1 violation" reasoning above), not to
+relax anything.
 
 ## Decision 3 — The wiring-class classifier is accepted on accuracy, not on movement
 
