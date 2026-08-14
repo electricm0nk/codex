@@ -3740,6 +3740,40 @@ fn load_derived_fixture_verified(path: &Path) -> BTreeSet<String> {
     out
 }
 
+/// The set of unit `id`s carrying a done-rung stamp (`literal-verified` or
+/// `fixture-verified`) in a `work-inventory.json` document. Shared by the
+/// regenerator's own stamp-loss guard (see [`stamp_loss`]) and its tests, so
+/// the guard's notion of "stamped" can never drift from what it protects.
+/// Returns an empty set on any parse failure -- an unreadable document proves
+/// nothing about what it used to carry, and the guard below treats an empty
+/// "previously stamped" set as "nothing to lose", never as an error, so a
+/// malformed existing file cannot itself block a regeneration.
+fn stamped_ids(inventory_json: &str) -> BTreeSet<String> {
+    let Ok(parsed) = serde_json::from_str::<serde_json::Value>(inventory_json) else {
+        return BTreeSet::new();
+    };
+    parsed["units"]
+        .as_array()
+        .into_iter()
+        .flatten()
+        .filter(|u| matches!(u["status"].as_str(), Some("literal-verified") | Some("fixture-verified")))
+        .filter_map(|u| u["id"].as_str().map(|s| s.to_string()))
+        .collect()
+}
+
+/// The stamp-loss guard's own decision (operator directive 2026-08-14,
+/// hazard 1 of `SD-30-class-feature-archetype-bundle/state-goals-and-lessons.md`
+/// §1.3): every unit id `existing_inventory_json` currently carries a
+/// `literal-verified`/`fixture-verified` stamp for, that `incoming_stamped`
+/// (the freshly computed run's own stamped set) does not reproduce. A plain
+/// regen run with neither `CORPUS_LITERAL_SWEEP_REPORT` nor
+/// `DERIVED_FIXTURE_CHECK_REPORT` set produces an empty `incoming_stamped`,
+/// so every currently-stamped id comes back here -- exactly the silent-loss
+/// hazard this function exists to make loud instead.
+fn stamp_loss(existing_inventory_json: &str, incoming_stamped: &BTreeSet<String>) -> BTreeSet<String> {
+    stamped_ids(existing_inventory_json).difference(incoming_stamped).cloned().collect()
+}
+
 fn json_field_str(obj: &str, key: &str) -> Option<String> {
     let needle = format!("\"{key}\":\"");
     let start = obj.find(&needle)? + needle.len();
@@ -4860,6 +4894,41 @@ fn main() {
     }
 
     let output_path = repo_root.join(OUTPUT_RELATIVE_PATH);
+
+    // Stamp-loss guard (operator directive 2026-08-14, hazard 1 of
+    // SD-30-class-feature-archetype-bundle/state-goals-and-lessons.md §1.3):
+    // a plain regen run -- neither `CORPUS_LITERAL_SWEEP_REPORT` nor
+    // `DERIVED_FIXTURE_CHECK_REPORT` set -- silently overwrites every
+    // `literal-verified`/`fixture-verified` status this file currently
+    // carries with nothing, and the diff looks like an ordinary refresh.
+    // Refuse to write over a real stamp loss unless the operator explicitly
+    // opts in with `--allow-stamp-loss`; a missing/unreadable existing file
+    // has nothing to lose and never blocks the write.
+    let allow_stamp_loss = args.iter().any(|a| a == "--allow-stamp-loss");
+    if let Ok(existing) = std::fs::read_to_string(&output_path) {
+        let incoming_stamped: BTreeSet<String> = inventory
+            .iter()
+            .filter(|item| matches!(item.verdict.status, "literal-verified" | "fixture-verified"))
+            .map(|item| item.id.clone())
+            .collect();
+        let lost = stamp_loss(&existing, &incoming_stamped);
+        if !lost.is_empty() && !allow_stamp_loss {
+            eprintln!(
+                "refusing to write {}: this run would drop {} of the {} verification \
+                 stamp(s) (literal-verified/fixture-verified) it currently carries. Set \
+                 CORPUS_LITERAL_SWEEP_REPORT and DERIVED_FIXTURE_CHECK_REPORT to the sweep's \
+                 and the fixture check's `--json-out` reports before regenerating (see \
+                 loop-instruction.md DoD item 4), or pass --allow-stamp-loss to proceed anyway. \
+                 First offenders: {}",
+                output_path.display(),
+                lost.len(),
+                stamped_ids(&existing).len(),
+                lost.iter().take(10).cloned().collect::<Vec<_>>().join(", ")
+            );
+            std::process::exit(1);
+        }
+    }
+
     if let Some(parent) = output_path.parent() {
         let _ = std::fs::create_dir_all(parent);
     }
@@ -6905,5 +6974,103 @@ mod class_feature_consumer_delta_tests {
             probe_class_feature_key(&fixture, &class_books, &lonely, "Rage Power ~ Superstition"),
             ClassFeatureProbeOutcome::NoSiblingToControlAgainst
         );
+    }
+}
+
+/// P0.1 (SD-30 pre-launch remediation, hazard 1 of
+/// `state-goals-and-lessons.md` §1.3): the regenerator must never silently
+/// overwrite a `literal-verified`/`fixture-verified` stamp with nothing. These
+/// tests exercise the guard's pure decision function directly -- no corpus
+/// checkout, no subprocess -- so the RED/GREEN cycle stays fast and CI-safe.
+#[cfg(test)]
+mod stamp_loss_guard_tests {
+    use super::*;
+
+    fn inventory_json(units: &[(&str, &str)]) -> String {
+        let rows: Vec<String> = units
+            .iter()
+            .map(|(id, status)| format!("{{\"id\": \"{id}\", \"status\": \"{status}\"}}"))
+            .collect();
+        format!("{{\"units\": [{}]}}", rows.join(", "))
+    }
+
+    /// `stamped_ids` picks out exactly the two done-rung statuses, ignoring
+    /// every ordinary status a unit might otherwise carry.
+    #[test]
+    fn stamped_ids_finds_only_the_two_done_rung_statuses() {
+        let doc = inventory_json(&[
+            ("a", "literal-verified"),
+            ("b", "fixture-verified"),
+            ("c", "grounded"),
+            ("d", "not-ingested"),
+        ]);
+        let ids = stamped_ids(&doc);
+        assert_eq!(ids, BTreeSet::from(["a".to_string(), "b".to_string()]));
+    }
+
+    /// The defect this guard exists to catch: a plain regen (no sweep/fixture
+    /// reports, so `incoming_stamped` is empty) against an existing inventory
+    /// that carries real stamps must report EVERY one of them as lost. Before
+    /// the guard existed, nothing in this binary ever computed this set --
+    /// the loss happened silently at `std::fs::write`.
+    #[test]
+    fn a_plain_regen_against_a_stamped_inventory_loses_every_stamp() {
+        let existing = inventory_json(&[
+            ("advanced_class_guide:class_feature:rage_power_abyssal_blood", "literal-verified"),
+            ("core_rulebook:feat:power_attack", "fixture-verified"),
+            ("core_rulebook:feat:cleave", "grounded"),
+        ]);
+        let incoming_stamped: BTreeSet<String> = BTreeSet::new();
+        let lost = stamp_loss(&existing, &incoming_stamped);
+        assert_eq!(
+            lost,
+            BTreeSet::from([
+                "advanced_class_guide:class_feature:rage_power_abyssal_blood".to_string(),
+                "core_rulebook:feat:power_attack".to_string(),
+            ]),
+            "a plain regen must be seen to drop both stamped units -- this is exactly the \
+             silent loss hazard #1 describes"
+        );
+    }
+
+    /// The honest case: a run that carries the sweep/fixture reports and
+    /// reproduces every currently-stamped id loses nothing, and the guard's
+    /// decision must reflect that -- it must not fire on ordinary, correct
+    /// regeneration.
+    #[test]
+    fn a_regen_that_reproduces_every_stamp_loses_nothing() {
+        let existing = inventory_json(&[
+            ("a", "literal-verified"),
+            ("b", "fixture-verified"),
+        ]);
+        let incoming_stamped: BTreeSet<String> =
+            BTreeSet::from(["a".to_string(), "b".to_string(), "c".to_string()]);
+        assert!(
+            stamp_loss(&existing, &incoming_stamped).is_empty(),
+            "a run that reproduces every existing stamp (plus a brand new one) must not \
+             be treated as a loss"
+        );
+    }
+
+    /// A partial loss -- one stamp reproduced, one not -- must be reported
+    /// precisely, not rounded up to "all" or down to "none".
+    #[test]
+    fn a_partial_stamp_loss_is_reported_precisely() {
+        let existing = inventory_json(&[
+            ("a", "literal-verified"),
+            ("b", "fixture-verified"),
+        ]);
+        let incoming_stamped: BTreeSet<String> = BTreeSet::from(["a".to_string()]);
+        assert_eq!(stamp_loss(&existing, &incoming_stamped), BTreeSet::from(["b".to_string()]));
+    }
+
+    /// An unreadable/malformed existing document has nothing provable to
+    /// lose -- the guard must treat that as "no loss", never as an error that
+    /// blocks every future write.
+    #[test]
+    fn a_malformed_existing_document_reports_no_loss() {
+        let incoming_stamped: BTreeSet<String> = BTreeSet::new();
+        assert!(stamp_loss("not json at all", &incoming_stamped).is_empty());
+        assert!(stamp_loss("", &incoming_stamped).is_empty());
     }
 }

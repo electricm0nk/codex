@@ -391,9 +391,23 @@ All of the following, each checkable by someone who was not present:
    surface that renders it, or in `SUPPORTING_RECORD_TYPES` with why it is a
    facet of an existing family.
 3. `cargo run --locked --bin v06_corpus_trap_report -- --audit` exits `0`.
-4. `cargo run --locked --bin v06_work_inventory` regenerates
-   `docs/work-inventory.json`, the book's units leave `not-started`, and a
-   second run changes only `generated_at`.
+4. **Guarded regen, not a plain run.** A bare `cargo run --locked --bin
+   v06_work_inventory` silently drops every `literal-verified`/
+   `fixture-verified` stamp the committed file carries (P0.1 fixed this from
+   a live hazard into a hard-refusing guard, `state-goals-and-lessons.md`
+   §1.3 hazard 1) — the sanctioned procedure is:
+   ```
+   cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep.json
+   cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture.json
+   CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep.json \
+   DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture.json \
+     cargo run --locked --bin v06_work_inventory
+   ```
+   This regenerates `docs/work-inventory.json`, the book's units leave
+   `not-started`, a second run changes only `generated_at`, AND the run's own
+   guard reports zero stamp loss (it exits 1 naming the dropped count
+   otherwise). `--allow-stamp-loss` is the explicit, logged escape hatch when
+   a stamp loss is intended — never the default path.
 5. The four-check wired-integration audit
    (`docs/governance/no-stub-mvp-doctrine.md` §"Per-cycle audit") is clean.
 6. Any family that could not be surfaced has an `OPEN_FINDINGS` entry in
