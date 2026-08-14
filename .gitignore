@@ -1,2 +1,6 @@
 # Rust build output
 /target
+
+# Wrangler CLI local cache (created by `wrangler pages deploy` etc.)
+# Do not ship; the deploy state is rebuilt on each run.
+.wrangler/
