@@ -529,12 +529,18 @@ fn engine_evaluator_output_equals_the_corpus_derived_expected_value() {
         );
     }
 
-    for unit_id in report.cleared.iter().filter(|id| uncleared_reason(id).is_some()) {
-        panic!(
-            "{unit_id} clears its `derived` bar but is still on the `UNCLEARED` record — \
-             delete the entry"
-        );
-    }
+    let stale_uncleared: Vec<_> = report
+        .cleared
+        .iter()
+        .filter(|id| uncleared_reason(id).is_some())
+        .collect();
+    assert!(
+        stale_uncleared.is_empty(),
+        "{} unit(s) clear the `derived` bar but are still on the `UNCLEARED` record — \
+         delete these entries: {:?}",
+        stale_uncleared.len(),
+        stale_uncleared
+    );
 
     assert_uncleared_set_is_exact(&report.failures, "derived bar");
     assert!(
