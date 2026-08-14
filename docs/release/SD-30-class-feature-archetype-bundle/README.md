@@ -44,6 +44,9 @@ cold start — see `decisions.md §34`.
 - `decisions.md` — decisions 1-32 (book-bundle era, retained as history) plus the 2026-08-10
   re-scope decisions `§33` onward (this is the operative scope from `§33` forward).
 - `loop-instruction.md` — per-cycle procedure; local-file dispatch via `kanban.md`/`progress.md`.
+- `state-goals-and-lessons.md` — **read this first.** State at the SD-29→SD-30 handoff
+  (2026-08-14), SD-30's goals and honest ceiling, and the retrospective lessons that session paid
+  for — including the live hazards a successor inherits.
 - `forward-scope-register.md` — successor work depending on SD-30's output; book-specific C2.x
   entries retired (moot — no book list to defer from).
 - `epic-breakdown.md` — dependency-ordered epics (measurement gates mechanism gates chassis sweep).

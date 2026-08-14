@@ -9,6 +9,12 @@
 >
 > Every dispatched agent gets `RETRO_ACTOR=<role-name>` set in its environment (`loop-instruction-template.md §2.1`) — no harness variable identifies an agent's role, and the fallback (worktree directory name) names a checkout, not a role, which makes the retrospective log's by-actor breakdown meaningless.
 >
+> **REQUIRED READ BEFORE THE FIRST CYCLE: `./state-goals-and-lessons.md`.** It carries the state
+> this bundle inherits, its goals and honest ceiling, the live hazards (the regenerator silently
+> drops 2,371 verification stamps; the dashboard producer crashes rather than degrades on an
+> unknown status), and the orchestration lessons that cost the handoff session real time — the
+> 2-agent concurrency cap, the background-and-yield stall, and commit-and-push-as-you-go.
+>
 > The orchestrating session never implements directly — it dispatches, verifies, and rules (`loop-instruction-template.md §2.2`). Do NOT engage this bundle via ad-hoc single-task invocations; one Workflow-tool launch runs to closure.
 >
 > **Orchestrator model: Opus, low reasoning effort** (operator directive 2026-08-01, `decisions.md §25`) — Opus at low reasoning effort produced materially better orchestration results than Sonnet at high reasoning effort, and is the new normal for the *orchestrating session* on this program. This supersedes any prior "orchestration runs on Sonnet" guidance (none existed in this package before this pass). Dispatched sub-agents are unaffected — they keep task-matched tiers (Haiku for housekeeping, Sonnet for real implementation/debugging/review, Opus for adversarial verification/judge-panel steps only) per `loop-instruction-template.md §2`. A session cannot change its own model mid-run: setting Opus-low is a **pre-launch operator step**, done before this cycle session starts.
