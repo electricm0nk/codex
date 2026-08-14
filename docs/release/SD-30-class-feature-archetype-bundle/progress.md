@@ -2403,3 +2403,115 @@ passed) and every stage before it already did.
 (6402 passed across 547 suites, all 526 `tests/*.rs` suites executed — byte-identical to
 `SD30-E3-F2-001`'s own figure, expected: this cycle added no new Rust tests). Gate now on `desktop`.
 Exit code still not obtained; item 1 above stands as written.
+
+### 11. Resumption — gate exit obtained, cycle closes out (same `HEAD`, no code change)
+
+A second agent resumed this exact card (`SD30-E3-F3-001`) after the prior agent ran out of turn
+mid-gate. **Verified the prior agent's work by content before building on it, per the resumption
+brief's own instruction — not taken on say-so:**
+
+- `git rev-parse HEAD` at resumption = `a6f0718034840698ee770a9740f4071efea79a05`, matching the prior
+  receipt's `head_after` exactly; `git status --porcelain` showed only pre-existing, unrelated dirty
+  state (`.gitignore` +4 lines re: `.wrangler/`, an untracked `.github/workflows/deploy-site.yml`) —
+  traced via `git log -3 -- .gitignore`, whose most recent touching commit (`462c40bc`) long predates
+  this cycle and is unrelated to SD-30; **not staged, not touched, left exactly as found** (shared
+  checkout, another session's in-flight work).
+- `grep -n 'DESCISPI\|NAMEISPI\|pi_screening\|declared_product_identity\|classify_optional_field_declared'`
+  over both `scripts/transcribe_monster_tables.py` and `scripts/transcribe_companion_tables.py`:
+  both screens present exactly as claimed (drop-on-`NAMEISPI:YES`, redact-on-`DESCISPI:YES`,
+  both-tokens-drops precedence, companion creature-half `NAMEISPI:YES` drop newly added).
+- `kanban.md`'s `epic-3-pi-gate` row and `progress.md`'s own §§1-10 above: content matches the prior
+  agent's receipt verbatim.
+- `forward-scope-register.md` `C1.6` (this package) and `SD-31-corpus-closure-grind/forward-scope-
+  register.md` `G1.6`: both entries present, cross-pointing correctly, content matches the claimed
+  invocation contract.
+- `git log origin/tranche/10..HEAD` and `HEAD..origin/tranche/10`: both empty — local `HEAD` and
+  `origin/tranche/10` are identical; both commits (`dc89e389`, `a6f07180`) already pushed. Nothing
+  stranded.
+
+**No content divergence found. All prior claims held.**
+
+### 12. Gate completion (this agent's own contribution)
+
+The gate (PID `423242`, launched 19:26 EDT by the prior agent, `CARGO_TARGET_DIR=/home/ubuntu/
+cargo-targets/sd30-e3-f3-backfill`) was still running at resumption, on the `desktop` stage. Watched
+to completion rather than re-launched (same PID throughout, confirmed live via `ps -p 423242` at each
+check) — no second gate was started, avoiding a duplicate/overlapping run against the same
+`CARGO_TARGET_DIR`. Remaining stages observed landing in the log in real time:
+
+```
+==> desktop — cargo test --locked -j 2  (apps/desktop/src-tauri)
+    PASS  desktop  (445 passed)
+==> reach — cargo test --locked -j 2 reach_gate  (apps/desktop/src-tauri)
+    PASS  reach  (27 passed)
+==> corpus-sweep — cargo run --locked --bin corpus_literal_sweep  (repo root)
+    PASS  corpus-sweep  (3516 records examined of 9328 read, 36105 tokens compared (9 synthesized), 8903 digests checked, 0 findings)
+==> frontend-install — npm ci if node_modules is absent  (apps/desktop)
+    PASS  frontend-install  (node_modules present)
+==> frontend-test — npm test  (apps/desktop)
+    PASS  frontend-test  (99/99 files)
+==> frontend-typecheck — npm run typecheck  (apps/desktop)
+    PASS  frontend-typecheck  (tsc --noEmit clean)
+==> clippy — cargo clippy --locked --tests -j 2  (BOTH crates)
+    PASS  clippy  (root:46 desktop:7 warnings, 0 errors)
+==> class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)
+    PASS  class-dump  (31/31 computing)
+
+SUMMARY
+  passed:  16  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump
+
+BASELINE NOTES (not failures — update deliberately):
+  - BASELINE_ROOT_FULL_TESTS baseline is stale: 6398 recorded, 6402 measured. Update /home/ubuntu/workspace/repos/codex/scripts/verify-baselines.env.
+
+RESULT: PASS
+VERIFY_EXIT=0
+```
+
+`VERIFY_EXIT=0` captured directly from the log's own append (`echo "VERIFY_EXIT=$?" >> "$LOG"` in the
+wrapper the prior agent launched — not through a pipe, not inferred from the harness task status).
+16/16 stages PASS.
+
+**DoD item 1 → PASS.** (Supersedes the "NOT YET OBTAINED" text in §9's table row 1 above; that row is
+left as written for the historical record of what was known at the time, this section is the update.)
+
+**DoD item 3 re-derived independently this session** (re-derive, do not transcribe — a number from a
+prior receipt is not evidence on its own): `cargo run --locked --bin v06_corpus_trap_report -- --audit`
+→ exit 2, `grep -c '\[wiring-class-mismatch\]'` = **177**, `grep -c class_feature` = **0** — byte-
+identical to the prior agent's figure, now independently confirmed rather than trusted. Pre-existing,
+unrelated to this cycle's `monster`/`companion` PI-screening change (0 `class_feature` hits).
+
+**DoD item 7 note (not a fix owed by this card):** the `BASELINE_ROOT_FULL_TESTS` staleness (6398
+recorded vs. 6402 measured) is real but not caused by `SD30-E3-F3` (this card's Python-only diff adds
+zero Rust tests — `root-full`'s count is byte-identical to `SD30-E3-F2-001`'s own figure, per §"Update"
+above). It predates this card, most likely from `SD30-E3-F2-001`'s Rust ingest-wiring change. The
+gate's own `RESULT: PASS` confirms it is advisory, not blocking (6402 ≥ 6398 floor). This repo's own
+`scripts/verify-baselines.env` history shows baseline bumps landing as their own dedicated commit,
+separate from feature work, rather than bundled opportunistically — left for that dedicated commit,
+not performed here, consistent with DoD item 7's "their own reviewable commit" instruction and this
+card's own scope (`SD30-E3-F3`, not a baseline-maintenance card).
+
+### 13. Final Definition of Done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **PASS.** `VERIFY_EXIT=0`, 16/16 stages, captured directly from the log (§12). |
+| 2 | Reach stage claim | **N/A** (as §9 row 2 — no new player-visible family this cycle) — and, re-confirmed this session, the gate's own `reach` stage ran and PASSED with 27 tests (nonzero — not the "0 matched tests" hard-failure case), the pre-existing baseline claim set, unaffected by this Python-only cycle. |
+| 3 | `v06_corpus_trap_report -- --audit` | **Exit 2, 177 pre-existing `wiring-class-mismatch`, 0 `class_feature`** — re-derived independently this session (§12), confirmed unrelated to this cycle's diff. |
+| 4 | Guarded work-inventory regen | **N/A**, as §9 row 4 — no corpus content or `docs/work-inventory.json` change this session either. |
+| 5 | Four-check wired-integration audit | **PASS**, as §9 row 5 — no further diff added this session (gate-watch only). |
+| 6 | `OPEN_FINDINGS` | **N/A**, as §9 row 6. |
+| 7 | Baseline movements own commit | **N/A for this card** — observed but out-of-scope, see §12. |
+| 8 | On-screen verification | **N/A**, as §9 row 8 — no player-visible surface touched. |
+
+### 14. Card disposition (final)
+
+**`SD30-E3-F3` sub-scope: COMPLETE.** All DoD items resolved (PASS or N/A-with-reason), gate green,
+work verified by content at both the start and end of this resumption. `kanban.md`'s `epic-3-pi-gate`
+row already carried the correct `F1/F2/F3 sub-scopes COMPLETE; F4 still open` status from the prior
+agent — left as-is (accurate). `Claimed-by`/`Cycle-id` unchanged (`sd30-e3-f3-backfill` /
+`SD30-E3-F3-001`) since this is the same card, same cycle-id, resumed, not a new claim.
+
+**Cycle status: COMPLETE.** No STOP condition encountered, no `decision-blocked` entry. The one open
+item from the prior return (`root-full`'s then-pending exit code) is now resolved: `VERIFY_EXIT=0`,
+full 16/16 gate PASS. No code changed in this resumption — it was a pure gate-watch-to-completion plus
+independent re-derivation of DoD item 3 and receipt/kanban closure.
