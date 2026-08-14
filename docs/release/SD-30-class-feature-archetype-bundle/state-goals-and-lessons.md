@@ -111,6 +111,13 @@ SD-30 owns the **full path to closure for every kind**: instrument application A
 
 ### 2.3 The honest ceiling
 
+> **Correction (2026-08-14, `decisions.md §45`, operator directive, launch session):** this
+> section's ~81%/100%-not-promised framing is **superseded**. The SD-30 exit bar is now 100% across
+> the board on the PF1e dashboard, via capability-building (race chassis, real verdict paths,
+> book onboarding), not descoping. The measurement below stands as an accurate snapshot of the
+> engine as it stood on the date it was written; it is no longer accepted as the target ceiling.
+> Original text preserved below per this package's standing convention.
+
 Instruments alone cannot close this. Ingest is required for the kinds the operator cares most about
 (`monster` 0.6%, `spell` 1.7%, `race` 0%, `class_feature` 0.2%). The combined bounded estimate is
 **~81% (~31,328 of 38,521)**, with a floor of ~7,193 units genuinely unreachable without new engine

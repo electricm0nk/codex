@@ -14,7 +14,10 @@ companion_to: ./scope-draft.md, ./decisions.md
 previously carried (Epics 3-18 under the old numbering, matching `kanban.md`'s 21 cards) are
 retired — that book list dissolved into SD-29's corpus-wide scope. SD-30's epics now follow the
 **dependency chain `decisions.md §37` establishes**, not a book list: measurement gates mechanism
-gates chassis sweep. 9 epics total, matching `kanban.md`'s 9 cards.
+gates chassis sweep. **15 epics total as of 2026-08-14 (`decisions.md §45`/`§47`), matching
+`kanban.md`'s 15 cards** — the original 9 (Epic 1-9), plus Epic 0 (instrument-apply, `decisions.md
+§43`), Epic 10 (ingest lanes, `decisions.md §44`), and Epics 11-14 (book onboarding, race chassis,
+verdict paths, cloud fan-out — the 100%-mandate epics, `decisions.md §45`/`§47`).
 
 Epic 1 fires FIRST. Closure fires LAST. Epic 4 (measurement) gates Epic 5 (mechanism) and Epic 6
 (chassis sweep) **per class**, not bundle-wide — see `decisions.md §37`.
@@ -571,6 +574,65 @@ exhaustive set.
 `SD-29-corpus-wide-catch-up-lanes/decisions.md §34/§36` (zero-monster books), `§44.4/§45.1/§49.2`
 (race-trait chassis split and pilot-book correction), `§68/§68.1` (negated-PCC-gate screen),
 `§50.1`/this package's own `§39` (declared-PI gate).
+
+## Epic 11 (SD30-E11) — Book Onboarding, 100% mandate (NEW, 2026-08-14, `decisions.md §45`)
+
+**Objective:** onboard the 7 `future_state` books — `occult_adventures`, `adventurers_guide`,
+`mythic_adventures`, `inner_sea_magic`, `inner_sea_temples`, `inner_sea_taverns`,
+`inner_sea_faiths` — the population these books add is not yet in the engine at all; closing to
+100% requires bringing it in.
+
+**Derived from:** `decisions.md §45` (the 100%-mandate ruling, item 3).
+
+**Gate:** hard-gated on `epic-3-pi-gate`, same as Epic 6 and Epic 10 — no book's records land before
+its PI screen (declared-PI reader, SD30-E3-F2/F3) is clean.
+
+**Not in this epic:** any book already in-scope under Epic 10's four kind-lanes or Epic 6's
+`class_feature` chassis sweep — this epic covers only the 7 books named above.
+
+## Epic 12 (SD30-E12) — Race Chassis, 100% mandate (NEW, 2026-08-14, `decisions.md §45`)
+
+**Objective:** build the missing race chassis that Decision §44 (citing `SD-29 §44.4/§45.1/§49.2`)
+found absent for ~2,894 of the corpus's 3,447 `race_trait` units, plus the `race` kind itself
+(103 units, 0% done). That absence was previously ruled structurally unreachable; this epic reverses
+that ruling by building the capability rather than accepting the ceiling.
+
+**Derived from:** `decisions.md §45` (the 100%-mandate ruling, item 1); `decisions.md §44` (the
+original chassis-absence finding, `RaceCorpus::resolve` returning `None` without a chassis).
+
+**Verification:** DoD-8 on-screen verification is mandatory for this epic — a chassis claim is not
+accepted from static/derived instrument output alone.
+
+## Epic 13 (SD30-E13) — Verdict-Path Capability, 100% mandate (NEW, 2026-08-14, `decisions.md §45`)
+
+**Objective:** give every currently-unmeasurable unit a real, non-placeholder verdict — the ~3,547
+`unknown`/unmeasurable population, including the 2,109-unit `ambiguous` bucket, that
+`state-goals-and-lessons.md` §2.3 (pre-correction) treated as a structural floor.
+
+**Derived from:** `decisions.md §45` (the 100%-mandate ruling, item 2).
+
+**Constraint:** classifier/instrument work under this epic is bound by
+`SD-32-instrument-coverage-and-consumer-wiring/decisions.md §3` ("the wiring-class classifier is
+accepted on accuracy, not on movement") — a verdict path is validated against known-correct cases
+before it is trusted to move counts, mirroring this package's own proxy-validation discipline
+(`state-goals-and-lessons.md` §3.1's "validate a proxy where it makes its confident claim").
+
+## Epic 14 (SD30-E14) — Cloud Fan-Out Protocol (NEW, 2026-08-14, `decisions.md §47`)
+
+**Objective:** the local-proof-then-cloud-scale protocol that lets build-heavy, self-contained lanes
+(Epic 10's per-kind ingest, Epic 11's book onboarding) scale to cloud agents after one local proof
+cycle per lane shape.
+
+**Derived from:** `decisions.md §47` (hardware re-derivation and cloud fan-out ruling).
+
+**Rules carried into every cycle dispatched under this epic:**
+
+1. Every cloud agent works its own branch — never two writers on one branch.
+2. The local orchestrator owns all merges to `tranche/10`, verified by content, not commit count.
+3. DoD-8 on-screen verification and dashboard-producer work stay local — no cloud agent runs either.
+
+**Not in this epic:** the ingest/onboarding work itself (Epic 10, Epic 11 own that) — this epic is
+the dispatch protocol enabling it at cloud scale, not the content work.
 
 ## Recommended sequencing (dependency order, not exclusive scope)
 

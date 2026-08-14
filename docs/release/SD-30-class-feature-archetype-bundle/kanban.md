@@ -45,9 +45,14 @@ built by the former SD-32, no new ingest required). It runs independently of the
 `class_feature` chain below (different files: dashboard-producer/instrument code and cross-kind
 application vs. `class_feature` rules-tables content) and does not gate or get gated by it.
 
+**Reordered 2026-08-14 (`decisions.md §46`, operator directive, launch session — "dashboard/reporting
+is Job 1"):** `epic-0-instrument-apply` is Order 1 in the table below, ahead of every other card, not
+only for its cheapest-lever rationale (`decisions.md §43`) but because it is also the reporting
+surface the operator and orchestrator both read for live progress. No card outranks it.
+
 | ID | Status | Epic | Cycle-type | Claimed-by | Claimed-at | Cycle-id |
 |----|--------|------|-----------|------------|------------|----------|
-| `epic-0-instrument-apply` | READY | Apply Existing Instruments to `held` | `done`-rung build (static/derived) + computed-bucket consumer-delta probes, corpus-wide + `unknown`-residue characterization (`feat`) + re-derivation reporting | — | — | — |
+| `epic-0-instrument-apply` | READY | **Order 1 — Apply Existing Instruments to `held` (dashboard/reporting, Job 1)** | `done`-rung build (static/derived) + computed-bucket consumer-delta probes, corpus-wide + `unknown`-residue characterization (`feat`) + re-derivation reporting | — | — | — |
 | `epic-1-identifier` | READY | Code-Side Identifier Cleanup | identifier-discipline audit pass | — | — | — |
 | `epic-2-prelaunch` | READY (gated on epic-1) | Operator Pre-Launch | local-file dispatch readiness + cycle-0 trap-report + work-inventory (23-book `class_feature` re-derivation) | — | — | — |
 | `epic-3-pi-gate` | READY (gated on epic-1, epic-2) | PI-Screening Provenance Gate | per-class PI-blacklist sweep (SD30-E3-F1) + declared-PI reader wired into class_feature ingest (SD30-E3-F2, `decisions.md §39`) + corpus-wide declared-PI backfill (SD30-E3-F3) + regression gate (SD30-E3-F4) — F2 hard-blocks epic-6, no chassis-sweep cycle may claim a class before F2 is COMPLETE | — | — | — |
@@ -58,6 +63,10 @@ application vs. `class_feature` rules-tables content) and does not gate or get g
 | `epic-8-code-review` | READY (gated on epic-5, epic-6, epic-7) | Bundle Code Review | full-bundle diff review vs. branch point (`decisions.md §26`) | — | — | — |
 | `epic-9-closure` | READY (gated on every other card) | Closure Epilogue | tranche promotion PR | — | — | — |
 | `epic-10-ingest-lanes` | READY (gated on epic-1, epic-2; each F-card hard-blocked on epic-3 for its target book, `decisions.md §44`) | Corpus-Wide Ingest Lanes, folded from SD-29 | per-kind ingest: SD30-E10-F1 `monster`, F2 `spell`, F3 `race`, F4 `race_trait` — each runs the raw-vs-workable split + pre-cycle classifier screen before claiming a book (SD-29 lessons, `decisions.md §44`) | — | — | — |
+| `epic-11-book-onboarding` | READY (gated on epic-3-pi-gate) | Book Onboarding, 100% mandate | onboard the 7 `future_state` books (`occult_adventures`, `adventurers_guide`, `mythic_adventures`, `inner_sea_magic`, `inner_sea_temples`, `inner_sea_taverns`, `inner_sea_faiths`) — PI screen (epic-3) clean per book before any record is written (`decisions.md §45`) | — | — | — |
+| `epic-12-race-chassis` | READY | Race Chassis, 100% mandate | build the missing race chassis closing the ~2,894 chassis-blocked `race_trait` units plus the `race` kind — DoD-8 on-screen verification mandatory (`decisions.md §45`) | — | — | — |
+| `epic-13-verdict-paths` | READY | Verdict-Path Capability, 100% mandate | real (non-placeholder) verdict paths for the ~3,547 unmeasurable units incl. 2,109 `ambiguous`; classifier work bound by `SD-32-instrument-coverage-and-consumer-wiring/decisions.md §3`'s accuracy-not-movement rule (`decisions.md §45`) | — | — | — |
+| `epic-14-cloud-fanout` | READY | Cloud Fan-Out Protocol | local-proof-then-cloud-scale protocol for lane B/C shapes (epic-10, epic-11); local orchestrator owns all `tranche/10` merges, DoD-8/dashboard-producer work stays local (`decisions.md §47`) | — | — | — |
 
 ## Retired cards (sixteen-book era, 2026-08-01 to 2026-08-10) — historical record, not claimable
 

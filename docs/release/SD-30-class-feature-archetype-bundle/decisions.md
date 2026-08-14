@@ -97,7 +97,7 @@ For monsters that appear in both Horror Adventures and Bestiary 2-5, the canonic
 - PascalCase for functions / methods / constants / properties / Tauri commands.
 - lowercase camelCase for variables.
 - Forbidden patterns: `sd30_*`, `SD30_*`, `Sd30*`, `sd30-*`, `t_<hex>`, `SD-30-Ex...`, `AV-PAY-N`.
-- Doctrine-of-record at `~/workspace/governance/identifier-discipline.md`.
+- Doctrine-of-record at `docs/doctrine-external/identifier-discipline.md`.
 
 ## Decision 8 — Operating form [SUPERSEDED — see §22]
 
@@ -1483,3 +1483,123 @@ record), `§44.4`/`§45.1`/`§49.2` (race-trait chassis split), `§34`/`§35`/`�
 `§68`/`§68.1` (negated-PCC-gate 719-unit finding), `§50.1` (declared-PI corpus-wide finding); this
 package's own `decisions.md §39` (PI-screening gate, 464-row finding) and `§43` (ceiling table,
 re-verified unchanged this session).
+
+## Decision 45 — Operator ruling: the 100% mandate supersedes the honest-ceiling framing; capability-building, not descoping, is the authorized route (2026-08-14, operator directive, launch session)
+
+**Status:** New. Operator directive, launch session, 2026-08-14.
+
+**The ruling, verbatim shape:** `state-goals-and-lessons.md` §2.3's "~81% honest ceiling / 100% is
+not promised" framing is superseded. The SD-30 exit bar is **100% across the board on the PF1e
+dashboard**. The authorized route is **building capability, not lowering the bar**:
+
+1. **Race chassis** for the ~2,894 chassis-blocked `race_trait` units plus the `race` kind itself —
+   the population Decision §44 (lesson 1, citing `SD-29 §44.4/§45.1/§49.2`) found had no modeled
+   chassis and was therefore ruled structurally unreachable. That ruling stands as a description of
+   the *current* engine; it is no longer accepted as a ceiling on the *target* engine. Building the
+   missing chassis is now in-scope SD-30 work.
+2. **Real verdict paths** for the ~3,547 unmeasurable units, including the 2,109 `ambiguous` bucket —
+   classifier/instrument work to give every currently-unmeasurable unit a real, non-placeholder
+   verdict.
+3. **Onboarding of all 7 `future_state` books** — `occult_adventures`, `adventurers_guide`,
+   `mythic_adventures`, `inner_sea_magic`, `inner_sea_temples`, `inner_sea_taverns`,
+   `inner_sea_faiths` — the corpus population these books would add is not yet in the engine at all,
+   and closing to 100% requires bringing it in.
+
+**What this does not authorize:** the anti-gaming rule (`SD-32-instrument-coverage-and-consumer-wiring/decisions.md`
+§1, restated by this package's own Decision §39/§44 PI-gate discipline) stays fully binding —
+"movement" toward 100% must be real capability landing, not a redefinition of `done`, a relaxed
+verdict rung, or a classifier tuned to agree with itself. Descoping any population out of the 100%
+target happens **only by explicit operator ruling**, and only when accompanied by evidence that
+capability-building is impossible for that population (not merely expensive) — the same evidentiary
+bar Decision §44's ingest-lane fold already applied when it declined to assume SD-29's premature
+closure was correct.
+
+**Why this doesn't just re-litigate §2.3:** §2.3's ~81%/~7,193-unreachable estimate was a measurement
+of what the engine *as it stood* could reach without new capability — it was not wrong as a
+measurement, and this decision does not dispute its arithmetic. What changes is the operator's
+willingness to accept that ceiling as the exit bar: the three items above (chassis, verdict paths,
+book onboarding) are exactly the categories §2.3 named as "genuinely unreachable," and the operator
+is directing that they be built rather than written off.
+
+**Disposition:** `kanban.md` gains four new epics — `epic-11-book-onboarding`, `epic-12-race-chassis`,
+`epic-13-verdict-paths`, `epic-14-cloud-fanout` (the fan-out protocol enabling the first three at
+scale, see Decision §47 below) — and `epic-breakdown.md` gains matching stubs. `state-goals-and-lessons.md`
+§2.3 gets a dated correction box pointing here; its original text stays visible per this package's
+standing convention (mirrors how §41/§42/§43 corrections were handled).
+
+**Authority:** operator directive, launch session, transcribed 2026-08-14; `state-goals-and-lessons.md`
+§2.3 (the framing being superseded); `SD-32-instrument-coverage-and-consumer-wiring/decisions.md §1`
+(anti-gaming rule, unchanged); this package's `decisions.md §44` (the evidentiary bar for descoping,
+reused here).
+
+## Decision 46 — Operator directive: dashboard/reporting is Job 1, ordered first in SD-30 (2026-08-14, operator directive, launch session)
+
+**Status:** New. Operator directive, launch session, 2026-08-14.
+
+**The ruling:** dashboard and progress-reporting work is ordered **first** in SD-30 — both the
+operator and the orchestrator need reliable live progress before anything else is prioritized. P0.2
+(dashboard-producer versioning/hardening) is in flight under this directive.
+
+**Disposition:** `kanban.md`'s claim-priority ordering is amended so the dashboard/reporting work
+(`epic-0-instrument-apply`, since the dashboard producer is the surface that reads its output, plus
+any standing producer-hardening work) is visibly Order 1, with a note recording the operator
+directive. This does not change Epic 0's file-disjointness or independence from the `class_feature`
+E1-E9 chain established by Decision §43 — it makes the *reporting-surface* priority explicit
+alongside the *cheapest-lever* rationale already on record.
+
+**Authority:** operator directive, launch session, transcribed 2026-08-14.
+
+## Decision 47 — Operator directive: hardware re-derivation, new concurrency cap, and cloud fan-out protocol (2026-08-14, operator directive, launch session)
+
+**Status:** New. Operator directive, launch session, 2026-08-14.
+
+**Hardware re-derivation.** The build box is now 8 cores / 45GB RAM / 968GB disk at 19% used,
+captured verbatim this session (2026-08-14):
+
+```
+$ nproc
+8
+$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:            45Gi        6.3Gi        19Gi       1.6Mi        20Gi        39Gi
+Swap:              0B          0B          0B
+$ df -h .
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       968G  181G  787G  19% /
+```
+
+**Concurrency cap.** The SD-29-era cap of "two build-capable agents" was derived on a 4-core box at
+~90% disk usage (`SD-29-corpus-wide-catch-up-lanes` era hardware) and is superseded by this
+re-derivation. Starting cap: **THREE concurrent build-capable agents**, each with bounded `cargo -j`,
+to be re-derived empirically from measured load per the existing budget discipline. `loop-instruction.md`'s
+disk-budget step now uses the numbers captured above, not the SD-29-era figures.
+
+**Cloud fan-out.** Build-heavy, self-contained lanes — per-book ingest, book onboarding (Epic 10,
+Epic 11) — scale to cloud agents **after one local proof cycle per lane shape**. Rules, restated from
+the operator directive:
+
+1. Every cloud agent works its own branch — never two writers on one branch (mirrors this package's
+   standing shared-checkout discipline).
+2. The local orchestrator owns all merges to `tranche/10`, verified by content, not commit count.
+3. Anything requiring DoD-8 on-screen verification, or the dashboard producer itself, completes
+   locally — cloud agents do not run either.
+
+**Disposition:** `kanban.md` gains `epic-14-cloud-fanout` (the local-proof-then-cloud-scale protocol
+for lanes B/C, i.e. Epic 10/Epic 11-shaped work). `loop-instruction.md`'s disk-budget step is flagged
+for update to the new hardware numbers (not edited by this pass — out of this cycle's write scope).
+
+**Authority:** operator directive, launch session, transcribed 2026-08-14; hardware capture 2026-08-14
+(`nproc`/`free -h`/`df -h` output above).
+
+## Decision 48 — Operator mandate: orchestrator runs Opus at HIGH effort, superseding Decision §25's "Opus low" (2026-08-14, operator directive, launch session)
+
+**Status:** New. Operator mandate, launch session, 2026-08-14. Both this decision and Decision §25
+are kept on record; this decision's mandate wins where they conflict.
+
+**The mandate:** the orchestrator (the agent driving SD-30 dispatch) runs **Opus at HIGH reasoning
+effort** for the remainder of SD-30, superseding Decision §25's "Opus low" setting. Subagent tiering
+is unchanged: Sonnet is the default for real implementation/debugging/review work, Haiku for
+mechanical/housekeeping work, Opus reserved for adversarial-verification or judge-panel steps only.
+
+**Authority:** operator directive, launch session, transcribed 2026-08-14; `decisions.md §25` (the
+setting being superseded, kept visible per this package's standing convention).
