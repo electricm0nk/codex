@@ -2986,7 +2986,31 @@ fn class_feature_owner<'a, I: Iterator<Item = &'a String>>(key: &str, classes: I
 }
 
 /// Resolve one corpus unit against the engine.
-fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<String>) -> Verdict {
+///
+/// `carries_prose_magnitude` is the caller's own `wiring_class` verdict for
+/// this same unit's token closure, narrowed to the two reasons
+/// (`prose_expr`, `prose_formula_segment`) that mean "a real, non-guard,
+/// non-cross-reference formula was found in prose" -- the %N-placeholder
+/// pattern `99efb504` taught `wiring_class::determine_closure` but never
+/// wired into this function's own, independent `text_only` signal. Before
+/// that gap was closed here, a record like Zomok's Breath Weapon
+/// (`DC %1...|CON+18`) could be `wiring_class: derived` (a real formula
+/// exists) while simultaneously `status: text-complete` (`status_vocabulary`
+/// promises that status ONLY when "the corpus record carries NO magnitude
+/// token at all") -- a live contradiction of this file's own contract, and
+/// the mechanism behind the classifier-quality/dashboard-score
+/// anti-correlation the 2026-08-14 incentive-fix investigation traced to
+/// this function. See that investigation's retro event for the corpus lines
+/// (Rejuvenate Eidolon's `3d10+min(CASTERLEVEL,10)`, Telepathy Tap's
+/// `10 + 1/2 your racial HD + your Charisma modifier`, Quarterstaff
+/// (Hurricane)'s `.MOD` row `DC %1.|12+WIS`) that proved the pattern
+/// genuine rather than a classifier false positive.
+fn classify(
+    unit: &CorpusUnit,
+    facts: &EngineFacts,
+    book_included_by: &BTreeSet<String>,
+    carries_prose_magnitude: bool,
+) -> Verdict {
     // A book with no compiled rule set has had nothing attempted -- unless it
     // is the shared library other books pull in, in which case the record's
     // real home is whichever ingested book includes it. The host is chosen by
@@ -3032,7 +3056,11 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
         Some(engine_book.clone())
     };
 
-    let text_only = unit.magnitude_token_count == 0;
+    // `magnitude_token_count` only counts `MAGNITUDE_TOKENS`-prefixed tab
+    // fields (BONUS:, DEFINE:, ...). A record can carry zero of those and
+    // still state a real, computable magnitude in prose -- see this
+    // function's doc comment.
+    let text_only = unit.magnitude_token_count == 0 && !carries_prose_magnitude;
     let not_ingested = |evidence: &str| Verdict {
         status: "not-ingested",
         evidence: evidence.to_string(),
@@ -3100,13 +3128,19 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                 status: "unknown",
                 evidence: "in_catalog_with_corpus_magnitude_but_no_observed_consumer".to_string(),
                 reason: Some(format!(
-                    "corpus record carries {} magnitude token(s) and the feat IS in the engine's \
-                     catalog, but the feat-effect probe observed no computed delta across the \
-                     swept postures. That is the probe's documented lower-bound behaviour: the \
-                     effect may need a posture, an opponent or a combat action this engine does \
-                     not model. Reported as unknown rather than deferred because no engine \
-                     diagnostic is scoped to a feat, so there is no engine text to quote",
-                    unit.magnitude_token_count
+                    "corpus record carries {} magnitude token(s){} and the feat IS in the \
+                     engine's catalog, but the feat-effect probe observed no computed delta \
+                     across the swept postures. That is the probe's documented lower-bound \
+                     behaviour: the effect may need a posture, an opponent or a combat action \
+                     this engine does not model. Reported as unknown rather than deferred \
+                     because no engine diagnostic is scoped to a feat, so there is no engine \
+                     text to quote",
+                    unit.magnitude_token_count,
+                    if carries_prose_magnitude {
+                        " and a prose-embedded formula (wiring_class: derived)"
+                    } else {
+                        ""
+                    }
                 )),
                 engine_book: engine_book_field,
             }
@@ -4418,7 +4452,6 @@ fn main() {
         let Some(enumeration) = enumerations.get(&book.id) else { continue };
         let hosts = included_by.get(&book.id).unwrap_or(&empty);
         for unit in &enumeration.units {
-            let verdict = classify(unit, &facts, hosts);
             let rows = token_closure_rows(
                 &mut corpus_lines,
                 &mod_index,
@@ -4430,6 +4463,13 @@ fn main() {
             );
             let row_refs: Vec<Option<&str>> = rows.iter().map(|r| r.as_deref()).collect();
             let (wc_class, wc_reason, wc_signals) = wiring_class::determine_closure(&row_refs);
+            // See `classify`'s doc comment: these two reasons are the only
+            // ones that mean "a real formula was found in prose", as
+            // opposed to a literal-magnitude-token or bonus/pre-guard
+            // signal `magnitude_token_count` already covers on its own.
+            let carries_prose_magnitude =
+                matches!(wc_reason.as_str(), "prose_expr" | "prose_formula_segment");
+            let verdict = classify(unit, &facts, hosts, carries_prose_magnitude);
             let collides = slug_population
                 .get(&(book.id.clone(), unit.kind, slug(&unit.key)))
                 .is_some_and(|n| *n > 1);
@@ -4828,6 +4868,85 @@ fn main() {
         std::process::exit(1);
     }
     print!("{out}");
+}
+
+/// 2026-08-14 incentive-fix investigation: proves `classify()`'s own
+/// `text_only` signal agrees with `wiring_class::determine_closure`'s
+/// %N-placeholder detection (`99efb504`) instead of contradicting it. See
+/// `classify`'s doc comment for the real corpus lines that motivated this.
+#[cfg(test)]
+mod prose_magnitude_status_tests {
+    use super::*;
+
+    fn feat_unit(book: &str, key: &str, magnitude_token_count: usize) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            kind: Kind::Feat,
+            key: key.to_string(),
+            name: key.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "feats.lst".to_string(), line: 1 },
+            magnitude_token_count,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    fn facts_with_feat_catalog(book: &'static str, key: &str) -> EngineFacts {
+        let mut facts = EngineFacts::default();
+        facts.feat_keys.entry(book).or_default().insert(key.to_string());
+        facts
+    }
+
+    /// Before this fix: a feat with zero `MAGNITUDE_TOKENS` fields always
+    /// read `text-complete`, even when `wiring_class` had already resolved a
+    /// real formula in its DESC/BENEFIT prose (Zomok's Breath Weapon shape:
+    /// `DC %1...|CON+18`). That is a direct contradiction of
+    /// `status_vocabulary`'s promise that `text-complete` means "NO
+    /// magnitude token at all, so there is no number to compute" -- there
+    /// plainly is one here, `wiring_class` just found it in prose rather
+    /// than in a `MAGNITUDE_TOKENS`-prefixed field.
+    #[test]
+    fn a_prose_formula_feat_does_not_read_text_complete() {
+        let facts = facts_with_feat_catalog("core_rulebook", "Zomok's Breath Weapon");
+        let verdict = classify(
+            &feat_unit("core_rulebook", "Zomok's Breath Weapon", 0),
+            &facts,
+            &BTreeSet::new(),
+            true, // wiring_class resolved prose_formula_segment/prose_expr
+        );
+        assert_ne!(verdict.status, "text-complete");
+        // Honestly `unknown`/`held`, not silently promoted to `done`: the
+        // fix must not manufacture a done-eligible status out of a formula
+        // the corpus-literal/evaluator-fixture bar has not verified.
+        assert_eq!(verdict.status, "unknown");
+    }
+
+    /// A feat with genuinely zero magnitude anywhere -- no
+    /// `MAGNITUDE_TOKENS` field AND no prose formula -- must still read
+    /// `text-complete`. The fix narrows the signal, it does not remove it.
+    #[test]
+    fn a_true_no_magnitude_feat_still_reads_text_complete() {
+        let facts = facts_with_feat_catalog("core_rulebook", "Iron Will");
+        let verdict =
+            classify(&feat_unit("core_rulebook", "Iron Will", 0), &facts, &BTreeSet::new(), false);
+        assert_eq!(verdict.status, "text-complete");
+    }
+
+    /// A feat whose own `MAGNITUDE_TOKENS` field count is already nonzero
+    /// must not regress just because `carries_prose_magnitude` is false --
+    /// the two signals are additive (`||`), never exclusive.
+    #[test]
+    fn a_token_magnitude_feat_is_unaffected_by_the_prose_signal() {
+        let facts = facts_with_feat_catalog("core_rulebook", "Power Attack");
+        let verdict = classify(
+            &feat_unit("core_rulebook", "Power Attack", 1),
+            &facts,
+            &BTreeSet::new(),
+            false,
+        );
+        assert_ne!(verdict.status, "text-complete");
+    }
 }
 
 #[cfg(test)]
@@ -6239,7 +6358,7 @@ mod spell_grounding_tests {
     fn a_spell_the_probe_observed_reaches_grounded_on_the_probes_own_evidence() {
         let mut facts = facts_with_catalog_level("core_rulebook", "Shield");
         facts.spell_effect_wired.insert(("core_rulebook".to_string(), "Shield".to_string()));
-        let verdict = classify(&spell_unit("core_rulebook", "Shield"), &facts, &BTreeSet::new());
+        let verdict = classify(&spell_unit("core_rulebook", "Shield"), &facts, &BTreeSet::new(), false);
         assert_eq!(verdict.status, "grounded");
         assert_eq!(verdict.evidence, "spell_effect_probe_observed_computed_delta");
     }
@@ -6253,7 +6372,7 @@ mod spell_grounding_tests {
     #[test]
     fn a_catalog_spell_the_probe_did_not_observe_stays_ingested_magnitude() {
         let facts = facts_with_catalog_level("core_rulebook", "Alarm");
-        let verdict = classify(&spell_unit("core_rulebook", "Alarm"), &facts, &BTreeSet::new());
+        let verdict = classify(&spell_unit("core_rulebook", "Alarm"), &facts, &BTreeSet::new(), false);
         assert_eq!(verdict.status, "ingested-magnitude");
         assert_eq!(verdict.evidence, "spell_list_entry_with_resolved_level");
     }
@@ -6271,7 +6390,7 @@ mod spell_grounding_tests {
         let mut facts = facts_with_catalog_level("advanced_players_guide", "Shield");
         facts.spell_effect_wired.insert(("core_rulebook".to_string(), "Shield".to_string()));
         let verdict =
-            classify(&spell_unit("advanced_players_guide", "Shield"), &facts, &BTreeSet::new());
+            classify(&spell_unit("advanced_players_guide", "Shield"), &facts, &BTreeSet::new(), false);
         assert_eq!(verdict.status, "ingested-magnitude");
     }
 
@@ -6290,7 +6409,7 @@ mod spell_grounding_tests {
             .spell_effect_wired
             .insert(("core_rulebook".to_string(), "Prestidigitation".to_string()));
         let verdict =
-            classify(&spell_unit("core_rulebook", "Prestidigitation"), &facts, &BTreeSet::new());
+            classify(&spell_unit("core_rulebook", "Prestidigitation"), &facts, &BTreeSet::new(), false);
         assert_eq!(verdict.status, "text-complete");
     }
 
@@ -6304,7 +6423,7 @@ mod spell_grounding_tests {
             .spell_effect_wired
             .insert(("core_rulebook".to_string(), "Invented Spell".to_string()));
         let verdict =
-            classify(&spell_unit("core_rulebook", "Invented Spell"), &facts, &BTreeSet::new());
+            classify(&spell_unit("core_rulebook", "Invented Spell"), &facts, &BTreeSet::new(), false);
         assert_eq!(verdict.status, "not-ingested");
     }
 
@@ -6549,7 +6668,7 @@ mod class_probe_tests {
         facts.class_books.insert("fighter".to_string(), "core_rulebook");
         facts.class_effect_wired.insert("fighter".to_string());
         let verdict =
-            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new());
+            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false);
         assert_eq!(verdict.status, "grounded");
         assert_eq!(
             verdict.evidence,
@@ -6567,7 +6686,7 @@ mod class_probe_tests {
         facts.class_books.insert("fighter".to_string(), "core_rulebook");
         // deliberately NOT inserted into `class_effect_wired`
         let verdict =
-            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new());
+            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false);
         assert_ne!(verdict.status, "grounded", "membership alone must not ground a class");
         assert_eq!(
             verdict.evidence,
@@ -6580,7 +6699,7 @@ mod class_probe_tests {
     fn an_observation_never_grounds_a_class_absent_from_every_class_enum() {
         let mut facts = EngineFacts::default();
         facts.class_effect_wired.insert("adept".to_string());
-        let verdict = classify(&class_unit("core_rulebook", "Adept"), &facts, &BTreeSet::new());
+        let verdict = classify(&class_unit("core_rulebook", "Adept"), &facts, &BTreeSet::new(), false);
         assert_eq!(verdict.status, "not-ingested");
         assert_eq!(verdict.evidence, "class_absent_from_ClassId_ALL_and_book_class_id_enums");
     }
