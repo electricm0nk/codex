@@ -2398,3 +2398,8 @@ change is anticipated regardless of outcome, since items 2-8 above are already s
 only job at this point is confirming the diff compiles/tests/lints clean, which `root-lib` (1776
 passed) and every stage before it already did.
 
+
+**Update, appended before turn-budget return:** `root-lib` PASS (1776 passed), `root-full` PASS
+(6402 passed across 547 suites, all 526 `tests/*.rs` suites executed — byte-identical to
+`SD30-E3-F2-001`'s own figure, expected: this cycle added no new Rust tests). Gate now on `desktop`.
+Exit code still not obtained; item 1 above stands as written.
