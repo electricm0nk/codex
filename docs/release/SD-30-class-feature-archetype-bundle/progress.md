@@ -283,3 +283,99 @@ Addresses `state-goals-and-lessons.md §1.3` hazards 4 and 5.
   `literal-verified` + 49 `fixture-verified` records; a fresh `--summary` run has zero of either,
   shifting every other status count by roughly the same total. Left unfixed here per scope
   (`v06_work_inventory.rs` is owned by another agent this cycle).
+
+### 2026-08-14 — P0.5: pre-launch checklist + full verification gate receipt
+
+Executed the SD-30 pre-launch checklist (loop-instruction.md pre-launch items) and the full
+`scripts/verify.sh` gate ahead of the operator's VM resize / Phase 1 orchestrator launch.
+`RETRO_ACTOR=p05-prelaunch-gate`.
+
+- **Tree hygiene**: `docs/retro/events/codex.jsonl` carried an uncommitted modification (retro
+  events from a prior session). Validated (`python3 scripts/retro.py validate` — 1008 events, all
+  valid) and committed standalone as `277e934e`.
+- **Claims/collisions check**: `git worktree list` showed 10 stale `.claude/worktrees/wf_*`
+  entries with no live owning processes. Two `.reclaim-claim` files found
+  (`codex-target-gate-green`, `codex-target-wiring-classifier`); both held dead PIDs (2046131,
+  336955 — neither present in `ps`). `hermes kanban list` on the active board (codex-tranche-5)
+  showed zero non-done cards. No cargo/rustc/verify.sh processes running. Conclusion: no live
+  claims. Note: `codex-target-gate-green` (23.8GB) was modified within the reclaim script's 6h
+  window and correctly skipped as "too young" by `reclaim.sh` — consistent with the `gate-green`
+  teammate having built recently, not a false negative in the liveness check.
+- **Disk/hardware budget** (2026-08-14 ~11:51 EDT, measured):
+  ```
+  $ nproc
+  8
+  $ free -h
+                 total        used        free      shared  buff/cache   available
+  Mem:            45Gi        5.6Gi        20Gi       1.6Mi        20Gi        40Gi
+  Swap:              0B          0B          0B
+  $ df -h /home/ubuntu
+  Filesystem      Size  Used Avail Use% Mounted on
+  /dev/sda1       968G  181G  787G  19% /
+  $ uptime
+   11:51:47 up 2 days,  4:54,  2 users,  load average: 1.02, 1.07, 1.04
+  ```
+  Per `decisions.md §47`: 8-core budget, concurrency cap stays at 3. The announced VM resize to
+  16 shared cores has not landed — no re-derivation triggered this pass; kept as measured (8
+  cores), not projected forward.
+- **Reclaim**: `./scripts/reclaim.sh --apply` reclaimed 1 item, 0 bytes total (deleted the local
+  branch `tranche/9`, already merged into `origin/develop`). 26 items skipped: cargo-target
+  candidates too-young or not-a-cargo-dir, verify-logs too-young, worktrees/branches under
+  `.claude/worktrees/` forbidden-path-protected. No cargo-target bytes reclaimed this pass.
+- **Full gate, first run — RED** (`b88b18fa`, mode `full`, `/tmp/codex-verify-WCt3I9`,
+  873s):
+  ```
+  SUMMARY
+    passed:  15  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest
+                 corpus-sweep-selftest root-lib desktop reach corpus-sweep frontend-install
+                 frontend-test frontend-typecheck clippy class-dump
+    FAILED:  1  root-full
+
+  RESULT: FAIL — logs in /tmp/codex-verify-WCt3I9
+  VERIFY_EXIT=1
+  ```
+  Cause: `no_foreign_home_paths::no_foreign_absolute_home_path_under_tests_src_or_scripts`
+  found 26 hardcoded `/home/ubuntu` literals in `scripts/observer/observer.py` and
+  `scripts/observer/pf1e_dashboard_producer.py` — fallout from the same-day P0.2 change
+  (`971cc063`) that moved those files into the repo as source-of-record under `scripts/`, the
+  path this guard test scans. The files' pre-existing hardcoded-path defaults had never been
+  scanned before the move and tripped the guard for the first time. Escalated to the team lead
+  per instruction rather than fixed locally (file ownership was P0.2's, not P0.5's).
+- **Remediation**: P0.2's author (`p02-producer`) converted the 26 literals in both files to the
+  `os.path.expanduser("~/...")` convention the guard requires. **Commit-attribution anomaly**: a
+  shared-index race folded the fix into `89078307` ("docs(sd30): absorb SD-32 into SD-30 and
+  delete the package") rather than landing as its own commit — verified directly via
+  `git diff 971cc063 89078307 -- scripts/observer/`, which shows exactly the 26-literal
+  `os.path.expanduser` conversion and nothing else. No separate `fix(sd30): resolve observer
+  paths` commit exists on `origin/tranche/10`; the fix's content is real and correct, only its
+  commit message is misattributed to the doc-absorption change it happened to ride in on.
+- **root-full re-run — GREEN** (`89078307`, mode `--only root-full`,
+  `/tmp/codex-verify-wTycIW`, 191s):
+  ```
+  SUMMARY
+    passed:  1  root-full
+
+  BASELINE NOTES (not failures — update deliberately):
+    - BASELINE_ROOT_FULL_TESTS baseline is stale: 6393 recorded, 6398 measured. Update
+      /home/ubuntu/workspace/repos/codex/scripts/verify-baselines.env.
+
+  RESULT: PASS
+  VERIFY_EXIT=0
+  ```
+  6398 passed across 547 suites (all 526 `tests/*.rs` suites executed) — above the
+  `ROOT_FULL_TESTS=6393` floor, so no failure; baseline left untouched per instruction (floors
+  are floors, not auto-bumped).
+- **Combined gate result**: stages 1-15 (preflight-disk, pi-sweep, audit-selftest,
+  reclaim-selftest, driver-selftest, corpus-sweep-selftest, root-lib, desktop, reach,
+  corpus-sweep, frontend-install, frontend-test, frontend-typecheck, clippy, class-dump) are
+  carried from the first run at `b88b18fa`, unaffected by the observer-path fix or the
+  doc-only SD-32-absorption commit. Stage 16 (root-full) re-ran clean at `89078307`. Net:
+  **16/16 gate PASS** across the two runs, no fixes applied by this checklist run itself.
+- **Dashboard cron cross-check**: `/home/ubuntu/swarm-observer/PF1e-dashboard.json`
+  `generated_at: 2026-08-14T16:15:02Z`, ~1.2 minutes old at check time (well within the 10-minute
+  freshness bar); `doneness_unmapped_seen: false`. Cron ticking clean.
+
+**P0.5 verdict: PASS.** Pre-launch checklist complete, gate green (across the documented
+two-run/one-fix sequence), no live claims, disk/hardware nominal, dashboard cron healthy. Ready
+for the operator's VM resize and Phase 1 orchestrator launch per `sd30-launch-readiness`
+sequencing.
