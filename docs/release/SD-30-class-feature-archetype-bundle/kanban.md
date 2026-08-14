@@ -52,7 +52,7 @@ surface the operator and orchestrator both read for live progress. No card outra
 
 | ID | Status | Epic | Cycle-type | Claimed-by | Claimed-at | Cycle-id |
 |----|--------|------|-----------|------------|------------|----------|
-| `epic-0-instrument-apply` | READY | **Order 1 — Apply Existing Instruments to `held` (dashboard/reporting, Job 1)** | `done`-rung build (static/derived) + computed-bucket consumer-delta probes, corpus-wide + `unknown`-residue characterization (`feat`) + re-derivation reporting | — | — | — |
+| `epic-0-instrument-apply` | COMPLETE | **Order 1 — Apply Existing Instruments to `held` (dashboard/reporting, Job 1)** | `done`-rung build (static/derived) + computed-bucket consumer-delta probes, corpus-wide + `unknown`-residue characterization (`feat`) + re-derivation reporting | sd30-e0-f4-report | 2026-08-14T17:40:31-04:00 | `SD30-E0-F4-001` |
 | `epic-1-identifier` | READY | Code-Side Identifier Cleanup | identifier-discipline audit pass | — | — | — |
 | `epic-2-prelaunch` | READY (gated on epic-1) | Operator Pre-Launch | local-file dispatch readiness + cycle-0 trap-report + work-inventory (23-book `class_feature` re-derivation) | — | — | — |
 | `epic-3-pi-gate` | READY (gated on epic-1, epic-2) | PI-Screening Provenance Gate | per-class PI-blacklist sweep (SD30-E3-F1) + declared-PI reader wired into class_feature ingest (SD30-E3-F2, `decisions.md §39`) + corpus-wide declared-PI backfill (SD30-E3-F3) + regression gate (SD30-E3-F4) — F2 hard-blocks epic-6, no chassis-sweep cycle may claim a class before F2 is COMPLETE | — | — | — |
@@ -190,6 +190,38 @@ in place: F3's own acceptance text's "329 units" claim for feat -> re-derived **
 #38`'s "3,218" claim for class_feature -> re-derived **3,622** (not re-characterized, out of F3
 scope, drift flagged for SD-31). Full receipt: `progress.md`, cycle `SD30-E0-F3-001`. This row stays
 `READY` — F4 (re-derivation and reporting) remains open under it.
+
+## Update (2026-08-14, SD30-E0-F4-001) — re-derivation and reporting: `epic-0-instrument-apply` COMPLETE
+
+F4's own acceptance text's `artifacts/derive-movable-mass.py` re-run instrument confirmed, live, to
+still raise `ValueError('static','literal-verified')` exactly as F1's prior correction found — cannot
+produce a pre/post pair; used the live dashboard producer's own `doneness_verdict()` (imported, not
+transcribed) instead, replayed over `git show <ref>:docs/work-inventory.json` at the true pre-Epic-0
+commit (`98d98d3a`) versus current `HEAD`. Board `done` unchanged at **5,837** across Epic 0's own
+three cycles (F1/F2/F3 confirmed/characterized an already-landed mechanism rather than moving new
+`done` units themselves); non-`done` buckets moved `held` −38 / `unmeasurable` +443 / `not-started`
+−405, entirely attributable to F3's guarded regen correctly reclassifying 38 `feat` units. All three
+reporting surfaces (`docs/work-inventory.json`, the live `PF1e-dashboard.json`, this package's own
+`state-goals-and-lessons.md §1.1`) cross-checked and now agree exactly — the third surface was stale
+on two independent counts (a `beginner_box`-exclusion gap and a pre-F3 snapshot date), both corrected
+in place with a retro correction event, not silently folded in. `AT-30-015`'s already-executed move to
+`SD-31-.../acceptance-and-verification.md AT-31-005` (`decisions.md §51`) is confirmed intact by
+content; that successor table's actual current per-kind figures were delivered into it per this
+bundle's SCOPE NOTE, surfacing and fixing a real row-copy-paste defect in its `spell` row (`held`
+1,235→**1,103**) along the way — not merely re-stating the split-time snapshot as current. Committed
+inventory verification stamps confirmed intact (2,322 `literal-verified` + 49 `fixture-verified` =
+2,371, matching F1 exactly). `reach` stage re-run: PASS, 27 matched tests. `v06_corpus_trap_report
+--audit`: exit 2, 177 pre-existing defects byte-identical to F1/F2's own prior reproduction (33/3/141
+by kind), confirmed neither caused nor worsened this cycle. Full receipt, all commands, and the DoD
+table: `progress.md`, cycle `SD30-E0-F4-001`.
+
+**`epic-0-instrument-apply` flipped to `COMPLETE`** — F1/F2/F3/F4 all confirmed on `tranche/10` **by
+content** (grepped the landed symbols fresh this cycle, not read from card status):
+`literal-verified`/`fixture-verified` in `pf1e_dashboard_producer.py` (F1),
+`probe_class_feature_effect_wiring` in `v06_work_inventory.rs` + `NO_GROUNDING_PROBE = ()` (F2), the
+`artifacts/sd30-e0-f3-unknown-residue/` artifact directory (F3), and this update plus the re-derived
+figures above (F4) — all present at `HEAD` (`3a3b89d1` before this cycle's own doc commit), confirmed
+an ancestor of `origin/tranche/10`.
 
 ## Operator override slot
 

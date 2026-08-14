@@ -1144,3 +1144,216 @@ record. No number moved by lowering a bar — both bucket boundaries (option-poo
 genuinely-unreachable) are structural signals read from the corpus source line, not a convenient
 split chosen to make a total look better, and two of this bundle's own inherited figures (329, 3,218)
 were corrected upward (367, 3,622) rather than left comfortable.
+
+## Cycle `SD30-E0-F4-001` — 2026-08-14 — Re-derivation and reporting; close of `epic-0-instrument-apply`
+
+**Actor:** `sd30-e0-f4-report` (`RETRO_ACTOR`/`CARGO_TARGET_DIR` name). **HEAD at start:** `3a3b89d1`
+(F3's own commit, already pushed and confirmed `origin/tranche/10`'s tip). **Checkout assertion:**
+`git rev-parse HEAD` = `3a3b89d1`; `git status --porcelain` showed the tree dirty on two
+**pre-existing, unrelated** entries this cycle did not create and did not touch — `.gitignore` (a
+`.wrangler/` ignore-rule addition from an unrelated site-deploy lane) and an untracked
+`.github/workflows/deploy-site.yml` — both left exactly as found; this cycle staged/committed neither.
+Package present, tree not fully clean but the dirty entries are unrelated to this bundle and not a
+git-recovery case (loop-instruction §0− only mandates recovery when the package is absent on a clean
+tree); proceeded per that reading, flagged here as a routine judgment call with a conventional default.
+
+### 1. Card
+
+`epic-0-instrument-apply`, F4 sub-scope ("re-derivation and reporting, and the close of
+`epic-0-instrument-apply`"). F1 (static/derived done rung), F2 (computed-bucket consumer-delta
+probes), F3 (`unknown`-residue characterization) all landed in prior cycles this same day
+(`SD30-E0-F1-001` `c3f3e599`, `SD30-E0-F2-001` `175394b6`, `SD30-E0-F3-001` `3a3b89d1`); this cycle
+does the re-derivation/reporting closeout and (conditionally, see §8) the epic flip.
+
+### 2. Acceptance items, and how each was actually met
+
+**AC1 — `derive-movable-mass.py` re-run, pre-epic and post-epic runs cited.**
+Re-ran it live this cycle rather than trusting F1's prior finding:
+
+```
+python3 docs/release/SD-30-class-feature-archetype-bundle/artifacts/derive-movable-mass.py
+```
+→ `ValueError: ('static', 'literal-verified')` — **reproduced, byte-identical failure mode** to F1's
+`SD30-E0-F1-001` finding (the script predates the `literal-verified`/`fixture-verified` rungs and
+cannot classify either status word; see the script's own staleness header, `decisions.md §50`). This
+is this criterion's own premise turning out wrong (already corrected in place by F1, re-confirmed not
+re-litigated here) — the script **cannot** produce a pre-epic/post-epic pair, before or after this
+cycle's own change, because it does not run at all. Per F1's correction and
+`state-goals-and-lessons.md §3.2`'s "report the board's movement... import the producer's own
+`doneness_verdict()` and replay it" doctrine, this cycle uses that live authority instead, run twice:
+
+- **Pre-Epic-0** (`98d98d3a`, the commit immediately before `SD30-E0-F1-001` started — the true
+  epic-0 entry state, distinct from `d1b29589`, an earlier "pre-rung" commit F1 cited for a narrower
+  purpose that predates even the handoff session's own rung landing):
+  `git show 98d98d3a:docs/work-inventory.json`, replayed through
+  `pf1e_dashboard_producer.doneness_verdict()` (imported, not transcribed) → `done` 5,837 / `held`
+  6,954 / `not-started` 21,300 / `unmeasurable` 3,546 / `in-progress` 848 / `deferred` 36 / total
+  38,521 (`beginner_box` excluded, matching the live producer's own exclusion).
+- **Post-Epic-0** (current `HEAD` = `3a3b89d1`, F1+F2+F3 landed): same replay → `done` 5,837 (+0) /
+  `held` 6,916 (−38) / `not-started` 20,895 (−405) / `unmeasurable` 3,989 (+443) / `in-progress` 848
+  (+0) / `deferred` 36 (+0) / total 38,521.
+- **The −38/+405/+443 movement is entirely `feat`**: F3's `unknown`-residue cycle's guarded
+  `v06_work_inventory` regen moved 38 `feat` units from `text-complete`/`held` to `unknown`/
+  `unmeasurable` (329→367 `unknown`, exactly F3's own re-derived figure) — a genuine corpus-read
+  correction, not a classifier defect. `done` is untouched by it; **Epic 0's net `done` movement is
+  entirely attributable to the static/derived rung that had already landed before Epic 0's F-cards
+  started** (3,464→5,837, `+2,373`, re-confirmed against `d1b29589` in §3 below), not to any of F1-F3's
+  own cycles, which is the honest finding: those cycles *confirmed and characterized* an existing
+  mechanism rather than moving new units to `done` themselves.
+- Command (repeated for both refs, `<ref>` substituted):
+  ```
+  git show <ref>:docs/work-inventory.json > /tmp/inv-<ref>.json
+  python3 -c "
+  import json, importlib.util, collections
+  spec = importlib.util.spec_from_file_location('m', 'scripts/observer/pf1e_dashboard_producer.py')
+  mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+  d = json.load(open('/tmp/inv-<ref>.json'))['units']
+  c = collections.Counter()
+  for u in d:
+      if u.get('book') == 'beginner_box': continue
+      c[mod.doneness_verdict(u.get('wiring_class'), u.get('status'), u.get('kind'))] += 1
+  print(c)
+  "
+  ```
+
+**AC2 — `AT-30-015` per-kind floor table updated with actual `done` figures.**
+`AT-30-015` was already MOVED to `SD-31-corpus-closure-grind/acceptance-and-verification.md
+AT-31-005` by `decisions.md §51` (2026-08-14, earlier the same day, prior to this cycle) — SD-30's own
+`acceptance-and-verification.md` correctly carries only the pointer (verified by content: line 244's
+`MOVED` header, line 370's exit-checklist strikethrough, both present, neither touched this cycle).
+Per this bundle's SCOPE NOTE ("deliver the mechanism and document its invocation contract for the
+successor... do not extend into the moved epics' work"), this cycle:
+- Re-derived the actual current `done`/`held`/total figures for all 5 kinds `AT-31-005` covers
+  (`class_feature`, `monster`, `spell`, `race`, `race_trait`) — see full table and command in
+  `SD-31-corpus-closure-grind/acceptance-and-verification.md AT-31-005`, updated this cycle.
+- **Found and corrected a real transcription defect, not just staleness**, in that table's `spell`
+  row: `held` was listed as `1,235` and `done+held` floor as `1,282 (45.1%)` — both are copy-paste
+  artifacts of the `monster` row directly above and `feat`'s percentage from an unrelated table. The
+  true `spell` `held` figure is **1,103** (`done+held` = 1,150, 40.4%), and the row's
+  `NO_GROUNDING_PROBE`-capped rationale is stale — `SD30-E0-F2` already lifted that cap, moving 132
+  `spell` units `held`→`in-progress`. Fixed in place with the correct figures and rationale, retro
+  correction emitted (`1786743412894-sd30-e0-f4-report-0f3bbc`,
+  `docs/retro/events/sd30-e0-f4-report.jsonl`). This is squarely "delivering the mechanism" (accurate
+  current data) to the successor's own document, not doing SD-31's ingest/measurement/mechanism work
+  — no SD-31 kanban or epic status was touched.
+- The other 4 rows (`class_feature`, `monster`, `race`, `race_trait`) re-derived exactly matching the
+  split-time snapshot — Epic 0's F1-F3 cycles made zero net movement to those kinds' `done`/`held`
+  split (confirmed by the same replay, per-kind, §3 below).
+
+### 3. Three-surface reporting-agreement check (this card's own additional requirement)
+
+| surface | `done` | `held` | `in-progress` | `not-started` | `unmeasurable` | `deferred` | total |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `docs/work-inventory.json` (committed, replayed via producer import) | 5,837 | 6,916 | 848 | 20,895 | 3,989 | 36 | 38,521 |
+| `/home/ubuntu/swarm-observer/PF1e-dashboard.json` `work_inventory.by_doneness` (live, `generated_at` 2026-08-14T21:26:18Z) | 5,837 | 6,916 | 848 | 20,895 | 3,989 | 36 | 38,521 |
+| this package's own receipts (`kanban.md` F1/F2/F3 rows, `state-goals-and-lessons.md §1.1`, updated this cycle) | 5,837 | 6,916 (was 6,954, corrected) | 848 | 20,895 (was 21,319, corrected) | 3,989 (was 3,546, corrected) | 36 | 38,521 (was 38,540, corrected) |
+
+**All three agree exactly after this cycle's correction.** Before this cycle, the third surface
+(this package's own `state-goals-and-lessons.md §1.1`) disagreed on every non-`done` bucket and on
+`total` — root-caused to two independent things, neither a live-dashboard defect: (1) that table's
+`total` did not exclude `beginner_box` (19 units) the way the live producer's
+`_exclude_books_from_kind_doneness` does; (2) it was captured before F3's guarded regen moved 38
+`feat` units `held`→`unmeasurable`. **The doc was stale, not the dashboard** — checked which one broke
+before fixing either, per this package's own "check the denominators before believing a disagreement"
+discipline. Fixed in place in `state-goals-and-lessons.md §1.1`, retro correction emitted (same event
+id as §2).
+
+Per-kind command (used for both the corpus-wide and per-kind breakdowns above):
+```
+python3 -c "
+import json, importlib.util, collections
+spec = importlib.util.spec_from_file_location('m', 'scripts/observer/pf1e_dashboard_producer.py')
+mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+d = json.load(open('docs/work-inventory.json'))['units']
+by_kind = collections.defaultdict(collections.Counter)
+for u in d:
+    if u.get('book') == 'beginner_box': continue
+    by_kind[u.get('kind')][mod.doneness_verdict(u.get('wiring_class'), u.get('status'), u.get('kind'))] += 1
+for k in sorted(by_kind): print(k, dict(by_kind[k]))
+"
+```
+
+**Verification-stamp check** (hazard 1, `state-goals-and-lessons.md §1.3`): committed
+`docs/work-inventory.json` carries `literal-verified` **2,322** + `fixture-verified` **49** = 2,371
+stamps —
+```
+python3 -c "
+import json, collections
+d = json.load(open('docs/work-inventory.json'))['units']
+print(collections.Counter(u.get('status') for u in d if u.get('status') in ('literal-verified','fixture-verified')))
+"
+```
+→ `Counter({'literal-verified': 2322, 'fixture-verified': 49})`, matching F1's figures exactly — the
+committed file has **not** silently lost its stamps. Confirmed the guard's own hazard-mitigation code
+is live by content: `src/bin/v06_work_inventory.rs:4907` (`--allow-stamp-loss` flag check) and its
+surrounding refusal logic exist and gate the write path (grepped, not assumed).
+
+**Honest board position per kind, at epic close** (same command as above, restated as the
+closing summary this card's brief asked for):
+
+| kind | done | total | % |
+|---|---:|---:|---|
+| equipment_modifier | 911 | 1,580 | 57.7% |
+| feat | 1,178 | 2,610 | 45.1% |
+| equipment | 2,626 | 6,208 | 42.3% |
+| companion | 416 | 1,696 | 24.5% |
+| class | 27 | 185 | 14.6% |
+| monster_ability | 334 | 3,107 | 10.7% |
+| race_trait | 266 | 3,447 | 7.7% |
+| spell | 47 | 2,843 | 1.7% |
+| monster | 7 | 1,270 | 0.6% |
+| class_feature | 25 | 15,472 | 0.2% |
+| **race** | **0** | **103** | **0.0%** |
+
+### 4. Definition of done
+
+This is a documentation/measurement-only cycle: no file under `src/`, `apps/`, or `scripts/` was
+changed (`git status --porcelain` before/after this cycle's own edits shows only markdown/doc/retro
+files touched; `docs/work-inventory.json` was regenerated to prove DoD-4's stability property then
+`git checkout`-reverted since the diff was `generated_at`-only, no content change to ship).
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **N/A — measurement/doc-only cycle, no Rust/Python production code changed.** Per loop-instruction's "Doc-only or measurement-only cycles run the relevant `--only` stages instead" — ran the specific stages relevant to this card's own claims instead (items 2-4 below), plus `--only preflight-disk` (PASS, 22% used / 757G available) before starting any bounded work. |
+| 2 | reach claim, nonzero | **PASS.** `./scripts/verify.sh --only reach` → `PASS reach (27 passed)`, `VERIFY_EXIT=0`. This card adds no new reach family; ran it anyway as this cycle's own honest-reporting standard, confirming the existing claim is live, not absent. |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **FAIL, exit 2 — pre-existing, out of this card's scope, byte-identical to F1/F2's prior receipts.** 177 defects (33 `companion`, 3 `monster`, 141 `monster_ability`), all `wiring-class-mismatch` in `ultimate_wilderness`'s companion-ability corpus JSON, traced by `SD30-E0-F1-001` to the `%N` prose-formula classifier fix landing without a matching re-ingest. Reproduced counts this cycle (33/3/141) are byte-identical to F1/F2's prior receipts — confirms this cycle neither caused nor worsened it (no `data/corpus/` or classifier file touched). Not fabricated as a pass; flagged for the same dedicated follow-up F1 already flagged. |
+| 4 | Guarded work-inventory regen | **PASS.** Ran the sanctioned sequence live: `corpus_literal_sweep` → CLEAN, 3,516/9,328 examined, 0 findings (byte-identical to F1). `derived_evaluator_fixture_check` → 49/94 cleared, 1 known failure, 44 not-ingested (byte-identical to F1). Guarded `v06_work_inventory` regen → `GUARD_EXIT=0` (zero stamp loss reported by the guard itself), and the resulting `docs/work-inventory.json` diff against the committed file was **`generated_at`-only** — confirmed by `git diff -- docs/work-inventory.json | grep -v generated_at` returning nothing besides the timestamp line — exactly the "second run changes only `generated_at`" stability DoD-4 requires. Reverted the no-op diff (`git checkout -- docs/work-inventory.json`) rather than committing a content-free timestamp bump. |
+| 5 | Four-check wired-integration audit | **PASS, branch-wide.** `git diff --unified=0 origin/develop...HEAD` for all four checks (`OK_NO_TOKENS`, `OK_NO_NOOP_HANDLERS`, `OK_NO_MOCK_LEAKS`, `OK_NO_WOULD_STRINGS`) — all four clean. This cycle's own diff touches no `.rs`/`.ts`/`.tsx` file at all (only `.md`/`.jsonl`), so it is doubly clean by construction. |
+| 6 | `OPEN_FINDINGS` in `reach_gate.rs` | **N/A.** No family surfaced or left unsurfaced this cycle — a reporting/closure card, not a reach-scope card. |
+| 7 | Baseline movements | **N/A.** No baseline-affecting code or test changed. |
+| 8 | On-screen verification | **N/A.** No player-visible desktop-app surface touched this cycle — a documentation/reporting cycle over already-committed measurement data, not new engine or UI wiring. |
+
+### 5. Retro events emitted
+
+- `1786743412894-sd30-e0-f4-report-0f3bbc` — correction: `state-goals-and-lessons.md §1.1`'s
+  non-`done` bucket figures and `SD-31 AT-31-005`'s `spell` row (claimed vs actual, both cited above),
+  `--verified-by` the producer-import replay cross-checked against the live dashboard JSON.
+
+### 6. Card disposition — epic-0-instrument-apply closure check
+
+Per the card's own instruction: grep for the symbols F1-F3 actually landed, not the card statuses.
+
+```
+grep -n "literal-verified\|fixture-verified" scripts/observer/pf1e_dashboard_producer.py   # F1: present, lines 3343/3354/3580/3593
+grep -n "probe_class_feature_effect_wiring" src/bin/v06_work_inventory.rs                    # F2: present, lines 4072/4452
+grep -n "^NO_GROUNDING_PROBE" scripts/observer/pf1e_dashboard_producer.py                    # F2: = () (cap lifted)
+ls docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e0-f3-unknown-residue/   # F3: README.md, characterize_feat_unknown.py, feat_unknown_characterization.json present
+```
+
+All four confirmed present at `HEAD` (`3a3b89d1`), which is `origin/tranche/10`'s own tip
+(`git merge-base --is-ancestor HEAD origin/tranche/10` — true). **F1-F4 all on `tranche/10` by
+content.** `epic-0-instrument-apply` flipped to `COMPLETE` in `kanban.md` this cycle.
+
+### 7. Reclaim
+
+`./scripts/reclaim.sh` (dry run): all candidates skipped (young verify-logs, forbidden worktree
+paths, unmerged/checked-out branches — consistent with 22-23% disk usage, not a "structurally full"
+reading). `./scripts/reclaim.sh --apply` run at cycle close; bytes reclaimed recorded in the commit
+that follows this receipt.
+
+**Verdict: SD30-E0-F4 COMPLETE, `epic-0-instrument-apply` COMPLETE.** DoD items 1, 6-8 N/A with
+stated reasons (measurement/doc-only cycle, no reach/code/UI surface touched); items 2, 4, 5 PASS;
+item 3 an honest, byte-identical-reproduced pre-existing FAIL, not this card's scope, not fabricated
+as a pass. Two real defects found and corrected in this package's own reporting surfaces (a
+`beginner_box`-exclusion bug and a row-copy-paste error), not merely re-stated as stale — both
+verified against the live dashboard producer, not against each other.

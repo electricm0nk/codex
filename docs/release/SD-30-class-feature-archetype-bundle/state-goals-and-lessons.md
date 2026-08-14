@@ -22,26 +22,53 @@ largest recorded defect class is transcribed-instead-of-derived counts.
 
 ### 1.1 The board (`done`, the product bar)
 
-Re-derived 2026-08-14 by importing the dashboard producer's own `_doneness_verdict_uncapped()` and
-replaying it over `docs/work-inventory.json`:
+**Re-derived 2026-08-14, SD30-E0-F4-001 (epic-0 closure cycle), superseding the table below.**
+Imported the dashboard producer's own `_doneness_verdict_uncapped()` (module import, not
+transcription) and replayed it over `git show <ref>:docs/work-inventory.json`, corpus-wide with
+`beginner_box` excluded (matching the live dashboard's own exclusion, `pf1e_dashboard_producer.py`'s
+`_exclude_books_from_kind_doneness`) — cross-checked byte-for-byte against the live
+`/home/ubuntu/swarm-observer/PF1e-dashboard.json` `work_inventory.by_doneness`/`by_doneness_kind`
+(`generated_at` 2026-08-14T21:26:18Z), which agrees exactly:
 
-| bucket | units |
-|---|---|
-| **done** | **5,837** |
-| held | 6,954 |
-| in-progress | 848 |
-| not-started | 21,319 |
-| unmeasurable | 3,546 |
-| deferred | 36 |
-| **total** | **38,540** |
+```
+python3 -c "
+import json, importlib.util, collections
+spec = importlib.util.spec_from_file_location('m', 'scripts/observer/pf1e_dashboard_producer.py')
+mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+d = json.load(open('docs/work-inventory.json'))['units']
+c = collections.Counter()
+for u in d:
+    if u.get('book') == 'beginner_box': continue
+    c[mod.doneness_verdict(u.get('wiring_class'), u.get('status'), u.get('kind'))] += 1
+print(c)
+"
+```
 
-Per kind, `done` / total:
+| bucket | units (was, F0-close snapshot) | units (now, F4-close, re-derived) |
+|---|---:|---:|
+| **done** | **5,837** | **5,837** (unchanged) |
+| held | 6,954 | 6,916 (−38) |
+| in-progress | 848 | 848 |
+| not-started | 21,319 | 20,895 (−424) |
+| unmeasurable | 3,546 | 3,989 (+443) |
+| deferred | 36 | 36 |
+| **total** | **38,540** | **38,521** (−19: the original table did not exclude `beginner_box`'s 19 units, a bug the live producer's `_exclude_books_from_kind_doneness` already guards against for the corpus-wide total — see that function's own docstring) |
+
+The −38/+443/−424 movement (not `done`-affecting) traces entirely to `feat`: F3's `unknown`-residue
+characterization cycle re-ran the guarded `v06_work_inventory` regen as part of confirming F1's
+static/derived rung, and the regenerated corpus read moved 38 `feat` units from `text-complete`/`held`
+to `unknown`/`unmeasurable` (329→367 `unknown`, matching F3's own re-derived figure in `kanban.md`) —
+a genuine corpus-read correction, not a classifier defect; `done` itself is untouched by it.
+`retro.py correction` event `1786743412894-sd30-e0-f4-report-0f3bbc` (`docs/retro/events/sd30-e0-f4-report.jsonl`).
+
+Per kind, `done` / total (re-derived same command, grouped by `kind`; matches the live dashboard's
+`by_doneness_kind` exactly):
 
 | kind | done | total | % |
 |---|---|---|---|
 | equipment_modifier | 911 | 1,580 | 57.7% |
 | feat | 1,178 | 2,610 | 45.1% |
-| equipment | 2,626 | 6,227 | 42.2% |
+| equipment | 2,626 | 6,208 | 42.3% |
 | companion | 416 | 1,696 | 24.5% |
 | class | 27 | 185 | 14.6% |
 | monster_ability | 334 | 3,107 | 10.7% |
@@ -51,8 +78,11 @@ Per kind, `done` / total:
 | class_feature | 25 | 15,472 | 0.2% |
 | **race** | **0** | **103** | **0.0%** |
 
-`race` at 0% is a **structural closure blocker** for SD-30 by construction
-(`acceptance-and-verification.md` AT-30-015).
+Per-kind `done`/total is unchanged from the F0-close snapshot except `equipment`'s total (6,227 →
+6,208, the same `beginner_box`-exclusion correction as the corpus-wide total above — its `done`/`held`
+split is unaffected). `race` at 0% is a **structural closure blocker**, now owned by
+`SD-31-corpus-closure-grind` (`acceptance-and-verification.md AT-31-005`, moved from this package's
+retired `AT-30-015` per `decisions.md §51`).
 
 ### 1.2 What landed in the handoff session
 
