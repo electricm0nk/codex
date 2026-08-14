@@ -1262,6 +1262,16 @@ struct EngineFacts {
     /// sheet renders. A subset of `class_books`' keys, never a superset: see
     /// [`probe_class_name`].
     class_effect_wired: BTreeSet<String>,
+    /// Every option-pool `class_feature` corpus key the class_feature
+    /// consumer-delta probe OBSERVED moving a rendered fact attributably to
+    /// itself, mapped to the book that models the pool's owning class.
+    ///
+    /// The book is carried, not just the key, for the reason
+    /// `probe_equipment_effect_wiring`'s `Celestial Shield` discipline records
+    /// and `SpellProbeOutcome::ForeignBookTable` enforces: a shared NAME is
+    /// not a shared record. A key is only ever grounded for the book whose
+    /// class the engine actually models.
+    class_feature_effect_wired: BTreeMap<String, &'static str>,
     /// Every race the engine models, by lowercase name.
     race_names: BTreeSet<String>,
     /// Race trait identities the engine grounds, as `<race>.<trait slug>`.
@@ -2856,6 +2866,9 @@ fn gather_engine_facts(
         chassis_companion_keys,
         class_books,
         class_effect_wired,
+        // Filled by `main` after corpus enumeration: the probe's key
+        // population and sibling map are corpus facts, not engine facts.
+        class_feature_effect_wired: BTreeMap::new(),
         race_names,
         race_trait_ids,
         race_trait_probe,
@@ -3328,6 +3341,22 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             not_ingested("class_modelled_but_no_observed_delta_on_the_rendered_snapshot")
         }
         Kind::ClassFeature => {
+            // The option-pool consumer-delta observation, asked FIRST because
+            // the branches below cannot reach these records at all: a pool
+            // member's group prefix names no class, so `class_feature_owner`
+            // fails and the record lands `unknown` however wired it is. Only
+            // the book whose class the engine models may claim the key --
+            // `class_feature_effect_wired` carries that book precisely so a
+            // second book's same-named record cannot ride this observation.
+            if facts.class_feature_effect_wired.get(&unit.key) == Some(&unit.book.as_str()) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "class_feature_probe_observed_a_delta_attributable_to_this_record"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
             let group = unit.key.split(" ~ ").next().unwrap_or(&unit.key);
             let Some(owner) = class_feature_owner(&unit.key, facts.class_books.keys()) else {
                 // The group names no class this engine models. Before calling
@@ -3859,6 +3888,38 @@ fn probe_class_feature_key(
     verdict
 }
 
+/// Runs the probe across every `class_feature` corpus key and keeps only the
+/// `Wired` verdicts, each mapped to the book that models its pool's owning
+/// class. The direct analogue of `spell_effect_wired_from_outcomes`.
+fn probe_class_feature_effect_wiring(
+    fixture: &CharacterInput,
+    class_books: &BTreeMap<String, &'static str>,
+    keys: &[String],
+) -> BTreeMap<String, &'static str> {
+    let siblings = class_feature_siblings(keys);
+    let mut wired = BTreeMap::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    for key in keys {
+        if !matches!(
+            probe_class_feature_key(fixture, class_books, &siblings, key),
+            ClassFeatureProbeOutcome::Wired { .. }
+        ) {
+            continue;
+        }
+        let group = key.split(" ~ ").next().unwrap_or(key);
+        let Some((_, owner, _, _)) = CLASS_FEATURE_POOLS.iter().find(|(g, _, _, _)| *g == group)
+        else {
+            continue;
+        };
+        if let Some(book) = class_books.get(*owner) {
+            wired.insert(key.clone(), *book);
+        }
+    }
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
 /// The probe's ceiling, printed by `--class-feature-probe`. Grounds nothing
 /// and moves no number on any board: this is the instrument reporting on
 /// itself, exactly as `--spell-probe` does.
@@ -4160,7 +4221,30 @@ fn main() {
         .filter(|u| u.kind == Kind::Class)
         .map(|u| u.name.to_lowercase())
         .collect();
-    let facts = gather_engine_facts(&fixture, corpus_class_names, &repo_root);
+    let mut facts = gather_engine_facts(&fixture, corpus_class_names, &repo_root);
+
+    // The class_feature consumer-delta probe, run over the keys the CORPUS
+    // enumeration just produced rather than over the committed inventory --
+    // generating this file from a previous copy of itself would make the
+    // observation circular. Its sibling map (which other members share a
+    // pool) comes from the same enumeration, so a key's control is always a
+    // real alternative the corpus declares.
+    {
+        let class_feature_keys: Vec<String> = enumerations
+            .values()
+            .flat_map(|e| e.units.iter())
+            .filter(|u| u.kind == Kind::ClassFeature)
+            .map(|u| u.key.clone())
+            .collect::<BTreeSet<String>>()
+            .into_iter()
+            .collect();
+        facts.class_feature_effect_wired = probe_class_feature_effect_wiring(
+            &fixture,
+            &facts.class_books.clone(),
+            &class_feature_keys,
+        );
+    }
+    let facts = facts;
 
     // --- wiring_class (GE-01) -----------------------------------------------
     // Built once, corpus-wide: the token closure index and a raw-line cache
