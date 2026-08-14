@@ -67,55 +67,79 @@ units were never started.** (`docs/retro/tranche-9-retrospective.md` §4.1, §9.
 **The numbers below are measured on this box, not carried from that document.** Re-derive them at
 pre-launch and before every wave; they are a snapshot, not a constant.
 
+**Superseded 2026-08-14 (`SD30-PRELAUNCH-002`, `decisions.md §47`'s owed edit).** `decisions.md §47`
+re-derived the box at 8 cores / 45 GB RAM / 968 GB disk (19 % used) on 2026-08-14 and flagged this
+section's SD-29-era 4-core / 80 %-disk numbers as stale but out of that pass's write scope. This
+pre-launch cycle re-measured the same box a few hours later and found it **had changed again** — the
+operator's VM resize had by then landed and gone further than `§47`'s own capture: 24 cores, 167 GB
+RAM. Disk is effectively unchanged in percentage (19→19 %) but grew in absolute headroom because
+usage dropped from 201 G to 178 G after this cycle's `reclaim.sh --apply` freed a 23.8 GB orphaned
+`codex-target-gate-green`. The block below is the live figure; `§47`'s 8-core/45GB capture is left in
+`decisions.md` as its own dated record per this package's standing convention, not overwritten.
+
 ```bash
-df -B1G /                                   # 484 total / 387 used / 98 avail / 80%   (2026-08-11)
+nproc                                       # 24     (2026-08-14, SD30-PRELAUNCH-002; was 8 at §47, 4 at 2026-08-11)
+free -h                                     # 167Gi total / 5.2Gi used / 158Gi free / 162Gi available
+df -B1G /                                   # 968 total / 178 used / 791 avail / 19%   (2026-08-14, post-reclaim)
 grep -n 'PREFLIGHT_DISK_MAX_PERCENT=\|PREFLIGHT_DISK_MIN_FREE_GB=' scripts/verify.sh
-#   verify.sh:244  PREFLIGHT_DISK_MAX_PERCENT=${PREFLIGHT_DISK_MAX_PERCENT:-90}
 #   verify.sh:243  PREFLIGHT_DISK_MIN_FREE_GB=${PREFLIGHT_DISK_MIN_FREE_GB:-20}
-du -sh target /home/ubuntu/cargo-targets/* /tmp/codex-target-* 2>/dev/null
-#   60G  target                                          (the primary checkout's accumulated tree)
-#   27G  /home/ubuntu/cargo-targets/sd29-e2-prelaunch     (one SD-29 cycle's, orphaned)
-#   11G  /tmp/codex-target-sd29-e6-racetrait-extend       (orphaned; AGENTS.md bans /tmp for these)
-nproc                                       # 4      (NOT 2 — see below)
+#   verify.sh:244  PREFLIGHT_DISK_MAX_PERCENT=${PREFLIGHT_DISK_MAX_PERCENT:-90}
+du -sh target /home/ubuntu/cargo-targets/* 2>/dev/null
+#   82G  target                                          (the primary checkout's accumulated tree, grown from 60G at 2026-08-11)
+#   27G  /home/ubuntu/cargo-targets/sd29-e2-prelaunch     (one prior cycle's, orphaned; not reclaimed — outside reclaim.sh's scanned roots)
 grep -n 'cargo build parallelism' scripts/verify.sh   # :47  default 2
 ```
 
-**The budget, derived from those four commands:**
+**The budget, derived from those commands:**
 
 | quantity | value | how |
 |---|---:|---|
-| filesystem | 484 G | `df -B1G /` |
-| currently used | 387 G (80 %) | same |
+| cores | **24** | `nproc` |
+| RAM | 167 Gi total, 158 Gi free | `free -h` |
+| filesystem | 968 G | `df -B1G /` |
+| currently used | 178 G (19 %) | same, post-`reclaim.sh --apply` |
 | `preflight-disk` refuses at | **90 % used** or **< 20 G free** | `verify.sh:243-244` |
-| headroom to the 90 % floor | **48 G** | `0.90 × 484 − 387` |
-| headroom to the 20 G-free floor | 78 G | `98 − 20` |
-| **binding headroom** | **48 G** | the smaller of the two |
-| a full-gate `CARGO_TARGET_DIR`, measured | **27 G – 60 G** | `du -sh` above; 27 G is one SD-29 cycle's, 60 G the accumulated primary |
-| **concurrent full-gate agents this box can carry today** | **1** | `48 G ÷ 60 G = 0` additional cold target dirs beyond the primary; reclaiming the two orphans (38 G) raises headroom to ~86 G, which affords exactly **one** |
+| headroom to the 90 % floor | **693 G** | `0.90 × 968 − 178` |
+| headroom to the 20 G-free floor | 771 G | `791 − 20` |
+| **binding headroom** | **693 G** | the smaller of the two (90 % floor binds) |
+| a full-gate `CARGO_TARGET_DIR`, measured | **27 G – 82 G** | `du -sh` above; 27 G is one prior cycle's fresh footprint, 82 G today's accumulated primary |
+| **concurrent full-gate agents this box can carry today (disk)** | **8** | `693 G ÷ 82 G = 8.4` (conservative: sized on the larger, accumulated-primary footprint, not the smaller fresh one) |
+| **concurrent full-gate agents this box can carry today (CPU)** | **12** | `nproc 24 ÷ default -j 2 per agent = 12`; not binding |
+| **RAM headroom at 8 agents × -j 2** | ample | ~16 concurrent `rustc` jobs × ~2-4 G each ≈ 32-64 G, against 158 Gi free; not binding |
+| **binding constraint** | **disk** | 8 < 12; disk governs |
+| **CAP: concurrent full-gate agents this box can carry today** | **8** | the smaller of the disk/CPU/RAM bounds above |
 
 **Rules, binding on the dispatching session:**
 
-1. **The cap is ONE concurrent full-gate agent** until a wave's own `df` shows otherwise. A
-   "full-gate agent" is any agent that will run `./scripts/verify.sh` without `--only`. Agents doing
-   measurement, doc, or `--only <stage>` work do not count against the cap and may fan out.
+1. **The cap is EIGHT concurrent full-gate agents** (re-derived 2026-08-14, `SD30-PRELAUNCH-002`;
+   was ONE at 2026-08-11's 4-core/80%-disk figures, THREE per `decisions.md §47`'s 8-core capture)
+   until a wave's own `df`/`nproc`/`free -h` shows otherwise. A "full-gate agent" is any agent that
+   will run `./scripts/verify.sh` without `--only`. Agents doing measurement, doc, or `--only <stage>`
+   work do not count against the cap and may fan out. **This is a ceiling, not a target** — dispatch
+   only as many as the wave's actual work supports; SD-30's own `loop-instruction.md` "Dispatch
+   mechanism" callout above still prefers serialized, non-`/batch` dispatch for cycles that touch
+   shared state (`progress.md`, `kanban.md`, `reach_gate.rs`), independent of what disk/CPU can carry.
 2. **The budget is checked before the fan-out, not by each agent afterwards.** `N` concurrent
-   full-gate agents need `N × 60 G` **plus** headroom above the 90 % floor. If the budget does not
+   full-gate agents need `N × 82 G` **plus** headroom above the 90 % floor. If the budget does not
    fit, **dispatch fewer.** An agent refusing at `preflight-disk` is the gate working correctly and
    is not a substitute for admission control — SD-29 proved that costs a lane.
 3. **Every dispatched agent gets its own `CARGO_TARGET_DIR`, named for its role, never under `/tmp`**
-   (`AGENTS.md` §Concurrency; `/tmp` is banned there and two orphans are sitting in it today).
+   (`AGENTS.md` §Concurrency; `/tmp` is banned there).
    Export it in the dispatch, do not leave it to the agent to remember. Delete it at cycle end
    (Cycle-mechanics step 8 already runs `reclaim.sh --apply`).
 4. **Reclaim before the wave, not after the failure.** `scripts/reclaim.sh` (dry run) then `--apply`,
    and record the reclaimed bytes. `reclaim.sh` correctly refuses live target dirs and unpushed
    worktrees, so **`0.0 B` reclaimed means the box is structurally full, not that it is clean** —
    that is the condition to dispatch fewer agents on, and SD-29 read it as noise 14 times.
-5. **CPU: `nproc` is 4 and `verify.sh` defaults to `-j 2`.** Two concurrent full sweeps starve each
-   other for ~15 minutes and the symptom is *a sweep that looks hung*. Before concluding a build has
-   stalled, run `pgrep -fa 'verify.sh|cargo test'` — frozen log timestamps and a frozen `deps/*.d`
-   count under live `rustc` mean **starved, not hung** (`AGENTS.md` rule A12).
-   (The predecessor retrospective repeatedly called this "a two-core box"; `nproc` says 4. The 2 is
-   `verify.sh`'s flag default, not the hardware — corrected 2026-08-11.)
+5. **CPU: `nproc` is 24 and `verify.sh` defaults to `-j 2`.** At the default job count, up to 12
+   concurrent full sweeps fit CPU-wise before sweeps start starving each other (disk caps the wave at
+   8 first). Before concluding a build has stalled, run `pgrep -fa 'verify.sh|cargo test'` — frozen
+   log timestamps and a frozen `deps/*.d` count under live `rustc` mean **starved, not hung**
+   (`AGENTS.md` rule A12).
+   (This box's core count has moved three times on record: 4 at 2026-08-11, 8 at `decisions.md §47`
+   2026-08-14 morning, 24 at this cycle 2026-08-14 afternoon — the operator's VM resize landed and
+   went further than `§47`'s own capture. Re-derive `nproc` every pre-launch; do not carry any of
+   these forward as a constant.)
 6. **Never `pkill -f` a pattern naming a shared tool.** `pgrep -af`, read the listing, `kill` by PID.
    On a shared checkout every agent's gate has the same command line by construction (`AGENTS.md`
    rule A11; one near-miss in SD-29 would have killed a sibling's 45-minute gate).

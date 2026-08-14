@@ -396,3 +396,164 @@ Epic 1 (identifier cleanup), Epic 2 (pre-launch), Epic 3 (PI-screening gate, now
 consumed by both successors), Epic 7 (version numbering), Epic 8 (bundle code review), Epic 9 (closure).
 The `§45` 100%-mandate exit bar is unchanged in substance — it becomes the joint SD-30→SD-31→SD-32
 program's exit criterion.
+
+## 2026-08-14 — SD30-PRELAUNCH-002: pre-launch checklist + concurrency re-derivation (admission control only)
+
+`RETRO_ACTOR=sd30-preflight`, `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-preflight` (unused —
+no build ran this cycle; this cycle implements nothing, per its own charter). Started at HEAD
+`e39a7f47` (`docs(sd30): narrow SD-30 scope post-split (§51)`) — tree already clean, package present,
+no recovery needed (`git rev-parse HEAD`, `git status --porcelain`,
+`ls docs/release/SD-30-class-feature-archetype-bundle/loop-instruction.md`).
+
+### 1. Seven-item pre-launch checklist
+
+| # | Item | Evidence | Result |
+|---|---|---|---|
+| 1 | `kanban.md` exists, ready queue present | `kanban.md` present; `epic-0-instrument-apply` READY (Order 1, no gate), `epic-1-identifier` READY, `epic-7-version` READY (gated on epic-1 only) | PASS |
+| 2 | `tranche/10` pushed to origin | `git rev-parse HEAD` = `e39a7f47...`; `git rev-parse origin/tranche/10` = same; `git log --oneline -1 origin/tranche/10` matches local tip | PASS |
+| 3 | GitHub OAuth valid for push | `gh auth status`: "Logged in to github.com account electricm0nk", "Active account: true", token scopes include `repo`/`workflow` (missing only `read:org`, irrelevant to push) | PASS |
+| 4 | Working tree clean | `git status --porcelain` — empty, both at cycle start and re-checked before this receipt | PASS |
+| 5 | Wave disk budget computed and recorded with `df` output | See §2 below — recomputed this cycle, written into `loop-instruction.md`'s Concurrency section in place | PASS |
+| 6 | Pilot/scope validation for any book/class a first cycle will claim | Epic 6 (per-class chassis-sweep, the only card that ever pinned a book/class) **moved to `SD-31-corpus-closure-grind/kanban.md`** under `decisions.md §51`. No SD-30 card claims a book or class. **No pilot validation is owed by this pre-launch pass** — stating this rather than inventing one, per the card's own instruction. | PASS (N/A by scope, not skipped) |
+| 7 | `epic-0-instrument-apply` card status known | `grep -n "epic-0-instrument-apply" kanban.md`: `READY`, `Order 1`, explicitly independent of the `epic-1`..`epic-9` `class_feature` chain (kanban.md lines 42-49, 55, 106) — confirmed against kanban's own claim-priority note | PASS |
+
+All seven items PASS. **No blockers found.**
+
+### 2. Hardware re-derivation (this cycle's primary deliverable)
+
+Commands run verbatim, 2026-08-14 ~15:5x (post-VM-resize, ~17 min uptime):
+
+```
+$ nproc
+24
+$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:           167Gi       5.2Gi       158Gi       1.6Mi       6.2Gi       162Gi
+$ df -h /            # BEFORE reclaim
+/dev/sda1       968G  201G  767G  21% /
+$ uptime
+ 15:51:11 up 16 min,  2 users,  load average: 1.02, 1.07, 1.04
+$ grep -n 'PREFLIGHT_DISK_MAX_PERCENT=\|PREFLIGHT_DISK_MIN_FREE_GB=' scripts/verify.sh
+scripts/verify.sh:243:PREFLIGHT_DISK_MIN_FREE_GB=${PREFLIGHT_DISK_MIN_FREE_GB:-20}
+scripts/verify.sh:244:PREFLIGHT_DISK_MAX_PERCENT=${PREFLIGHT_DISK_MAX_PERCENT:-90}
+```
+
+This is a **second** re-derivation on the same day: `decisions.md §47` (this session, 2026-08-14
+morning) captured 8 cores / 45 Gi RAM / 968 G disk at 19 % used and explicitly flagged
+`loop-instruction.md`'s disk-budget section as owed-but-out-of-scope for that pass — this cycle is
+that owed edit. Between `§47`'s capture and this cycle, the operator's VM resize (referenced but "not
+landed" as of the P0.5 receipt earlier this file) **landed and went further than `§47`'s own number**:
+8→24 cores, 45→167 GiB RAM. Disk stayed ~968 G at ~19-21 % used throughout.
+
+**Arithmetic** (after `reclaim.sh --apply`, see §3 — post-reclaim `df -B1G /`: 968 total / 178 used /
+791 avail / 19 %):
+
+- headroom to the 90 % floor: `0.90 × 968 − 178 = 871.2 − 178 = 693.2 G`
+- headroom to the 20 G-free floor: `791 − 20 = 771 G`
+- **binding headroom: 693 G** (90 % floor binds; smaller of the two)
+- full-gate `CARGO_TARGET_DIR` footprint, measured: `du -sh target` → **82 G** (primary checkout,
+  accumulated; grown from the 60 G recorded 2026-08-11); `du -sh /home/ubuntu/cargo-targets/*` → 27 G
+  (`sd29-e2-prelaunch`, one prior cycle's fresh footprint, orphaned)
+- **disk-based cap**: `693 G ÷ 82 G = 8.4` → **8** concurrent full-gate agents (conservative: sized on
+  the larger, accumulated-primary footprint, not the smaller fresh one)
+- **CPU-based cap**: `nproc 24 ÷ verify.sh default -j 2 per agent = 12` — not binding
+- **RAM check**: 8 agents × 2 jobs = ~16 concurrent `rustc` processes × ~2-4 G each ≈ 32-64 G, against
+  158 Gi free — not binding
+- **binding constraint: disk** (8 < 12)
+
+**`max_full_gate_agents = 8`**, derived from this cycle's own measurement, not from `decisions.md
+§47`'s 3 or any earlier document. `loop-instruction.md`'s "Concurrency and resource budget" section
+updated in place with this table, the live commands, and revised rules 1/2/5 (cap language, footprint
+figure, `nproc` note). A `scripts/retro.py correction` event was emitted
+(`--subject "loop-instruction.md Concurrency and resource budget section"`, `--claimed` `§47`'s
+8-core/3-agent figures, `--actual` the 24-core/8-agent figures above, `--verified-by` the command list
+above) — event id `1786737248914-sd30-preflight-1aad8f` in
+`docs/retro/events/sd30-preflight.jsonl`; log re-validated (`python3 scripts/retro.py validate` — 1017
+events, all valid).
+
+**Caveat carried forward, not resolved this cycle:** 8 is a ceiling computed from disk/CPU/RAM
+headroom alone. `loop-instruction.md`'s standing "Dispatch mechanism" doctrine (shared-state cycles
+serialize; `/batch` is not the default) still governs how many agents a wave *should* dispatch — this
+number answers "how many the box can carry," not "how many a wave should send."
+
+### 3. Live-claims check (before treating the box as ours)
+
+- `git worktree list` — 10 stale `.claude/worktrees/wf_*` entries beyond the primary checkout, all
+  with committed history (`git log --oneline -1` per worktree, all clean HEAD-at-a-commit, no
+  in-progress uncommitted state visible).
+- `.reclaim-claim` files: `find / -maxdepth 6 -name ".reclaim-claim"` →
+  `/home/ubuntu/workspace/codex-target-wiring-classifier/.reclaim-claim` (PID 336955),
+  `/home/ubuntu/workspace/codex-target-gate-green/.reclaim-claim` (PID 2046131). Both PIDs checked
+  with `ps -p <pid>` — **neither is alive.** No live claims.
+- `pgrep -fa "verify.sh|cargo test|cargo build"` — no matching process (only this cycle's own shell
+  wrapper matched the pattern trivially via its own command line, not a real hit).
+- **Conclusion: no live claims found.** Box is administratively clear for admission control.
+
+### 4. Reclaim
+
+```
+$ ./scripts/reclaim.sh                          # dry run
+WOULD REMOVE  /home/ubuntu/workspace/codex-target-gate-green  (23.8GB)
+  would reclaim: 1 item(s), 23.8GB total
+$ ./scripts/reclaim.sh --apply
+REMOVED  /home/ubuntu/workspace/codex-target-gate-green  (23.8GB)
+  reclaimed: 1 item(s), 23.8GB total
+```
+
+**23.8 GB reclaimed** (not 0.0 B — the box is not structurally full). 22 other candidates correctly
+skipped: `codex-target-wiring-classifier` (not a cargo target dir — no `CACHEDIR.TAG`/build output),
+10 worktrees + 10 matching branches under `.claude/worktrees/` (forbidden-path-protected, live
+worktree checkouts), `site-deploy` branch (not merged, upstream present).
+
+### 5. `verify.sh --only preflight-disk`
+
+```
+$ ./scripts/verify.sh --only preflight-disk > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+==> preflight-disk — disk budget check before any build starts
+    repo filesystem (.../codex, mounted at /): 19% used, 790G available
+    scratch-log filesystem (/tmp/codex-verify-uQy2as, mounted at /): 19% used, 790G available
+    PASS  preflight-disk  (disk budget OK)
+RESULT: PASS
+VERIFY_EXIT=0
+```
+
+Exit code captured directly (not through a pipe), in the same shell statement. **PASS, `VERIFY_EXIT=0`.**
+
+### 6. Dashboard cross-check (Job 1, `decisions.md §46`)
+
+```
+$ ls -la /home/ubuntu/swarm-observer/PF1e-dashboard.json
+-rw-r--r-- 1 ubuntu ubuntu 1319078 Aug 14 15:50 ...
+$ python3 -c "... generated_at, doneness_unmapped_seen, age ..."
+generated_at: 2026-08-14T19:50:01Z    (check run at 19:52:08Z UTC)
+doneness_unmapped_seen: False
+age minutes: 2.13
+$ crontab -l | grep -i pf1e
+*/5 * * * * /usr/bin/flock -n .../PF1e-dashboard.lock /usr/bin/python3 .../pf1e_dashboard_producer.py >> .../pf1e-dashboard-producer.log 2>&1
+```
+
+**Dashboard fresh** (2.1 minutes old, well within the 10-minute bar), cron entry present and firing
+on schedule, `doneness_unmapped_seen: false` (no unrecognised-status crash risk observed this tick).
+Cron is healthy — no loud blocker to raise for Epic 0.
+
+### Definition of done (this cycle's DoD — admission-control cycle, not a code cycle)
+
+1. `verify.sh` exits 0 — **N/A as a full run; `--only preflight-disk` run per this cycle's own
+   instructions (item 5 above), exits 0.** This cycle changed no Rust/Python production code, so the
+   full gate is not owed (loop-instruction.md: "Doc-only or measurement-only cycles run the relevant
+   `--only` stages instead and state exactly which").
+2. Reach stage claim — **N/A**, no code touched, no family surfaced or changed this cycle.
+3. `v06_corpus_trap_report -- --audit` — **N/A**, no corpus/inventory content touched this cycle.
+4. Guarded work-inventory regen — **N/A**, `docs/work-inventory.json` not touched this cycle.
+5. Four-check wired-integration audit — **N/A**, no production code changed (this cycle edits two
+   Markdown docs: `loop-instruction.md`, this `progress.md` entry, plus one `kanban.md` claim edit).
+6. `OPEN_FINDINGS` in `reach_gate.rs` — **N/A**, no family left unsurfaced this cycle.
+7. Baseline movements — **N/A**, `scripts/verify-baselines.env` not touched.
+8. On-screen verification — **N/A**, no player-visible surface touched this cycle.
+
+### Verdict
+
+**`launch_ok = true`.** All seven pre-launch checklist items PASS, no blockers, no live claims, disk
+reclaimed and preflight-disk green, dashboard cron healthy. `max_full_gate_agents = 8`, re-derived
+this cycle and written into `loop-instruction.md` in place, cited by cycle-id `SD30-PRELAUNCH-002` and
+retro correction `1786737248914-sd30-preflight-1aad8f`. Cycles may fire.
