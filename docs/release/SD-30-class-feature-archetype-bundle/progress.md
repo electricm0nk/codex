@@ -756,3 +756,246 @@ by lowering a bar; kanban.md's two wrong estimates were corrected DOWN to the tr
 already-landed figures (2,322 not-claimed-1,602 is a correction of an under-estimate, not a
 manufactured gain — the actual mechanism has been running since `4087f171`/`c04eb9ef`, this cycle
 only found the planning note that never caught up to it).
+
+
+## 2026-08-14 — SD30-E0-F2-001: computed-bucket consumer-delta probes, corpus-wide — enumerated fresh, NO_GROUNDING_PROBE cap corrected
+
+`RETRO_ACTOR=sd30-e0-f2-probes`, `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-e0-f2-probes`.
+**HEAD at start:** `c3f3e599` (`fix(sd30): SD30-E0-F1 — verify static/derived done rung by content,
+re-derive corpus-wide figures`) — `git rev-parse HEAD` / `git status --porcelain` (empty) / package
+present at `ls docs/release/SD-30-class-feature-archetype-bundle/loop-instruction.md`: tree clean, no
+recovery needed.
+
+### 1. Fresh enumeration (re-derived, not transcribed)
+
+Kinds with a `computed`-wiring-class population, corpus-wide:
+
+```
+$ python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); \
+  print(collections.Counter(u['kind'] for u in d['units'] if u.get('wiring_class')=='computed').most_common())"
+class_feature 4178, race_trait 1001, companion 793, monster_ability 669, equipment_modifier 561,
+feat 509, equipment 369, spell 210, class 176, monster 7, race 4
+```
+
+`class_feature` confirmed as the largest, 4,178 — matching the card's cited figure, re-derived not
+transcribed.
+
+Existing `probe_*` functions, enumerated fresh:
+
+```
+$ grep -n '^fn probe_' src/bin/v06_work_inventory.rs
+```
+14 functions: `probe_feat_effect_wiring`, `probe_reachable_race_traits`, `probe_race_trait_corpus`,
+`probe_equipment_key_universe`, `probe_equipment_keys_by_book`, `probe_equipment_effect_wiring`,
+`probe_casting_class_for_spell`, `probe_spell_key`, `probe_spell_keys_by_book`,
+`probe_spell_effect_wiring`, `probe_class_name`, `probe_class_effect_wiring`,
+`probe_class_feature_key`, `probe_class_feature_effect_wiring`.
+
+Cross-referencing coverage against `classify()`'s match arms (`src/bin/v06_work_inventory.rs`):
+
+| kind | probe_* exists? | grounded/total (computed) |
+|---|---|---|
+| feat | yes — `probe_feat_effect_wiring` | 58/509 |
+| equipment, equipment_modifier | yes — `probe_equipment_effect_wiring` (shared) | 40/369, 55/561 |
+| spell | yes — `probe_spell_effect_wiring` | 46/210 |
+| class | yes — `probe_class_effect_wiring` | 27/176 |
+| race_trait | yes — `probe_race_trait_corpus`/`probe_reachable_race_traits` | 264/1001 |
+| **class_feature** | **yes — `probe_class_feature_effect_wiring` (line 4072)** | 20/4178 |
+| companion | no | 416/793 |
+| monster_ability | no | 334/669 |
+| monster | no | 7/7 |
+| race | no | 0/4 |
+
+### 2. CORRECTION — the card's own premise is wrong for `class_feature`
+
+The acceptance text names `class_feature` as "the largest such population... and no existing
+`probe_*` function." **False, checked by content, not assumed.** `probe_class_feature_effect_wiring`
+(`src/bin/v06_work_inventory.rs:4072`) exists, is invoked from `classify()`'s `Kind::ClassFeature` arm
+(`facts.class_feature_effect_wired.get(&unit.key) == Some(&unit.book.as_str())`), and already produces
+20 `grounded` units under `computed`. class_feature needs no new probe. `retro.py correction` event
+`1786739559344-sd30-e0-f2-probes-a01b3e`.
+
+### 3. The real gap, examined — and found NOT to need a new probe for 3 of 4 kinds
+
+`companion`, `monster_ability`, `monster`, `race` have `computed` population and no `probe_*`
+function. Investigated each rather than building probes to satisfy the letter of the acceptance text:
+
+**`companion` and `monster_ability`: no new probe is buildable OR owed.** Their only real downstream
+consumer is `apps/desktop/src-tauri`'s `list_companion_catalog`/`list_monster_catalog` Tauri commands
+(confirmed already claimed in `reach_gate.rs`, lines ~1893-1948). Both are **proven structural
+bijections** over the exact compiled registries (`companion_chassis::COMPANION_BOOKS`,
+`monster_chassis::MONSTER_BOOKS`) the current membership check (`facts.holds_key` /
+`chassis_companion_keys` / `chassis_monster_ability_keys`) already reads — zero filtering, own module
+tests assert it:
+
+```
+$ sed -n '600,614p' apps/desktop/src-tauri/src/companion_catalog.rs   # the_catalog_serves_every_registered_companion_creature
+    assert_eq!(response.entries.len(), expected);   # expected = COMPANION_BOOKS.companions.len() sum
+$ sed -n '772,800p' apps/desktop/src-tauri/src/monster_catalog.rs     # the_catalog_serves_every_ingested_bonus_bestiary_monster...
+```
+
+A probe re-implementing that map would produce the IDENTICAL grounded/not-ingested split already
+produced today — confirmed directly: every `computed` unit of these two kinds is ALREADY exactly
+`{grounded, not-ingested}`, a strict two-way split with no `in-progress`-shaped status a probe could
+move (`python3 Counter` over `docs/work-inventory.json`, §1 table above). Building one anyway would
+also require reaching into `apps/desktop/src-tauri`, a separate cargo workspace
+`v06_work_inventory.rs` cannot depend on. Per the no-stub-mvp doctrine's own mirror rule (never invent
+a surface a check cannot fail against), no new probe is owed. `retro.py deferral` event
+`1786739592315-sd30-e0-f2-probes-84d9cc`.
+
+**`monster`: already 100% grounded (7/7) under `computed`.** No gap exists to close regardless of
+probe existence.
+
+**`race`: no new probe is owed; zero board impact either way.** The 4 `computed` `race` units are
+`{not-started, not-ingested}` × 0 `grounded`. Inspected individually
+(`python3` filter on `docs/work-inventory.json`): 2 of the 4 (`adventurers_guide "Companion (Bird
+(Raven))"`, `ultimate_psionics "Companion (Karaan)"`) read as `file_kind()` misclassification —
+companion records typed `kind==race` by filename, the same recurring classifier defect class this
+program has hit 3× before (`isi_abilities_race_companion.lst`, Bestiary 5/6). The other 2
+(`core_essentials` Aasimar, Tiefling) are real races `RaceId::ALL` does not model — an ingest gap, not
+a probe gap. A probe changes none of their status. `retro.py deferral` event
+`1786739592428-sd30-e0-f2-probes-01f6d2`.
+
+### 4. `NO_GROUNDING_PROBE` cap — removed for both listed kinds, per the card's own bar
+
+The cap's justifying comment (`scripts/observer/pf1e_dashboard_producer.py`, round 8 SD-29) claimed
+"`companion` and `spell` alone read `grounded: 0`". **Re-checked against the live payload this cycle:
+FALSE for both.**
+
+```
+$ python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); \
+  print(collections.Counter((u['wiring_class'],u['status']) for u in d['units'] if u['kind']=='companion')); \
+  print(collections.Counter((u['wiring_class'],u['status']) for u in d['units'] if u['kind']=='spell'))"
+```
+`computed`+`companion`: 416 `grounded` of 793. `computed`+`spell`: 46 `grounded` of 210. Both kinds'
+consumer-delta check already exists and already lands nonzero `grounded` — the card's own bar ("cap
+removed for a kind once its probe lands AND is confirmed reaching a nonzero `grounded` count under
+`computed`") is met for both. `retro.py correction` event `1786739559459-sd30-e0-f2-probes-11d945`.
+
+**Change:** `scripts/observer/pf1e_dashboard_producer.py`: `NO_GROUNDING_PROBE = ("companion",
+"spell")` → `NO_GROUNDING_PROBE = ()`. Same change, three follow-on fixes required and made:
+
+1. **`spell_kind_capped_count` gated on live membership** (was unconditional; would have kept
+   reporting a nonzero "disagreement" count for `spell` even after the disagreement stopped existing).
+2. **`WIRING_SUMMARY_SCHEMA` bumped 11→12** — required. A live run after the code-only change served a
+   STALE cache (`state-goals-and-lessons.md` hazard 5, hit live this cycle): `docs/work-inventory.json`'s
+   mtime never moved, so `compute_wiring_class_summary()`'s mtime-only cache check kept serving the OLD
+   `no_grounding_probe_kinds` and OLD `by_doneness` split. Caught by running the producer end-to-end and
+   diffing the shipped payload, not by trusting the code diff. `retro.py near-miss` event
+   `1786739567777-sd30-e0-f2-probes-6ecfa0`.
+3. **`/home/ubuntu/swarm-observer/PF1e-dashboard.html`'s client-side fallback guard fixed** — was
+   `if (Array.isArray(ngp) && ngp.length) NO_GROUNDING_PROBE = ngp;`, which can only ever ADD kinds to
+   the hardcoded default, never honor an explicitly-EMPTIED payload array (`.length` falsy). Changed to
+   `if (Array.isArray(ngp))`. This untracked, cron-served HTML file was backed up to
+   `/home/ubuntu/swarm-observer/.backups/` (2 files, `.pre-sd30-e0-f2` suffix) before editing, per
+   `state-goals-and-lessons.md` hazard 4.
+
+**Verified end-to-end**, live producer run (respecting the cron `flock`):
+
+```
+$ /usr/bin/flock -n /home/ubuntu/swarm-observer/PF1e-dashboard.lock /usr/bin/python3 \
+    /home/ubuntu/.hermes/profiles/god-emporer/skills/release-swarm-observer/scripts/pf1e_dashboard_producer.py
+pf1e-producer: rendered /home/ubuntu/swarm-observer/PF1e-dashboard.json   (exit 0)
+```
+Before fix (stale cache, schema 11): `no_grounding_probe_kinds: ["companion","spell"]`,
+`by_doneness: {held: 7048, in-progress: 716, done: 5837, ...}`.
+After fix (schema 12, forced recompute): `no_grounding_probe_kinds: []`, `spell_kind_capped_count: 0`,
+`by_doneness: {held: 6916, in-progress: 848, done: 5837, ...}`.
+
+**Board movement**: `held` −132, `in-progress` +132, **`done` unchanged (5,837)**. This is a
+reclassification honesty fix, not a `done` gain — `computed`+`grounded` was never subject to this
+cap; only `computed`+non-`grounded` `spell` units (`ingested-magnitude`) were miscoloured `held`
+instead of the more honest `in-progress`. `companion`'s cap removal moves 0 units (was already inert —
+confirmed no `computed`+`companion` unit exists outside the `{grounded, not-ingested}` split). No
+number moved by lowering a bar; the opposite direction (a bar that no longer has an excuse to be
+capped) was tightened to match reality.
+
+HTML syntax verified: `node -e "new Function(scriptBlockSource)"` over the file's single `<script>`
+block — no syntax error. Python syntax verified: `python3 -c "import ast; ast.parse(...)"` — OK.
+
+### 5. Full gate found and fixed a pre-existing, inherited defect (unrelated to this cycle's own change)
+
+The first `./scripts/verify.sh --full` run against `tranche/10` HEAD `c3f3e599` — the FIRST full-gate
+run against that commit; SD30-E0-F1-001's own DoD item 1 was N/A ("no Rust/Python production code
+changed") so it never ran — **FAILED** at `root-full`: `tests/v06_work_inventory.rs:655`,
+`zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown`, 405 violations, cargo exit
+101.
+
+Root-caused, not assumed: every one of the 405 violating units carries `wiring_class: "derived"`,
+`wiring_class_reason: "prose_formula_segment"` (`python3 Counter` over
+`docs/work-inventory.json`). `classify()`'s `text_only` check
+(`magnitude_token_count == 0 && !carries_prose_magnitude`, landed in `2ce72913`) is correctly FALSE
+for a zero-raw-token unit that carries a detected prose-embedded formula, so it falls past the
+`not_ingested` branch into `unknown` **by design** — the DATA is correct (this cycle touched no
+corpus data, no `v06_work_inventory.rs`, no `2ce72913` code). The TEST's own invariant comment predates
+`2ce72913` and never accounted for the `carries_prose_magnitude` override, so **the test was the stale
+half**. Fixed in place: narrowed the assertion to exempt `wiring_class_reason == "prose_formula_segment"`
+rather than deleting or weakening the check — a true zero-magnitude, no-prose-formula unit landing
+`unknown` is still caught. `retro.py correction` event `1786740230122-sd30-e0-f2-probes-f3839c`.
+
+This is a mechanical/stale-fixture-shaped defect per the loop-instruction's PRESS ON criteria (not this
+card's own scope, but blocking every cycle's DoD item 1 since it landed) — fixed in place rather than
+recorded `decision-blocked`, per that doctrine's explicit example.
+
+**The first fix attempt was itself incomplete — caught by re-running the gate, not by inspection.**
+Run 2 (after the first fix) still FAILED at the same test: `left: 29` violations, not 0. Exempting only
+`wiring_class_reason == "prose_formula_segment"` missed the sibling reason `"prose_expr"` —
+`v06_work_inventory.rs`'s own `carries_prose_magnitude` computation (its `classify()` doc comment,
+line ~4505) narrows to **both** reasons:
+`matches!(wc_reason.as_str(), "prose_expr" | "prose_formula_segment")`. The test now quotes that exact
+predicate verbatim rather than re-deriving it from an aggregate `Counter` a second time (the first
+pass's actual mistake: 398 of 405 violations were `prose_formula_segment`, and the smaller `prose_expr`
+slice did not stand out enough on that read). `python3` re-check against the corrected predicate:
+`0` remaining violations. `retro.py near-miss` event `1786741134671-sd30-e0-f2-probes-6f8fee`. A third
+full gate run was launched after this correction; its result is below.
+
+### 6. Definition of done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **PASS. `VERIFY_EXIT=0`, RESULT: PASS, 16/16 stages**, third full run this cycle (run 1 FAIL at `root-full`, pre-existing stale test found live; run 2 FAIL at `root-full`, first fix attempt incomplete, found live; run 3 PASS clean). Exit code captured directly in the same shell statement (`./scripts/verify.sh > "$LOG" 2>&1; echo VERIFY_EXIT=$? >> "$LOG"`), never through a pipe. Log: `/tmp/codex-verify-M5CFs3` (run 3). `clippy` clean both crates (root:46 desktop:7 warnings, 0 errors — pre-existing warning counts, unchanged). `class-dump` 31/31 computing. One baseline note (not a failure): `BASELINE_ROOT_FULL_TESTS` stale 6393→6398 — its own commit, §5 above / §7 below. |
+| 2 | reach claim, nonzero | **PASS.** `reach` stage: 27 passed (the full standing `reach_gate` suite — `grep -c '#\[test\]' apps/desktop/src-tauri/src/reach_gate.rs` confirms 27 exist, matching exactly). No NEW family surfaced this cycle (this card is dashboard/instrument-scope, not a new player-facing reach claim), so this is the standing-health check, not a new-family claim — recorded honestly as such, same framing SD30-E0-F1-001 used. |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **FAIL, exit 2 — pre-existing, out of this card's scope, unchanged by this cycle.** 177 defects (33 companion, 3 monster, 141 monster_ability), all `wiring-class-mismatch`: stored `display` vs computed-fresh `derived` in `data/corpus/**/*.json`, traced by SD30-E0-F1-001 to the `%N` prose-formula classifier fix (`99efb504`) landing without a matching re-ingest of those kinds' stored JSON. Same 177 as F1's prior receipt, byte-for-byte reproduced this cycle (`companion`/`monster`/`monster_ability` counts: 33/3/141) — confirms this cycle neither caused nor worsened it (this cycle touched no `data/corpus/` file and no `v06_work_inventory.rs` code). Flagged for the same dedicated follow-up card F1 already flagged; not this card's scope to fix. |
+| 4 | Guarded work-inventory regen | **N/A.** `src/bin/v06_work_inventory.rs` (the generator), `data/corpus/`, and `docs/work-inventory.json` itself are untouched this cycle. `tests/v06_work_inventory.rs` (§5 below) changed, but it is a TEST asserting against the document, not the generator producing it — its fix narrows an assertion, it does not alter what `v06_work_inventory` computes or writes, so a regen would be byte-identical (net of `generated_at`) to the committed file. The committed `docs/work-inventory.json` (SD30-E0-F1-001's regen, `generated_at: 2026-08-14T20:03:13Z`) remains authoritative and is what every figure above is re-derived against. |
+| 5 | Four-check wired-integration audit | **PASS.** All four checks scoped to `apps/desktop/**` / `src/**/*.rs` — `scripts/observer/pf1e_dashboard_producer.py` and `tests/v06_work_inventory.rs` (repo-root `tests/`, not `src/`) match neither glob; run anyway for the record — `OK_NO_TOKENS`, `OK_NO_NOOP_HANDLERS`, `OK_NO_MOCK_LEAKS`, `OK_NO_WOULD_STRINGS`. Also grepped both actually-changed files directly for the STUB/MOCK/todo/fixme/hack token set: clean. |
+| 6 | `OPEN_FINDINGS` in `reach_gate.rs` | **N/A.** No family was left unsurfaced this cycle in the reach-gate sense — `list_monster_catalog`/`list_companion_catalog` already carry their own claims from before this cycle, and this cycle's finding (§3) is that no NEW instrument is owed for companion/monster_ability, not that a family is unclaimed. Recorded instead as two `retro.py deferral` events (§3) naming the remedy/revisit condition, the correct registry for an instrument-scope (not a reach-scope) finding. |
+| 7 | Baseline movements | **DONE, own commit.** `BASELINE_ROOT_FULL_TESTS` 6393 → 6398, fully attributed (not this cycle's own tests — see §5's third paragraph): +5 from `9060840c`'s five new tests landing between the 6393 baseline and this cycle with no intervening green-gate measurement, this cycle's own fix contributing net zero (restores one test the same commit range's data regen broke, not a further +1). `--show-actuals` output quoted verbatim in the commit (`./scripts/verify.sh --only root-full --show-actuals`). `BASELINE_ROOT_TEST_BINARIES` unchanged (547, no new test file). |
+| 8 | On-screen verification | **N/A.** No player-visible desktop-app surface touched — `scripts/observer/pf1e_dashboard_producer.py` and the standalone dashboard HTML are the operator/ops reporting surface, not the character-sheet app `run-desktop`'s driver reaches. |
+
+### 7. Retro events emitted
+
+- `1786739559344-sd30-e0-f2-probes-a01b3e` — correction, class_feature-already-has-a-probe premise.
+- `1786739559459-sd30-e0-f2-probes-11d945` — correction, NO_GROUNDING_PROBE's stale justifying comment.
+- `1786739567777-sd30-e0-f2-probes-6ecfa0` — near-miss, stale wiring-class-summary cache (hazard 5) caught live before publish.
+- `1786739592315-sd30-e0-f2-probes-84d9cc` — deferral, no new probe for companion/monster_ability (proven redundant).
+- `1786739592428-sd30-e0-f2-probes-01f6d2` — deferral, no new probe for race (corpus noise + unrelated ingest gap).
+- `1786739472584-sd30-e0-f2-probes-0cbf9a` — verification, auto-emitted by `verify.sh --only preflight-disk`.
+- `1786741134671-sd30-e0-f2-probes-6f8fee` — near-miss, first fix attempt to the stale test was itself incomplete (one of two exemption reasons), caught by re-running the gate.
+- 5 `verification` events auto-emitted by `verify.sh` across this cycle's runs (preflight check, full runs 1/2/3, the `--only root-full --show-actuals` baseline-measurement run) — `python3` count over `docs/retro/events/sd30-e0-f2-probes.jsonl`, denominators honest in both directions.
+
+### 8. Card disposition
+
+`epic-0-instrument-apply`'s **F2 sub-scope is COMPLETE**: enumerated the real kind/probe list fresh
+(not from the card's own 4,178/"no probe" framing, which was wrong and is corrected in place),
+determined by direct evidence that 3 of the 4 genuinely-probe-less kinds need no new probe (proven
+redundant or zero-impact, not merely deferred for time), and removed the `NO_GROUNDING_PROBE` cap for
+both kinds it named, per the card's own confirmation bar, with the stale-cache hazard it triggered
+caught and fixed in the same change. `kanban.md`'s `epic-0-instrument-apply` row is left `READY` (F3/F4
+remain open under the same row), matching SD30-E0-F1-001's own precedent for this multi-feature row.
+
+### 9. Reclaim
+
+`./scripts/reclaim.sh --apply` run at cycle end, after all three gate runs settled: **0.0B reclaimed,
+31 items skipped**, every one correctly guarded (this cycle's own `sd30-e0-f2-probes` target dir still
+live, `/tmp/codex-verify-M5CFs3` too young, other agents' worktrees/branches genuinely in use). Per
+`state-goals-and-lessons.md`'s own doctrine, 0.0B means "structurally full of live work," not "clean" —
+consistent with disk at 22% used / 757G available (`df -h /`), well inside `verify.sh`'s 90%/20G-free
+preflight floor; not a concerning reading, just an honest one.
+
+**Verdict: SD30-E0-F2 COMPLETE.** DoD items 4/6/8 N/A with stated reasons, item 5 PASS, item 7 DONE
+(own commit), item 3 is an honest, reproduced, out-of-card-scope FAIL identical to F1's prior finding
+(not a regression, byte-identical 177/33/3/141 both before and after this cycle's changes). Items 1
+and 2 both PASS on a clean, three-times-verified `verify.sh --full` run (`VERIFY_EXIT=0`, 16/16). No
+number moved by lowering a bar: `done` is unchanged (5,837); the
+132-unit `held`→`in-progress` movement is a bar being applied MORE strictly (the excuse for exempting
+`spell` no longer holds), and `companion`'s cap removal is inert by direct proof, not by assumption.

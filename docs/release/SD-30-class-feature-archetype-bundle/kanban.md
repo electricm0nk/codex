@@ -126,6 +126,31 @@ claimed under **`epic-0-instrument-apply`** above (already `READY`, already Orde
 separate cards on this board; SD-32's own kanban records their `READY` status directly for cycles
 that read that package's queue.
 
+## Update (2026-08-14, SD30-E0-F2-001) — computed-bucket consumer-delta probes: F2 sub-scope COMPLETE
+
+Enumerated the real kind/`probe_*` list fresh rather than working from the card's own framing, and
+found it wrong: `class_feature` (4,178 units, confirmed the largest `computed` population) already
+has a landed, wired probe (`probe_class_feature_effect_wiring`, `src/bin/v06_work_inventory.rs:4072`)
+grounding 20 units — the card's "no existing `probe_*` function" claim for it does not hold.
+The 4 kinds genuinely lacking one (`companion`, `monster_ability`, `monster`, `race`) were each
+investigated on their own evidence, not assumed to need a probe built: `companion`/`monster_ability`'s
+only real consumer (`apps/desktop/src-tauri`'s `list_companion_catalog`/`list_monster_catalog`,
+already claimed in `reach_gate.rs`) is a proven structural bijection over the exact compiled registry
+the current membership check already reads (own module tests assert it), so a new probe would be
+redundant, not a gap — confirmed by the fact that every `computed` unit of both kinds is already
+exactly `{grounded, not-ingested}`, no third status a probe could move. `monster` is already 100%
+grounded (7/7). `race`'s 4-unit `computed` population is 2 `file_kind()`-misclassified companion
+records plus 2 real not-yet-ingested races (Aasimar/Tiefling) — a probe changes none of their status.
+`NO_GROUNDING_PROBE = ("companion", "spell")` in `scripts/observer/pf1e_dashboard_producer.py` was
+removed (both kinds re-checked and confirmed reaching a nonzero `grounded` count under `computed`
+right now — companion 416/793, spell 46/210 — the card's own confirmation bar). Board effect:
+`held` −132 / `in-progress` +132 (spell reclassified, more honestly), `done` unchanged at 5,837 — not
+a bar lowered, a bar the excuse for exempting no longer covers. A stale `wiring-class-summary.json`
+cache (hazard 5) served the OLD split after the code change until `WIRING_SUMMARY_SCHEMA` was bumped
+11→12 to force recompute — caught live, fixed in the same change. Full receipt, all commands, and the
+DoD table: `progress.md`, cycle `SD30-E0-F2-001`. This row stays `READY` — F3 (`unknown`-residue
+characterization) and F4 (re-derivation reporting) remain open under it.
+
 **Correction (SD30-E0-F1-001, 2026-08-14).** This section's "4,805 ceiling, 1,602 movable" (static)
 and "2,674 ceiling, 535 movable" (derived) figures were pre-run planning estimates, never
 re-derived against an actual sweep/check run, and both are wrong. The mechanism landed in commits

@@ -828,17 +828,34 @@ def work_inventory_panel(inventory: dict | None, wiring: dict | None = None) -> 
         # text-complete, and display+ingested-magnitude -- the three cells
         # where a probeless kind's kind-agnostic colour (in-progress) disagrees
         # with its kind-capped verdict (held).
-        "spell_kind_capped_count": sum(
-            _exclude_books_from_kind_doneness(
-                (wiring or {}).get("cross_tab_by_kind", {}),
-                (wiring or {}).get("cross_tab_by_kind_by_book", {}),
-                excluded,
-            ).get("spell", {}).get(cell, 0)
-            for cell in (
-                "computed|ingested-magnitude",
-                "computed|text-complete",
-                "display|ingested-magnitude",
+        #
+        # SD30-E0-F2 (2026-08-14) fix: gated on `"spell" in NO_GROUNDING_PROBE`
+        # (currently False -- see that constant's declaration). Before this
+        # fix the sum below was unconditional, so it kept reporting the raw
+        # structural count of spell records sitting in these three cells even
+        # after `spell` left `NO_GROUNDING_PROBE` -- correct as a record count,
+        # but WRONG as this field's actual contract ("records where the
+        # kind-agnostic colour disagrees with the kind-capped verdict"),
+        # because with the cap removed those two verdicts no longer disagree
+        # for `spell` at all. The viewer's caption built on this number would
+        # have kept asserting a disagreement that had stopped being true the
+        # moment the cap lifted -- exactly the stale-claim shape this cycle's
+        # other fixes were about, just reached through a number instead of
+        # prose.
+        "spell_kind_capped_count": (
+            sum(
+                _exclude_books_from_kind_doneness(
+                    (wiring or {}).get("cross_tab_by_kind", {}),
+                    (wiring or {}).get("cross_tab_by_kind_by_book", {}),
+                    excluded,
+                ).get("spell", {}).get(cell, 0)
+                for cell in (
+                    "computed|ingested-magnitude",
+                    "computed|text-complete",
+                    "display|ingested-magnitude",
+                )
             )
+            if "spell" in NO_GROUNDING_PROBE else 0
         ),
         # Book x kind doneness cross (round 11, operator UI-first reframe,
         # 2026-08-12): "how usable is Ultimate Equipment's equipment
@@ -3161,7 +3178,24 @@ WIRING_CLASS_CACHE = os.environ.get(
 # instrument disagreement resolved favorably instead of skeptically) had
 # relocated from the `ambiguous` branch to the `display` branch. See the
 # `display` branch of `doneness_verdict()` for the full reasoning.
-WIRING_SUMMARY_SCHEMA = 11
+#
+# Bumped 11 -> 12 (SD30-E0-F2, 2026-08-14): same hazard again, this time in
+# `NO_GROUNDING_PROBE` rather than `doneness_verdict()` itself --
+# `NO_GROUNDING_PROBE` emptied from `("companion", "spell")` to `()` this
+# cycle (both kinds now confirmed reaching a nonzero `grounded` count under
+# `computed`; see that constant's own declaration). Caught live: a first run
+# of this producer after the code change (`docs/work-inventory.json`'s mtime
+# unchanged) served a stale schema-11 cache whose OWN baked-in
+# `no_grounding_probe_kinds` still read `["companion", "spell"]` and whose
+# `by_doneness`/`by_doneness_kind`/`cross_tab_by_kind` were still computed
+# under the old cap (`held: 7048, in-progress: 716`, not the expected
+# `held: 6916, in-progress: 848`) -- exactly
+# `state-goals-and-lessons.md` hazard 5 ("silently serves a stale
+# wiring-class cache"), reached through a producer-constant change this time
+# rather than a corpus-doc change. `NO_GROUNDING_PROBE` feeds
+# `doneness_verdict()`'s capping step directly, so it is exactly as
+# invalidating as the branch-logic changes above.
+WIRING_SUMMARY_SCHEMA = 12
 
 # ---------------------------------------------------------------------------
 # Doneness (added 2026-08-12, operator directive; SD-29 `decisions.md §46`)
@@ -3257,18 +3291,46 @@ DONENESS_VALUES = (
     DONENESS_DEFERRED,
 )
 
-# Kinds the inventory has NO consumer-delta probe for at all -- `grounded` is
-# unreachable for them by construction, not merely unobserved yet (verified
-# against the live payload: every other kind shows `grounded` > 0 corpus-wide;
-# `companion` and `spell` alone read `grounded: 0`). Single-sourced here
-# (round 8, SD-29 QA finding, 2026-08-12): the viewer's own
-# `NO_GROUNDING_PROBE` constant duplicated this exact fact, which is the two-
-# copies-of-the-same-fact hazard that caused several earlier rounds' bugs.
-# This tuple is shipped on the payload (`work_inventory.no_grounding_probe_kinds`)
-# so the viewer reads it instead of hand-maintaining its own copy; see
+# Kinds the inventory has NO consumer-delta probe for at all -- `grounded`
+# would be unreachable for them by construction, not merely unobserved yet.
+#
+# EMPTIED (SD30-E0-F2, 2026-08-14). This tuple's own justifying comment
+# ("`companion` and `spell` alone read `grounded: 0`") is now FALSE, checked
+# against the live `docs/work-inventory.json` this cycle, not transcribed:
+# `computed`-wiring-class `companion` reads 416 `grounded` of 793, and
+# `computed`-wiring-class `spell` reads 46 `grounded` of 210
+# (`v06_work_inventory.rs`'s `Kind::Companion`/`Kind::Spell` verdict arms,
+# `facts.holds_key`/`facts.spell_effect_wired` respectively). Both kinds'
+# consumer-delta check already exists and already lands nonzero `grounded`,
+# so per this card's own acceptance bar ("the cap is removed for a kind once
+# its probe lands AND is confirmed reaching a nonzero `grounded` count under
+# the `computed` class for that kind") neither belongs in this tuple any
+# longer. `companion`'s cap was already inert regardless (its `computed`
+# population is a strict `{grounded, not-ingested}` two-way split with no
+# `in-progress`-shaped status to cap -- `build_companion_catalog()` in
+# `apps/desktop/src-tauri/src/companion_catalog.rs` is a proven bijection
+# over `companion_chassis::COMPANION_BOOKS`, own test
+# `the_catalog_serves_every_registered_companion_creature`, so no unit can
+# be "in the table but not grounded"). `spell`'s cap DOES move real units:
+# emptying it reclassifies 132 `computed`+`ingested-magnitude` spell units
+# from `held` to `in-progress` (verified by replaying `doneness_verdict()`
+# over `docs/work-inventory.json` with and without the cap, this cycle) --
+# a more honest board position, not a `done` gain (spell's `done` count is
+# unchanged: `computed`+`grounded` was never subject to this cap, only
+# `computed`+non-`grounded` was).
+#
+# Left as an empty tuple, not deleted, so a FUTURE kind whose probe
+# genuinely cannot exist yet (there is none on record as of this cycle) has
+# somewhere to be listed without re-deriving this comment's reasoning from
+# scratch. Still single-sourced on the payload
+# (`work_inventory.no_grounding_probe_kinds`) exactly as before; see
 # `doneness_verdict()` below for how it is used, and PF1e-dashboard.html's
-# `NO_GROUNDING_PROBE` for the client-side read.
-NO_GROUNDING_PROBE = ("companion", "spell")
+# `NO_GROUNDING_PROBE` for the client-side read -- that file's own fallback
+# guard (`if (ngp.length) NO_GROUNDING_PROBE = ngp`) was fixed in the SAME
+# change (SD30-E0-F2) to honor an explicitly-EMPTY shipped list rather than
+# silently keeping its stale `["companion", "spell"]` default, which an
+# emptied list would otherwise never be able to override.
+NO_GROUNDING_PROBE = ()
 
 DONENESS_MEANING = {
     DONENESS_DONE: (
@@ -3295,19 +3357,27 @@ DONENESS_MEANING = {
         "`display` (specifically `display`+`grounded`, where a real consumer "
         "delta contradicts the no-magnitude classification) the bar is not even "
         "known yet -- both need a working wiring-class classifier before there "
-        "is a bar to check against at all. Also where `spell`/`companion` units "
-        "land instead of `in-progress`: those two kinds have no consumer-delta "
-        "probe at all (see `NO_GROUNDING_PROBE`), so their bar can never be "
-        "confirmed reachable by an instrument that exists. As done as the "
+        "is a bar to check against at all. Also where a unit of any `kind` "
+        "listed in `NO_GROUNDING_PROBE` would otherwise land `in-progress`: "
+        "that kind has no consumer-delta probe at all, so its bar can never "
+        "be confirmed reachable by an instrument that exists. As done as the "
         "current instruments can prove, and deliberately not counted as done "
-        "(SD-29 decisions.md §46.4)."
+        "(SD-29 decisions.md §46.4). `NO_GROUNDING_PROBE` is empty as of "
+        "SD30-E0-F2 (2026-08-14) -- `spell` and `companion`, the two kinds it "
+        "used to name, both have a landed probe reaching a nonzero `grounded` "
+        "count under `computed` (46 and 416 respectively, re-derived that "
+        "cycle), so this clause is currently vacuous by construction, not "
+        "dead code -- a future kind with a genuinely unreachable bar has "
+        "somewhere to be listed."
     ),
     DONENESS_IN_PROGRESS: (
         "Really part way: ingested, short of its own class's bar, and the bar is "
         "reachable with an instrument that exists. Dominated by `computed` units "
-        "holding their numbers with no consumer delta yet observed. Never assigned "
-        "to a `spell`/`companion` record -- see `NO_GROUNDING_PROBE` -- since for "
-        "those kinds no instrument that could reach the bar exists at all."
+        "holding their numbers with no consumer delta yet observed. Would never "
+        "be assigned to a `kind` listed in `NO_GROUNDING_PROBE` -- currently "
+        "empty (SD30-E0-F2, 2026-08-14; see that constant's declaration) -- "
+        "since for such a kind no instrument that could reach the bar would "
+        "exist at all."
     ),
     DONENESS_NOT_STARTED: (
         "No record in the engine -- `not-ingested` (the book is in play, this "
