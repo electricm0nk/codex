@@ -146,6 +146,35 @@ run_reclaim "$WS" "$TMPROOT" --apply >/dev/null
 if [ -d "$d" ]; then pass "non-cargo-shaped codex-target-* dir untouched"; else fail "non-cargo-shaped codex-target-* dir untouched"; fi
 rm -rf "$WS" "$TMPROOT"
 
+# --- 10. A codex-target-* dir with real build output but NO CACHEDIR.TAG ----
+# is still found and reported. This is the 2026-08-13 defect: five real,
+# 8-50G codex-target-* dirs (debug/release output present, CACHEDIR.TAG
+# absent — cargo does not write it on every run) were silently invisible.
+# consider_cargo_target_dir()'s `! is_cargo_target_dir "$real"` branch used
+# to `return` with no output line at all for exactly this shape, so this
+# case failed red against the pre-fix code (dir survived --apply, no
+# disposition line of any kind — not even a SKIP).
+fresh_roots
+d="$WS/codex-target-no-tag"
+mkdir -p "$d/debug"
+printf 'x%.0s' {1..1024} > "$d/debug/payload"
+touch -t "$(date -d '-24 hours' +%Y%m%d%H%M)" "$d" "$d/debug" "$d/debug/payload"
+out=$(run_reclaim "$WS" "$TMPROOT" --apply)
+if [ ! -d "$d" ] && echo "$out" | grep -q "REMOVED  $d"; then pass "cargo-shaped dir with no CACHEDIR.TAG still found and removed"; else fail "cargo-shaped dir with no CACHEDIR.TAG still found and removed"; fi
+rm -rf "$WS" "$TMPROOT"
+
+# --- 11. Every codex-target-* candidate is enumerated in the summary, ------
+# including the ones that get rejected as not-a-cargo-target — the
+# "considered N" line makes silent invisibility structurally visible.
+fresh_roots
+make_target "$WS" codex-target-alpha 24 >/dev/null
+mkdir -p "$WS/codex-target-empty-junk"
+touch -t "$(date -d '-24 hours' +%Y%m%d%H%M)" "$WS/codex-target-empty-junk"
+out=$(run_reclaim "$WS" "$TMPROOT")
+if echo "$out" | grep -q "considered 2 codex-target-\* candidate(s)"; then pass "considered-count reports all name-matched candidates"; else fail "considered-count reports all name-matched candidates"; fi
+if echo "$out" | grep -q "not a cargo target dir"; then pass "non-cargo candidate gets an explicit disposition line"; else fail "non-cargo candidate gets an explicit disposition line"; fi
+rm -rf "$WS" "$TMPROOT"
+
 echo "---------------------------------------------------------------"
 echo "passed: $PASSED  failed: $FAILED"
 [ "$FAILED" -eq 0 ] || { echo "SELF-TEST FAILED."; exit 1; }

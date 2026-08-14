@@ -414,13 +414,15 @@ older_than_threshold() {
 # only to find candidates fast; this is what confirms one.
 # ---------------------------------------------------------------------------
 
+is_cargo_target_shape() {
+    local dir="$1"
+    [[ -f "$dir/.rustc_info.json" || -d "$dir/debug" || -d "$dir/release" ]]
+}
+
 is_cargo_target_dir() {
     local dir="$1"
     [[ -f "$dir/CACHEDIR.TAG" ]] || return 1
-    if [[ -f "$dir/.rustc_info.json" || -d "$dir/debug" || -d "$dir/release" ]]; then
-        return 0
-    fi
-    return 1
+    is_cargo_target_shape "$dir"
 }
 
 # ---------------------------------------------------------------------------
@@ -430,14 +432,36 @@ is_cargo_target_dir() {
 # Runs the full skip/remove ladder on one confirmed-real cargo-target path.
 # Shared by both scan passes below; every liveness guard lives here so a
 # candidate cannot reach rm via one pass with fewer checks than the other.
+#
+# $2 (confirmed_by_name) is set to 1 by Pass 2, the codex-target-* name-scan.
+# Real cargo builds do not reliably write CACHEDIR.TAG on every run (an
+# incremental build can leave it absent while `debug/`/`release/` build
+# output is very much present) — the 2026-08-13 finding was five real,
+# 8-50G codex-target-* dirs silently invisible to this function for exactly
+# that reason. For a name-matched candidate, build-output shape alone
+# (is_cargo_target_shape) is sufficient confirmation: the naming convention
+# already rules out fontconfig/uv/man-db sharing the scan root, which is the
+# false-positive CACHEDIR.TAG exists to prevent for the untargeted Pass 1
+# sweep. A name-matched candidate that also fails the shape check is
+# reported explicitly, never silently dropped — see the "considered" count
+# in reclaim_cargo_target().
 consider_cargo_target_dir() {
-    local real="$1" size
+    local real="$1" confirmed_by_name="${2:-0}" size
 
     if ! is_cargo_target_dir "$real"; then
-        # A CACHEDIR.TAG from some other tool (fontconfig, uv,
-        # man-db, ...) sharing the scan root, or a codex-target-* dir
-        # cargo never actually populated. Not our business.
-        return
+        if (( confirmed_by_name == 1 )) && is_cargo_target_shape "$real"; then
+            : # codex-target-* dir with real build output but no
+              # CACHEDIR.TAG this run — confirmed by shape instead, fall
+              # through to the safety ladder below.
+        elif (( confirmed_by_name == 1 )); then
+            say "    SKIP  $real  — matches codex-target-* naming convention but has neither CACHEDIR.TAG nor cargo build output (debug/release/.rustc_info.json); not a cargo target dir"
+            SKIPPED_LINES+=("cargo-target  $real  SKIPPED (not a cargo target dir)")
+            return
+        else
+            # A CACHEDIR.TAG from some other tool (fontconfig, uv,
+            # man-db, ...) sharing the scan root. Not our business.
+            return
+        fi
     fi
 
     if is_forbidden_path "$real"; then
@@ -511,15 +535,25 @@ reclaim_cargo_target() {
     # sweep of /tmp or the workspace — repos/*/target and other tools' cache
     # dirs live there) and depth-1: the convention puts the dir itself at
     # the root, never nested.
+    #
+    # Every dir this find turns up is a "candidate" and gets a disposition
+    # line — REMOVED/WOULD REMOVE, a SKIP reason, or the not-a-cargo-target
+    # SKIP from consider_cargo_target_dir — so the "0 item(s)" failure mode
+    # this pass was added to catch (real orphans present, tool reports none)
+    # cannot recur unnoticed: the candidate count below and the per-category
+    # skip/reclaim counts in SUMMARY must always add up.
+    local candidates=0
     for root in "$WORKSPACE_ROOT" "$ORPHAN_TMP_ROOT"; do
         [[ -d "$root" ]] || { say "    (root does not exist, skipping: $root)"; continue; }
         while IFS= read -r -d '' dir; do
             real=$(cd -- "$dir" 2>/dev/null && pwd -P) || real="$dir"
             [[ "$seen" == *"|$real|"* ]] && continue
             seen="$seen|$real|"
-            consider_cargo_target_dir "$real"
+            candidates=$(( candidates + 1 ))
+            consider_cargo_target_dir "$real" 1
         done < <(find "$root" -maxdepth 1 -type d -name 'codex-target-*' -print0 2>/dev/null)
     done
+    say "    considered $candidates codex-target-* candidate(s) under $WORKSPACE_ROOT and $ORPHAN_TMP_ROOT"
 }
 
 # ---------------------------------------------------------------------------
