@@ -120,6 +120,31 @@ derived evaluator-vs-fixture: 49 of 94 covered units cleared the bar;
 - **44 unevaluatable**, all `ultimate_equipment`. Verified structural, not an excuse:
   `data/corpus/ultimate_equipment` does not exist — the book has no ingest at all.
 
+### Proven able to fail
+
+A green check that cannot fail is worthless, so the check was held to the same bar the
+brief sets for the corpus sweep. `docs/retro/closure-derived-check-teeth.sh` applies three
+deliberate mutations to the committed fixture, runs the suite, and restores from git
+between each:
+
+```
+baseline (unmutated)                        exit=0    5 passed; 0 failed
+expected.bonus +1, corpus_field untouched   exit=101  FAILED fixture_expected_values_are_re_derivable_from_the_pinned_corpus_field
+upstream_lst_sha256 zeroed                  exit=101  FAILED pinned_corpus_field_is_byte_identical_to_the_upstream_lst
+upstream_line off by one                    exit=101  FAILED pinned_corpus_field_is_byte_identical_to_the_upstream_lst
+```
+
+Each mutation reddens the specific guarantee it attacks. `git status` on the fixture is
+empty afterwards.
+
+**Gap worth naming:** the static corpus sweep has a self-test wired into `verify.sh` as
+its own stage (`corpus-sweep-selftest`, 15 cases). The `derived` check has no equivalent
+stage — its ability to fail is demonstrated by the script above but is not gated. Wiring
+it in was left alone deliberately as out-of-scope for this card; it is a one-stage change
+for whoever owns `verify.sh` next.
+
+### Coverage
+
 Coverage is 94 of 2,879 held `derived` units. The 2,785 uncovered are reported by the
 instrument with a reason each; the dominant reasons are kinds with no equipment-effect
 evaluator (monster 1,229 · spell 941 · companion 303 · monster_ability 219) and small
@@ -194,6 +219,24 @@ python3 docs/retro/closure-derived-doneness-delta.py 8d00d0b1 90bd9975 HEAD
 #   DELTA vs 8d00d0b1: +46 done  {'spell': 46}
 #   DELTA vs 90bd9975: +0 done  (no kind moved)
 ```
+
+## Gate
+
+`./scripts/verify.sh` (full, all 16 stages), exit code captured directly, not through a
+pipe: **`VERIFY_EXIT=0`, `RESULT: PASS`**.
+
+```
+passed: 16  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest
+            corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep
+            frontend-install frontend-test frontend-typecheck clippy class-dump
+root-full   6371 passed across 546 suites, all 526 tests/*.rs suites executed
+```
+
+`root-full` executing all 526 suites is what confirms this check is gated rather than
+merely present.
+
+One baseline note, not a failure and not touched by this run:
+`BASELINE_CLIPPY_WARNINGS_ROOT` is loose (54 recorded, 46 measured).
 
 ## Per-kind `done` movement
 
