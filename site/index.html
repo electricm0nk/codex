@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campaign Codex — Open-source Pathfinder 1e rules engine</title>
+  <meta name="description" content="Campaign Codex is an open-source Rust + Tauri replacement for PCGen: a deterministic Pathfinder 1e rules engine with a buildable desktop workbench surface." />
+  <meta name="author" content="electricm0nk" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E📕%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">Campaign Codex</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/">Overview</a>
+        <a href="/status.html">Status</a>
+        <a href="/releases.html">Releases</a>
+        <a href="https://github.com/electricm0nk/codex">GitHub →</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="kicker">Open-source · MIT (source) · OGL/CC/ORC (data)</p>
+        <h1>A Pathfinder 1e rules engine<br />you can read, run, and trust.</h1>
+        <p class="lede">
+          Campaign Codex is a Rust + Tauri replacement effort for PCGen. It parses the heritage PCGen
+          corpus, computes character state deterministically, and ships a buildable Linux desktop
+          workbench — every step of the pipeline is covered by a test.
+        </p>
+        <p class="ctas">
+          <a class="btn btn-primary" href="https://github.com/electricm0nk/codex">View on GitHub</a>
+          <a class="btn btn-secondary" href="#install">Install &amp; build</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="wrap">
+        <div class="grid two">
+          <div>
+            <h2>What works today</h2>
+            <p>
+              The corpus-ingest pipeline, the deterministic compute chassis, the boundary contract,
+              and every persistence store are real, tested, and exercised end to end by
+              <code>cargo test --locked</code> and <code>npm test</code>.
+            </p>
+            <ul>
+              <li>PCGen <code>.pcc</code>/<code>.lst</code> parsing into canonical source-IR</li>
+              <li>Pilot compute + boundary contract — deterministic, fail-honest</li>
+              <li>Per-domain engines: spellbook, skill allocation, feat prerequisites, equipment effects, level-up</li>
+              <li>Desktop workbench: create, load, clone, export, recompute</li>
+              <li>Campaign manager (local) with on-disk persistence and conflict detection</li>
+              <li>Self-update chain + browser-handoff feedback to GitHub issues</li>
+            </ul>
+            <p><a href="status.html">Full status report →</a></p>
+          </div>
+          <div>
+            <h2>What it isn't (yet)</h2>
+            <p>
+              Codex today is a developer proof harness plus a buildable desktop workbench surface,
+              not a finished end-user product. The honest single-class path is Fighter, levels 1-3,
+              for any race — every other class/level combination returns real claim-blocking
+              diagnostics rather than fabricated output. The desktop UI surface is bounded and
+              demo-oriented, not a general character builder.
+            </p>
+            <p>
+              We say so up front rather than pretending. That posture is the project's central
+              engineering commitment.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content alt" id="install">
+      <div class="wrap">
+        <h2>Install &amp; build</h2>
+        <p>Verified on Ubuntu 24.04. Other platforms: repeat the proof before assuming parity.</p>
+
+        <h3>1. Linux system dependencies</h3>
+<pre><code>sudo apt update
+sudo apt install libwebkit2gtk-4.1-dev \
+  build-essential curl wget file libxdo-dev \
+  libssl-dev libayatana-appindicator3-dev \
+  librsvg2-dev pkg-config</code></pre>
+
+        <h3>2. Rust toolchain</h3>
+<pre><code>curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+. "$HOME/.cargo/env"
+cargo --version</code></pre>
+
+        <h3>3. Node.js LTS</h3>
+<p>Install via your normal bootstrap path, then verify with <code>node --version</code> and <code>npm --version</code>.</p>
+
+        <h3>4. Repo-local dependencies</h3>
+<pre><code>cd apps/desktop
+npm ci
+npm run typecheck
+npm run build
+npm run tauri:check
+npx tauri build --debug</code></pre>
+
+        <h3>5. Run the proof harness</h3>
+<pre><code>cargo test                 # full suite
+cargo test ge06_           # bounded pilot compute surface
+cargo test ge08_           # bounded Guard Stance homebrew surface</code></pre>
+
+        <h3>6. Launch the desktop shell (graphical Linux only)</h3>
+<pre><code>cd apps/desktop
+npx tauri dev</code></pre>
+        <p>Full onboarding and troubleshooting lives in <a href="https://github.com/electricm0nk/codex/blob/main/README.md">README.md</a>.</p>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="wrap">
+        <div class="grid two">
+          <div>
+            <h2>Project</h2>
+            <p><strong>Repository:</strong> <a href="https://github.com/electricm0nk/codex">github.com/electricm0nk/codex</a></p>
+            <p><strong>Owner:</strong> <a href="https://github.com/electricm0nk">electricm0nk</a> (Todd Hintzmann)</p>
+            <p><strong>License (source code):</strong> MIT — see <a href="https://github.com/electricm0nk/codex/blob/main/LICENSE">LICENSE</a>.</p>
+            <p><strong>License (game rules data):</strong> NOT MIT-licensed. Each dataset carries its own license — Open Game License v1.0a, Creative Commons, or ORC. See <a href="https://github.com/electricm0nk/codex/blob/main/LICENSING.md">LICENSING.md</a> in the repo for the full attribution and notice obligations.</p>
+            <p><strong>Trademark:</strong> Pathfinder and related marks are trademarks of Paizo Inc. This project is not affiliated with or endorsed by Paizo.</p>
+          </div>
+          <div>
+            <h2>Documentation</h2>
+            <ul>
+              <li><a href="https://github.com/electricm0nk/codex/blob/main/README.md">README</a> — onboarding, build, demo, troubleshooting</li>
+              <li><a href="https://github.com/electricm0nk/codex/blob/main/docs/architecture/README.md">Architecture docs</a> — system map, module boundaries, conventions, real-vs-stubbed status</li>
+              <li><a href="https://github.com/electricm0nk/codex/tree/main/docs/release">Release docs</a> — every SD-N bundle, including release notes</li>
+              <li><a href="releases.html">Releases</a> — release-notes index for v0.6, v0.7, and in-flight bundles</li>
+              <li><a href="https://github.com/electricm0nk/codex/issues">Issue tracker</a> — bug reports and enhancement requests</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Campaign Codex is an independent open-source project. Pathfinder and the Pathfinder Compatibility Logo are trademarks of Paizo Inc.</p>
+      <p>Source code: MIT. Game rules data: see per-dataset licenses.</p>
+    </div>
+  </footer>
+</body>
+</html>

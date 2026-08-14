@@ -1,0 +1,236 @@
+/* Campaign Codex — site stylesheet
+   Plain CSS, system fonts, no CDN, no build step. */
+
+:root {
+  --ink: #1a1d23;
+  --ink-soft: #4a4f57;
+  --ink-muted: #6b7280;
+  --paper: #fafaf7;
+  --paper-alt: #f0ede5;
+  --rule: #d8d3c4;
+  --accent: #7a1f1f;        /* Pathfinder-toned red-brown */
+  --accent-soft: #a64343;
+  --link: #1f4e79;
+  --code-bg: #efece4;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+               Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+a:focus-visible {
+  outline: 2px solid var(--accent-soft);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Header */
+.site-header {
+  background: var(--paper-alt);
+  border-bottom: 1px solid var(--rule);
+}
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.brand {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: var(--accent);
+}
+.brand:hover { text-decoration: none; }
+.site-nav a {
+  margin-left: 18px;
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+.site-nav a:hover { color: var(--accent); text-decoration: none; }
+
+/* Hero */
+.hero {
+  padding: 64px 0 48px;
+  border-bottom: 1px solid var(--rule);
+}
+.hero.compact {
+  padding: 40px 0 32px;
+}
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+.hero h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 38px;
+  line-height: 1.18;
+  margin: 0 0 18px;
+  color: var(--ink);
+  font-weight: 700;
+}
+.lede {
+  font-size: 18px;
+  color: var(--ink-soft);
+  max-width: 720px;
+  margin: 0;
+}
+.ctas {
+  margin-top: 28px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+.btn:hover { text-decoration: none; }
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--accent-soft); }
+.btn-secondary {
+  background: transparent;
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.btn-secondary:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Content sections */
+.content {
+  padding: 48px 0;
+}
+.content.alt {
+  background: var(--paper-alt);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.content h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 26px;
+  margin: 0 0 16px;
+  color: var(--ink);
+}
+.content h3 {
+  font-size: 18px;
+  margin: 24px 0 8px;
+  color: var(--ink);
+}
+.content p {
+  margin: 0 0 14px;
+}
+.content ul {
+  margin: 0 0 14px;
+  padding-left: 22px;
+}
+.content li { margin-bottom: 4px; }
+
+.grid {
+  display: grid;
+  gap: 32px;
+}
+.grid.two {
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 720px) {
+  .grid.two { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 30px; }
+  .lede { font-size: 17px; }
+}
+
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.9em;
+  background: var(--code-bg);
+  padding: 1px 6px;
+  border-radius: 3px;
+  color: var(--ink);
+}
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-size: 13.5px;
+  line-height: 1.5;
+  margin: 0 0 18px;
+}
+pre code {
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Releases */
+.release {
+  padding: 22px 0;
+  border-top: 1px solid var(--rule);
+}
+.release:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+.release h3 {
+  margin: 0 0 4px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+}
+.release .meta {
+  color: var(--ink-muted);
+  font-size: 14px;
+  margin: 0 0 12px;
+  font-style: italic;
+}
+.release p:last-child {
+  margin-bottom: 0;
+}
+
+/* Footer */
+.site-footer {
+  padding: 32px 0;
+  background: var(--paper-alt);
+  border-top: 1px solid var(--rule);
+  font-size: 13.5px;
+  color: var(--ink-muted);
+}
+.site-footer p {
+  margin: 0 0 4px;
+}

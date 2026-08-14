@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Status — Campaign Codex</title>
+  <meta name="description" content="What is real, working product surface today across the Campaign Codex repo, and what is stubbed, partially wired, or deferred." />
+  <meta name="author" content="electricm0nk" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E📕%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">Campaign Codex</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/">Overview</a>
+        <a href="/status.html">Status</a>
+        <a href="/releases.html">Releases</a>
+        <a href="https://github.com/electricm0nk/codex">GitHub →</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero compact">
+      <div class="wrap">
+        <p class="kicker">Status · as of v0.7 alpha</p>
+        <h1>What works, what doesn't, what's next.</h1>
+        <p class="lede">
+          The canonical, closure-updated statement of real-vs-stubbed state lives in
+          <a href="https://github.com/electricm0nk/codex/blob/main/docs/architecture/status.md">docs/architecture/status.md</a>
+          in the repo — and that file supersedes anything written here. This page is a stable
+          public summary suitable for the website; for the per-bundle receipts, read the
+          release notes linked below.
+        </p>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="wrap">
+        <h2>Posture</h2>
+        <p>
+          Codex today is a developer proof harness and a buildable desktop workbench, not a
+          finished character-management product. The corpus-ingest pipeline, the deterministic
+          compute chassis, the boundary contract, and every persistence store are real, tested,
+          and exercised end to end.
+        </p>
+        <p>
+          Character coverage is narrow: <strong>single-class Fighter at levels 1-3, for any race,
+          is the only path that reaches a fully <code>Computed</code> receipt today.</strong> Every
+          other class/level combination returns real claim-blocking diagnostics from the engine
+          rather than fabricated output. That honesty is a load-bearing commitment of the project —
+          we say so up front.
+        </p>
+      </div>
+    </section>
+
+    <section class="content alt">
+      <div class="wrap">
+        <h2>Real today</h2>
+        <div class="grid two">
+          <div>
+            <h3>Corpus ingest</h3>
+            <ul>
+              <li>PCGen <code>.pcc</code>/<code>.lst</code> parsing into canonical <code>SourcePackageContent</code></li>
+              <li>Repo-resident JSON corpus cache for seven books (CRB, APG, ACG, Bestiary 1, ARG, Pathfinder Unchained, Bonus Bestiary)</li>
+              <li>Per-domain engines: spellbook (9/9 schools), skill allocation, feat prerequisites (4/4), equipment effects (4/4), damage total, level-up (11/11 classes)</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Compute + boundary</h3>
+            <ul>
+              <li>Pilot compute + boundary contract (<code>compute_pilot_base_chassis</code> → <code>to_pilot_receipt</code>) is deterministic and fail-honest throughout</li>
+              <li>Fighter + Wizard multiclass base-chassis dispatch (SD-24): BAB/save stacking + per-class named-feature explanations, levels 1-10</li>
+              <li>Encounter difficulty and party challenge rating compute</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Desktop workbench (Tauri)</h3>
+            <ul>
+              <li>Character Hub: create, load, clone, portrait upload/load/delete, JSON export, recompute — real engine compute + real persistence</li>
+              <li>Campaign manager (local) with on-disk persistence and nonce-based conflict detection</li>
+              <li>Self-update chain + browser-handoff feedback to GitHub issues</li>
+              <li>Rule-system adapter seam — typed object-safe trait dispatching to <code>Pf1Adapter</code> (real) or a governed <code>StubAdapter</code> (honest "not yet implemented")</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Homebrew + oracle</h3>
+            <ul>
+              <li>Homebrew authoring workbench — Guard Stance proof package's validate/persist/preview round trip</li>
+              <li>PCGen runner scaffolding — <code>scripts/pcgen-run-character.sh</code> drives real headless PCGen Gradle batch-export; <code>oracle_validation::pcgen_runner</code> wraps it in one Rust call</li>
+              <li>Support-state matrix (34-row typed truth ledger, bridged to the desktop tester workbench)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="wrap">
+        <h2>Honest structural ceilings</h2>
+        <p>The two structural ceilings this section names are surfaced by recent work and neither fixed by it:</p>
+        <ul>
+          <li>
+            <strong>Race chassis.</strong> The engine models exactly seven races (CRB hardcoded).
+            Most <code>race_trait</code> units across the corpus cannot ground until a real race
+            chassis lands.
+          </li>
+          <li>
+            <strong>Companion kind is unstarted.</strong> All 1,696 <code>companion</code> units are
+            <code>not-ingested</code>/<code>not-started</code>; 0 are grounded. The companion lane
+            never began — its pilot cycle refused at the <code>preflight-disk</code> gate and was
+            left unclaimed rather than falsely marked attempted.
+          </li>
+        </ul>
+        <p>
+          Out of <strong>38,540 units across 38 book directories</strong>, the corpus-wide status
+          (as of SD-29 closure, 2026-08-11) is: <code>grounded</code> 491, <code>text-complete</code>
+          2,402, <code>ingested-magnitude</code> 6,548, <code>not-ingested</code> 14,582,
+          <code>not-started</code> 11,190, <code>unknown</code> 3,291, <code>deferred-with-reason</code>
+          36. The full per-kind breakdown lives in
+          <a href="https://github.com/electricm0nk/codex/blob/main/docs/architecture/status.md">status.md</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="content alt">
+      <div class="wrap">
+        <h2>In flight</h2>
+        <ul>
+          <li>
+            <strong>SD-30 — Class Feature &amp; Archetype Bundle.</strong> 16 books' per-record rollup
+            across archetypes and class features; targeted for the next release cut.
+          </li>
+          <li>
+            <strong>SD-31 — PCGen Character Import.</strong> Building the path for a user to open
+            an existing PCGen character file in Codex. Rule: an import either brings the character
+            across intact, or tells the user exactly what it could not bring and refuses — no silent losses.
+          </li>
+        </ul>
+        <p>Follow the in-flight bundles via the <a href="releases.html">releases index</a> or the <a href="https://github.com/electricm0nk/codex/tree/main/docs/release">docs/release/</a> tree.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Campaign Codex is an independent open-source project. Pathfinder and the Pathfinder Compatibility Logo are trademarks of Paizo Inc.</p>
+      <p>Source code: MIT. Game rules data: see per-dataset licenses.</p>
+    </div>
+  </footer>
+</body>
+</html>
