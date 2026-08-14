@@ -557,3 +557,202 @@ Cron is healthy — no loud blocker to raise for Epic 0.
 reclaimed and preflight-disk green, dashboard cron healthy. `max_full_gate_agents = 8`, re-derived
 this cycle and written into `loop-instruction.md` in place, cited by cycle-id `SD30-PRELAUNCH-002` and
 retro correction `1786737248914-sd30-preflight-1aad8f`. Cycles may fire.
+
+## 2026-08-14 — SD30-E0-F1-001: static/derived `done` rung, verified by content and re-derived corpus-wide
+
+`RETRO_ACTOR=sd30-e0-f1-rung`, `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-e0-f1-rung`.
+**HEAD at start:** `98d98d3a` (`docs(sd30): SD30-PRELAUNCH-002 — pre-launch checklist + concurrency
+re-derivation`) — `git rev-parse HEAD` / `git status --porcelain` (empty) / package present at
+`ls docs/release/SD-30-class-feature-archetype-bundle/loop-instruction.md`: tree clean, no recovery
+needed.
+
+### 1. Verify by content first
+
+The card's handoff claims the static/derived rung and both movable-mass instruments (former SD-32
+`e5-static-sweep`/`e6-derived-check`, folded here per `decisions.md §49`) already landed. Checked by
+content, not by any prior receipt's say-so:
+
+```
+git log --oneline --all | grep -i "literal-verified\|fixture-verified\|corpus_literal_sweep\|derived_evaluator"
+  c04eb9ef feat(doneness): add the derived done rung (fixture-verified)
+  e928da8c fix(v06-work-inventory): declare literal-verified in status_vocabulary
+  4087f171 feat(doneness): add the static done rung (literal-verified)
+git merge-base --is-ancestor 4087f171 HEAD && git merge-base --is-ancestor e928da8c HEAD \
+  && git merge-base --is-ancestor c04eb9ef HEAD    # all three: ancestor confirmed
+```
+
+All three are on `tranche/10` by content. `scripts/observer/pf1e_dashboard_producer.py`'s
+`_doneness_verdict_uncapped()` (read directly, lines 3401-3524) confirms the `static`/`derived`
+branch maps `status in ("literal-verified","fixture-verified")` → `DONENESS_DONE`, everything else
+(`ingested-magnitude`/`grounded`/`text-complete`) → `DONENESS_HELD`, and anything else `raise
+ValueError` — no relaxation, matches `decisions.md §49(d)` verbatim. **F1's core mechanism is
+COMPLETE and correctly wired; this cycle's job is re-derivation, hardening, and the corpus-wide
+regen it was waiting on, not building the rung.**
+
+### 2. Re-derived headline figures (every number below has its command)
+
+```
+$ python3 -c "...Counter(u['status'] for u in json.load(open('docs/work-inventory.json'))['units'])..."
+literal-verified: 2322   fixture-verified: 49    (committed docs/work-inventory.json, before this cycle's regen)
+
+$ cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep.json
+corpus-literal-sweep: 3516 records examined of 9328 read, 36105 tokens compared (9 synthesized),
+8903 digests checked, 0 findings — CLEAN. (Byte-identical to `ed79ee1b`'s figures, re-run fresh.)
+
+$ cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture.json
+derived-evaluator-fixture-check: 49 of 94 covered units cleared; 1 failed; 44 not ingested.
+FAIL advanced_players_guide:equipment:spindle_of_perfect_knowledge: corpus states
+BONUS:STAT|INT,WIS,CHA|4|TYPE=Enhancement, evaluator produced no ability bonus at all. (Exit 0 —
+the tool distinguishes cleared/failed/not-ingested and correctly withholds the stamp from the one
+failing unit rather than either failing the whole run or silently stamping it. This live failure
+IS this cycle's "prove the instrument can fail" evidence for the derived rung — no synthetic
+corruption needed, a real one is sitting in the corpus.)
+```
+
+**kanban.md's "4,805 ceiling, 1,602 movable" (static) / "2,674 ceiling, 535 movable" (derived)
+figures were wrong** — pre-run planning estimates, never checked against an actual run. Corrected
+in place (`kanban.md`, this cycle) to the re-derived, actually-landed figures: static 4,801
+static+held total / 2,322 TOKEN-COMPARED literal-verified (not 1,602); derived 94-of-2,879 covered
+by fixture design / 49 cleared (not 535). `retro.py correction` event
+`1786738386633-sd30-e0-f1-rung-012e3f`.
+
+**Board movement**, re-derived by importing the dashboard producer's own `doneness_verdict()` and
+replaying it over `git show <ref>:docs/work-inventory.json` at the pre-rung commit (`d1b29589`,
+parent of `4087f171`) versus current `HEAD`:
+
+```
+BEFORE d1b29589  done=3464 held=9455 in-progress=716 not-started=21322 unmeasurable=3547 deferred=36
+AFTER  HEAD      done=5837 held=7086 in-progress=716 not-started=21319 unmeasurable=3546 deferred=36
+delta:  done +2373  held -2369  not-started -3  unmeasurable -1
+```
+
+`done` 3,464 → 5,837 matches `state-goals-and-lessons.md §1.1`'s cited figure exactly, independently
+re-derived this cycle rather than transcribed. The small `not-started`/`unmeasurable` deltas (-3/-1)
+are unrelated corpus-shape drift between the two refs, not the rung's own effect (the rung only ever
+moves `held`→`done`); not investigated further as immaterial to this card.
+
+**`docs/release/.../artifacts/derive-movable-mass.py` run live** per the card's own instruction:
+raises `ValueError: ('static', 'literal-verified')` on the current inventory — confirmed live, exactly
+as its own staleness header (added `decisions.md §50`) documents. **The card's instruction to run this
+script before/after is itself stale**; the dashboard producer's own function (used above) is the live
+authority. Not re-flagged as a new correction since the script's header already records this; this
+cycle's live run is the re-derivation that confirms the header is still accurate, not a new finding.
+
+### 3. Guarded work-inventory regen (DoD item 4)
+
+```
+$ cp docs/work-inventory.json /tmp/work-inventory-before-regen.json
+$ CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep.json DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture.json \
+    cargo run --locked --bin v06_work_inventory     # run 1, exit 0
+$ cp docs/work-inventory.json /tmp/work-inventory-after-regen1.json
+$ CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep.json DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture.json \
+    cargo run --locked --bin v06_work_inventory     # run 2, exit 0
+```
+
+Run 1 vs run 2, Python-diffed with `generated_at` stripped from both sides: **identical**
+(`True`) — the two guarded runs differ only in timestamp, zero stamp loss, guard confirms
+`literal-verified: 2322`, `fixture-verified: 49` present in both. DoD item 4 satisfied.
+
+**Regenerated `docs/work-inventory.json` also differs from the file committed at cycle start**
+(444 units' `status` changed, all `not-ingested`/`text-complete` → `unknown`, 0 units added/removed).
+Root-caused, not assumed: the committed file's `generated_at` (`2026-08-14T02:06:11Z`) predates two
+already-merged, already-tested code changes on `tranche/10` — `2ce72913` (`fix(v06-work-inventory):
+teach classify()'s text_only signal the %N prose-formula pattern`, 06:33) and its own commit message
+states *"docs/work-inventory.json is NOT regenerated in this commit... Regeneration+recommit needs to
+go through whichever pipeline stage owns that re-stamping"* — this cycle's guarded regen (DoD item 4)
+is exactly that pipeline stage. Spot-checked one unit
+(`ultimate_wilderness:class_feature:tree_soul_transform_wood`): its `not-ingested` verdict is
+superseded by an `unknown` verdict with evidence `class_feature_group_names_no_class_at_all`, a
+branch already present in the codebase since `66a6804d` (2026-08-13, confirmed ancestor of the very
+commit that generated the committed file) — the wider 405-unit ripple is `2ce72913`'s `text_only`
+flag flipping which pre-existing branch a unit reaches, a bigger effect than that commit's own
+hand-audited "54-unit contradiction set" scoped to units already showing `text-complete`, not a new
+defect. Zero units gained or lost `literal-verified`/`fixture-verified` in this regen (both counts
+identical to the committed file). **Regenerated file committed this cycle** as the natural close-out
+of the guarded-regen pipeline `2ce72913` left open, and within DoD item 4's own charter.
+
+### 4. Prove the instrument can fail (before trusting a pass)
+
+```
+$ bash scripts/tests/test_corpus_literal_sweep.sh
+15/15 PASS, including: one-byte magnitude drift caught, corpus file drifting under a still-matching
+record caught, a cited corpus file that does not exist caught, a malformed shipped record is a hard
+failure not a silent skip, an empty population exits 2 and never prints CLEAN.
+SELF-TEST PASSED.
+
+$ cargo test --locked --test derived_evaluator_fixture_check
+5/5 passed, including reference_derivation_refuses_what_it_cannot_parse and
+fixture_expected_values_are_re_derivable_from_the_pinned_corpus_field (both fail loudly on a
+corrupted/hand-invented expected value by construction).
+```
+
+Plus the live real-corpus failure at §2 (`spindle_of_perfect_knowledge`, correctly withheld from
+`fixture-verified`). Both instruments demonstrably refuse a bad input; neither is a gate that cannot
+fail.
+
+### 5. DoD item 3 — `v06_corpus_trap_report -- --audit`: NOT clean, pre-existing, out of this card's
+scope
+
+```
+$ cargo run --locked --bin v06_corpus_trap_report -- --audit
+TRAP 259 (mod-record, 0 defects, still clean) + 177 NEW wiring-class-mismatch defects
+AUDIT_EXIT=2
+```
+
+All 177 defects are `companion`/`monster_ability` kind, `stored wiring_class: display` vs `derived`
+computed fresh — traced to `99efb504` (the %N prose-formula `wiring_class::determine_closure` fix)
+landing in the classifier without a matching re-ingest of those two kinds' stored `data/corpus/*.json`
+records. **Zero defects in `class_feature`/`equipment`/any static-or-derived-rung family this card
+owns.** Every prior SD-29 receipt on record shows `AUDIT_EXIT=0`
+(`docs/release/SD-29-.../progress.md`, thirteen+ citations) — this is a genuine, newly-surfaced
+regression, not something this cycle introduced (nothing this cycle touched `data/corpus/`), and not
+something SD30-E0-F1 (static/derived rung) owns to fix. **Reported honestly as FAILED, not
+fabricated as a pass.** `retro.py correction` event `1786738438742-sd30-e0-f1-rung-427179`. Flagged
+for a dedicated follow-up card (companion/monster_ability wiring_class re-ingest sweep) — out of
+scope for this cycle to fix itself.
+
+### 6. Definition of done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **N/A as a full run.** No Rust/Python production code changed this cycle (only `docs/work-inventory.json` regen via an already-shipped binary, plus Markdown docs). Ran the applicable `--only` stages instead (items 2 below; `--only preflight-disk`-equivalent skipped, disk already checked healthy this session). |
+| 2 | reach claim, nonzero | `./scripts/verify.sh --only reach` → **PASS, 27 passed, VERIFY_EXIT=0.** No new family surfaced this cycle (F1 is a classification/stamping instrument, not a new reach-gate consumer), so this is the standing-health check, not a new-family claim; recorded honestly as such. |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **FAIL, exit 2 — see §5.** 177 pre-existing, out-of-scope defects (companion/monster_ability), 0 in this card's owned families. Not fabricated as a pass. |
+| 4 | Guarded work-inventory regen | **PASS — see §3.** Two consecutive guarded runs identical net of `generated_at`; zero stamp loss; regenerated file committed. |
+| 5 | Four-check wired-integration audit | **N/A.** No shipping TS/TSX/JSX/Rust code added or modified this cycle (doc + generated-data-only cycle) — doctrine's own documentary-cycle exemption applies. Ran the four greps anyway for the record: checks 2/3/4 clean (`OK_NO_NOOP_HANDLERS`/`OK_NO_MOCK_LEAKS`/`OK_NO_WOULD_STRINGS`); check 1 matches are all the literal word "placeholder" as PCGen domain terminology (`%N` prose placeholder, HTML input `placeholder=`) in pre-existing code from before this cycle, not a STUB/MOCK/todo/fixme/hack token — confirmed by inspection, no shipping stub found. |
+| 6 | `OPEN_FINDINGS` in `reach_gate.rs` | **N/A.** No reach family left unsurfaced this cycle — `reach_gate.rs`'s `OPEN_FINDINGS` tracks per-book/-kind unsurfaced-family gaps, a different registry than trap-report's §5 finding, and this cycle surfaced nothing new to leave open there. |
+| 7 | Baseline movements | **N/A.** `scripts/verify-baselines.env` not touched. |
+| 8 | On-screen verification | **N/A.** No player-visible surface touched — the static/derived rung is a dashboard/reporting classification, not a desktop-app surface change; `decisions.md §49(d)` still requires reach/on-screen verification for player-visible surfaces generally, none of which this cycle changes. |
+
+### 7. Card disposition
+
+`epic-0-instrument-apply`'s **F1 sub-scope (static/derived done rung) is verified COMPLETE**: the
+mechanism was already landed and correctly wired pre-cycle; this cycle content-verified it, re-derived
+every figure the handoff cited (all checked out except kanban.md's two movable-mass estimates, both
+corrected), applied the guarded regen it was left waiting on, and proved both instruments can fail.
+`epic-0-instrument-apply`'s F2 (`computed`-bucket consumer-delta probes)/F3 (`unknown`-residue
+characterization)/F4 (re-derivation reporting, effectively folded into this receipt for F1) remain
+open. **`kanban.md`'s `epic-0-instrument-apply` row is left `READY`** (not flipped `COMPLETE`) since
+F2/F3 are unclaimed work under the same row — a judgment call, stated here per the "routine judgment
+call, conventional default" press-on rule; there is no per-feature-seed row to flip independently
+(unlike epic-5/epic-6's per-class tracking convention).
+
+### 8. Retro events emitted
+
+- `1786738386633-sd30-e0-f1-rung-012e3f` — correction, kanban.md movable-mass figures.
+- `1786738438742-sd30-e0-f1-rung-427179` — correction, trap_report --audit standing-clean assumption.
+- `1786738482810-codex-85cb93` — verification, auto-emitted by `verify.sh --only reach`.
+
+### 9. Reclaim
+
+`./scripts/reclaim.sh --apply` run at cycle end; see the commit's own receipt line below for the
+bytes reclaimed (recorded after this entry is written, per the loop's own "receipt before the gate
+result is final" allowance — this cycle ran no `verify.sh --full`, so there is no long-running gate
+still in flight to wait on before reclaiming).
+
+**Verdict: SD30-E0-F1 COMPLETE.** DoD items 1/5/6/7/8 N/A with stated reasons, items 2 and 4 PASS,
+item 3 is an honest, documented, out-of-card-scope FAIL flagged for a follow-up card. No number moved
+by lowering a bar; kanban.md's two wrong estimates were corrected DOWN to the true, smaller,
+already-landed figures (2,322 not-claimed-1,602 is a correction of an under-estimate, not a
+manufactured gain — the actual mechanism has been running since `4087f171`/`c04eb9ef`, this cycle
+only found the planning note that never caught up to it).

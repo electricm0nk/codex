@@ -57,9 +57,16 @@ Acceptance:
 - The dashboard producer's `doneness_verdict()` table gains a `done` rung for `wiring_class in
   (static, derived)` when the corpus-sweep / derived-evaluator gate has actually examined and passed
   the record (not merely `held`).
-- Re-running `docs/release/SD-30-class-feature-archetype-bundle/artifacts/derive-movable-mass.py` after the rung lands shows the `static`/`derived` `held`
-  population (6,619 units, per the B3 bucket in this session's run) move to `done` for records the
-  gate has passed.
+- Movement is shown by importing the dashboard producer's own `doneness_verdict()` /
+  `_doneness_verdict_uncapped()` and replaying it over `git show <ref>:docs/work-inventory.json` at
+  the pre-rung commit versus the post-rung commit (`done` 3,464 → 5,837, `held` 9,455 → 7,086,
+  re-derived `SD30-E0-F1-001`). **Correction (`SD30-E0-F1-001`, 2026-08-14):** this criterion
+  originally named `artifacts/derive-movable-mass.py` as the re-run instrument; that script
+  predates the `literal-verified`/`fixture-verified` rungs and `raise ValueError`s on any unit
+  carrying either word (confirmed live this cycle — see its own staleness header, added
+  `decisions.md §50`), so it cannot be used to show this criterion's movement. The dashboard
+  producer's own function, replayed over git refs, is the live authority per
+  `state-goals-and-lessons.md §1.1`'s own methodology; use that.
 - No relaxation of what "passed" means — a record the gate has not examined stays `held`, not `done`.
 
 #### SD30-E0-F2 — `computed`-bucket consumer-delta probes, corpus-wide

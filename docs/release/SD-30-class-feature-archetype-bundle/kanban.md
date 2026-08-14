@@ -120,11 +120,35 @@ SD-32 `decisions.md §2` (the `static`/`derived` "no `done` rung" measurement ga
 (decision)` on the SD-32 board's `e5-static-sweep`/`e6-derived-check` cards) is **ANSWERED** by
 operator ruling, 2026-08-14 (the table-sheet doneness doctrine — `decisions.md §49`). The
 `literal-verified`/`fixture-verified` rung and its verdict-table mapping are ratified. Those two
-cards' work — the static corpus-literal byte-equality sweep (4,805 ceiling, 1,602 movable) and the
-derived evaluator-vs-fixture check (2,674 ceiling, 535 movable) — is corpus-wide instrument-application
-work with no `class_feature`-only scope, so it is claimed under **`epic-0-instrument-apply`** above
-(already `READY`, already Order 1) rather than as separate cards on this board; SD-32's own kanban
-records their `READY` status directly for cycles that read that package's queue.
+cards' work — the static corpus-literal byte-equality sweep and the derived evaluator-vs-fixture
+check — is corpus-wide instrument-application work with no `class_feature`-only scope, so it is
+claimed under **`epic-0-instrument-apply`** above (already `READY`, already Order 1) rather than as
+separate cards on this board; SD-32's own kanban records their `READY` status directly for cycles
+that read that package's queue.
+
+**Correction (SD30-E0-F1-001, 2026-08-14).** This section's "4,805 ceiling, 1,602 movable" (static)
+and "2,674 ceiling, 535 movable" (derived) figures were pre-run planning estimates, never
+re-derived against an actual sweep/check run, and both are wrong. The mechanism landed in commits
+`4087f171`/`e928da8c` (static rung) and `c04eb9ef` (derived rung), already merged to `tranche/10`
+before this cycle. Re-run live this cycle:
+`cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep.json` → CLEAN, 3516 records
+examined of 9328 read, 0 findings, joining to **2,322** `literal-verified` units (not 1,602) — the
+static+held population is 4,801 (not 4,805), of which 2,322 are TOKEN-COMPARED (the actual movable
+set), 138 are digest-only (not credited), 2,341 are unreached (no shipped corpus record at that
+book/file/line, can never move by re-running the sweep).
+`cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture.json` → **49**
+of 94 covered units cleared (not 535) — the fixture covers exactly 94 of 2,879 held `derived` units
+by design (every held unit whose corpus row carries an evaluated token family), not a sample that
+widens; 1 of the 94 is a known, live-confirmed failure
+(`advanced_players_guide:equipment:spindle_of_perfect_knowledge` — corpus states
+`BONUS:STAT|INT,WIS,CHA|4|TYPE=Enhancement`, the evaluator currently produces no ability bonus — the
+instrument correctly refuses to stamp it), and the other 2,785 held derived units are out of the
+fixture's coverage entirely, not movable by construction. Board movement from applying both rungs,
+re-derived by importing the dashboard producer's own `doneness_verdict()` and replaying it over
+`git show <ref>:docs/work-inventory.json` at the pre-rung commit (`d1b29589`, the parent of
+`4087f171`) versus current `HEAD`: `done` 3,464 → 5,837 (+2,373), `held` 9,455 → 7,086 (−2,369),
+matching `state-goals-and-lessons.md §1.1`'s figure exactly. `retro.py correction` event id
+`1786738386633-sd30-e0-f1-rung-012e3f` (`docs/retro/events/sd30-e0-f1-rung.jsonl`).
 
 ## Operator override slot
 
