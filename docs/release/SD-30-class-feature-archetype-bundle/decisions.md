@@ -1307,7 +1307,7 @@ flagged — still open, now SD-30's own question, not a cross-bundle one).
 
 ```sh
 cargo run --locked --bin v06_work_inventory   # regenerated docs/work-inventory.json, stamp 2026-08-13T20:45:47Z
-python3 docs/release/SD-32-instrument-coverage-and-consumer-wiring/artifacts/derive-movable-mass.py
+python3 docs/release/SD-30-class-feature-archetype-bundle/artifacts/derive-movable-mass.py
 ```
 
 validated (`transcription validated against live dashboard: True`) against the live dashboard's
@@ -1382,7 +1382,7 @@ or any closure-pressure argument. Widening the charter to all kinds does not cre
 before F2 clears; it only widens which kinds' ingest cycles are subject to the same gate.
 
 **Authority:** `cargo run --locked --bin v06_work_inventory` (this session, stamp
-2026-08-13T20:45:47Z); `python3 docs/release/SD-32-instrument-coverage-and-consumer-wiring/artifacts/derive-movable-mass.py`
+2026-08-13T20:45:47Z); `python3 docs/release/SD-30-class-feature-archetype-bundle/artifacts/derive-movable-mass.py`
 (this session, output captured, validated against the live dashboard payload); operator ruling,
 2026-08-13, transcribed in the dispatch brief for this doc pass.
 
@@ -1657,3 +1657,125 @@ text `display` features shown to the player remain `done` per the standing v0.6 
 **Authority:** operator directive, launch session, transcribed 2026-08-14, quoted verbatim above;
 SD-32 `decisions.md §2` (the decision answered); SD-30 `decisions.md §43` (the fold of SD-32 into
 SD-30, under which this ruling's SD-32-scoped consequences are recorded).
+
+## Decision 50 — SD-32 absorbed and deleted (operator ruling)
+
+**Status:** New. Operator ruling, 2026-08-14, same session as `decisions.md §43`/`§49`. This
+decision closes the fold that §43 started: the `SD-32-instrument-coverage-and-consumer-wiring`
+package itself is now deleted from the repo tree. Its content is not lost — git history preserves
+every commit under its former path, and this section is the pointer forward. Landed as part of the
+same commit that deletes the package.
+
+**The operator's ruling, verbatim (2026-08-14):**
+
+> as far as i'm concerned, SD-32 should be deleted and any required work needs to be brought into
+> scope of SD-30
+
+**Background.** SD-32 was created by an orchestrator without the operator asking for it (`decisions.md
+§43`). Its `decisions.md §2` measurement gate was answered earlier the same day (`§49` above), and its
+epics E5/E6 folded into SD-30's `epic-0-instrument-apply` (`kanban.md`). With the fold complete, the
+operator ruled the package itself should go away rather than persist as an inert "RETIRED" shell —
+absorb whatever is still load-bearing into SD-30, then delete.
+
+**(a) The anti-gaming rule — reproduced verbatim, load-bearing, binding on every SD-30 cycle from
+here forward.** SD-30 `decisions.md §45` already cited this rule by reference to the SD-32 package;
+now that the package is gone, the rule itself must live in SD-30. Reproduced exactly as it stood in
+the former `SD-32-instrument-coverage-and-consumer-wiring/decisions.md` Decision 1:
+
+> **THE ONE RULE THAT OVERRIDES EVERYTHING ELSE: YOU MAY NOT MOVE A NUMBER BY LOWERING THE BAR.**
+>
+> The operator's directive is "improve our numbers, assuming the measuring systems are accurate." That
+> second clause is a constraint, not a licence: the instruments are to be trusted and EXTENDED, never
+> tuned to flatter the result. Every one of the following is forbidden, and doing any of them makes
+> this work worse than not doing it:
+>
+> - Reclassifying a unit into an easier wiring_class so it clears a lower bar.
+> - Loosening, skipping, #[ignore]-ing or special-casing a check so more units pass.
+> - Marking a unit done on evidence weaker than its class actually requires.
+> - Counting 'held' as done. SD-29 decisions.md §46.4 deliberately does NOT count it, and the
+>   doneness_meaning text says so explicitly: "As done as the current instruments can prove, and
+>   deliberately not counted as done."
+> - Widening a bucket definition, or editing doneness_meaning, to make a bucket look better.
+> - Ingesting fixture data, or hand-authoring rules data, to satisfy a check.
+>
+> This program has spent three days learning that a green instrument over an empty screen is worse
+> than a red one. A number that moved because the bar moved is a lie told to the operator in the one
+> artifact they use to judge progress. If a unit cannot legitimately reach its bar, LEAVE IT and say
+> why. Reporting "fewer moved than hoped, honestly" is a success. If you ever find yourself editing a
+> threshold, a classifier, or a definition to make a count rise, STOP and report it instead.
+
+Its four operative consequences (acceptance criteria phrased as "units legitimately reach their bar,"
+not "the count rises"; receipts report units moved AND units examined-and-left-alone; a cycle that
+moves fewer units than its ceiling with a correct account of why is `COMPLETE`, not `BLOCKED`; `held`
+is never reported, aggregated, or described as `done`) carry over unchanged and are now SD-30's own,
+not an import by reference.
+
+**(b) Decision §2 (the measurement-gate question) — already answered and folded.** No new content
+needed; `decisions.md §49` above already reproduces the ratified answer (the `literal-verified`/
+`fixture-verified` rung, the table-sheet doneness doctrine) in full and is the live location for it.
+Cross-references elsewhere in this package that pointed at the former `SD-32-.../decisions.md §2`
+should be read as pointing at `§49`.
+
+**(c) Decision §3 — the wiring-class classifier is accepted on accuracy, not on movement (LOAD-BEARING,
+VERBATIM, binds `epic-13-verdict-paths`'s classifier work).** Reproduced exactly as it stood in the
+former package's Decision 3:
+
+> **Decision.** The classifier that resolves `ambiguous` (360 units) and re-examines
+> `display`+`grounded` (1,416 units) is accepted or rejected on **agreement with a hand-labelled
+> sample**, and on nothing else.
+>
+> 1. **E4-F1 runs first and is a gate.** A sample of at least 100 units, stratified across the five
+>    wiring classes and across at least four kinds, is hand-labelled from the corpus record — the whole
+>    record, not a field-filtered grep — **before** the classifier is written. The labels are
+>    committed. The labeller records the token evidence for each label.
+> 2. The classifier's acceptance criterion is its **agreement rate against that held-out sample**,
+>    reported per class and per kind, plus its full confusion matrix. There is no target count of
+>    units moved anywhere in E4's acceptance.
+> 3. **Movement is reported in both directions.** A classifier that reclassifies 180 units into
+>    `computed` and 400 units out of `computed` into `static` reports both, and its net effect on
+>    `done` may be **negative**. That is a **passing** outcome. A classifier that only ever moves units
+>    toward the two `done`-producing cells is presumptively wrong and must be re-examined before its
+>    output is accepted.
+> 4. If E4-F1's sample shows the current classifier is substantially correct and the
+>    `display`+`grounded` contradiction is real but rare, E4-F2 is **not dispatched**, E4 closes at F1,
+>    and the 1,776 units are reported as "examined, correctly classified, left alone." That is
+>    `COMPLETE`.
+>
+> **Rationale.** This lever is ranked #2 by ceiling and #1 by gaming risk. Under §1's first forbidden
+> item — "reclassifying a unit into an easier wiring_class so it clears a lower bar" — a classifier is
+> exactly the instrument that could do that at scale while looking principled. The defence is that the
+> classifier is judged against ground truth established *before* anyone knows which way it moves the
+> count.
+
+`epic-breakdown.md`'s reference to `SD-32-instrument-coverage-and-consumer-wiring/decisions.md §3`
+(the classifier acceptance rule) now resolves here.
+
+**(d) Everything else.** SD-32's remaining decisions (§4 probe-coverage-is-widening-not-bar-change,
+§5 the superseded spell-bucket-C call, §6 the stale `companion` `NO_GROUNDING_PROBE` report, §7
+scope-is-instruments-not-ingestion, §8 every-figure-ships-with-its-command, §9 the equipment-probe
+key-universe fix landed and verified, §10 the 716-unit in-progress structural breakdown) are not
+reproduced here — none of them binds live SD-30 work going forward (§4/§9/§10 describe landed,
+already-merged work; §5 is self-superseded; §6/§7/§8 are reporting norms already covered by this
+package's own equivalents, e.g. `decisions.md §8`'s figure-provenance convention). They remain
+retrievable in full from git history. **Last commit under the `SD-32-instrument-coverage-and-consumer-
+wiring/` path before deletion: `b88b18fa3700125f992e67b0ae29e1d5b70de3c0`.**
+
+**Absorbed artifacts.** `artifacts/derive-movable-mass.py`, `artifacts/static-sweep-coverage.py`,
+`artifacts/why-in-progress-equipment-stalls.py`, and `artifacts/ground-spell-units/*` are copied into
+this package's own `artifacts/` directory, byte-for-byte except a staleness header added to
+`derive-movable-mass.py` (it predates the `literal-verified`/`fixture-verified` rungs and raises on
+them; the versioned dashboard producer's `_doneness_verdict_uncapped()` is the live authority, not
+this script).
+
+**SD-32 kanban cards, folded (verified against the former package's `kanban.md` before deletion):**
+`e5-static-sweep` and `e6-derived-check` → `epic-0-instrument-apply` (already folded per `§43`/`§49`,
+recorded on this package's own `kanban.md`); `e4-classifier-calibration`/`e4-classifier` → the
+classifier work bound by (c) above, owned by `epic-13-verdict-paths`; `e3-effect-wiring` → equipment
+consumer-wiring work, owned by `epic-0-instrument-apply`'s cross-kind consumer-delta scope; `e1-
+measurement-gate` → closed by (b)/`§49`; `e7-structural-report`, `e8-code-review`, `e9-closure` → no
+independent successor needed, subsumed by this package's own `epic-8-code-review`/`epic-9-closure`
+(SD-30 already runs its own bundle-wide review and closure covering all absorbed scope, so a separate
+SD-32-shaped review/closure pass would be duplicate work, not missing work). No SD-32 card is left
+without a stated home.
+
+**Authority:** operator directive, verbatim above, 2026-08-14.

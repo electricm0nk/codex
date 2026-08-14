@@ -3,7 +3,7 @@
 
 Reads the same canonical sources as the v0.6 observer (SWARM_STATUS.md,
 risks-and-open-questions.md, /usage cache, the wired-integration stubs
-registry) and produces a single JSON file at /home/ubuntu/swarm-observer/
+registry) and produces a single JSON file at ~/swarm-observer/
 PF1e-dashboard.json. The HTML at PF1e-dashboard.html fetch()'s this file at
 page-load.
 
@@ -53,19 +53,19 @@ _spec.loader.exec_module(_observer)
 # Paths
 # ---------------------------------------------------------------------------
 
-DEFAULT_STATUS = "/home/ubuntu/workspace/repos/codex/docs/release/v0.6/SWARM_STATUS.md"
-DEFAULT_RISKS_DOC = "/home/ubuntu/workspace/repos/codex/docs/release/v0.6/risks-and-open-questions.md"
+DEFAULT_STATUS = os.path.expanduser("~/workspace/repos/codex/docs/release/v0.6/SWARM_STATUS.md")
+DEFAULT_RISKS_DOC = os.path.expanduser("~/workspace/repos/codex/docs/release/v0.6/risks-and-open-questions.md")
 # Authoritative per-class state source (see observer.py's
 # parse_class_report_table doc comment for why this takes priority over
 # SWARM_STATUS.md's own prose-scraping heuristics).
-DEFAULT_REPORT = "/home/ubuntu/workspace/repos/codex/docs/release/v0.6/SWARM_REPORT.md"
-DEFAULT_USAGE_CACHE = "/home/ubuntu/swarm-observer/.usage-cache.txt"
-DEFAULT_STUBS_REGISTRY = "/home/ubuntu/workspace/repos/codex/docs/governance/wired-integration-stubs-registry.md"
+DEFAULT_REPORT = os.path.expanduser("~/workspace/repos/codex/docs/release/v0.6/SWARM_REPORT.md")
+DEFAULT_USAGE_CACHE = os.path.expanduser("~/swarm-observer/.usage-cache.txt")
+DEFAULT_STUBS_REGISTRY = os.path.expanduser("~/workspace/repos/codex/docs/governance/wired-integration-stubs-registry.md")
 # PF1E_JSON_PATH is the toolchain-wide override (the orchestrator helper reads
 # the same var), so one env var retargets both the producer and the writer.
 # PF1E_JSON_OUT stays supported and still wins for producer-only redirection.
 DEFAULT_OUT = os.environ.get(
-    "PF1E_JSON_PATH", "/home/ubuntu/swarm-observer/PF1e-dashboard.json"
+    "PF1E_JSON_PATH", os.path.expanduser("~/swarm-observer/PF1e-dashboard.json")
 )
 
 # ---------------------------------------------------------------------------
@@ -90,10 +90,10 @@ DEFAULT_OUT = os.environ.get(
 # be produced at all (no repo, no toolchain, build failure) -- so the panel
 # degrades to its old behaviour instead of going blank.
 DEFAULT_REPO_ROOT = os.environ.get(
-    "CODEX_REPO_ROOT", "/home/ubuntu/workspace/repos/codex"
+    "CODEX_REPO_ROOT", os.path.expanduser("~/workspace/repos/codex")
 )
 DEFAULT_CLASS_STATE_CACHE = os.environ.get(
-    "PF1E_CLASS_STATE_CACHE", "/home/ubuntu/swarm-observer/class-state-dump.json"
+    "PF1E_CLASS_STATE_CACHE", os.path.expanduser("~/swarm-observer/class-state-dump.json")
 )
 # This producer is driven by a once-a-minute cron renderer. Shelling out to
 # cargo every minute would contend with the swarm's own builds on a shared
@@ -107,7 +107,7 @@ CLASS_STATE_BUILD_TIMEOUT_SECONDS = int(
 # A private target dir keeps this refresh from fighting the swarm's agents
 # over the shared checkout's target/ lock.
 DEFAULT_CLASS_STATE_TARGET_DIR = os.environ.get(
-    "PF1E_CLASS_STATE_TARGET_DIR", "/home/ubuntu/swarm-observer/.class-state-target"
+    "PF1E_CLASS_STATE_TARGET_DIR", os.path.expanduser("~/swarm-observer/.class-state-target")
 )
 
 # ---------------------------------------------------------------------------
@@ -137,7 +137,7 @@ DEFAULT_CLASS_STATE_TARGET_DIR = os.environ.get(
 # pipeline, and probes which catalog feats genuinely change a computed number.
 # Nothing in this file re-types any of those numbers.
 DEFAULT_CONTENT_STATE_CACHE = os.environ.get(
-    "PF1E_CONTENT_STATE_CACHE", "/home/ubuntu/swarm-observer/content-state-dump.json"
+    "PF1E_CONTENT_STATE_CACHE", os.path.expanduser("~/swarm-observer/content-state-dump.json")
 )
 # Same cost discipline as the class dump: cron runs this producer often and the
 # checkout is shared, so the dump is cached and only rebuilt when it ages out.
@@ -173,7 +173,7 @@ CONTENT_STATE_MAX_AGE_SECONDS = int(
 # subprocess on every cron tick would cost more than the compute it reports
 # on, so the dashboard takes the aggregates and leaves the rows on disk.
 DEFAULT_WORK_INVENTORY_CACHE = os.environ.get(
-    "PF1E_WORK_INVENTORY_CACHE", "/home/ubuntu/swarm-observer/work-inventory-summary.json"
+    "PF1E_WORK_INVENTORY_CACHE", os.path.expanduser("~/swarm-observer/work-inventory-summary.json")
 )
 # The inventory reads ~1,000 corpus files and runs the feat probe, so it is the
 # most expensive of the three dumps. Its own env var, defaulting to an hour --
@@ -1813,7 +1813,7 @@ def _expand_races(races: list) -> tuple:
 # Per-book LST file mapping for extracting items.
 # Each kind has 1+ LST files. Equipment LSTs are split across arms_armor, general, magic_items.
 # For Bestiary 1, monsters come from the SD-22 cache at data/corpus/beastiary/monster/.
-_PCGEN_ROOT = "/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game"
+_PCGEN_ROOT = os.path.expanduser("~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game")
 _BOOK_LST_DIRS = {
     "core_rulebook": "core_rulebook",
     "advanced_players_guide": "advanced_players_guide",
@@ -2068,7 +2068,7 @@ def _load_beastiary_monsters(content: dict | None = None) -> list:
             })
         return out
 
-    path = "/home/ubuntu/workspace/repos/codex/data/corpus/beastiary/monster"
+    path = os.path.expanduser("~/workspace/repos/codex/data/corpus/beastiary/monster")
     fallback = []
     if not os.path.isdir(path):
         return fallback
@@ -2417,7 +2417,7 @@ def _atomic_write_json(out_path: str, data: dict, validate=_validate_payload,
 # repeated JSON keys cost more than the values they label.
 
 UNIT_SHARD_DIR = os.environ.get(
-    "PF1E_UNIT_SHARD_DIR", "/home/ubuntu/swarm-observer/units"
+    "PF1E_UNIT_SHARD_DIR", os.path.expanduser("~/swarm-observer/units")
 )
 # `wiring_class` added round 4 (SD-29 QA findings F25/F28, 2026-08-12): the
 # per-record table used to show only raw `status`, which is orthogonal to
@@ -2556,7 +2556,7 @@ SPELL_SHARD_FIELDS = UNIT_SHARD_FIELDS + ("school",)
 SHARD_SCHEMA = 13
 WORK_INVENTORY_FULL_DOC = os.environ.get(
     "PF1E_WORK_INVENTORY_DOC",
-    "/home/ubuntu/workspace/repos/codex/docs/work-inventory.json",
+    os.path.expanduser("~/workspace/repos/codex/docs/work-inventory.json"),
 )
 PROVEN_STATUSES = ("grounded", "text-complete")
 
@@ -3126,7 +3126,7 @@ EXCLUDED_BOOKS = {"beginner_box"}
 # by_status calculation in work_inventory_panel(), unchanged.
 WIRING_CLASS_VALUES = ("display", "static", "derived", "computed", "ambiguous")
 WIRING_CLASS_CACHE = os.environ.get(
-    "PF1E_WIRING_CLASS_CACHE", "/home/ubuntu/swarm-observer/wiring-class-summary.json"
+    "PF1E_WIRING_CLASS_CACHE", os.path.expanduser("~/swarm-observer/wiring-class-summary.json")
 )
 
 # Bump when the cached summary's SHAPE changes. The cache is keyed on the

@@ -1,6 +1,20 @@
 #!/usr/bin/env python3
 """Re-derive every movable-mass figure this bundle cites, from first sources.
 
+ORIGIN AND STALENESS NOTE (added when SD-32 was absorbed into SD-30 and
+deleted as a package, operator ruling 2026-08-14; see `decisions.md §50`).
+This script was written under the former SD-32 package and copied here
+byte-for-byte (only this note and the run path in the module docstring
+changed). It PREDATES the `literal-verified`/`fixture-verified` rungs
+ratified in `decisions.md §49` — its `uncapped()`/`verdict()` transcription
+does not know those status words and will `raise ValueError` on any unit
+carrying one. It is KNOWN STALE for that reason and is kept for its bucket
+methodology (A1-A4/B1-B3/C1-C2), not as a live source of truth. The
+versioned dashboard producer's `_doneness_verdict_uncapped()` /
+`doneness_verdict()` (`scripts/observer/pf1e_dashboard_producer.py`) is the
+live authority on the verdict table; re-derive against that, not this
+script's transcription, whenever the two disagree.
+
 Sources (both read-only):
   * `docs/work-inventory.json` — the generator's output (`cargo run --bin v06_work_inventory`).
   * The doneness verdict table, transcribed from `doneness_verdict()` /
@@ -13,7 +27,7 @@ The transcription is validated, not trusted: `validate()` recomputes
 `work_inventory.by_doneness`. If the producer's table ever changes, this
 script fails loudly rather than reporting a stale split.
 
-Run:  python3 docs/release/SD-32-instrument-coverage-and-consumer-wiring/artifacts/derive-movable-mass.py
+Run:  python3 docs/release/SD-30-class-feature-archetype-bundle/artifacts/derive-movable-mass.py
 """
 import json
 import collections

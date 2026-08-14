@@ -14,7 +14,7 @@ derivation: it reads only
 and partitions the bucket by the reason the probe could not observe a delta.
 Nothing here is transcribed from a previous run.
 
-Run:  python3 docs/release/SD-32-instrument-coverage-and-consumer-wiring/artifacts/why-in-progress-equipment-stalls.py
+Run:  python3 docs/release/SD-30-class-feature-archetype-bundle/artifacts/why-in-progress-equipment-stalls.py
 """
 import collections
 import json

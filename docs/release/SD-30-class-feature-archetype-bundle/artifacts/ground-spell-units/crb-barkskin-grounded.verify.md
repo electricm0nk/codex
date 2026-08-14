@@ -9,7 +9,7 @@
 - agent: `probe-spell-ground` · date: 2026-08-13T21:28:20Z
 - HEAD: `d1593801`
 - harness: `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh`
-- screenshot: `docs/release/SD-32-instrument-coverage-and-consumer-wiring/artifacts/ground-spell-units/crb-barkskin-grounded.png`
+- screenshot: `docs/release/SD-30-class-feature-archetype-bundle/artifacts/ground-spell-units/crb-barkskin-grounded.png`
 - rendered lines containing the record/expectations:
 ```
 7:CRB (652)

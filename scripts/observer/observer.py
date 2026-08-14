@@ -30,15 +30,15 @@ import sys
 # Paths (operator-overridable via env vars)
 # ---------------------------------------------------------------------------
 
-DEFAULT_STATUS = "/home/ubuntu/workspace/repos/codex/docs/release/v0.6/SWARM_STATUS.md"
-DEFAULT_MAILBOX_GLOB = "/home/ubuntu/.claude/teams/*/inboxes/*.json"
-DEFAULT_TASK_GLOB = "/home/ubuntu/.claude/tasks/*/*.json"
-DEFAULT_OUT = "/home/ubuntu/swarm-observer/dashboard.html"
-DEFAULT_LIVE = "/home/ubuntu/swarm-observer/SWARM_LIVE.txt"
-DEFAULT_TASKS_SIDECAR = "/home/ubuntu/workspace/repos/codex/docs/release/v0.6/SWARM_TASKS.md"
-DEFAULT_RISKS_DOC = "/home/ubuntu/workspace/repos/codex/docs/release/v0.6/risks-and-open-questions.md"
-DEFAULT_REPORT = "/home/ubuntu/workspace/repos/codex/docs/release/v0.6/SWARM_REPORT.md"
-DEFAULT_USAGE_CACHE = "/home/ubuntu/swarm-observer/.usage-cache.txt"
+DEFAULT_STATUS = os.path.expanduser("~/workspace/repos/codex/docs/release/v0.6/SWARM_STATUS.md")
+DEFAULT_MAILBOX_GLOB = os.path.expanduser("~/.claude/teams/*/inboxes/*.json")
+DEFAULT_TASK_GLOB = os.path.expanduser("~/.claude/tasks/*/*.json")
+DEFAULT_OUT = os.path.expanduser("~/swarm-observer/dashboard.html")
+DEFAULT_LIVE = os.path.expanduser("~/swarm-observer/SWARM_LIVE.txt")
+DEFAULT_TASKS_SIDECAR = os.path.expanduser("~/workspace/repos/codex/docs/release/v0.6/SWARM_TASKS.md")
+DEFAULT_RISKS_DOC = os.path.expanduser("~/workspace/repos/codex/docs/release/v0.6/risks-and-open-questions.md")
+DEFAULT_REPORT = os.path.expanduser("~/workspace/repos/codex/docs/release/v0.6/SWARM_REPORT.md")
+DEFAULT_USAGE_CACHE = os.path.expanduser("~/swarm-observer/.usage-cache.txt")
 DEFAULT_WEEKLY_CAP = 0
 
 TASK_COLUMNS = ["task", "owner", "rulebook", "status"]

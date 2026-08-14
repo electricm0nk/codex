@@ -37,7 +37,7 @@ validated against a file known to be shared by both sides.
 
 Read-only. Reads `docs/work-inventory.json` and `data/corpus/**`, writes nothing.
 
-Run:  python3 docs/release/SD-32-instrument-coverage-and-consumer-wiring/artifacts/static-sweep-coverage.py
+Run:  python3 docs/release/SD-30-class-feature-archetype-bundle/artifacts/static-sweep-coverage.py
 """
 import collections
 import glob
