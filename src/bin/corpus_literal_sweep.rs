@@ -47,6 +47,7 @@ fn main() -> ExitCode {
     let mut corpus_root: Option<PathBuf> = None;
     let mut quiet = false;
     let mut max_report = 40usize;
+    let mut json_out: Option<PathBuf> = None;
     let mut args = std::env::args().skip(1);
     while let Some(arg) = args.next() {
         match arg.as_str() {
@@ -61,6 +62,10 @@ fn main() -> ExitCode {
             "--max-report" => match args.next().and_then(|v| v.parse().ok()) {
                 Some(v) => max_report = v,
                 None => return fatal("--max-report needs a number"),
+            },
+            "--json-out" => match args.next() {
+                Some(v) => json_out = Some(PathBuf::from(v)),
+                None => return fatal("--json-out needs a path"),
             },
             "--quiet" => quiet = true,
             other => return fatal(&format!("unknown argument: {other}")),
@@ -231,7 +236,65 @@ fn main() -> ExitCode {
         return ExitCode::from(2);
     }
 
-    if findings.is_empty() {
+    let clean = findings.is_empty();
+
+    // Evidence for the doneness-verdict `static` done rung (operator
+    // directive 2026-08-13, answering SD-32 decisions.md §2): a record is
+    // only "verified" here if the WHOLE sweep came back CLEAN (a red sweep
+    // proves nothing about any individual record -- one book's mismatch does
+    // not tell you another book's records are fine, so it credits none) AND
+    // this specific record went through pass 2b's token comparison
+    // (`!record.tokens.is_empty()`) -- the digest-only pass (2a) is a weaker
+    // bar and never credited here, same rule `static-sweep-coverage.py`
+    // documents. `v06_work_inventory` joins this file's `(book, source_file,
+    // source_line)` triples against its own units to decide which ones may
+    // carry `literal-verified`; it does not trust anything this binary did
+    // not itself byte-compare.
+    if let Some(path) = &json_out {
+        let mut entries: Vec<String> = Vec::new();
+        if clean {
+            for records in by_book.values() {
+                for record in records {
+                    if record.tokens.is_empty() {
+                        continue;
+                    }
+                    // `v06_work_inventory`'s units carry the SHORT book name
+                    // (e.g. `advanced_class_guide`), not the 4-segment
+                    // `book_dir_of()` grouping key this binary uses
+                    // internally (e.g. `pathfinder/paizo/roleplaying_game/
+                    // advanced_class_guide`) -- that key is the immediate
+                    // parent directory of `source_file`.
+                    let source_path = Path::new(&record.source_path);
+                    let (Some(source_file), Some(short_book)) = (
+                        source_path.file_name().and_then(|f| f.to_str()),
+                        source_path
+                            .parent()
+                            .and_then(|p| p.file_name())
+                            .and_then(|f| f.to_str()),
+                    ) else {
+                        continue;
+                    };
+                    entries.push(format!(
+                        "{{\"book\":{},\"source_file\":{},\"source_line\":{}}}",
+                        json_string(short_book),
+                        json_string(source_file),
+                        record.source_line
+                    ));
+                }
+            }
+        }
+        let body = format!(
+            "{{\"clean\":{},\"records_examined\":{},\"verified\":[{}]}}\n",
+            clean,
+            tally.records_examined,
+            entries.join(",")
+        );
+        if let Err(e) = std::fs::write(path, body) {
+            return fatal(&format!("--json-out: cannot write {}: {e}", path.display()));
+        }
+    }
+
+    if clean {
         println!("{LABEL}: CLEAN");
         return ExitCode::SUCCESS;
     }
@@ -245,6 +308,24 @@ fn main() -> ExitCode {
     let affected: BTreeSet<&str> = findings.iter().map(Finding::record).collect();
     println!("{LABEL}: {} findings across {} records", findings.len(), affected.len());
     ExitCode::from(1)
+}
+
+/// Minimal JSON string escaping for the `--json-out` report. Corpus book
+/// names and `.lst` filenames are plain ASCII in this repo; this only
+/// guards against a stray quote/backslash rather than implementing full
+/// JSON escaping.
+fn json_string(s: &str) -> String {
+    let mut out = String::with_capacity(s.len() + 2);
+    out.push('"');
+    for c in s.chars() {
+        match c {
+            '"' => out.push_str("\\\""),
+            '\\' => out.push_str("\\\\"),
+            _ => out.push(c),
+        }
+    }
+    out.push('"');
+    out
 }
 
 fn fatal(message: &str) -> ExitCode {

@@ -3221,6 +3221,62 @@ struct InventoryUnit {
 /// Reads the shared deterministic pilot input fixture, or exits with the
 /// reason. Extracted from [`main`] so `--spell-probe` can run without also
 /// requiring a `PCGEN_CORPUS_ROOT` checkout it does not read.
+/// Parses `corpus_literal_sweep --json-out`'s report into the
+/// `(book, source_file, source_line)` triples it verified.
+///
+/// Hand-rolled rather than pulling in a JSON parser for one file this binary
+/// itself controls the shape of: `{"clean":<bool>,"records_examined":<n>,
+/// "verified":[{"book":"...","source_file":"...","source_line":<n>},...]}`.
+/// Returns an empty set on ANY read/parse failure or when `clean` is not
+/// `true` -- a missing, stale, or dirty report must never be misread as
+/// evidence. `clean:false` in particular is load-bearing: a sweep that found
+/// a mismatch anywhere proves nothing about any individual record, so its
+/// `verified` array (always empty on that branch, see `corpus_literal_sweep`)
+/// is trusted precisely because this function refuses to trust anything else
+/// in a non-clean report either.
+fn load_sweep_verified(path: &Path) -> BTreeSet<(String, String, usize)> {
+    let Ok(text) = std::fs::read_to_string(path) else {
+        return BTreeSet::new();
+    };
+    if !text.contains("\"clean\":true") {
+        return BTreeSet::new();
+    }
+    let mut out = BTreeSet::new();
+    let Some(list_start) = text.find("\"verified\":[") else {
+        return BTreeSet::new();
+    };
+    let mut rest = &text[list_start + "\"verified\":[".len()..];
+    while let Some(obj_start) = rest.find('{') {
+        let Some(obj_end) = rest[obj_start..].find('}') else { break };
+        let obj = &rest[obj_start..obj_start + obj_end];
+        let book = json_field_str(obj, "book");
+        let source_file = json_field_str(obj, "source_file");
+        let source_line = json_field_usize(obj, "source_line");
+        if let (Some(book), Some(source_file), Some(line)) = (book, source_file, source_line) {
+            out.insert((book, source_file, line));
+        }
+        rest = &rest[obj_start + obj_end + 1..];
+        if rest.trim_start().starts_with(']') {
+            break;
+        }
+    }
+    out
+}
+
+fn json_field_str(obj: &str, key: &str) -> Option<String> {
+    let needle = format!("\"{key}\":\"");
+    let start = obj.find(&needle)? + needle.len();
+    let end = obj[start..].find('"')? + start;
+    Some(obj[start..end].replace("\\\"", "\"").replace("\\\\", "\\"))
+}
+
+fn json_field_usize(obj: &str, key: &str) -> Option<usize> {
+    let needle = format!("\"{key}\":");
+    let start = obj.find(&needle)? + needle.len();
+    let end = obj[start..].find(|c: char| !c.is_ascii_digit()).map(|e| start + e).unwrap_or(obj.len());
+    obj[start..end].parse().ok()
+}
+
 fn load_probe_fixture(repo_root: &Path) -> CharacterInput {
     let fixture_path = repo_root.join(FIXTURE_RELATIVE_PATH);
     let fixture_text = match std::fs::read_to_string(&fixture_path) {
@@ -3278,6 +3334,21 @@ fn main() {
         );
         std::process::exit(1);
     }
+
+    // The `static` done-rung evidence (operator directive 2026-08-13,
+    // answering SD-32 decisions.md §2): `corpus_literal_sweep --json-out`'s
+    // report of which shipped records it byte-compared clean, if a fresh one
+    // has been generated. `CORPUS_LITERAL_SWEEP_REPORT` is opt-in and unset
+    // by default, so an inventory generated without first running the sweep
+    // carries no `literal-verified` units at all -- it never fabricates
+    // evidence it was not handed. Only used for `wiring_class == Static`
+    // below; `derived`'s `fixture-verified` rung is not wired here yet.
+    let sweep_verified: BTreeSet<(String, String, usize)> =
+        std::env::var("CORPUS_LITERAL_SWEEP_REPORT")
+            .ok()
+            .map(PathBuf::from)
+            .map(|p| load_sweep_verified(&p))
+            .unwrap_or_default();
 
     let fixture = load_probe_fixture(&repo_root);
 
@@ -3518,6 +3589,33 @@ fn main() {
             collisions.iter().take(10).copied().collect::<Vec<_>>().join(", ")
         );
         std::process::exit(1);
+    }
+
+    // The `static` done rung (operator directive 2026-08-13, answering SD-32
+    // decisions.md §2): upgrade a unit's status to `literal-verified` when,
+    // and only when, `wiring_class == Static`, its existing status is one of
+    // the three the sweep's bar supersedes, AND its own `(book, source_file,
+    // source_line)` triple is in `corpus_literal_sweep --json-out`'s verified
+    // set. Applied here, before `by_status`/`by_kind`/`by_book` are
+    // aggregated below, so every rollup in this file's output -- corpus-wide
+    // totals, per-book, per-kind -- agrees with the per-unit `status` field
+    // the final `units` array carries; doing this only in the serializer
+    // would leave the aggregates stale (caught by this generator's own
+    // idempotence contract before it ever reached the dashboard). A unit the
+    // sweep did not reach (no shipped `data/corpus` record, or a
+    // digest-only comparison) keeps its ordinary status and stays `held`,
+    // same as before this rung existed.
+    for item in &mut inventory {
+        if item.wiring_class == wiring_class::WiringClass::Static
+            && matches!(item.verdict.status, "ingested-magnitude" | "grounded" | "text-complete")
+            && sweep_verified.contains(&(
+                item.unit.book.clone(),
+                item.unit.provenance.file.clone(),
+                item.unit.provenance.line,
+            ))
+        {
+            item.verdict.status = "literal-verified";
+        }
     }
 
     // --- aggregate ---------------------------------------------------------
