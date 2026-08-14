@@ -55,7 +55,7 @@ surface the operator and orchestrator both read for live progress. No card outra
 | `epic-0-instrument-apply` | COMPLETE | **Order 1 — Apply Existing Instruments to `held` (dashboard/reporting, Job 1)** | `done`-rung build (static/derived) + computed-bucket consumer-delta probes, corpus-wide + `unknown`-residue characterization (`feat`) + re-derivation reporting | sd30-e0-f4-report | 2026-08-14T17:40:31-04:00 | `SD30-E0-F4-001` |
 | `epic-1-identifier` | COMPLETE | Code-Side Identifier Cleanup | identifier-discipline audit pass | sd30-e1-identifier | 2026-08-14T21:49:20Z | `SD30-E1-F1-001` |
 | `epic-2-prelaunch` | COMPLETE | Operator Pre-Launch | local-file dispatch readiness + cycle-0 trap-report + work-inventory (23-book `class_feature` re-derivation) | sd30-e2-prelaunch | 2026-08-14T22:10:00Z | `SD30-E2-F1-001` |
-| `epic-3-pi-gate` | READY (gated on epic-1, epic-2) | PI-Screening Provenance Gate | per-class PI-blacklist sweep (SD30-E3-F1) + declared-PI reader wired into class_feature ingest (SD30-E3-F2, `decisions.md §39`) + corpus-wide declared-PI backfill (SD30-E3-F3) + regression gate (SD30-E3-F4) — F2 hard-blocks epic-6, no chassis-sweep cycle may claim a class before F2 is COMPLETE | — | — | — |
+| `epic-3-pi-gate` | IN-FLIGHT (SD30-E3-F1 sub-scope COMPLETE; F2/F3/F4 still open) | PI-Screening Provenance Gate | per-class PI-blacklist sweep (SD30-E3-F1, COMPLETE) + declared-PI reader wired into class_feature ingest (SD30-E3-F2, `decisions.md §39`) + corpus-wide declared-PI backfill (SD30-E3-F3) + regression gate (SD30-E3-F4) — F2 hard-blocks epic-6, no chassis-sweep cycle may claim a class before F2 is COMPLETE | sd30-e3-f1-blacklist | 2026-08-14T18:15:00-04:00 | `SD30-E3-F1-001` |
 | `epic-4-measurement` | **MOVED to `SD-31-corpus-closure-grind/kanban.md` `epic-1-measurement` (`decisions.md §51`, 2026-08-14)** | Per-Class Archetype Measurement | class inventory + per-class hand-verification + chooser-primitive design + `unknown`-bucket characterization | — | — | — |
 | `epic-5-mechanism` | **MOVED to `SD-31-corpus-closure-grind/kanban.md` `epic-2-mechanism` (`decisions.md §51`)** | Archetype Mechanism | supersession-shape wiring per cleared class; chooser-shape wiring once epic-4-F3 lands | — | — | — |
 | `epic-6-chassis-sweep` | **MOVED to `SD-31-corpus-closure-grind/kanban.md` `epic-3-chassis-sweep` (`decisions.md §51`)** | Per-Class Chassis Sweep | per-class `class_feature` ingest across the 23 in-scope books, reach-gate claim per record | — | — | — |
@@ -264,6 +264,27 @@ after `epic-1-identifier` closed (HEAD now `aa248507`):
 Full receipt, all commands verbatim, DoD table: `progress.md`, cycle `SD30-E2-F1-001`.
 
 **`epic-2-prelaunch` flipped to `COMPLETE`.**
+
+## Update (2026-08-14, `SD30-E3-F1-001`) — SD30-E3-F1 (per-class PI-blacklist sweep) sub-scope COMPLETE
+
+`decisions.md §39.4` had already narrowed `SD30-E3-F1`'s own acceptance to "the blacklist sweep"
+(the declared-`NAMEISPI`/`DESCISPI` reader is `SD30-E3-F2`'s separate card). This cycle found the
+mechanism the acceptance names (`pi_table_sweep::screen_generated_table`, shared
+`pi_screening::PI_BLACKLIST_TERMS`) already built by SD-29 (`579d5941`) and already production-wired
+— two live non-test callers, `gen_feat_gap_tables.rs`/`gen_equipment_gap_tables.rs` — and already
+covering `class_feature`-shaped content (`docs/governance/pi-sweep-baseline.tsv`'s two `real-leak`
+rows inside `acg/archetype_tables.rs` and `advanced_race_guide/archetype_tables.rs`). Epic 6 (this
+card's own consumer) moved to `SD-31-corpus-closure-grind` Epic 3 before this cycle fired, so no
+SD-30 cycle calls it against a live book. Delivered instead: two new permanent regression tests
+(`tests/pi_table_sweep.rs`) proving the pre-commit entry point refuses/passes on real, already-shipped
+`class_feature` content (not a fixture), plus the exact six-step invocation contract SD-31's Epic 3
+must follow (`decisions.md §52.3`), pointed at from both packages' `forward-scope-register.md` (SD-30
+C1.4, SD-31 G1.4).
+
+Full receipt, all commands verbatim, DoD table: `progress.md`, cycle `SD30-E3-F1-001`.
+
+**`SD30-E3-F1` sub-scope COMPLETE. `epic-3-pi-gate` stays `IN-FLIGHT` — F2/F3/F4 remain open and
+still hard-block `epic-6-chassis-sweep`'s successor card in `SD-31-corpus-closure-grind`.**
 
 ## Operator override slot
 

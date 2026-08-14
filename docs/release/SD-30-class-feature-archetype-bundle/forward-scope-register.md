@@ -65,6 +65,23 @@ the SD-28 decisions, not the commit message alone). Not a cold start.
 **Cross-bundle doc:** `SD-29-corpus-wide-catch-up-lanes/successor-forward-scope-register.md C1.3`
 should be read alongside this entry; both name the same funded effort from opposite sides.
 
+### C1.4 — Per-class PI-blacklist sweep: mechanism delivered, invocation contract for the ingest lane (2026-08-14, `SD30-E3-F1-001`)
+
+**Owner:** `SD-31-corpus-closure-grind` (its Epic 3, ex-SD-30 Epic 6 — `decisions.md §51`).
+
+**What SD-30 delivers:** `SD30-E3-F1` closed (`decisions.md §52`) without a `class_feature` ingest
+lane to wire into, because that lane (Epic 6) moved to SD-31 before this cycle fired. The PI-blacklist
+sweep mechanism itself (`codex::rules_core::pi_table_sweep::screen_generated_table`, the shared
+`pi_screening::PI_BLACKLIST_TERMS`) is already built, already production-wired (two live non-test
+callers, `gen_feat_gap_tables.rs`/`gen_equipment_gap_tables.rs`), and proven this cycle against real
+`class_feature`-shaped content (`tests/pi_table_sweep.rs`'s two new tests, plus two pre-existing
+`real-leak` baseline rows already found inside shipped `archetype_tables.rs` files). `decisions.md
+§52.3` states the exact six-step invocation contract SD-31's Epic 3 generator/transcriber must follow.
+
+**What SD-31 must do:** call `screen_generated_table` before writing any generated `class_feature`
+table text, hard-stop on a non-empty result, and record the outcome in that book's cycle's first
+receipt — the contract, not a re-derivation of it, per `decisions.md §52.3`.
+
 ## Class 2 — RETIRED 2026-08-10 (book-list deferrals, moot under the `class_feature` re-scope)
 
 **The four book-specific deferrals below (C2.1-C2.4) are retired, not merely stale.** They deferred

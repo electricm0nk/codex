@@ -189,6 +189,17 @@ Acceptance:
   `progress.md`.
 - A hit is a hard stop for that record (`loop-instruction.md` "Stop vs. press on"), not routed around.
 
+**Status: COMPLETE (`SD30-E3-F1-001`, 2026-08-14, `decisions.md §52`).** Epic 6 (this card's own
+consumer) moved to `SD-31-corpus-closure-grind/epic-breakdown.md` Epic 3 before this cycle fired
+(`decisions.md §51`), so no SD-30 cycle calls the mechanism against a live `class_feature` book —
+`decisions.md §52` found the mechanism itself (`pi_table_sweep::screen_generated_table`, the shared
+`PI_BLACKLIST_TERMS`) already built, already production-wired (two live non-test callers,
+`gen_feat_gap_tables.rs`/`gen_equipment_gap_tables.rs`), and already covering already-shipped
+`class_feature`-shaped content (two `real-leak` baseline rows inside `archetype_tables.rs` files).
+This cycle proved it fails/passes against real `class_feature` content (`tests/pi_table_sweep.rs`,
+two new tests) and documented the exact invocation contract SD-31's Epic 3 must follow — see
+`decisions.md §52.3`.
+
 #### SD30-E3-F2 — Declared-PI reader wired into the `class_feature` ingest/transcription path (2026-08-13, `decisions.md §39`)
 
 **Blocks Epic 6 entirely — no per-book chassis-sweep cycle may claim its class until this feature

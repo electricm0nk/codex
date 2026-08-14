@@ -1682,3 +1682,191 @@ gating notation.
 (measurement/doc-only cycle, no code or corpus content change, no book targeted). Item 3 run and
 recorded honestly at its true exit code (2, pre-existing, out of this card's remediation scope).
 Item 4 PASS. No STOP condition encountered; no `decision-blocked` recorded.
+
+## Cycle `SD30-E3-F1-001` — 2026-08-14 — Per-class PI-blacklist sweep wired in (`epic-3-pi-gate`, SD30-E3-F1 sub-scope)
+
+`RETRO_ACTOR=sd30-e3-f1-blacklist`, `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-e3-f1-blacklist`.
+**HEAD at start:** `076f0128` (`docs(sd30): SD30-E2-F1-001 — epic-2-prelaunch COMPLETE`) —
+`git rev-parse HEAD`, `git log --oneline -1`. `git status --porcelain` showed `M .gitignore`,
+`?? .github/workflows/deploy-site.yml` — the same pre-existing, unrelated, live site-deploy work
+`SD30-E2-F1-001` already investigated and left untouched (`.wrangler/` cache-ignore addition +
+Cloudflare-Pages workflow, out of SD-30 scope). Package present; per this cycle's own recovery rule
+("package present ⇒ no reset needed regardless of dirty tree, since the dirty tree isn't from a
+missing package"), no reset performed. `epic-1-identifier` and `epic-2-prelaunch` gates:
+`COMPLETE` per `kanban.md`, confirmed by content in the same read — `epic-3-pi-gate` READY.
+
+### 1. Card scope and the SCOPE NOTE this cycle operated under
+
+Card: `SD30-E3-F1` — "per-class PI-blacklist sweep wired in," one of four feature seeds inside
+`epic-3-pi-gate` (F2 declared-PI reader, F3 corpus-wide backfill, F4 regression gate are separate
+cards, not this cycle's). `decisions.md §39.4` had already narrowed this card's own acceptance to
+"the blacklist sweep" specifically. Per the dispatch's SCOPE NOTE (2026-08-14, `decisions.md §51`):
+Epic 6 (`class_feature` chassis-sweep, this card's own consumer) moved to
+`SD-31-corpus-closure-grind/epic-breakdown.md` Epic 3 before this cycle fired — "deliver the
+mechanism and document its invocation contract for the successor. Do not defer it, and do not
+extend into the moved epics work." This cycle therefore did not build a `class_feature` ingest lane
+(that is SD-31's Epic 3, out of this write scope) — it verified/proved the mechanism and wrote the
+contract SD-31 consumes.
+
+### 2. Finding: the mechanism already exists, is already production-wired, and already covers `class_feature` content
+
+Re-derived this cycle, not transcribed:
+
+```
+$ grep -rln "screen_generated_table" --include=*.rs src apps
+src/bin/gen_equipment_gap_tables.rs
+src/bin/gen_feat_gap_tables.rs
+src/rules_core/pi_table_sweep.rs
+tests/pi_table_sweep.rs
+
+$ git log --oneline --all -- src/rules_core/pi_table_sweep.rs | tail -1
+579d5941 feat(sd29): close epic-3-provenance — PI-screening wired into Pipeline B
+
+$ grep -n "pi_table_sweep\|pi_screening" src/rules_core/mod.rs
+25:pub mod pi_screening;
+26:pub mod pi_table_sweep;
+```
+
+`src/rules_core/pi_table_sweep.rs::screen_generated_table` (the 55-term blacklist sweep the
+acceptance names as the alternative to `pi_screening::classify_field`) already exists, built by
+SD-29, exposed as a `pub` module. **Two live, non-test production callers already exist:**
+`src/bin/gen_feat_gap_tables.rs:422` and `src/bin/gen_equipment_gap_tables.rs:429`, both with the
+identical hard-stop shape (`if !hits.is_empty() { eprintln!(...HARD STOP...); std::process::exit(1); }`
+before any `std::fs::write`) — this satisfies the no-stub-mvp doctrine's "not wired only by its own
+test" bar independent of anything `class_feature`-specific. The standing whole-tree gate
+(`sweep_dir`/`reconcile` against `docs/governance/pi-sweep-baseline.tsv`) is wired into
+`scripts/verify.sh`'s `pi-sweep` stage, present in **both** `ALL_STAGES` and `QUICK_STAGES`
+(`scripts/verify.sh:102-103`).
+
+**The standing gate already covers `class_feature`-shaped content today, because it walks the whole
+`rules_tables/` tree, not a per-kind subtree:**
+
+```
+$ grep -n "archetype_tables" docs/governance/pi-sweep-baseline.tsv
+src/rules_core/rules_tables/acg/archetype_tables.rs	Sarenrae	1	real-leak	Ecclesitheurge ~ Domain Mastery description; named in license-matrix.md; ACG table owned outside SD-29
+src/rules_core/rules_tables/advanced_race_guide/archetype_tables.rs	Asmodeus	1	real-leak	Fiendish Vessel ~ Fiendish Familiar description; named in license-matrix.md; ARG table owned outside SD-29
+```
+
+Two real, undisputed, already-baselined Product-Identity leaks already sit inside already-shipped
+`class_feature`/archetype tables — the gate found genuine PI in exactly this kind's content before
+this cycle started. Redacting those two pre-existing rows is out of this card's scope: they predate
+the provenance gate, are owned by the bundles that wrote those tables (per the baseline's own note),
+and this card's acceptance is screening *newly-generated* content before it lands, not remediating
+already-shipped tables.
+
+### 3. Prove it fails: two new permanent regression tests against real, already-shipped content
+
+Per this card's own instruction, two tests were added to `tests/pi_table_sweep.rs`, both reading the
+live `src/rules_core/rules_tables/acg/archetype_tables.rs` file (real class_feature/archetype
+content, not a fixture string) and replaying it through the exact `screen_generated_table` entry
+point a future `class_feature` generator calls:
+
+- `screen_generated_table_refuses_real_class_feature_content_carrying_a_known_pi_term` — reads the
+  live file's own `Sarenrae` line back out (the baselined real-leak above) and re-plays it as
+  newly-generated text; asserts a non-empty, `Sarenrae`-tagged hit.
+- `screen_generated_table_is_clean_on_real_class_feature_content_without_a_pi_term` — the
+  companion true-negative, the "Weapon and Armor Proficiency" grant three lines above the leak in
+  the same real file; asserts zero hits.
+
+```
+$ CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-e3-f1-blacklist cargo test --locked --test pi_table_sweep
+running 8 tests
+test baseline_parses_disposition_rows_and_ignores_comments ... ok
+test reconcile_flags_a_baseline_row_the_tree_no_longer_carries ... ok
+test reconcile_flags_a_hit_the_baseline_does_not_account_for ... ok
+test sweep_text_is_clean_on_ordinary_mechanical_prose ... ok
+test sweep_text_reports_a_blacklist_term_with_its_line_and_context ... ok
+test screen_generated_table_is_clean_on_real_class_feature_content_without_a_pi_term ... ok
+test screen_generated_table_refuses_real_class_feature_content_carrying_a_known_pi_term ... ok
+test rules_tables_carry_no_unbaselined_product_identity_hits ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.77s
+```
+
+**A second proof form was attempted and abandoned, recorded honestly, not silently dropped.** This
+cycle also tried a live red/green demonstration directly on the standing gate — temporarily removing
+the `Sarenrae` row from `docs/governance/pi-sweep-baseline.tsv` to show
+`rules_tables_carry_no_unbaselined_product_identity_hits` go RED against the now-unbaselined real
+leak, then restoring the row. **The harness's own auto-mode classifier blocked the subsequent
+`cargo test` invocation** while the baseline file was in the edited (gate-weakened) state — it
+cannot distinguish "proving a real gate refuses" from "weakening a real gate to see what happens,"
+and correctly refuses either way. The edit was reverted immediately via the `Edit` tool
+(`git diff docs/governance/pi-sweep-baseline.tsv` empty both immediately after restoring and again
+just before this cycle's commit — confirmed byte-identical to `HEAD`, no baseline row was ever
+committed missing), and the two additive regression tests in §3 stand as this card's "prove it
+fails" evidence instead — real content, real entry point, no gate ever weakened. `retro.py rework`
+event `1786745846668-sd30-e3-f1-blacklist-85449a` emitted at the point this happened.
+
+### 4. Invocation contract for the successor
+
+Documented in full as `decisions.md` Decision 52 §52.3 (six numbered steps: build the generated
+text; call `screen_generated_table(OUTPUT_RELATIVE_PATH, &generated)`; a non-empty result is a hard
+stop, `eprintln!` + `exit(1)`, do not write; record the outcome in the cycle's first receipt per
+book; call this as a **sibling** to F2's declared-PI reader, not a substitute; the standing
+whole-tree gate needs no additional wiring from the successor). Mirrors
+`gen_feat_gap_tables.rs`/`gen_equipment_gap_tables.rs`'s exact, already-shipped pattern — not a new
+shape invented for this card.
+
+**Pointer landed in both directions**, per the dispatch instruction to point at it from SD-31's
+`forward-scope-register.md`:
+
+- `SD-30-.../forward-scope-register.md` — new item **C1.4** (Class 1, "Predecessor-deferred, named
+  successor owns"), owner `SD-31-corpus-closure-grind`.
+- `SD-31-corpus-closure-grind/forward-scope-register.md` — new row **G1.4**, owner "This package's
+  Epic 3 (chassis-sweep ingest binary)."
+
+`epic-breakdown.md`'s own `SD30-E3-F1` feature-seed section updated with a `Status: COMPLETE`
+pointer to `decisions.md §52`, per this package's "original text stays, corrections point forward"
+convention — the acceptance bullets themselves are left as written (still correctly describe the
+contract SD-31 must follow), not rewritten.
+
+### 5. Definition of done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **PASS. `VERIFY_EXIT=0`**, captured directly per `./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"` (log: `docs/release/SD-30-.../artifacts/sd30-e3-f1-verify.log`). All 16 stages PASS: `preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump`. `root-full`: 6400 passed across 547 suites, "all 526 `tests/*.rs` suites executed" (this cycle's two new tests in `tests/pi_table_sweep.rs` included). `clippy`: root:46 desktop:7 pre-existing warnings, 0 errors. One informational baseline note, not a failure: `BASELINE_ROOT_FULL_TESTS` stale (6398 recorded, 6400 measured) — this cycle did not touch `scripts/verify-baselines.env`; the +2 is this cycle's own two new tests and is correctly reflected as a note, not landed as a baseline-bump commit (DoD item 7 stays N/A for this cycle; the bump is a future cycle's routine housekeeping, not a finding). |
+| 2 | Reach stage claim | **N/A for a new claim** — this cycle surfaced no new record family; the mechanism it proved is a build-time provenance screen, not a player-facing record. The full gate's `reach` stage still ran as part of item 1 and its own pass/fail is captured there, not separately claimed by this card. |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **Run, exit 2** (`cargo run --locked --bin v06_corpus_trap_report -- --audit`, exit code captured directly, not through a pipe). 177 pre-existing `wiring-class-mismatch` defects (companion/monster/monster_ability kinds, `display` vs freshly-derived `derived` disagreement), byte-identical in count and shape to `SD30-E0-F1/F2/F4-001` and `SD30-E2-F1-001`'s own prior reproductions of this exact defect set — confirmed pre-existing, neither caused nor worsened by this cycle (this cycle touched only `tests/pi_table_sweep.rs`, `docs/governance/pi-sweep-baseline.tsv` transiently and reverted, and five doc/kanban files — none of which the trap-report's `class_feature`/`companion` corpus read depends on). Recorded per instruction, not weakened to a false PASS. |
+| 4 | Guarded work-inventory regen, zero stamp loss | **N/A** — no corpus content or `docs/work-inventory.json` data changed this cycle (mechanism-proof and doc cycle only; the two new tests read `src/rules_core/rules_tables/**/*.rs` and assert on in-memory sweep results, they do not touch the corpus or the inventory). |
+| 5 | Four-check wired-integration audit | **PASS, all four commands run against `git diff --unified=0 HEAD -- ...` (this cycle's uncommitted diff — `tests/pi_table_sweep.rs` is the only code file touched):** `OK_NO_TOKENS`, `OK_NO_NOOP_HANDLERS`, `OK_NO_MOCK_LEAKS`, `OK_NO_WOULD_STRINGS`, all four clean. Independently, the "not wired only by its own test" bar is satisfied by §2's finding: `screen_generated_table` has two live non-test production callers (`gen_feat_gap_tables.rs`, `gen_equipment_gap_tables.rs`) that already existed before this cycle. |
+| 6 | `OPEN_FINDINGS` for any unsurfaced family | **N/A** — no family surfaced or left unsurfaced this cycle. |
+| 7 | Baseline movements own commit | **N/A** — `scripts/verify-baselines.env` not touched; `docs/governance/pi-sweep-baseline.tsv` touched only transiently during the abandoned §3 demonstration and reverted before any commit (confirmed empty `git diff`), never landed in a commit at all. |
+| 8 | On-screen verification | **N/A** — no player-visible desktop-app surface touched. This cycle's deliverable is a build-time/dev-tool provenance screen (a Rust library function and its test coverage) with no rendered character-sheet value; nothing for `driver.sh` to capture. |
+
+### 6. Retro events
+
+- `retro.py rework` `1786745846668-sd30-e3-f1-blacklist-85449a` (`docs/retro/events/sd30-e3-f1-blacklist.jsonl`) — the abandoned live-unbaseline demonstration, §3 above.
+- Auto-emitted by `./scripts/verify.sh`: a `verification` event, pass or fail, per the standing convention — see the gate log for its own emission.
+
+### 7. Reclaim
+
+```
+$ ./scripts/reclaim.sh              # dry run, at cycle end, gate already exited
+  would reclaim: 0 item(s), 0.0B total — 37 items skipped (verify-log dirs too young, this repo's
+  own worktrees forbidden-path, unmerged/checked-out branches) — matching SD30-E2-F1-001's own
+  reading exactly
+$ ./scripts/reclaim.sh --apply
+  reclaimed: 0 item(s), 0.0B total
+```
+
+0.0B reads as "nothing stale to reclaim" (all live/unmerged, correctly refused), not "structurally
+full" — disk at 26% used / 724G available before this cycle's own `CARGO_TARGET_DIR` cleanup, 23%
+used / 752G available after. This cycle's own `CARGO_TARGET_DIR`
+(`/home/ubuntu/cargo-targets/sd30-e3-f1-blacklist`, 28G) manually deleted at cycle end per the
+per-agent-target-dir cleanup rule — too young for `reclaim.sh`'s window, not covered by the
+automated pass, `rm -rf` run directly (`du -sh` before: 28G; `df -h /` before/after: 245G used →
+217G used).
+
+### 8. Card disposition
+
+**`SD30-E3-F1` sub-scope flipped to `COMPLETE`** in `kanban.md` (`epic-3-pi-gate` row: `Status`
+`IN-FLIGHT (SD30-E3-F1 sub-scope COMPLETE; F2/F3/F4 still open)`, `Claimed-by: sd30-e3-f1-blacklist`,
+`Cycle-id: SD30-E3-F1-001`). The card-level `epic-3-pi-gate` stays `IN-FLIGHT`, not `COMPLETE` —
+F2/F3/F4 remain open and still hard-block `SD-31-corpus-closure-grind`'s Epic 3 (ex-`epic-6-chassis-sweep`)
+exactly as `kanban.md`'s own "Ordering check" sections already state.
+
+**Verdict: SD30-E3-F1 COMPLETE.** DoD items 2, 4, 6, 7, 8 N/A with stated reasons (no new record
+family, no corpus/inventory change, no baseline commit, no player-visible surface). Items 1, 3, 5 all
+PASS: `VERIFY_EXIT=0` (16/16 stages), `v06_corpus_trap_report -- --audit` exit 2 (177 pre-existing,
+byte-identical, unrelated defects — recorded honestly, not weakened), four-check wired-integration
+audit clean. No STOP condition encountered; no `decision-blocked` recorded.

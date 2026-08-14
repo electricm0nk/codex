@@ -14,7 +14,7 @@
 //! baseline row that no longer matches the tree (so the file cannot rot into a
 //! blanket suppression).
 
-use codex::rules_core::pi_table_sweep::{parse_baseline, reconcile, sweep_dir, sweep_text};
+use codex::rules_core::pi_table_sweep::{parse_baseline, reconcile, screen_generated_table, sweep_dir, sweep_text};
 use std::path::PathBuf;
 
 fn repo_root() -> PathBuf {
@@ -69,6 +69,79 @@ fn reconcile_flags_a_baseline_row_the_tree_no_longer_carries() {
     let verdict = reconcile(&[], &baseline);
     assert!(verdict.unbaselined.is_empty());
     assert_eq!(verdict.stale.len(), 1, "a stale baseline row must be reported");
+}
+
+/// `SD30-E3-F1`'s invocation contract, proven against real content, not a
+/// fixture: the lane-facing pre-commit entry point
+/// (`pi_table_sweep::screen_generated_table`, the exact function
+/// `gen_feat_gap_tables`/`gen_equipment_gap_tables` already call before
+/// writing) must refuse when the text it is about to write is
+/// `class_feature`/archetype content carrying a declared blacklist term.
+/// `acg/archetype_tables.rs` line's `Sarenrae` hit
+/// (`docs/governance/pi-sweep-baseline.tsv`, disposition `real-leak`,
+/// "Ecclesitheurge ~ Domain Mastery description") is already-shipped, real
+/// `class_feature` table content — this test reads that exact line back out
+/// of the live file and re-plays it through the pre-commit screen a future
+/// `class_feature` generator (SD-31's Epic 3 chassis-sweep, per
+/// `SD-30-.../decisions.md` this feature seed's invocation-contract entry)
+/// would call, so the proof exercises the real pipeline shape, not a
+/// hand-written string.
+#[test]
+fn screen_generated_table_refuses_real_class_feature_content_carrying_a_known_pi_term() {
+    let root = repo_root();
+    let path = root.join("src/rules_core/rules_tables/acg/archetype_tables.rs");
+    let text = std::fs::read_to_string(&path).expect("acg archetype_tables.rs exists");
+    let sarenrae_line = text
+        .lines()
+        .find(|l| l.contains("Sarenrae"))
+        .expect("the known Sarenrae PI line (baselined real-leak) is still present in acg::archetype_tables");
+
+    // Simulate a future class_feature lane's generator emitting this exact,
+    // real row as newly-generated table text — the shape SD-31's Epic 3
+    // chassis-sweep will produce for `adventurers_guide` et al.
+    let generated = format!("{sarenrae_line}\n");
+    let hits = screen_generated_table(
+        "src/rules_core/rules_tables/adventurers_guide/class_feature_gap_tables.rs",
+        &generated,
+    );
+
+    assert!(
+        !hits.is_empty(),
+        "the pre-commit screen must refuse real class_feature-shaped content carrying a declared blacklist term; got no hits for: {generated}"
+    );
+    assert!(
+        hits.iter().any(|h| h.term == "Sarenrae"),
+        "expected a Sarenrae hit, got {hits:?}"
+    );
+}
+
+/// The companion true-negative: the same pre-commit entry point, called on
+/// real, adjacent `class_feature`/archetype content that carries no
+/// blacklist term (`acg/archetype_tables.rs`'s "Weapon and Armor
+/// Proficiency" grant, three lines above the `Sarenrae` hit above), must NOT
+/// refuse. A gate that flags everything proves as little as one that flags
+/// nothing.
+#[test]
+fn screen_generated_table_is_clean_on_real_class_feature_content_without_a_pi_term() {
+    let root = repo_root();
+    let path = root.join("src/rules_core/rules_tables/acg/archetype_tables.rs");
+    let text = std::fs::read_to_string(&path).expect("acg archetype_tables.rs exists");
+    let clean_line = text
+        .lines()
+        .find(|l| l.contains("Weapon and Armor Proficiency"))
+        .expect("the known clean grant line is still present in acg::archetype_tables");
+    assert!(
+        !clean_line.contains("Sarenrae"),
+        "test fixture assumption broken: the chosen clean line now carries the PI term"
+    );
+
+    let generated = format!("{clean_line}\n");
+    let hits = screen_generated_table(
+        "src/rules_core/rules_tables/adventurers_guide/class_feature_gap_tables.rs",
+        &generated,
+    );
+
+    assert!(hits.is_empty(), "unexpected hit(s) on real, non-PI class_feature content: {hits:?}");
 }
 
 /// The gate itself, over the live tree.

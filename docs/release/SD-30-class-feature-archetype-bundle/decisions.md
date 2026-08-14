@@ -1869,3 +1869,131 @@ AT-31-005` for the moved floor table.
 epics and rules this split divides); `SD-31-corpus-closure-grind/` and
 `SD-32-engine-capability-builds/` (the two new packages this decision creates, cited for their own
 decisions.md Decision 1, which records the split from the receiving side).
+
+## Decision 52 — SD30-E3-F1 closed: the per-class PI-blacklist sweep is already a real, wired,
+production-path pre-commit mechanism; invocation contract documented for the successor (2026-08-14,
+`SD30-E3-F1-001`)
+
+**Status:** New. Cycle `SD30-E3-F1-001` (`RETRO_ACTOR=sd30-e3-f1-blacklist`).
+
+### 52.1 Finding: the mechanism this card names already exists, is already production-wired, and
+already covers `class_feature` content — it was not built by this cycle
+
+`epic-breakdown.md`'s SD30-E3-F1 acceptance names two things: (a) a lane calls
+`pi_screening::classify_field` or "runs the 55-term blacklist sweep as a pre-commit check" against
+newly-generated `class_feature` content before it lands in `rules_tables/`; (b) the sweep's clean/hit
+outcome is recorded in the cycle's first receipt per book; (c) a hit is a hard stop, never routed
+around. `decisions.md §39.4` already narrowed this card's own acceptance to "the blacklist sweep"
+specifically (the declared-`NAMEISPI`/`DESCISPI` reader is `SD30-E3-F2`'s separate card).
+
+Re-derived this cycle, not transcribed:
+
+```bash
+$ grep -rln "screen_generated_table" --include=*.rs src apps
+src/bin/gen_equipment_gap_tables.rs
+src/bin/gen_feat_gap_tables.rs
+src/rules_core/pi_table_sweep.rs
+tests/pi_table_sweep.rs
+```
+
+`src/rules_core/pi_table_sweep.rs` (landed by SD-29 `579d5941`, "close epic-3-provenance — PI-screening
+wired into Pipeline B") already provides exactly the acceptance's alternative (b): `screen_generated_table(file, generated)`
+— a thin, well-documented alias over `sweep_text` against the shared `pi_screening::PI_BLACKLIST_TERMS`
+— for a lane's extraction/generation step to call **before** its write, plus `sweep_dir`/`reconcile`
+against `docs/governance/pi-sweep-baseline.tsv` as the standing whole-tree gate, wired into
+`scripts/verify.sh`'s `pi-sweep` stage (`ALL_STAGES` **and** `QUICK_STAGES` — cheap enough for both).
+Two existing kind-lane generators already call the pre-commit form in production, not only in a test:
+`gen_feat_gap_tables.rs:422` and `gen_equipment_gap_tables.rs:429`, both with the identical
+hard-stop shape — `if !hits.is_empty() { eprintln!(...HARD STOP...); std::process::exit(1); }` before
+any `std::fs::write`. This satisfies the no-stub-mvp doctrine's "not wired only by its own test" bar
+independent of anything `class_feature`-specific: the mechanism has two live, non-test production
+callers today.
+
+**The standing gate already covers `class_feature` content, because it walks the whole
+`rules_tables/` tree, not a per-kind subtree.** `docs/governance/pi-sweep-baseline.tsv` already
+carries two `real-leak` rows *inside already-shipped `class_feature`/archetype tables*:
+`src/rules_core/rules_tables/acg/archetype_tables.rs` (`Sarenrae`, "Ecclesitheurge ~ Domain Mastery
+description") and `src/rules_core/rules_tables/advanced_race_guide/archetype_tables.rs` (`Asmodeus`,
+"Fiendish Vessel ~ Fiendish Familiar description") — both "owned outside SD-29," i.e. real,
+undisputed Product Identity the standing gate already found in `class_feature`-shaped content and
+already fails a build on if the baseline row is ever removed while the text remains. Redacting those
+two pre-existing rows is not this card's scope (they are baselined, tracked, owned by the bundles that
+authored those tables — `epic-3-pi-gate`'s job is screening *newly-generated* content, per the
+acceptance's own "before it lands," not remediating already-shipped tables written before the gate
+existed).
+
+### 52.2 Proof: the pre-commit entry point refuses real `class_feature` content carrying a known PI
+term, and passes real `class_feature` content that carries none
+
+Per this card's own instruction ("prove it fails: feed it a known PI term and confirm it refuses — a
+gate that cannot fail proves nothing"), two permanent regression tests were added to
+`tests/pi_table_sweep.rs`, both reading **already-shipped, real** `class_feature`/archetype content
+(`src/rules_core/rules_tables/acg/archetype_tables.rs`) rather than a synthetic fixture string, and
+replaying it through the exact `screen_generated_table` entry point a future `class_feature` generator
+calls:
+
+- `screen_generated_table_refuses_real_class_feature_content_carrying_a_known_pi_term` — reads the
+  live file's own `Sarenrae` line (the baselined real-leak above) back out and re-plays it as
+  newly-generated text; asserts `screen_generated_table` returns a non-empty, `Sarenrae`-tagged hit.
+- `screen_generated_table_is_clean_on_real_class_feature_content_without_a_pi_term` — the companion
+  true-negative, three lines above the leak in the same real file ("Weapon and Armor Proficiency"),
+  asserts zero hits — a gate that flags everything proves as little as one that flags nothing.
+
+```bash
+$ CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-e3-f1-blacklist cargo test --locked --test pi_table_sweep
+running 8 tests
+test screen_generated_table_is_clean_on_real_class_feature_content_without_a_pi_term ... ok
+test screen_generated_table_refuses_real_class_feature_content_carrying_a_known_pi_term ... ok
+test rules_tables_carry_no_unbaselined_product_identity_hits ... ok
+[... 5 more, all ok ...]
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+```
+
+**A second proof form was attempted and abandoned, recorded honestly rather than silently dropped:**
+this cycle also tried a live red/green demonstration on the *standing* gate — temporarily removing the
+`Sarenrae` baseline row (`docs/governance/pi-sweep-baseline.tsv`) to show `rules_tables_carry_no_
+unbaselined_product_identity_hits` go RED against the now-unbaselined real leak, then restoring the
+row. The harness's own auto-mode classifier blocked the `cargo test` invocation while the baseline
+file was in the edited (gate-weakened) state — it cannot distinguish "proving a real gate refuses" from
+"weakening a real gate to see what happens," and correctly refuses either way. The edit was reverted
+immediately (`git diff docs/governance/pi-sweep-baseline.tsv` empty, confirmed byte-identical to `HEAD`
+before any commit), and the two additive regression tests above stand as this card's "prove it fails"
+evidence instead — they exercise the identical real-content/real-entry-point proof without ever
+weakening a live gate. `retro.py` near-miss event emitted for this at the point it happened.
+
+### 52.3 Invocation contract for the successor (SD-31's Epic 3 chassis-sweep, ex-Epic 6)
+
+Epic 6 (per-class chassis sweep, `class_feature`'s own ingest lane) moved to
+`SD-31-corpus-closure-grind/epic-breakdown.md` Epic 3 (`decisions.md §51`). This is the exact,
+already-proven contract that lane's generator/transcriber binary must follow — the same shape
+`gen_feat_gap_tables.rs`/`gen_equipment_gap_tables.rs` already ship in production, not a new pattern:
+
+1. Build the generated table text in memory (the `String` about to be written to
+   `src/rules_core/rules_tables/<book>/<...>.rs`).
+2. Call `codex::rules_core::pi_table_sweep::screen_generated_table(OUTPUT_RELATIVE_PATH, &generated)`
+   — the shared 55-term blacklist (`pi_screening::PI_BLACKLIST_TERMS`), never a forked term list.
+3. **A non-empty result is a hard stop for that record, not a filtered-out row:** `eprintln!` each hit
+   (file, line, term, context), `std::process::exit(1)`, and **do not write the file**.
+4. Record the outcome — clean, or the hit list — in the cycle's first receipt per book in that
+   package's own `progress.md`, per this card's own acceptance line 2.
+5. This is Epic 3's blacklist-sweep obligation only. Epic 3-F2's declared-`NAMEISPI`/`DESCISPI` reader
+   (`pi_screening::{declared_product_identity, classify_optional_field_declared}`) is a **sibling**
+   check, not a substitute (`§39.4`'s "the two are now a union") — the successor's lane must call both,
+   in the order F2's own acceptance states (drop `NAMEISPI:YES` before the scope filter, redact
+   `DESCISPI:YES`, *then* run this blacklist sweep over what remains).
+6. The standing whole-tree gate (`scripts/verify.sh`'s `pi-sweep` stage, `tests/pi_table_sweep.rs`'s
+   `rules_tables_carry_no_unbaselined_product_identity_hits`) already covers whatever the lane writes,
+   with no additional wiring needed on the successor's part — it walks the entire `rules_tables/` tree
+   recursively. A hit that reaches shipped output despite step 3 (e.g. a hand-edit bypassing the
+   generator) still fails `verify.sh` before merge.
+
+**Pointer landed in both directions**, per this card's dispatch instruction: SD-30's own
+`forward-scope-register.md` (Class 1, new item C1.4) and `SD-31-corpus-closure-grind/
+forward-scope-register.md` (new row) both cite this section as the mechanism SD-31's Epic 3 consumes.
+
+**Authority:** `epic-breakdown.md` SD30-E3-F1; `decisions.md §39` (F1/F2/F3/F4 split, "the blacklist
+sweep" scoping); `src/rules_core/pi_table_sweep.rs`, `src/rules_core/pi_screening.rs`; `src/bin/
+gen_feat_gap_tables.rs`, `src/bin/gen_equipment_gap_tables.rs` (the two live production callers);
+`tests/pi_table_sweep.rs` (this cycle's two new tests plus the five pre-existing); `docs/governance/
+pi-sweep-baseline.tsv`; `docs/governance/no-stub-mvp-doctrine.md` (the "not wired only by its own test"
+bar this finding satisfies).
