@@ -239,3 +239,47 @@ Epic 1 (identifier cleanup) and Epic 2 (operator pre-launch, re-derived for the 
 `class_feature` population) fire first, unchanged in shape from before the re-scope. Epic 4's
 class-inventory feature seed (SD30-E4-F1) is the first genuinely new work: enumerate which
 `class_feature`-bearing classes remain unmeasured beyond SD-28's 28-class/25-verified set.
+### 2026-08-14 — P0.2: PF1e dashboard producer versioned and hardened
+
+Addresses `state-goals-and-lessons.md §1.3` hazards 4 and 5.
+
+- **Backup**: live `pf1e_dashboard_producer.py`/`observer.py` copied to
+  `/home/ubuntu/swarm-observer/.backups/{pf1e_dashboard_producer.py,observer.py}.pre-p02-versioning-2026-08-14`
+  before any edit.
+- **Versioned home**: source of record is now `scripts/observer/pf1e_dashboard_producer.py`
+  and `scripts/observer/observer.py` in this repo. The former hermes-tree copies at
+  `/home/ubuntu/.hermes/profiles/god-emporer/skills/release-swarm-observer/scripts/` were
+  replaced with symlinks to the repo copies, so the existing cron line (unchanged) now runs the
+  versioned scripts:
+  `*/5 * * * * /usr/bin/flock -n /home/ubuntu/swarm-observer/PF1e-dashboard.lock /usr/bin/python3 /home/ubuntu/.hermes/profiles/god-emporer/skills/release-swarm-observer/scripts/pf1e_dashboard_producer.py >> /home/ubuntu/swarm-observer/pf1e-dashboard-producer.log 2>&1`
+  5-minute cadence unchanged; crontab itself was not edited.
+- **Hazard 4 fix (unrecognised-status crash)**: `build_unit_shards()`'s per-unit loop called
+  `doneness_verdict()` with no guard — the ONE call site (of two) that let a `ValueError` from an
+  unrecognised `(wiring_class, status)` pair escape uncaught, crashing `main()` and publishing
+  nothing for that cron tick. Now wrapped in try/except: degrades the unit to the `unmeasurable`
+  doneness verdict, logs a loud `WARNING` line to stderr/the producer log, and records the
+  offending cell under a new `doneness_unmapped` dict per kind plus a top-level
+  `doneness_unmapped_seen` boolean flag in `unit_index`. `SHARD_SCHEMA` bumped 12 -> 13 (new
+  fields would otherwise be hidden behind the existing shape-gated shard cache).
+- **Hazard 5 fix (stale wiring-class cache)**: `compute_wiring_class_summary()`'s cache-validity
+  check compared only mtime and schema, not which `doc_path` the cache was actually computed
+  from — a cache left over from a different `doc_path` invocation, newer than an unrelated doc,
+  could be served silently ("produced a false zero during measurement"). Added a
+  `cached.get("source_document") == doc_path` requirement alongside the existing mtime/schema
+  checks.
+- **Verification**: manual run against the live `docs/work-inventory.json` (38,521 units)
+  produced JSON with the same top-level keys as `.last-good` and matched `total_units`; watched
+  one live 5-minute cron tick land clean (`generated_at` advanced, no traceback, exit 0).
+  Degrade path proven by feeding a scratch copy of the inventory with 5 units' `status` doctored
+  to a bogus word (`quantum-superposed`, never emitted by the real generator): hardened producer
+  published successfully with `doneness_unmapped_seen: true` and the exact 5 units bucketed;
+  the pre-fix backup, run against the identical doctored input, crashed with
+  `ValueError: doneness: unmapped 'derived' + 'quantum-superposed'` and exit 1 (nothing
+  published) — confirming the fix actually changes behavior, not just adds unreachable code.
+- **`status_sources_agree: false` diagnosis**: NOT a producer bug. It is hazard 1 from
+  `state-goals-and-lessons.md §1.3` (the `v06_work_inventory --summary` regenerator drops the
+  2,371 `literal-verified`/`fixture-verified` stamps on a plain run). The committed
+  `docs/work-inventory.json` (`generated_at` 2026-08-14T02:06:11Z) still carries 2,322
+  `literal-verified` + 49 `fixture-verified` records; a fresh `--summary` run has zero of either,
+  shifting every other status count by roughly the same total. Left unfixed here per scope
+  (`v06_work_inventory.rs` is owned by another agent this cycle).
