@@ -1471,3 +1471,149 @@ classifier code was written, tuned, or sketched. SD31-E2-F2 (classifier build/ac
 `HEAD` before this receipt: `65decb5e0`. Committed on branch `sd31/e2-groundtruth`, pushed to
 `origin/sd31/e2-groundtruth` — **not merged by this cycle**; a later integration cycle merges it onto
 `tranche/11` per the workflow's worktree-isolation instructions.
+
+## SD31-W1-INTEGRATE-001 — Wave integration: merge, adversarial-review fixes, standing audit, full gate (`sd31-w1-integrate`)
+
+**Actor:** `sd31-w1-integrate`. **Checkout:** primary, `tranche/11`. **HEAD at start:** `0ca468847`.
+**Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`./scripts/verify.sh --only preflight-oracle` → PASS, `scripts/pcgen-oracle-pin.env`).
+
+### 1. Merge `sd31/e2-groundtruth`
+
+Verified by content, not status, before merging:
+```
+git fetch origin
+git log --oneline origin/tranche/11..origin/sd31/e2-groundtruth
+# -> 539906016 docs(sd31): SD31-E2-F1 -- hand-labelled ground-truth sample (Epic 2's first gate)
+git diff --stat $(git merge-base origin/tranche/11 origin/sd31/e2-groundtruth) origin/sd31/e2-groundtruth
+# -> 6 files, 2880 insertions(+): OPEN-ISSUES.md, SD31-E2-F1-ground-truth-methodology.md (317 lines),
+#    SD31-E2-F1-ground-truth-sample-v1.json (2402 lines), progress.md, 2 retro shards
+```
+`git merge --no-ff origin/sd31/e2-groundtruth` hit an append-append conflict in `progress.md` (both
+branches appended distinct cycle sections at the tail); resolved by keeping BOTH sections
+concatenated, no content dropped on either side (confirmed no `<<<<<<<`/`=======`/`>>>>>>>` markers
+remain, line count 1476 → 1473 after removing only the 6 conflict-marker lines themselves). Merge
+commit `ce0f534a9`.
+
+**Content-proof after merge (not trusting the report):**
+```
+ls -la docs/release/SD-31-corpus-closure-grind/artifacts/ | grep -i groundtruth   # 2 files present
+python3 -c "import json; d=json.load(open('docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E2-F1-ground-truth-sample-v1.json')); print(len(d))"
+# -> 150
+```
+150 labelled records confirmed present. No blocker.
+
+### 2. Fix the 9 CONFIRMED adversarial-review findings
+
+All 9 findings addressed this cycle. Commit `4d33ea331`. Each independently re-derived against the
+committed artifacts, not transcribed from the review report:
+
+| # | Target | Fix | Verification command | Result |
+|---|---|---|---|---|
+| 1 | `reachability_audit.py` docstring / commit `eadb263f7` over-claim | Narrowed docstring claim to the wiring_class axis only; documented the status-axis catch-all-absorption gap inline with the mutation-test evidence | mutation test: 3 real `computed` units forced to a fabricated status | `unmapped_cells_with_units=[]`, `ok=True`, exit 0 (contrast fabricated wiring_class: exit 1) — non-blocking, OPEN-ISSUES row 6 |
+| 2 | Sibling report's `--json-out artifacts/...` path drift | No repo change (remedy says none required — committed receipt already correct) | `grep -n 'artifacts/SD31-E0-F1-001-baseline.json' progress.md` | line 1211 already correct |
+| 3 | `epic-breakdown.md:81,86` stale `race_trait` figures | Added inline parenthetical with re-derived value + command, authoring-time number left visible | `python3 -c` replaying `doneness_verdict()` over `race_trait` units | `3447 3181` (was stated 3,284 not-done / ~2,894 done) |
+| 4 | Sample `token_evidence`: 105/150 canned-string rows | Withdrew dependent headline figures (finding 8); logged OPEN-ISSUES row 3 (`BLOCKER` for any F1-close decision) — re-labelling 150 corpus records is out of this integration cycle's bounded scope | `python3 -c` counting boilerplate-prefix rows | 105 of 150, all `agrees_with_engine=True` |
+| 5 | `display_grounded_target` population: 40/40 unevidenced | Same as #4 — logged in the same OPEN-ISSUES row 3, explicit population breakdown recorded | `python3 -c` grouping by `population` field | `display_grounded_target` n=40 agree=40 boilerplate=40 |
+| 6 | Stratification depth vs F2's per-class/per-kind requirement | Caveat added to methodology doc; OPEN-ISSUES row 5 | `python3 -c` `Counter((hand_wiring_class,kind))` | 45 occupied cells, 31 with n≤2 |
+| 7 | "43 disagree, 40 trace to Finding A" attribution error | Corrected table + prose to 38 (+2 same-class-different-reason) in methodology.md's Result section | `python3 -c` filtering `no_corpus_line_bug` tag | ncl=40, disagree=38, agree=2 (`favored_enemy_humanoid_changeling`, `exciter_rapture`) |
+| 8 | "95.5%"/"71.3%" headline agreement figures | **Withdrawn** from methodology.md; explicit bar on citing or invoking Decision 1(e) item 4 closure on them | `python3 -c` isolating non-`no_corpus_line` boilerplate-agreeing rows | 110 non-ncl, 105 agree, all 105 boilerplate |
+| 9 | Sampling script not committed | Reproducibility gap noted in methodology.md + OPEN-ISSUES row 4; not fabricated post-hoc (a reconstruction can't prove the original draw was unbiased) | `git diff --stat` vs merge-base | 6 files, all `docs/`, zero `.py`/`.rs` |
+
+9 `correction` retro events emitted this cycle (`docs/retro/events/sd31-w1-integrate.jsonl`), each with
+`--verified-by` naming the exact command above.
+
+`scripts/tests/test_reachability_audit.py` re-run after the docstring edit (docstring-only change,
+no behavior touched): `python3 -m unittest scripts.tests.test_reachability_audit -v` → **11/11 pass**.
+
+**Not overwritten:** three findings from the E0 review batch (attacks #1–#7 on the audit's own
+correctness, the baseline figures, the dead-end ownership, and the gate result) were REFUTED, not
+confirmed — no action taken on those per the review's own verdict; nothing dropped for a bad reason on
+inspection of the E0 "Full reports for context" section.
+
+### 3. Re-run Epic 0's audit at the integrated tip (standing gate, `decisions.md §4`)
+
+```
+python3 scripts/reachability_audit.py --json-out docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W1-INTEGRATE-001-audit.json
+```
+```
+reachability_audit: 38521 units (excl. beginner_box)
+  grid: 5 wiring classes x 9 statuses = 45 cells evaluated
+  REACHABLE CEILING: 94.53%  (36412 / 38521)
+  per-kind reachable ceiling:
+    class                 99.46%    class_feature  92.99%    companion       98.53%
+    equipment             99.05%    equipment_modifier 100.00%   feat        96.70%
+    monster               99.69%    monster_ability 98.42%   race            52.43%
+    race_trait            79.98%    spell           97.82%
+  dead-end cells: 9 (all `ambiguous|*`, `no-done-path`, total 2,109 units)
+    ambiguous|deferred-with-reason   units=0        ambiguous|fixture-verified   units=0
+    ambiguous|grounded               units=278      ambiguous|ingested-magnitude units=28
+    ambiguous|literal-verified       units=0        ambiguous|not-ingested       units=1501
+    ambiguous|not-started            units=89       ambiguous|text-complete      units=94
+    ambiguous|unknown                units=119
+```
+`python3 scripts/reachability_audit.py > /dev/null 2>&1; echo AUDIT_EXIT=$?` → `AUDIT_EXIT=0`.
+
+**Identical to the SD31-E0-F1-001 baseline** (94.53%, same 9 dead-end cells, same 2,109-unit total) —
+expected: `docs/work-inventory.json` was not regenerated this cycle (`generated_at` unchanged,
+`2026-08-15T01:34:18Z`), and the merged-in ground-truth sample is a labelled artifact, not a board
+mutation. Every dead-end cell is `wiring_class == 'ambiguous'`, owned by `epic-2-verdict-paths`
+(`epic-breakdown.md` "## Epic 2") — no new unowned dead-end at the integrated tip.
+
+### 4. Full gate
+
+Launched in the background before writing this receipt (and this section drafted while it ran), per
+gate-sequencing discipline:
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W1-INTEGRATE-001-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+**`VERIFY_EXIT=0`.** Confirmed by both the exit code AND the log's own `SUMMARY` block (not inferred
+from a harness wrapper status), per the "read the number, corroborate against SUMMARY" discipline:
+```
+==> SUMMARY
+  passed:  21  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+                reachability-audit-selftest reachability-audit pi-sweep audit-selftest
+                reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full
+                desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck
+                clippy class-dump
+RESULT: PASS
+VERIFY_EXIT=0
+```
+21/21 stages pass, including `reachability-audit` (`PASS reachability-audit (reachable ceiling
+94.53%)`) and `reachability-audit-selftest` (`11 cases passed`) at the merged tip. `root-lib` 1777
+passed, `root-full` 6411 passed across 548 suites (all 527 `tests/*.rs` suites executed), `desktop`
+green, `reach` green, `frontend-test` 99/99 files, `clippy` 0 errors (46 root / 7 desktop warnings,
+pre-existing), `class-dump` 31/31 computing.
+
+**BASELINE NOTES (non-failing, logged not fixed this cycle).** The gate's own output flags 3 stale
+counters in `scripts/verify-baselines.env`: `BASELINE_ROOT_LIB_TESTS` 1776→1777,
+`BASELINE_ROOT_FULL_TESTS` 6398→6411, `BASELINE_ROOT_TEST_BINARIES` 547→548. This diff added zero
+`.rs` files (the two production changes this cycle were a Python docstring and doc/artifact edits),
+so the drift predates this integration cycle and this is simply the first gate run to measure it
+since. Per Decision-record convention ("Baseline movements ... are a separate reviewable commit
+carrying `--show-actuals` output"), left unedited here — out of this cycle's bounded scope — and
+logged to `OPEN-ISSUES.md` row 7 (`NOTE`) rather than silently absorbed.
+
+Full log: `artifacts/SD31-W1-INTEGRATE-001-verify.log`.
+
+### 5. Board headline re-derived at the integrated tip
+
+```
+python3 -c "
+import json, importlib.util, collections
+spec = importlib.util.spec_from_file_location('P','scripts/observer/pf1e_dashboard_producer.py')
+P = importlib.util.module_from_spec(spec); spec.loader.exec_module(P)
+d = json.load(open('docs/work-inventory.json'))
+units = [u for u in d['units'] if (u.get('book') or 'unknown') not in P.EXCLUDED_BOOKS]
+verdicts = collections.Counter(P.doneness_verdict(u.get('wiring_class') or 'ambiguous', u.get('status') or 'unknown', u.get('kind')) for u in units)
+print(d.get('generated_at'), len(units), dict(verdicts), round(verdicts['done']/len(units)*100,4))
+"
+```
+→ `generated_at 2026-08-15T01:34:18Z`, denominator **38,521**, `done` **5,837 (15.15 %)**,
+`not-started` 20,895 · `held` 6,916 · `unmeasurable` 3,989 · `in-progress` 848 · `deferred` 36 —
+**exact match** to `ORCHESTRATOR-LOG.md`'s "Baseline at orchestration start" table on every figure.
+Unchanged since orchestration start: no board mutation occurred in this wave (Epic 0 built tooling,
+Epic 2-F1 hand-labelled a 150-unit sample outside the board proper). This is the real starting point
+for the next wave, re-derived not carried forward.
+
