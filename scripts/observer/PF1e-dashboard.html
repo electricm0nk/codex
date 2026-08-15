@@ -756,9 +756,13 @@ function dataQualityIssues() {
   return issues;
 }
 
-/* In-scope units only. The whole-corpus figure includes future-state books
-   (Ultimate Psionics, the Inner Sea line, Bestiary 2-6…) nobody has been asked
-   to do yet, so it understates delivered work by roughly 3x. */
+/* In-scope units only. Feeds the SECONDARY line under the mandate headline
+   (renderCompletion()) and the lane-page/book-page "measurable" figures,
+   which stay in_scope-only this round (launch-readiness remediation Step
+   4C explicitly left them as a labelled follow-up). The PRIMARY headline no
+   longer reads from this function -- see `wi.mandate_headline`
+   (operator ruling 2026-08-15, decisions.md Decision 5): the whole-corpus
+   figure, future-state books included, IS the number that matters now. */
 function inScopeUnits() {
   const wi = DATA.work_inventory || {};
   const books = (wi.books || []).filter((b) => b.scope === "in_scope");
@@ -846,15 +850,41 @@ function renderCompletion() {
   // player can actually use right now". A raw-status-axis number with a
   // doneness-shaped caption sitting on it is exactly finding F25's pattern;
   // it had just never been named because nobody happened to test the
-  // no-v0.6-channel path. The one headline number is now always the actual
-  // in-scope doneness percentage, v6-channel-availability doesn't change
-  // what "the headline" means.
-  const by2 = inScope.byDoneness || {};
-  const doneHeadline = by2["done"] || 0;
-  const headlineDenom = usableDenom(by2, inScope.units || 0);
+  // no-v0.6-channel path. The one headline number was, at the time, always
+  // the in-scope doneness percentage; v6-channel-availability did not
+  // change what "the headline" meant. SUPERSEDED 2026-08-15 (operator
+  // ruling, decisions.md Decision 5, launch-readiness remediation Step
+  // 4C): the headline is now the whole-mandate percentage below, not the
+  // in-scope one -- that figure moved to the secondary line.
+  // Mandate headline (operator ruling 2026-08-15, decisions.md Decision 5,
+  // launch-readiness remediation Step 4C): done against the WHOLE mandate
+  // denominator -- every unit in every book except beginner_box, including
+  // future-state books, unmeasurable and deferred. Nothing subtracted; the
+  // only way this number moves is a unit reaching `done`. Fallback covers
+  // an older JSON that predates `mandate_headline` (falls back to the raw
+  // by_doneness/total_units the panel always carried, so a stale cache
+  // still renders SOMETHING rather than crashing the page).
+  const m = wi.mandate_headline || {
+    done: (wi.by_doneness || {}).done || 0,
+    denominator: wi.total_units || 0,
+    unmapped_units: 0,
+    secondary_in_scope_measurable: null,
+  };
+  const doneHeadline = m.done;
+  const headlineDenom = m.denominator;
   const headlineNum = headlineDenom
     ? `<div class="headline-num">${fmtPct(pct(doneHeadline, headlineDenom))}<span class="unit">%</span></div>`
-    : `<div class="headline-num na" style="font-size:0.5em;font-style:normal">n/a<span class="unit"> — nothing in scope could be measured</span></div>`;
+    : `<div class="headline-num na" style="font-size:0.5em;font-style:normal">n/a<span class="unit"> — nothing in the mandate could be measured</span></div>`;
+  assertLadderSums("mandate headline", wi.by_doneness || {}, headlineDenom);
+  const secondary = m.secondary_in_scope_measurable;
+  const secondaryLine = secondary
+    ? `<div class="pct-small">In-scope &amp; measurable (the previous headline): ${num(secondary.done)}` +
+      `<span class="unit">/${num(secondary.denominator)} (${pctCell(secondary.done, secondary.denominator)})</span></div>`
+    : "";
+  const unmappedLine = m.unmapped_units > 0
+    ? `<div class="pct-caption" style="color:var(--warn)">` +
+      `${num(m.unmapped_units)} units carry no verdict — counted in the denominator, not in done.</div>`
+    : "";
 
   // F1-fallout note (round 5, SD-29 QA finding #1, 2026-08-12): this
   // "N/N classes|races" count and the headline doneness % above it are TWO
@@ -922,11 +952,12 @@ function renderCompletion() {
     <div class="completion">
       ${headlineNum}
       <div class="pct-caption" style="max-width:26em">
-        <strong>In-scope content that's fully usable right now</strong> — ${num(doneHeadline)}
-        of the ${num(headlineDenom)} in-scope records that can actually be checked clear their
-        own bar with no caveats. This is THE headline number on this page; everything below is
-        detail on how it's built.
+        <strong>Fully usable, against the whole mandate</strong> — ${num(doneHeadline)}
+        of ${num(headlineDenom)} records across all 37 books (incl. the 7 future-state books,
+        unmeasurable and deferred — nothing subtracted). 100% is the bar.
       </div>
+      ${secondaryLine}
+      ${unmappedLine}
     </div>
     ${renderLaneStrip(wi)}`;
 
@@ -957,16 +988,22 @@ function renderLaneStrip(wi) {
   if (!kinds.length) return "";
   const order = LANE_ORDER.filter((k) => kinds.includes(k))
     .concat(kinds.filter((k) => !LANE_ORDER.includes(k)));
+  // Strict rule (operator ruling 2026-08-15, Step 4C): the sticky-header
+  // chips share the SAME denominator as the mandate headline above them --
+  // every unit in the lane, nothing subtracted -- rather than the old
+  // usableDenom() (which dropped unmeasurable/deferred). Every other
+  // usableDenom() call site (Overview ladder, lane pages, book pages) is
+  // left as-is this round, labelled "measurable" honestly; deciding
+  // page-wide is a logged follow-up, not this fix's scope.
   const chips = order.map((kind) => {
     const by = byKind[kind] || {};
     const denom = Object.values(by).reduce((a, b) => a + b, 0);
     const done = by["done"] || 0;
-    const covDenom = usableDenom(by, denom);
     const label = LANE_LABEL[kind] || titleCase(kind);
     return `<div class="card flat lane-chip" data-kind="${esc(kind)}"
       onclick="location.hash='#/lane/${esc(kind)}'" title="${esc(label)} — see the full breakdown on Overview or #/lane/${esc(kind)}">
       <span class="lane-chip-label">${esc(label)}</span>
-      <span class="lane-chip-pct">${pctCell(done, covDenom)}</span>
+      <span class="lane-chip-pct">${pctCell(done, denom)}</span>
     </div>`;
   }).join("");
   return `<div class="lane-strip">${chips}</div>`;

@@ -797,6 +797,16 @@ def work_inventory_panel(inventory: dict | None, wiring: dict | None = None) -> 
         "doneness_values": list(DONENESS_VALUES),
         "doneness_meaning": dict(DONENESS_MEANING),
         "by_doneness": by_doneness,
+        # The mandate headline (Decision 5, operator ruling 2026-08-15,
+        # launch-readiness remediation Step 4C): done against the WHOLE
+        # denominator, not the in-scope-and-measurable subset the old
+        # headline used. `total_units - dropped_units` above is the same
+        # figure already served under `total_units` a few lines up -- passed
+        # explicitly here rather than re-derived so this field can never
+        # drift from it. See `_mandate_headline()`'s own docstring for why
+        # nothing is subtracted.
+        "mandate_headline": _mandate_headline(by_doneness, total_units - dropped_units, books,
+                                              (wiring or {}).get("doneness_unmapped", {})),
         # Per-kind ladder, corpus-wide, same exclusion as by_doneness above.
         # `doneness_by_kind` on the cache is UNADJUSTED (every book, including
         # excluded ones); subtract each excluded book's per-kind contribution
@@ -3441,6 +3451,56 @@ def _exclude_books_from_flat_counts(counts: dict, counts_by_book: dict,
             if out[cell] <= 0:
                 out.pop(cell, None)
     return out
+
+
+def _mandate_headline(by_doneness: dict, denominator: int, books: list,
+                       unmapped: dict) -> dict:
+    """Operator ruling 2026-08-14/15: the headline is done / EVERY unit in every book except
+    beginner_box -- future_state books, unmeasurable and deferred all stay in the denominator.
+    Nothing is subtracted; the only way this number moves is a unit reaching `done`.
+
+    `denominator` is the caller's already-adjusted `total_units` (excluded books already
+    subtracted) -- passed in rather than re-derived here so this field can never disagree
+    with the top-level `total_units` the same payload serves. `books` is the SAME per-book
+    list `work_inventory_panel()` already built (excluded books already dropped from it),
+    used here only to recompute the pre-2026-08-15 in-scope-and-measurable secondary figure
+    for continuity, not to redefine the primary one.
+    """
+    in_scope = [b for b in books if b.get("scope") == "in_scope"]
+    is_by: dict[str, int] = {}
+    for b in in_scope:
+        for v, c in (b.get("by_doneness") or {}).items():
+            is_by[v] = is_by.get(v, 0) + c
+    is_units = sum(b.get("units") or 0 for b in in_scope)
+    unmapped_units = sum(unmapped.values())
+    result = {
+        "done": by_doneness.get(DONENESS_DONE, 0),
+        "denominator": denominator,                       # == total_units (38,521 today)
+        "denominator_rule": (
+            "all units, all books except beginner_box, incl. unmeasurable, deferred and "
+            "future_state; nothing subtracted"
+        ),
+        "unmapped_units": unmapped_units,                  # units absent from every rung; still in the denominator
+        "secondary_in_scope_measurable": {
+            "done": is_by.get(DONENESS_DONE, 0),
+            "denominator": max(0, is_units - is_by.get(DONENESS_UNMEASURABLE, 0)
+                                - is_by.get(DONENESS_DEFERRED, 0)),
+            "rule": "in_scope books only, minus unmeasurable and deferred (the pre-2026-08-15 headline)",
+        },
+    }
+    # stderr-only sanity check (Step 4C spec): the cron must keep publishing
+    # even if this ever disagrees -- a raised exception here would blank the
+    # whole dashboard over one arithmetic mismatch, a worse failure than a
+    # logged warning.
+    ladder_sum = sum(by_doneness.values())
+    if ladder_sum + unmapped_units != denominator:
+        print(
+            f"WARNING: mandate_headline sanity check failed: ladder sum ({ladder_sum}) + "
+            f"unmapped ({unmapped_units}) = {ladder_sum + unmapped_units} != "
+            f"denominator ({denominator})",
+            file=sys.stderr,
+        )
+    return result
 
 
 def doneness_verdict(wiring_class: str, status: str, kind: str | None = None) -> str:
