@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T20:36:34Z",
+  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Devil (Drowning) ~ Drown",
     "delivery": "Supernatural",
@@ -28,8 +28,9 @@
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "wiring_class": "display",
+  "wiring_class": "derived",
   "wiring_class_signals": [
+    "derived:prose_formula_segment",
     "display:no_magnitude_token"
   ]
 }

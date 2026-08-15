@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Speak with Animals (Rodents only) ~ Constant",
     "delivery": "SpellLike",
     "description": "You can use speak with animals, as per the spell, as a constant ability, but only to speak with rodents. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated as a swift action.",
     "description_variables": [],
+    "description_variants": [],
     "facet": null,
     "key": "bestiary_4:companion:speak_with_animals_rodents_only_constant",
     "name": "Speak with Animals (rodents only)",

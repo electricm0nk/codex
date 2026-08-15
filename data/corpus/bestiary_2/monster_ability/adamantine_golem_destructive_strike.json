@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T16:51:34Z",
+  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Adamantine Golem ~ Destructive Strike",
     "delivery": "Extraordinary",
@@ -28,8 +28,8 @@
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "wiring_class": "static",
+  "wiring_class": "derived",
   "wiring_class_signals": [
-    "static:literal_magnitudes_only"
+    "derived:prose_formula_segment"
   ]
 }

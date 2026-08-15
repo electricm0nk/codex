@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Companion (Dinosaur (Diplodocus)) ~ Tail Lash",
     "delivery": "Extraordinary",
     "description": "The diplodocus prefers to attack with its tail. The dinosaur can snap its incredibly long tail with surprising speed like an enormous whip-this is a primary attack that deals bludgeoning and slashing damage. A diplodocus can make two separate attacks with its tail lash as a full-attack action.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialAttack",
     "key": "bestiary_4:companion:companion_dinosaur_diplodocus_tail_lash",
     "name": "Tail Lash",

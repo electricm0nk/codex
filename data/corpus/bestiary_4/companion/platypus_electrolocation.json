@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Platypus ~ Electrolocation",
     "delivery": "Extraordinary",
     "description": "While underwater, platypuses can sense the tiny electrical currents that trigger muscle movement. This allows them to locate living prey and to distinguish it from inanimate objects. Treat electrolocation as lifesense with a range of 30 feet, but that functions only underwater.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialQuality",
     "key": "bestiary_4:companion:platypus_electrolocation",
     "name": "Electrolocation",

@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Nycar ~ Poison",
     "delivery": "Extraordinary",
     "description": "Bite-injury; save Fort DC 12; frequency 1/round for 6 rounds; effect 1d4 acid and 1 Con damage; cure 2 consecutive saves.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialAttack",
     "key": "bestiary_4:companion:nycar_poison",
     "name": "Poison",

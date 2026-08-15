@@ -1028,9 +1028,13 @@ inside Epic 3, gating Epic 6 exactly as the blacklist sweep already does.
   run receipt (`§50.3`/`§53.2` — independently converged, now the settled rule, not reargued per
   cycle). Reclassifying a declared-PI row as shippable remains `ogl-pi-blacklist.md` §3's per-book
   override, an operator decision, not a cycle's to make.
-- **Backfill, corpus-wide, every already-shipped kind.** `§53.7`'s own scope finding: "only
-  `ingest_race_traits` calls it… the same command that found this, pointed at the whole corpus rather
-  than one kind, is the successor's first move." §39.2's corpus-wide sweep command *is* that first
+- **Backfill, corpus-wide, every already-shipped kind.** `SD-29-corpus-wide-catch-up-lanes/decisions.md
+  §53.7`'s own scope finding (corrected 2026-08-14, `SD30-CARRY-001`: the bare `§53.7` this bullet
+  previously carried is ambiguous this far from `§39.1`'s own establishing citation, and reads as a
+  phantom cross-reference into this package's own Decision 53, which has no `§53.7` of its own —
+  `retro.py correction` `1786757789966-sd30-carry-defects-83156a`): "only `ingest_race_traits` calls
+  it… the same command that found this, pointed at the whole corpus rather than one kind, is the
+  successor's first move." §39.2's corpus-wide sweep command *is* that first
   move, re-run at whatever point the backfill cycle executes (currently zero hits outside the already-
   fixed `race_trait`, but Pipeline B's monster/companion transcribers still lack `DESCISPI` handling
   entirely, so any future re-ingest of those kinds without this fix reopens the gap silently).
@@ -2261,3 +2265,94 @@ own premise); `§52.3`/`§53.5` (the two invocation contracts this gate enforces
 `tests/sd29_declared_product_identity_in_shipped_race_traits.rs` (the shape mirrored exactly);
 `state-goals-and-lessons.md §3.1` ("a gate that cannot fail proves nothing" — the defect class §54.2
 avoids). Full DoD table, all commands verbatim: `progress.md`, cycle `SD30-E3-F4-001`.
+
+## Decision 55 — Operator ruling on the deferred SD30-E1 finding: identifier-discipline's forbidden-pattern list does NOT reach devops/observability tracking keys under `scripts/` (2026-08-14, `SD30-CARRY-001`, routine unattended-mode default)
+
+**Status:** New. Rules the open deferral `SD30-E1` recorded and left unresolved
+(`docs/retro/events/sd30-e1-identifier.jsonl` id `1786744223492-sd30-e1-identifier-4b01f0`,
+`revisit`: "does the identifier-discipline doctrine forbidden-pattern list reach devops/observability
+tooling under `scripts/` — specifically the `sd28_`/`sd29_`/`sd30_book_pre_build` tracking-manifest
+keys in `scripts/observer/pf1e_dashboard_producer.py` — or is it scoped to shipping game-rules/UI
+surface only"). Unattended mode requires a ruling, not a wait — this is a routine judgment call with a
+conventional default (`loop-instruction.md` "PRESS ON… a routine judgment call with a conventional
+default — pick it, state it").
+
+### 55.1 The finding, re-verified at this cycle's own HEAD
+
+```
+$ grep -n 'sd28_book_pre_build\|sd29_book_pre_build\|sd30_book_pre_build' scripts/observer/pf1e_dashboard_producer.py
+2260:        "sd28_book_pre_build": {
+2261:            "manifest_id": "sd28_book_pre_build",
+2269:        "sd29_book_pre_build": {
+2270:            "manifest_id": "sd29_book_pre_build",
+2278:        "sd30_book_pre_build": {
+2279:            "manifest_id": "sd30_book_pre_build",
+```
+
+Three dict keys (plus a fourth sibling, `sd27_book_pre_build`, not named in the deferral but the same
+shape) inside `_seed_manifests()`'s literal return dict, each a self-contained tracking-manifest record
+(`manifest_id`, `workchannel`, `scope`, `managed_by`, `stats`, `items`) for one release bundle's own
+book-pre-build stage tracking. `sd27_`/`sd28_`/`sd29_` are for bundles already CLOSED; `sd30_` is this
+program's own current bundle.
+
+### 55.2 What the audit script actually enforces, read at source not assumed
+
+`scripts/identifier-discipline-audit.sh`'s `SHIPPING_PATHSPEC` is exactly
+`apps/desktop/**/*.ts*`, `apps/desktop/src-tauri/**/*.rs`, `src/**/*.rs` — `scripts/**` is absent by
+construction, and the script's own header comment states the rule explicitly: *"Only shipping source
+is scanned, so `docs/release/**` is out of scope by construction."* `decisions.md §26` (Epic 8 Bundle
+Code Review, this program's own final identifier-discipline gate) delegates to this exact script at
+bundle-diff scope (`git diff origin/develop...HEAD`) rather than inventing a wider check — so even
+the bundle's own closing review would not flag these keys.
+
+### 55.3 Ruling: not a violation, at the doctrine's own stated purpose
+
+`decisions.md §7`'s headline: *"Source-code identifiers describe WHAT the artifact does, NOT which
+release / spec domain it came from."* The mischief this targets is a bundle tag riding as INCIDENTAL
+NOISE on an otherwise-generic identifier — `sd30_gen_book_cache` still means "generate the book
+cache" with a stale prefix stapled on, confusing a reader about whether the code still applies once
+the bundle closes (the doctrine's own worked violations, `sd27_bundle_flag`/`kind_is_sd17_b3`/
+`build_ge08_workbench_snapshot`, are all this shape — the tag is decoration on a name that already
+says what the thing does without it).
+
+The `sdNN_book_pre_build` keys are the opposite shape. `book_pre_build` already says WHAT the record
+tracks; `sdNN_` is not decoration on that name, it is the discriminator between four otherwise-
+identical parallel records — SD-27's book-pre-build tracking is a genuinely different, historically-
+closed dataset from SD-30's own live one, and collapsing the prefix (`book_pre_build_current`, or
+similar) would not remove a violation, it would DESTROY the four-manifest structure's own ability to
+keep SD-27/28/29's closed history distinguishable from SD-30's live one — the same shape this
+program's own `docs/release/SD-<N>-<slug>/` per-bundle directory convention already uses everywhere,
+sanctioned by construction (every package this program ships is bundle-tag-named as its own identity,
+not an exception the doctrine tolerates only in docs). `workchannel` inside each of these four dicts
+is even a second, redundant restatement of the same fact (`"workchannel": "SD-30"`) — the manifest's
+whole job is to be workchannel-scoped.
+
+**Ruling:** the identifier-discipline doctrine's forbidden-pattern list is scoped to shipping
+game-rules/UI surface (`src/**/*.rs`, `apps/desktop/**/*.ts*` — the audit script's own pathspec) and
+does **not** reach devops/observability tracking-manifest keys under `scripts/` whose bundle tag is
+the record's own workchannel-discriminating content, not incidental noise on an implementation name.
+This matches both authorities the deferral itself named (the audit script's pathspec, `decisions.md
+§26`'s delegation to it) and is the safer default under unattended mode: `scripts/observer/
+pf1e_dashboard_producer.py` runs from cron every 5 minutes under flock and RAISES on an unrecognised
+status/key rather than degrading (`state-goals-and-lessons.md §1.3` hazard 4) — an unreviewed,
+zero-benefit rename (these keys never reach a player or a release reviewer; they are pure ops
+telemetry) carries real operational risk for no doctrinal gain, and two prior, unremediated
+`sd28_`/`sd29_` instances of the identical shape already shipped through two closed bundles' own Epic
+8-equivalent reviews without either one flagging it — reversing course now, alone, on `sd30_` only,
+would be inconsistent with that standing precedent rather than correcting it.
+
+### 55.4 Disposition
+
+No rename lands. `scripts/observer/pf1e_dashboard_producer.py` is unchanged by this ruling (verified:
+`git diff --stat scripts/observer/pf1e_dashboard_producer.py` empty before and after this decision was
+written). The deferral `1786744223492-sd30-e1-identifier-4b01f0` is resolved by this ruling, not left
+open; no successor bundle inherits it as an open question. If a future operator directive narrows or
+widens the doctrine's stated scope explicitly to cover `scripts/`, this ruling is superseded the same
+way every other operator-directive supersession in this file is recorded — in place, dated, pointing
+here.
+
+**Authority:** `docs/doctrine-external/identifier-discipline.md` (doctrine text); `decisions.md §7`
+(this package's restatement); `decisions.md §26` (Epic 8's delegation to the audit script);
+`scripts/identifier-discipline-audit.sh` (the mechanism itself, read at source); `docs/retro/events/
+sd30-e1-identifier.jsonl` (the deferral this ruling closes); `state-goals-and-lessons.md §1.3` hazard 4
+(the operational-risk half of the "safer default" reasoning).

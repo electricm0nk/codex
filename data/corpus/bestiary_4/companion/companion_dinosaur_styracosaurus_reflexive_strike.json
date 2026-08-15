@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Companion (Dinosaur (Styracosaurus)) ~ Reflexive Strike",
     "delivery": "Extraordinary",
     "description": "A styracosaurus can make three additional attacks of opportunity each round-combined with its bonus Combat Reflexes feat, this allows the dinosaur to make up to five of these attacks of opportunity per round. The dinosaur makes these attacks with its horned crest, but they are treated as normal gore attacks.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialAttack",
     "key": "bestiary_4:companion:companion_dinosaur_styracosaurus_reflexive_strike",
     "name": "Reflexive Strike",

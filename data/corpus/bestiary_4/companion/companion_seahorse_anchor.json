@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Companion (Seahorse) ~ Anchor",
     "delivery": "Extraordinary",
     "description": "As a move action, a seahorse can wrap its tail around a stationary object. The seahorse remains anchored to the object until it releases its grip (a free action) or is forcibly moved. An anchored seahorse gains a +4 bonus to its combat maneuver defense and on checks and saving throws against effects that would move it against its will.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialQuality",
     "key": "bestiary_4:companion:companion_seahorse_anchor",
     "name": "Anchor",

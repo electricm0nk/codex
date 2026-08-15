@@ -240,7 +240,9 @@ still-exposed books) must follow — see `decisions.md §53.5`.
 
 #### SD30-E3-F3 — Corpus-wide declared-PI backfill sweep, every already-shipped kind
 
-`decisions.md §53.7`'s own scope finding named this as "the successor's first move": the shared
+`SD-29-corpus-wide-catch-up-lanes/decisions.md §53.7`'s own scope finding (bare `decisions.md §53.7`
+before `SD30-CARRY-001`'s citation-qualification fix — this package's own Decision 53 has no `§53.7`,
+`retro.py correction` `1786757789966-sd30-carry-defects-83156a`) named this as "the successor's first move": the shared
 reader is placed in `pi_screening` but only `ingest_race_traits` calls it; every other Pipeline A
 writer and the entire Pipeline B transcription pipeline (`transcribe_monster_tables.py` — drops
 `NAMEISPI:YES`, per lines 780/818, but has never read `DESCISPI:YES`; `transcribe_companion_tables.py`
@@ -274,7 +276,8 @@ transcriber's `book_dirs()` does not register at all — out of this card's scop
 onboarding. All 6 registered monster books and all 17 registered companion books regenerate
 byte-identical to `HEAD`, proving zero live behavior change; the new code paths are proven via a
 synthetic-row harness replaying each script's own unmodified `transcribe()` function (15/15 checks
-pass across both scripts). Full detail, commands, and the `§53.7`-citation correction:
+pass across both scripts). Full detail, commands, and the (superseded, see `SD30-CARRY-001`)
+`§53.7`-citation correction:
 `progress.md`, cycle `SD30-E3-F3-001`.
 
 #### SD30-E3-F4 — Regression gate: a future ingest cannot reintroduce a declared-PI leak
@@ -633,7 +636,9 @@ precondition, not an optional step.
   work has not yet landed, not 3,447.
 - Runs `scripts/classify_race_trait_rows.py` and `scripts/screen_pcc_load_gates.py` before selecting
   a book (SD-29's own pilot on `inner_sea_intrigue` found it carried zero genuine race traits,
-  `decisions.md §45.1` — this card must not repeat that miss).
+  `SD-29-corpus-wide-catch-up-lanes/decisions.md §45.1` — this package's own Decision 45 has no
+  `§45.1` of its own, qualified 2026-08-14 `SD30-CARRY-001` per the same citation-hygiene pass as the
+  `§53.7` fix above — this card must not repeat that miss).
 
 **Acceptance (per card):** the raw-vs-workable split is recorded with its command before any cycle
 claims; the pre-cycle classifier/screen ran against the candidate book before the round was committed

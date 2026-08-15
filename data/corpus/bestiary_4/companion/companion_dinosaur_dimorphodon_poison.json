@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Companion (Dinosaur (Dimorphodon)) ~ Poison",
     "delivery": "Extraordinary",
@@ -9,6 +9,7 @@
     "description_variables": [
       "10+HD/2+CON"
     ],
+    "description_variants": [],
     "facet": "SpecialAttack",
     "key": "bestiary_4:companion:companion_dinosaur_dimorphodon_poison",
     "name": "Poison",
@@ -33,8 +34,9 @@
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "wiring_class": "display",
+  "wiring_class": "derived",
   "wiring_class_signals": [
+    "derived:prose_formula_segment",
     "display:no_magnitude_token"
   ]
 }

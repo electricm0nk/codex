@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Beheaded ~ Flaming",
     "delivery": "Supernatural",
     "description": "The beheaded gains fire immunity and a +2 bonus to Charisma. Its slam attack also deals 1d6 points of fire damage and might catch the target on fire (Core Rulebook p.444)",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialAttack",
     "key": "bestiary_4:companion:beheaded_flaming",
     "name": "Flaming",

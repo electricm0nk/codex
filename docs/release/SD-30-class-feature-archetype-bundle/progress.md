@@ -3383,3 +3383,245 @@ Every candidate correctly refused (verify-logs too young, worktrees/branches liv
 `state-goals-and-lessons.md`'s hazard doctrine this means the box is structurally full of live work,
 not that it is clean; not a signal to act on here, since no disk pressure was hit this cycle
 (`preflight-disk` passed cleanly at both ends of the gate, §6).
+
+## Cycle `SD30-CARRY-001` — 2026-08-14/15 — carry-over defects blocking honest closure
+
+**Actor:** `sd30-carry-defects`. **Starting HEAD:** `727e103b`
+(`727e103bf488d3b94121ee5c3f2f86567d069ae2`, full SHA — `git rev-parse HEAD`), tree not clean per
+`git status --porcelain` but the only pre-existing dirt was exactly the two files
+`state-goals-and-lessons.md`/prior cycles name as another session's site-deploy work (`.gitignore`'s
+`.wrangler/` entry, untracked `.github/workflows/deploy-site.yml`) plus an appended-only
+`docs/retro/events/codex.jsonl` line from a sibling session's own gate run — all three left exactly as
+found, none staged, none touched. Package directory present, so no `git reset --hard` recovery needed.
+This card owns three items every prior cycle in this run flagged as out of its own scope.
+
+### Item 1 — DoD item 3 (`v06_corpus_trap_report -- --audit`), RED bundle-wide: resolved
+
+**Re-derived diagnosis at source, not transcribed from the brief (which itself warns every prior
+number in it is unverified).**
+
+```
+$ cargo run --locked --bin v06_corpus_trap_report -- --audit
+AUDIT_EXIT=2, 177 wiring-class-mismatch defects
+```
+
+Full per-record listing parsed and cross-referenced against `data/corpus/*/{companion,monster,
+monster_ability}/*.json` to find each finding's REAL corpus book (not the citation path's own book
+segment, which can differ — see the residual-3 finding below):
+
+```
+companion: beastiary 1, bestiary_4 7, core_essentials 1, ultimate_magic 1, ultimate_wilderness 23  (33)
+monster: inner_sea_gods 3                                                                           (3)
+monster_ability: beastiary 2, bestiary_2 8, bestiary_4 125, horror_adventures 3,
+                 inner_sea_bestiary 1, inner_sea_world_guide 2                                     (141)
+                                                                                          TOTAL = 177
+```
+
+The brief's own framing ("reported as `ultimate_wilderness` companion abilities") undercounted the
+finding's real footprint by 7x — it is 10 books, not 1. Confirmed the diagnosis (`%N` prose-formula
+classifier fix, `99efb504`, landed without a matching re-ingest of these kinds' stored
+`data/corpus/*.json`) is real by inspecting `src/bin/gen_book_cache.rs` at source: it is the SAME,
+single, canonical generator that originally wrote every one of these records (`companion:<book>` /
+bare `<book>` CLI args, `CompanionBookSpec`/`MonsterBookSpec` tables), and it recomputes `wiring_class`
+fresh on every run via `wiring_class_for_source()` — so a stale stored value is exactly what an
+un-re-run generator leaves behind after the classifier it calls changes underneath it.
+
+**Guarded against the two named hazards before acting:**
+
+- **PI/license/raw-data survival, verified by content, not assumed.** Snapshotted the full
+  `companion`/`monster`/`monster_ability` subtrees for all 10 books (3,067 records) before touching
+  anything. After regenerating, diffed every field of every record pre/post:
+  `license`/`pi_field`/`pi_marker`/`source`/`population`/`completeness` — **0 mismatches across 3,067
+  records.** `data` changed on 79 records, and every one of those 79 changes is the identical, already
+  -known-benign `description_variants: []` schema-catch-up field this generator's own doc comment
+  describes (`decisions.md §61.1`-shaped: a field the JSON schema gained after these 10 books were
+  last regenerated, empty for every record whose corpus row has no gated `DESC:` variant — no
+  information added or lost). Every book's `LICENSE.json` `license_declaration` byte-identical
+  pre/post; `records_processed` unchanged for all 10 books (831/731/827/166/54/190/116/23/32/327).
+- **Pinned counts, re-derived not decremented.** Grepped every test file referencing these 10 books
+  before regenerating (`tests/sd26_cache_beastiary.rs`, `tests/sd27_book_license_record_counts.rs`,
+  `tests/pi_table_sweep.rs`) — none hardcode a companion/monster/monster_ability record count for any
+  of them (`sd27_book_license_record_counts.rs` self-derives `records_processed` against the live
+  on-disk count by construction). Ran all three test files after regen: **26/26 pass**, no assertion
+  broke.
+- **Wiring-class cache staleness — `cache_path` passed explicitly at every step** (both the generator's
+  own `WiringClassIndex::build()` calls and this cycle's own re-derivation used a fresh
+  `CARGO_TARGET_DIR`/binary build each time, never a persisted cross-run cache).
+
+**Commands run** (`export RETRO_ACTOR=sd30-carry-defects; export
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-carry-defects` in every shell):
+
+```
+$ cargo run --locked --bin gen_book_cache -- companion:beastiary          # EXIT=0, 24 creatures/35 abilities
+$ cargo run --locked --bin gen_book_cache -- companion:bestiary_4         # EXIT=0, 34 creatures/44 abilities
+$ cargo run --locked --bin gen_book_cache -- companion:core_essentials    # EXIT=0, 58 creatures/44 abilities
+$ cargo run --locked --bin gen_book_cache -- companion:ultimate_magic     # EXIT=0, 10 creatures/22 abilities
+$ cargo run --locked --bin gen_book_cache -- companion:ultimate_wilderness  # EXIT=0, 169 creatures/158 abilities
+$ cargo run --locked --bin gen_book_cache -- beastiary                    # EXIT=0
+$ cargo run --locked --bin gen_book_cache -- bestiary_2                   # EXIT=0
+$ cargo run --locked --bin gen_book_cache -- bestiary_4                   # EXIT=0
+$ cargo run --locked --bin gen_book_cache -- horror_adventures            # EXIT=0
+$ cargo run --locked --bin gen_book_cache -- inner_sea_bestiary           # EXIT=0
+$ cargo run --locked --bin gen_book_cache -- inner_sea_gods               # EXIT=0
+$ cargo run --locked --bin gen_book_cache -- inner_sea_world_guide        # EXIT=0
+```
+
+**Re-ran the audit: 177 → 3.** The residual 3 (all `inner_sea_gods:monster`, citing
+`.../inner_sea_gods/support/isg_races_b4.lst`, a real PCGen shared-include path) were investigated
+rather than accepted as a smaller version of the same defect, and turned out to be a **different, real
+bug — in the AUDIT itself, not in the corpus.** `src/pcgen_import/corpus_traps.rs`'s own `book_dir`
+derivation for the GE-01 wiring-class self-check used `Path::new(rel).parent()` when the record's
+citation path did not match the `core_essentials/races/` special case — for a file nested in
+`inner_sea_gods/support/`, that reaches ONE level deeper (`.../inner_sea_gods/support`) than the
+generator's own book_dir (`.../inner_sea_gods`, the book's top-level dir, always — confirmed by
+reading `gen_book_cache.rs`'s `wiring_class_for_source()`/`CorpusLines::line()`, whose own doc comment
+names this exact single-level-join limitation as "D0"). The audit could therefore "see" a `.lst` row
+the generator's own fresh computation genuinely could not, and flagged a stamp (`ambiguous:
+no_corpus_line`) that the generator, by its own documented rule, computed correctly. Confirmed by
+re-reading the stored value before AND after the companion/monster regen above: unchanged at
+`ambiguous` both times — **these 3 records' data was never wrong; only the audit's book_dir scoping
+was.** Fixed by anchoring `book_dir` on the `/{book}/` path segment (matching every
+`CompanionBookSpec`/`MonsterBookSpec` row's own `book_relative` convention) as a second special case
+alongside the existing `RACES_MARKER` one, so the audit always reproduces the SAME book_dir the
+generator used — no smarter, no wider, matching semantics not inventing a better answer.
+
+```
+$ cargo test --locked --lib pcgen_import::corpus_traps
+14 passed; 0 failed          (all 3 wiring_class_mismatch-specific tests included, unmodified)
+$ cargo run --locked --bin v06_corpus_trap_report -- --audit
+No defects: every ingested record's citation agrees with the line it names.
+AUDIT_EXIT=0
+```
+
+**Board movement: zero.** `v06_work_inventory` recomputes `wiring_class` independently from raw PCGen
+`.lst` source on every run — it never reads the corpus JSON's own stored `wiring_class` field — so the
+177-defect staleness never reached the product board; it was purely a corpus-cache/audit-internal
+disagreement. Re-derived by importing the dashboard producer's own `doneness_verdict()` and replaying
+it over `git show HEAD:docs/work-inventory.json` (pre-cycle) vs the guarded-regen output (post-cycle,
+DoD item 4 below): `done` 5,837 → 5,837 (0), `held` 6,916 → 6,916 (0), every other bucket also 0 —
+confirmed by content (`git diff --stat docs/work-inventory.json` shows only the `generated_at` line
+across both guarded-regen runs).
+
+### Item 2 — citation drift (`§53.7`)
+
+Investigated at source rather than trusting the card brief's framing ("Decision 53 only runs 53.1
+through 53.6 — there is no 53.7"): **that premise is correct for THIS package's own `decisions.md`**
+(`grep -n '^### 53' decisions.md` → stops at `53.6`), but `§53.7` is not a phantom reference — it is a
+real subsection of `SD-29-corpus-wide-catch-up-lanes/decisions.md` ("One scope finding for a
+successor — this is not a race_trait-only defect", `grep -n '^### 53' SD-29-.../decisions.md` → runs
+through `53.7`), and its verbatim text matches every SD-30 quotation of it exactly. `SD-30`
+`decisions.md §39.1` correctly establishes the cross-package citation once
+(`SD-29-corpus-wide-catch-up-lanes/decisions.md §53`); the drift is that three LATER re-citations
+(`decisions.md §39.4` line 1031, `epic-breakdown.md` lines 243/277, and — found while spot-checking
+per the card's "fix any others you find" instruction — `epic-breakdown.md` line 639's `§45.1`, same
+shape, same source package) dropped the package qualifier, reading as if they cite this package's own
+Decision 53/45, which have no such subsections.
+
+**Fixed in place** (not deleted — the finding they cite is real and correctly quoted, only the
+qualifier was missing): all four sites now read
+`SD-29-corpus-wide-catch-up-lanes/decisions.md §53.7`/`§45.1` explicitly, each with an inline note of
+the correction and this cycle's id.
+
+**Spot-check of every other `decisions.md §N[.M]` citation in `epic-breakdown.md` and
+`loop-instruction.md`** (per the card's "while you are here" instruction):
+
+```
+$ grep -oP '^## Decision \K[0-9]+' decisions.md | sort -n | uniq   # 1..54, zero gaps
+$ grep -oP 'decisions\.md §\d+(\.\d+)?' epic-breakdown.md loop-instruction.md | sort -u
+```
+
+Every bare whole-number citation (`§5`, `§7`, `§16`, `§18`, `§26`, `§33`..`§53`, etc.) resolves to a
+Decision that genuinely exists in this package's own `decisions.md` (1–54, no gaps). Every
+sub-decimal (`§NN.M`) citation was checked against its parent Decision's actual `### NN.M` headings;
+all resolve locally except the four `§53.7`/`§45.1` sites already fixed above (all four are real
+SD-29 cross-references, not phantoms). `loop-instruction.md` carries zero sub-decimal citations —
+nothing to check there beyond the whole-number sweep, which is clean.
+
+```
+$ python3 scripts/retro.py correction --subject "decisions.md §39.4 / epic-breakdown.md SD30-E3-F3-F4" \
+    --claimed "..." --actual "..." --verified-by "grep -n '^### 53' <both files>" ...
+retro: correction 1786757789966-sd30-carry-defects-83156a
+```
+
+### Item 3 — open deferral `1786744223492-sd30-e1-identifier-4b01f0`, ruled
+
+Read the deferral, `decisions.md §7`/`§26`, `scripts/identifier-discipline-audit.sh` at source (its
+`SHIPPING_PATHSPEC` is exactly `apps/desktop/**/*.ts*`, `apps/desktop/src-tauri/**/*.rs`,
+`src/**/*.rs` — `scripts/**` genuinely absent, confirming the deferral's own claim), and the disputed
+keys themselves (`sd28_book_pre_build`/`sd29_book_pre_build`/`sd30_book_pre_build` in
+`scripts/observer/pf1e_dashboard_producer.py`'s `_seed_manifests()`).
+
+**Ruling: NOT a violation.** Recorded as `decisions.md` Decision 55 (full reasoning there, not
+duplicated here): the doctrine's own headline targets a bundle tag riding as incidental noise on an
+otherwise-generic identifier (`sd30_gen_book_cache` still means "generate the book cache" without the
+prefix); these keys are the opposite shape — `book_pre_build` already says what the record tracks,
+and the `sdNN_` prefix is the discriminator between four genuinely-distinct, mostly-historical
+tracking manifests (SD-27/28/29 closed, SD-30 live), not decoration. This matches both authorities the
+deferral itself named (the audit script's own pathspec; `decisions.md §26`'s delegation to that exact
+script for Epic 8's own bundle-diff-scope review) and is the safer default under unattended mode: an
+unreviewed rename risks the live cron-run producer (`state-goals-and-lessons.md §1.3` hazard 4 —
+RAISES on an unrecognised key) for zero benefit (these keys are pure ops telemetry, never a player- or
+reviewer-facing surface), and two prior, unremediated `sd28_`/`sd29_` instances of the identical shape
+already shipped through two closed bundles' own reviews unflagged.
+
+**No rename lands.** `scripts/observer/pf1e_dashboard_producer.py` is unchanged by this cycle
+(`git diff --stat` empty for that file throughout). The deferral is resolved, not left open, via
+`python3 scripts/retro.py note --corrects 1786744223492-sd30-e1-identifier-4b01f0 ...` →
+`1786757997170-sd30-carry-defects-85d073`.
+
+### Definition of done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **PASS. `VERIFY_EXIT=0`, captured directly (`echo "VERIFY_EXIT=$?" >> "$LOG"` in the same shell statement, read from the log's own append), 16/16 stages: preflight-disk, pi-sweep, audit-selftest, reclaim-selftest, driver-selftest, corpus-sweep-selftest, root-lib (1776 passed), root-full (6405 passed/548 suites/527 tests/*.rs), desktop (445 passed), reach (27 passed), corpus-sweep (3516/9328, 0 findings), frontend-install, frontend-test (99/99), frontend-typecheck, clippy (root:46/desktop:7 warnings, 0 errors), class-dump (31/31 computing).** |
+| 2 | Reach stage claim, nonzero | **PASS, 27 matched tests** (same run) — no new player-visible family this cycle; standing-health check, unaffected by this cycle's diff. |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **PASS, EXIT=0** — was the bundle-wide RED this card exists to fix. Re-derived twice (§Item 1), both clean. |
+| 4 | Guarded work-inventory regen | **PASS.** `corpus_literal_sweep` EXIT=0 (3516/9328, CLEAN); `derived_evaluator_fixture_check` EXIT=0 (49/94 cleared, 1 known pre-existing fail, `spindle_of_perfect_knowledge`, same as every prior cycle); guarded `v06_work_inventory` EXIT=0. Two consecutive guarded runs both diff `docs/work-inventory.json` by exactly 1 line (`generated_at`) against the pre-cycle committed file — **zero stamp loss**, `2322 literal-verified + 49 fixture-verified = 2371`, byte-match to every prior cycle. Zero board movement (§Item 1). |
+| 5 | Four-check wired-integration audit | **PASS**, all 4 checks clean (`bash scripts/wired-integration-audit.sh`, `OK_NO_TOKENS`/`OK_NO_NOOP_HANDLERS`/`OK_NO_MOCK_LEAKS`/`OK_NO_WOULD_STRINGS`). |
+| 6 | `OPEN_FINDINGS` for any unsurfaced family | N/A — no family surfaced or left unsurfaced this cycle. |
+| 7 | Baseline movements own commit | N/A — `scripts/verify-baselines.env` not touched. |
+| 8 | On-screen verification | **N/A, reasoned not waived.** No player-visible field changed on any of the 3,067 touched records (confirmed by content diff, §Item 1) — only `wiring_class`/`wiring_class_signals` (internal classification metadata, not read by `apps/desktop/src-tauri/{companion,monster}_catalog.rs` — confirmed by grep, zero hits) and the benign empty-array `description_variants` schema catch-up. No new record family surfaced, no existing display value moved. |
+
+**Full gate:**
+
+```
+$ export RETRO_ACTOR=sd30-carry-defects CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-carry-defects
+$ ./scripts/verify.sh > <log> 2>&1; echo "VERIFY_EXIT=$?" >> <log>
+```
+
+Launched at HEAD (this cycle's own uncommitted diff) ~21:34 EDT, in the background, per "launch the
+gate early." This receipt's Item 1-3 sections, the DoD table, the retro events, and both doc edits
+(Items 2/3) were written while it ran, per the gate-sequencing rule. Polled inline (not backgrounded-
+and-abandoned) via a Monitor watch on the log's own `VERIFY_EXIT=` line — never inferred, never
+through a pipe.
+
+```
+VERIFY_EXIT=0
+16/16 stages PASS: preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest
+  corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install
+  frontend-test frontend-typecheck clippy class-dump
+clippy: root:46 desktop:7 warnings, 0 errors (pre-existing baseline, unchanged by this cycle's diff)
+BASELINE NOTES (advisory, RESULT still PASS, not this cycle's diff -- 0 Rust test fns/binaries added):
+  BASELINE_ROOT_FULL_TESTS 6398 recorded / 6405 measured; BASELINE_ROOT_TEST_BINARIES 547 / 548
+  -- same drift SD30-E7-F1-001 already found and correctly left un-bumped; not this cycle's obligation
+  either (DoD item 7).
+```
+
+Total wall time ~14 minutes on a cold `CARGO_TARGET_DIR` (24-core / ~34% disk used throughout, no
+`preflight-disk` pressure at any point). Wrapper log:
+`/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/d9c38510-724f-408f-b3c9-273134333e9d/scratchpad/verify-full-1.log`.
+Per-stage logs: `/tmp/codex-verify-TKccg0`. `HEAD` unchanged across the whole run (no concurrent
+writer touched this checkout during the gate).
+
+### Retrospective events
+
+- `correction` `1786757789966-sd30-carry-defects-83156a` — the `§53.7`/`§45.1` citation drift (Item 2).
+- `note` `1786757997170-sd30-carry-defects-85d073` — resolves deferral `1786744223492-sd30-e1-identifier-4b01f0` (Item 3), `--corrects` it.
+
+### Card disposition
+
+`SD30-CARRY-001`: all three named items resolved this cycle. Item 1 (the only one gating a DoD item)
+closes DoD-3 bundle-wide — `v06_corpus_trap_report -- --audit` now exits 0, a genuine change from RED
+to GREEN, not a scope narrowing. Items 2 and 3 are doc-hygiene/ruling items, both closed with a
+recorded, verifiable disposition. Added as a row in `kanban.md` (Order 1.5, ahead of `epic-8`/`epic-9`
+since it is a prerequisite carry-over fix, not a new epic) so the closure cycle can see it.

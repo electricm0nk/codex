@@ -60,6 +60,7 @@ surface the operator and orchestrator both read for live progress. No card outra
 | `epic-5-mechanism` | **MOVED to `SD-31-corpus-closure-grind/kanban.md` `epic-2-mechanism` (`decisions.md §51`)** | Archetype Mechanism | supersession-shape wiring per cleared class; chooser-shape wiring once epic-4-F3 lands | — | — | — |
 | `epic-6-chassis-sweep` | **MOVED to `SD-31-corpus-closure-grind/kanban.md` `epic-3-chassis-sweep` (`decisions.md §51`)** | Per-Class Chassis Sweep | per-class `class_feature` ingest across the 23 in-scope books, reach-gate claim per record | — | — | — |
 | `epic-7-version` | COMPLETE (re-confirmed by content, green full gate at `4630fec2` — `progress.md` `SD30-E7-F1-001` re-dispatch cycle; the prior `2026-08-14T20:18:00Z` mark was premature per `epic-9-closure`'s own finding, now genuinely earned) | Build Version Numbering | first concrete value `0.10.<build>` | sd30-e7-version | 2026-08-14T21:14:00Z | `SD30-E7-F1-001` |
+| `epic-carry-001-defects` | COMPLETE (`progress.md` cycle `SD30-CARRY-001`) | Carry-Over Defects Blocking Honest Closure | DoD-3 (`v06_corpus_trap_report -- --audit`) 177→0 defects, 10-book corpus re-ingest; `§53.7`/`§45.1` citation-drift fix; `decisions.md §55` rules the SD30-E1 identifier-discipline deferral | sd30-carry-defects | 2026-08-15T01:34:00Z | `SD30-CARRY-001` |
 | `epic-8-code-review` | READY (gated on epic-1, epic-2, epic-3, epic-7 — narrowed 2026-08-14, `decisions.md §51`; no longer gated on epic-5/epic-6, moved) | Bundle Code Review | full-bundle diff review vs. branch point (`decisions.md §26`) | — | — | — |
 | `epic-9-closure` | BLOCKED (epic-8-code-review not started — sole remaining blocker; epic-7-version's gate is now green at `4630fec2` per `SD30-E7-F1-001`'s re-dispatch cycle, `progress.md` §12 — the "gate red at HEAD" reason recorded 2026-08-14T22:20:00Z no longer holds) | Closure Epilogue | tranche promotion PR | sd30-e9-closure | 2026-08-14T22:20:00Z | `SD30-E9-F1-001` |
 | `epic-10-ingest-lanes` | **MOVED to `SD-31-corpus-closure-grind/kanban.md` `epic-4-ingest-lanes` (`decisions.md §51`)** | Corpus-Wide Ingest Lanes, folded from SD-29 | per-kind ingest: SD30-E10-F1 `monster`, F2 `spell`, F3 `race`, F4 `race_trait` — each runs the raw-vs-workable split + pre-cycle classifier screen before claiming a book (SD-29 lessons, `decisions.md §44`) | — | — | — |
@@ -332,6 +333,28 @@ partially refreshed, Closure-F2 (workspace-tree removal) re-confirmed still hold
 **Next cycle to claim `epic-9-closure` needs, in order: (1) `epic-7-version` fixes the stale build-label
 fixture and obtains a captured `VERIFY_EXIT=0`; (2) `epic-8-code-review` runs its whole-bundle diff
 review and closes; (3) re-check Closure-F1 and open the PR.**
+
+## Update (2026-08-15, `SD30-CARRY-001`) — `epic-carry-001-defects` COMPLETE
+
+Three carry-over items every prior cycle flagged as out of its own scope, owned and closed this
+cycle:
+
+- **DoD item 3 was RED bundle-wide** (`v06_corpus_trap_report -- --audit` exit 2, 177
+  `wiring-class-mismatch` defects) — re-derived the diagnosis at source (real footprint 10 books, not
+  the 1 the brief named), re-ran the canonical generator (`gen_book_cache`) for all 10, verified
+  license/PI/source metadata survived by content diff across 3,067 records (0 mismatches), fixed a
+  genuine second defect the residual 3 findings exposed (an audit-side `book_dir`-scoping bug in
+  `corpus_traps.rs` for nested-subdirectory citations, not a corpus staleness). Audit now exits **0**.
+  Zero board movement (`done` stays 5,837 — this defect never reached the product board).
+- **Citation drift**: `§53.7`/`§45.1` are real SD-29 cross-references, not phantoms — under-qualified
+  at 4 sites (`decisions.md §39.4`, `epic-breakdown.md` ×3), now qualified in place.
+- **Open deferral ruled**: `decisions.md §55` — the identifier-discipline doctrine does NOT reach
+  `scripts/observer/pf1e_dashboard_producer.py`'s `sdNN_book_pre_build` tracking-manifest keys. No
+  rename lands.
+
+Full receipt, all commands, DoD table: `progress.md`, cycle `SD30-CARRY-001`. Does not change
+`epic-8-code-review`'s or `epic-9-closure`'s own gating (`epic-carry-001-defects` was not itself a
+gate for either — DoD-3 was a bundle-wide, ungated standing obligation).
 
 ## Operator override slot
 

@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T18:45:25Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Giant Frog ~ Tongue",
     "delivery": "Extraordinary",
     "description": "A giant frog's tongue is a primary attack with reach equal to three times the frog's normal reach (15 feet for a Medium giant frog). A giant frog's tongue deals no damage on a hit, but can be used to grab. A giant frog does not gain the grappled condition while using its tongue in this manner.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialAttack",
     "key": "beastiary:companion:giant_frog_tongue",
     "name": "Tongue",

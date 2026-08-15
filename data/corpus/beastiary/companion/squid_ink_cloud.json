@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T18:45:25Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Squid ~ Ink Cloud",
     "delivery": "Extraordinary",
@@ -9,6 +9,7 @@
     "description_variables": [
       "InkCloudRadius"
     ],
+    "description_variants": [],
     "facet": "SpecialQuality",
     "key": "beastiary:companion:squid_ink_cloud",
     "name": "Ink Cloud",

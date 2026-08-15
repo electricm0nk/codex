@@ -1484,8 +1484,30 @@ pub fn audit_ingested_cache(cache_dir: &Path, corpus_root: &Path) -> std::io::Re
                     // first pin the wrong book_dir for every record after
                     // it in the same output book.
                     const RACES_MARKER: &str = "core_essentials/races/";
+                    // A citation nested in a subdirectory the generator's own
+                    // book_dir does NOT reach (e.g. `inner_sea_gods/support/
+                    // isg_races_b4.lst`, a real PCGen include-path fact --
+                    // `_inner_sea_gods.pcc` pulls that file in from a shared
+                    // `support/` subtree) must scope this index to the SAME
+                    // book_dir `gen_book_cache.rs` used when it computed the
+                    // stored `wiring_class` -- the book's own top-level
+                    // directory, always, regardless of how deep the citation
+                    // sits under it (`CorpusLines::line`'s own doc comment
+                    // names this exact single-level-join limit as D0). A bare
+                    // `.parent()` instead reaches directly into `support/`,
+                    // giving this self-check a WIDER book_dir than the
+                    // generator itself had, so it can "see" a `.lst` row the
+                    // generator's own fresh computation could not -- and
+                    // disagree with a stamp that was, by the generator's own
+                    // rule, computed correctly. Anchor on the `/{book}/`
+                    // path segment instead, matching `book_relative`'s own
+                    // convention (every `CompanionBookSpec`/`MonsterBookSpec`
+                    // row's `book_relative` ends in exactly this segment).
+                    let book_marker = format!("/{book}/");
                     let book_dir = if let Some(at) = rel.find(RACES_MARKER) {
                         corpus_root.join(&rel[..at + RACES_MARKER.len()])
+                    } else if let Some(at) = rel.find(&book_marker) {
+                        corpus_root.join(&rel[..at + book_marker.len() - 1])
                     } else {
                         Path::new(rel)
                             .parent()
