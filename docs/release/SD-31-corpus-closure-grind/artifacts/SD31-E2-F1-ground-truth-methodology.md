@@ -170,12 +170,28 @@ print(len(ct), 'occupied cells,', sum(1 for v in ct.values() if v <= 2), 'with n
 # -> 48 occupied (class, kind) cells, 29 of them n<=2
 ```
 **The 35-unit widening draw moved this from 31/45 thin to 29/48 thin — a real but modest
-improvement, not a fix.** Root cause: `scripts/sample_ground_truth_units.py` (see "Widening the
-sample" above) can only stratify a pre-draw by `engine_wiring_class`, since `hand_wiring_class` does
-not exist until a human reads the record — and this cycle's own correction rate (13 of 35 widened
-units disagreed with the engine, on top of the v1 draw's own high disagreement rate in exactly the
-populations that were oversampled) means a meaningful fraction of units drawn to fill an
-engine-labelled thin cell landed, once hand-labelled, in a *different* cell instead. **F2 still must
+improvement, not a fix.**
+
+**Root-cause correction, 2026-08-15 (`SD31-W2-INTEGRATE-001`, Finding 11).** The paragraph below
+attributed the modest gain entirely to the hand-vs-engine axis mismatch. That mismatch is real, but
+is NOT the binding constraint — the draw's own `--target-per-cell 2` flag is. The methodology
+defines a thin cell as `n<=2` and the widening draw tops cells up TO 2, so every cell the draw
+targeted lands exactly on the thin threshold and necessarily STAYS thin by definition, independent of
+the axis-mismatch effect. Reproduced: `python3 scripts/sample_ground_truth_units.py --inventory
+docs/work-inventory.json --exclude-ids-from <150 v1 ids> --current-cell-counts <post-relabel
+hand_wiring_class:kind counts> --target-per-cell 2 --seed 31 --out redraw.json` → "drew 35 unit(s)
+across 28 cell(s)," identical to the committed `widening_batch_v2`; the same inputs with
+`--target-per-cell 3` draw 70 units across 36 cells instead. Before dispatching a further widening
+pass, re-run with `--target-per-cell` set ABOVE the thin threshold (e.g. 4), not just re-attempt the
+same flag value and expect a different result. Tracked as a concrete Epic 2 follow-on rather than
+re-run in this integration cycle (`OPEN-ISSUES.md` row 20).
+
+Root cause (axis mismatch, still real, just not the binding one): `scripts/sample_ground_truth_units.py`
+(see "Widening the sample" above) can only stratify a pre-draw by `engine_wiring_class`, since
+`hand_wiring_class` does not exist until a human reads the record — and this cycle's own correction
+rate (13 of 35 widened units disagreed with the engine, on top of the v1 draw's own high disagreement
+rate in exactly the populations that were oversampled) means a meaningful fraction of units drawn to
+fill an engine-labelled thin cell landed, once hand-labelled, in a *different* cell instead. **F2 still must
 not report a per-class/per-kind rate for a cell this sample does not defensibly cover** (`n<=2`); a
 further widening pass stratified by `hand_wiring_class` from a prior partial draw (i.e. drawing again
 only after seeing where THIS draw's hand-labels actually landed, repeating until each target cell's
@@ -187,6 +203,19 @@ Every unit of *independently-evidenced* signal in the sample sits almost entirel
 full evidence-quality picture). **F2 must not report a per-class/per-kind rate for a cell this sample
 does not defensibly cover**; either a future re-draw widens thin cells, or F2 states explicitly which
 cells it is not permitted to report on. Tracked as `OPEN-ISSUES.md` row 5 (owner: Epic 2, `NOTE`).
+
+**Blinding caveat, added 2026-08-15 (`SD31-W2-INTEGRATE-001`, Finding 10).** All 185 units in this
+sample were labelled UNBLINDED: the labeller had the engine's `engine_wiring_class`/
+`engine_wiring_class_reason` in front of it for every unit while writing `hand_wiring_class` and its
+evidence. That makes this sample an AUDITED yardstick, not a genuinely independent one — a real
+exposure the methodology should have stated plainly from the start. Adversarial review could not
+convert this into any single demonstrably-wrong label (every label it independently re-derived from
+the corpus, without looking at the engine's answer, held), so it is a process gap, not a proven data
+defect; the stark rate difference between the relabelled-105 (1.9% non-`no_corpus_line`
+disagreement) and the freshly-drawn widening batch (21.4%) is the quantity that makes the exposure
+concrete, not evidence any specific label is wrong. `OPEN-ISSUES.md` row 21 tracks adding a `--blind`
+flag to `scripts/sample_ground_truth_units.py` (withhold the two engine columns from the labelling
+stub, join them back only at scoring time) for every future draw.
 
 ## Labelling method
 

@@ -133,13 +133,27 @@ def find_mod_rows(book_dir: str, target_names: set) -> list[str]:
 
 
 def corpus_text_for_record(rec: dict, book_index: dict) -> str | None:
-    """The concatenated raw text of everything this guard can find that
-    plausibly belongs to `rec`'s corpus record: any `corpus_path_verified`
-    paths the record itself names, plus a recursive base-row search by
-    `source_file`/`source_line`, plus every `.MOD` row targeting `name` or
-    `corpus_key`. Returns None only when NOTHING at all could be located
-    (a genuinely missing book directory) -- an empty-but-located result
-    still returns "" so the caller reports UNGROUNDED, not a false CLEAN.
+    """The concatenated raw text of `rec`'s own CLOSURE: a recursive
+    base-row search by `source_file`/`source_line`, plus every `.MOD` row
+    targeting `name` or `corpus_key`. Returns None only when NOTHING at
+    all could be located (a genuinely missing book directory) -- an
+    empty-but-located result still returns "" so the caller reports
+    UNGROUNDED, not a false CLEAN.
+
+    Repair (`SD31-W2-INTEGRATE-001`, Finding 13): this function used to
+    ALSO union in the full text of every `corpus_path_verified` path the
+    record names, which over-claimed row-level grounding -- a quote that
+    merely appeared ANYWHERE in the same `.lst` FILE (including a
+    different, unrelated record sharing that file) would pass as
+    "grounded in its own corpus row." Fed a single record
+    (`bestiary_4:monster_ability:winter_hag_ice_staff`) whose only quoted
+    token was a field from an unrelated neighboring record in the same
+    file, the old version reported a false PASS. The base-row and
+    `.MOD`-row lookups below are the record's true closure and are
+    unaffected by this fix -- an independent closure reconstruction over
+    the real 185-unit sample confirmed every genuine quoted token already
+    lives in this closure, so removing the whole-file union changes
+    nothing about the guard's real-data verdicts, only closes the exploit.
     """
     book = rec.get("book")
     book_dir = book_index.get(book)
@@ -147,15 +161,6 @@ def corpus_text_for_record(rec: dict, book_index: dict) -> str | None:
         return None
 
     chunks: list[str] = []
-
-    verified_paths = rec.get("corpus_path_verified") or []
-    for relpath in verified_paths:
-        full = os.path.join(book_dir, relpath)
-        try:
-            with open(full, "r", encoding="utf-8", errors="replace") as fh:
-                chunks.append(fh.read())
-        except OSError:
-            continue
 
     sf = rec.get("source_file")
     ln = rec.get("source_line")

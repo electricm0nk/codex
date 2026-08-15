@@ -17,9 +17,12 @@ fail" -- SD31-E2-F1-002's brief):
 
 Also proves it does NOT flag a genuinely well-evidenced record (a required
 companion to "can fail" -- a guard that always fails is exactly as useless
-as one that never does), and proves the nested-directory nested-path case
-(OPEN-ISSUES.md row 1's bug) resolves correctly via `corpus_path_verified`
-without needing the buggy single-level join.
+as one that never does), that the nested-directory nested-path case
+(OPEN-ISSUES.md row 1's bug) resolves correctly via the recursive
+`source_file`/`source_line` search, and (`SD31-W2-INTEGRATE-001`,
+Finding 13) that naming a `corpus_path_verified` path is no longer a
+whole-file grounding shortcut -- a quote must live in the record's own
+closure, not merely in a file it shares with an unrelated record.
 """
 import json
 import os
@@ -160,25 +163,36 @@ class GroundTruthEvidenceGuardTest(unittest.TestCase):
         violations = guard.check_sample(units, self.corpus_root, "fixture")
         self.assertEqual(violations, [], f"nested-path record wrongly flagged: {violations}")
 
-    def test_corpus_path_verified_is_honoured(self):
-        """A record naming its own verified read-path (SD31-E2-F1-002's
-        `corpus_path_verified` field) is checked against exactly that path
-        without needing a filename search at all."""
-        real_evidence = (
+    def test_corpus_path_verified_is_not_a_whole_file_grounding_shortcut(self):
+        """Repair guard (`SD31-W2-INTEGRATE-001`, Finding 13). Before the
+        fix, `corpus_text_for_record` unioned in the FULL TEXT of every
+        `corpus_path_verified` path a record named, so a quote that merely
+        appeared anywhere in that FILE -- including a different, unrelated
+        record sharing it -- would pass as "grounded in its own corpus
+        row." Reproduces the exact live shape that fooled the old version
+        (`bestiary_4:monster_ability:winter_hag_ice_staff` quoting an
+        unrelated neighboring record's `KEY:` field): the default
+        `Real Feature` record (in `fb_abilities_class.lst`) is given
+        `token_evidence` quoting `BONUS:VAR|NestedBonus|2`, a field that
+        belongs ONLY to the unrelated `Nested Feature` record in a
+        DIFFERENT file this record names via `corpus_path_verified`. This
+        must now FAIL -- the quote is not in `Real Feature`'s own closure
+        (its base row, or any `.MOD` row targeting it)."""
+        evidence = (
             "Quoted tokens (verbatim from the row(s) below): BONUS:VAR|NestedBonus|2"
         )
         units = [
             self._base_record(
-                id="fake_book:class_feature:nested_feature",
-                name="Nested Feature",
-                source_file="fb_nested.lst",
-                source_line=1,
                 corpus_path_verified=["nested/deeper/fb_nested.lst"],
-                token_evidence=real_evidence,
+                token_evidence=evidence,
             )
         ]
         violations = guard.check_sample(units, self.corpus_root, "fixture")
-        self.assertEqual(violations, [], f"corpus_path_verified record wrongly flagged: {violations}")
+        self.assertTrue(
+            violations,
+            "a quote grounded only in an unrelated record sharing a corpus_path_verified "
+            "file must be flagged, not silently passed",
+        )
 
     def test_unknown_book_is_reported_not_silently_skipped(self):
         units = [

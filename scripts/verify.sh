@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -480,6 +480,55 @@ run_reachability_audit_selftest() {
     fi
 
     stage_pass reachability-audit-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: groundtruth-guard-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_ground_truth_evidence_guard.py
+# scripts/tests/test_sample_ground_truth_units.py` -- the self-tests for
+# `scripts/ground_truth_evidence_guard.py` and
+# `scripts/sample_ground_truth_units.py` (SD31-E2-F1-002). Adversarial
+# review Finding 14 (`SD31-W2-INTEGRATE-001`): ~800 lines of new Python
+# shipped with no gate coverage at all. The guard's own LIVE run against
+# the real ground-truth sample is deliberately kept OUT of this gate --
+# `OPEN-ISSUES.md` rows 14/15 -- because it currently reds on the
+# untouched-45 residual this cycle was barred from repairing, and
+# `verify.sh` has only two stage tiers (no "registered but not default").
+# The SELF-TESTS carry no such dependency (a hermetic fake corpus tree
+# under a temp dir, same pattern as producer-selftest/
+# reachability-audit-selftest above) and pass right now, so wiring them in
+# is zero-risk. Cheap (stdlib unittest, no build, no network).
+# ---------------------------------------------------------------------------
+
+run_groundtruth_guard_selftest() {
+    stage_start "groundtruth-guard-selftest — python3 -m unittest scripts/tests/test_ground_truth_evidence_guard.py scripts/tests/test_sample_ground_truth_units.py"
+    local log="$LOG_DIR/groundtruth-guard-selftest.log"
+    local script1="$REPO_ROOT/scripts/tests/test_ground_truth_evidence_guard.py"
+    local script2="$REPO_ROOT/scripts/tests/test_sample_ground_truth_units.py"
+
+    if [[ ! -f "$script1" || ! -f "$script2" ]]; then
+        stage_fail groundtruth-guard-selftest "self-test script(s) missing: $script1 / $script2"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script1" "$script2" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail groundtruth-guard-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail groundtruth-guard-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass groundtruth-guard-selftest "$ran cases passed"
 }
 
 # ---------------------------------------------------------------------------
@@ -1246,6 +1295,7 @@ for stage in "${SELECTED[@]}"; do
         producer-selftest)   run_producer_selftest ;;
         reachability-audit-selftest) run_reachability_audit_selftest ;;
         reachability-audit)  run_reachability_audit ;;
+        groundtruth-guard-selftest) run_groundtruth_guard_selftest ;;
         pi-sweep)            run_pi_sweep ;;
         audit-selftest)      run_audit_selftest ;;
         reclaim-selftest)    run_reclaim_selftest ;;
