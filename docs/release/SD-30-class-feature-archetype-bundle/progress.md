@@ -3854,4 +3854,33 @@ Log: `/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/d9c38510-724f-408f-b3c
 
 ### Commit, push, reclaim
 
-__COMMIT_DETAIL__
+Committed `fc461781a` ("fix(sd30): SD30-E8-F3-001 — epic-8 code review: fix dangling-grant +
+citation-resolution defects"), 126 files changed (+858/-133): the 4 source files
+(`ingest_pu_classes.rs`, `corpus_traps.rs`, `gen_book_cache.rs`, `cache_gen/mod.rs`), 116
+`data/corpus/inner_sea_gods/` records (the regen), the new `artifacts/sd30-e8-code-review.md`,
+`forward-scope-register.md`, `kanban.md`, this file, and this cycle's own new
+`docs/retro/events/sd30-e8-triage.jsonl` — staged by explicit path (directory for the corpus
+regen, individual files for everything else), never `git add -A`; the pre-existing sibling-session
+dirt (`.gitignore`, `docs/retro/events/codex.jsonl`, untracked `.github/workflows/deploy-site.yml`)
+left exactly as found throughout, confirmed unstaged both before and after the commit.
+
+`origin/tranche/10` was at this cycle's own starting `HEAD` (`7eda1d11c`) at push time — no
+concurrent writer landed anything in between. Pushed and verified by content, not by the push
+command's own exit code alone: `git fetch origin tranche/10; git rev-parse HEAD` ==
+`git rev-parse origin/tranche/10` == `fc461781a`.
+
+```
+$ ./scripts/reclaim.sh --apply
+reclaimed: 0 item(s), 0.0B total
+```
+
+Every candidate this run considered was either too young (<6h: this cycle's own `verify-logs` and
+a sibling scratch `cargo-target-review` dir, 1.5GB, modified within the window), a forbidden path
+(nine live `.claude/worktrees/*` — other sessions' own checkouts), or an unmerged/checked-out
+branch. This cycle's own `CARGO_TARGET_DIR`
+(`/home/ubuntu/cargo-targets/sd30-e8-triage`) sits outside `reclaim.sh`'s scanned roots
+(`/home/ubuntu/workspace` and `/tmp`'s `codex-target-*` convention), per this cycle's own
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/<actor>` mandate (not `/tmp`) — not reclaimed by this
+script, expected. 0.0B here reads as "nothing eligible yet on a busy shared box," not "structurally
+full": `df -B1G /` throughout this cycle held at 35-37% used, 617-636G available, `preflight-disk`
+passed clean on every gate run.
