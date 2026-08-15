@@ -45,3 +45,45 @@ logs:  /tmp/codex-verify-jl0CO1
     PASS  root-full  (6423 passed across 549 suites, all 528 tests/*.rs suites executed)
 ---------------------------------------------------------------
 ==> desktop — cargo test --locked -j 2  (apps/desktop/src-tauri)
+    PASS  desktop  (445 passed)
+---------------------------------------------------------------
+==> reach — cargo test --locked -j 2 reach_gate  (apps/desktop/src-tauri)
+    PASS  reach  (27 passed)
+---------------------------------------------------------------
+==> corpus-sweep — cargo run --locked --bin corpus_literal_sweep  (repo root)
+    PASS  corpus-sweep  (3516 records examined of 9328 read, 36105 tokens compared (9 synthesized), 8903 digests checked, 0 findings)
+---------------------------------------------------------------
+==> frontend-install — npm ci if node_modules is absent  (apps/desktop)
+    PASS  frontend-install  (node_modules present)
+---------------------------------------------------------------
+==> frontend-test — npm test  (apps/desktop)
+    PASS  frontend-test  (99/99 files)
+---------------------------------------------------------------
+==> frontend-typecheck — npm run typecheck  (apps/desktop)
+    PASS  frontend-typecheck  (tsc --noEmit clean)
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 2  (BOTH crates)
+    PASS  clippy  (root:46 desktop:7 warnings, 0 errors)
+---------------------------------------------------------------
+==> class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)
+    PASS  class-dump  (31/31 computing)
+---------------------------------------------------------------
+SUMMARY
+  passed:  21  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump
+
+MEASURED (scripts/verify-baselines.env format):
+  PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6
+  REACHABILITY_CEILING_PERCENT=94.53
+  BASELINE_ROOT_LIB_TESTS=1789
+  BASELINE_ROOT_FULL_TESTS=6423
+  BASELINE_ROOT_TEST_BINARIES=549
+  BASELINE_DESKTOP_TESTS=445
+  BASELINE_CORPUS_LITERAL_RECORDS=3516
+  BASELINE_FRONTEND_TEST_FILES=99
+  BASELINE_CLIPPY_WARNINGS_ROOT=46
+  BASELINE_CLIPPY_WARNINGS_DESKTOP=7
+  BASELINE_COMPUTED_CLASSES=31
+
+RESULT: PASS
+logs in /tmp/codex-verify-jl0CO1
+VERIFY_EXIT=0
