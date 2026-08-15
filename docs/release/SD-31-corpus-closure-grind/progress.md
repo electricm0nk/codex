@@ -2484,3 +2484,214 @@ pending change.
 only; it never writes `docs/work-inventory.json` and moves no unit's `status`/`wiring_class` on the
 board proper. The ground-truth sample is Epic 2's own accuracy-measurement input, not a board record.
 
+
+---
+
+## SD31-W2-INTEGRATE-001 — wave-2 integration: merge, fix 14 CONFIRMED findings, one guarded regen, standing audit
+
+**Cycle:** `SD31-W2-INTEGRATE-001`. **Actor:** sd31-w2-integrate. **Checkout:** primary
+(`/home/ubuntu/workspace/repos/codex`), branch `tranche/11`, sole writer this wave (three sibling
+waves — sd31-e2-wiringfix, sd31-e2-relabel, sd31-e1-chassis — had already finished on their own
+worktree branches).
+
+**HEAD at start:** `79c0872401b3d10ca5522ea94331e91fc7f41890` (`docs(sd31): SD31-E2-F2-001-wiringfix
+cycle receipt, board delta, kanban/OPEN-ISSUES update`) — `git status --porcelain` showed two
+modified files (a completed-but-uncommitted `verify-v2.log`, a legitimate retro-events append) and
+one untracked file (`docs/governance/third-party-tier-licensing-survey.md`, another session's, left
+alone throughout this cycle per the shared-box discipline). Package dir present. Nothing recovered
+silently.
+
+**Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`), confirmed via `./scripts/verify.sh --only preflight-oracle` → PASS
+before any other command, and re-confirmed at every subsequent `--only preflight-oracle` check this
+cycle.
+
+**HEAD at end:** `4486255e0cb6cd3738ed47370a3434707a662ef4`.
+
+### 1. Merged the three worktree branches, content proven by grep not status
+
+| Branch | Head | Proven arrived by |
+|---|---|---|
+| `sd31-e6-heldcells` | `86ba7419309bf1ecd5cead2114226744f18369bd` | `ls artifacts/SD31-E6-F11-001-held-cell-map.md` exists, `grep -c "static.*held"` → 7 |
+| `sd31-e1-chassis-SD31-E1-F1-001` | `e56b42b7a08097da04ca4edf43a54d7a547c7721` | `grep -n IN_SCOPE_RACES src/bin/ingest_races.rs` → present; `ls artifacts/SD31-E1-F1-001/*.png` → 3 DoD-8 screenshots present |
+| `worktree-wf_49e8e5da-ca5-2` | `d865308bc06a0aef15d45fe83f34f2e3efe0a70d` | `ls scripts/ground_truth_evidence_guard.py scripts/sample_ground_truth_units.py` present; `python3 -c "len(json.load(...))"` → 185 units in the sample |
+
+Merge order: e6-heldcells (docs-only) → e1-chassis (largest, 681 files: corpus regens + code) →
+worktree-relabel (touches the same three package docs a third time). Conflicts, all resolved
+deliberately (never `git checkout --theirs`/`--ours` blindly):
+
+- **`OPEN-ISSUES.md` row numbering (adversarial review Finding 6-of-14, the "Both branches" one).**
+  All three branches independently numbered their new `## Open` rows starting at 8 (the table's
+  state at their common fork point). Renumbered on merge in landing order: `SD31-E2-F2-001-wiringfix`
+  (already on `tranche/11`) kept 8-10; `sd31-e6-heldcells`'s two new rows became 11-12;
+  `sd31-e1-chassis`'s one new row became 13; the relabel branch's three new rows became 14-16 (and its
+  own `## Resolved` entries for rows 3/4/5 merged in numeric order alongside the pre-existing 1/2/7).
+  Every cross-reference inside each branch's own `progress.md` section and `kanban.md` row citing its
+  old row number was updated to the new one — verified by grep, not assumed.
+- **`kanban.md`'s `epic-1-race-chassis`/`epic-2-verdict-paths` rows.** Each of the last two branches
+  carried its own update to one of these two rows, and one carried a now-stale copy of the OTHER row
+  (forked before that row's later update landed). Kept the newest, most-current version of each row
+  rather than a naive last-write-wins.
+- **`progress.md` sequential appends.** Three separate "both sides added a new section after the same
+  base" conflicts, resolved by keeping both sections in landing order — no content dropped.
+
+### 2. Fixed every CONFIRMED finding from the three Opus adversarial reviews (14 of 14)
+
+Gaming verdict on all three reports: **CLEAN on intent** — no bucket widened, no wiring_class
+hand-relabelled, no check skipped, no gate stage weakened, no test `#[ignore]`d to dodge a failure,
+every published headline figure reproduces exactly. **NOT clean on 55 units** (Finding 1) — fixed
+below, first, as the binding anti-gaming violation. None of the three `overall` verdicts was `GAMED`;
+all three were `REPAIR`. Every finding below is fixed forward in this cycle; none silently dropped.
+
+| # | Finding | Fix | Commit |
+|---:|---|---|---|
+| 1 | 55 units moved `derived`→`static` on a NAMED-VARIABLE magnitude (`DR:EidolonDR/evil`, `BONUS:STAT\|STR\|MutagenStatBonus`), the wave's binding anti-gaming rule | `has_arith_scoped`'s `/`-as-division exclusion for `CR:`/`DR:` now applies only when the pre-slash segment is a bare integer; `has_scalar_or_arith_for_token` signals `derived` when a stripped `BONUS:STAT` magnitude is not a bare integer. New `is_integer_literal()`. 6 new tests (`d4_*`), real corpus rows (Agathion eidolon DR, Mutagenic Mauler Brawler). | `1f069cc1c` |
+| 2 | "Movement confirmed both directions" overclaimed a bidirectional control never exercised | Restated: movement is one-directional by construction (1,265 `derived`→`static`, 0 `static`→`derived`); the "both directions" evidence shown is two unchanged-class regression guards | `cd1dccd9b` |
+| 3 | New-test count stated three inconsistent ways (18 in two places, 6+8=14 in `OPEN-ISSUES`) | Corrected to 13 (12 lib: 5 resolution + 7 signals, + 1 integration test) in `progress.md`; `OPEN-ISSUES.md` row 19 added (Resolved rows 1/2 left as originally written, append-only) | `cd1dccd9b` |
+| 4 | `resolve_corpus_file`'s doc claim ("never a silently-wrong pick") was false for the root-shadows-nested shape — the direct-join fast path returned early, before the collision scan ran | Direct-join candidate now collected into the same `matches` set as the nested search (depth-guarded against double-count); 2 new tests (root-shadow collision, regression guard for the ordinary case). No live defect (0 real collisions). | `650a63ced` |
+| 5 | The DoD-governing gate log committed at `79c087240` was truncated mid-run, no `VERIFY_EXIT` | Committed the already-completed, green working-tree copy (`VERIFY_EXIT=0`, 21/21) as-is | `ed2d7adbb` |
+| 6 | E6-F11 `derived`-held figures (2,777 / 2,704) didn't reproduce, dropped a 15-unit cell the map's own per-kind table included | Corrected to 2,792 / 2,719 in the held-cell map and `progress.md`, in place with visible strikethrough; `OPEN-ISSUES.md` row 17 (this package had already established 2,792 once before) | `c06318ba7` |
+| 7 | E6-F11 `ambiguous`-held (309) and `display`+`ambiguous` (1,552) didn't reproduce | Corrected to 400 / 1,643 | `c06318ba7` |
+| 8 | `reach_gate.rs`'s accepted-shortfall register gave the wrong root cause for 3 unreached ISR records (claimed real upstream gap; PCGen actually ships a symmetric granter via `Geneiekin ~ Mostly Human.MOD` rows, gap is project-side) | Rewrote the `UNREACHED_RECORD_FINDINGS` comment and `progress.md` receipt with the true cause, original wrong text struck through and preserved. Numeric pin unchanged. `OPEN-ISSUES.md` row 18 names the concrete Epic 1 follow-on. | `cd1dccd9b` |
+| 9 | `OPEN-ISSUES.md` row-numbering collision across all three branches | Renumbered on merge, described under §1 above | (merge commits) |
+| 10 | Ground-truth relabelling was unblinded (engine's verdict visible to the labeller throughout) | Recorded in methodology doc + `OPEN-ISSUES.md` row 21; no label shown wrong, so not re-labelled this cycle | `dfb56996d` |
+| 11 | Widening draw's `--target-per-cell 2` cannot clear the `n<=2` thin-cell bar by construction; doc blamed only the axis mismatch | Corrected the root-cause attribution in the methodology doc, reproduced exactly (`--target-per-cell 2` → 35/28 cells, identical ids to committed; `--target-per-cell 3` → 70/36 cells). `OPEN-ISSUES.md` row 20. | `dfb56996d` |
+| 12 | The relabel sample's `engine_wiring_class` snapshot predates the wiringfix/D4 fixes, stale against the merged tip | Re-derived for all 185 units against the merged, D4-fixed tip: **167/185 agree**, all 18 disagreements attributed to documented out-of-scope gaps. Test rewritten (`assert_eq!(genuine.len(), 185)`, `assert_eq!(agree, 167)`). | `1f069cc1c` |
+| 13 | `ground_truth_evidence_guard.py`'s PASS message overclaimed — `corpus_path_verified` paths were read in FULL, so a quote merely present anywhere in that file (an unrelated neighboring record) passed as row-level grounding | Restricted `corpus_text_for_record` to the record's true closure (base row + `.MOD` rows, both already present); re-ran the guard against the real 185-unit sample before/after — 24 violations both times, proving no real record relied on the removed union. Replaced the stale test with one proving the old behavior would have been fooled. | `dfb56996d` |
+| 14 | ~800 lines of new Python (the guard + sampler) had zero gate coverage | Added `groundtruth-guard-selftest` to `verify.sh`'s `ALL_STAGES`/`QUICK_STAGES` (14 self-test cases, zero-risk — hermetic fake corpus, no live-run dependency). The guard's own live run stays out of the gate per rows 14/15 (untouched-45 residual). | `dfb56996d` |
+
+Retro `correction`/`note` events emitted per finding with `--verified-by`, `docs/retro/events/
+sd31-w2-integrate.jsonl` (10 events this cycle: 8 corrections, 1 note, plus this receipt's own).
+
+### 3. The one sanctioned guarded regen
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-w2-integrate.json
+# -> 3635 records examined of 9447 read, 37198 tokens compared (9 synthesized), 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-w2-integrate.json
+# -> 49 of 94 covered units cleared; 1 failed (advanced_players_guide:equipment:
+#    spindle_of_perfect_knowledge, pre-existing, unrelated to this cycle's changes); 44 not ingested;
+#    exit 0
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-w2-integrate.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-w2-integrate.json \
+  cargo run --locked --bin v06_work_inventory
+```
+
+**Zero stamp loss, confirmed.** No `refusing to write` message; the guard's own diff check passed
+silently. Investigated the one figure that looked alarming at first read — the regenerated file shows
+`"fixture-verified": 0` where the committed one showed 49 — and traced it to a real, EXPECTED
+consequence, not a loss: all 49 previously `fixture-verified` unit ids remain stamped as EITHER
+`literal-verified` or `fixture-verified` in the new file (`python3` cross-check: 49 of 49 still
+stamped). The already-landed `SD31-E2-F2-001-wiringfix` D3 fix (BONUS:STAT selector false-positive)
+correctly reclassified these 49 units' `wiring_class` from `derived` to `static` — they are flat-
+literal `BONUS:STAT` equipment bonuses (`belt_of_giant_strength_2/4/6`, etc.), exactly the false-
+positive shape that fix targets — so they now clear `corpus_literal_sweep` instead of
+`derived_evaluator_fixture_check`, and the guard correctly saw no id-level loss.
+
+**Second run changes only `generated_at`, confirmed:** re-ran the identical command; `python3` diff
+of top-level keys between the two outputs → only `generated_at` differs.
+
+Committed as `faa14e9fa`. Board delta measured against the previously committed inventory (before
+this regen, i.e. before every fix this cycle made): `done` 5,837 → 6,076 (+239, 15.15% → 15.77%),
+`held` 6,916 → 6,790 (-126), `not-started` 20,895 → 20,737 (-158), `unmeasurable` 3,989 → 4,034 (+45),
+denominator unchanged at 38,521.
+
+### 4. The standing audit
+
+```
+python3 scripts/reachability_audit.py --json-out artifacts/SD31-W2-INTEGRATE-001-audit.json
+```
+`AUDIT_EXIT=0`. **Reachable ceiling: 98.94% (38,112/38,521)** — unchanged from
+`SD31-E2-F2-001-wiringfix`'s own measurement (this cycle's Finding-1 fix moves units between
+`derived`/`static`, not into/out of `ambiguous`, so the ceiling is exactly unaffected; verified by
+re-running the audit both before and after committing the regen). Same 9 `ambiguous|*` dead-end cells
+as every prior run, all still owned by Epic 2. **Movement vs. wave 1's baseline**
+(`SD31-E0-F1-001-baseline.json`): 94.53% (36,412/38,521) → 98.94% (38,112/38,521), dead-end unit
+total 2,109 → 409. Per-kind, the two largest movers are both Epic 1's doing this wave: `race` 52.43%
+→ 100.00%, `race_trait` 79.98% → 99.56%. Committed as `4486255e0`.
+
+### 5. Full gate
+
+Launched in the background BEFORE this receipt was written:
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W2-INTEGRATE-001-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+Confirmed live-progressing while this receipt was written (not stalled): `groundtruth-guard-selftest`
+(the new stage) PASS (14 cases), `reachability-audit` PASS (98.94%), `pi-sweep`/`audit-selftest`/
+`reclaim-selftest`/`driver-selftest`/`corpus-sweep-selftest` all PASS, `root-lib` PASS (1,795 passed).
+See `$LOG` for the terminal `VERIFY_EXIT` — if this receipt was committed before the run finished,
+that is stated explicitly in the section below, not implied.
+
+### 6. Board headline, re-derived at the integrated tip
+
+```
+python3 -c "
+import json, collections, importlib.util
+spec = importlib.util.spec_from_file_location('P','scripts/observer/pf1e_dashboard_producer.py')
+P = importlib.util.module_from_spec(spec); spec.loader.exec_module(P)
+d = json.load(open('docs/work-inventory.json'))
+units = [u for u in d['units'] if (u.get('book') or 'unknown') not in P.EXCLUDED_BOOKS]
+verdicts = collections.Counter(P.doneness_verdict(u.get('wiring_class') or 'ambiguous', u.get('status') or 'unknown', u.get('kind')) for u in units)
+print(d.get('generated_at'), len(units), dict(verdicts), round(verdicts['done']/len(units)*100,4))
+"
+```
+→ `generated_at 2026-08-15T21:14:09Z`, denominator **38,521**, `done` **6,076 (15.77%)**,
+`not-started` 20,737 · `held` 6,790 · `unmeasurable` 4,034 · `in-progress` 848 · `deferred` 36.
+`ambiguous` wiring-class population: **409** (unchanged from the wiringfix measurement).
+
+Per-kind `done` rate:
+
+| kind | total | done | done% |
+|---|---:|---:|---:|
+| class | 185 | 27 | 14.59% |
+| class_feature | 15,472 | 25 | 0.16% |
+| companion | 1,696 | 416 | 24.53% |
+| equipment | 6,208 | 2,650 | 42.69% |
+| equipment_modifier | 1,580 | 911 | 57.66% |
+| feat | 2,610 | 1,181 | 45.25% |
+| monster | 1,270 | 7 | 0.55% |
+| monster_ability | 3,107 | 334 | 10.75% |
+| race | 103 | 0 | 0.00% |
+| race_trait | 3,447 | 478 | 13.87% |
+| spell | 2,843 | 47 | 1.65% |
+
+This board movement (+239 `done`, +0.62pp) is almost entirely a measurement/reachability effect —
+Epic 1's race-chassis batch landing this wave, not any new content ingest by this integration cycle
+itself. `class_feature` and `monster` remain the two lowest-doneness kinds by a wide margin and are
+the next wave's obvious targets (see `followups`).
+
+### What was corrected, reworked, or narrowly avoided this cycle
+
+- Nearly trusted the alarming `"fixture-verified": 0` reading in the freshly regenerated inventory as
+  a stamp-loss bug before tracing it to the D3 wiringfix's own (already-landed, correct)
+  reclassification of the 49 affected units from `derived` to `static` — see §3.
+- Caught my own OPEN-ISSUES row-renumbering needing propagation into THREE places per branch (the
+  Open-table row itself, that branch's own `progress.md` cross-references, and `kanban.md`'s
+  citations) — the E6-F11 held-cell map turned out to cite rows only by "below," not by number, so no
+  fourth propagation site existed there, verified by grep rather than assumed.
+- Did not attempt Finding 10's full remedy (a `--blind` sampling flag + full re-label) or Finding 11's
+  full remedy (re-run the widening draw at `--target-per-cell 4`+ and hand-label the result) — both
+  are real labelling/tooling work beyond this integration cycle's bounded scope; logged as concrete
+  Epic 2 follow-ons (`OPEN-ISSUES.md` rows 20-21) rather than attempted partially or skipped silently.
+
+### Files changed (commits `ed2d7adbb`..`4486255e0`)
+
+- `apps/desktop/src-tauri/src/reach_gate.rs` (Finding 8 comment correction)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` (rows 17-21 appended; rows 8-16
+  renumbered on merge)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E2-F1-ground-truth-methodology.md`
+  (Findings 10/11 correction notes)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F11-001-held-cell-map.md` (Findings 6/7
+  figure corrections)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W2-INTEGRATE-001-audit.json` (new)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E2-F2-001-wiringfix-verify-v2.log` (Finding
+  5, completed log committed)
+- `docs/release/SD-31-corpus-closure-grind/kanban.md`, `progress.md` (this entry, plus per-card
+  updates)
+- `docs/work-inventory.json` (the one sanctioned guarded regen, committed per §3)
+- `scripts/ground_truth_evidence_guard.py`, `scripts/tests/test_ground_truth_evidence_guard.py`
+  (Finding 13)
+- `scripts/verify.sh` (Finding 14, new `groundtruth-guard-selftest` stage)
+- `src/rules_core/wiring_class.rs`, `tests/sd31_e2_ground_truth_agreement.rs` (Findings 1/4/9/12)
+- `docs/retro/events/sd31-w2-integrate.jsonl` (new, 10 events)
