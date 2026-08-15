@@ -155,13 +155,23 @@ fn genuinely_evidenced_ground_truth_units_agree_with_the_fixed_engine() {
 
     // This assertion is intentionally NOT `assert_eq!(disagree.len(), 0)`:
     // per the dispatch brief, a disagreement is a finding to explain, not
-    // noise to average away. Every one of the 18 disagreements at 167/185
-    // (re-derived `SD31-W2-INTEGRATE-001`, adversarial-review Finding 9's
-    // remedy: re-derive against the merged tip, not the pre-wiringfix
-    // snapshot) is attributable to an ALREADY-DOCUMENTED, out-of-scope gap
-    // -- none is caused by the D4 fix itself (`has_arith_scoped`/
-    // `has_scalar_or_arith_for_token`'s DR/BONUS:STAT variable-magnitude
-    // repair), which touches no disagreeing unit here:
+    // noise to average away.
+    //
+    // **`SD31-E2-F3-001` fixed 3 of the 18 disagreements at 167/185**
+    // (re-derived `SD31-W2-INTEGRATE-001`): `ultimate_magic:class_feature:
+    // dragon_shaman_totem_transformation` (row 9(a), the lowercase
+    // `classlevel(...)` case fix), `horror_adventures:class_feature:
+    // exciter_rapturous_rage` (row 9(c), the `+`-then-`(` arithmetic fix),
+    // and `bestiary_4:monster_ability:winter_hag_ice_staff` (row 16 Finding
+    // D, the `SPELLS:` field scan). All three now correctly report
+    // `Derived`, matching their hand labels. See `wiring_class.rs`'s `D6`
+    // tests for the unit-level coverage.
+    //
+    // The remaining 15 disagreements at 170/185 are attributable to an
+    // ALREADY-DOCUMENTED, out-of-scope gap -- none is caused by this
+    // cycle's fixes (which touch no OTHER disagreeing unit here) or by the
+    // earlier D4 repair (`has_arith_scoped`/`has_scalar_or_arith_for_token`'s
+    // DR/BONUS:STAT variable-magnitude fix):
     //   - Base-row-only test SCOPE LIMITATION (this file's own doc
     //     comment), not a classifier defect (5 units): `core_essentials:
     //     race:aasimar`, `bestiary:race:iron_cobra_darkwood_cobra`,
@@ -172,18 +182,24 @@ fn genuinely_evidenced_ground_truth_units_agree_with_the_fixed_engine() {
     //     (Derived/prose_expr vs. hand Computed -- the CASTERLEVEL
     //     percent-placeholder resolution the production closure performs
     //     is out of this base-row-only harness's reach).
-    //   - `OPEN-ISSUES.md` row 9's three pre-existing classifier gaps (5
-    //     units): (a) `case_sensitive_scalar_false_negative` --
-    //     `ultimate_magic:class_feature:dragon_shaman_totem_transformation`;
-    //     (b) `bare_var_judgement_call` --
-    //     `ultimate_combat:class_feature:martial_artist_martial_arts_master`,
+    //   - `OPEN-ISSUES.md` row 9(b), the STILL-OPEN `bare_var_judgement_call`
+    //     design question (3 units, deliberately NOT resolved this cycle --
+    //     see `SD31-E2-F3-001`'s progress.md receipt for why): `ultimate_combat:
+    //     class_feature:martial_artist_martial_arts_master`,
     //     `core_essentials:race_trait:favored_enemy_humanoid_changeling`,
-    //     `horror_adventures:class_feature:exciter_rapture`; (c) the
-    //     `has_arith` uppercase-run/parenthesised-subexpression gap --
-    //     `horror_adventures:class_feature:exciter_rapturous_rage`.
-    //   - `OPEN-ISSUES.md` row 16's Findings D/E/F (relabel branch,
-    //     unscanned field shapes -- 5 units): Finding D (`SPELLS:` field
-    //     unscanned) -- `bestiary_4:monster_ability:winter_hag_ice_staff`;
+    //     `horror_adventures:class_feature:exciter_rapture`.
+    //   - `OPEN-ISSUES.md` row 16's Findings E/F (relabel branch, unscanned
+    //     field shapes -- 4 units, deliberately NOT resolved this cycle;
+    //     `SD31-E2-F3-001` investigated Finding E and found it structurally
+    //     entangled with the SAME open "guard scoped to record eligibility
+    //     vs. the magnitude itself" design question the methodology's own
+    //     "Judgement calls" item 2 already flags unresolved -- adding
+    //     `PLUS:` reclassifies ~257 `equipment_modifier` records corpus-wide
+    //     to `computed` via a `PRETYPE`/`PREMULT` item-type-compatibility
+    //     guard that is almost universal on this record shape, not a
+    //     per-record judgement; shipping it needs that design question
+    //     ruled on first, not a blind large-blast-radius sweep -- see
+    //     `progress.md`'s `SD31-E2-F3-001` receipt):
     //     Finding E (`PLUS:` field unscanned) --
     //     `core_rulebook:equipment_modifier:special_ability_ghost_touch_armor`,
     //     `ultimate_combat:equipment_modifier:special_ability_reliable_firearm`;
@@ -198,15 +214,15 @@ fn genuinely_evidenced_ground_truth_units_agree_with_the_fixed_engine() {
     //     (prose-only per-level/per-caster-level scaling with no
     //     `BONUS:`/`DEFINE:` chassis -- a genuine `display` vs. `ambiguous`
     //     definitional gray zone the methodology names explicitly).
-    // 5 + 5 + 5 + 3 = 18, matching the printed disagreement count exactly.
-    // None of these is `OPEN-ISSUES.md` rows 1/2's named findings, nor
-    // Finding 1's D4 repair; fixing them here would be undispatched scope
-    // expansion on a shared, heavily-consumed function. The count is
-    // asserted so a regression in either direction is visible on the next
-    // run.
+    // 5 + 3 + 4 + 3 = 15, matching the printed disagreement count exactly.
+    // Fixing the remaining 15 here would be undispatched scope expansion on
+    // a shared, heavily-consumed function (row 9(b) is a genuine, still-open
+    // design question, not a bug; E/F are real but out of this cycle's
+    // bounded budget -- see the receipt). The count is asserted so a
+    // regression in either direction is visible on the next run.
     assert_eq!(
         agree,
-        167,
+        170,
         "agreement count moved -- re-derive the per-unit breakdown in progress.md before trusting this number \
          (disagreements printed above)"
     );
