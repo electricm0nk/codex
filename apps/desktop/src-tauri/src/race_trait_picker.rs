@@ -978,18 +978,25 @@ mod tests {
     /// `race_resolver::every_alternate_the_app_offers_is_one_the_engine_can_place`
     /// so the two halves cannot separate again.
     #[test]
-    fn every_alternate_from_every_race_corpus_book_reaches_the_menu_across_all_eighteen_in_scope_races() {
+    fn every_alternate_from_every_race_corpus_book_reaches_the_menu_across_every_in_scope_race() {
         let menu = menu();
-        assert_eq!(menu.races.len(), 18, "18 in-scope races (decisions.md §25.3)");
+        assert_eq!(
+            menu.races.len(),
+            24,
+            "24 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
+             Bestiary 2 batch of 6 (2026-08-15)"
+        );
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
-            total, 282,
+            total, 330,
             "ARG's 153 Alternate-classified records + Monster Codex's 4 (SD-29 decisions.md §43) \
              + APG's 1 (`Half-Orc ~ Plagueborn`, decisions.md §39's deferral, closed by SD-29's \
              race-trait extend lane) + Inner Sea Races' 67 (§45, the same lane's round 2) \
              + Horror Adventures' 41 (§47, round 3) \
              + Core Essentials' 16 heritages (§49, round 4; the book's other 48 records \
-             are the replacement rows those heritages grant and are never menu rows)"
+             are the replacement rows those heritages grant and are never menu rows) \
+             + SD-31 Epic 1-F2's Bestiary 2 batch of 48 (ARG's 42 + Inner Sea Races' 6, \
+             2026-08-15)"
         );
 
         // Per-race counts, derived from the corpus by this very menu.
@@ -1021,24 +1028,30 @@ mod tests {
             ("Dwarf", 30),      // ARG 17 + ISR 7 + HA 6
             ("Elf", 27),        // ARG 13 + ISR 7 + HA 7 (ISR 8 until 2026-08-12: `Elf ~
             // Sovyrian-Born` carries `NAMEISPI:YES` and is dropped, `decisions.md` 53)
+            ("Fetchling", 6),   // ARG 5 + ISR 1 (SD-31 Epic 1-F2, 2026-08-15)
             ("Gnome", 23),      // ARG 12 + ISR 6 + HA 5
             ("Goblin", 10),     // ARG 7 + MC 2 + ISR 1
+            ("Grippli", 5),     // ARG 4 + ISR 1 (SD-31 Epic 1-F2)
             ("HalfElf", 20),    // ARG 9 + ISR 7 + HA 4
             ("HalfOrc", 28),    // ARG 14 + APG 1 + ISR 7 + HA 6
             ("Halfling", 27),   // ARG 13 + ISR 7 + HA 7
             ("Hobgoblin", 10),  // ARG 9 + ISR 1
             ("Human", 33),      // ARG 15 + ISR 12 + HA 6
+            ("Ifrit", 9),       // ARG 8 + ISR 1 (SD-31 Epic 1-F2)
             ("Kobold", 5),      // ARG 4 + ISR 1
             ("Merfolk", 4),     // ARG 3 + ISR 1
+            ("Oread", 9),       // ARG 8 + ISR 1 (SD-31 Epic 1-F2)
             ("Orc", 5),         // ARG 4 + ISR 1
             ("Svirfneblin", 3), // ARG 2 + ISR 1
+            ("Sylph", 9),       // ARG 8 + ISR 1 (SD-31 Epic 1-F2)
             ("Tengu", 5),       // ARG 4 + ISR 1
             ("Tiefling", 20),   // ARG 7 + ISR 3 + CE 10 (heritages)
+            ("Undine", 10),     // ARG 9 + ISR 1 (SD-31 Epic 1-F2)
         ];
         for (race_id, count) in expected {
             assert_eq!(race(&menu, race_id).alternates.len(), *count, "{race_id} alternate count");
         }
-        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 282);
+        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 330);
     }
 
     /// Every alternate is attributed to a book that really loaded it, and
@@ -1265,9 +1278,10 @@ mod tests {
             }
         }
         assert_eq!(
-            checked, 282,
+            checked, 330,
             "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43) + 67 Inner Sea Races \
-             (§45) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§49)"
+             (§45) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§49) + \
+             48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, 2026-08-15)"
         );
         assert!(unmatched.is_empty(), "no alternate may name a flag nothing declares: {unmatched:?}");
 
@@ -1792,9 +1806,15 @@ mod tests {
         // *menu rows*, so the book's other 48 records are correctly absent
         // here while being fully present in `reach_gate`'s claim, which reads
         // what each selection grants as well as what it offers.
-        assert_eq!((standard, alternates), (173, 282));
+        // SD-31 Epic 1-F2 (2026-08-15) added Bestiary 2's 6-race batch: 57
+        // more `TraitRole::Default` standard rows (173 -> 230) and 48 more
+        // alternates via ARG/ISR (282 -> 330), the same "no race/ chassis
+        // moves it" shape APG/HA/CE already established does not apply here
+        // -- this batch DOES add a `race/` chassis (6 new ones), which is
+        // exactly why `standard` moves this time and did not for those books.
+        assert_eq!((standard, alternates), (230, 330));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 455);
+        assert_eq!(checked, 560);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.
@@ -1817,7 +1837,7 @@ mod tests {
         // absent. Rendering restores them for every player, character or not.
         assert_eq!(
             changed,
-            vec!["Oversized Goblin", "Halfling ~ Adaptable Luck"],
+            vec!["Oversized Goblin", "Halfling ~ Adaptable Luck", "Undine ~ Nereid Fascination"],
             "the records whose rendered prose differs from the ingest-time collapse"
         );
 
@@ -1833,6 +1853,15 @@ mod tests {
         let luck = &by_key_all(corpus, "Halfling", "Halfling ~ Adaptable Luck");
         assert!(luck.contains("they gain the full +2 bonus"), "{luck}");
         assert!(luck.contains("they only gain a +1 bonus"), "{luck}");
+        // SD-31 Epic 1-F2's third: the same `&nl;` entity shape as
+        // `Oversized Goblin`, not a new defect class -- `Undine ~ Nereid
+        // Fascination`'s corpus DESC also carries a literal `&nl;`, which
+        // this record's stored `data.description` (written by
+        // `ingest_races.rs`, which has no entity table) holds verbatim and
+        // this renderer decodes to a real newline.
+        let nereid = by_key_all(corpus, "Undine", "Undine ~ Nereid Fascination");
+        assert!(!nereid.contains("&nl;"), "rendered prose still carries a PCGen entity: {nereid}");
+        assert!(nereid.contains("This is a supernatural ability."), "{nereid}");
         // Reported rather than pinned: widening what the engine can resolve
         // must not fail here, and neither must a record quietly guessing.
         println!("trait rows still reporting an unresolved DESC argument: {dropping}");

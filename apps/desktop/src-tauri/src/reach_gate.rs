@@ -1021,6 +1021,17 @@ fn reach_of(family: &Family) -> Option<Reach> {
             "B1",
             crate::race_catalog::ingested_race_ids_for_book("beastiary"),
         )),
+        // SD-31 Epic 1-F2 (2026-08-15). Bestiary 2's 6-race chassis batch:
+        // the first new race-catalog book since the original 18
+        // (`decisions.md §25.3`). Same mechanism as CRB/B1 above -- no new
+        // surface, `ingest_races` files this book's chassis+standard traits
+        // exactly like the other two, so `list_race_catalog` already serves
+        // it once `race_catalog::RACE_CORPUS_BOOKS` and `RACE_CATALOG_BOOKS`
+        // both carry `"bestiary_2"`/`B2`.
+        ("bestiary_2", "races") => Some(races_reach(
+            "B2",
+            crate::race_catalog::ingested_race_ids_for_book("bestiary_2"),
+        )),
 
         // Racial traits: `list_alternate_racial_traits` serves every race's
         // standard rows and every ARG alternate, and
@@ -1041,6 +1052,14 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // reach test passed without ever asking about them.
         ("crb", "race_traits") => Some(race_traits_reach("CRB", "core_rulebook")),
         ("beastiary1", "race_traits") => Some(race_traits_reach("B1", "beastiary")),
+        // SD-31 Epic 1-F2 (2026-08-15). Bestiary 2's 57 standard racial-trait
+        // records, filed under `bestiary_2` by `ingest_races` exactly like
+        // CRB's and Bestiary 1's above -- same claim shape, no new surface.
+        // (The 48 ARG/ISR *alternate* rows this batch also added are covered
+        // by the `advanced_race_guide`/`inner_sea_races` claims below, since
+        // `race_traits_reach` filters by the record's own `book_id`, which
+        // for an alternate is the book it was actually read from.)
+        ("bestiary_2", "race_traits") => Some(race_traits_reach("B2", "bestiary_2")),
         ("advanced_race_guide", "race_traits") => {
             Some(race_traits_reach("ARG", "advanced_race_guide"))
         }
@@ -2409,9 +2428,30 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         // and no selection reaches it. This is an upstream data gap, not a
         // wiring gap: selecting `Human ~ Tribalistic` correctly suppresses the
         // standard `Human ~ Languages` row, and nothing brings this one in to
-        // take its place. Remedy in OPEN_FINDINGS above. 71 of the book's 72
-        // records reach a player; this is the one.
-        &["Human ~ Tribalistic Languages"],
+        // take its place. Remedy in OPEN_FINDINGS above.
+        //
+        // The three `Mostly Human ~ <Race> ~ Languages` rows below are a
+        // DIFFERENT shape of the same outcome, added by SD-31 Epic 1-F2
+        // (2026-08-15): each carries a *positive* `PREFACT:1,ABILITIES,
+        // <Race>_ReplaceLanguages=True`, so `race_resolver::classify` reads
+        // them as `TraitRole::FlagGranted`, not `Unclassified` -- but no
+        // Ifrit/Sylph/Undine alternate in either ARG or Inner Sea Races sets
+        // the `<Race>_ReplaceLanguages` flag that would grant them (verified:
+        // grep every `sets_replace_flags` value for these three races across
+        // both books' ingested records -- none contains it). Oread's sibling
+        // row (`Mostly Human ~ Oread ~ Languages`) DOES reach, because
+        // `Oread ~ Isolated` (Inner Sea Races) sets `Oread_ReplaceLanguages` --
+        // the presence of that one working case is what proves this is a real
+        // upstream content gap for the other three, not a resolver defect: the
+        // exact same mechanism reaches Oread's row and only Oread's.
+        // 79 of the book's 82 records reach a player; these three plus
+        // `Human ~ Tribalistic Languages` are the four that do not.
+        &[
+            "Human ~ Tribalistic Languages",
+            "Mostly Human ~ Ifrit ~ Languages",
+            "Mostly Human ~ Sylph ~ Languages",
+            "Mostly Human ~ Undine ~ Languages",
+        ],
     ),
     // SD28-C4.8/§60/§63: all 403 archetype-swap records across 7 books --
     // every key, because none reaches a player through any surface today
@@ -3003,9 +3043,14 @@ mod tests {
         // `ABILITY:<cat>|AUTOMATIC|<key>` token. `race_resolver` reads that
         // grant shape now, so all 156 reach and the expectation is `Surfaced`.
         let ingested = corpus_record_keys("advanced_race_guide", "race_trait");
-        assert_eq!(ingested.len(), 156, "ARG's 156 ingested race-trait records, counted on disk");
+        assert_eq!(
+            ingested.len(),
+            201,
+            "ARG's 201 ingested race-trait records, counted on disk (156 -> 201 by SD-31 Epic \
+             1-F2, 2026-08-15, Bestiary 2's 6-race batch)"
+        );
         match reach_of(&arg_traits).expect("ARG race traits have a declared claim") {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 156),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 201),
             other => panic!("every ARG race-trait record must reach a player, got {other:?}"),
         }
     }
@@ -3069,23 +3114,33 @@ mod tests {
         let ingested = corpus_record_keys("inner_sea_races", "race_trait");
         assert_eq!(
             ingested.len(),
-            71,
-            "ISR's 71 ingested race-trait records, counted on disk. **Was 72 until 2026-08-12** \
+            82,
+            "ISR's 82 ingested race-trait records, counted on disk. **Was 72 until 2026-08-12** \
              (SD-29 `decisions.md` 53): `Elf ~ Sovyrian-Born` carries `NAMEISPI:YES`, PCGen's \
              own declaration that the record NAME is Product Identity. A name cannot be \
              redacted, so the row is dropped at ingest rather than screened -- the same \
-             ruling the monster lane reached for Inner Sea World Guide's five NAMEISPI rows"
+             ruling the monster lane reached for Inner Sea World Guide's five NAMEISPI rows. \
+             71 -> 82 by SD-31 Epic 1-F2 (2026-08-15), Bestiary 2's 6-race batch."
         );
 
-        // 70 of 71 reach. The shortfall is `Human ~ Tribalistic Languages` and
-        // it is pinned by key, both ways, so a SECOND unreached record fails
-        // here and so does this one silently starting to reach.
+        // 79 of 82 reach. The shortfall is `Human ~ Tribalistic Languages`
+        // plus the three `Mostly Human ~ <Race> ~ Languages` rows
+        // `UNREACHED_RECORD_FINDINGS` names, pinned by key, both ways, so a
+        // FIFTH unreached record fails here and so does any of these four
+        // silently starting to reach.
         match reach_of(&isr_traits).expect("ISR race traits have a declared claim") {
             Reach::NotSurfaced { missing, .. } => {
+                let mut missing: Vec<&str> = missing.iter().map(String::as_str).collect();
+                missing.sort_unstable();
                 assert_eq!(
-                    missing.iter().map(String::as_str).collect::<Vec<_>>(),
-                    vec!["Human ~ Tribalistic Languages"],
-                    "exactly one ISR record is unreached, and it is the one OPEN_FINDINGS names"
+                    missing,
+                    vec![
+                        "Human ~ Tribalistic Languages",
+                        "Mostly Human ~ Ifrit ~ Languages",
+                        "Mostly Human ~ Sylph ~ Languages",
+                        "Mostly Human ~ Undine ~ Languages",
+                    ],
+                    "exactly four ISR records are unreached, and they are the ones OPEN_FINDINGS names"
                 );
             }
             other => panic!("ISR's race-trait shortfall must be reported exactly, got {other:?}"),

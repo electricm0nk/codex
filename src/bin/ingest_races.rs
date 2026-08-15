@@ -96,8 +96,35 @@ struct RaceSpec {
     book: &'static str,
 }
 
-/// The 18 races whose true source book is already ingested
-/// (`decisions.md §25.3`). Core Rulebook's 7 and Bestiary 1's 11.
+/// The 24 races whose true source book is registered in this project
+/// (`decisions.md §25.3`'s original 18 -- Core Rulebook's 7 and Bestiary 1's
+/// 11 -- plus SD-31 Epic 1's first chassis batch: Bestiary 2's 6 standard,
+/// non-heritage races).
+///
+/// **SD-31 Epic 1-F2 (2026-08-15) widened this from 18 to 24.** The original
+/// doc comment here read "The 18 races whose true source book is already
+/// ingested" and this module's own header doc called the other 19 ARG
+/// reprints (Bestiary 2/3/4, Inner Sea World Guide) permanently out of scope
+/// because "their source books are unregistered, and creating their first
+/// content would be inventing provenance for a tome nobody has audited"
+/// (`decisions.md §25.3`). That premise is now FALSE for Bestiary 2:
+/// `data/corpus/bestiary_2/` is a real, registered corpus book directory
+/// (SD-29's monster-lane ingest), so reading its 7 races' chassis+standard
+/// traits out of PCGen's shared `core_essentials/races/` storage and filing
+/// them under `bestiary_2` -- exactly the pattern this table already uses
+/// for Core Rulebook and Bestiary 1 -- invents no provenance at all; the
+/// book is audited and already shipping this project's content.
+///
+/// Dhampir is the 7th "B2 race" (`advanced_race_guide.pcc`'s `# B2 races`
+/// section) and is deliberately NOT added here: `core_essentials/races/
+/// dhampir/` carries a `dhampir_abilities_subrace.lst` (a heritage/subrace
+/// selector, the same shape `race_resolver.rs`'s `subrace_grants` exists
+/// for), which this binary's simple "one chassis + flat standard-trait list"
+/// loop does not model -- adding it here would either silently drop the
+/// heritage rows or misfile them as ordinary standard traits. Left for a
+/// follow-on Epic 1 batch that extends this tool the way `ingest_race_
+/// traits.rs`'s `core_essentials` `BookSource` already does for Aasimar/
+/// Tiefling heritage.
 const IN_SCOPE_RACES: &[RaceSpec] = &[
     // `# Core Races` section of advanced_race_guide.pcc -> Core Rulebook.
     RaceSpec { dir: "dwarf", book: "core_rulebook" },
@@ -119,6 +146,15 @@ const IN_SCOPE_RACES: &[RaceSpec] = &[
     RaceSpec { dir: "svirfneblin", book: "beastiary" },
     RaceSpec { dir: "tengu", book: "beastiary" },
     RaceSpec { dir: "tiefling", book: "beastiary" },
+    // `# B2 races` section of advanced_race_guide.pcc -> Bestiary 2.
+    // SD-31 Epic 1-F2 batch (2026-08-15); Dhampir excluded, see doc comment
+    // above.
+    RaceSpec { dir: "fetchling", book: "bestiary_2" },
+    RaceSpec { dir: "grippli", book: "bestiary_2" },
+    RaceSpec { dir: "ifrit", book: "bestiary_2" },
+    RaceSpec { dir: "oread", book: "bestiary_2" },
+    RaceSpec { dir: "sylph", book: "bestiary_2" },
+    RaceSpec { dir: "undine", book: "bestiary_2" },
 ];
 
 /// Heuristic OGL/PI screen (`docs/governance/ogl-pi-blacklist.md`) — the
@@ -371,8 +407,20 @@ fn collapse_whitespace(text: &str) -> String {
 }
 
 /// Replaces every `%N` in one `DESC:` segment with argument N's resolved
-/// literal, returning the rendered text and the names of any arguments
-/// that would not resolve.
+/// literal, and every `%%` with a literal `%`, returning the rendered text
+/// and the names of any arguments that would not resolve.
+///
+/// **`%%` handling added by SD-31 Epic 1-F2 (2026-08-15).** This binary's
+/// copy of the substitution rule was missing the escape branch
+/// `ingest_race_traits.rs`'s sibling function has always had (its own doc
+/// comment names the exact two upstream rows, `reduced by 20%%` and `(50%%
+/// or fewer hit points)`, that motivated it) -- ARG never happened to route
+/// a `%%`-bearing row through THIS binary's 18-race chassis path, so the gap
+/// shipped silently until this batch's `Fetchling ~ Shadow Blending`
+/// (`core_essentials/races/fetchling/fetchling_abilities_race.lst`, "50%%
+/// miss chance ... 20%% miss chance") became the first one that does, and
+/// `equipment_catalog::no_catalog_serves_a_description_carrying_raw_pcgen_syntax`
+/// caught the literal `%%` reaching the served description text.
 ///
 /// An unresolvable argument is **dropped, never guessed**: the
 /// placeholder goes, the `+`/`-` sign that introduced it goes with it,
@@ -387,6 +435,13 @@ fn substitute_placeholders(prose: &str, args: &[&str], vars: &BTreeMap<String, O
     let mut i = 0;
 
     while i < chars.len() {
+        // The escape is checked first: `%%` is never an argument reference,
+        // and `%%1` would otherwise be misread as one.
+        if chars[i] == '%' && chars.get(i + 1) == Some(&'%') {
+            out.push('%');
+            i += 2;
+            continue;
+        }
         if chars[i] == '%'
             && let Some(digit) = chars.get(i + 1).and_then(|c| c.to_digit(10))
             && digit >= 1
@@ -476,11 +531,21 @@ fn render_description(row: &LstRow) -> Result<RenderedDescription, String> {
 }
 
 /// The PCGen substitution syntax that must never reach a player: an
-/// unsubstituted `%<digit>` placeholder, or a raw `|` argument tail.
-/// Used as a production guard on every description this binary writes.
+/// unsubstituted `%<digit>` placeholder, an unescaped `%%` literal-percent
+/// escape, or a raw `|` argument tail. Used as a production guard on every
+/// description this binary writes.
+///
+/// **`%%` check added by SD-31 Epic 1-F2 (2026-08-15).** This guard was
+/// missing the escape case `ingest_race_traits.rs`'s sibling guard has
+/// always checked (defense in depth alongside this same cycle's fix to
+/// `substitute_placeholders`, which is what stops the escape reaching a
+/// stored description in the first place).
 fn leaked_pcgen_syntax(text: &str) -> Option<&'static str> {
     if text.contains('|') {
         return Some("raw '|' argument tail");
+    }
+    if text.contains("%%") {
+        return Some("unescaped '%%' literal-percent escape");
     }
     let chars: Vec<char> = text.chars().collect();
     for (i, c) in chars.iter().enumerate() {
@@ -850,7 +915,7 @@ fn main() {
 
     // Clear only the two content-kind directories this tool owns, so a
     // race removed from scope cannot linger as a stale record.
-    for book in ["core_rulebook", "beastiary"] {
+    for book in ["core_rulebook", "beastiary", "bestiary_2"] {
         for kind in ["race", "race_trait"] {
             let dir = out_root.join(book).join(kind);
             if dir.exists() {
@@ -1554,7 +1619,7 @@ mod tests {
         let mut races = 0usize;
         let mut traits = 0usize;
 
-        for book in ["core_rulebook", "beastiary"] {
+        for book in ["core_rulebook", "beastiary", "bestiary_2"] {
             let race_dir = root.join(book).join("race");
             let mut race_files: Vec<PathBuf> =
                 fs::read_dir(&race_dir).expect("race dir must exist").filter_map(Result::ok).map(|e| e.path()).collect();
@@ -1604,9 +1669,12 @@ mod tests {
         }
 
         // Pinned counts, derived from the real corpus (`decisions.md
-        // §25.3`: Core Rulebook's 7 races + Bestiary 1's 11).
-        assert_eq!(races, 18, "18 in-scope race chassis records");
-        assert_eq!(traits, 175, "175 standard racial trait records");
+        // §25.3`: Core Rulebook's 7 races + Bestiary 1's 11, plus SD-31
+        // Epic 1-F2's Bestiary 2 batch of 6: 24 races / 232 standard
+        // racial trait records, re-measured 2026-08-15 by running this
+        // binary against the real corpus, not invented).
+        assert_eq!(races, 24, "24 in-scope race chassis records");
+        assert_eq!(traits, 232, "232 standard racial trait records");
     }
 
     // -----------------------------------------------------------------
@@ -1775,6 +1843,38 @@ mod tests {
         let row = one_row(&padded_line(&["X", "DESC:A +%1 bonus applies."]));
         let rendered = render_description(&row).unwrap();
         assert_eq!(rendered.text.as_deref(), Some("A bonus applies."));
+    }
+
+    /// SD-31 Epic 1-F2 (2026-08-15). This binary's copy of the substitution
+    /// rule was missing the `%%` literal-percent escape branch its sibling
+    /// `ingest_race_traits.rs::substitute_placeholders` has always had; the
+    /// real Fetchling row this test is field-for-field from
+    /// (`core_essentials/races/fetchling/fetchling_abilities_race.lst`,
+    /// `Fetchling ~ Shadow Blending`) is what caught it, via
+    /// `equipment_catalog::no_catalog_serves_a_description_carrying_raw_pcgen_syntax`
+    /// in the desktop crate.
+    #[test]
+    fn literal_percent_escape_renders_as_a_single_percent_sign() {
+        let row = one_row(&padded_line(&[
+            "Shadow Blending",
+            "KEY:Fetchling ~ Shadow Blending",
+            "CATEGORY:Special Ability",
+            "TYPE:RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality",
+            "DESC:Attacks against a fetchling in dim light have a 50%% miss chance instead of the \
+             normal 20%% miss chance. This ability does not grant total concealment; it just \
+             increases the miss chance.",
+            "SOURCEPAGE:p.xx",
+        ]));
+        let rendered = render_description(&row).expect("row must render");
+        let text = rendered.text.expect("prose survives");
+        assert!(!text.contains("%%"), "the escape must not survive: {text:?}");
+        assert_eq!(
+            text,
+            "Attacks against a fetchling in dim light have a 50% miss chance instead of the \
+             normal 20% miss chance. This ability does not grant total concealment; it just \
+             increases the miss chance."
+        );
+        assert_eq!(leaked_pcgen_syntax(&text), None);
     }
 
     /// A description with nothing to substitute must come through

@@ -1,0 +1,86 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:03Z",
+  "data": {
+    "key": "Oread ~ Ability Scores",
+    "name": "+2 Strength, +2 Wisdom, -2 Charisma",
+    "race_key": "Oread",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Oread Racial Trait",
+      "Oread Racial Default",
+      "SpecialQuality",
+      "Racial Ability Scores"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Oread_ReplaceAbilityScores",
+    "sets_replace_flags": [],
+    "description": "Oreads are strong, solid, stable, and stoic.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oread ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality.Racial Ability Scores"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Oread_ReplaceAbilityScores=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Oreads are strong, solid, stable, and stoic."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "STR,WIS",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "CHA",
+          "-2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/oread/oread_abilities_race.lst",
+    "sha256": "6df0996010724936a1ddf95c3a26311e2834198b134c95f4bc8b9c06255fa843",
+    "line": 14,
+    "record_key": "Oread ~ Ability Scores"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

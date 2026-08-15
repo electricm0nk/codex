@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:15Z",
+  "data": {
+    "key": "Sylph ~ Like the Wind",
+    "name": "Like the Wind",
+    "race_key": "Sylph",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Sylph Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Sylph_ReplaceEnergyResistance"
+    ],
+    "description": "A sylph with this racial trait gains a +5 foot bonus to her base speed. This racial trait replaces energy resistance.",
+    "source_page": "p.156",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sylph ~ Like the Wind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Sylph Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Sylph ~ Like the Wind],[!PREFACT:1,ABILITIES,Sylph_ReplaceEnergyResistance=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A sylph with this racial trait gains a +5 foot bonus to her base speed."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces energy resistance.|!PREABILITY:1,CATEGORY=Special Ability,Sylph ~ Like the Wind"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "FACT",
+        "value": "Sylph_ReplaceEnergyResistance|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "MOVEADD",
+          "TYPE.Walk",
+          "5"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 687,
+    "record_key": "Sylph ~ Like the Wind"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1617,7 +1617,6 @@ Unchanged since orchestration start: no board mutation occurred in this wave (Ep
 Epic 2-F1 hand-labelled a 150-unit sample outside the board proper). This is the real starting point
 for the next wave, re-derived not carried forward.
 
-
 ---
 
 ## SD31-E2-F2-001-wiringfix — `epic-2-verdict-paths` D1/D2 fix, ground-truth validation, board delta
@@ -2002,3 +2001,268 @@ report the same drift; unedited here for the same out-of-scope reason. Confirmed
 - `docs/release/SD-31-corpus-closure-grind/progress.md` (this entry)
 - `docs/work-inventory.json` — regenerated locally for measurement only, restored via
   `git checkout --`, never committed (wave rule).
+
+---
+
+## 2026-08-15 — SD31-E1-F1-001: Race chassis design + Bestiary 2 six-race batch (Epic 1-F1/F2/F3)
+
+**Cycle:** `SD31-E1-F1-001`, actor `sd31-e1-chassis`, own worktree `wf_49e8e5da-ca5-3`, own branch
+`sd31-e1-chassis-SD31-E1-F1-001`. **Started from** `origin/tranche/11` tip
+`c99461ac3d391d81b898005c58c80e518b4701ae` (`docs(sd31): wave-2 disk budget + the ambiguous-bucket
+lever wave 1 surfaced`) — package directory was absent on first look, tree was clean, recovered per
+protocol (`git fetch && git reset --hard origin/tranche/11`), recorded here as instructed. **Oracle
+pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`), confirmed via `./scripts/verify.sh --only preflight-oracle` before
+any other command.
+
+### 1. F1 — chassis design
+
+**Direct enumeration, grepped not estimated.** `ingest_races.rs`'s `IN_SCOPE_RACES` (18 entries) is
+exactly the set of races with a `data/corpus/{core_rulebook,beastiary}/race/*.json` chassis file —
+verified by listing both directories directly (`ls data/corpus/core_rulebook/race/` → 7,
+`ls data/corpus/beastiary/race/` → 11). The "18 modeled races" figure was correct and needed no
+correction. The corpus's referenced-but-unmodelled population was re-derived two ways:
+
+- **Named-race scan:** a Python re-implementation of `ingest_race_traits.rs::parse_row`'s race-key
+  rule (TYPE token stripped of ` Racial Trait` or ` Subrace`) run over the real `.lst` files behind
+  all 89 `(book, source_file)` pairs `docs/work-inventory.json`'s `race_trait`-kind units cite →
+  **61 distinct race_key values, 18 matching `IN_SCOPE_RACES` exactly, 43 not** (script:
+  `/tmp/.../enum_races.py`, re-run at cycle start).
+- **Corrected the inherited "~2,894 chassis-blind units" figure.** `evidence ==
+  "race_trait_race_not_modelled"` over the pre-batch `docs/work-inventory.json`:
+  `python3 -c "import json; d=json.load(open('docs/work-inventory.json')); u=[x for x in d['units'] if x['kind']=='race_trait']; print(sum(1 for x in u if x.get('evidence')=='race_trait_race_not_modelled'))"`
+  → **2,689**, not ~2,894 (≈7% off). Retro correction emitted (`sd31-e1-chassis.jsonl`).
+
+**Design decision: full `RaceCorpus` entries via the existing generic ingest mechanism, not a
+shim.** `RaceCorpus::chassis: BTreeMap<String, RaceChassisRecord>` is populated purely by walking
+whichever `data/corpus/<book>/race/*.json` files exist on disk — `resolve()`'s only gate is
+`self.chassis.get(race_key)?` (`race_resolver.rs:710`). Nothing about the signature needed to change;
+a race becomes "modeled" the instant a chassis record exists for it, regardless of Rust code. But a
+chassis-only shim (a bare `RaceCacheData` row with no ability-score/size/speed trait rows behind it)
+would let `resolve()` return `Some` while leaving every DoD-8-relevant number a default or a blank —
+`RaceCacheData` itself carries no ability-score field at all; those values live entirely in separate
+`race_trait/<race>/*.json` rows (`~ Ability Scores`, `~ Size`, `~ Speed`) that a chassis-only shim
+would not add. Traced the real path to `done`: `v06_work_inventory.rs`'s `Kind::RaceTrait` verdict
+grounds on `facts.race_trait_engine_book(unit)` — literally "does `RaceCorpus` (the same loader the
+app uses) resolve this row" — and the dashboard producer's `doneness_verdict()` maps
+`(computed, grounded)` to `done`; a shim with an empty trait list would leave every one of that
+race's rows `not-ingested` forever. **Decision: land full chassis + full standard-trait sets, using
+`ingest_races.rs`/`ingest_race_traits.rs` exactly as built for the original 18** — these are already
+generic, data-driven tools; the only code change needed was widening their `IN_SCOPE_RACES` tables.
+
+**Wiring discovered already anticipated this.** `race_catalog.rs`'s `RACE_CORPUS_BOOKS` doc comment
+reads verbatim: "safe to extend as further books are ingested." `v06_work_inventory.rs` and two
+integration-test files parse that same constant from source at runtime rather than hardcoding a copy,
+so extending it once fed every downstream consumer (catalog, diagnostic panel, reach claims, `docs/
+work-inventory.json`) with no separate wiring step.
+
+### 2. F2 — first batch: Bestiary 2's 6 non-heritage races
+
+**Batch selection, by evidence.** `advanced_race_guide.pcc`'s own `# B2 races` section names 7 races
+(Dhampir, Fetchling, Grippli, Ifrit, Oread, Sylph, Undine) whose true source book is Bestiary 2 —
+already a registered corpus book (`data/corpus/bestiary_2/` exists, ingested by SD-29's monster
+lane), directly reversing `ingest_races.rs`'s own stale premise ("the other 19 races... their source
+books are unregistered, and creating their first content would be inventing provenance for a tome
+nobody has audited"). Of the 7, **Dhampir excluded**: `core_essentials/races/dhampir/
+dhampir_abilities_subrace.lst` exists (a heritage/subrace selector, the same shape `race_resolver.rs`
+already models for Aasimar/Tiefling but that `ingest_races.rs`'s simple loop does not) — landing it
+with the same rigor as the other 6 would require extending that binary's mechanism, deferred to a
+follow-on batch rather than done as a stub. The other 6 confirmed subrace-free by direct directory
+listing before committing to the batch. Skinwalker (84 chassis-blind rows, the single largest gap)
+was considered and deliberately NOT picked: its true book is Bestiary 5 (also registered) but it
+carries the same heritage/subrace shape as Dhampir, so it shares the same follow-on scope.
+
+**Landed, with the same rigor as the existing 18 — every number transcribed from the real corpus,
+none invented:**
+
+- `IN_SCOPE_RACES` widened 18 → 24 in both `ingest_races.rs` and `ingest_race_traits.rs` (kept in
+  sync by hand, per that pair's existing convention; a comment cross-references both).
+- `cargo run --locked --bin ingest_races` → 6 new chassis + 57 new standard racial-trait records
+  (Fetchling 11, Grippli 10, Ifrit 9, Oread 9, Sylph 9, Undine 9), zero errors, zero PI-blacklist
+  hits. Verified one by hand: Fetchling's `~ Ability Scores` row states `+2 DEX, +2 CHA, -2 WIS`
+  (`raw_bonus_chains`), matching real Pathfinder Fetchling stats.
+- `cargo run --locked --bin ingest_race_traits` (all books) → 45 new ARG alternates + 6 new ISR
+  alternates for the batch (no code change beyond the `IN_SCOPE_RACES` widening — both binaries are
+  already book-agnostic).
+- **Corrected a real defect this content exposed, not merely a pinned count.**
+  `ingest_races.rs::substitute_placeholders` had no `%%`-literal-percent-escape branch — its sibling
+  `ingest_race_traits.rs` has always had one — so Fetchling's real `Shadow Blending` row ("50%% miss
+  chance... 20%% miss chance") would have shipped the raw PCGen escape verbatim to a player. Caught
+  by `equipment_catalog::no_catalog_serves_a_description_carrying_raw_pcgen_syntax`. Fixed with a TDD
+  test (`literal_percent_escape_renders_as_a_single_percent_sign`, field-for-field from the real row)
+  before regenerating; also added the matching `%%` check to that binary's own `leaked_pcgen_syntax`
+  guard, which had the identical gap. Retro near-miss emitted.
+- **Corrected a second real defect**, not a rendering bug: `Grippli ~ Princely`'s real
+  `BONUS:SKILL|Diplomacy,Intimidate|2|TYPE=Racial` reached the menu (via `race_resolver.rs`) but
+  computed a **0** delta on a built character — `pilot_compute.rs`'s hand-modelled
+  `ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES` table (the sanctioned `decisions.md §24` shape for exactly
+  this situation) needed the one new row added; nothing derives it from the corpus automatically by
+  design. Caught by `tests::every_alternate_whose_bonus_lands_on_a_total_this_engine_computes...`.
+  Fixed. Retro near-miss emitted.
+- Wired the new book through every consumer surface: `race_catalog.rs` (`RACE_CORPUS_BOOKS`,
+  `RACE_CATALOG_BOOKS`, `BOOK_B2`/`book_code`), `corpus_ingest_diagnostic.rs`
+  (`diagnostic_book_id("B2")` — the exact class of bug its own doc comment names for CRB/B1, just not
+  yet hit for this book), `reach_gate.rs` (`("bestiary_2","races")` and `("bestiary_2",
+  "race_traits")` claims, both using the same `races_reach`/`race_traits_reach` helpers CRB/B1
+  already use — no new mechanism), and `race_resolver.rs`'s two hand-modelled tables `RACE_SIZES`
+  (Fetchling/Ifrit/Oread/Sylph/Undine Medium, Grippli Small — each value the race's real `~ Size`
+  row's `TEMPLATE:SIZE_` token) and `ALTERNATE_TRAIT_REPLACE_FLAGS` (48 new entries, values read
+  verbatim off the committed corpus, not hand-typed).
+- **A genuine, evidenced reach shortfall, recorded rather than hidden.** 3 of the batch's new Inner
+  Sea Races records — `Mostly Human ~ Ifrit/Sylph/Undine ~ Languages` — carry a positive
+  `PREFACT:1,ABILITIES,<Race>_ReplaceLanguages=True` gate, but no ARG or ISR alternate for those 3
+  races sets that flag (verified: grepped every alternate's `sets_replace_flags` for the three races,
+  none contains it). Oread's sibling row (`Mostly Human ~ Oread ~ Languages`) DOES reach, because
+  `Oread ~ Isolated` sets `Oread_ReplaceLanguages` — the one working case is what proves the other
+  three are a real upstream content gap, not a resolver defect. Added to
+  `reach_gate.rs`'s `UNREACHED_RECORD_FINDINGS` (extending the existing
+  `inner_sea_races`/`race_traits` entry) alongside the pre-existing `Human ~ Tribalistic Languages`
+  case, same shape.
+- **Two `LICENSE.json` restatements**, each the real on-disk count, not adjusted to make a test
+  pass: `advanced_race_guide/LICENSE.json` `records_processed` 649 → 694 (+45, this batch's ARG
+  alternates). `inner_sea_races/LICENSE.json` `records_processed` 71 → 82 (+11) and
+  `records_redacted` 18 → 22 (+4: `Fetchling ~ Shadow Agent`, `Grippli ~ Defensive Training`,
+  `Ifrit ~ Brazen Flame`, `Undine ~ Triton Magic`, each confirmed by direct inspection to name real
+  Golarion Product Identity or declare `DESCISPI:YES`). **Self-caught a wrong first draft here**: the
+  failing test's error message listed 4 record names alphabetically from the full 22-record redacted
+  set, not the 4 that were new; a first pass misread that as "4 pre-existing records became newly
+  redacted by this cycle's regen" and wrote that into the LICENSE.json note. `git diff HEAD` on each
+  of those 4 named files showed only `ingested_at` moved, `pi_marker` unchanged — corrected before
+  committing. Retro correction emitted.
+- **Full downstream test fallout, all fixed, none skipped/weakened.** Every hand-maintained table or
+  pinned count this batch moved was located by running the real test suites (root `--lib`, root
+  `--no-fail-fast` full sweep, desktop crate, 4 targeted `tests/sd27_*` integration files, frontend
+  `npm test`) and fixing forward — 4 iterations across roughly 20 individual pinned-count/table
+  updates, no test's assertion loosened or removed, two genuine content defects fixed rather than
+  worked around (see above).
+
+**DoD-8 on-screen verification — driven, not simulated.** `RUN_DESKTOP_AGENT=sd31-e1-chassis`
+exported before every `driver.sh` call. Launched the real desktop app (`npm ci` + `driver.sh launch`,
+own `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-e1-chassis-desktop`), then:
+
+1. **Race Traits catalog**, filtered to Fetchling: real ability-score line
+   ("+2 Dexterity, +2 Charisma, -2 Wisdom"), real size ("Medium"), real speed ("Normal Speed...
+   base speed of 30 feet"), and `Shadow Blending`'s description rendering "50% miss chance... 20%
+   miss chance" — a single `%`, confirming the escape fix reached the shipped screen, not just the
+   test suite.
+2. **Character creation form**, race set to Fetchling: the ability-score panel shows
+   "Fetchling racial modifiers: +2 DEX, -2 WIS, +2 CHA" and the CALCULATED column shows the
+   modifiers actually applied (DEX 14→16, WIS 12→10, CHA 8→10) — not text-only, the number moved.
+   Size field reads "Medium". The Alternate Racial Traits panel lists real ARG/ISR content
+   including `Shadow Agent · ISR p.215` rendering `[redacted PI]` — on-screen confirmation the PI
+   screen fires correctly too.
+3. **Created the character** ("SD31 E1 Fetchling Test"): "Your character was computed and saved,"
+   with real combat totals (AC 17, Melee +5, BAB +1, Fort +4, Reflex +3, Will +0) — the full compute
+   pipeline ran end to end for a brand-new race, not a static display.
+
+Screenshots committed: `artifacts/SD31-E1-F1-001/dod8-{01,02,03}-*.png`.
+
+### 3. F3 — ceiling release to Epic 6, and the re-derived workable pool
+
+**`epic-6-ingest-lanes` F3/F4 gate, `kanban.md`, updated in the same commit as this receipt** to name
+the landed batch: *Bestiary 2's 6 races (Fetchling, Grippli, Ifrit, Oread, Sylph, Undine) — Dhampir
+deferred, heritage/subrace shape*. Per the gate's own per-batch design, `epic-6-ingest-lanes` may now
+claim the `race`/`race_trait` lane for books whose rows reference only these 6 races (plus the
+original 18); Dhampir-referencing rows remain gated.
+
+**No `race`/`race_trait` unit marked `done` by this epic** — verified this is true both by
+construction (no code in this cycle writes to `docs/work-inventory.json`'s committed copy at all;
+the wave rule already forbids committing it) and by re-deriving the doneness-verdict ladder locally
+as a measurement only (see below), never persisted.
+
+**Guarded regen run locally to measure the delta** (per the wave rule — not committed;
+`git checkout -- docs/work-inventory.json` run immediately after measuring):
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-e1-chassis.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-e1-chassis.json
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-e1-chassis.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-e1-chassis.json \
+  cargo run --locked --bin v06_work_inventory
+```
+Guard reported clean (no stamp loss); `derived_evaluator_fixture_check` found 1 pre-existing,
+unrelated failure (`advanced_players_guide:equipment:spindle_of_perfect_knowledge`) — an equipment
+row this cycle never touched, not a regression.
+
+Measured delta, `race_trait` kind (3,447 total, unchanged by definition):
+
+| figure | before | after | Δ |
+|---|---:|---:|---:|
+| chassis-blind (`evidence=="race_trait_race_not_modelled"`) | 2,689 | 2,576 | **-113** |
+| `done` (doneness-ladder: `wiring_class=="computed" && status=="grounded"`) | 266 | 316 | **+50** |
+| workable (total − chassis-blind) | 758 | 871 | **+113** |
+| workable-and-not-yet-done (the real Epic-6 backlog this batch opened) | 492 | 555 | **+63** |
+
+`race` kind: 0 `done` before and after (0 of 103) — unaffected, correctly: chassis-building alone
+grounds no `race`-kind unit under the doneness ladder without an ingest claim, and none was made.
+
+**The often-quoted "553" figure could not be reproduced** by any derivation this cycle tried (the
+closest, workable-and-not-yet-done pre-batch, is 492, not 553) and is not asserted to be either
+right or wrong here — re-deriving what it was originally measuring is out of this cycle's bounded
+scope. The four figures above are re-derived fresh, each with its command, and are the ones this
+receipt stands behind.
+
+### 4. Gate
+
+Launched early, in the background, while the receipt was written. First run surfaced 7 real test
+failures (all pinned counts this batch's own corpus growth moved, one hand-maintained table
+addition, and 2 genuine content defects — see §2) plus a frontend-test failure (1 file, same class);
+all fixed, then a second full run launched to confirm:
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E1-F1-001-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+**Run 1:** `VERIFY_EXIT=1` (`root-full` 7 tests, `frontend-test` 1 file — all fixed, §2). **Run 2:**
+`VERIFY_EXIT=1` again — a second, book-specific `LICENSE.json` gap this time (`bestiary_2`'s own
+`records_processed` needed 731 → 794 for the batch's 6 chassis + 57 standard-trait records; fixed the
+same way as the other two `LICENSE.json` restatements in §2) plus one more hand-pinned `156` this
+cycle's earlier sweep missed, in `corpus_ingest_diagnostic.rs`'s
+`the_two_ingested_books_totals_reconcile_with_their_license_artifacts` (156 → 201, same ARG figure as
+everywhere else). **Run 3 confirmed green:**
+```
+==> SUMMARY
+  passed:  21  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+                reachability-audit-selftest reachability-audit pi-sweep audit-selftest
+                reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full
+                desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck
+                clippy class-dump
+RESULT: PASS
+VERIFY_EXIT=0
+```
+21/21 stages, including `reachability-audit` unchanged at **94.53 %** (no ceiling regression),
+`root-full` **6,412 passed across 548 suites** (all 527 `tests/*.rs` suites executed — up from 6,398
+on the pre-cycle baseline), `desktop` **445 passed**, `frontend-test` **99/99 files**, `clippy` 0
+errors. Corroborated by the log's own `SUMMARY` block, not inferred from a harness wrapper status.
+Full log: `artifacts/SD31-E1-F1-001-verify.log`.
+
+**Baseline movement, logged not fixed this cycle** (per `decisions.md` convention — a separate
+reviewable commit): `scripts/verify-baselines.env`'s `BASELINE_ROOT_LIB_TESTS` (1776→1777) and
+`BASELINE_ROOT_TEST_BINARIES` (547→548) both **pre-date this cycle** — already flagged stale in
+`OPEN-ISSUES.md` row 7 by the prior `SD31-W1-INTEGRATE-001` cycle, which measured 1777/548 before
+this cycle touched anything. `BASELINE_ROOT_FULL_TESTS` moved again on top of that pre-existing
+drift: that cycle measured 6411, this cycle measures **6412** — a further +1, consistent with (not
+independently attributed beyond) the one new `#[test]` this cycle added
+(`ingest_races.rs::literal_percent_escape_renders_as_a_single_percent_sign`).
+`BASELINE_CORPUS_LITERAL_RECORDS` moved 3516→3635 (+119) — plausibly this cycle's new corpus records
+(6 chassis + 57 standard traits + 56 alternates) but not independently re-derived term-by-term
+against that exact figure. All left unedited, same convention as `OPEN-ISSUES.md` row 7.
+
+**Two process gaps self-caught, both harmless, both recorded rather than smoothed over.**
+
+1. `RETRO_ACTOR` was exported once at cycle start but each subsequent Bash call is a fresh shell, so
+   it did not persist — `verify.sh`'s own auto-emitted verification events from this cycle's first
+   two runs landed under actor `wf_49e8e5da-ca5-3` (the worktree name) rather than
+   `sd31-e1-chassis`, exactly the failure mode `loop-instruction-template.md §2.1` warns about.
+   Corrected for this cycle's own explicit retro events (`--actor sd31-e1-chassis` passed inline
+   every time from this point on); the two mis-attributed auto-events are left as-is in
+   `docs/retro/events/wf_49e8e5da-ca5-3.jsonl` rather than edited after the fact.
+2. **Run 2 and Run 3 briefly overlapped**: Run 3 was launched without first confirming (via the
+   process table, not the log's apparent completion) that Run 2's `run_verify.sh` process had
+   actually exited. Both held an independent `O_TRUNC` open on the same log path and wrote at
+   different speeds, so the file's tail briefly showed Run 2's completed `FAIL` summary followed by
+   Run 3's later, longer `PASS` summary in the same file — confusing to read, but harmless: neither
+   process writes to source files, only runs tests against the (already-fixed) tree, and the process
+   table (`pstree -p`, `pgrep -f run_verify.sh`) resolved which content was real before it was
+   trusted. Retro near-miss emitted (`sd31-e1-chassis.jsonl`); the lesson generalizes "one writer per
+   tree" to "one writer per shared output path," even within a single agent's own sequential
+   launches.
+

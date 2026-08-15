@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:15Z",
+  "data": {
+    "key": "Gloom Shimmer ~ Spell-Like Abilities",
+    "name": "Spell-Like Abilities",
+    "race_key": "Fetchling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Fetchling Racial Trait",
+      "SpecialQuality",
+      "SpellLike"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [],
+    "description": "A gloom shimmer fetchling can use disguise self once per day as a spell-like ability. He can assume the form of any humanoid creature using this spell-like ability. When a fetchling reaches 9th level in any combination of classes, he gains displacement as a spell-like ability usable twice per day, and at 13th level, he gains plane shift (self only, to the Shadow Plane or the Material Plane only) usable once per day. A fetchling's caster level is equal to his total Hit Dice.",
+    "source_page": "p.108",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gloom Shimmer ~ Spell-Like Abilities"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Fetchling Racial Trait.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A gloom shimmer fetchling can use disguise self once per day as a spell-like ability. He can assume the form of any humanoid creature using this spell-like ability. When a fetchling reaches 9th level in any combination of classes, he gains displacement as a spell-like ability usable twice per day, and at 13th level, he gains plane shift (self only, to the Shadow Plane or the Material Plane only) usable once per day. A fetchling's caster level is equal to his total Hit Dice."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Disguise Self (humanoid only)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Displacement|PRELEVEL:MIN=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Plane Shift (self only/to Shadow or Material Plane)|PRELEVEL:MIN=13"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "RacialSLA_Displacement_Times",
+          "2",
+          "TYPE=Base"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 462,
+    "record_key": "Gloom Shimmer ~ Spell-Like Abilities"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

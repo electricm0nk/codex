@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:03Z",
+  "data": {
+    "key": "Fetchling ~ Size",
+    "name": "Medium",
+    "race_key": "Fetchling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Fetchling Racial Trait",
+      "Fetchling Racial Default",
+      "SpecialQuality",
+      "Racial Size"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Fetchling_ReplaceSize",
+    "sets_replace_flags": [],
+    "description": "Fetchlings are Medium creatures and receive no bonuses or penalties due to their size.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fetchling ~ Size"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality.Racial Size"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Fetchling_ReplaceSize=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Fetchlings are Medium creatures and receive no bonuses or penalties due to their size."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "SIZE_M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/fetchling/fetchling_abilities_race.lst",
+    "sha256": "9eb9117928a30be812bb51725014116c0318a597f074725243b9b0f8e2860b28",
+    "line": 16,
+    "record_key": "Fetchling ~ Size"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

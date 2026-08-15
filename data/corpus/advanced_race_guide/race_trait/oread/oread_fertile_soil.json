@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:15Z",
+  "data": {
+    "key": "Oread ~ Fertile Soil",
+    "name": "Fertile Soil",
+    "race_key": "Oread",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Oread Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Oread_ReplaceEarthAffinity"
+    ],
+    "description": "Oread sorcerers with the verdant bloodline treat their Charisma score as 2 points higher for all sorcerer spells and class abilities. Oread clerics with the Plant domain use their domain powers and spells at +1 caster level. This racial trait replaces earth affinity.",
+    "source_page": "p.144",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oread ~ Fertile Soil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Oread Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Oread ~ Fertile Soil],[!PREFACT:1,ABILITIES,Oread_ReplaceEarthAffinity=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Oread sorcerers with the verdant bloodline treat their Charisma score as 2 points higher for all sorcerer spells and class abilities. Oread clerics with the Plant domain use their domain powers and spells at +1 caster level."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces earth affinity.|!PREABILITY:1,CATEGORY=Special Ability,Oread ~ Fertile Soil"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Affinity Sorcerer Bonus|PREMULT:2,[PRECLASS:1,Sorcerer=1],[PREABILITY:1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Verdant]"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "FACT",
+        "value": "Oread_ReplaceEarthAffinity|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "DOMAIN.Plant",
+          "1",
+          "PREMULT:2,[PRECLASS:1,Cleric=1],[PREDOMAIN:1,Plant]"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Sorcerer_VerdantTanglevine_CMB",
+          "1",
+          "PREMULT:2,[PRECLASS:1,Sorcerer=1],[PREABILITY:1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Verdant]"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 632,
+    "record_key": "Oread ~ Fertile Soil"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

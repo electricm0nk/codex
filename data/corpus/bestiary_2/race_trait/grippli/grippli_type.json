@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:03Z",
+  "data": {
+    "key": "Grippli ~ Type",
+    "name": "Grippli",
+    "race_key": "Grippli",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Grippli Racial Trait",
+      "Grippli Racial Default",
+      "SpecialQuality",
+      "Racial Type"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Grippli_ReplaceType",
+    "sets_replace_flags": [],
+    "description": "Gripplis are humanoids with the grippli subtype.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Grippli ~ Type"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Grippli Racial Trait.Grippli Racial Default.SpecialQuality.Racial Type"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Grippli_ReplaceType=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Gripplis are humanoids with the grippli subtype."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Humanoid|Grippli"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/grippli/grippli_abilities_race.lst",
+    "sha256": "bfff9461d0fa6795c3e821fef386c34a2d1c85a029a4cad17343a512cf056f5f",
+    "line": 15,
+    "record_key": "Grippli ~ Type"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:03Z",
+  "data": {
+    "key": "Fetchling ~ Skilled",
+    "name": "Skilled",
+    "race_key": "Fetchling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Fetchling Racial Trait",
+      "Fetchling Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Fetchling_ReplaceSkilled",
+    "sets_replace_flags": [],
+    "description": "Fetchlings have a +2 racial bonus on Knowledge (planes) and Stealth checks.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fetchling ~ Skilled"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Fetchling_ReplaceSkilled=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Fetchlings have a +2 racial bonus on Knowledge (planes) and Stealth checks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Knowledge (planes), +2 Stealth"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Knowledge (Planes),Stealth",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/fetchling/fetchling_abilities_race.lst",
+    "sha256": "9eb9117928a30be812bb51725014116c0318a597f074725243b9b0f8e2860b28",
+    "line": 20,
+    "record_key": "Fetchling ~ Skilled"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -216,6 +216,12 @@ fn diagnostic_book_id(race_catalog_book_code: &str) -> String {
         "CRB" => "crb".to_string(),
         "B1" => "beastiary1".to_string(),
         "ARG" => "advanced_race_guide".to_string(),
+        // SD-31 Epic 1-F2 (2026-08-15). Without this arm the race count for
+        // Bestiary 2's 6 new races is computed under key "B2" but
+        // `book_status("bestiary_2", ...)` looks it up by "bestiary_2" --
+        // same mismatch class `diagnostic_book_id`'s own doc comment names
+        // for CRB/B1/ARG, just not yet hit for this book.
+        "B2" => "bestiary_2".to_string(),
         other => other.to_string(),
     }
 }
@@ -1071,8 +1077,9 @@ mod tests {
         // reader has to infer from an absence.
         assert!(
             !arg_book.content_kind_counts.contains_key("race_traits"),
-            "ARG's 156 racial-trait records are corpus-JSON-only; see the module doc for why \
-             they are accounted for in LICENSE.json rather than here"
+            "ARG's 201 racial-trait records (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15) are \
+             corpus-JSON-only; see the module doc for why they are accounted for in \
+             LICENSE.json rather than here"
         );
     }
 
@@ -1120,13 +1127,15 @@ mod tests {
     /// — so agreement between them is real evidence rather than a tautology,
     /// and a table that silently loses records shows up as a mismatch here.
     ///
-    /// ARG's 156 corpus-JSON-only racial traits are the one declared
-    /// difference, stated as a number here rather than waved at, so the two
-    /// artifacts reconcile exactly.
+    /// ARG's 201 corpus-JSON-only racial traits (156 -> 201 by SD-31 Epic
+    /// 1-F2, 2026-08-15) are the one declared difference, stated as a number
+    /// here rather than waved at, so the two artifacts reconcile exactly.
     #[test]
     fn the_two_ingested_books_totals_reconcile_with_their_license_artifacts() {
         for (book_id, corpus_dir, corpus_only_records) in [
-            ("advanced_race_guide", "advanced_race_guide", 156u32),
+            // 156 -> 201 by SD-31 Epic 1-F2 (2026-08-15): Bestiary 2's 6-race
+            // batch added 45 more ARG race_trait records.
+            ("advanced_race_guide", "advanced_race_guide", 201u32),
             ("pathfinder_unchained", "pathfinder_unchained", 0),
         ] {
             let response = build_corpus_ingest_diagnostic();
@@ -1230,6 +1239,14 @@ mod tests {
              convention is that a content-kind row means real records — so the honest \
              rendering of zero here is no row, not `races: 0`"
         );
+        assert_eq!(
+            races("bestiary_2"),
+            Some(6),
+            "Bestiary 2's six races (SD-31 Epic 1-F2, 2026-08-15) -- the first race batch \
+             this panel has reported since Bestiary 1's, and proof the \
+             `diagnostic_book_id(\"B2\")` mapping this batch added actually attaches the \
+             count to the right book row"
+        );
     }
 
     /// The number the panel reports must be the number a player can actually
@@ -1251,7 +1268,11 @@ mod tests {
             creatable.len(),
             "the panel's per-book race counts must sum to exactly the races the catalog serves"
         );
-        assert_eq!(panel_total, 18, "18 in-scope races today: CRB's 7 plus Bestiary 1's 11");
+        assert_eq!(
+            panel_total, 24,
+            "24 in-scope races today: CRB's 7 plus Bestiary 1's 11 plus Bestiary 2's 6 \
+             (SD-31 Epic 1-F2, 2026-08-15)"
+        );
     }
 
     /// A book with no race content must not grow a misleading `races: 0` row —

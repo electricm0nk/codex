@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:15Z",
+  "data": {
+    "key": "Grippli ~ Toxic Skin",
+    "name": "Toxic Skin",
+    "race_key": "Grippli",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Grippli Racial Trait",
+      "SpecialAttack",
+      "Special Attack",
+      "Extraordinary"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Grippli_ReplaceSwampStride",
+      "Grippli_ReplaceCamouflage"
+    ],
+    "description": "Once per day as a swift action, a grippli can create a poison that can be applied to a weapon or delivered as a touch attack. Alternatively, the grippli can smear the poison on its own body as a standard action, affecting the first creature to hit it with an unarmed strike or natural weapon. The poison loses its potency after 1 hour. The grippli is immune to its own poison. This racial trait replaces swamp stride and camouflage.",
+    "source_page": "p.190",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Grippli ~ Toxic Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Grippli Racial Trait.SpecialAttack.Special Attack.Extraordinary"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Grippli ~ Toxic Skin],[!PREFACT:1,ABILITIES,Grippli_ReplaceSwampStride=True,Grippli_ReplaceCamouflage=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a swift action, a grippli can create a poison that can be applied to a weapon or delivered as a touch attack. Alternatively, the grippli can smear the poison on its own body as a standard action, affecting the first creature to hit it with an unarmed strike or natural weapon. The poison loses its potency after 1 hour. The grippli is immune to its own poison."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces swamp stride and camouflage.|!PREABILITY:1,CATEGORY=Special Ability,Grippli ~ Toxic Skin"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grippli ~ Toxic Skin ~ Grippli Poison"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.190"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Grippli Toxic Skin"
+      },
+      {
+        "key": "FACT",
+        "value": "Grippli_ReplaceSwampStride|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Grippli_ReplaceCamouflage|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 908,
+    "record_key": "Grippli ~ Toxic Skin"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

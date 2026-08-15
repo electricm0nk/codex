@@ -314,10 +314,11 @@ fn no_offered_alternate_racial_trait_can_ever_be_refused_for_an_inert_flag() {
         }
     }
     assert_eq!(
-        checked, 282,
+        checked, 330,
         "ARG's 153 + Monster Codex's 4 + APG's 1 + Inner Sea Races' 67 + Horror Adventures' 41 \
          + Core Essentials' 16 heritages, selectable alternates (SD-29 decisions.md §44, §45, \
-         §47, §49). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller \
+         §47, §49) + SD-31 Epic 1-F2's 48 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, \
+         2026-08-15). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller \
          corpus"
     );
 }
@@ -359,6 +360,11 @@ fn the_two_gate_sources_agree_wherever_both_speak() {
         }
     }
 
-    assert_eq!(from_row, 166, "rows whose own !PREFACT declares the gate");
+    assert_eq!(
+        from_row,
+        223,
+        "rows whose own !PREFACT declares the gate (166 -> 223: SD-31 Epic 1-F2's 57 new \
+         standard rows, 2026-08-15, all of which declare their own !PREFACT)"
+    );
     assert_eq!(from_globalvar, 9, "Aasimar's nine, whose only declaration is the globalvar file");
 }

@@ -1,0 +1,86 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:15Z",
+  "data": {
+    "key": "Ifrit ~ Wildfire Heart",
+    "name": "Wildfire Heart",
+    "race_key": "Ifrit",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Ifrit Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Ifrit_ReplaceEnergyResistance"
+    ],
+    "description": "Ifrits with this trait are as swift and dangerous as a blazing wildfire. They gain a +4 racial bonus on initiative checks. This racial trait replaces energy resistance.",
+    "source_page": "p.127",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ifrit ~ Wildfire Heart"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ifrit Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Ifrit ~ Wildfire Heart],[!PREFACT:1,ABILITIES,Ifrit_ReplaceEnergyResistance=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Ifrits with this trait are as swift and dangerous as a blazing wildfire. They gain a +4 racial bonus on initiative checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces energy resistance.|!PREABILITY:1,CATEGORY=Special Ability,Ifrit ~ Wildfire Heart"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.127"
+      },
+      {
+        "key": "FACT",
+        "value": "Ifrit_ReplaceEnergyResistance|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "INITIATIVE",
+          "4",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 550,
+    "record_key": "Ifrit ~ Wildfire Heart"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

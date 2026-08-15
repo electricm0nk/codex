@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:15Z",
+  "data": {
+    "key": "Undine ~ Deepsight",
+    "name": "Deepsight",
+    "race_key": "Undine",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Undine Racial Trait",
+      "SpecialQuality",
+      "Special Ability",
+      "Vision"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Undine_ReplaceVision"
+    ],
+    "description": "The eyes of some undines are especially adapted to the lightless depths of the oceans, but not to air-filled environments. An undine with this racial trait has darkvision 120 feet when underwater, but otherwise has no darkvision at all. This racial trait replaces darkvision.",
+    "source_page": "p.175",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undine ~ Deepsight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Undine Racial Trait.SpecialQuality.Special Ability.Vision"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Undine ~ Deepsight],[!PREFACT:1,ABILITIES,Undine_ReplaceVision=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The eyes of some undines are especially adapted to the lightless depths of the oceans, but not to air-filled environments. An undine with this racial trait has darkvision 120 feet when underwater, but otherwise has no darkvision at all."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces darkvision.|!PREABILITY:1,CATEGORY=Special Ability,Undine ~ Deepsight"
+      },
+      {
+        "key": "VISION",
+        "value": "Deepsight (120)"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.175"
+      },
+      {
+        "key": "FACT",
+        "value": "Undine_ReplaceVision|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 778,
+    "record_key": "Undine ~ Deepsight"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -773,7 +773,11 @@ mod tests {
     fn already_ingested_keys_reads_real_keys_off_disk_not_a_hand_list() {
         let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus/advanced_race_guide/race_trait");
         let keys = already_ingested_keys(&dir);
-        assert_eq!(keys.len(), 156, "ARG's 156 ingested race-trait keys");
+        assert_eq!(
+            keys.len(),
+            201,
+            "ARG's 201 ingested race-trait keys (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15)"
+        );
         assert!(keys.contains("Dwarf ~ Ancient Enmity"), "the exact collision this fix exists for");
         assert!(!keys.contains("Half-Orc ~ Plagueborn"), "APG's one genuinely unique key must not be in ARG's set");
     }
