@@ -86,6 +86,12 @@ pub(crate) const RACE_CORPUS_BOOKS: &[&str] = &[
     "inner_sea_races",
     "horror_adventures",
     "core_essentials",
+    // Bestiary 2, SD-31 Epic 1-F2 (2026-08-15): the chassis + standard
+    // traits for 6 newly-modelled races (`ingest_races::IN_SCOPE_RACES`),
+    // filed under `bestiary_2` per `advanced_race_guide.pcc`'s own
+    // `# B2 races` section, exactly the way core_rulebook/beastiary already
+    // are.
+    "bestiary_2",
 ];
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
@@ -120,10 +126,17 @@ const BOOK_HA: &str = "HA";
 /// doc: a record's book is the corpus directory it was loaded from).
 /// SD-29 race-trait lane, round 4.
 const BOOK_CE: &str = "CE";
+/// Bestiary 2. SD-31 Epic 1-F2 (2026-08-15): the first race-chassis batch
+/// this project has added since the original 18 (`decisions.md §25.3`).
+/// Loaded exactly like `core_rulebook`/`beastiary` — `ingest_races` files
+/// its 6 races' chassis and standard traits here, so unlike ARG/APG/MC/
+/// ISR/HA/CE it DOES contribute catalog rows (see `RACE_CATALOG_BOOKS`
+/// below).
+const BOOK_B2: &str = "B2";
 
 /// Every book code this catalog can emit. ARG is a *loadable* book here but
 /// contributes no rows — see this module's doc comment.
-pub const RACE_CATALOG_BOOKS: &[&str] = &[BOOK_CRB, BOOK_B1];
+pub const RACE_CATALOG_BOOKS: &[&str] = &[BOOK_CRB, BOOK_B1, BOOK_B2];
 
 /// Maps a corpus book directory name to its wire code. An unrecognized book
 /// id passes through verbatim rather than being silently relabelled, so a
@@ -144,6 +157,7 @@ pub(crate) fn book_code(book_id: &str) -> String {
         "inner_sea_races" => BOOK_ISR.to_string(),
         "horror_adventures" => BOOK_HA.to_string(),
         "core_essentials" => BOOK_CE.to_string(),
+        "bestiary_2" => BOOK_B2.to_string(),
         other => other.to_string(),
     }
 }
@@ -489,12 +503,26 @@ mod tests {
         assert_eq!(count_for(&response, "Tengu"), 10);
         assert_eq!(count_for(&response, "Tiefling"), 10);
 
+        // The 6 Bestiary 2 races, SD-31 Epic 1-F2 (2026-08-15) -- the first
+        // chassis batch since the original 18. Every one of the 57 corpus
+        // rows this batch added is a `<Race> Racial Default` row (re-derived:
+        // `find data/corpus/bestiary_2/race_trait -name '*.json'` gives the
+        // per-race counts below, and every one of the 57 records'
+        // `is_racial_default` is `true`), so `count_for` equals each race's
+        // whole standard-trait count with none held back as non-default.
+        assert_eq!(count_for(&response, "Fetchling"), 11);
+        assert_eq!(count_for(&response, "Grippli"), 10);
+        assert_eq!(count_for(&response, "Ifrit"), 9);
+        assert_eq!(count_for(&response, "Oread"), 9);
+        assert_eq!(count_for(&response, "Sylph"), 9);
+        assert_eq!(count_for(&response, "Undine"), 9);
+
         // Pinned as a total as well as per race so a race silently dropping
-        // out cannot be masked by another race growing.
-        assert_eq!(response.entries.len(), 173);
+        // out cannot be masked by another race growing. 173 + 57 = 230.
+        assert_eq!(response.entries.len(), 230);
 
         let races: BTreeSet<&str> = response.entries.iter().map(|e| e.race_id.as_str()).collect();
-        assert_eq!(races.len(), 18, "18 in-scope races: {races:?}");
+        assert_eq!(races.len(), 24, "24 in-scope races: {races:?}");
     }
 
     /// The regression guard for the identity change: `reach_gate::races_reach`
@@ -548,12 +576,15 @@ mod tests {
              reach the response — an unreachable code is the exact defect this widening fixes"
         );
 
-        // Derived, not assumed: 67 CRB rows + 106 Bestiary 1 rows = 173.
+        // Derived, not assumed: 67 CRB rows + 106 Bestiary 1 rows + 57
+        // Bestiary 2 rows (SD-31 Epic 1-F2, 2026-08-15) = 230.
         let crb = response.entries.iter().filter(|e| e.book == BOOK_CRB).count();
         let b1 = response.entries.iter().filter(|e| e.book == BOOK_B1).count();
+        let b2 = response.entries.iter().filter(|e| e.book == BOOK_B2).count();
         assert_eq!(crb, 67);
         assert_eq!(b1, 106);
-        assert_eq!(crb + b1, response.entries.len());
+        assert_eq!(b2, 57);
+        assert_eq!(crb + b1 + b2, response.entries.len());
     }
 
     /// ARG declares zero races and zero racial defaults (`decisions.md §25`),
@@ -594,11 +625,15 @@ mod tests {
         let alternates: usize =
             corpus.race_keys().iter().map(|key| corpus.alternate_traits(key).len()).sum();
         assert_eq!(
-            alternates, 282,
+            alternates, 330,
             "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
              Codex's 4 (SD-29 decisions.md §43) + APG's 1 (`Half-Orc ~ Plagueborn`) + Inner Sea \
              Races' 68 (§45) + Horror Adventures' 41 (§47) + Core Essentials' 16 heritages \
-             (§49). Two loaded records are not \
+             (§49) + SD-31 Epic 1-F2's 6 Bestiary 2 races' 48 (ARG's 42 + Inner Sea Races' 6 \
+             actually-Alternate rows; re-derived by role, not by the raw per-book row counts \
+             `ingest_race_traits` prints, which also include that batch's 8 `Unclassified` rows \
+             -- ARG 3, Inner Sea Races 5). \
+             Two loaded records are not \
              alternates at all and are correctly \
              outside this count: Monster Codex's `Oversized Goblin` and Inner Sea Races' \
              `Human ~ Tribalistic Languages`, both of which set no replace flag, so \

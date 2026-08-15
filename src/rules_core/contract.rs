@@ -454,7 +454,8 @@ pub const UNKNOWN_RACE_SIZE_DIAGNOSTIC_ID: &str = "encumbrance.race_size.unknown
 /// its real carrying capacity, a wrong load tier, and the wrong max-Dex cap and
 /// armor check penalty that follow from the tier — the identical defect
 /// `size.rs` was written to remove for Gnome and Halfling, still live for three
-/// more races. `race_resolver::race_size_for_race_token` covers all 18.
+/// more races. `race_resolver::race_size_for_race_token` covers all 24
+/// (widened from 18 by SD-31 Epic 1-F2, 2026-08-15).
 ///
 /// # Why there is still a fallback, and why it is no longer silent
 ///

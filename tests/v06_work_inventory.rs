@@ -447,7 +447,12 @@ fn arg_race_file_carries_favored_class_bonus_and_choice_suboption_rows_not_trait
             );
         }
     }
-    assert_eq!(checked, 156, "156 already-ingested ARG alternate racial trait records");
+    assert_eq!(
+        checked,
+        201,
+        "201 already-ingested ARG alternate racial trait records (156 -> 201 by SD-31 Epic \
+         1-F2, 2026-08-15)"
+    );
 }
 
 // ---------------------------------------------------------------------------

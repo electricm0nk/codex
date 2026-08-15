@@ -234,7 +234,15 @@ const BOOK_SOURCES: &[BookSource] = &[
 
 /// The 18 in-scope races (`decisions.md §25.3`), spelled exactly as the corpus
 /// spells them in its `TYPE:<Race> Racial Trait` component.
-const IN_SCOPE_RACES: [&str; 18] = [
+// Widened 18 -> 24 by SD-31 Epic 1-F2 (2026-08-15): Bestiary 2's 6
+// non-heritage races (Dhampir excluded -- see `ingest_races.rs`'s
+// `IN_SCOPE_RACES` doc comment for why). Kept in sync by hand with that
+// binary's own race table; `race_resolver::RaceCorpus::resolve` only
+// resolves a race whose chassis this OTHER binary (`ingest_races`) wrote,
+// so a race added only here and not there would collect alternate-trait
+// rows into a `race_trait/<race>/` directory `RaceCorpus::chassis()` never
+// populates -- loaded but permanently unreachable, not merely incomplete.
+const IN_SCOPE_RACES: [&str; 24] = [
     // Core Rulebook (7)
     "Dwarf",
     "Elf",
@@ -255,6 +263,13 @@ const IN_SCOPE_RACES: [&str; 18] = [
     "Svirfneblin",
     "Tengu",
     "Tiefling",
+    // Bestiary 2 (6), SD-31 Epic 1-F2
+    "Fetchling",
+    "Grippli",
+    "Ifrit",
+    "Oread",
+    "Sylph",
+    "Undine",
 ];
 
 const RACIAL_TRAIT_TYPE_SUFFIX: &str = " Racial Trait";
@@ -1664,11 +1679,18 @@ mod tests {
         // Per-book expected counts, re-derived on disk by this test itself.
         // Stated as a table so a book whose ingest silently stops writing
         // fails here by name rather than by a total that still adds up.
+        // ARG 156->201 and Inner Sea Races 71->82: SD-31 Epic 1-F2
+        // (2026-08-15) widened `IN_SCOPE_RACES` from 18 to 24 (Bestiary 2's
+        // 6 non-heritage races), so both books' alternate-trait rows for
+        // those 6 races now pass the in-scope filter for the first time.
+        // Re-derived on disk, not transcribed: `find data/corpus/
+        // advanced_race_guide/race_trait -name '*.json' | wc -l` -> 201;
+        // same for `inner_sea_races` -> 82.
         let expected: BTreeMap<&str, usize> =
             [
-                ("advanced_race_guide", 156usize),
+                ("advanced_race_guide", 201usize),
                 ("monster_codex", 5),
-                ("inner_sea_races", 71),
+                ("inner_sea_races", 82),
                 ("horror_adventures", 43),
                 // Core Essentials' Aasimar and Tiefling heritage traits
                 // (race-trait lane round 4): 16 heritage selectors + the 48
@@ -1738,13 +1760,14 @@ mod tests {
         }
         assert_eq!(
             total,
-            339,
-            "156 ARG + 5 Monster Codex + 71 Inner Sea Races + 43 Horror Adventures + 64 Core \
-             Essentials heritage records. This total sits alongside the per-book map above \
-             and must move with it; round 3 moved the map first and this pin caught the \
-             omission, round 4 did the same, and the companion lane hit it a third time in \
-             one cycle -- fixing one assertion reveals the next one below it, which is the \
-             whole reason the test states both"
+            395,
+            "201 ARG + 5 Monster Codex + 82 Inner Sea Races + 43 Horror Adventures + 64 Core \
+             Essentials heritage records (ARG/ISR moved from 156/71 by SD-31 Epic 1-F2, \
+             2026-08-15). This total sits alongside the per-book map above and must move \
+             with it; round 3 moved the map first and this pin caught the omission, round 4 \
+             did the same, the companion lane hit it a third time in one cycle, and this \
+             batch is the fourth -- fixing one assertion reveals the next one below it, \
+             which is the whole reason the test states both"
         );
     }
 
@@ -1757,20 +1780,21 @@ mod tests {
     }
 
     #[test]
-    fn in_scope_roster_is_exactly_the_18_races_decisions_25_3_names() {
-        assert_eq!(IN_SCOPE_RACES.len(), 18);
+    fn in_scope_roster_is_exactly_the_24_races_sd31_epic1_f2_names() {
+        // Widened 18 -> 24 by SD-31 Epic 1-F2 (2026-08-15); see this
+        // constant's own doc comment and `ingest_races.rs`'s matching
+        // `IN_SCOPE_RACES` table.
+        assert_eq!(IN_SCOPE_RACES.len(), 24);
         let unique: BTreeSet<&str> = IN_SCOPE_RACES.into_iter().collect();
-        assert_eq!(unique.len(), 18, "roster must not repeat a race");
-        // The out-of-scope races decisions.md §25.3 defers to SD-28 must not
-        // have crept in.
+        assert_eq!(unique.len(), 24, "roster must not repeat a race");
+        // The 6 Bestiary 2 races this batch added must actually be present.
+        for added in ["Fetchling", "Grippli", "Ifrit", "Oread", "Sylph", "Undine"] {
+            assert!(unique.contains(added), "{added} is SD-31 Epic 1-F2's batch and must be in scope");
+        }
+        // Still-out-of-scope races (`decisions.md §25.3`'s original deferral,
+        // minus the 6 this batch moved into scope) must not have crept in.
         for deferred in [
             "Dhampir",
-            "Fetchling",
-            "Grippli",
-            "Ifrit",
-            "Oread",
-            "Sylph",
-            "Undine",
             "Catfolk",
             "Ratfolk",
             "Suli",
@@ -1784,7 +1808,7 @@ mod tests {
             "Gillman",
             "Strix",
         ] {
-            assert!(!unique.contains(deferred), "{deferred} is deferred to SD-28 and must not be in scope");
+            assert!(!unique.contains(deferred), "{deferred} is still deferred and must not be in scope");
         }
     }
 }

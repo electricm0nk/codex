@@ -126,8 +126,9 @@ function loadTraits(): TraitRecord[] {
 
 /**
  * The two books that declare races of their own. ARG declares none — its
- * 156 records are alternates and flag-granted replacements layered over
- * these — so a *standard* racial trait is by definition one of these.
+ * 201 records (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15) are alternates and
+ * flag-granted replacements layered over these — so a *standard* racial
+ * trait is by definition one of these.
  */
 function loadStandardTraits(): TraitRecord[] {
   return (['core_rulebook', 'beastiary'] as const).flatMap((book) =>
@@ -274,7 +275,13 @@ function corpusVision(defaults: TraitRecord[]): string {
 function verifiesTheCorpusIsReallyOnDiskAndCarriesEighteenRaces() {
   const chassis = loadChassis();
   assertEqual(chassis.length, 18, 'race chassis records on disk');
-  assertEqual(loadTraits().length, 331, 'race trait records across all three books (CRB 67 + B1 108 + ARG 156)');
+  assertEqual(
+    loadTraits().length,
+    376,
+    'race trait records across all three books (CRB 67 + B1 108 + ARG 201; ARG 156 -> 201 by ' +
+      'SD-31 Epic 1-F2, 2026-08-15 -- this test only loads CRB/B1/ARG, so Bestiary 2\'s new ' +
+      'chassis is out of its scope, but ARG\'s own growth still moves this total)',
+  );
   const standard = loadStandardTraits();
   assertEqual(standard.length, 175, 'standard racial trait records (CRB 67 + B1 108)');
   const defaults = standard.filter((t) => t.is_racial_default);

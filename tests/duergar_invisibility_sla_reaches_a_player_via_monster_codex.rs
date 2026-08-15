@@ -91,6 +91,11 @@ const LOADED_BOOKS: &[&str] = &[
     // 2's (see `inner_sea_races` above). Widened rather than relaxed, both
     // times.
     "core_essentials",
+    // SD-31 Epic 1-F2 (2026-08-15): Bestiary 2's 6-race chassis batch. THIRD
+    // time this exact test has caught this exact omission -- this copy is
+    // edited in the same commit that adds a book to `RACE_CORPUS_BOOKS` from
+    // now on, not after the fact.
+    "bestiary_2",
 ];
 
 fn corpus_dirs() -> Vec<(&'static str, PathBuf)> {

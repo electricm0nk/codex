@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:03Z",
+  "data": {
+    "key": "Fetchling ~ Shadow Blending",
+    "name": "Shadow Blending",
+    "race_key": "Fetchling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Fetchling Racial Trait",
+      "Fetchling Racial Default",
+      "SpecialQuality",
+      "Supernatural",
+      "Defensive"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Fetchling_ReplaceShadowBlending",
+    "sets_replace_flags": [],
+    "description": "Attacks against a fetchling in dim light have a 50% miss chance instead of the normal 20% miss chance. This ability does not grant total concealment; it just increases the miss chance.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fetchling ~ Shadow Blending"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality.Supernatural.Defensive"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Fetchling_ReplaceShadowBlending=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Attacks against a fetchling in dim light have a 50%% miss chance instead of the normal 20%% miss chance. This ability does not grant total concealment; it just increases the miss chance."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Attacks against a you in dim light have a 50%% miss chance instead of the normal 20%% miss chance; this does not grant total concealment."
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/fetchling/fetchling_abilities_race.lst",
+    "sha256": "9eb9117928a30be812bb51725014116c0318a597f074725243b9b0f8e2860b28",
+    "line": 21,
+    "record_key": "Fetchling ~ Shadow Blending"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

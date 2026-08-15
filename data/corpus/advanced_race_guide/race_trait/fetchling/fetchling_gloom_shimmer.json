@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:15Z",
+  "data": {
+    "key": "Fetchling ~ Gloom Shimmer",
+    "name": "Gloom Shimmer",
+    "race_key": "Fetchling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Fetchling Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Fetchling_ReplaceSpellLikeAbilities"
+    ],
+    "description": "Some fetchlings can manipulate shadowy energy in order to displace their location instead of transporting between shadows. Upon reaching 9th level, instead of gaining shadow walk as a spell-like ability, these fetchlings gain displacement as a spell-like ability usable twice per day. For this ability, a fetchling's caster level is equal to his total Hit Dice. This racial trait modifies the spell-like ability racial trait.",
+    "source_page": "p.108",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fetchling ~ Gloom Shimmer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Fetchling Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Fetchling ~ Gloom Shimmer],[!PREFACT:1,ABILITIES,Fetchling_ReplaceSpellLikeAbilities=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some fetchlings can manipulate shadowy energy in order to displace their location instead of transporting between shadows. Upon reaching 9th level, instead of gaining shadow walk as a spell-like ability, these fetchlings gain displacement as a spell-like ability usable twice per day. For this ability, a fetchling's caster level is equal to his total Hit Dice."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait modifies the spell-like ability racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Fetchling ~ Gloom Shimmer"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fetchling Racial Trait|AUTOMATIC|Gloom Shimmer ~ Spell-Like Abilities"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      },
+      {
+        "key": "FACT",
+        "value": "Fetchling_ReplaceSpellLikeAbilities|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 455,
+    "record_key": "Fetchling ~ Gloom Shimmer"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

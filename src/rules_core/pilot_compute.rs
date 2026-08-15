@@ -9880,6 +9880,9 @@ const ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES: &[(&str, &str, i16, i16, i16)] = &
     ("Hobgoblin ~ Fearsome", "race:hobgoblin", 0, 4, 0),
     ("Human ~ Heart of the Mountain", "race:human", 2, 0, 0),
     ("Human ~ Heart of the Sea", "race:human", 0, 0, 2),
+    // SD-31 Epic 1-F2 (2026-08-15). `BONUS:SKILL|Diplomacy,Intimidate|2|
+    // TYPE=Racial` -- Diplomacy has no total here, so only Intimidate lands.
+    ("Grippli ~ Princely", "race:grippli", 0, 2, 0),
 ];
 
 /// The Climb / Intimidate / Swim racial bonus this character's chosen

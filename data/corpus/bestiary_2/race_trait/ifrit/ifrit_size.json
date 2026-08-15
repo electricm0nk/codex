@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:03Z",
+  "data": {
+    "key": "Ifrit ~ Size",
+    "name": "Medium",
+    "race_key": "Ifrit",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Ifrit Racial Trait",
+      "Ifrit Racial Default",
+      "SpecialQuality",
+      "Racial Size"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Ifrit_ReplaceSize",
+    "sets_replace_flags": [],
+    "description": "Ifrits are Medium creatures and receive no bonuses or penalties due to their size.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ifrit ~ Size"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ifrit Racial Trait.Ifrit Racial Default.SpecialQuality.Racial Size"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Ifrit_ReplaceSize=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Ifrits are Medium creatures and receive no bonuses or penalties due to their size."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "SIZE_M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ifrit/ifrit_abilities_race.lst",
+    "sha256": "d6fc2affc3f9c65ca0fe05c1c32eb3ad7baa5783e2ba641bb113c12a1b2a3305",
+    "line": 16,
+    "record_key": "Ifrit ~ Size"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

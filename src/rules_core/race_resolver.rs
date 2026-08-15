@@ -914,6 +914,13 @@ const RACE_SIZES: &[(&str, SizeCategory)] = &[
     ("Svirfneblin", SizeCategory::Small),  // TEMPLATE:SIZE_S
     ("Tengu", SizeCategory::Medium),       // TEMPLATE:SIZE_M
     ("Tiefling", SizeCategory::Medium),    // TEMPLATE:SIZE_M, over a chassis FACT:BaseSize|S
+    // Bestiary 2's 6, SD-31 Epic 1-F2 (2026-08-15).
+    ("Fetchling", SizeCategory::Medium),   // TEMPLATE:SIZE_M
+    ("Grippli", SizeCategory::Small),      // TEMPLATE:SIZE_S
+    ("Ifrit", SizeCategory::Medium),       // TEMPLATE:SIZE_M
+    ("Oread", SizeCategory::Medium),       // TEMPLATE:SIZE_M
+    ("Sylph", SizeCategory::Medium),       // TEMPLATE:SIZE_M
+    ("Undine", SizeCategory::Medium),      // TEMPLATE:SIZE_M
 ];
 
 /// Creature size for a loose race identifier — a `race:<slug>` character-input
@@ -955,10 +962,12 @@ pub fn race_size_for_race_token(race_id: &str) -> Option<SizeCategory> {
 /// # What the values are
 ///
 /// `RaceTraitCacheData::sets_replace_flags`, verbatim and in source order, for
-/// all 282 records [`RaceCorpus::alternate_traits`] classifies as
-/// [`TraitRole::Alternate`] across the 18 in-scope races — ARG's 153, Monster
+/// all 330 records [`RaceCorpus::alternate_traits`] classifies as
+/// [`TraitRole::Alternate`] across the 24 in-scope races — ARG's 153, Monster
 /// Codex's 4, the Advanced Player's Guide's 1, Inner Sea Races' 67 and Horror
-/// Adventures' 41, the last four landed by SD-29's race-trait lane. The three records that are *not* standalone
+/// Adventures' 41 (the last four landed by SD-29's race-trait lane), plus
+/// SD-31 Epic 1-F2's Bestiary 2 batch of 48 (ARG's 42 + Inner Sea Races' 6,
+/// 2026-08-15). The three records that are *not* standalone
 /// choices — `Feral ~ Languages`, `Scion of Humanity ~ Languages` and
 /// `Saltbeard ~ Dwarf ~ Greed`, all three [`TraitRole::FlagGranted`] — are
 /// deliberately absent: a player never selects them, they are granted by the
@@ -1184,6 +1193,52 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     ("Tiefling ~ Scaled Skin", &["Tiefling_ReplaceFiendishResistance"]),
     ("Tiefling ~ Soul Seer", &["Tiefling_ReplaceFiendishSorcery", "Tiefling_ReplaceSpellLikeAbility"]),
     ("Tiefling ~ Vestigial Wings", &["Tiefling_ReplaceSkilled"]),
+    // ---- Fetchling, Grippli, Ifrit, Oread, Sylph, Undine (SD-31 Epic 1-F2, 2026-08-15) ----
+    // Bestiary 2's 6-race chassis batch. Values read verbatim off
+    // `data/corpus/advanced_race_guide/race_trait/` for these races' new
+    // `TraitRole::Alternate` rows, the same way every row above was.
+    ("Fetchling ~ Emissary", &["Fetchling_ReplaceShadowBlending"]),
+    ("Fetchling ~ Gloom Shimmer", &["Fetchling_ReplaceSpellLikeAbilities"]),
+    ("Fetchling ~ Shadow Magic", &["Fetchling_ReplaceSkilled"]),
+    ("Fetchling ~ Subtle Manipulator", &["Fetchling_ReplaceSpellLikeAbilities"]),
+    ("Fetchling ~ World Walker", &["Fetchling_ReplaceSkilled"]),
+    ("Grippli ~ Glider", &["Grippli_ReplaceSwampStride"]),
+    ("Grippli ~ Jumper", &["Grippli_ReplaceCamouflage"]),
+    ("Grippli ~ Princely", &["Grippli_ReplaceSwampStride", "Grippli_ReplaceWeaponFamiliarity"]),
+    ("Grippli ~ Toxic Skin", &["Grippli_ReplaceSwampStride", "Grippli_ReplaceCamouflage"]),
+    ("Ifrit ~ Desert Mirage", &["Ifrit_ReplaceFireAffinity"]),
+    ("Ifrit ~ Efreeti Magic", &["Ifrit_ReplaceSpellLikeAbility"]),
+    ("Ifrit ~ Fire in the Blood", &["Ifrit_ReplaceFireAffinity"]),
+    ("Ifrit ~ Fire Insight", &["Ifrit_ReplaceFireAffinity"]),
+    ("Ifrit ~ Fire-Starter", &["Ifrit_ReplaceFireAffinity"]),
+    ("Ifrit ~ Forge-Hardened", &["Ifrit_ReplaceSpellLikeAbility"]),
+    ("Ifrit ~ Hypnotic", &["Ifrit_ReplaceFireAffinity"]),
+    ("Ifrit ~ Wildfire Heart", &["Ifrit_ReplaceEnergyResistance"]),
+    ("Oread ~ Crystalline Form", &["Oread_ReplaceEarthAffinity"]),
+    ("Oread ~ Earth Insight", &["Oread_ReplaceEarthAffinity"]),
+    ("Oread ~ Ferrous Growth", &["Oread_ReplaceSpellLikeAbility"]),
+    ("Oread ~ Fertile Soil", &["Oread_ReplaceEarthAffinity"]),
+    ("Oread ~ Granite Skin", &["Oread_ReplaceEnergyResistance"]),
+    ("Oread ~ Mountain-Born", &["Oread_ReplaceSpellLikeAbility"]),
+    ("Oread ~ Stone in the Blood", &["Oread_ReplaceEarthAffinity"]),
+    ("Oread ~ Treacherous Earth", &["Oread_ReplaceSpellLikeAbility"]),
+    ("Sylph ~ Air Insight", &["Sylph_ReplaceAirAffinity"]),
+    ("Sylph ~ Breeze-Kissed", &["Sylph_ReplaceAirAffinity"]),
+    ("Sylph ~ Like the Wind", &["Sylph_ReplaceEnergyResistance"]),
+    ("Sylph ~ Sky Speaker", &["Sylph_ReplaceSpellLikeAbility"]),
+    ("Sylph ~ Storm in the Blood", &["Sylph_ReplaceAirAffinity"]),
+    ("Sylph ~ Thunderous Resilience", &["Sylph_ReplaceEnergyResistance"]),
+    ("Sylph ~ Weather Savvy", &["Sylph_ReplaceSpellLikeAbility"]),
+    ("Sylph ~ Whispering Wind", &["Sylph_ReplaceSpellLikeAbility"]),
+    ("Undine ~ Acid Breath", &["Undine_ReplaceSpellLikeAbility"]),
+    ("Undine ~ Amphibious", &["Undine_ReplaceSpellLikeAbility"]),
+    ("Undine ~ Deepsight", &["Undine_ReplaceVision"]),
+    ("Undine ~ Flesh Chameleon", &["Undine_ReplaceEnergyResistance"]),
+    ("Undine ~ Hydrated Vitality", &["Undine_ReplaceWaterAffinity"]),
+    ("Undine ~ Nereid Fascination", &["Undine_ReplaceSpellLikeAbility"]),
+    ("Undine ~ Ooze Breath", &["Undine_ReplaceSpellLikeAbility"]),
+    ("Undine ~ Terrain Chameleon", &["Undine_ReplaceEnergyResistance"]),
+    ("Undine ~ Water Sense", &["Undine_ReplaceEnergyResistance"]),
 
     // ================= Inner Sea Races =================
     // SD-29 race-trait lane, round 2. 68 of the book's 72 in-scope rows set
@@ -1283,6 +1338,16 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     ("Tiefling ~ Bullying", &["Tiefling_ReplaceSkilled"]),
     ("Tiefling ~ Light from the Darkness", &["Tiefling_ReplaceSpellLikeAbility"]),
     ("Tiefling ~ Pass for Human", &["Tiefling_ReplaceType", "Tiefling_ReplaceLanguages"]),
+    // ---- Fetchling, Grippli, Ifrit, Oread, Sylph, Undine (SD-31 Epic 1-F2, 2026-08-15) ----
+    // Bestiary 2's 6-race chassis batch. Values read verbatim off
+    // `data/corpus/inner_sea_races/race_trait/` for these races' new
+    // `TraitRole::Alternate` rows, the same way every row above was.
+    ("Fetchling ~ Shadow Agent", &["Fetchling_ReplaceSkilled"]),
+    ("Grippli ~ Defensive Training", &["Grippli_ReplaceSwampStride", "Grippli_ReplaceWeaponFamiliarity"]),
+    ("Ifrit ~ Brazen Flame", &["Ifrit_ReplaceEnergyResistance", "Ifrit_ReplaceSpellLikeAbility"]),
+    ("Oread ~ Isolated", &["Oread_ReplaceEnergyResistance", "Oread_ReplaceLanguages"]),
+    ("Sylph ~ Secretive", &["Sylph_ReplaceSpellLikeAbility", "Sylph_ReplaceEnergyResistance"]),
+    ("Undine ~ Triton Magic", &["Undine_ReplaceSpellLikeAbility"]),
 
     // ================= Horror Adventures =================
     // SD-29 race-trait lane, round 3. 41 of the book's 43 in-scope rows in
@@ -1688,13 +1753,19 @@ mod tests {
 
     /// Every in-scope race's chassis loads through the real typed
     /// `CorpusRecordV1<RaceCacheData>` (not an untyped `Value` probe) and
-    /// license-validates. 18 races per `decisions.md §25.3`.
+    /// license-validates. 24 races: `decisions.md §25.3`'s original 18 plus
+    /// SD-31 Epic 1-F2's Bestiary 2 batch of 6 (2026-08-15).
     #[test]
-    fn all_eighteen_in_scope_races_load_from_the_real_on_disk_corpus() {
+    fn all_twenty_four_in_scope_races_load_from_the_real_on_disk_corpus() {
         let corpus = all_books();
-        assert_eq!(corpus.race_keys().len(), 18, "18 in-scope races: CRB 7 + Bestiary 1's 11");
+        assert_eq!(
+            corpus.race_keys().len(),
+            24,
+            "24 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6"
+        );
         assert_eq!(corpus.chassis("Dwarf").expect("Dwarf").book_id, "core_rulebook");
         assert_eq!(corpus.chassis("Tengu").expect("Tengu").book_id, "beastiary");
+        assert_eq!(corpus.chassis("Fetchling").expect("Fetchling").book_id, "bestiary_2");
         // ARG contributes traits, never a race chassis (decisions.md §25.2:
         // ARG declares zero races of its own).
         assert!(
@@ -1952,9 +2023,14 @@ mod tests {
             }
         }
         assert_eq!(
-            redacted, 27,
-            "Inner Sea Races' 18 PI-redacted records + Core Essentials' 9, counted on disk. \
+            redacted, 31,
+            "Inner Sea Races' 22 PI-redacted records + Core Essentials' 9, counted on disk. \
              Horror Adventures added 0: it is a rules supplement, not a campaign setting. \
+             ISR's 18 -> 22 by SD-31 Epic 1-F2 (2026-08-15): `Fetchling ~ Shadow Agent`, \
+             `Grippli ~ Defensive Training`, `Ifrit ~ Brazen Flame` and `Undine ~ Triton \
+             Magic` each name Golarion Product Identity in their prose and are correctly \
+             redacted; Bestiary 2's other two ISR alternates (`Oread ~ Isolated`, `Sylph ~ \
+             Secretive`) do not and are not. \
              **Was 12 + 8 = 20 until 2026-08-12** (SD-29 `decisions.md §53`), when the ingest \
              path learned to read PCGen's own per-record declaration `DESCISPI:YES` alongside \
              the 55-term blacklist. The blacklist had caught 18 of the 26 declared rows by \
@@ -1976,11 +2052,14 @@ mod tests {
     fn the_whole_corpus_classifies_into_the_four_roles_with_no_leftovers() {
         let corpus = all_books();
         let count = |role: TraitRole| corpus.traits.values().flatten().filter(|t| t.role == role).count();
-        assert_eq!(count(TraitRole::Default), 173);
+        // 173 -> 230 by SD-31 Epic 1-F2 (2026-08-15): Bestiary 2's 6-race
+        // batch adds 57 new standard (`is_racial_default`) rows.
+        assert_eq!(count(TraitRole::Default), 230);
         // 153 ARG + Monster Codex's 4 + the Advanced Player's Guide's 1
         // (`Half-Orc ~ Plagueborn`) + Inner Sea Races' 67 + Horror
-        // Adventures' 41, all landed by SD-29's race-trait lane.
-        assert_eq!(count(TraitRole::Alternate), 282);
+        // Adventures' 41, all landed by SD-29's race-trait lane, + SD-31
+        // Epic 1-F2's 48 (ARG's 42 + Inner Sea Races' 6).
+        assert_eq!(count(TraitRole::Alternate), 330);
         // 5 + Inner Sea Races' 3: `Junk Tinker ~ Skilled` (named by an
         // `ABILITY:Goblin Racial Trait|AUTOMATIC|` grant) and the two rows
         // carrying a positive `PREFACT` gate, `Secret Magic ~ Merfolk ~ Speed`
@@ -2002,17 +2081,35 @@ mod tests {
         // than its contribution to `Alternate` above (48 against 16), which is
         // the whole shape of a heritage: one thing a player picks, three
         // things they get.
-        assert_eq!(count(TraitRole::FlagGranted), 58);
+        // 58 -> 66 by SD-31 Epic 1-F2: 8 new records this batch's own rows
+        // carry no readable gate on (`classify()` alone would call all 8
+        // `Unclassified`), but every one is named by a sibling alternate's
+        // `ABILITY:<cat>|AUTOMATIC|<key>` token, so `link_automatic_grants`
+        // promotes all 8 to `FlagGranted` -- the exact `Feral ~ Languages`
+        // shape this module's docs already name, at a larger scale than any
+        // prior book: `Fetchling ~ Gloom Shimmer` grants `Gloom Shimmer ~
+        // Spell-Like Abilities`, `Fetchling ~ Subtle Manipulator` grants
+        // `Subtle Manipulator ~ Spell-Like Abilities`, `Fetchling ~ World
+        // Walker` grants `World Walker ~ Skilled` (all three ARG), and
+        // `Oread ~ Isolated` grants `Isolated ~ Oread ~ Languages` (Inner Sea
+        // Races) -- plus the 4 already-`FlagGranted`-by-`classify()` `Mostly
+        // Human ~ <Race> ~ Languages` rows (positive `PREFACT`), one of
+        // which (Oread's) is granted by that same `Oread ~ Isolated`.
+        assert_eq!(count(TraitRole::FlagGranted), 66);
         // `Oversized Goblin` and `Human ~ Tribalistic Languages` -- see
         // `no_corpus_trait_is_left_without_a_readable_gate`, which pins both by
-        // key and names each one's remedy.
+        // key and names each one's remedy. Unchanged by SD-31 Epic 1-F2: every
+        // one of this batch's gate-free rows has a real granter (see above),
+        // so none of them lands here.
         assert_eq!(count(TraitRole::Unclassified), 2);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            515,
+            628,
             "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
              + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
-             + the 48 replacement rows they grant)"
+             + the 48 replacement rows they grant) + SD-31 Epic 1-F2's 113 (57 standard \
+             + 42 ARG alternates + 3 ARG grant-linked rows + 6 Inner Sea Races alternates \
+             + 5 Inner Sea Races grant-linked/positive-gate rows, 2026-08-15)"
         );
     }
 
@@ -2164,7 +2261,18 @@ mod tests {
         // Both new flags are claimed by a real standard row
         // (`Aasimar ~ Ability Scores`, `Tiefling ~ Ability Scores`), which is
         // why the orphan-flag assertion above did not move.
-        assert_eq!(all_flags.len(), 93);
+        //
+        // SD-31 Epic 1-F2 (2026-08-15) moved this 93 -> 113: 20 brand-new
+        // `<Race>_Replace*` flags across the 6 Bestiary 2 races' ARG+ISR
+        // alternates, all in the batch's own new race namespaces (no B2
+        // race's flag can collide with the original 18's, and none does --
+        // re-derived on the written tree, 20 distinct flags across
+        // `Fetchling_*`/`Grippli_*`/`Ifrit_*`/`Oread_*`/`Sylph_*`/`Undine_*`).
+        // Every one of them is claimed by that same race's own standard row
+        // (each B2 race's `ingest_races` batch wrote its `!PREFACT` gates
+        // from the same globalvar reconciliation the original 18 use), so
+        // the orphan-flag assertion above still does not move.
+        assert_eq!(all_flags.len(), 113);
     }
 
     /// **No alternate in the loaded corpus fires an inert flag any more.**
@@ -2187,8 +2295,9 @@ mod tests {
         }
         assert_eq!(
             checked,
-            282,
-            "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures. \
+            330,
+            "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + \
+             48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, 2026-08-15). \
              **282, not 283, since 2026-08-12** (SD-29 `decisions.md` 53): Inner Sea Races' \
              `Elf ~ Sovyrian-Born` carries `NAMEISPI:YES`, PCGen's own declaration that the \
              record NAME is Product Identity, and a name cannot be redacted -- so the row is \
@@ -2273,7 +2382,7 @@ mod tests {
     /// panic, must not duplicate a trait, and must leave every selection
     /// matched.
     #[test]
-    fn selecting_every_alternate_at_once_stays_consistent_for_all_eighteen_races() {
+    fn selecting_every_alternate_at_once_stays_consistent_for_every_in_scope_race() {
         let corpus = all_books();
         for race in corpus.race_keys() {
             let keys: Vec<String> =
@@ -2362,9 +2471,9 @@ mod tests {
     /// race, or one of them is lying. `decisions.md §24` allows the table;
     /// this is the verification that keeps it honest.
     #[test]
-    fn the_hand_modelled_race_size_table_matches_the_corpus_for_all_eighteen_races() {
+    fn the_hand_modelled_race_size_table_matches_the_corpus_for_all_in_scope_races() {
         let corpus = all_books();
-        assert_eq!(RACE_SIZES.len(), 18);
+        assert_eq!(RACE_SIZES.len(), 24, "18 original + SD-31 Epic 1-F2's Bestiary 2 batch of 6");
         for key in corpus.race_keys() {
             let resolved = corpus.resolve(key, &[]).expect("resolves");
             assert_eq!(
@@ -2401,9 +2510,10 @@ mod tests {
         }
         assert_eq!(
             corpus_rows.len(),
-            282,
-            "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures \
-             selectable alternates"
+            330,
+            "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + \
+             48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6) selectable \
+             alternates"
         );
         assert_eq!(ALTERNATE_TRAIT_REPLACE_FLAGS.len(), corpus_rows.len(), "no table row is extra or missing");
         for (key, flags) in ALTERNATE_TRAIT_REPLACE_FLAGS {
@@ -2444,7 +2554,7 @@ mod tests {
         let typo = vec!["Dwarf ~ Saltbeerd".to_string()];
         assert!(replace_flags_fired_by(&typo).is_empty());
         assert_eq!(unknown_alternate_trait_keys(&typo), vec!["Dwarf ~ Saltbeerd".to_string()]);
-        assert_eq!(selectable_alternate_trait_keys().len(), 282);
+        assert_eq!(selectable_alternate_trait_keys().len(), 330);
     }
 
     #[test]

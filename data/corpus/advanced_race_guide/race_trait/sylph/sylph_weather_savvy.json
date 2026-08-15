@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:15Z",
+  "data": {
+    "key": "Sylph ~ Weather Savvy",
+    "name": "Weather Savvy",
+    "race_key": "Sylph",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Sylph Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Sylph_ReplaceSpellLikeAbility"
+    ],
+    "description": "Some sylphs are so in tune with the air and sky that they can sense the slightest change in atmospheric conditions. Sylphs with this trait can spend a full-round action to predict the weather in an area for the next 24 hours. The sylph's prediction is always accurate, but cannot account for spells or supernatural effects that might alter the forecast. This racial trait replaces the sylph's spell-like ability racial trait.",
+    "source_page": "p.157",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sylph ~ Weather Savvy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Sylph Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Sylph ~ Weather Savvy],[!PREFACT:1,ABILITIES,Sylph_ReplaceSpellLikeAbility=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some sylphs are so in tune with the air and sky that they can sense the slightest change in atmospheric conditions. Sylphs with this trait can spend a full-round action to predict the weather in an area for the next 24 hours. The sylph's prediction is always accurate, but cannot account for spells or supernatural effects that might alter the forecast."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the sylph's spell-like ability racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Sylph ~ Weather Savvy"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "FACT",
+        "value": "Sylph_ReplaceSpellLikeAbility|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 691,
+    "record_key": "Sylph ~ Weather Savvy"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

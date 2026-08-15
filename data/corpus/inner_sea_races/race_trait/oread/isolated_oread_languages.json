@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:15Z",
+  "data": {
+    "key": "Isolated ~ Oread ~ Languages",
+    "name": "Languages",
+    "race_key": "Oread",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Oread Racial Trait",
+      "SpecialQuality",
+      "Racial Language"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [],
+    "description": "Isolated oreads begin play speaking Terran. Oreads with high Intelligence scores can choose any of the following bonus languages: Aquan, Auran, Dwarven, Elven, Gnome, Halfling, Ignan, and Undercommon.",
+    "source_page": "p.216",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Isolated ~ Oread ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Oread Racial Trait.SpecialQuality.Racial Language"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "Isolated oreads begin play speaking Terran. Oreads with high Intelligence scores can choose any of the following bonus languages: Aquan, Auran, Dwarven, Elven, Gnome, Halfling, Ignan, and Undercommon."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Aquan|Bonus Language ~ Auran|Bonus Language ~ Dwarven|Bonus Language ~ Elven|Bonus Language ~ Gnome|Bonus Language ~ Halfling|Bonus Language ~ Ignan|Bonus Language ~ Undercommon"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Terran"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 1014,
+    "record_key": "Isolated ~ Oread ~ Languages"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

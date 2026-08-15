@@ -4243,6 +4243,13 @@ mod tests {
                 "race:svirfneblin",
                 "race:tengu",
                 "race:tiefling",
+                // Bestiary 2's 6, SD-31 Epic 1-F2 (2026-08-15).
+                "race:fetchling",
+                "race:grippli",
+                "race:ifrit",
+                "race:oread",
+                "race:sylph",
+                "race:undine",
             ]
         );
     }

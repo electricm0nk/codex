@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T19:20:03Z",
+  "data": {
+    "key": "Fetchling ~ Languages",
+    "name": "Languages",
+    "race_key": "Fetchling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Fetchling Racial Trait",
+      "Fetchling Racial Default",
+      "SpecialQuality",
+      "Racial Language"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Fetchling_ReplaceLanguages",
+    "sets_replace_flags": [],
+    "description": "Fetchlings begin play speaking Common. Fetchlings with a high Intelligence scores can choose from the following languages: Aklo, Aquan, Auran, Draconic, D'ziriak (understanding only, cannot speak), Ignan, Terran, and any regional human tongue.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fetchling ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality.Racial Language"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Fetchling_ReplaceLanguages=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Fetchlings begin play speaking Common. Fetchlings with a high Intelligence scores can choose from the following languages: Aklo, Aquan, Auran, Draconic, D'ziriak (understanding only, cannot speak), Ignan, Terran, and any regional human tongue."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Aklo|Bonus Language ~ Aquan|Bonus Language ~ Auran|Bonus Language ~ Draconic|Bonus Language ~ D'ziriak ~ Cannot Speak|Bonus Language ~ Ignan|Bonus Language ~ Terran|Bonus Language ~ Any Human Language"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/fetchling/fetchling_abilities_race.lst",
+    "sha256": "9eb9117928a30be812bb51725014116c0318a597f074725243b9b0f8e2860b28",
+    "line": 24,
+    "record_key": "Fetchling ~ Languages"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

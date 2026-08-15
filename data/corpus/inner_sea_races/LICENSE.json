@@ -12,8 +12,8 @@
     "signed_off": false,
     "signed_off_at": null
   },
-  "records_processed": 71,
-  "records_redacted": 18,
+  "records_processed": 82,
+  "records_redacted": 22,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
     "blacklist_version_reviewed": "2026-07-27",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "Every field of the 71 alternate-racial-trait records this run wrote was screened BOTH against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md AND against the row's own `DESCISPI:YES`/`NAMEISPI:YES` declaration, by src/rules_core/pi_screening.rs, which the ingest binary calls per record. The two screens are a union, never a substitution. 18 descriptions hit a term or carried the declaration and were replaced by the marker with pi_field recording which field was redacted; the record's mechanical payload (sets_replace_flags, raw_tokens, raw_bonus_chains) is untouched, so redaction costs prose and not rules. One further row, `Elf ~ Sovyrian-Born` (isr_abilities_race.lst:67), declares `NAMEISPI:YES` and is DROPPED rather than redacted, because a name is the record's identity on every screen and half of its key. records_processed is 71, the real on-disk count for this book's only ingested kind. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "Every field of the 82 alternate-racial-trait records this run wrote was screened BOTH against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md AND against the row's own `DESCISPI:YES`/`NAMEISPI:YES` declaration, by src/rules_core/pi_screening.rs, which the ingest binary calls per record. The two screens are a union, never a substitution. 22 descriptions hit a term or carried the declaration and were replaced by the marker with pi_field recording which field was redacted; the record's mechanical payload (sets_replace_flags, raw_tokens, raw_bonus_chains) is untouched, so redaction costs prose and not rules. One further row, `Elf ~ Sovyrian-Born` (isr_abilities_race.lst:67), declares `NAMEISPI:YES` and is DROPPED rather than redacted, because a name is the record's identity on every screen and half of its key. records_processed is 82, the real on-disk count for this book's only ingested kind. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see. UPDATE -- SD31-E1-F1-001 (race chassis lane), 2026-08-15: re-running `ingest_race_traits.rs` for all books (required to add Bestiary 2's 6-race batch) added 11 genuinely new records for this batch's 6 races (6 ARG/ISR-shaped alternates plus 5 `Mostly Human ~ <Race> ~ Languages`-shaped grant-linked rows), 71 -> 82. 4 of the 11 new records are redacted (`Fetchling ~ Shadow Agent`, `Grippli ~ Defensive Training`, `Ifrit ~ Brazen Flame`, `Undine ~ Triton Magic`, each confirmed by direct inspection to name real Golarion Product Identity or declare `DESCISPI:YES`), 18 -> 22. The failing test's error message lists the first 4 of the full 22-record redacted set alphabetically, not the 4 that are new -- re-checked via `git diff HEAD` on each of those 4 named files: all four (Aasimar/Duergar/Dwarf records) show only their `ingested_at` stamp moved, `pi_marker` unchanged, confirming they were already redacted before this cycle and are not part of the delta."
 }

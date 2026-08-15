@@ -132,6 +132,15 @@ const SIZE_TRUTH: &[(&str, &str, SizeCategory, SizeCategory)] = &[
     ("race:svirfneblin", "Svirfneblin", SizeCategory::Small, SizeCategory::Small),
     ("race:tengu", "Tengu", SizeCategory::Medium, SizeCategory::Medium),
     ("race:tiefling", "Tiefling", SizeCategory::Small, SizeCategory::Medium),
+    // Bestiary 2's 6, SD-31 Epic 1-F2 (2026-08-15). Chassis and trait agree
+    // for every one of them (none carries an Aasimar/Tiefling-shaped
+    // chassis/trait disagreement).
+    ("race:fetchling", "Fetchling", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:grippli", "Grippli", SizeCategory::Small, SizeCategory::Small),
+    ("race:ifrit", "Ifrit", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:oread", "Oread", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:sylph", "Sylph", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:undine", "Undine", SizeCategory::Medium, SizeCategory::Medium),
 ];
 
 fn all_books() -> RaceCorpus {
@@ -142,6 +151,8 @@ fn all_books() -> RaceCorpus {
             book_id: "advanced_race_guide",
             dir: Path::new("data/corpus/advanced_race_guide"),
         },
+        // Bestiary 2, SD-31 Epic 1-F2 (2026-08-15).
+        BookCorpusRoot { book_id: "bestiary_2", dir: Path::new("data/corpus/bestiary_2") },
     ];
     let corpus = load_race_corpus(&roots);
     assert!(corpus.diagnostics().is_empty(), "clean load expected: {:?}", corpus.diagnostics());
@@ -155,8 +166,12 @@ fn all_books() -> RaceCorpus {
 #[test]
 fn the_expected_table_covers_all_eighteen_races_and_matches_the_on_disk_chassis_tokens() {
     let corpus = all_books();
-    assert_eq!(SIZE_TRUTH.len(), 18, "18 in-scope races: CRB 7 + Bestiary 1's 11");
-    assert_eq!(corpus.race_keys().len(), 18, "and the corpus must carry all 18");
+    assert_eq!(
+        SIZE_TRUTH.len(),
+        24,
+        "24 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 (SD-31 Epic 1-F2)"
+    );
+    assert_eq!(corpus.race_keys().len(), 24, "and the corpus must carry all 24");
 
     for (_, key, chassis_size, _) in SIZE_TRUTH {
         let chassis = corpus.chassis(key).unwrap_or_else(|| panic!("{key} must have a chassis"));
@@ -293,7 +308,11 @@ fn goblin_kobold_and_svirfneblin_are_small_not_a_defaulted_medium() {
         .filter(|(token, _, _, _)| race_size_for_race_token(token) == Some(SizeCategory::Small))
         .map(|(_, key, _, _)| *key)
         .collect();
-    assert_eq!(small, vec!["Gnome", "Halfling", "Goblin", "Kobold", "Svirfneblin"]);
+    assert_eq!(
+        small,
+        vec!["Gnome", "Halfling", "Goblin", "Kobold", "Svirfneblin", "Grippli"],
+        "Grippli added by SD-31 Epic 1-F2 (2026-08-15)"
+    );
 }
 
 /// Token matching accepts the shapes real inputs carry, and refuses
