@@ -531,7 +531,11 @@ Ingesting more monster records does not move this lane's `done` count; only fixt
   *after* this lane; `decisions.md §2` inverted the order and made it an internal gate.
 - Runs `scripts/classify_race_trait_rows.py` before selecting any book or committing a round.
 
-#### SD31-E6-F4 (was SD31-E4-F4 / SD30-E10-F4) — `race_trait` ingest lane (513 grounded / 264 done, 7.7 %)
+#### SD31-E6-F4 (was SD31-E4-F4 / SD30-E10-F4) — `race_trait` ingest lane (513 grounded / 266 done, 7.7 %)
+
+**Corrected 2026-08-15 (launch-readiness remediation Step 5, drift D6): header previously read "264
+done" — stale by 2 units. Re-derived this cycle (same command as `AT-31-005`):
+`race_trait` → `{'not-started': 2934, 'done': 266, 'held': 247}`. `retro.py correction` emitted.
 
 - **HARD-GATED ON EPIC 1**, per race batch, same as F3.
 - Raw remainder is not workload: of 3,447 corpus `race_trait` units, only 553 carried a
@@ -775,7 +779,44 @@ this epic's kind roster is unowned as of this step.
 
 **Objective:** onboard the 7 `future_state` books — `occult_adventures`, `adventurers_guide`,
 `mythic_adventures`, `inner_sea_magic`, `inner_sea_temples`, `inner_sea_taverns`, `inner_sea_faiths`.
-The population these books add is not yet in the engine at all; closing to 100 % requires bringing it in.
+
+**Corrected premise, 2026-08-15 (launch-readiness remediation Step 5, drift D8).** "The population
+these books add is not yet in the engine at all" understates it: all 7 books are **already present**
+in `docs/work-inventory.json` (`scope: "future_state"` on the book row), carrying **4,094 units**
+today, not zero. Re-derived this cycle:
+
+```
+python3 -c "
+import json, collections
+d = json.load(open('docs/work-inventory.json'))
+books = [b for b in d['books'] if b.get('scope')=='future_state']
+print('books:', [b['id'] for b in books])
+ids = {b['id'] for b in books}
+units = [u for u in d['units'] if u.get('book') in ids]
+print('total units:', len(units))
+print(collections.Counter(u.get('book') for u in units))
+cf = [u for u in units if u.get('kind')=='class_feature']
+print('class_feature units:', len(cf))
+print(collections.Counter(u.get('book') for u in cf))
+"
+# books: ['adventurers_guide', 'inner_sea_faiths', 'inner_sea_magic', 'inner_sea_taverns',
+#         'inner_sea_temples', 'mythic_adventures', 'occult_adventures']
+# total units: 4094
+# {'occult_adventures': 1729, 'adventurers_guide': 974, 'mythic_adventures': 969,
+#  'inner_sea_magic': 335, 'inner_sea_temples': 64, 'inner_sea_taverns': 20, 'inner_sea_faiths': 3}
+# class_feature units: 1908
+# {'occult_adventures': 979, 'adventurers_guide': 700, 'inner_sea_magic': 218, 'inner_sea_taverns': 11}
+```
+
+What "not yet in the engine" actually means: these 4,094 units are counted, in the mandate
+denominator, today — Epic 7 does not add them (`decisions.md §5`'s invariance property already states
+this for the denominator as a whole); it drives them toward `done`. **4 of the 7 books —
+`occult_adventures`, `adventurers_guide`, `inner_sea_magic`, `inner_sea_taverns` — overlap the
+23-book `class_feature` roster** (`README.md`'s "In scope"; confirmed against
+`SD-30-.../README.md`'s book list) and together carry **1,908 `class_feature` units**. Those units are
+**not this epic's to move: Epic 5 (chassis sweep) already owns corpus-wide `class_feature`
+ingest across all 23 books, these 4 included**, and "Not in this epic" below names that carrier
+explicitly rather than silently stripping the population as the pre-correction text did.
 
 **Derived from:** `SD-30 decisions.md §45` item 3.
 
@@ -784,9 +825,15 @@ level; cited per book).
 
 **Cost note, not a scope note:** the recorded calibration is ~1.5-2 h per book of real work, dominated
 by fixed per-file cost (~7 count-pinning files), with content nearly free after that. Do not
-extrapolate a blended per-record rate.
+extrapolate a blended per-record rate. This applies to the non-`class_feature` remainder these 7
+books carry (`4,094 - 1,908 = 2,186` units across `spell`/`monster_ability`/other kinds, re-derive by
+kind at time of use), since the `class_feature` share follows Epic 5's own per-class cost shape, not
+this epic's per-book shape.
 
-**Not in this epic:** any book already in-scope under Epic 6's kind lanes or Epic 5's chassis sweep.
+**Not in this epic:** any book already in-scope under Epic 6's kind lanes, or **Epic 5's chassis
+sweep — explicitly including the 1,908 `class_feature` units in `occult_adventures`,
+`adventurers_guide`, `inner_sea_magic`, and `inner_sea_taverns`** (see the correction above; these
+were previously stripped from this epic's scope without a named carrier).
 
 ## Epic 8 (SD31-E8) — Cloud Fan-Out Protocol (merged: was SD31-E6 + SD32-E3; orig. SD30-E14)
 
@@ -846,6 +893,9 @@ Acceptance:
   `git show <ref>:docs/work-inventory.json` at both ends, never by comparing status counts.
 - `./scripts/verify.sh` green at the closing tip, exit code captured directly.
 - `release-notes.md` populated; `docs/architecture/` refreshed.
+- **F3 (bundle code review) COMPLETE, added 2026-08-15**, with every `CONFIRMED` finding disposed
+  (`fixed-in-bundle` or `deferred` to `forward-scope-register.md`) — the closure receipt is not valid
+  without F3's own receipt cited by cycle-id.
 
 #### SD31-E9-F2 — Honest-closure precedent
 
@@ -855,6 +905,47 @@ Acceptance:
   it, its second refused to close with 63 workable units outstanding, its third closed honestly. A
   closure cycle that cannot meet F1 writes a closure-blocked receipt naming exactly what is
   outstanding — it does not close and it does not open a promotion PR.
+
+#### SD31-E9-F3 — Bundle code review of SD-31's own diff (added 2026-08-15, launch-readiness remediation Step 5, drift D12, closes `risks-and-open-questions.md` open question 2)
+
+**Objective:** `SD-30-.../epic-8-code-review` reviewed SD-30's own diff — a review whose scope
+predates this package's existence and therefore does not, and cannot, cover any commit this package
+makes. `risks-and-open-questions.md` open question 2 flagged that gap as unresolved: this seed is the
+resolution. Runs after Epics 0-8 close, before the closure receipt fires — same "review after, not
+during, and not scoped to only the final cycle" placement SD-30's Epic 8 used.
+
+**Shape, adapted from `SD-30-class-feature-archetype-bundle/epic-breakdown.md` Epic 8** (three
+parallel read-only review dimensions, then an adversarial verify pass, per this program's other
+review precedent — the launch-readiness plan's own Step 6):
+
+- **Diff scope.** This package's own diff against its branch point — the commit range from this
+  package's first commit (the SD-30 split, 2026-08-14) through the closing tip, `git diff
+  <split-commit>...HEAD` scoped to `docs/release/SD-31-corpus-closure-grind/` plus any
+  production code this package's epics touched outside that directory (re-derive the split-commit
+  hash from `progress.md`'s "Split from SD-30" entry at review time, don't hardcode it here — this
+  package's own history is still being written). Not `origin/develop...HEAD`, which would re-review
+  SD-30's already-reviewed diff too.
+- **Three parallel read-only dimensions** (mirrors `SD30-E8-F1`/`F2`, run independently, no dimension
+  blocks another):
+  1. **Correctness/no-stub/reach** — a sample of this package's own rules logic (Epics 1-7's
+     production code, not its docs) checked against the source corpus; no stub, fixture-only, or mock
+     data in a production path (`docs/governance/no-stub-mvp-doctrine.md`); a sample of records
+     claiming to reach a player surface spot-checked against `reach_gate.rs`'s live IPC/UI path.
+  2. **Test quality** — a sample of this package's own new gates/tests actually fails when the thing
+     it protects is broken (`docs/governance/book-ingestion-playbook.md §7.4`'s standard; this
+     package's own S3/S4 remediation cycles already set the precedent — `producer-selftest` and
+     `oracle-pin-selftest` were both mutation-proven at landing time, `progress.md`).
+  3. **Doc-fact accuracy** — this file's own drift-sweep discipline (`decisions.md §2`'s absorption,
+     the epic renumber map, the mandate denominator) re-checked against the live repo state at review
+     time, not assumed still true from the epic that landed it.
+- **Adversarial verify.** After the three dimensions report, a read-only pass (Opus-tier per this
+  program's model-tier discipline) attempts to REFUTE each finding before it is accepted — same shape
+  as the launch-readiness plan's own Step 6 adversarial verify. A finding that survives refutation is
+  `CONFIRMED`; one that does not is dropped with the refutation recorded, not silently discarded.
+- **Disposition, per finding** (mirrors `SD30-E8-F3`): every `CONFIRMED` finding is `fixed-in-bundle`
+  before Epic 9's closure receipt fires, or `deferred` to `forward-scope-register.md` with a named
+  owner — never left undisposed. A `scripts/retro.py` event is emitted per finding with
+  `--verified-by`.
 
 ## Recommended sequencing
 

@@ -9,7 +9,15 @@
 - `SD-30-class-feature-archetype-bundle`'s Epics 1, 2 and 3 `COMPLETE` — all three closed 2026-08-14,
   cited not re-verified per cycle.
 - `scripts/reachability_audit.py` (Epic 0) exists and has a committed baseline run before any other
-  card is claimed (`decisions.md §4`).
+  card is claimed (`decisions.md §4`). **Clarified 2026-08-15 (launch-readiness remediation Step 5,
+  drift D3):** this is listed under "pre-loop prerequisites" but cannot literally precede the loop —
+  the script is Epic 0's own deliverable (`README.md` "Source STC contents"), and Epic 0 is a card
+  inside this loop, not outside it. Read this bullet as **"before any card other than Epic 0's own
+  first cycle"**: the loop's very first claimed card must be an Epic 0 card, that cycle builds the
+  script, proves it can fail, and commits the baseline run — only after that does the "before any
+  other card" gate apply to everything that follows. It is not yet in `scripts/verify.sh` (confirmed
+  `--list` this cycle carries no `reachability`-named stage) and is not assumed to be until Epic 0-F1
+  lands it.
 - `cargo run --locked --bin v06_work_inventory` regenerates `docs/work-inventory.json` at cycle-0 of
   any card that cites a figure from it — never transcribed stale.
 

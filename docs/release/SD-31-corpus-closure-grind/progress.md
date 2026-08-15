@@ -14,6 +14,41 @@ in this package's `kanban.md` from this point forward append their receipts belo
 
 No cycles claimed yet.
 
+## 2026-08-15 — SD-32 absorbed; epics re-sequenced (`decisions.md §2`/§3/§4)
+
+**Added retroactively 2026-08-15 (launch-readiness remediation Step 5, drift D14): this package had no
+merge receipt for its own SD-32 absorption before this correction, even though the absorption is the
+single largest structural change this package underwent after its creation.** Commit `fae30fc12`
+(2026-08-15 09:00:41 -0400), pushed to `origin/tranche/10` before the remediation pass began. Summary
+of `decisions.md §2`-§4, the decisions that commit landed:
+
+- **§2 — SD-32 absorbed, epics re-sequenced.** Operator ruling 2026-08-15 (verbatim in `decisions.md`):
+  *"SD-31 will be next, if there are prereqs in SD-32, then they need to be moved into SD-31... merge
+  SD-31 and SD-32 and... reshuffle the epic order."* `SD-30 decisions.md §51` had split SD-30 into a
+  grind package (SD-31) and a capability package (SD-32), scheduled to run in that order — but the
+  dependency ran the other way: 22.1 % of the board (8,524 units — `ambiguous` 2,109, `unmeasurable`
+  3,989, `race`+`race_trait` not-done 3,284, minus 119 overlap) could not reach `done` without the
+  capability builds SD-32 was going to deliver *after* SD-31 would have already tried to close.
+  `docs/release/SD-32-engine-capability-builds/` was deleted; its Epics 1-2 became this package's own
+  Epics 1-2; its Epic 3 (cloud fan-out) merged into this package's Epic 8. Directory name kept
+  unchanged (cited from a shipped Rust test and a production Python script). Full renumber map:
+  `README.md`.
+- **§3 — Structural Exclusion Register.** Replaces the struck "or named a successor for the remainder"
+  deferral hatch. A unit leaves the 100 % denominator only via an entry carrying the proving command,
+  the named missing capability (cost is never a valid reason), an Epic 0 audit run, and **operator
+  sign-off**. A cycle may propose; only the operator grants.
+- **§4 — Epic 0, the reachability audit, becomes a standing gate.** `scripts/reachability_audit.py`
+  answers, mechanically, whether a path to `done` exists for every unit on the board; runs before the
+  first cycle, at every epic closure, and before any closure receipt. Not yet built at this writing —
+  it is Epic 0's own first-cycle deliverable (see `technical-requirements.md`'s pre-loop-prerequisites
+  clarification, drift D3).
+
+No `verify.sh` run required for this receipt — commit `fae30fc12` was doc-only (package restructuring:
+`decisions.md`, `epic-breakdown.md`, `kanban.md`, `README.md`, `scope-draft.md`,
+`state-goals-and-lessons.md`, `progress.md`, `forward-scope-register.md`,
+`risks-and-open-questions.md`, deletion of `SD-32-engine-capability-builds/`), confirmed by
+`git show --stat fae30fc12`.
+
 ## 2026-08-15 — Launch-readiness remediation Step 1: S1-doneness-bar (RETRO_ACTOR sd31-ready-s1)
 
 **Scope.** Plan Step 1 of
@@ -545,3 +580,158 @@ closed (both unmapped cells now map to `held`, never `done`, never raise). Both 
 able to fail and restored. `producer-selftest` wired into both `verify.sh` stage sets. Epic 0-F1
 acceptance sentence added. Full `verify.sh` green at the tip, 19/19 stages. `docs/work-inventory.json`
 untouched throughout, as instructed (no inventory change needed).
+
+## 2026-08-15 — Launch-readiness remediation Step 5: S5-drift (RETRO_ACTOR sd31-ready-s5)
+
+**Scope.** Plan Step 5 of `~/.claude/plans/conduct-a-launch-readines-zesty-ripple.md` — drift findings
+D1-D14, plus a full re-scan of the package for remaining SD-32-as-live text and stale (pre-merge or
+pre-Step-2) epic numbers. **Doc-only step** — no Rust/Python/shell production code touched; ran
+`./scripts/verify.sh --only preflight-disk` only, per the dispatch, not the full gate.
+
+**Started from HEAD** `d4693f9b68269b33d07c4f43864bc400339a3022` on `tranche/10`. Tree was clean at
+start (`git status --porcelain` empty); confirmed before any write.
+
+**Figures re-derived this cycle, every one reproduced not transcribed (commands and outputs also
+recorded inline at each fix site, and via `retro.py correction` for the five that moved a package
+figure):**
+
+1. Per-kind `doneness_verdict()` replay (`class_feature`/`monster`/`spell`/`race`/`race_trait`):
+   ```
+   python3 -c "
+   import json, importlib.util, collections
+   spec = importlib.util.spec_from_file_location('m', 'scripts/observer/pf1e_dashboard_producer.py')
+   mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+   d = json.load(open('docs/work-inventory.json'))['units']
+   by_kind = collections.defaultdict(collections.Counter)
+   for u in d:
+       if u.get('book') == 'beginner_box': continue
+       by_kind[u.get('kind')][mod.doneness_verdict(u.get('wiring_class'), u.get('status'), u.get('kind'))] += 1
+   for k in ('class_feature','monster','spell','race','race_trait'):
+       print(k, dict(by_kind[k]))
+   "
+   ```
+   → `spell {'held': 1103, 'in-progress': 132, 'done': 47, 'not-started': 1561}`; `race_trait
+   {'not-started': 2934, 'done': 266, 'held': 247}`. Confirms `spell` held/floor is **1,103/1,150**
+   (not the 1,235/1,282 `scope-draft.md`'s own copy of this table still carried — D5) and
+   `race_trait` done is **266** (not the 264 `epic-breakdown.md SD31-E6-F4`'s header still carried —
+   D6). `acceptance-and-verification.md AT-31-005` already had the correct numbers (a prior SD-30
+   correction, `SD30-E0-F4-001`); this cycle's fix brings `scope-draft.md`'s independent copy into
+   agreement — the disagreement itself was the STOP-condition drift D5 named.
+2. PCC-gate exclusion count: `python3 scripts/screen_pcc_load_gates.py` → `TOTAL remaining units
+   excluded by a PCC load gate: 682` (was 719 in `AT-31-004` — D7).
+3. `wiring_class` distribution, corpus-wide: `python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'))['units']; print(collections.Counter(u.get('wiring_class') for u in d if u.get('book')!='beginner_box'))"` →
+   `Counter({'display': 14366, 'computed': 8477, 'static': 7394, 'derived': 6175, 'ambiguous': 2109})`.
+   Confirms `ambiguous` is **2,109**, not the historic 360 `decisions.md` Decision 1(e)'s reproduced
+   SD-30 §50(c) quote still carried (D9); `display`+`grounded` re-derived at **1,243** (not that
+   quote's 1,416), matching `AT-31-010`'s already-corrected figure elsewhere in this package.
+4. Epic 7 premise (D8): re-derived the 7 `future_state` books are already in
+   `docs/work-inventory.json` (4,094 units total), and that 4 of them
+   (`occult_adventures`/`adventurers_guide`/`inner_sea_magic`/`inner_sea_taverns`) overlap the 23-book
+   `class_feature` roster, carrying 1,908 `class_feature` units — command and output recorded in
+   `epic-breakdown.md`'s own Epic 7 correction. Named the carrier: **Epic 5** (chassis sweep), not
+   Epic 7.
+5. Confirmed `scripts/reachability_audit.py` does not exist (`ls` → not found) and carries no stage in
+   `./scripts/verify.sh --list` (grep for `reachability` in the stage list → no hits) — grounds D3's
+   fix to `README.md`/`technical-requirements.md`.
+6. SD-30 hardware live block, re-confirmed by reading `SD-30-.../loop-instruction.md:74-98` directly
+   (not re-measured this cycle — a doc-only step, and the figures are already this package's own
+   `loop-instruction.md` override 4's citation): 24 cores / 167 GiB RAM / 968 GB disk at 19% used, cap
+   8 — grounds D2's fix to `decisions.md` 1(d)'s stale 8-core/45GB/cap-3 capture.
+
+**D1-D14 disposition:**
+
+- **D1** — `state-goals-and-lessons.md` Goals section and `technical-design.md`'s closing
+  file-disjointness paragraph both described a three-package split ("joint SD-30→SD-31→SD-32" / "SD-32
+  touches race-chassis and classifier engine code") that `decisions.md §2` had already ended.
+  Corrected in place, dated, original text struck-through/superseded per this program's convention.
+  Also corrected `technical-design.md`'s "What this package does not touch" list, which claimed the
+  dashboard producer untouched — false since this package's own Step 4 (`195b237d3`, `2b232fe1d`)
+  touched it narrowly.
+- **D2** — `acceptance-and-verification.md` frontmatter (`status`/`date`) updated to the post-merge
+  2026-08-15 state; `AT-31-001` (Epic 1→3), `AT-31-002` (Epic 3/4/5→5/6/7), `AT-31-004` (Epic 4→6)
+  epic numbers corrected; `decisions.md` 1(c) (Epic 3/4/5→5/6/7) and 1(d) ("Governs...Epic 6"→Epic 8,
+  plus the stale-hardware supersession) corrected — all as dated in-place corrections, not silent
+  rewrites.
+- **D3** — `README.md`'s claim "`scripts/verify.sh` runs [`reachability_audit.py`]" was false
+  (confirmed by `--list`); corrected to name it Epic 0's own not-yet-built deliverable.
+  `technical-requirements.md:11`'s "pre-loop prerequisite" framing was self-contradictory (the script
+  is built BY the loop's first epic) — clarified as "before any card other than Epic 0's own first
+  cycle."
+- **D4** — `forward-scope-register.md` gained `C1.8`/`C1.9` rows, reproduced from
+  `SD-30-.../forward-scope-register.md` lines 188/215, matching `README.md`'s existing claim that they
+  are tracked here (previously false — no rows existed).
+- **D5** — `scope-draft.md`'s `spell` row (1,235/1,282, a copy-paste artifact of `monster`'s
+  held + `feat`'s floor) corrected to 1,103/1,150, matching `AT-31-005`'s already-correct copy.
+  `retro.py correction` emitted.
+- **D6** — `epic-breakdown.md SD31-E6-F4` header's "264 done" corrected to 266. `retro.py correction`
+  emitted. (The "1,242 grounded / 7 done" conflation for the `monster` lane, F1, was already fixed by
+  Step 2's rewrite — confirmed still correct, no further action.)
+- **D7** — `AT-31-004`'s 719-unit PCC-gate figure corrected to 682 (re-run this cycle). `retro.py
+  correction` emitted.
+- **D8** — `epic-breakdown.md` Epic 7's premise corrected: the 7 books are already in
+  `work-inventory.json` (4,094 units), and the 1,908 `class_feature` units in the 4 overlapping books
+  are named as Epic 5's, not silently stripped. Mirrored (lighter touch) in
+  `state-goals-and-lessons.md`'s "State at package creation" bullet for the same books.
+- **D9** — `decisions.md` Decision 1(e)'s reproduced SD-30 §50(c) quote corrected in place
+  (360→2,109 `ambiguous`; 1,416→1,243 `display`+`grounded`), and "Reproduced exactly as it stands"
+  changed to "Reproduced with edits noted" with a correction paragraph explaining both moved figures.
+  `retro.py correction` emitted.
+- **D10** — `SD-30-class-feature-archetype-bundle/state-goals-and-lessons.md:116`'s "dashboard
+  producer is not under version control" corrected in place (struck-through, dated) — false as of this
+  package's own commit `2b232fe1d`. Touched outside this package's own directory because the dispatch
+  named this exact file/line explicitly; no other SD-30 file touched.
+- **D11** — `docs/governance/loop-instruction-template.md` lines 37/42/127 (Hermes kanban references)
+  each gained a "retired 2026-08-01, see SD-30 decisions §14a" note, without rewriting the template's
+  own checklist structure.
+- **D12** — Added **Epic 9-F3 — Bundle code review of SD-31's own diff** to `epic-breakdown.md`,
+  shaped on `SD-30-.../epic-8-code-review` (three parallel read-only dimensions: correctness/no-stub/
+  reach, test quality, doc-fact accuracy) plus an adversarial-verify refutation pass and per-finding
+  disposition (`fixed-in-bundle`/`deferred`). Epic 9-F1's exit-gate acceptance now requires F3
+  `COMPLETE`. `kanban.md`'s `epic-9-closure` row updated to mention it. Closed
+  `risks-and-open-questions.md` open question 2 in place (struck-through, dated, resolution recorded).
+- **D13** — `loop-instruction.md` gained override 9: a quoted live-dashboard figure must name its
+  source (`by_status` vs. `by_doneness`/`cross_tab`, with stamps) whenever
+  `work_inventory.status_sources_agree` is `false` — verified the field's real meaning by reading
+  `pf1e_dashboard_producer.py`'s `_cross_tab_status_margin`/`work_inventory_panel()` directly.
+- **D14** — Added a dated merge receipt to this file (above, "2026-08-15 — SD-32 absorbed; epics
+  re-sequenced"), summarizing `decisions.md §2`-§4, retroactively covering commit `fae30fc12` which had
+  none. Confirmed `fae30fc12` was doc-only via `git show --stat`.
+
+**Re-scan for remaining SD-32-as-live text / stale epic numbers** (beyond D1-D14's named sites): ran
+`grep -n "SD-32"` and epic-number patterns (`Epic N-FM`, `epic-N-<name>` card IDs) across every `.md`
+in the package. Every remaining `SD-32` hit is a historical quote (operator ruling verbatim, provenance
+citation, or `progress.md`/`decisions.md` narrative) — none treat SD-32 as a live sibling. Found and
+fixed one additional drift beyond the named D-items: `release-notes.md`'s "Split provenance" section
+still stated the split-time-only Epic 1-6 ↔ SD30-E4/5/6/10/11/14 mapping as current; corrected in
+place, dated, pointing at `README.md`'s live renumber map.
+
+**Retro corrections emitted this cycle** (`docs/retro/events/sd31-ready-s5.jsonl`, `python3
+scripts/retro.py validate` → clean, 1101 events all valid):
+1. `1786808823998-sd31-ready-s5-653f06` — spell held/floor 1,235/1,282 → 1,103/1,150.
+2. `1786808824115-sd31-ready-s5-427396` — race_trait done 264 → 266.
+3. `1786808824228-sd31-ready-s5-5d24dc` — PCC-gate exclusion 719 → 682.
+4. `1786808824341-sd31-ready-s5-1ab920` — Decision 1(e) ambiguous 360 → 2,109 (and display+grounded
+   1,416 → 1,243, folded into the same correction since both live in the same reproduced quote).
+
+**What was NOT re-derived this cycle** (explicitly out of this step's scope, per the dispatch): the
+`monster`/`spell`/`race`/`race_trait` D6 "1,242 grounded/7 done" conflation fix (already Step 2's,
+verified still correct, not re-done); anything requiring a fresh `docs/work-inventory.json` regen
+(none of this cycle's fixes needed one — the file was read-only throughout, confirmed by `git diff
+--stat docs/work-inventory.json` showing no change).
+
+**Verify.** Doc-only step. Ran the disk-preflight stage only, per the dispatch instruction
+("Doc-only unless you touch code: `--only preflight-disk`"):
+```
+RETRO_ACTOR=sd31-ready-s5 CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-ready-s5 \
+  ./scripts/verify.sh --only preflight-disk > "$LOG" 2>&1; echo VERIFY_EXIT=$? >> "$LOG"
+```
+→ `repo filesystem: 46% used, 525G available; scratch-log filesystem: 46% used, 525G available; PASS
+preflight-disk; RESULT: PASS; VERIFY_EXIT=0`. This step touched no Rust/Python/shell production code,
+so the full gate was not required; `preflight-disk` alone confirms the shared checkout has headroom
+for this and the next cycle.
+
+**Status: COMPLETE.** All 14 named drift items (D1-D14) fixed in place with dated corrections; four
+figure corrections emitted via `retro.py correction`; one additional drift found and fixed by the
+re-scan (`release-notes.md`); full package re-scan for SD-32-as-live and stale epic numbers came back
+clean beyond the named items. 16 files touched, all `docs/`, all doc-only — no Rust/Python/shell
+production code changed this cycle.

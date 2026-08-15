@@ -85,6 +85,15 @@ SD-30's own Epic 6/Epic 10 were gated before the split (`SD-30-.../decisions.md 
 the fold from SD-29 widened which kinds' ingest is subject to the gate, it never relaxed it, and moving
 those epics to a sibling package does not create a bypass either.
 
+**Correction, 2026-08-15 (launch-readiness remediation Step 5, drift D2).** The epic numbers above
+("Epic 3 (chassis sweep), Epic 4 (ingest lanes), or Epic 5 (book onboarding)") are this package's
+*original* split-time numbering, superseded by `decisions.md §2`'s 2026-08-15 re-sequencing. Under
+the live renumber map (`README.md` "Epic renumber map"), chassis sweep is **Epic 5**, corpus-wide
+ingest lanes are **Epic 6**, and book onboarding is **Epic 7**. The gate itself is unchanged — it
+binds whichever epics currently carry those three functions, by function, not by number — and the
+original sentence is left visible above per this program's doc convention; read "Epic 3/4/5" there as
+"Epic 5/6/7" today.
+
 ### (d) The concurrency/cloud fan-out protocol
 
 Reproduced from `SD-30-class-feature-archetype-bundle/decisions.md §47`: hardware baseline (8 cores /
@@ -93,6 +102,21 @@ build-capable agents (re-derived empirically per the existing budget discipline)
 fan-out rules — every cloud agent works its own branch, never two writers on one branch; the local
 orchestrator owns all merges to `tranche/10`, verified by content not commit count; DoD-8 on-screen
 verification and dashboard-producer work stay local. Governs this package's Epic 6.
+
+**Superseded 2026-08-15 (launch-readiness remediation Step 5, drift D2), on two counts, per this
+program's "original text stays visible, correction points forward, dated" convention:**
+
+1. **The hardware baseline above is stale twice over.** `SD-30-class-feature-archetype-bundle/
+   loop-instruction.md`'s own live block (`SD30-PRELAUNCH-002`, re-measured after `§47` itself) found
+   the box had moved again the same day, past `§47`'s 8-core/45GB capture, to **24 cores, 167 GiB RAM,
+   968 GB disk at 19% used**, with a re-derived **concurrent full-gate-agent cap of 8** (disk-bound,
+   693 G headroom ÷ ~82 G per full-gate `CARGO_TARGET_DIR`), not the 3-agent cap named above. Re-derive
+   both figures (`nproc`, `free -h`, `df -B1G /`, the `du -sh` sizing) at time of use, per that file's
+   own standing instruction — the numbers above are a snapshot, not a constant, and were already
+   snapshot-stale the day `§47` was written.
+2. **"Governs this package's Epic 6" is this package's pre-merge numbering.** Under the current
+   renumber map (`README.md`), the cloud fan-out protocol is **Epic 8**, not Epic 6 (Epic 6 is now
+   Corpus-Wide Ingest Lanes). Read "Epic 6" above as "Epic 8."
 
 **Authority:** operator ruling, 2026-08-14, transcribed in the dispatch brief for this split;
 `SD-30-class-feature-archetype-bundle/decisions.md §43-§51` (the widened-charter, 100%-mandate, and
@@ -104,11 +128,12 @@ split decisions this package's scope descends from).
 §2`).** It is lettered (e) here because (b) in this package's Decision 1 is already the table-sheet
 doctrine; any inherited citation reading "SD-32 Decision 1(b)" resolves to this subsection.
 
-Reproduced exactly as it stands in `SD-30-class-feature-archetype-bundle/decisions.md §50(c)`
-(originally the deleted SD-32 package's Decision 3):
+Reproduced with edits noted (not exactly — see the correction below) from
+`SD-30-class-feature-archetype-bundle/decisions.md §50(c)` (originally the deleted SD-32 package's
+Decision 3):
 
-> **Decision.** The classifier that resolves `ambiguous` (360 units) and re-examines
-> `display`+`grounded` (1,416 units) is accepted or rejected on **agreement with a hand-labelled
+> **Decision.** The classifier that resolves `ambiguous` (2,109 units) and re-examines
+> `display`+`grounded` (1,243 units) is accepted or rejected on **agreement with a hand-labelled
 > sample**, and on nothing else.
 >
 > 1. **The gate that runs first.** A sample of at least 100 units, stratified across the five
@@ -133,6 +158,31 @@ Reproduced exactly as it stands in `SD-30-class-feature-archetype-bundle/decisio
 > exactly the instrument that could do that at scale while looking principled. The defence is that the
 > classifier is judged against ground truth established *before* anyone knows which way it moves the
 > count.
+
+**Correction, 2026-08-15 (launch-readiness remediation Step 5, drift D9).** SD-30's `§50(c)` — and,
+by inheritance, this subsection before this correction — carried the historic split-time figure
+"`ambiguous` (360 units)". Re-derived this cycle by importing the dashboard producer's own
+`doneness_verdict()` and counting `wiring_class == 'ambiguous'` over `docs/work-inventory.json`
+(`beginner_box` excluded, as the live producer excludes it):
+
+```
+python3 -c "
+import json, collections
+d = json.load(open('docs/work-inventory.json'))['units']
+c = collections.Counter(u.get('wiring_class') for u in d if u.get('book') != 'beginner_box')
+print(c)
+"
+# Counter({'display': 14366, 'computed': 8477, 'static': 7394, 'derived': 6175, 'ambiguous': 2109})
+```
+
+The true count is **2,109**, already the figure this package's own README/Decision 2 use elsewhere
+(the 360 was a stale pre-widening snapshot that survived only inside this one reproduced quote). The
+quote's other figure, `display`+`grounded` (1,416), is likewise stale — re-derived the same way
+(`wiring_class == 'display' and status == 'grounded'`) at **1,243**, matching `AT-31-010`'s binding
+figure elsewhere in this package. Both are corrected in place above; the quote is therefore no longer
+an exact reproduction of SD-30 §50(c), hence "reproduced with edits noted," not "reproduced exactly."
+The rule itself — the acceptance criterion, the four numbered clauses, the rationale — is unchanged;
+only the two population counts moved.
 
 ## Decision 2 — SD-32 absorbed into SD-31; epics re-sequenced so capability precedes the grind that depends on it (2026-08-15, operator ruling)
 

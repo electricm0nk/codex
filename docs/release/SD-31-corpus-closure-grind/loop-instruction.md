@@ -47,6 +47,18 @@ unattended-mode authorization) — read it directly each cycle. This file states
    `scripts/fetch-pcgen-oracle.sh` if it fails. Quote the pin SHA
    (`scripts/pcgen-oracle-pin.env`'s `PCGEN_ORACLE_SHA`) in every cycle's re-derive receipt — a
    figure re-derived against an unstated oracle commit is not re-derived.
+9. **A quoted dashboard figure must name its source when `status_sources_agree` is false** (added
+   2026-08-15, launch-readiness remediation Step 5, drift D13). The live dashboard JSON's
+   `work_inventory.status_sources_agree` field (`scripts/observer/pf1e_dashboard_producer.py`,
+   `_cross_tab_status_margin` / `work_inventory_panel()`) is the arithmetic skew test between the
+   dashboard producer's two work-inventory sources — a fresh `v06_work_inventory --summary` run vs.
+   the committed full document's cross-tab. They routinely carry different `generated_at` stamps
+   without the figures actually disagreeing; when `status_sources_agree` is `false`, they really are
+   different corpus snapshots, and citing a number from the JSON without saying which of the two
+   sources it came from (`by_status` vs. `by_doneness`/`cross_tab`, and each one's own
+   `generated_at`/`doneness_source_generated_at`) risks a figure that silently drifted between the two
+   reads. Any cycle receipt quoting a live-dashboard figure checks this field first and, if `false`,
+   names the specific source field and its own stamp — not just "the dashboard says N."
 
 ## What is not overridden
 

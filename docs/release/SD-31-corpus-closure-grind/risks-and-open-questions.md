@@ -56,7 +56,14 @@ that silently disappears.
    units) and Epic 5-F4 (the 36 `deferred-with-reason` units) close the two remaining un-carded
    populations the same review found. See `epic-breakdown.md` Epic 6 F5-F11 and Epic 5-F4;
    `forward-scope-register.md G1.3` updated in step.
-2. **Does this package run its own Bundle Code Review, or rely on SD-30's Epic 8?** SD-30's Epic 8
+2. ~~**Does this package run its own Bundle Code Review, or rely on SD-30's Epic 8?** SD-30's Epic 8
    reviewed SD-30's diff, which does not include this package's work. Currently unresolved; the
    conservative reading is that Epic 9 needs a review step of its own before the exit gate. Flagged,
-   not decided.
+   not decided.~~ **RESOLVED 2026-08-15 (launch-readiness remediation Step 5, drift D12).** Yes: this
+   package runs its own review, **Epic 9-F3** (`epic-breakdown.md`), scoped to this package's own diff
+   against its branch point (the SD-30 split commit), not SD-30's already-reviewed diff. Shape follows
+   `SD-30-.../epic-8-code-review`'s three parallel read-only dimensions
+   (correctness/no-stub/reach, test quality, doc-fact accuracy), then an adversarial verify pass that
+   attempts to refute each finding before it is accepted, then per-finding disposition
+   (`fixed-in-bundle` or `deferred` to `forward-scope-register.md`). Epic 9-F1's exit-gate acceptance
+   now requires F3 `COMPLETE` before the closure receipt is valid.

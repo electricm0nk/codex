@@ -113,8 +113,15 @@ retired `AT-30-015` per `decisions.md §51`).
    (`text-complete` from an unresolved corpus LEVEL) is a live residual instance.
 3. **`done` is unreachable for `ambiguous`** at every status — same shape as the static/derived gap
    that the rungs fixed. Not yet addressed.
-4. **The dashboard producer is not under version control** and runs from cron every 5 minutes under
-   flock. Its `static`/`derived` branch RAISES on an unrecognised status: emitting a new status word
+4. ~~**The dashboard producer is not under version control**~~ **Corrected 2026-08-15
+   (`SD-31-corpus-closure-grind` launch-readiness remediation Step 5, drift D10, closing the loop on
+   its own Step 4 which did the work): false as of `SD-31-corpus-closure-grind` commit `2b232fe1d`
+   (2026-08-15) — `scripts/observer/pf1e_dashboard_producer.py` was already under version control
+   before that commit (it is this repo's own script); that commit additionally imported
+   `~/swarm-observer/PF1e-dashboard.html` byte-identical as `scripts/observer/PF1e-dashboard.html` and
+   symlinked the served file to it, closing the gap this lesson named.** Its (the producer's)
+   `static`/`derived` branch runs from cron every 5 minutes under
+   flock and RAISES on an unrecognised status: emitting a new status word
    from the generator without landing the producer rule in the SAME change crashes the dashboard
    rather than degrading it. Back it up to `/home/ubuntu/swarm-observer/.backups/` before editing.
 5. **`compute_wiring_class_summary()` silently serves a stale wiring-class cache** when its mtime

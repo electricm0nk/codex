@@ -25,9 +25,35 @@ Per `SD-30-class-feature-archetype-bundle/decisions.md §43` (per-kind `grounded
 |---|---:|---:|---:|---:|---|
 | class_feature | 15,472 | 25 (0.2%) | 88 | measured per-class via Epic 3 (this package) | Epics 3/4/5 |
 | monster | 1,270 | 7 (0.6%) | 1,235 | 1,242 (97.8%, done+held) | Epic 6-F1 + SD-30 Epic 0's static/derived rung (closed 2026-08-14 — verify by content) |
-| spell | 2,843 | 47 (1.7%) | 1,235 | 1,282 (45.1%, done+held, `NO_GROUNDING_PROBE`-capped) | Epic 6-F2 + SD-30 Epic 0's spell probe (verify by content what landed) |
+| spell | 2,843 | 47 (1.7%) | 1,235 ~~stale, see correction~~ | 1,282 (45.1%) ~~stale, see correction~~ | Epic 6-F2 + SD-30 Epic 0's spell probe (verify by content what landed) |
 | race | 103 | 0 (0.0%) | 7 | 103 (100%) — **gated on this package's Epic 1 race chassis** | Epic 6-F3, gated on Epic 1 per race batch |
 | race_trait | 3,447 | 266 (7.7%) | 247 | 513 (14.9%, done+held) *without* chassis; up to 3,447 *with* Epic 1's chassis | Epic 6-F4, gated on Epic 1 per race batch |
+
+**Correction, `spell` row, 2026-08-15 (launch-readiness remediation Step 5, drift D5).** The `held`
+(1,235) and `done+held` floor (1,282, 45.1%) figures above are a copy-paste artifact of the `monster`
+row directly above (`monster`'s own `held` is 1,235; `1,282` is `feat`'s `done+held` from a different
+table entirely) — the same defect `acceptance-and-verification.md AT-31-005` already diagnosed and
+corrected for its own copy of this table (`SD30-E0-F4-001`), but this file's copy was never brought
+into agreement, leaving an in-package figure disagreement (a STOP condition under SD-30's "Hard
+stops" doctrine). Re-derived this cycle, matching `AT-31-005` exactly:
+
+```
+python3 -c "
+import json, importlib.util, collections
+spec = importlib.util.spec_from_file_location('m', 'scripts/observer/pf1e_dashboard_producer.py')
+mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+d = json.load(open('docs/work-inventory.json'))['units']
+c = collections.Counter()
+for u in d:
+    if u.get('book') == 'beginner_box' or u.get('kind') != 'spell': continue
+    c[mod.doneness_verdict(u.get('wiring_class'), u.get('status'), 'spell')] += 1
+print(dict(c))
+"
+# {'held': 1103, 'in-progress': 132, 'done': 47, 'not-started': 1561}
+```
+
+The true `spell` `held` is **1,103** (`done+held` = **1,150**, 40.4%), not 1,235/1,282. `retro.py
+correction` emitted for this file's copy specifically (see `progress.md`'s S5-drift receipt).
 
 **Note on `race`/`race_trait`, rewritten 2026-08-15 (`decisions.md §2`).** The chassis-blind ceiling
 (513 of 3,447 `race_trait`, 0 of 103 `race`) is **not this package's ceiling** — it is the ceiling of

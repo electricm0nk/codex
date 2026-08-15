@@ -91,8 +91,15 @@ that package's `README.md` "Source STC contents" section for the convention. Thi
   package's charter.
 - `artifacts/` — the corpus-wide instrument tooling stays canonical in
   `../SD-30-class-feature-archetype-bundle/artifacts/` and is used by path reference rather than
-  duplicated. `scripts/reachability_audit.py` (Epic 0) is repo tooling, not a package artifact,
-  because `scripts/verify.sh` runs it.
+  duplicated. `scripts/reachability_audit.py` (Epic 0) is repo tooling, not a package artifact —
+  it lives at repo root because a pre-loop/standing gate belongs next to `verify.sh`, not inside a
+  release package. **Corrected 2026-08-15 (launch-readiness remediation Step 5, drift D3):** this
+  previously read "because `scripts/verify.sh` runs it" — false today. `scripts/reachability_audit.py`
+  does not exist yet (`ls scripts/reachability_audit.py` → not found, re-checked this cycle) and
+  `./scripts/verify.sh --list` carries no `reachability`-named stage — it is **Epic 0's own
+  not-yet-built deliverable** (`technical-requirements.md`'s pre-loop prerequisites), not a stage the
+  gate already runs. Once Epic 0-F1 lands it, wiring it into `verify.sh` is part of that same cycle's
+  acceptance, not assumed done in advance.
 
 ## Epic renumber map
 

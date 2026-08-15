@@ -1,9 +1,14 @@
 ---
 canonical: true
 owner: god-emporer
-status: planning-ready (split from SD-30, operator ruling 2026-08-14)
-date: 2026-08-14
+status: planning-ready (SD-32 absorbed, epics re-sequenced, operator ruling 2026-08-15)
+date: 2026-08-15
 ---
+
+**Frontmatter corrected 2026-08-15 (launch-readiness remediation Step 5, drift D2).** Originally
+`status: planning-ready (split from SD-30, operator ruling 2026-08-14)` / `date: 2026-08-14` — the
+split-time snapshot, predating `decisions.md §2`'s SD-32 absorption and epic re-sequencing the same
+day. The AT numbers below are updated to the post-merge epic numbers in the same commit as this note.
 
 # SD-31 Acceptance and Verification
 
@@ -13,7 +18,11 @@ from `SD-30-class-feature-archetype-bundle/acceptance-and-verification.md` and i
 
 ## AT-31-001 — Per-class measurement is never blended (moved from SD30-E4's standing discipline)
 
-Given a class this package's Epic 1 measures.
+**Corrected 2026-08-15 (launch-readiness remediation Step 5, drift D2): originally read "this
+package's Epic 1" — the split-time number. Per-class measurement is Epic 3 under the current
+renumber map (`README.md`).**
+
+Given a class this package's Epic 3 measures.
 
 When a `wired-able / named` figure is reported for that class.
 
@@ -26,8 +35,12 @@ Then:
 
 ## AT-31-002 — Reach-gate satisfaction per ingested record (inherited prime rule, restated for this package's ingest epics)
 
+**Corrected 2026-08-15 (launch-readiness remediation Step 5, drift D2): originally read "Epic 3, 4,
+or 5" — the split-time numbers. Under the current renumber map (`README.md`), chassis sweep is Epic 5,
+corpus-wide ingest lanes are Epic 6, and book onboarding is Epic 7.**
+
 Given a `class_feature`, `monster`, `spell`, `race`, or `race_trait` record ingested under this
-package's Epic 3, 4, or 5.
+package's Epic 5, 6, or 7.
 
 When the record lands in `src/rules_core/rules_tables/<book>/`.
 
@@ -55,14 +68,20 @@ Whether this package runs a review step of its own is an open question
 
 ## AT-31-004 — Raw-vs-workable split precedes any ingest-lane cycle (SD-29 lesson, inherited)
 
-Given any card under Epic 4 (`monster`/`spell`/`race`/`race_trait` ingest lanes).
+**Corrected 2026-08-15 (launch-readiness remediation Step 5, drift D2/D7): originally read "Epic 4"
+(the split-time number; corpus-wide ingest lanes are Epic 6 under the current renumber map,
+`README.md`) and cited 719 negated-PCC-gate-excluded units — re-derived below at 682.**
+
+Given any card under Epic 6 (`monster`/`spell`/`race`/`race_trait` ingest lanes).
 
 When a cycle plans to claim a book for that card.
 
 Then the raw-vs-workable split (structurally-blocked units excluded, e.g. the ~2,894 chassis-blind
-`race_trait` units, the 719 negated-PCC-gate-excluded units corpus-wide) is computed and cited with its
-command **before** the cycle claims the book — not after, and not assumed unchanged from a prior
-session's figure without re-running the command.
+`race_trait` units, the **682** negated-PCC-gate-excluded units corpus-wide — re-derived this cycle,
+`python3 scripts/screen_pcc_load_gates.py` → `TOTAL remaining units excluded by a PCC load gate: 682`,
+superseding the stale 719 figure this AT previously cited) is computed and cited with its command
+**before** the cycle claims the book — not after, and not assumed unchanged from a prior session's
+figure without re-running the command.
 
 ## AT-31-005 — Per-kind `done`-floor table: PROGRESS FLOORS, NOT CLOSURE CRITERIA (moved from `SD-30-.../acceptance-and-verification.md` AT-30-015; relabelled `decisions.md §5`, operator ruling 2026-08-15)
 
@@ -104,8 +123,8 @@ Then:
 | class_feature | 15,472 | 25 (0.2%) | 88 | measured per-class via Epic 1 gate, not a blanket % | population too large/heterogeneous for a flat floor |
 | monster | 1,270 | 7 (0.6%) | 1,235 | 1,242 (97.8%, done+held) | almost entirely `held`, blocked on SD-30 Epic 0's `derived` done rung |
 | spell | 2,843 | 47 (1.7%) | 1,103 | 1,150 (40.4%, done+held) — `NO_GROUNDING_PROBE` cap lifted (SD-30 Epic 0-F2); 132 units already `in-progress` toward `grounded` under the new probe | no consumer reads a spell magnitude corpus-wide beyond the probe's current coverage |
-| race | 103 | 0 (0.0%) | 7 | 103 (100%) — **needs SD-32's race chassis** to clear past the ~7-grounded ceiling | smallest population; 0% is a structural blocker, not skippable |
-| race_trait | 3,447 | 266 (7.7%) | 247 | 513 (14.9%, done+held) *without* SD-32's chassis; up to 3,447 *with* it | classifier-lever-capped without the chassis |
+| race | 103 | 0 (0.0%) | 7 | 103 (100%) — **needs Epic 1's race chassis** (SD-32 was absorbed 2026-08-15, `decisions.md §2`; the chassis is this package's own Epic 1 now, not a sibling package's) to clear past the ~7-grounded ceiling | smallest population; 0% is a structural blocker, not skippable |
+| race_trait | 3,447 | 266 (7.7%) | 247 | 513 (14.9%, done+held) *without* Epic 1's chassis; up to 3,447 *with* it | classifier-lever-capped without the chassis |
 
 Command (re-run this cycle, cross-checked byte-identical against the live
 `/home/ubuntu/swarm-observer/PF1e-dashboard.json` `work_inventory.by_doneness_kind`,
