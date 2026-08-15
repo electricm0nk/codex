@@ -2266,3 +2266,190 @@ against that exact figure. All left unedited, same convention as `OPEN-ISSUES.md
    tree" to "one writer per shared output path," even within a single agent's own sequential
    launches.
 
+---
+
+## Cycle `SD31-E2-F1-002-relabel` (`RETRO_ACTOR=sd31-e2-relabel`, worktree
+`wf_49e8e5da-ca5-2`, own branch, isolated checkout)
+
+**Card:** `epic-2-verdict-paths`, feature seed `SD31-E2-F1` (repair). **Brief:** `OPEN-ISSUES.md` rows
+3/4/5 — 105 of the 150 `SD31-E2-F1-001` ground-truth-sample units carried a single byte-identical
+canned `token_evidence` string quoting zero tokens from the record.
+
+**HEAD started from:** the worktree was found at PR-#362-merge `061b623ee` (a bad base, package dir
+absent, tree clean) — recovered per the mandatory branch-state check:
+`git fetch origin && git reset --hard origin/tranche/11` → `c99461ac3d391d81b898005c58c80e518b4701ae`
+("docs(sd31): wave-2 disk budget + the ambiguous-bucket lever wave 1 surfaced"). Recorded per the
+"a cycle that silently recovered and did not say so is why the log under-counts this" rule.
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS, `PCGEN_ORACLE_SHA` =
+`7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`). Re-run at cycle end,
+same result, log: `artifacts/SD31-E2-F1-002-relabel-verify.log` (`VERIFY_EXIT=0`).
+
+**No production code changed** (per the card's own instruction) — a full gate was correctly not run.
+Ran instead: `./scripts/verify.sh --only preflight-oracle` (above); `python3 -m json.tool` on the
+edited JSON artifact (valid); `python3 -m unittest -v scripts.tests.test_ground_truth_evidence_guard
+scripts.tests.test_sample_ground_truth_units` — 14/14 green, the applicable check for this cycle's two
+new Python scripts (no repo-wide doc/JSON lint stage exists in `verify.sh` to invoke instead —
+confirmed via `./scripts/verify.sh --list`).
+
+### 1. Re-labelled all 105 canned units
+
+Identified programmatically: `token_evidence.startswith("confirmed from the unit's full token
+closure")` → **105**
+(`python3 -c "import json; d=json.load(open('...sample-v1.json')); BOIL=\"confirmed from the unit's
+full token closure\"; print(sum(1 for r in d if r['token_evidence'].startswith(BOIL)))"`). The
+untouched 45 were identified as the complement of that same check — never re-opened.
+
+For each of the 105: resolved the real book directory, found the base row by a **recursive** search
+under it (not the single-level `dir.join(file)` join `OPEN-ISSUES.md` row 1 tracks —
+`scratchpad/extract_rows.py`, a local research tool, not committed, deliberately re-implements
+resolution independently), collected every `.MOD` row targeting the unit's `name`/`corpus_key`, read
+the WHOLE closure, applied D0–D6 by hand, and wrote `token_evidence` with a `Quoted tokens (verbatim
+from the row(s) below): ...` marker whose segments were verified — programmatically, before writing —
+to appear byte-for-byte in the extracted corpus text (`scratchpad/apply_relabel.py`; every quote was
+checked, one typo caught and fixed mid-run —
+`occult_adventures:spell:occultist_spell_chill_metal`'s corpus_key, and
+`core_rulebook:spell:nightmare`/`ultimate_magic:spell:symbol_of_slowing`'s quotes, all corrected before
+the JSON was written).
+
+**Outcome:** 103/105 confirmed the engine's existing verdict, now with genuine evidence; **2
+disagreed** — new findings this cycle:
+
+- `bestiary_4:monster_ability:winter_hag_ice_staff` (`display_grounded_target` population,
+  AT-31-010's own bound scope) — engine `display`, true `derived` (Finding D: `SPELLS:` fields carry
+  scalar-dependent formulas the scanner never examines; `Cone of Cold,15+CHA` is an unambiguous
+  CHA-scalar DC).
+- `core_rulebook:equipment_modifier:special_ability_ghost_touch_armor` — engine `display`, true
+  `static` (Finding E: `PLUS:` fields, an equipment-modifier's equivalent-bonus value, are likewise
+  unscanned; `PLUS:3` is a flat literal).
+
+Verified `0` canned strings remain post-relabel (same command as above, re-run).
+
+### 2. Widened the sample by 35 units (`OPEN-ISSUES.md` row 5)
+
+Committed `scripts/sample_ground_truth_units.py` (real, seeded `random.seed(31)`, stratified,
+verdict-emitting-nothing sampler — `python3 -m unittest scripts.tests.test_sample_ground_truth_units`,
+5/5 green) and ran it once:
+```
+python3 scripts/sample_ground_truth_units.py --inventory docs/work-inventory.json \
+  --exclude-ids-from <the 150 v1-draw ids> --current-cell-counts <(hand_wiring_class,kind)->count> \
+  --target-per-cell 2 --seed 31 --out widening_draw.json
+```
+→ 35 units across 28 `(engine_wiring_class, kind)` cells. Hand-labelled all 35 to the identical
+whole-record standard as the 105 above (`scratchpad/widen_decisions.py` +
+`scratchpad/apply_widen.py`, same quote-verification-before-write discipline; one quote too short for
+the evidence guard's marker floor caught and fixed post-hoc —
+`ultimate_magic:feat:remote_bomb`'s `|TL` → `between you and the bomb.|TL`).
+
+**13 of 35 (37%) disagreed with the engine** — a materially higher rate than the v1 draw, because the
+widening draw concentrated in exactly the kinds/classes Findings A (`no_corpus_line`) and B
+(`BONUS:STAT`/`DR` false positive) affect. Full worked examples: `SD31-E2-F1-ground-truth-
+methodology.md` Findings D–F.
+
+**Cell-coverage result, honestly reported (per the card's own "do not report a rate for a cell the
+sample cannot defensibly cover" instruction):**
+```
+python3 -c "
+import json, collections
+d = json.load(open('docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E2-F1-ground-truth-sample-v1.json'))
+ct = collections.Counter((r['hand_wiring_class'], r['kind']) for r in d)
+print(len(ct), sum(1 for v in ct.values() if v<=2))
+"
+```
+→ **48 occupied cells, 29 with n<=2** (was 45/31 pre-widen). **Improved, not fixed** — the sampler can
+only stratify a pre-draw by `engine_wiring_class` (hand labels don't exist until read), and this
+cycle's own high correction rate meant several draws landed in a different cell than intended once
+hand-labelled. `OPEN-ISSUES.md` row 5 moved to Resolved with this honest, partial framing (not
+oversold as "fixed").
+
+**Total sample size: 185** (was 150).
+
+### 3. Built the evidence-provenance guard (`OPEN-ISSUES.md` row 3 item 3)
+
+`scripts/ground_truth_evidence_guard.py` + `scripts/tests/test_ground_truth_evidence_guard.py` (9/9
+green) — checks any ground-truth-sample JSON for `token_evidence` absent, byte-identical across
+records, or not traceable to real corpus text. **Not a classifier** — never computes/emits/compares a
+`wiring_class` verdict. Proven able to fail (4 defect-shape tests, hermetic fake corpus, never the
+real `$PCGEN_CORPUS_ROOT` or live sample) and able to pass (3 clean-evidence tests) — "this repo has
+shipped three gates that could not fail" is the standing bar.
+
+Run against the live 185-unit file:
+```
+python3 scripts/ground_truth_evidence_guard.py docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E2-F1-ground-truth-sample-v1.json
+```
+→ `FAIL: 24 violations` — **all 21 distinct affected ids are inside the untouched 45**, zero inside
+this cycle's 140 touched records. New finding, NOT fixed (barred by the card's "do not re-open the 45"
+instruction): 4 `ultimate_combat:class_feature:monk_bonus_feat_*` units share byte-identical, non-
+record-specific evidence (a smaller instance of the exact defect this cycle fixed, missed by the
+original Opus review because it checked one specific shared string, not duplication in general); 17
+more carry genuine-but-short (<20-char) quotes. Logged to `OPEN-ISSUES.md` row 14 (`NOTE`, renumbered from 8 at integration) with the
+guard's own output as proof; none of the 45's fields touched.
+
+**Not wired into `./scripts/verify.sh` this cycle.** `verify.sh` has only two stage tiers (`ALL_STAGES`
+= every full-mode stage = every `--only`-invokable stage; `QUICK_STAGES` a subset) — no "registered
+but not default" tier exists. Wiring the guard in today would fail BOTH modes for every future card,
+repo-wide, until the untouched-45 gap above is fixed — out of this card's repair scope. Shipped the
+fully-working, independently-runnable script + its passing self-test suite; withheld the default
+`verify.sh` wiring rather than force a false pass or red every sibling card's routine gate on an
+out-of-scope defect. `OPEN-ISSUES.md` row 15 (`NOTE`, renumbered from 9 at integration) records the decision and names the exact stage
+names (`ground-truth-evidence-guard`, `ground-truth-evidence-guard-selftest`) for whoever wires it in.
+
+### 4. Corrected a standing claim (`OPEN-ISSUES.md` row 2 / Finding B)
+
+Row 2's own 3-unit check found the `BONUS:STAT`/`DR:`-slash false positive always co-occurs with a
+genuine rescuing signal. Re-checked against the 35-unit widening batch: **not universal** — 3 units
+(`ultimate_equipment:equipment:belt_of_stoneskin`, `bestiary_2:monster:twigjack`,
+`horror_adventures:race:undead_phantom`) carry ONLY the false positive, genuinely misclassified
+`derived` when the true class is `static`. Retro `correction` event emitted (`--verified-by` the
+per-unit hand-read, methodology doc Finding F).
+
+### Files changed
+
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E2-F1-ground-truth-sample-v1.json` — 105
+  units relabelled, 35 units appended (185 total).
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E2-F1-ground-truth-methodology.md` —
+  extended throughout: widening-sample section, updated stratification numbers, Findings D/E/F, the
+  evidence-guard section, the untouched-45 gap section, a fresh 185-unit headline table with explicit
+  non-representativeness caveats.
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` — rows 3/4/5 moved to Resolved
+  (row 5 explicitly as "improved, not fully resolved"); rows 8/9/10 opened, renumbered to 14/15/16
+  at integration (`SD31-W2-INTEGRATE-001`, Finding 6 — tranche/11 already occupied rows 8-13 from
+  two other branches merged first).
+- `scripts/ground_truth_evidence_guard.py`, `scripts/tests/test_ground_truth_evidence_guard.py` (new).
+- `scripts/sample_ground_truth_units.py`, `scripts/tests/test_sample_ground_truth_units.py` (new).
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E2-F1-002-relabel-verify.log` (new).
+
+**`docs/work-inventory.json` — untouched, per the wave rule.** This card reads it (for `corpus_key`
+cross-reference) but never regenerates or commits it; `git status --porcelain` confirms it carries no
+pending change.
+
+### What I corrected, reworked, or narrowly avoided
+
+- Recovered from a bad worktree base silently pointed at PR-#362-merge instead of `tranche/11` (logged
+  above, per the "recovery must be recorded" rule).
+- Caught and fixed 3 typo'd quotes before they were written (self-checked by
+  `scratchpad/apply_relabel.py`/`apply_widen.py` refusing to write an unverified quote — see §1/§2).
+- Discovered mid-cycle that `signals()` computes its per-row fallback (`static`/`display`) INDEPENDENTLY
+  per corpus row and `closure_signals` only unions the resulting SIGNAL SETS — a guard field on a
+  `.MOD` row can never combine with a magnitude field on a different row to produce
+  `computed:pre_guard`. Traced this precisely for
+  `advanced_players_guide:class_feature:admixture_school_elemental_manipulation` before concluding
+  `static` (agrees with engine) rather than assuming `computed` from a same-closure-but-different-row
+  guard, which would have been a wrong correction.
+- Almost wired the evidence guard into `verify.sh`'s default stage list before checking what it would
+  do to every OTHER card's gate; ran it against the live file first, found the untouched-45 gap, and
+  changed course to the narrower call in §3.
+- **Near-miss avoided in the guard's own design:** the first version's sliding-window quote check
+  (fixed length 20) produced 12 false-FAIL results against my OWN freshly-verified 105 relabelled
+  records (short-but-real quotes like `CR:1`, `WT:2` joined with `" | "` never form one 20-char
+  contiguous run). Caught by running the guard against my own work before declaring it done, not
+  assuming the guard was correct because it compiled — redesigned to a structured-marker-aware check
+  before trusting its verdict on the untouched 45.
+
+### Board delta
+
+**None measured — correct for this card.** This card touches
+`SD31-E2-F1-ground-truth-sample-v1.json` and `docs/release/SD-31-corpus-closure-grind/artifacts/`
+only; it never writes `docs/work-inventory.json` and moves no unit's `status`/`wiring_class` on the
+board proper. The ground-truth sample is Epic 2's own accuracy-measurement input, not a board record.
+
