@@ -2907,3 +2907,17 @@ Updated test anchors in both `buildVersionTriple.test.ts` files (release/ and re
 
 Card status after this cycle: **COMPLETE** (work delivered and committed to tranche/10 by content).
 
+
+### 13. Gate completion status
+
+Gate launched at 2026-08-14T20:18:00Z, still in progress as of 20:30 UTC. Root-full stage is 
+building ~490 test binaries (the longest stage). Monitoring will continue; exit code to be 
+appended once root-full completes.
+
+Pre-gate stages passed:
+- preflight-disk: PASS (695G available, 29% used)
+- pi-sweep: PASS (10 hits, 10 baseline rows)
+- audit-selftest: PASS (28 tests)
+- reclaim-selftest: PASS (13 tests)
+- driver-selftest: PASS (7 tests)
+
