@@ -101,3 +101,60 @@ cycle's scope; noted for a future hardening card).
 (15.15 %), matching this file's "Baseline at orchestration start" table exactly on every figure
 (overall breakdown and all 11 per-kind rows). No hard stop; both reads resolve to the same unchanged
 snapshot. Full detail and per-command re-derivation: `progress.md` cycle `SD31-W1-PREFLIGHT-001`.
+
+### Wave budget — `sd31-w2-ambiguous-and-capability` (dispatcher-computed, before fan-out)
+
+Computed by the orchestrating session per SD-30 `loop-instruction.md` "Concurrency and resource
+budget" rule 2 (*"the budget is checked before the fan-out, not by each agent afterwards"*), at
+`tranche/11` tip `a3acc8e80`, immediately after reclaiming wave 1's orphaned target dir.
+
+```
+df -B1G /                                   # 968 total / 179 used / 789 avail / 19%   (pre-reclaim)
+du -sh target /home/ubuntu/cargo-targets/*  # 83G target ; 28G cargo-targets/sd31-w1-integrate (orphaned)
+pgrep -fa 'verify.sh|cargo test|cargo build'   # no live build -> safe to remove
+rm -rf /home/ubuntu/cargo-targets/sd31-w1-integrate
+df -B1G /                                   # 968 total / 151 used / 817 avail / 16%   (post-reclaim, +28G)
+```
+
+| quantity | value | how |
+|---|---:|---|
+| filesystem / used | 968 G / **151 G (16 %)** | `df -B1G /`, post-reclaim |
+| headroom to the 90 %-used floor | **720.2 G** | `0.90 × 968 − 151` |
+| headroom to the 20 G-free floor | 797 G | `817 − 20` |
+| binding headroom | **720.2 G** | 90 % floor binds |
+| measured full-gate `CARGO_TARGET_DIR` footprint | **83 G** | `du -sh target` |
+| cap — concurrent full-gate agents (disk) | **8** | `720.2 ÷ 83 = 8.68`, floored |
+| cap — concurrent full-gate agents (CPU) | 12 | `nproc 24 ÷ -j 2`; not binding |
+| **this wave dispatches** | **4 build agents, at most 3 of them full-gate** | within the cap of 8 |
+
+Wave 1's lesson applied: `reclaim.sh` does not scan `/home/ubuntu/cargo-targets/`
+(`OPEN-ISSUES.md` note, `SD31-W1-PREFLIGHT-001`), so the dispatcher reclaims that root by hand
+before each fan-out until a cycle fixes the script.
+
+### Why this wave targets what it targets
+
+Wave 1's two Opus adversarial reviews surfaced the largest structural lever on the board, which no
+planning pass had found (`OPEN-ISSUES.md` row 1):
+
+```
+python3 -c "
+import json,collections,sys
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d=json.load(open('docs/work-inventory.json'))
+U=[u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+amb=[u for u in U if (u.get('wiring_class') or 'ambiguous')=='ambiguous']
+print(len(amb), collections.Counter(u.get('wiring_class_reason') for u in amb).most_common())
+"
+# -> 2109  [('no_corpus_line', 1707), ('prose_scaling_phrase', 291), ('prose_ability_scaling', 111)]
+```
+
+`ambiguous` is the board's only wiring class that reaches `done` from **no** status — every one of
+those 2,109 units is a structural dead-end (`SD31-E0-F1-001-baseline.json`, 9 dead-end cells, all
+`ambiguous|*`). **1,707 of them (80.9 %) carry `wiring_class_reason == no_corpus_line`**, and wave 1
+proved by recursive glob that **100 % of those rows genuinely exist** — they are missed only because
+`wiring_class::CorpusLines::line()` joins one directory level and these books nest their `.lst`
+files. That is a bug fix, not a reclassification, and it is the single highest-leverage change
+available on the board today. It is dispatched here as this wave's primary card, with an Opus
+adversarial reviewer whose explicit job is to prove the fix resolves each unit to its **correct**
+row rather than merely to *a* row — the anti-gaming risk on a change of this size is exactly that.
+
