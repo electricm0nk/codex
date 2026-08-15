@@ -409,3 +409,139 @@ the identical record count, scratch clone deleted, operator's real clone reconfi
 (`acee7f092`) already pushed to `origin/tranche/10` from the prior cycle; no code change was needed
 this cycle, only completing the verification this step's own protocol requires before calling it
 done. `scripts/reclaim.sh --apply` re-run this cycle (see below).
+
+---
+
+## 2026-08-15 — S4-dashboard (Plan Step 4, commits B->C, D)
+
+Actor `sd31-ready-s4`. Started at HEAD `62b5dc995`, tree clean (`git status --porcelain` empty).
+Read the design file's sections 2/3 and the commit plan
+(`~/.claude/plans/conduct-a-launch-readines-zesty-ripple-agent-aplan-code-shapes-409903fa5aadd92c.md`)
+before touching anything. THIS IS LOCAL-ONLY WORK under SD-30 state-goals hazard 4: the dashboard
+producer runs from cron every 5 minutes under `flock`, so both `~/swarm-observer/PF1e-dashboard.html`
+and `scripts/observer/pf1e_dashboard_producer.py` were backed up to
+`~/swarm-observer/.backups/*.pre-sd31-20260815-105442` **before any edit**, and every new field
+(`mandate_headline`) landed in the SAME commit as its reader (`renderCompletion()`).
+
+**Commit B — `2b232fe1d`.** Imported `~/swarm-observer/PF1e-dashboard.html` byte-identical as
+`scripts/observer/PF1e-dashboard.html` (`cmp` confirmed identical, 182,023 bytes). Then, operationally
+(not a commit): removed the standalone served file, symlinked
+`~/swarm-observer/PF1e-dashboard.html -> ~/workspace/repos/codex/scripts/observer/PF1e-dashboard.html`
+(mode 644 on the repo file), matching the producer's own precedent (the cron path already symlinks to
+`scripts/observer/pf1e_dashboard_producer.py`). Proved nginx still serves it:
+`curl -s -H "Host: hermes.trantor.internal" http://10.0.0.134/swarm/PF1e-dashboard.html` ->
+`HTTP_CODE=200 SIZE=182023`, and `cmp`'d the curled body against the repo file: byte-identical.
+
+**Commit C — `d636c922d`.** Producer `work_inventory_panel()` gained `_mandate_headline()` (new
+helper next to `_exclude_books_from_flat_counts`) emitting `mandate_headline: {done, denominator
+(== total_units, the strict 38,521-unit mandate), denominator_rule, unmapped_units,
+secondary_in_scope_measurable}` per the design's exact spec, with a stderr-only sanity assert
+(`ladder sum + unmapped == denominator`) that logs, never raises (the cron must keep publishing).
+HTML `renderCompletion()` now reads `wi.mandate_headline` (fallback to `by_doneness`/`total_units` for
+an older JSON), caption reads "Fully usable, against the whole mandate ... 100% is the bar", a
+secondary `.pct-small` line shows the pre-2026-08-15 in-scope figure, a visible warning line appears
+when `unmapped_units > 0`, and `assertLadderSums("mandate headline", ...)` runs at render time.
+`renderLaneStrip()`'s sticky-header chips switched from `usableDenom()` to the strict per-lane
+denominator so header and headline agree (every other `usableDenom()` call site left as-is, per the
+design's explicit scope cut). Stale comments at `inScopeUnits()` and the F1-fallout note updated
+in place (superseded, dated, original text kept per this program's doc convention). JS syntax verified
+with `node --check` on the extracted `<script>` body.
+
+Re-derived, not assumed, run under the SAME `flock` the cron uses:
+```
+/usr/bin/flock -n /home/ubuntu/swarm-observer/PF1e-dashboard.lock /usr/bin/python3 \
+  /home/ubuntu/workspace/repos/codex/scripts/observer/pf1e_dashboard_producer.py
+jq .work_inventory.mandate_headline /home/ubuntu/swarm-observer/PF1e-dashboard.json
+  -> done 5837, denominator 38521, secondary 5837/30402
+```
+Matches `decisions.md` Decision 5's 15.15% ruling exactly (5837/38521 = 15.148...%). No sanity-check
+warning emitted in `pf1e-dashboard-producer.log`. **Confirmed the NEXT AUTOMATIC cron tick** (not just
+the manual run above) produced a fresh JSON: polled `PF1e-dashboard.json`'s mtime until it advanced
+past the manual-run timestamp, caught the 11:00:02 tick, and re-checked: same `mandate_headline`
+figures, `doneness_unmapped_seen: false` (found via `jq '.. | objects | select(has("doneness_unmapped_seen"))'`
+since the field lives nested under a shard-index object, not top-level), zero sanity warnings.
+`docs/work-inventory.json` untouched throughout (confirmed via `git diff --stat`) — no inventory
+regeneration was needed or performed.
+
+**Commit D — `195b237d3`.** `_doneness_verdict_uncapped`'s `ambiguous` branch now maps
+`literal-verified`/`fixture-verified` to `held` (design's option (ii), with its full rationale comment
+verbatim) — blocker B6's two previously-unmapped cells. Generator: extracted the two inline
+`static`/`derived` stamp loops in `main()` (`src/bin/v06_work_inventory.rs`, was ~4562-4595) into
+`apply_done_rung_stamps(inventory, sweep_verified, derived_fixture_verified)`, combined into one loop
+with an exhaustive `match` on `wiring_class` (behaviourally identical to the original two separate
+loops — Static/Derived are mutually exclusive per unit — but makes the "every other class is a no-op"
+invariant a single visible arm rather than two loops' worth of implicit omission). New `#[test]`
+`apply_done_rung_stamps_tests::ambiguous_display_computed_items_in_both_verified_sets_stay_unstamped`
+puts an Ambiguous/Display/Computed item's own `(book, file, line)`/`id` in BOTH verified sets and
+confirms none get stamped, plus a Static control item in the same run that DOES get stamped (proves
+the verified sets themselves are wired correctly, not an empty-set false negative). `status_vocabulary`
+entries for both `literal-verified` and `fixture-verified` gained the one-sentence addendum from the
+design: meaningful only on a static/derived unit; elsewhere the producer reads `held` and the next
+regen re-derives the status from the class.
+
+New `scripts/tests/test_pf1e_dashboard_producer.py` (unittest, imports the producer module the same
+`importlib.util.spec_from_file_location` way the producer imports its own `observer.py` sibling):
+grids the full `WIRING_CLASS_VALUES x` a 9-word status vocabulary (kept in sync by hand with the
+Rust `STATUS_VOCABULARY` list, commented as such) = 45 fabricated units, one per cell, `kind="spell"`
+(outside `NO_GROUNDING_PROBE`, so the kind-cap never masks a raising cell) through
+`compute_wiring_class_summary(doc_path=<tmp fabricated doc>, cache_path=<tmp scratch>)` — asserts
+`doneness_unmapped == {}`; plus `ambiguous+literal-verified == held`, `ambiguous+fixture-verified ==
+held`, `static+literal-verified == done` (control), and `ambiguous+"bogus-status-word"` still raises.
+5/5 pass. Wired as the `producer-selftest` stage in BOTH `verify.sh` stage sets (`ALL_STAGES` and
+`QUICK_STAGES`), right after `oracle-pin-selftest`, following that stage's own tally-parsing
+convention (`Ran N tests` from unittest's own summary line, 0-cases guard, exit-code gate).
+`epic-breakdown.md` Epic 0-F1 gained the acceptance sentence from design §3 verbatim (full-grid
+evaluation, `ValueError` cells reported as dead-end/unmapped with counts, fail outright if any
+count > 0), cross-referenced to this remediation and to the new producer test.
+
+**PROVE NEW GATES CAN FAIL, both new tests, both restored after:**
+- Python: reverted the `ambiguous` tuple to its pre-fix 3-status form
+  (`grounded`/`text-complete`/`ingested-magnitude` only) in a copy-and-restore round-trip; re-ran
+  `python3 -m unittest scripts/tests/test_pf1e_dashboard_producer.py -v` -> 2 errors + 1 failure
+  (`ValueError: doneness: unmapped 'ambiguous' + 'literal-verified'`, and the full-grid assertion
+  showing the exact unmapped dict); also re-ran through the wired stage,
+  `./scripts/verify.sh --only producer-selftest` -> `RESULT: FAIL`. Restored the file byte-for-byte
+  from a pre-break copy; `git status --porcelain` confirmed the diff returned to exactly the intended
+  D-commit state; re-ran both -> green again.
+- Rust: temporarily made `WiringClass::Ambiguous` share `Static`'s stamping condition (a guarded match
+  arm inserted ahead of the catch-all); `cargo test --bin v06_work_inventory apply_done_rung_stamps`
+  -> `FAILED`, `assertion `left == right` failed: Ambiguous must stay unstamped, left: "literal-verified"
+  right: "grounded"`. Restored from a pre-break copy; re-ran -> `ok`, 1 passed.
+
+**Full gate at the tip (`195b237d3`), launched in background early and polled inline this same turn:**
+```
+RETRO_ACTOR=sd31-ready-s4 CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-ready-s4 ./scripts/verify.sh
+  -> RESULT: PASS
+  -> VERIFY_EXIT=0
+  -> passed: 19  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-sweep
+     audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop
+     reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump
+```
+(log `/tmp/claude-1000/.../scratchpad/verify-s4d-full.log`, `duration_seconds: 1389`, retro event
+`docs/retro/events/sd31-ready-s4.jsonl` id `1786807831706-sd31-ready-s4-74f426`). `producer-selftest`
+itself: `PASS (5 cases passed)`. `cargo test --bin v06_work_inventory` (separately, isolating the new
+test group): 84 passed, 0 failed, including the new `apply_done_rung_stamps_tests` module.
+
+**Correction, logged via `retro.py correction` (event `1786807982394-sd31-ready-s4-757924`):** commit
+`195b237d3`'s own message mis-stated the `BASELINE_ROOT_LIB_TESTS` stale note (1776 recorded / 1777
+measured) as "this commit's own +1 test, expected". That is wrong: the `root-lib` stage runs
+`cargo test --locked --lib` only (the crate's `--lib` target), and this commit's new `#[test]` lives
+inside `src/bin/v06_work_inventory.rs`'s own `#[cfg(test)]` module — compiled into that BINARY's
+separate test target, which `root-full` (not `root-lib`) exercises. The `root-lib` 1776/1777 drift is
+**100% pre-existing**: S3-oracle's own receipt (above) already measured `root-lib` at 1777 against the
+same 1776 baseline with zero new tests of its own. This commit's actual +1 shows up in
+`BASELINE_ROOT_FULL_TESTS`: S3-oracle measured `root-full` at 6410 (12 pre-existing over the 6398
+baseline, none of it S3's); this commit measured 6411 = 6410 + this commit's one new test.
+`BASELINE_ROOT_TEST_BINARIES` (547 recorded / 548 measured) is unchanged by this commit — no new test
+**file** was added, only a test module inside an existing one — and was already 548 at S3's
+measurement. Per "stay inside the granted write scope" (S3's own precedent), `verify-baselines.env`
+itself is left untouched; this is a correction to what THIS step's own commit message claimed, not a
+fix to the baseline file.
+
+**Status: COMPLETE.** Commits B (`2b232fe1d`), C (`d636c922d`), D (`195b237d3`) all landed and pushed
+to `origin/tranche/10`. HTML under version control and served via symlink (proven live). Strict
+mandate headline live on both a manual and an automatic cron-driven run (proven twice). Blocker B6
+closed (both unmapped cells now map to `held`, never `done`, never raise). Both new self-tests proven
+able to fail and restored. `producer-selftest` wired into both `verify.sh` stage sets. Epic 0-F1
+acceptance sentence added. Full `verify.sh` green at the tip, 19/19 stages. `docs/work-inventory.json`
+untouched throughout, as instructed (no inventory change needed).
