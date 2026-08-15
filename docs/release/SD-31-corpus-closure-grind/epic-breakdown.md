@@ -456,6 +456,13 @@ Acceptance:
   with operator sign-off** (`decisions.md §3`). No third option exists. In particular the phrase "or
   named a successor for the remainder," struck from this package by `decisions.md §2`, is not
   reintroduced.
+- **The doneness bar (`decisions.md §5`, operator ruling 2026-08-15), alongside — not instead of — the
+  reachable-ceiling bar above:** `done / denominator == 100 %`, where `denominator` is every unit in
+  `docs/work-inventory.json` except `EXCLUDED_BOOKS` (today 38,521), OR every shortfall unit carries a
+  signed `AT-31-100` register entry. A reachable ceiling of 100 % does not by itself satisfy this bar —
+  reachability is a capability-gap check ("could a unit get to `done`"), doneness is the actual count
+  ("did it"). Both bars must pass; a receipt quoting only the reachable ceiling is not a valid closure.
+  Re-derive with the command in `AT-31-103`.
 - Board position stated per kind — `done`/total with the command — and the delta from this package's
   opening baseline, computed by replaying the dashboard producer's own `doneness_verdict()` over
   `git show <ref>:docs/work-inventory.json` at both ends, never by comparing status counts.
@@ -499,6 +506,13 @@ SD-31 closes when:
 
 - **Epic 0's audit reports a reachable ceiling of 100 %**, or every shortfall unit carries an
   operator-signed Structural Exclusion Register entry (`decisions.md §3`).
+- **The doneness bar is satisfied** (`decisions.md §5`, `AT-31-103`, operator ruling 2026-08-15):
+  `done / denominator == 100 %` against the full 38,521-unit mandate denominator (every unit in
+  `docs/work-inventory.json` except `EXCLUDED_BOOKS`), or every shortfall unit carries a signed
+  `AT-31-100` entry. This bar is **separate from and additional to** the reachable-ceiling bar
+  immediately above — a 100 % reachable ceiling with the board still at 15 % `done` does not close
+  the package. `AT-31-005`'s per-kind `done+held` figures are progress floors that inform whether a
+  kind is moving; they are not, on their own, a closure criterion for this bar or any other.
 - Epic 1 has landed a race chassis for the chassis-blind population, DoD-8 verified per race added.
 - Epic 2 has landed the ground-truth sample and either a validated classifier or a documented close-at-F1,
   **and the `ambiguous` wiring class has a path to `done` or a signed register entry**.

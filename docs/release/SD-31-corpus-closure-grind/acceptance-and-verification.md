@@ -64,7 +64,15 @@ Then the raw-vs-workable split (structurally-blocked units excluded, e.g. the ~2
 command **before** the cycle claims the book — not after, and not assumed unchanged from a prior
 session's figure without re-running the command.
 
-## AT-31-005 — Per-kind `done`-floor table (moved from `SD-30-.../acceptance-and-verification.md` AT-30-015)
+## AT-31-005 — Per-kind `done`-floor table: PROGRESS FLOORS, NOT CLOSURE CRITERIA (moved from `SD-30-.../acceptance-and-verification.md` AT-30-015; relabelled `decisions.md §5`, operator ruling 2026-08-15)
+
+**Relabelled 2026-08-15 (`decisions.md §5`, launch-readiness blocker B1).** The table below states
+`done+held` floors — a floor a cycle can satisfy without any single unit reaching `done` (e.g. the
+`race_trait` floor is `513/3,447, 14.9%, done+held`, satisfiable entirely by `held` units). Decision
+1(a)'s anti-gaming rule explicitly forbids counting `held` as `done`. These floors are **progress
+floors** — a per-cycle "is this kind moving" signal — and are **never**, on their own, sufficient to
+close an epic or the package. The package's actual closure criterion is the doneness bar,
+`AT-31-103` below.
 
 Given the widened, split program's charter (`SD-30-.../decisions.md §43-§45`, `§51`) — the kinds this
 package's epics own (`class_feature`, `monster`, `spell`, `race`, `race_trait`) are driven to `done`,
@@ -223,13 +231,51 @@ dead-end list are quoted in the receipt. At package closure the ceiling reads **
 shortfall unit carries a signed `AT-31-100` entry. A receipt that quotes a sub-100 % ceiling and
 proceeds to close without signed entries is not a valid closure.
 
+## AT-31-103 — Doneness bar (`decisions.md §5`, operator ruling 2026-08-15)
+
+Given any epic closure, and the package closure.
+
+When the receipt is written.
+
+Then the receipt quotes the **mandate denominator replay** — the strict, whole-board denominator, not
+the in-scope-books-only secondary — run at that tip:
+
+```
+python3 -c "import json,sys,collections; sys.path.insert(0,'scripts/observer'); import
+pf1e_dashboard_producer as P; U=[u for u in json.load(open('docs/work-inventory.json'))['units'] if
+u.get('book') not in P.EXCLUDED_BOOKS]; c=collections.Counter(P.doneness_verdict(u.get('wiring_class'),
+u.get('status'), u.get('kind')) for u in U); print(c, len(U))"
+```
+
+and either:
+
+- `done / denominator == 100 %` (denominator = `len(U)` above, every unit in
+  `docs/work-inventory.json` except `EXCLUDED_BOOKS`; 38,521 at this decision's authoring, re-derive at
+  time of use), **or**
+- every shortfall unit (`denominator - done`) carries a signed `AT-31-100` register entry.
+
+This bar is **distinct from and additional to `AT-31-102`'s reachable-ceiling bar** — reachability asks
+whether a path to `done` exists for a unit given current capability; doneness asks whether the unit
+actually reached `done`. A reachable ceiling of 100 % does not satisfy this criterion by itself, and a
+receipt satisfying only `AT-31-102` while `done / denominator < 100 %` (without signed entries covering
+every shortfall unit) is not a valid closure under this test. `AT-31-005`'s per-kind `done+held` floors
+do not satisfy this bar either — they are progress floors, not closure criteria (`AT-31-005`, as
+relabelled).
+
+**Invariance note.** Neither Epic 2 (resolving `unmeasurable`/`ambiguous` units) nor Epic 7 (onboarding
+the 7 `future_state` books, already inside the 38,521-unit denominator today) moves the denominator —
+only a unit reaching `done` moves this figure. A receipt that shows the denominator changing between
+two runs of this replay (other than by an operator-signed `AT-31-100` exclusion) is a protocol
+violation and must be investigated before the closure proceeds.
+
 ## Exit gate checklist
 
 - [ ] AT-31-001 — no blended per-class measurement figure reported, ever.
 - [ ] AT-31-002 — reach-gate claims `> 0` matched-tests per cycle, every record ingested under Epics 5/6/7.
 - [ ] AT-31-003 — every ingest-cycle claim cites the PI-gate `COMPLETE` receipt for its specific book.
 - [ ] AT-31-004 — raw-vs-workable split recorded with command, every Epic 6 card, before the cycle that used it.
-- [ ] AT-31-005 — per-kind `done` figures re-derived and checked against the floor table at closure.
+- [ ] AT-31-005 — per-kind `done` figures re-derived and checked against the floor table at closure
+      (progress floors only — passing this row alone does not satisfy AT-31-103).
 - [ ] AT-31-006 — all 7 `future_state` books onboarded PI-clean.
 - [ ] AT-31-007 — DoD-8 on-screen verification recorded for every race added.
 - [ ] AT-31-008 — the 18 previously-modeled races still resolve, proven by regression test.
@@ -239,5 +285,8 @@ proceeds to close without signed entries is not a valid closure.
 - [ ] AT-31-101 — no cycle claimed across an open capability gate.
 - [ ] AT-31-102 — reachability audit run at the closing tip; **reachable ceiling 100 %**, or every
       shortfall unit signed off.
+- [ ] AT-31-103 — **doneness bar**: mandate denominator replay run at the closing tip;
+      `done / denominator == 100 %` (38,521-unit strict denominator), or every shortfall unit signed
+      off. Distinct from AT-31-102; both must pass.
 - [ ] `forward-scope-register.md` reviewed for successor work.
 - [ ] `release-notes.md` populated.

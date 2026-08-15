@@ -35,6 +35,15 @@ reuse. Two different packages have now held it; neither exists.
 SD-31 owns **the whole remaining path to the 100 % mandate** (`SD-30 decisions.md §45`): the engine
 capability that makes units reachable, and the volume work that then reaches them.
 
+**The bar this package closes against is a doneness bar, not a reachability bar** (`decisions.md §5`,
+operator ruling 2026-08-15): `done / denominator == 100 %`, where `denominator` is every unit in
+`docs/work-inventory.json` except `EXCLUDED_BOOKS` — today **38,521** units, **5,837 done (15.15 %)**.
+Epic 0's standing reachability audit (below) answers a related but different question — *can* a unit
+reach `done` given current capability — and is a necessary gate, not a substitute: a 100 % reachable
+ceiling with the board still at 15 % `done` does not close this package. Both bars must clear, or every
+shortfall unit must carry an operator-signed Structural Exclusion Register entry
+(`decisions.md §3`/`AT-31-100`).
+
 It was created 2026-08-14 by splitting SD-30's Phase 3 ("the grind") into its own package, alongside a
 sibling SD-32 holding Phase 4 ("capability builds"). On 2026-08-15 the operator merged the two —
 *"SD-31 will be next, if there are prereqs in SD-32, then they need to be moved into SD-31"* — because
@@ -160,10 +169,20 @@ Reach the 100 % dashboard mandate, in dependency order:
 
 ## Exit statement
 
-SD-31 is complete when Epic 0's reachability audit, re-run at the closing tip, reports a **reachable
-ceiling of 100 %** — or when every shortfall unit carries a Structural Exclusion Register entry with
-**operator sign-off** (`decisions.md §3`), each naming the missing capability and why building it is
-genuinely impossible rather than merely expensive.
+SD-31 is complete when **both** of the following hold, at the closing tip:
+
+1. **Epic 0's reachability audit reports a reachable ceiling of 100 %** — or every shortfall unit
+   carries a Structural Exclusion Register entry with **operator sign-off** (`decisions.md §3`), each
+   naming the missing capability and why building it is genuinely impossible rather than merely
+   expensive.
+2. **The doneness bar clears** (`decisions.md §5`, `AT-31-103`, operator ruling 2026-08-15):
+   `done / denominator == 100 %` against the full mandate denominator (every unit in
+   `docs/work-inventory.json` except `EXCLUDED_BOOKS`) — or every shortfall unit carries the same
+   signed Structural Exclusion Register entry as above.
+
+Neither bar substitutes for the other: (1) is a capability-gap check ("could this unit reach `done`
+given what the engine can do today"), (2) is the actual count ("did it"). AT-31-005's per-kind
+`done`/`held` floors are progress signal only and satisfy neither bar on their own.
 
 There is no third option. The phrase *"or named a successor for the remainder"* — which appeared twice
 in this package's original completion gate, pointed at exactly the lanes the capability builds unblock

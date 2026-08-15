@@ -277,3 +277,134 @@ sign-off. It is never a number a closure receipt may quote and pass over.
 The audit must be proven able to fail before it is trusted (`SD-30
 state-goals-and-lessons.md §3.1`: this repo has shipped three gates that could not fail). Its own
 tests corrupt a wiring-class/status pair and confirm the audit reports the resulting dead-end.
+
+## Decision 5 — The mandate denominator (operator ruling 2026-08-15)
+
+**Status:** New. Landed by the SD-31 launch-readiness remediation pass, blocker B1/B3
+(`~/.claude/plans/conduct-a-launch-readines-zesty-ripple.md`).
+
+**The defect this ruling fixes.** Before this decision, the package's own completion gate
+(`epic-breakdown.md` "Completion gate", `SD31-E9-F1`, `AT-31-102`) required only that
+`scripts/reachability_audit.py`'s **reachable ceiling** — the share of the board a unit *could* reach
+`done` for, if every in-flight lane succeeded — hit 100 %, or be signed off unit-by-unit. No acceptance
+test anywhere required `done / denominator == 100 %`. The readiness review that surfaced this
+(`~/.claude/plans/conduct-a-launch-readines-zesty-ripple.md`, blocker B1) found the reachable ceiling —
+before `scripts/reachability_audit.py` exists (it is Epic 0's own not-yet-built deliverable, so this
+figure is not independently re-derived in this decision; it is carried here by source) — at
+**36,412 / 38,521 = 94.53 %** while the board sits at **5,837 done**: the gate as written is
+satisfiable by giving the 2,109 `ambiguous` units one `done`-producing status, with the board still at
+15 % actually done. `AT-31-005`'s per-kind floors compound this: they are stated as
+`done+held` floors (e.g. race_trait `513 / 3,447, 14.9%, done+held`), and Decision 1(a)'s anti-gaming
+rule explicitly forbids counting `held` as `done` — a floor a cycle can satisfy without any unit
+reaching `done` is not a closure criterion, whatever it is labelled.
+
+**Operator ruling, 2026-08-15, as recorded in the launch-readiness plan's Context section** (this
+review's four rulings, taken together; the denominator ruling is the first):
+
+> Denominator = everything, strictest. All 37 non-`beginner_box` books incl. the 7 `future_state` ones;
+> `unmeasurable` and `deferred` stay IN until `done` or operator-signed exclusion. The dashboard
+> headline must show this number.
+>
+> Oracle = pin + bootstrap script, not vendored (public repo; `.gitignore` policy).
+>
+> Open cards for the six unowned kinds and add a hard done-% bar to Epic 9.
+>
+> Commit the other session's three dirty files as-is on `tranche/10` in their own commit.
+
+This decision records the first of the four (the denominator and the doneness bar); the oracle pin, the
+six kind cards, and the housekeeping commit are recorded by the plan's other remediation steps.
+
+**The rule.** The mandate denominator is **every unit in `docs/work-inventory.json` except the books in
+`pf1e_dashboard_producer.EXCLUDED_BOOKS`** (today `{"beginner_box"}`, 1 of 38 books). It includes:
+
+- the 7 `future_state` books (`scope == "future_state"` on the book row) — already present in the
+  inventory (4,094 units), not yet onboarded by Epic 7;
+- `unmeasurable` units (`status == "unknown"`, no instrument exists yet) — 3,989;
+- `deferred` (`deferred-with-reason`) units — 36.
+
+None of these leave the denominator except through an operator-signed Structural Exclusion Register
+entry (`decisions.md §3`, `AT-31-100`).
+
+**Re-derived this cycle** (command below, run against `docs/work-inventory.json` at this cycle's HEAD):
+
+```
+python3 -c "import json,sys,collections; sys.path.insert(0,'scripts/observer'); import
+pf1e_dashboard_producer as P; U=[u for u in json.load(open('docs/work-inventory.json'))['units'] if
+u.get('book') not in P.EXCLUDED_BOOKS]; c=collections.Counter(P.doneness_verdict(u.get('wiring_class'),
+u.get('status'), u.get('kind')) for u in U); print(c, len(U))"
+```
+
+```
+Counter({'not-started': 20895, 'held': 6916, 'done': 5837, 'unmeasurable': 3989, 'in-progress': 848,
+'deferred': 36}) 38521
+```
+
+**Mandate headline: 5,837 / 38,521 = 15.15 %.**
+
+**The pre-ruling headline, kept only as a labelled secondary.** The dashboard's live `usableDenom()`
+(`~/swarm-observer/PF1e-dashboard.html renderCompletion()`) computes over `inScopeUnits()` — books
+with `scope == "in_scope"` only (30 of 38 books; the 7 `future_state` books and `beginner_box`
+excluded) — minus `unmeasurable` and `deferred` from that narrower population. Re-derived this cycle
+by replaying the same book-scope filter over `docs/work-inventory.json`:
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer')
+import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+in_scope_ids = {b['id'] for b in d['books'] if b.get('scope') == 'in_scope'}
+U = [u for u in d['units'] if u.get('book') in in_scope_ids]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'), u.get('status'), u.get('kind')) for u in U)
+denom = len(U) - c['unmeasurable'] - c['deferred']
+print(c, 'denom', denom, 'pct', round(c['done']/denom*100,2))
+"
+```
+
+Reproduces exactly: `done=5,837`, `denom=30,402`, **19.20 %** — matching the figure `B3` in the
+readiness review cited from the live dashboard byte-for-byte. **This figure is superseded by the
+15.15 % strict mandate headline above and is kept below it, labelled "in-scope, measurable-only
+(secondary)", never as the package's own headline.**
+
+**The invariance property.** Under the strict rule, the denominator is fixed at 38,521 by the set of
+non-`EXCLUDED_BOOKS` units already in `docs/work-inventory.json` today — it does not grow or shrink as
+work lands:
+
+- **Epic 2** (resolving `unmeasurable`/`ambiguous` units into a `done`-reachable path) does not touch
+  the denominator — those units are already counted, today, as `unmeasurable`/`held`/`not-started`.
+  Epic 2's effect is entirely on the *numerator* (or on the reachable-ceiling audit), never on the
+  denominator.
+- **Epic 7** (onboarding the 7 `future_state` books) does not touch the denominator either — those
+  4,094 units are already inside the 38,521 (re-derived above: 7 `future_state` books, 4,094 units,
+  confirmed present in `docs/work-inventory.json` today). Epic 7 moves those units toward `done`; it
+  does not add them to the board.
+
+**Only a unit reaching `done` moves the mandate headline.** This is the property the pre-ruling
+headline lacked: because `usableDenom()` scopes to `in_scope` books, an Epic 7 book flipping from
+`future_state` to `in_scope` would have *widened* that denominator the same cycle it started
+contributing `done` units, so the old headline could read as a regression (denominator growth
+outpacing numerator growth) for work that is unambiguously forward progress. The strict headline
+cannot do that: the 38,521 is already the full board.
+
+**What this changes in the package**, landed together with this decision:
+
+- `epic-breakdown.md` `SD31-E9-F1` and "Completion gate" gain the **doneness bar**
+  (`done / denominator == 100 %`, or every shortfall unit signed off) **alongside, not instead of**,
+  the existing reachability-ceiling bar. A closure that satisfies only the reachable-ceiling bar no
+  longer passes.
+- `acceptance-and-verification.md` gains **AT-31-103 — Doneness bar**, with the replay command above.
+- `AT-31-005`'s per-kind `done+held` figures are relabelled **progress floors**, not closure
+  criteria — useful as a per-cycle "is this kind moving" signal, never sufficient on their own to
+  close an epic or the package.
+- `README.md`'s Purpose/Exit statement names the doneness bar explicitly, not only the reachable
+  ceiling.
+
+**Retro.** A correction is emitted for the denominator ambiguity (38,521 strict vs. 30,402
+measurable-secondary) — the package's own text used the 38,521/15.15 % figures in `README.md` and
+Decision 2 already, but no acceptance criterion bound the package to them, and `AT-31-005`'s floors and
+the pre-ruling exit gate together left the 100 % mandate satisfiable at 15 % `done`. No new
+`retro.py decision` event is separately warranted — this file's own Decision 5 entry, dated and
+attributed, already is that record.
+
+**Authority:** operator ruling 2026-08-15 (verbatim above, as recorded in the launch-readiness plan);
+figures re-derived the same day by the commands in this section.
