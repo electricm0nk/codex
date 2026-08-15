@@ -42,11 +42,20 @@ that silently disappears.
 
 ## Open questions
 
-1. **Do `equipment`/`equipment_modifier`/`companion`/`feat`/`monster_ability` get cards?** They are in
-   the 100 % denominator but no card claims them (`forward-scope-register.md G1.3`). Epic 0's audit
+1. ~~**Do `equipment`/`equipment_modifier`/`companion`/`feat`/`monster_ability` get cards?** They are
+   in the 100 % denominator but no card claims them (`forward-scope-register.md G1.3`). Epic 0's audit
    will surface their reachability, and Epic 9 cannot close over them silently — but whether they open
    as Epic 6 cards or as their own epic is not yet decided. **This is the most likely source of a
-   late scope surprise in this package**, and it is named here rather than discovered at closure.
+   late scope surprise in this package**, and it is named here rather than discovered at closure.~~
+   **RESOLVED 2026-08-15 (launch-readiness remediation Step 2, blocker B2, operator ruling "open
+   cards for the six unowned kinds").** They open as Epic 6 cards, not a new epic: `equipment` (F5),
+   `equipment_modifier` (F6), `companion` (F7), `feat` (F8, routes SD-30 E0-F3's 217-unit
+   probe-fixture residue), `monster_ability` (F9). A **sixth kind, `class`** (158 not-done units,
+   `computed|not-ingested` dominant), found by the readiness review and named nowhere in this package
+   before this correction, also opens as Epic 6-F10. Epic 6-F11 (held static/derived residual, 5,273
+   units) and Epic 5-F4 (the 36 `deferred-with-reason` units) close the two remaining un-carded
+   populations the same review found. See `epic-breakdown.md` Epic 6 F5-F11 and Epic 5-F4;
+   `forward-scope-register.md G1.3` updated in step.
 2. **Does this package run its own Bundle Code Review, or rely on SD-30's Epic 8?** SD-30's Epic 8
    reviewed SD-30's diff, which does not include this package's work. Currently unresolved; the
    conservative reading is that Epic 9 needs a review step of its own before the exit gate. Flagged,

@@ -178,6 +178,12 @@ Acceptance:
   up by Epic 3-F4 / Epic 5-F3's next disposition cycle — an in-package gate now, not a handoff.
 - Units confirmed genuinely unreachable are **proposed** to the Structural Exclusion Register with the
   four items `decisions.md §3` requires. A cycle may propose; only the operator grants.
+- **Widened 2026-08-15 (`acceptance-and-verification.md` AT-31-010, launch-readiness remediation Step
+  2, blocker B4):** the same ground-truth-sample classifier is also applied to the 1,243-unit
+  `wiring_class == display, status == grounded` population (re-derive) — the other half of Decision
+  1(e)'s own named scope, previously bound nowhere in this epic's own acceptance text. Passing
+  outcome per Decision 1(e) item 4 may be "examined, correctly classified, left alone"; what fails
+  this bullet is closing Epic 2 having never run the sample against this population at all.
 
 ## Epic 3 (SD31-E3) — Per-Class Archetype Measurement (was SD31-E1; orig. SD30-E4; GATES Epics 4 and 5)
 
@@ -343,6 +349,109 @@ Acceptance:
   **proposal** to the Structural Exclusion Register — not a disposal a cycle performs on its own
   authority.
 
+#### SD31-E5-F4 — The 36 `deferred-with-reason` units (added 2026-08-15, launch-readiness remediation Step 2, blocker B2)
+
+**Re-derived this cycle** (not transcribed):
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+deferred = [u for u in U if u.get('status')=='deferred-with-reason']
+print(len(deferred))
+print(collections.Counter((u.get('kind'), u.get('book')) for u in deferred))
+"
+```
+→ **36 units**, matching the plan's expected figure exactly: **34 `class_feature`** (17
+`advanced_class_guide`, 7 `core_rulebook`, 4 `advanced_players_guide`, 2 `advanced_race_guide`, 2
+`ultimate_magic`, 1 `pathfinder_unchained`, 1 `ultimate_psionics`) and **2 `feat`** (both
+`ultimate_campaign`). Sits in the mandate denominator (`decisions.md §5`) with zero sign-off and,
+before this seed, no card.
+
+**Full list, by `id` — each already carries a per-unit `reason` in `docs/work-inventory.json`, not
+reproduced verbatim here for space, but grep-able by `id`:**
+
+| id | kind | book | wiring_class | reason theme (see full text in `docs/work-inventory.json`) |
+|---|---|---|---|---|
+| `advanced_class_guide:class_feature:arcanist` | class_feature | advanced_class_guide | computed | Arcane Reservoir / prepared spellbook beyond chassis pillar |
+| `advanced_class_guide:class_feature:bloodrager` | class_feature | advanced_class_guide | computed | Bloodrage / spells-per-day beyond chassis pillar |
+| `advanced_class_guide:class_feature:bloodrager_bloodrage` | class_feature | advanced_class_guide | computed | same as above (Bloodrage sub-feature) |
+| `advanced_class_guide:class_feature:brawler` | class_feature | advanced_class_guide | computed | AC bonus lost while helpless/immobilized — no transient combat-state representation |
+| `advanced_class_guide:class_feature:hunter` | class_feature | advanced_class_guide | computed | full class-table grounding note, no remaining gap named beyond diagnostic |
+| `advanced_class_guide:class_feature:hunter_animal_companion` | class_feature | advanced_class_guide | static | animal-companion advancement, columns with no engine consumer |
+| `advanced_class_guide:class_feature:investigator` | class_feature | advanced_class_guide | computed | Trapfinding/Trap Sense/Inspiration beyond chassis pillar |
+| `advanced_class_guide:class_feature:shaman` | class_feature | advanced_class_guide | computed | Orisons/prepared spellcasting beyond chassis pillar |
+| `advanced_class_guide:class_feature:shaman_spirit_life` | class_feature | advanced_class_guide | computed | Spirit power content beyond Life's Channel |
+| `advanced_class_guide:class_feature:shaman_wandering_spirit_life` | class_feature | advanced_class_guide | computed | same, Wandering Spirit variant |
+| `advanced_class_guide:class_feature:shaman_spirit` | class_feature | advanced_class_guide | computed | same, base Spirit |
+| `advanced_class_guide:class_feature:skald` | class_feature | advanced_class_guide | computed | full class-table grounding note |
+| `advanced_class_guide:class_feature:slayer` | class_feature | advanced_class_guide | computed | full class-table grounding note |
+| `advanced_class_guide:class_feature:slayer_talent_feat` | class_feature | advanced_class_guide | computed | same, talent-feat sub-feature |
+| `advanced_class_guide:class_feature:spirit_summoner_eidolon` | class_feature | advanced_class_guide | display | Quadruped Eidolon stat block, one built evolution set |
+| `advanced_class_guide:class_feature:swashbuckler` | class_feature | advanced_class_guide | computed | full class-table grounding note |
+| `advanced_class_guide:class_feature:warpriest` | class_feature | advanced_class_guide | computed | Blessing power content beyond Destruction/Strength |
+| `advanced_players_guide:class_feature:cavalier_mount` | class_feature | advanced_players_guide | computed | mount advancement, columns with no engine consumer |
+| `advanced_players_guide:class_feature:summoner` | class_feature | advanced_players_guide | computed | Quadruped Eidolon stat block, one built evolution set |
+| `advanced_players_guide:class_feature:summoner_eidolon` | class_feature | advanced_players_guide | computed | same, eidolon sub-feature |
+| `advanced_players_guide:class_feature:witch_hex` | class_feature | advanced_players_guide | computed | only selected hex + shared save DC (51/53 records) modeled |
+| `advanced_race_guide:class_feature:reincarnated_oracle_revelations` | class_feature | advanced_race_guide | computed | Mystery revelations beyond grounded Tier-1 set |
+| `advanced_race_guide:class_feature:sky_druid_animal_companion` | class_feature | advanced_race_guide | display | animal-companion advancement, columns with no engine consumer |
+| `core_rulebook:class_feature:bard` | class_feature | core_rulebook | computed | only Inspire Courage modeled among bardic performances |
+| `core_rulebook:class_feature:bard_bardic_performance` | class_feature | core_rulebook | computed | same, performance sub-feature |
+| `core_rulebook:class_feature:cleric` | class_feature | core_rulebook | computed | domain spell-list contents (which spell fills the slot) unmodeled |
+| `core_rulebook:class_feature:druid` | class_feature | core_rulebook | computed | animal-companion advancement, columns with no engine consumer |
+| `core_rulebook:class_feature:druid_domain_animal` | class_feature | core_rulebook | computed | same, domain-animal sub-feature |
+| `core_rulebook:class_feature:sorcerer` | class_feature | core_rulebook | computed | Arcane bloodline progression at level 10, three items ungrounded |
+| `core_rulebook:class_feature:sorcerer_bloodline_arcane` | class_feature | core_rulebook | computed | same, bloodline sub-feature |
+| `pathfinder_unchained:class_feature:unchained_summoner_eidolon` | class_feature | pathfinder_unchained | computed | Quadruped Eidolon stat block, one built evolution set |
+| `ultimate_campaign:feat:fearless_zeal` | feat | ultimate_campaign | display | `.MOD BENEFIT:` row splices verbatim mid-sentence into Damned's own text |
+| `ultimate_campaign:feat:magnum_opus` | feat | ultimate_campaign | display | `.MOD BENEFIT:` row's sentence grammatically truncated |
+| `ultimate_magic:class_feature:planar_oracle_revelations` | class_feature | ultimate_magic | computed | Mystery revelations beyond grounded Tier-1 set |
+| `ultimate_magic:class_feature:storm_druid_animal_companion` | class_feature | ultimate_magic | static | animal-companion advancement, columns with no engine consumer |
+| `ultimate_psionics:class_feature:phrenic_slayer_as` | class_feature | ultimate_psionics | computed | full class-table grounding note |
+
+**Disposition — none silently carried, per this seed's own charter:**
+
+- **The 6 animal/eidolon/mount "columns with no engine consumer" units**
+  (`hunter_animal_companion`, `sky_druid_animal_companion`, `druid`, `druid_domain_animal`,
+  `cavalier_mount`, `storm_druid_animal_companion`) name a real,
+  structural gap: the engine has no consumer for certain advancement columns at all. **Real path:**
+  a future cycle under this seed builds the missing consumer (in scope, ordinary engine work, not
+  impossible) — or, if genuinely out of charter, proposes each to the Structural Exclusion Register
+  with `decisions.md §3`'s four items. Not yet proposed as of this receipt — flagged for the next
+  cycle claiming this seed, not silently carried.
+- **The "beyond grounded Tier-1/chassis-pillar" units** (Oracle Mystery revelations ×2, Shaman Spirit
+  power ×3, Bardic Performance, Warpriest Blessing, Sorcerer bloodline, Witch hex, Eidolon evolutions
+  ×4, Cleric domain spell) name option-pool content: a representative option is already grounded, the
+  remainder deliberately deferred — this is `decisions.md #38`'s standing "ground one representative,
+  defer the rest with a named diagnostic" ruling, **already satisfied** by the existing `reason` text.
+  **Real path:** these are correctly `deferred-with-reason` today and need no register entry; they
+  remain in the denominator (per Decision 5) and are candidates for Epic 3/Epic 5's per-class
+  measurement chain to widen the grounded set, not for exclusion.
+- **The 1 combat-state unit** (`brawler`, AC bonus lost while helpless/immobilized) names a genuine
+  engine-capability gap (no transient combat-state representation). **Real path:** proposed here as a
+  **PROPOSED** Structural Exclusion Register entry (not yet operator-signed — a cycle may only
+  propose):
+
+  | Missing capability | Why impossible/out-of-charter (not merely expensive) | Proving command | Epic 0 run | Sign-off |
+  |---|---|---|---|---|
+  | Transient combat-state representation (helpless/immobilized flags feeding AC-bonus suppression) | Out-of-charter for this package: no other `class_feature` or `feat` record in the corpus needs transient combat state, so building a whole new state axis for one Brawler feature is a scope expansion this package's charter (`class_feature`, corpus-wide ingest, book onboarding) does not cover — **not proposed as a cost objection**, which `decisions.md §3` forbids as a reason. | `grep -n "helpless\|immobilized" src/rules_core/*.rs src/rules_core/**/*.rs` (no transient-state field found at authoring) | Not yet run — Epic 0 does not exist yet at this cycle; **this entry is provisional pending Epic 0's own audit run**, per `AT-31-100` item 3 | **NONE — proposed only, per this seed's launch-readiness remediation instruction; the operator has not signed this entry** |
+
+  This entry is **PROPOSED, not granted** — the unit stays in the denominator until the operator
+  signs `AT-31-100`'s register (`acceptance-and-verification.md`) or a real engine consumer lands.
+- **The 2 PCGen `.lst` transcription-quality `feat` units** (`fearless_zeal`, `magnum_opus`) name a
+  source-data legibility issue (`.MOD BENEFIT:` splicing/truncation), not a capability gap. **Real
+  path:** a future ingest cycle re-reads the raw `.lst` line and hand-corrects the transcription
+  (ordinary ingest-quality work, not exclusion-eligible under `decisions.md §3` item 2's "genuinely
+  impossible" bar).
+
+**Acceptance:** every one of the 36 units above has either (a) a real forward path stated (consumer
+build, Epic 3/5 measurement widening, transcription fix) or (b) a Structural Exclusion Register entry
+— proposed here for the 1 `brawler` unit, pending operator sign-off. None of the 36 is left with
+neither.
+
 ## Epic 6 (SD31-E6) — Corpus-Wide Ingest Lanes, folded from SD-29 (was SD31-E4; orig. SD30-E10)
 
 **Objective:** the real per-book ingest that instrument application cannot substitute for. SD-29 closed
@@ -355,14 +464,49 @@ with its corpus-wide kind lanes at a *measured* ceiling, not an exhausted one; S
 **Per-kind cards**, each running the raw-vs-workable split and the pre-cycle row-classifier screen
 before planning cycles. Every figure below is a split-time snapshot — re-derive at time of use.
 
-#### SD31-E6-F1 (was SD31-E4-F1 / SD30-E10-F1) — `monster` ingest lane (1,242 grounded / 7 done, 0.6 %)
+#### SD31-E6-F1 (was SD31-E4-F1 / SD30-E10-F1) — `monster`: **rewritten 2026-08-15 as a fixture-coverage lane, not an ingest lane** (launch-readiness remediation Step 2, blocker B4)
 
-- Pilot book selection runs `scripts/screen_pcc_load_gates.py` and a monster-count check
-  (`cargo run --locked --bin v06_work_inventory` per-book breakdown) before committing a round —
-  `bestiary_5`/`bestiary_6` are confirmed zero-monster books, hard stop, not a candidate.
-- Splits `not-started`/`not-ingested` `monster` units into workable vs. structurally blocked
-  (negated-PCC-gate exclusions) before scheduling any cycle.
-- Mirrors SD-29 Epic 3's monster-ingest pipeline (same `rules_tables/*.rs` shape).
+**Correction (re-derived, launch-readiness remediation Step 2).** This seed's header previously read
+"1,242 grounded / 7 done, 0.6 %" and was framed as ingest work (raw-vs-workable split, pre-cycle
+screen, mirroring SD-29's ingest pipeline). Re-derived this cycle by importing the dashboard
+producer's own `doneness_verdict()` over `docs/work-inventory.json`:
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS and u.get('kind')=='monster']
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),'monster') for u in U)
+print(dict(c), len(U))
+"
+```
+→ `{'held': 1235, 'done': 7, 'not-started': 28}`, total 1,270. Of the 1,235 `held`, **1,229 are the
+single cell `derived|grounded`** — the whole monster lane's not-done mass is *one* cell, not the
+raw-ingest residue the old framing implied. `retro.py correction` emitted (claimed "1,242 grounded /
+7 done" framed as ingest ceiling → actual 1,229 `derived|grounded` held units, a fixture-coverage
+gap, not an ingest gap).
+
+**Why it is a fixture lane, not an ingest lane.** `monster` is `wiring_class == derived` almost
+entirely; a `derived` unit reaches `done` only via the `fixture-verified` rung
+(`v06_work_inventory.rs` ~4574-4592), stamped when a unit's `id` is in
+`derived_evaluator_fixture_check`'s verified set. That set is `tests/fixtures/rules_core/derived-
+evaluator-fixtures.json`, **94 entries corpus-wide** — see Epic 6-F11 below, which owns growing it.
+Ingesting more monster records does not move this lane's `done` count; only fixture coverage does.
+
+- **Instrument that moves this cell:** `tests/fixtures/rules_core/derived-evaluator-fixtures.json` +
+  `derived_evaluator_fixture_check` (owner: Epic 6-F11).
+- **What remains a real ingest concern for `monster`:** the 28 `not-started` units (24
+  `derived|not-ingested`, 3 `static|not-ingested`, 1 `ambiguous|not-started`) and the pre-cycle screen
+  discipline SD-29's pipeline established — `bestiary_5`/`bestiary_6` are confirmed zero-monster
+  books, hard stop, not a candidate; `scripts/screen_pcc_load_gates.py` and a monster-count check
+  (`cargo run --locked --bin v06_work_inventory` per-book breakdown) run before any of those 28 are
+  claimed.
+- **Acceptance:** a cycle claiming this seed either (a) grows `derived-evaluator-fixtures.json`
+  coverage for `monster` `id`s and re-runs `derived_evaluator_fixture_check` to confirm the stamp
+  loop moves them to `fixture-verified`/`done`, or (b) ingests one of the 28 genuinely `not-started`
+  units per the pre-cycle screen above. Citing a rising `grounded`/`held` count as progress on this
+  seed, without a fixture-coverage or true-ingest delta, is not acceptance evidence.
 
 #### SD31-E6-F2 (was SD31-E4-F2 / SD30-E10-F2) — `spell` ingest lane (623 grounded / 47 done, 1.7 %)
 
@@ -388,17 +532,235 @@ before planning cycles. Every figure below is a split-time snapshot — re-deriv
 - Runs `scripts/classify_race_trait_rows.py` and `scripts/screen_pcc_load_gates.py` before selecting a
   book.
 
-**Acceptance (per card):** the raw-vs-workable split is recorded with its command before any cycle
-claims; the pre-cycle classifier/screen ran against the candidate book before the round was committed;
-PI screen cited clean for the book before any record is written; reach-gate satisfied per record
-ingested; units found structurally unreachable are proposed to the Structural Exclusion Register with
-`decisions.md §3`'s four items, never silently ingested as if grounded and never deferred by cycle fiat.
+### F5-F10 — cards for the six previously-unowned kinds (added 2026-08-15, launch-readiness remediation Step 2, blocker B2)
 
-**Not in this epic:** `class_feature` ingest (Epic 5). `equipment`/`equipment_modifier`/`companion`/
-`feat`/`monster_ability` — not named in the operator's cited frustration list; a future pass may open
-cards for them under this epic without a new operator ruling. **Note for Epic 9:** those kinds are in
-the 100 % denominator even though no card currently claims them — Epic 0's audit will surface them and
-Epic 9 cannot close over them silently.
+**Why these six.** `forward-scope-register.md` `G1.3` and `risks-and-open-questions.md` open question
+1 both named `equipment`/`equipment_modifier`/`companion`/`feat`/`monster_ability` as real,
+un-carded `not-started` residue in the 100 % denominator; the readiness review (`~/.claude/plans/
+conduct-a-launch-readines-zesty-ripple.md`, blocker B2) found a sixth, **`class`** (158 not-done
+units), named nowhere in the package. All six are re-derived fresh below — not transcribed from the
+plan — by the same replay every other figure in this file uses:
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+for k in ('equipment','monster_ability','feat','companion','equipment_modifier','class'):
+    units = [u for u in U if u.get('kind')==k]
+    verdict = lambda u: P.doneness_verdict(u.get('wiring_class'),u.get('status'),k)
+    c = collections.Counter(verdict(u) for u in units)
+    print(k, 'total', len(units), 'done', c.get('done',0), 'not_done', len(units)-c.get('done',0), dict(c))
+"
+```
+→ `equipment 6,208 total, 2,626 done, 3,582 not_done` / `monster_ability 3,107, 334, 2,773` /
+`feat 2,610, 1,178, 1,432` / `companion 1,696, 416, 1,280` / `equipment_modifier 1,580, 911, 669` /
+`class 185, 27, 158`. **Sum of not-done: 9,894** — matches the readiness review's figure exactly.
+
+#### SD31-E6-F5 — `equipment` ingest/instrument lane (3,582 not-done)
+
+**Shape** (not-done cells, largest first): `static|ingested-magnitude` 2,175 held, `static|not-
+ingested` 449 not-started, `static|not-started` 340 not-started, `computed|ingested-magnitude` 291
+in-progress, `derived|ingested-magnitude` 73 held, `display|not-ingested` 72 not-started,
+`display|not-started` 43 not-started, `static|text-complete` 36 held, `computed|not-ingested` 33
+not-started, `ambiguous|text-complete` 23 held, `ambiguous|ingested-magnitude` 20 held, plus a small
+tail. **2,327 of the 3,582 (65 %) are `held`**, almost entirely `static`/`derived` — the same
+literal-sweep/fixture-check coverage gap Epic 6-F11 owns corpus-wide; the remaining 293
+`computed|ingested-magnitude` are `in-progress` toward `grounded` under an existing probe, and ~962
+are genuine `not-started` ingest residue.
+
+- **Instrument/lane that moves each cell:** `held` `static`/`derived` cells move via `corpus_literal_
+  sweep` coverage and `derived_evaluator_fixture_check` fixture coverage (Epic 6-F11 extends both for
+  `equipment`); `computed|ingested-magnitude` in-progress units move via whatever consumer-delta probe
+  exists for `equipment` magnitudes (verify by content before assuming coverage, per this epic's
+  standing discipline); the `not-started` residue is real per-book ingest, same shape as F1/F2.
+- **Acceptance:** raw-vs-workable split recorded with command before any ingest cycle claims a book
+  (same as F1-F4); a `held` cell moved is cited against `corpus_literal_sweep`/fixture-check coverage
+  deltas, never against a raw ingest count; PI screen cited clean per book; reach-gate satisfied per
+  record.
+
+#### SD31-E6-F6 — `equipment_modifier` ingest/instrument lane (669 not-done)
+
+**Shape:** `computed|ingested-magnitude` 422 in-progress (the dominant cell — 63 % of the not-done
+population, already past ingest and sitting on a `computed` probe), `display|not-started` 119
+not-started, `computed|not-started` 79 not-started, `display|not-ingested` 15 not-started,
+`static|ingested-magnitude` 14 held, `static|not-started` 10 not-started, `derived|ingested-
+magnitude` 5 held, `computed|not-ingested` 5 not-started. Only 19 units are `held`; this kind's gap
+is mostly `not-started` ingest plus a large `in-progress` `computed` population one probe-coverage
+step from `grounded`.
+
+- **Instrument/lane:** the `computed` consumer-delta probe already exercising 422 units (verify by
+  content which probe and its coverage ceiling before claiming it can be widened) moves the
+  in-progress mass; the `not-started` residue (213 units) is real per-book ingest.
+- **Acceptance:** same per-card acceptance as F1-F4/F5; a cycle claiming the `computed` in-progress
+  mass cites the probe's own coverage figures before and after, never a raw status-count delta.
+
+#### SD31-E6-F7 — `companion` ingest/instrument lane (1,280 not-done)
+
+**Shape:** `computed|not-ingested` 377 not-started, `derived|grounded` 303 held, `display|not-
+ingested` 298 not-started, `display|grounded` 182 held (part of the corpus-wide 1,243 `display|
+grounded` population Epic 2/AT-31-010 now binds — see below), `derived|not-ingested` 42 not-started,
+`static|not-ingested` 34 not-started, `ambiguous|not-ingested` 23 not-started, `static|grounded` 19
+held, `ambiguous|grounded` 2 held. Split roughly evenly between real `not-started` ingest (774 units)
+and `held` fixture/verdict-path gaps (506 units, of which 182 are the `display|grounded` population
+Epic 2 owns and 303+19 are `derived`/`static` fixture-coverage gaps Epic 6-F11 owns).
+
+- **Instrument/lane:** `display|grounded` 182 moves via Epic 2's verdict-path work (AT-31-010,
+  widened below); `derived|grounded` 303 and `static|grounded` 19 move via Epic 6-F11's fixture/sweep
+  coverage growth; the 774 `not-started` units are real per-book ingest (`companion` PI-gate contract
+  `forward-scope-register.md G1.6`, dormant today — 17 registered companion books carry zero
+  declared-PI source tokens).
+- **Acceptance:** same per-card discipline as F1-F4; a cycle cites which of the three levers (verdict
+  path / fixture coverage / ingest) it is pulling and does not credit one lever's movement to another.
+
+#### SD31-E6-F8 — `feat` ingest/instrument lane (1,432 not-done) — **routes the SD-30 E0-F3 217-unit probe-fixture residue**
+
+**Shape:** `display|not-started` 556 not-started, `computed|unknown` 306 unmeasurable,
+`display|not-ingested` 189 not-started, `computed|not-started` 120 not-started, `ambiguous|text-
+complete` 69 held, `derived|unknown` 43 unmeasurable, `derived|not-started` 33 not-started,
+`derived|not-ingested` 25 not-started, `computed|not-ingested` 24 not-started, `static|unknown` 18
+unmeasurable, plus a small tail (`367` total `unknown`, matching SD30-E0-F3's own re-derivation
+exactly).
+
+**The 217-unit routing.** `docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e0-f3-
+unknown-residue/` (README.md + `feat_unknown_characterization.json`) already diagnosed `feat`'s
+367-unit `unknown` residue per-unit against each record's own PCGen `.lst` source line, not the
+stored `reason` text, and found:
+
+| bucket | units | remedy per the artifact's own §4 |
+|---|---:|---|
+| chooser-pre-selection-gap (positive `PREABILITY` naming a prior chooser selection the probe's synthetic character never makes) | 194 | widen `probe_feat_effect_wiring`'s fixture to pre-select a representative chooser option (a Rage Power, a Discovery, …) per swept class before checking for a computed delta |
+| prereq-stat-or-skill-gap (`PRESTAT`/`PRESKILL` floor the probe's fixed per-class stat block does not satisfy) | 23 | either a richer per-feat stat floor in the fixture, or an honest per-feat "structurally needs a purpose-built character" acknowledgment |
+| **genuinely-unreachable total (probe-fixture gap, both above)** | **217** | — |
+| option-pool (mechanism real, specific pool-slot ungrounded — `BONUS:ABILITYPOOL`/`Extra <X>`, 68; inline `CHOOSE:`, 16; named sub-choice `KEY:... ~ ...`, 16) | 100 | ground one representative option per chooser family, defer the rest with a named diagnostic — mirrors `decisions.md #38`'s standing `class_feature` ruling; no new ingest |
+| unclustered remainder (no structural signal on the record's own `.lst` line) | 50 | read each unit's full `.lst` record individually — no pattern found by the artifact's structural-signal pass |
+
+**Concretely, in this repo:** `PROBE_CLASSES` (`src/bin/v06_work_inventory.rs:128`, 5 classes) and
+`PROBE_SELECTIONS` (`:138`, 4 generic choices) drive `probe_feat_effect_wiring` (`:1574`) via
+`feat_probe_input` (`:1560`), which **strips** the fixture's pre-selected feats/choices rather than
+seeding a chooser pre-selection or a prerequisite-satisfying stat floor — exactly the gap the 194+23
+units name. Widening the fixture (not the corpus, not the classifier) is the remedy; this is
+probe-capability work, the same shape `decisions.md §2` moved into this package as Epic 2.
+
+- **Owner/instrument:** the probe-fixture widening above (Epic 2's verdict-path capability track, or
+  a dedicated Epic 6-F8 cycle using the same fixture — either is in-package now that `decisions.md
+  §2` absorbed the capability track; no cycle may claim this seed by re-running the classifier or
+  loosening the probe's pass bar, per Decision 1(a)).
+- **Acceptance:** a cycle claiming the 217-unit bucket cites the artifact's per-unit `id` list and,
+  after widening the fixture, re-runs `probe_feat_effect_wiring` (via `v06_work_inventory`) and shows
+  the specific `id`s' status leaving `unknown`; the 100-unit option-pool bucket is accepted at
+  "grounded one representative option, deferred the rest with a named diagnostic," no per-option
+  computation attempted; the 50-unit remainder is read individually, not pattern-guessed.
+
+#### SD31-E6-F9 — `monster_ability` ingest/instrument lane (2,773 not-done)
+
+**Shape:** `display|grounded` 981 held (**an Epic 2 dependency** — part of the corpus-wide 1,243
+`display|grounded` population AT-31-010 now binds, below), `display|not-ingested` 653 not-started,
+`computed|not-ingested` 335 not-started, `derived|grounded` 219 held, `derived|not-ingested` 214
+not-started, `static|not-ingested` 213 not-started, `static|grounded` 85 held, `ambiguous|not-
+ingested` 39 not-started, `display|not-started` 23 not-started, `ambiguous|grounded` 10 held,
+`derived|not-started` 1 not-started. **1,295 held** (981 of which is the Epic-2-owned `display|
+grounded` cell) + **1,478 not-started** = 2,773.
+
+- **Instrument/lane:** the 981 `display|grounded` cell moves only when Epic 2's verdict-path work
+  lands (it is capability-blocked exactly like `ambiguous`, not an ingest gap); the remaining 314
+  `static`/`derived` `grounded`-held units move via Epic 6-F11's sweep/fixture coverage; the 1,478
+  not-started units are real per-book ingest, PI-gate contract `forward-scope-register.md G1.6` (6
+  registered monster books, zero declared-PI tokens today, dormant).
+- **Acceptance:** same three-lever discipline as F7; a receipt citing "monster_ability held count
+  dropped" without naming which lever (Epic 2 / Epic 6-F11 / ingest) moved it is not acceptance
+  evidence.
+
+#### SD31-E6-F10 — `class` ingest/instrument lane (158 not-done)
+
+**Shape:** `computed|not-ingested` 114 not-started, `computed|not-started` 35 not-started,
+`display|not-ingested` 7 not-started, `ambiguous|not-started` 1 not-started, `derived|not-started` 1
+not-started. **158 of 158 not-done units are `not-started`; zero are `held`.** Dominated by
+`computed|not-ingested` (114, 72 %) — this is real ingest work, not a fixture/verdict-path gap, and
+overlaps Epic 3's per-class measurement chain (a `class` unit and its `class_feature` units share a
+class-of-origin but are separately-tracked kinds; ingesting a class's own `class` record is not the
+same act as measuring or wiring its `class_feature` records).
+
+- **Instrument/lane:** real per-book ingest; no probe or fixture blocks this kind.
+- **Acceptance:** raw-vs-workable split recorded before a cycle claims a book; reach-gate satisfied
+  per record; PI screen cited clean per book (same discipline as F1-F4).
+
+### F11 — held static/derived residual, corpus-wide (added 2026-08-15, launch-readiness remediation Step 2, blocker B4)
+
+**Re-derived this cycle**, corpus-wide, both wiring classes:
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+verdict = lambda u: P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind'))
+c = collections.Counter()
+for u in U:
+    if verdict(u)=='held' and u.get('wiring_class') in ('static','derived'):
+        c[u.get('kind')] += 1
+print('total', sum(c.values())); print(dict(c.most_common()))
+"
+```
+→ **5,273 held `static`/`derived` units total** (matches the readiness review's B4 figure exactly):
+`equipment 2,284`, `monster 1,232`, `spell 1,061`, `companion 322`, `monster_ability 304`,
+`class_feature 33`, `equipment_modifier 19`, `feat 17`, `race_trait 1`.
+
+**The two instruments, and their coverage gap:**
+
+- `corpus_literal_sweep` (byte-equality against the corpus literal) covers the `static` rung — wired
+  into `verify.sh`'s `corpus-sweep` stage, already run every full gate.
+- `derived_evaluator_fixture_check` (evaluator-vs-fixture) covers the `derived` rung, gated on
+  `tests/fixtures/rules_core/derived-evaluator-fixtures.json`, whose own doc comment
+  (`src/bin/derived_evaluator_fixture_check.rs:14`) states its coverage as "94 of 2,879." **Re-derived
+  this cycle, that trailing figure is stale:**
+  ```
+  python3 -c "
+  import json, sys, collections
+  sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+  d = json.load(open('docs/work-inventory.json'))
+  U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+  elig = [u for u in U if u.get('wiring_class')=='derived' and u.get('status') in
+          ('ingested-magnitude','grounded','text-complete')]
+  print(len(elig))
+  "
+  ```
+  → **2,792**, not 2,879 (corpus drift since the comment was authored; the fixture file itself
+  confirms **94 entries**: `python3 -c "import json; print(len(json.load(open('tests/fixtures/
+  rules_core/derived-evaluator-fixtures.json'))['entries']))"` → `94`). `retro.py correction`
+  emitted (claimed 2,879, `src/bin/v06_work_inventory.rs:4585` and `derived_evaluator_fixture_check.
+  rs:14`, → actual 2,792, verified by the two commands above).
+
+**Owner and lane.** This seed extends both instruments' coverage — it does not build a third one.
+`monster`'s F1 above (1,229 of the 5,273) and F5/F7/F9's `held` cells above are this lane's direct
+consumers; a cycle here grows either `corpus_literal_sweep`'s cited-file coverage or `derived-
+evaluator-fixtures.json`'s entry set and re-runs the relevant per-kind figure above to show the
+delta, never claims a `held`→`done` move without a coverage-instrument citation.
+
+- **Acceptance:** every unit moved off `held` cites the specific `corpus_literal_sweep` file or
+  `derived-evaluator-fixtures.json` entry that verified it; the two re-derivation commands above are
+  re-run and their deltas quoted in the cycle's receipt; no `held` unit is marked `done` by widening
+  `doneness_verdict()`'s table itself (Decision 1(a) forbids widening a bucket definition to move a
+  count) — only by adding real, checkable coverage.
+
+**Acceptance (per card, F1-F10):** the raw-vs-workable split is recorded with its command before any
+cycle claims; the pre-cycle classifier/screen ran against the candidate book before the round was
+committed; PI screen cited clean for the book before any record is written; reach-gate satisfied per
+record ingested; units found structurally unreachable are proposed to the Structural Exclusion
+Register with `decisions.md §3`'s four items, never silently ingested as if grounded and never
+deferred by cycle fiat.
+
+**Not in this epic:** `class_feature` ingest (Epic 5, per-class chassis sweep) — `class_feature` is
+never an Epic 6 kind, even though `class` (F10) now is. **Superseded 2026-08-15 (launch-readiness
+remediation Step 2, blocker B2):** the prior text here read "`equipment`/`equipment_modifier`/
+`companion`/`feat`/`monster_ability` — not named in the operator's cited frustration list; a future
+pass may open cards for them ... without a new operator ruling," carried forward, dated, per this
+program's doc convention. **All six previously-unowned kinds (those five plus `class`) now have
+cards — F5-F10 above — opened by this remediation step, not by a new operator ruling** (the operator's
+2026-08-15 ruling directed "open cards for the six unowned kinds," `decisions.md §5`). Nothing in
+this epic's kind roster is unowned as of this step.
 
 ## Epic 7 (SD31-E7) — Book Onboarding, 100 % mandate (was SD31-E5; orig. SD30-E11)
 
@@ -515,13 +877,21 @@ SD-31 closes when:
   kind is moving; they are not, on their own, a closure criterion for this bar or any other.
 - Epic 1 has landed a race chassis for the chassis-blind population, DoD-8 verified per race added.
 - Epic 2 has landed the ground-truth sample and either a validated classifier or a documented close-at-F1,
-  **and the `ambiguous` wiring class has a path to `done` or a signed register entry**.
+  **and the `ambiguous` wiring class has a path to `done` or a signed register entry, and the
+  1,243-unit `display|grounded` population has been examined by the same classifier** (`AT-31-010`,
+  widened 2026-08-15).
 - Epic 3 has measured every remaining `class_feature`-bearing class.
 - Epic 4 has landed the supersession shape for every class Epic 3 clears, and resolved the
   chooser-interaction shape for Oracle/Arcanist/Sorcerer.
-- Epic 5's chassis sweep has ingested and reach-gated every class Epics 3/4 cleared.
-- Epic 6's four per-kind ingest cards have each reached a ceiling that is **a capability fact, not a
-  scheduling artifact** — F3/F4 re-derived after Epic 1's final chassis batch.
+- Epic 5's chassis sweep has ingested and reach-gated every class Epics 3/4 cleared, **and its F4 (the
+  36 `deferred-with-reason` units, added 2026-08-15) has a real path or a signed register entry for
+  each unit — none silently carried past closure**.
+- Epic 6's per-kind ingest/instrument cards — F1 (`monster`, fixture-coverage), F2 (`spell`), F3/F4
+  (`race`/`race_trait`), F5-F10 (`equipment`, `equipment_modifier`, `companion`, `feat`,
+  `monster_ability`, `class`, added 2026-08-15), F11 (held static/derived residual, added
+  2026-08-15) — have each reached a ceiling that is **a capability fact, not a scheduling artifact**
+  — F3/F4 re-derived after Epic 1's final chassis batch; **no kind in the 38,521-unit denominator is
+  outside this epic's card roster as of this closure**.
 - Epic 7 has onboarded all 7 `future_state` books, PI-clean.
 - Epic 8 has run at least one local-proof-then-cloud-scale cycle per lane shape it claims a role in.
 - Epic 9's exit gate passes; `progress.md` carries the closure receipt; the promotion PR is opened, not

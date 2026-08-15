@@ -140,6 +140,11 @@ Reach the 100 % dashboard mandate, in dependency order:
   re-derive).
 - `class_feature`, corpus-wide, all 23 books (unchanged list, `SD-30-class-feature-archetype-bundle/README.md`).
 - The four SD-29-folded kind lanes: `monster`, `spell`, `race`, `race_trait`.
+- **Six previously-unowned kinds, cards opened 2026-08-15 (`epic-breakdown.md` Epic 6 F5-F10,
+  launch-readiness remediation Step 2, blocker B2):** `equipment` (3,582 not-done), `equipment_modifier`
+  (669), `companion` (1,280), `feat` (1,432), `monster_ability` (2,773), and `class` (158) — all six
+  are in the 38,521-unit mandate denominator (`decisions.md §5`); none had a card before this
+  correction.
 - The 7 `future_state` books: `occult_adventures`, `adventurers_guide`, `mythic_adventures`,
   `inner_sea_magic`, `inner_sea_temples`, `inner_sea_taverns`, `inner_sea_faiths`.
 - The cloud fan-out dispatch protocol for all of the above.

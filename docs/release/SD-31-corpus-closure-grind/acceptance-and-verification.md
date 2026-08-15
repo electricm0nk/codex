@@ -175,7 +175,7 @@ Then:
   with "we moved N units to done" as its primary evidence is rejected pending the sample-agreement
   evidence instead.
 
-## AT-31-010 — The `ambiguous` dead-end is closed or signed off (Epic 2-F3)
+## AT-31-010 — The `ambiguous` dead-end is closed or signed off, AND the `display|grounded` held population is examined (Epic 2-F3) (widened 2026-08-15, launch-readiness remediation Step 2, blocker B4)
 
 Given `wiring_class == ambiguous`, which at authoring time reached `done` from **no status at all**
 (2,109 units — re-derive, `decisions.md §2`).
@@ -186,6 +186,39 @@ Then either `scripts/reachability_audit.py` shows `ambiguous` reaching `done` fr
 or every affected unit carries a signed `AT-31-100` register entry. Epic 2 may not close leaving the
 class structurally unreachable and unregistered — that outcome silently caps the board below 100 % and
 is the specific failure the merge exists to prevent.
+
+**Widened 2026-08-15 (launch-readiness remediation Step 2, blocker B4).** This criterion previously
+bound only `ambiguous`. Re-derived this cycle, corpus-wide:
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS
+     and u.get('wiring_class')=='display' and u.get('status')=='grounded']
+print(len(U)); print(dict(collections.Counter(u.get('kind') for u in U)))
+"
+```
+→ **1,243 units**, all `held` (matches `decisions.md §2`'s cited B4 population exactly):
+`monster_ability 981`, `companion 182`, `class_feature 54`, `race_trait 23`, `feat 3`. This is
+Decision 1(e)'s own named target ("re-examines `display`+`grounded` (1,416 units)" — that 1,416 was
+the split-time snapshot; 1,243 is this cycle's re-derivation, drift expected and not itself a defect)
+but this AT previously bound only the `ambiguous` half of Decision 1(e)'s classifier scope, leaving
+the `display|grounded` half's examination criterion unstated anywhere in `acceptance-and-
+verification.md`.
+
+Given `wiring_class == display, status == grounded` (1,243 units, re-derive at time of use).
+
+When Epic 2 closes.
+
+Then the ground-truth-sample classifier (`SD31-E2-F1`/`F2`) is applied to this population exactly as
+Decision 1(e) specifies: agreement-rate acceptance, both-direction movement reported, and — per
+Decision 1(e) item 4 — if the sample shows the current classification substantially correct, this
+population is reported "examined, correctly classified, left alone" (a passing, `COMPLETE` outcome,
+not a mandate to force reclassification). What is **not** acceptable is Epic 2 closing having never
+examined this population at all — the same silent-cap failure this AT already forbids for
+`ambiguous`, applied to the second half of the same classifier's scope.
 
 ## AT-31-100 — The Structural Exclusion Register (`decisions.md §3`)
 
@@ -280,7 +313,8 @@ violation and must be investigated before the closure proceeds.
 - [ ] AT-31-007 — DoD-8 on-screen verification recorded for every race added.
 - [ ] AT-31-008 — the 18 previously-modeled races still resolve, proven by regression test.
 - [ ] AT-31-009 — classifier accepted on sample agreement, with both-direction movement reported.
-- [ ] AT-31-010 — `ambiguous` reaches `done`, or every affected unit is signed off.
+- [ ] AT-31-010 — `ambiguous` reaches `done`, or every affected unit is signed off; the 1,243-unit
+      `display|grounded` population is examined by the same classifier (widened 2026-08-15).
 - [ ] AT-31-100 — no unit left the denominator without an operator-signed register entry.
 - [ ] AT-31-101 — no cycle claimed across an open capability gate.
 - [ ] AT-31-102 — reachability audit run at the closing tip; **reachable ceiling 100 %**, or every
