@@ -84,6 +84,7 @@ use std::path::{Path, PathBuf};
 use sha2::{Digest, Sha256};
 
 use codex::rules_core::cache_gen::WiringClassIndex;
+use codex::rules_core::pi_screening;
 use codex::rules_core::shape_b_v1::{
     ClassFeatureCacheData, ClassFeatureGrant, ClassVariantCacheData, Completeness, CorpusRecordV1, CorpusSource,
     License, Population, RawBonusChain, RawToken,
@@ -250,6 +251,20 @@ fn raw_bonus_chains(row: &LstRow) -> Vec<RawBonusChain> {
 /// (`decisions.md §27.2`). Absent → `None`.
 fn source_page(row: &LstRow) -> Option<String> {
     row.first("SOURCEPAGE").filter(|v| *v != PLACEHOLDER_SOURCE_PAGE).map(str::to_string)
+}
+
+/// [`pi_screening::declared_product_identity`] over one parsed row's own
+/// tokens (`row.tokens()`, not a re-parse) -- the shared reader
+/// `ingest_race_traits.rs::declared_product_identity_of` already uses,
+/// applied here rather than forked (`decisions.md §39.4`: "the same reader
+/// `ingest_race_traits` already uses, not a new implementation"). PCGen
+/// declares Product Identity per record via `NAMEISPI:YES` /
+/// `DESCISPI:YES`; this binary's own 54-term `PI_BLACKLIST_TERMS` heuristic
+/// (`pi_hits`, below) is a sibling check, not a substitute -- reading a
+/// declaration and scanning for undeclared terms are different questions
+/// (`decisions.md §39.4`/`§53.1`, "the two are now a union").
+fn declared_product_identity_of(row: &LstRow) -> pi_screening::DeclaredProductIdentity {
+    pi_screening::declared_product_identity(row.tokens())
 }
 
 /// `CSKILL:Acrobatics|Climb|TYPE=Craft` → the `|`-split list, verbatim.
@@ -562,6 +577,22 @@ fn parse_grant(mod_target: &str, clause: &str) -> Option<ClassFeatureGrant> {
         granted_by_key: mod_target.to_string(),
         suppressed_by_var,
     })
+}
+
+/// Drops any grant whose `feature_key` names a feature row PCGen itself
+/// declares `NAMEISPI:YES` on. Those rows are dropped by the per-feature
+/// loop and never shipped as their own `class_feature` record, so a
+/// class-variant chassis that still lists them as granted would ship a
+/// dangling reference the corpus does not provide (code review finding
+/// SD30-E8-F2). Mirrors `ingest_race_traits.rs`'s ordering, which drops a
+/// PI-declared row before any chassis-level list derives from it.
+fn drop_pi_named_grants(variant_grants: Vec<ClassFeatureGrant>, feature_rows: &[&LstRow]) -> Vec<ClassFeatureGrant> {
+    let pi_dropped_keys: BTreeSet<&str> = feature_rows
+        .iter()
+        .filter(|frow| declared_product_identity_of(frow).name)
+        .map(|frow| frow.record_key())
+        .collect();
+    variant_grants.into_iter().filter(|g| !pi_dropped_keys.contains(g.feature_key.as_str())).collect()
 }
 
 // ---------------------------------------------------------------------
@@ -891,10 +922,33 @@ fn main() {
     let mut ungranted_features: Vec<String> = Vec::new();
     let mut real_pages = 0usize;
     let mut missing_pages = 0usize;
+    // `class_feature` rows PCGen itself declares `NAMEISPI:YES` on, dropped
+    // before any other processing -- reported, never silent
+    // (`decisions.md §39.4`, mirrors `ingest_race_traits.rs`'s
+    // `dropped, NAMEISPI:YES` line).
+    let mut pi_dropped: Vec<String> = Vec::new();
+    // `class_feature` descriptions PCGen declares `DESCISPI:YES` on,
+    // redacted through the shared reader (mirrors `ingest_race_traits.rs`'s
+    // `descriptions redacted by DESCISPI:YES` line).
+    let mut pi_declared_descriptions = 0usize;
 
     for (variant_key, spec) in VARIANTS {
         let Some(row) = variant_rows.get(*variant_key) else { continue };
         let variant_grants = grants.get(*variant_key).cloned().unwrap_or_default();
+        // A grant naming a feature row PCGen itself declares `NAMEISPI:YES`
+        // on must never reach the class-variant record: that row is
+        // DROPPED (never emitted as its own `class_feature` JSON) by the
+        // per-feature loop below, which runs *after* this point. Without
+        // this filter the variant's own `feature_grants` would still list
+        // the dropped key, shipping a reference the corpus does not
+        // provide -- code review finding SD30-E8-F2, `decisions.md §51`
+        // scope note. Computed here, before `feature_grants` is captured
+        // into `ClassVariantCacheData` and written to disk, so the
+        // record on disk can never disagree with what the per-feature loop
+        // actually emits. Mirrors `ingest_race_traits.rs`'s ordering, which
+        // drops a PI-declared row before any chassis-level list is derived
+        // from it. See `drop_pi_named_grants_test` below for the proof.
+        let variant_grants = drop_pi_named_grants(variant_grants, feature_rows.get(*variant_key).map(Vec::as_slice).unwrap_or_default());
         grants_per_class.insert((*variant_key).to_string(), variant_grants.len());
 
         // Hit-die override: resolve the applied template to its `HITDIE:`.
@@ -1009,6 +1063,20 @@ fn main() {
 
         for frow in feature_rows.get(*variant_key).map(Vec::as_slice).unwrap_or_default() {
             let key = frow.record_key().to_string();
+
+            // PCGen's own per-record Product Identity declaration, read
+            // before any other processing (mirrors `ingest_race_traits.rs`,
+            // where the same check runs before the race scope filter). A
+            // NAME cannot be redacted -- it is the record's identity on
+            // every screen and half of its key -- so a row declaring
+            // `NAMEISPI:YES` is DROPPED, never screened
+            // (`decisions.md §39.4`, `§50.3`/`§53.2`).
+            let declared = declared_product_identity_of(frow);
+            if declared.name {
+                pi_dropped.push(format!("{LST_RELATIVE}:{}: {key}", frow.line_no));
+                continue;
+            }
+
             let grant = grant_by_feature.get(key.as_str());
 
             let rendered = render_description(frow);
@@ -1038,6 +1106,20 @@ fn main() {
                 ungranted_features.push(key.clone());
             }
 
+            // `DESCISPI:YES` is PCGen stating that this description is
+            // Product Identity, redacted through the shared reader
+            // whatever the 54-term blacklist below says (`decisions.md
+            // §39.4`/`§53.1`, "the two are now a union" -- an undeclared
+            // description still runs `pi_hits` unchanged, below). A row
+            // that declares nothing keeps its rendered text exactly as
+            // before this change.
+            let (feature_license, feature_pi_field, feature_pi_marker, description) = if declared.description {
+                pi_declared_descriptions += 1;
+                pi_screening::classify_optional_field_declared("description", rendered.text.as_deref(), true)
+            } else {
+                (License::Ogl, None, None, rendered.text.clone())
+            };
+
             let data = ClassFeatureCacheData {
                 key: key.clone(),
                 name: frow.name().to_string(),
@@ -1049,7 +1131,7 @@ fn main() {
                 is_granted: grant.is_some(),
                 visible: frow.first("VISIBLE").map(str::to_string),
                 class_skills: cskills(frow),
-                description: rendered.text,
+                description,
                 source_page: page,
                 raw_tokens: raw_tokens_excluding_bonus(frow),
                 raw_bonus_chains: raw_bonus_chains(frow),
@@ -1077,9 +1159,9 @@ fn main() {
                     ingested_at: ingested_at.clone(),
                     data,
                     source: source(frow.line_no, &key),
-                    license: Some(License::Ogl),
-                    pi_field: None,
-                    pi_marker: None,
+                    license: Some(feature_license),
+                    pi_field: feature_pi_field,
+                    pi_marker: feature_pi_marker,
                     wiring_class,
                     wiring_class_signals,
                 },
@@ -1115,6 +1197,11 @@ fn main() {
     }
     println!("  features written       : {}", features_per_class.values().sum::<usize>());
     println!("  source_page real / absent: {real_pages} / {missing_pages}");
+    println!("  dropped, NAMEISPI:YES  : {}", pi_dropped.len());
+    for line in &pi_dropped {
+        println!("    {line}");
+    }
+    println!("  descriptions redacted by DESCISPI:YES : {pi_declared_descriptions}");
 
     if !ungranted_features.is_empty() {
         println!("\n  declared but never granted by any progression row ({}):", ungranted_features.len());
@@ -1231,6 +1318,62 @@ mod tests {
         assert!(parse_grant("X", "Special Ability|VIRTUAL|Something").is_none());
     }
 
+    // --- PI-named grant filtering (code review finding SD30-E8-F2) -----
+    //
+    // Proves `drop_pi_named_grants` actually filters a dangling reference,
+    // not merely that it compiles: one clean row survives, one
+    // `NAMEISPI:YES` row's grant is dropped, and a grant naming a feature
+    // key that doesn't appear in `feature_rows` at all (an orphan grant,
+    // unrelated to PI) is left untouched -- the function must not over-drop.
+
+    #[test]
+    fn drop_pi_named_grants_removes_only_the_grant_naming_a_nameispi_row() {
+        let clean = row("Ki Pool\tKEY:Unchained Monk ~ Ki Pool\tTYPE:Unchained Monk Class Feature");
+        let secret = row(
+            "Secret Feature\tKEY:Unchained Monk ~ Secret Feature\tNAMEISPI:YES\tTYPE:Unchained Monk Class Feature",
+        );
+        let feature_rows: Vec<&LstRow> = vec![&clean, &secret];
+
+        let grants = vec![
+            ClassFeatureGrant {
+                feature_key: "Unchained Monk ~ Ki Pool".to_string(),
+                feature_category: "Unchained Monk Class Feature".to_string(),
+                min_level: None,
+                granted_by_key: "Monk ~ Unchained Class".to_string(),
+                suppressed_by_var: None,
+            },
+            ClassFeatureGrant {
+                feature_key: "Unchained Monk ~ Secret Feature".to_string(),
+                feature_category: "Unchained Monk Class Feature".to_string(),
+                min_level: None,
+                granted_by_key: "Monk ~ Unchained Class".to_string(),
+                suppressed_by_var: None,
+            },
+            ClassFeatureGrant {
+                feature_key: "Unchained Monk ~ Orphan (no feature row)".to_string(),
+                feature_category: "Unchained Monk Class Feature".to_string(),
+                min_level: None,
+                granted_by_key: "Monk ~ Unchained Class".to_string(),
+                suppressed_by_var: None,
+            },
+        ];
+
+        let filtered = drop_pi_named_grants(grants, &feature_rows);
+        let kept: Vec<&str> = filtered.iter().map(|g| g.feature_key.as_str()).collect();
+
+        // The PI-declared grant is gone -- the class-variant record can no
+        // longer ship a dangling reference to a dropped feature row.
+        assert!(!kept.contains(&"Unchained Monk ~ Secret Feature"));
+        // The clean grant survives untouched.
+        assert!(kept.contains(&"Unchained Monk ~ Ki Pool"));
+        // A grant naming no feature row at all (a different, pre-existing
+        // defect class the later `declared: BTreeSet` sanity check catches)
+        // is not this function's concern and must not be silently dropped
+        // here too -- that would hide the orphan-grant check's own finding.
+        assert!(kept.contains(&"Unchained Monk ~ Orphan (no feature row)"));
+        assert_eq!(filtered.len(), 2);
+    }
+
     // --- chassis overrides ---------------------------------------------
 
     #[test]
@@ -1290,6 +1433,65 @@ mod tests {
     fn raw_tokens_keep_the_placeholder_verbatim_even_though_source_page_drops_it() {
         let r = row("X\tSOURCEPAGE:p.xx");
         assert!(raw_tokens_excluding_bonus(&r).iter().any(|t| t.key == "SOURCEPAGE" && t.value == "p.xx"));
+    }
+
+    // --- declared Product Identity (`NAMEISPI`/`DESCISPI`) ---------------
+    //
+    // `pu_abilities_class.lst` itself carries zero `NAMEISPI:YES` /
+    // `DESCISPI:YES` tokens today (re-derived this cycle:
+    // `grep -o 'NAMEISPI:[A-Za-z]*\|DESCISPI:[A-Za-z]*'
+    //   ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/
+    //   pathfinder_unchained/pu_abilities_class.lst` → no hits), so the
+    // production path this card wires in has nothing live to redact/drop
+    // and the real ingest run's own `dropped, NAMEISPI:YES`/
+    // `descriptions redacted by DESCISPI:YES` counters both print `0`
+    // (correct, not a proof the mechanism works). These tests build a row
+    // in the exact shape a future PCGen source addition would carry and
+    // replay it through the real production functions
+    // (`declared_product_identity_of`, `pi_screening::
+    // classify_optional_field_declared`) this binary now calls, mirroring
+    // `ingest_race_traits.rs`'s own `declared_product_identity_of` tests.
+
+    #[test]
+    fn declared_product_identity_of_reads_nameispi_and_descispi_off_the_row() {
+        let neither = row("Ordinary Feature\tKEY:Ordinary\tDESC:Mechanics only.");
+        let declared = declared_product_identity_of(&neither);
+        assert!(!declared.name && !declared.description);
+
+        let name_declared = row("Secret Feature\tKEY:Secret\tNAMEISPI:YES\tDESC:Whatever.");
+        assert!(declared_product_identity_of(&name_declared).name);
+
+        let desc_declared = row("Public Feature\tKEY:Public\tDESCISPI:YES\tDESC:Whatever.");
+        assert!(declared_product_identity_of(&desc_declared).description);
+
+        // PCGen writes `NAMEISPI:NO` explicitly on OGL rows; that is not a
+        // declaration (same rule `pi_screening::declared_product_identity`
+        // itself pins).
+        let explicit_no = row("Explicit No\tKEY:ExplicitNo\tNAMEISPI:NO\tDESCISPI:NO");
+        let declared = declared_product_identity_of(&explicit_no);
+        assert!(!declared.name && !declared.description);
+    }
+
+    #[test]
+    fn a_descispi_row_is_redacted_through_the_shared_reader_even_with_no_blacklist_term() {
+        // Real shape from `decisions.md §39.2`'s finding: a description
+        // PCGen declares Product Identity that names nothing the 54-term
+        // blacklist below knows, so only the declared-PI reader catches it.
+        let r = row(
+            "Unchained Something\tKEY:Unchained Something\tDESCISPI:YES\tDESC:You channel a rite passed down among the Ekujae, granting a +2 bonus.",
+        );
+        let declared = declared_product_identity_of(&r);
+        assert!(declared.description);
+
+        let rendered = render_description(&r);
+        assert!(pi_hits(&[rendered.text.as_deref().unwrap_or_default()]).is_empty(), "no blacklist term in this prose");
+
+        let (license, pi_field, pi_marker, stored) =
+            pi_screening::classify_optional_field_declared("description", rendered.text.as_deref(), true);
+        assert_eq!(license, License::PiRedacted);
+        assert_eq!(pi_field.as_deref(), Some("description"));
+        assert!(pi_marker.is_some());
+        assert_ne!(stored.as_deref(), rendered.text.as_deref(), "the declared row must not ship its real prose");
     }
 
     // --- descriptions ---------------------------------------------------

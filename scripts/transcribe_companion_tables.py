@@ -95,6 +95,32 @@ def rust_slice(values: list[str]) -> str:
     return "&[" + ", ".join(rust_str(v) for v in values) + "]"
 
 
+PI_MARKER_RS = "src/rules_core/shape_b_v1.rs"
+
+
+def redacted_pi_marker() -> str:
+    """`shape_b_v1::REDACTED_PI_MARKER`, parsed out of the Rust source.
+
+    **Derived, never re-typed** -- `transcribe_monster_tables.redacted_pi_marker`'s
+    identical function, for the identical reason: a hand-copied literal
+    drifts silently the first time the const changes, and this is the exact
+    string a `DESCISPI:YES` ability's redacted `description` field ships
+    instead of its declared-PI prose (`pi_screening::classify_optional_
+    field_declared`'s own redaction value, `decisions.md §39.4`/`§53`,
+    applied by hand here because this transcriber emits a Rust literal table
+    rather than a JSON record with a `license`/`pi_field`/`pi_marker` trio to
+    route through the shared reader).
+    """
+    text = open(PI_MARKER_RS, encoding="utf-8").read()
+    match = re.search(r'REDACTED_PI_MARKER:\s*&str\s*=\s*"([^"]*)"', text)
+    if not match:
+        raise SystemExit(
+            f"{PI_MARKER_RS}: could not find `REDACTED_PI_MARKER` -- the const's "
+            "shape changed and this parser must be updated with it"
+        )
+    return match.group(1)
+
+
 def parse_speeds(row: list[str]) -> list[tuple[str, int]]:
     """`MOVE:Walk,30,Fly,40` -> [("Walk", 30), ("Fly", 40)]."""
     raw = token(row, "MOVE:")
@@ -435,6 +461,48 @@ def transcribe(book: str) -> str:
             file=sys.stderr,
         )
 
+    # ---- Product Identity screen, CREATURE half, before the ownership
+    # indices below are built ----
+    #
+    # Adopted from `transcribe_monster_tables`'s Product Identity screen
+    # (`decisions.md §39`/`§53`, `SD30-E3-F3-001`), applied at the SAME early
+    # point the `.COPY=`/`.MOD` delta screen immediately above states its own
+    # placement by: `creature_species`/`creature_display`, built below, are
+    # both derived from `creatures`, so a row that should not ship must be
+    # gone before either index sees it. `NAMEISPI:YES` DROPS the row rather
+    # than redacting it -- a name cannot be redacted without breaking the
+    # record's own identity and every `<Creature> ~ <Ability>` key that
+    # references it, PCGen's own rule `decisions.md §50.3`/`§53.2`
+    # independently converged on. `CompanionRecord`'s own fields
+    # (`companion_chassis::CompanionRecord`) are all structural -- no
+    # free-text description at all -- so there is no `DESCISPI:YES` field to
+    # redact at this half; only the name-drop rule applies here. This book's
+    # own re-derived source exposure at time of writing is zero
+    # (`decisions.md §39.2` corpus-wide sweep, re-run this cycle).
+    pi_dropped_creatures = sorted(
+        u["corpus_key"]
+        for u in creatures
+        if token(
+            read_row(resolve_source_file(directory, u["source_file"]), u["source_line"]),
+            "NAMEISPI:",
+        )
+        == "YES"
+    )
+    if pi_dropped_creatures:
+        dropped = set(pi_dropped_creatures)
+        creatures = [u for u in creatures if u["corpus_key"] not in dropped]
+        if not creatures:
+            raise SystemExit(
+                f"{book}: every companion creature row declares NAMEISPI:YES; "
+                "there is no record for this chassis to transcribe"
+            )
+        print(
+            f"{book}: {len(pi_dropped_creatures)} creature row(s) NOT transcribed "
+            "(NAMEISPI:YES -- a declared name cannot be redacted, mirrors "
+            "transcribe_monster_tables's rule): " + ", ".join(pi_dropped_creatures),
+            file=sys.stderr,
+        )
+
     creature_keys = {u["corpus_key"] for u in creatures}
     # `<species>` -> EVERY creature row claiming it, in row order. A list rather
     # than one key, and derived from the ORDERED creature list rather than from
@@ -573,6 +641,73 @@ def transcribe(book: str) -> str:
     # their honest `not-ingested` status in the work inventory — this function
     # never touches that — so the shortfall stays a stated claim a reader can
     # check rather than a silent omission.
+
+    # ---- Product Identity screen, ABILITY half ----
+    #
+    # `pi_screening::{declared_product_identity, classify_optional_field_declared}`'s
+    # two rulings, hand-applied here because this transcriber emits a Rust
+    # literal table rather than a JSON record with `license`/`pi_field`/
+    # `pi_marker` to route through the shared reader (`decisions.md §39.4`,
+    # `SD30-E3-F3-001`): `NAMEISPI:YES` DROPS the row -- the identity field,
+    # referenced by every `<Creature> ~ <Ability>` key that owns it, so
+    # redaction would break the reference, exactly `transcribe_monster_
+    # tables`'s own rule. `DESCISPI:YES` REDACTS the description text (its
+    # `%N` variables, and every gated variant -- `description_variants` are
+    # alternate renderings of the SAME declared-PI prose, not independent
+    # text) to `shape_b_v1::REDACTED_PI_MARKER` and ships the row anyway,
+    # mirroring `ingest_race_traits.rs`/`ingest_pu_classes.rs`'s
+    # name-drop/description-redact split. A row carrying BOTH tokens is
+    # dropped, not redacted -- the name-drop always wins, because a dropped
+    # row has no description left to redact.
+    #
+    # This transcriber (unlike `transcribe_monster_tables`) does not also run
+    # a term-blacklist scan over emitted values -- `scripts/verify.sh`'s
+    # `pi-sweep` stage (`pi_sweep_rules_tables`) already screens EVERY
+    # generated file under `src/rules_core/rules_tables/`, this book's
+    # `companion_data.rs` included, against `pi_screening::PI_BLACKLIST_TERMS`
+    # downstream of this script; adding a second copy of that scan here would
+    # duplicate a check that already runs, not add coverage. Declared-PI
+    # reading is a DIFFERENT question from term-blacklist scanning
+    # (`decisions.md §39.4`'s "union, never a merge"), and this screen answers
+    # only that question.
+    #
+    # This book's own re-derived source exposure at time of writing is zero
+    # for every book this transcriber's `book_dirs()` currently registers
+    # (`decisions.md §39.2` corpus-wide sweep over the 17-book companion
+    # scope, re-run this cycle); `decisions.md §39`'s own 1-row
+    # `dtt_races_companion.lst` (`dirty_tactics_toolbox`) finding is real but
+    # is a book this transcriber does not yet register at all -- out of
+    # `docs/work-inventory.json`'s `corpus_root`/`additional_book_dirs`, so
+    # out of THIS script's current scope, owned by book onboarding when that
+    # book is added (`SD-31-corpus-closure-grind`).
+    pi_dropped_abilities: list[str] = []
+    desc_redacted: set[str] = set()
+    for unit in abilities:
+        key = unit["corpus_key"]
+        row = read_row(resolve_source_file(directory, unit["source_file"]), unit["source_line"])
+        if token(row, "NAMEISPI:") == "YES":
+            pi_dropped_abilities.append(key)
+        elif token(row, "DESCISPI:") == "YES":
+            desc_redacted.add(key)
+    if pi_dropped_abilities:
+        dropped = set(pi_dropped_abilities)
+        abilities = [u for u in abilities if u["corpus_key"] not in dropped]
+        for key in dropped:
+            owners.pop(key, None)
+        for creature_key, keys in creature_ability_keys.items():
+            creature_ability_keys[creature_key] = [k for k in keys if k not in dropped]
+        print(
+            f"{book}: {len(pi_dropped_abilities)} ability row(s) NOT transcribed "
+            "(NAMEISPI:YES -- a declared name cannot be redacted): "
+            + ", ".join(sorted(pi_dropped_abilities)),
+            file=sys.stderr,
+        )
+    # `desc_redacted`'s stderr line and module-doc entry are emitted below,
+    # AFTER the `.COPY=`/`.MOD` and empty-payload screens and the orphan pass
+    # have all run -- any of them can still remove a row this set was
+    # computed before (an orphaned or delta DESCISPI:YES row has no
+    # description left to redact either, because it has no row left).
+
     # ---- delta-row screen (`.COPY=` / `.MOD`), before the orphan pass ----
     #
     # Adopted verbatim from `transcribe_monster_tables`'s `.COPY=` screen, for
@@ -691,6 +826,17 @@ def transcribe(book: str) -> str:
             file=sys.stderr,
         )
 
+    # Finalized against whatever `abilities` actually ships after every
+    # screen above -- an ability no longer shipping (orphan, `.COPY=`/`.MOD`
+    # delta, or empty-payload) has no description left to redact either.
+    desc_redacted &= {u["corpus_key"] for u in abilities}
+    if desc_redacted:
+        print(
+            f"{book}: {len(desc_redacted)} ability row(s) description redacted "
+            f"(DESCISPI:YES): " + ", ".join(sorted(desc_redacted)),
+            file=sys.stderr,
+        )
+
     out: list[str] = []
     out.append(f"//! {book} companion tables, transcribed verbatim from the book's own")
     out.append("//! PCGen `.lst` rows.")
@@ -711,6 +857,60 @@ def transcribe(book: str) -> str:
         for source_file in sorted({u["source_file"] for u in rows}):
             n = sum(1 for u in rows if u["source_file"] == source_file)
             out.append(f"//!   * `{source_file}` -- {n} companion {shape_name} rows")
+    if pi_dropped_creatures or pi_dropped_abilities:
+        out.append("//!")
+        out.append(
+            f"//! {len(pi_dropped_creatures)} creature row(s) and {len(pi_dropped_abilities)}"
+        )
+        out.append(
+            "//! ability row(s) of this book DECLARE `NAMEISPI:YES` (PCGen's own per-record"
+        )
+        out.append(
+            "//! Product Identity marker) and are NOT transcribed -- a name cannot be"
+        )
+        out.append(
+            "//! redacted without breaking the record's own identity and every ability key"
+        )
+        out.append(
+            "//! that references it. Reclassifying is `docs/governance/ogl-pi-blacklist.md`"
+        )
+        out.append("//! §3's per-book override, an operator decision, not a transcriber's:")
+        # `units` (built at the top of this function, never reassigned after
+        # the `gated` filter) still carries every dropped row's own unit
+        # dict -- `creatures`/`abilities` have already had these keys removed
+        # by this point, so they are looked up here rather than there.
+        pi_dropped_units = {u["corpus_key"]: u for u in units}
+        for key in sorted(pi_dropped_creatures) + sorted(pi_dropped_abilities):
+            unit = pi_dropped_units[key]
+            out.append(
+                f"//!   * `{unit['source_file']}:{unit['source_line']}` "
+                f"({'creature' if key in pi_dropped_creatures else 'ability'} row, `{key}`)"
+            )
+    if desc_redacted:
+        out.append("//!")
+        out.append(
+            f"//! {len(desc_redacted)} ability row(s) of this book DECLARE `DESCISPI:YES` --"
+        )
+        out.append(
+            "//! their `description` (its `%N` variables, and every gated"
+        )
+        out.append(
+            "//! `description_variants` entry) SHIP REDACTED to `shape_b_v1::"
+        )
+        out.append(
+            "//! REDACTED_PI_MARKER` rather than dropped, because a description (unlike a"
+        )
+        out.append(
+            "//! name) can be redacted and the record still works. Reclassifying is"
+        )
+        out.append(
+            "//! `docs/governance/ogl-pi-blacklist.md` §3's per-book override, an operator"
+        )
+        out.append("//! decision, not a transcriber's:")
+        desc_redacted_units = {u["corpus_key"]: u for u in abilities}
+        for key in sorted(desc_redacted):
+            unit = desc_redacted_units[key]
+            out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}` ({key})")
     if orphans:
         out.append("//!")
         out.append(
@@ -901,6 +1101,17 @@ def transcribe(book: str) -> str:
         segments = parse_type_segments(row)
         facet, delivery = read_facet_and_delivery(segments)
         description, variables, variants = parse_desc(row)
+        if unit["corpus_key"] in desc_redacted:
+            # `DESCISPI:YES` -- the redaction promised by the module doc's
+            # own listing above. `variables` names `%N` placeholders from the
+            # ORIGINAL text, which no longer ships, so it is cleared too
+            # rather than left dangling against a marker with no `%N` for
+            # them to refer to; `variants` are alternate renderings of the
+            # SAME declared-PI prose, so they are dropped rather than each
+            # individually redacted -- one marker says everything three would.
+            description = redacted_pi_marker()
+            variables = []
+            variants = []
         adjustments = parse_stat_adjustments(row)
         out.append("    CompanionAbilityRecord {")
         out.append(f"        key: {rust_str(unit['corpus_key'])},")

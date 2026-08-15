@@ -20,7 +20,7 @@ named; it's recorded here as **Class 1**. SD-30-specific retrofits land in
 |--------|------|------|
 | Per-book ingest pipeline | `docs/governance/book-ingestion-playbook.md` | Doctrine-of-record; pre-cycle trap-report is mandatory |
 | Reach gate | `apps/desktop/src-tauri/src/reach_gate.rs` | Definition-of-done per `decisions.md §18` (prime rule); gate's `OPEN_FINDINGS` carries missing-surface prerequisites |
-| Identifier discipline | `~/workspace/governance/identifier-discipline.md` | SD-30 inherits; Epic 1 enforces |
+| Identifier discipline | `docs/doctrine-external/identifier-discipline.md` | SD-30 inherits; Epic 1 enforces |
 | Build-version scheme | `<major>.<tranche-base>.<build>` (2026-07-17 amendment) | SD-30 first concrete value `0.10.<build>` |
 | Source STC chassis | `spec-domain-bundle-authoring` skill | 13-file shape per the modern chassis |
 | Move-not-copy publish | `release-package-promotion` skill | Workspace tree removed on publish commit |
@@ -64,6 +64,188 @@ the SD-28 decisions, not the commit message alone). Not a cold start.
 
 **Cross-bundle doc:** `SD-29-corpus-wide-catch-up-lanes/successor-forward-scope-register.md C1.3`
 should be read alongside this entry; both name the same funded effort from opposite sides.
+
+### C1.4 — Per-class PI-blacklist sweep: mechanism delivered, invocation contract for the ingest lane (2026-08-14, `SD30-E3-F1-001`)
+
+**Owner:** `SD-31-corpus-closure-grind` (its Epic 3, ex-SD-30 Epic 6 — `decisions.md §51`).
+
+**What SD-30 delivers:** `SD30-E3-F1` closed (`decisions.md §52`) without a `class_feature` ingest
+lane to wire into, because that lane (Epic 6) moved to SD-31 before this cycle fired. The PI-blacklist
+sweep mechanism itself (`codex::rules_core::pi_table_sweep::screen_generated_table`, the shared
+`pi_screening::PI_BLACKLIST_TERMS`) is already built, already production-wired (two live non-test
+callers, `gen_feat_gap_tables.rs`/`gen_equipment_gap_tables.rs`), and proven this cycle against real
+`class_feature`-shaped content (`tests/pi_table_sweep.rs`'s two new tests, plus two pre-existing
+`real-leak` baseline rows already found inside shipped `archetype_tables.rs` files). `decisions.md
+§52.3` states the exact six-step invocation contract SD-31's Epic 3 generator/transcriber must follow.
+
+**What SD-31 must do:** call `screen_generated_table` before writing any generated `class_feature`
+table text, hard-stop on a non-empty result, and record the outcome in that book's cycle's first
+receipt — the contract, not a re-derivation of it, per `decisions.md §52.3`.
+
+### C1.5 — Declared-PI reader wired into `class_feature`'s one existing production ingest binary; contract for the 6 still-exposed books (2026-08-14, `SD30-E3-F2-001`)
+
+**Owner:** `SD-31-corpus-closure-grind` (its Epic 3, ex-SD-30 Epic 6 — `decisions.md §51`), for the 6
+books this item's own `decisions.md §39.2` measured real declared-PI exposure in
+(`adventurers_guide`, `inner_sea_magic`, `inner_sea_world_guide`, `inner_sea_intrigue`,
+`book_of_the_damned_volume_2`, `inner_sea_combat`).
+
+**What SD-30 delivers:** `SD30-E3-F2` closed (`decisions.md §53`). `decisions.md §39.2`'s "no
+`class_feature` ingest path exists" premise was itself corrected this cycle
+(`decisions.md §53.1`): `src/bin/ingest_pu_classes.rs` (SD-27) already is one, for
+`pathfinder_unchained`. `pi_screening::{declared_product_identity, classify_optional_field_declared}`
+— the shared reader `ingest_race_traits.rs` already used, no forked implementation — is now wired into
+that binary's `class_feature`-writing loop (`NAMEISPI:YES` drop before other processing, `DESCISPI:YES`
+redact through the shared reader, both counted/named in the run receipt, `license`/`pi_field`/
+`pi_marker` genuinely populated). `pathfinder_unchained`'s own source carries zero live declared-PI
+tokens today (`decisions.md §53.2`), so two new unit tests in `src/bin/ingest_pu_classes.rs` prove the
+wiring against real-shaped synthetic rows replayed through the real production functions.
+
+**What SD-31 must do:** for each of the 6 named books, whichever `class_feature` ingest lane Epic 3
+builds must (1) preserve every source token verbatim in `raw_tokens`; (2) call
+`pi_screening::declared_product_identity` on the row's own tokens **before any other per-row
+processing, before any scope/eligibility filter**; (3) drop `NAMEISPI:YES` rows, naming
+`{source_file}:{line}: {key}` in the cycle's own `progress.md` receipt; (4) redact `DESCISPI:YES`
+descriptions through `classify_optional_field_declared`, populating the record's `license`/`pi_field`/
+`pi_marker` from its return rather than a hardcoded `Ogl`; (5) run this as a sibling to whichever
+blacklist-term screen the lane also runs (`C1.4`'s contract), never a substitute, and never let it
+silently weaken an already-shipped stricter policy for the sake of a simpler diff; (6) reclassifying a
+specific declared-PI row as shippable is `ogl-pi-blacklist.md` §3's per-book override, an operator
+decision the lane may request but not make unilaterally. Full six-step contract: `decisions.md §53.5`.
+
+### C1.6 — Declared-PI reader wired into BOTH Pipeline-B Rust-literal-table transcribers (`monster`/`monster_ability`/`companion`), the corpus-wide backfill sweep re-confirmed zero-hit (2026-08-14, `SD30-E3-F3-001`)
+
+**Owner:** `SD-31-corpus-closure-grind`'s `epic-4-ingest-lanes` (ex-SD-30 Epic 10) F1 `monster`, for any
+future monster/monster-ability book carrying declared-PI content; and this package's own `G1.3` slot
+(companion ingest, unclaimed) for any future companion book, for the same reason.
+
+**What SD-30 delivers:** `SD30-E3-F3` closed (`progress.md`, this cycle's receipt). `decisions.md
+§39.2`'s corpus-wide sweep re-run at the start of this cycle reproduced its zero-hits-outside-
+`race_trait` result byte-identically — no corpus file needed redaction or regeneration this cycle.
+Unlike `C1.5` (a `pi_screening`-routed JSON-record writer), these two scripts emit Rust literal
+tables directly (`MonsterAbilityRecord`/`CompanionAbilityRecord` static arrays), so the two rulings
+are hand-applied rather than routed through `classify_optional_field_declared`: `NAMEISPI:YES` drops
+the row (unchanged shape, already existed for monster, newly added for companion); `DESCISPI:YES`
+now redacts every free-text rendering of the row's description (`description`,
+`description_variables`, and — companion only — every gated `description_variants` entry) to
+`shape_b_v1::REDACTED_PI_MARKER`, read from source via a `redacted_pi_marker()` helper (never
+hand-typed) added to both scripts. A row declaring both tokens drops, never redacts. Proven against
+every book either script currently registers (6 monster, 17 companion — all regenerate byte-identical
+to `HEAD`, i.e. zero live behavior change today) and against synthetic rows replayed through each
+script's own real `transcribe()` function (15/15 checks pass across both scripts, `progress.md §5`).
+`decisions.md §39`'s own 1-row `dtt_races_companion.lst` finding re-confirmed but found to belong to
+a book (`dirty_tactics_toolbox`) neither script's `book_dirs()` currently registers — out of this
+item's scope, a `SD-31` book-onboarding concern if that book is ever added.
+
+**What SD-31 must do:** when `epic-4-ingest-lanes` F1 (or a future companion-ingest card under this
+package's `G1.3`) onboards a book whose source rows carry `NAMEISPI:YES`/`DESCISPI:YES` — the current
+6-monster/17-companion registered scope has none, so this is dormant until a new book lands — the
+mechanism already applies automatically (both screens run on every `transcribe()` call over any
+registered book, no per-book opt-in). Nothing further to wire; confirm the run's own stderr /
+module-doc listing names the expected rows for that book, per the six-step contract restated in
+`progress.md`, cycle `SD30-E3-F3-001` §8 (mirrors `C1.5`'s `§53.5`, restated for the Rust-literal-table
+shape).
+
+### C1.7 — Regression gate: a future `class_feature` ingest cannot reintroduce a declared-PI leak (2026-08-14, `SD30-E3-F4-001`)
+
+**Owner:** `SD-31-corpus-closure-grind`'s `epic-3-chassis-sweep` (ex-SD-30 Epic 6) — the first cycle
+that lands a `class_feature` record for any of the 22 not-yet-ingested books in the 23-book roster.
+
+**What SD-30 delivers:** a permanent, always-on `cargo test` regression suite,
+`tests/sd30_declared_product_identity_in_shipped_class_features.rs`, following
+`tests/sd29_declared_product_identity_in_shipped_race_traits.rs`'s shape exactly (reads shipped
+`data/corpus/*/class_feature/**.json`, the same bytes a player-facing record ships, not source
+`.lst` rows). Two enforcement tests: no shipped record may publish a `NAMEISPI:YES`-declared name
+(must be dropped, never redacted — a name can't be redacted without breaking the record's own
+identity/key); no shipped record may ship a `DESCISPI:YES`-declared description unredacted (must
+carry `pi_marker: "redacted"` and `description: "[redacted PI]"`, the same
+`shape_b_v1::PI_MARKER_REDACTED`/`REDACTED_PI_MARKER` constants `C1.5`/`C1.6`'s writers already
+emit through). Neither test requires `class_feature`'s live corpus to currently contain a positive
+case (it doesn't — only `pathfinder_unchained` is ingested today, and it declares zero PI); a third
+test, `the_leak_detectors_actually_fire_on_a_planted_leak_and_clear_on_a_redacted_row`, proves the
+detection logic itself can both fail and pass against synthetic planted rows, independent of live
+corpus content — closing the "a gate that cannot fail because its target is empty" defect class this
+package's own `loop-instruction.md` "Pilot and scope validation" section names as having shipped
+three times already. Proven live against real shipped output this cycle, not only synthetically: a
+`NAMEISPI:YES` row was planted as a scratch copy inside
+`data/corpus/pathfinder_unchained/class_feature/summoner_unchained_class/`, confirmed the suite goes
+RED (`no_shipped_class_feature_record_publishes_a_name_the_corpus_declares_product_identity`
+`FAILED`), the scratch file removed, confirmed GREEN again (all 3 tests `ok`) — commands and output
+verbatim in `progress.md`, cycle `SD30-E3-F4-001`. Wired into `scripts/verify.sh`'s existing
+`root-full` stage (not a new stage): every top-level `tests/*.rs` file is auto-discovered by
+`expected_test_suites()`/`executed_test_suites()`, which already fails `root-full` if a suite is
+present but never executed — no separate wiring commit needed.
+
+**What SD-31 must do:** nothing to invoke — this is a passive regression gate, not a function a
+cycle calls. The moment `epic-3-chassis-sweep` (or any future `class_feature` writer) lands a record
+in `data/corpus/<any book>/class_feature/` whose corpus row declared `NAMEISPI:YES` and still
+shipped, or `DESCISPI:YES` and shipped unredacted, this suite's first two tests fail `root-full` —
+diagnose per the failing test's own assertion message (it names the offending record's `key` and
+file path directly) and route the fix through `C1.5`'s declared-PI reader
+(`pi_screening::{declared_product_identity, classify_optional_field_declared}`), not around this
+gate. Reclassifying a specific declared-PI row as shippable remains `ogl-pi-blacklist.md` §3's
+per-book override, an operator decision, never a lane's own call.
+
+### C1.8 — Wire `v06_corpus_trap_report -- --audit` into `scripts/verify.sh` as a real stage (2026-08-15, `SD30-E8-F3-001`)
+
+**Owner:** `SD-31-corpus-closure-grind` (monster/race_trait grind lanes already own re-deriving this
+audit's per-book coverage as part of their own closure work).
+
+**What SD-30 delivers:** the audit is now a real, non-vacuous gate — `epic-8-code-review` proved it
+can both fail (3 real `wiring-class-mismatch` defects, `data/corpus/inner_sea_gods/monster/
+{psychopomp_ahmuuth,steward_of_the_skein,the_first_blade}.json`) and pass (exit 0 after the fix),
+closing the objection that previously blocked wiring it in ("a gate that cannot fail proves
+nothing"). Both the self-check (`src/pcgen_import/corpus_traps.rs`'s `audit_ingested_cache`) and the
+generator it checks against (`src/bin/gen_book_cache.rs`'s `wiring_class_for_source`) had the
+identical bare-basename bug for a citation nested under a book subdirectory; both are fixed, with
+unit-test coverage a directory-prefixed fixture proves actually exercises the fix (see
+`artifacts/sd30-e8-code-review.md`, Finding 2). The 3 affected records are regenerated and correct
+on `tranche/10`.
+
+**What SD-31 must do:** decide and land the `scripts/verify.sh` stage itself — which books/kinds it
+runs the audit against corpus-wide (today's audit covers every book under `data/corpus/` with a
+populated `cache_dir`, so likely all of them, but that is SD-31's call to confirm against its own
+book-onboarding schedule), and how a future legitimate `wiring_class: "ambiguous"`/`no_corpus_line`
+record (a record genuinely sourced from a second source with no real corpus line, per
+`wiring_citation`'s own `WebSecondSource`/`SameBookFallback` cases) is told apart from a future real
+regression, so the new stage doesn't false-positive on day one. Not a re-open of the underlying
+defect — that part is closed; this is purely the CI-wiring decision `epic-8-code-review` itself has
+no authority to make unilaterally for a repo-wide gate, and which SD-30's scope note bars extending
+into (moved-epic ingest-lane territory).
+
+### C1.9 — `v06_work_inventory.rs`'s own citation resolution shares the nested-subdirectory bug C1.8's two fixes closed (2026-08-15, `SD30-E8-F3-001`)
+
+**Owner:** whichever bundle next touches the measurement instrument (`v06_work_inventory.rs`) —
+Epic 0 (`epic-0-instrument-apply`) is CLOSED for SD-30, so this is not a live SD-30 card; the
+natural owner is `SD-31-corpus-closure-grind`, which already re-derives measurement figures as part
+of its own closure work. (An earlier revision named `SD-32-engine-capability-builds` as an
+alternative owner if the fix were judged capability-shaped; that package was absorbed into SD-31 on
+2026-08-15 — `SD-31-corpus-closure-grind/decisions.md §2` — so SD-31 owns both shapes and there is no
+alternative owner to choose between.)
+
+**What SD-30 found, not fixed:** `epic-8-code-review` fixed the identical bare-basename citation
+bug in two places this cycle (`src/pcgen_import/corpus_traps.rs`'s audit self-check and
+`src/bin/gen_book_cache.rs`'s generator — see `artifacts/sd30-e8-code-review.md` Finding 2). While
+checking whether that fix could move `docs/work-inventory.json`'s own board (it cannot — confirmed:
+`v06_work_inventory.rs` recomputes `wiring_class` fresh from raw PCGen `.lst` provenance via its own
+`token_closure_rows` call, never reads a shipped corpus JSON's own `wiring_class` field, so this
+cycle's 3-record data fix has zero board effect in either direction), the SAME bug shape was found
+in the instrument's own `enumerate_file` (`rel = path.file_name()`, a bare basename, joined against
+a top-level `book_paths` entry exactly like the two now-fixed copies).
+
+**Consequence, unconfirmed:** any book with a real citation nested under a subdirectory (the
+`inner_sea_gods/support/` shape is the one confirmed real precedent so far) may have its
+`wiring_class`/`wiring_class_reason`/`wiring_class_signals` silently misclassified in
+`docs/work-inventory.json` itself — the actual measurement board, not just a shipped-record stamp.
+Not confirmed to move any unit's doneness bucket; not confirmed NOT to, either.
+
+**What the next owner must do:** (1) fix `enumerate_file`'s `rel` derivation the same way
+(`wiring_class_file_arg`/`file_basename`'s `/{book}/`-marker approach, or extract a single shared
+helper all three call sites use, closing the defect class structurally instead of a third parallel
+copy); (2) run the DoD item 4 GUARDED regen procedure (`corpus_literal_sweep` →
+`derived_evaluator_fixture_check` → guarded `v06_work_inventory`, never a bare run —
+`state-goals-and-lessons.md` §1.3 hazard 1) to re-measure; (3) report the board's movement via the
+dashboard producer's own `doneness_verdict()` replayed at both ends, per this program's anti-gaming
+doctrine (`decisions.md §50(a)`) — not the raw `wiring_class` reclassification count.
 
 ## Class 2 — RETIRED 2026-08-10 (book-list deferrals, moot under the `class_feature` re-scope)
 

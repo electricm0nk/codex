@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T18:45:25Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Octopus ~ Jet",
     "delivery": "Extraordinary",
     "description": "An octopus can jet backward once per round as a full-round action, at a speed of 200 ft. It must move in a straight line while jetting, and does not provoke attacks of opportunity when it does so.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialQuality",
     "key": "beastiary:companion:octopus_jet",
     "name": "Jet",

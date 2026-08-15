@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T18:45:25Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Octopus ~ Ink Cloud",
     "delivery": "Extraordinary",
     "description": "An octopus can emit a 10ft radius sphere of ink once per minute as a free action. The ink provides total concealment in water, and persists for 1 minute.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialQuality",
     "key": "beastiary:companion:octopus_ink_cloud",
     "name": "Ink Cloud",

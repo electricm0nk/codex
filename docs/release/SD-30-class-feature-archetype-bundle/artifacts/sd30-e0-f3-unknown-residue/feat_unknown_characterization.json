@@ -1,0 +1,3690 @@
+{
+  "generated_at": "2026-08-14T20:03:13Z",
+  "total": 367,
+  "unresolved_source_line": 0,
+  "bucket_counts": {
+    "genuinely-unreachable (needs new probe-fixture capability)": 217,
+    "unclustered-remainder": 50,
+    "option-pool (mechanism real, specific pool-slot ungrounded)": 100
+  },
+  "shape_counts": {
+    "genuinely-unreachable (needs new probe-fixture capability) :: prereq-stat-or-skill-gap": 23,
+    "unclustered-remainder :: no-structural-signal": 50,
+    "genuinely-unreachable (needs new probe-fixture capability) :: chooser-pre-selection-gap": 194,
+    "option-pool (mechanism real, specific pool-slot ungrounded) :: inline-choose": 16,
+    "option-pool (mechanism real, specific pool-slot ungrounded) :: resource-pool-expansion": 68,
+    "option-pool (mechanism real, specific pool-slot ungrounded) :: named-sub-choice-key": 16
+  },
+  "units": [
+    {
+      "id": "advanced_class_guide:feat:amateur_investigator",
+      "name": "Amateur Investigator",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 13,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "advanced_class_guide:feat:amateur_swashbuckler",
+      "name": "Amateur Swashbuckler",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 14,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "advanced_class_guide:feat:battle_cry",
+      "name": "Battle Cry",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 19,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "advanced_class_guide:feat:befuddling_strike",
+      "name": "Befuddling Strike",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 20,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:believer_s_boon",
+      "name": "Believer's Boon",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 22,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "advanced_class_guide:feat:believer_s_hands",
+      "name": "Believer's Hands",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 24,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:dazing_fist",
+      "name": "Dazing Fist",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 36,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:divine_protection",
+      "name": "Divine Protection",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 42,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "advanced_class_guide:feat:draining_strike",
+      "name": "Draining Strike",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 43,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:extended_animal_focus",
+      "name": "Extended Animal Focus",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 58,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:extra_arcanist_exploit",
+      "name": "Extra Arcanist Exploit",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 59,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'arcanist' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_class_guide:feat:extra_inspiration",
+      "name": "Extra Inspiration",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 62,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'investigator' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_class_guide:feat:extra_investigator_talent",
+      "name": "Extra Investigator Talent",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 63,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'investigator' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_class_guide:feat:extra_martial_flexibility",
+      "name": "Extra Martial Flexibility",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 64,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'brawler' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_class_guide:feat:extra_reservoir",
+      "name": "Extra Reservoir",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 66,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'kineticist/occultist' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_class_guide:feat:extra_slayer_talent",
+      "name": "Extra Slayer Talent",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 67,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'slayer' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_class_guide:feat:faerie_s_strike",
+      "name": "Faerie's Strike",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 69,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:flexible_wizardry",
+      "name": "Flexible Wizardry",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 73,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:grasping_strike",
+      "name": "Grasping Strike",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 81,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:gruesome_slaughter",
+      "name": "Gruesome Slaughter",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 85,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:improved_flexible_wizardry",
+      "name": "Improved Flexible Wizardry",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 89,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:lay_of_the_land",
+      "name": "Lay of the Land",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 109,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_class_guide:feat:manifested_blood",
+      "name": "Manifested Blood",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 112,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "advanced_class_guide:feat:paralyzing_strike",
+      "name": "Paralyzing Strike",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 119,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:raging_blood",
+      "name": "Raging Blood",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 127,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "advanced_class_guide:feat:recovered_rage",
+      "name": "Recovered Rage",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 132,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:slashing_grace",
+      "name": "Slashing Grace",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 143,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "advanced_class_guide:feat:slow_faller",
+      "name": "Slow Faller",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 146,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:staggering_fist",
+      "name": "Staggering Fist",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 152,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:studied_combatant",
+      "name": "Studied Combatant",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 157,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:talented_magician",
+      "name": "Talented Magician",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 160,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_class_guide:feat:unfettered_familiar",
+      "name": "Unfettered Familiar",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 164,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "advanced_class_guide:feat:winter_s_strike",
+      "name": "Winter's Strike",
+      "book": "advanced_class_guide",
+      "source_file": "acg_feats.lst",
+      "source_line": 169,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_players_guide:feat:additional_traits",
+      "name": "Additional Traits",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 9,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "advanced_players_guide:feat:arcane_talent",
+      "name": "Arcane Talent",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 13,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_players_guide:feat:aspect_of_the_beast",
+      "name": "Aspect of the Beast",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 14,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_players_guide:feat:eclectic",
+      "name": "Eclectic",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 49,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_players_guide:feat:elemental_fist",
+      "name": "Elemental Fist",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 54,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_players_guide:feat:elemental_fist_dragon_ferocity",
+      "name": "Elemental Fist",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 56,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Elemental Fist ~ Dragon Ferocity' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_players_guide:feat:elemental_fist_full_version",
+      "name": "Elemental Fist",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 57,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Elemental Fist ~ Full Version' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_players_guide:feat:expanded_arcana",
+      "name": "Expanded Arcana",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 82,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'wizard (arcane discovery-adjacent)' IS in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_players_guide:feat:extra_bombs",
+      "name": "Extra Bombs",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 83,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'alchemist' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_players_guide:feat:extra_discovery",
+      "name": "Extra Discovery",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 84,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'alchemist' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_players_guide:feat:extra_hex",
+      "name": "Extra Hex",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 85,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'witch' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_players_guide:feat:extra_rage_power",
+      "name": "Extra Rage Power",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 86,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'barbarian' IS in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_players_guide:feat:extra_revelation",
+      "name": "Extra Revelation",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 87,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'oracle' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_players_guide:feat:extra_rogue_talent",
+      "name": "Extra Rogue Talent",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 88,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'rogue' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_players_guide:feat:gnome_trickster",
+      "name": "Gnome Trickster",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 98,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_players_guide:feat:greater_dirty_trick",
+      "name": "Greater Dirty Trick",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 101,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_players_guide:feat:greater_drag",
+      "name": "Greater Drag",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 102,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_players_guide:feat:greater_reposition",
+      "name": "Greater Reposition",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 104,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_players_guide:feat:greater_steal",
+      "name": "Greater Steal",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 106,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_players_guide:feat:hero_s_fortune",
+      "name": "Hero's Fortune",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 274,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "advanced_players_guide:feat:improved_dirty_trick",
+      "name": "Improved Dirty Trick",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 111,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_players_guide:feat:improved_drag",
+      "name": "Improved Drag",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 112,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_players_guide:feat:improved_reposition",
+      "name": "Improved Reposition",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 114,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_players_guide:feat:improved_steal",
+      "name": "Improved Steal",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 118,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_players_guide:feat:ironhide",
+      "name": "Ironhide",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 123,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "advanced_players_guide:feat:punishing_kick",
+      "name": "Punishing Kick",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 153,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_players_guide:feat:racial_heritage",
+      "name": "Racial Heritage",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 155,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_players_guide:feat:raging_vitality",
+      "name": "Raging Vitality",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 156,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_players_guide:feat:touch_of_serenity",
+      "name": "Touch of Serenity",
+      "book": "advanced_players_guide",
+      "source_file": "apg_feats.lst",
+      "source_line": 202,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:adaptive_fortune",
+      "name": "Adaptive Fortune",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 84,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:angel_wings",
+      "name": "Angel Wings",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 202,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:angelic_flesh_brazen",
+      "name": "Brazen",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 216,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Angelic Flesh ~ Brazen' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_race_guide:feat:angelic_flesh_golden",
+      "name": "Golden",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 217,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Angelic Flesh ~ Golden' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_race_guide:feat:angelic_flesh_steel",
+      "name": "Steel",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 219,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Angelic Flesh ~ Steel' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_race_guide:feat:armor_of_the_pit",
+      "name": "Armor of the Pit",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 414,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "advanced_race_guide:feat:beast_rider",
+      "name": "Beast Rider",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 67,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:bestow_luck",
+      "name": "Bestow Luck",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 100,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:black",
+      "name": "Black",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 340,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:blood_beak",
+      "name": "Blood Beak",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 404,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:blood_drinker",
+      "name": "Blood Drinker",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 244,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_race_guide:feat:blood_feaster",
+      "name": "Blood Feaster",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 245,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:blue",
+      "name": "Blue",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 341,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:catfolk_exemplar",
+      "name": "Catfolk Exemplar",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 231,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_race_guide:feat:catfolk_exemplar_sharp_claws",
+      "name": "Sharp Claws",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 240,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Catfolk Exemplar ~ Sharp Claws' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_race_guide:feat:diverse_palate",
+      "name": "Diverse Palate",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 247,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_race_guide:feat:draconic_aspect",
+      "name": "Draconic Aspect",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 330,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "advanced_race_guide:feat:draconic_breath",
+      "name": "Draconic Breath",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 331,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:draconic_glide",
+      "name": "Draconic Glide",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 332,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:draconic_paragon",
+      "name": "Draconic Paragon",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 333,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:drow_nobility",
+      "name": "Drow Nobility",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 271,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:elven_spirit",
+      "name": "Elven Spirit",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 49,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_race_guide:feat:extra_elemental_assault",
+      "name": "Extra Elemental Assault",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 177,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'kineticist' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_race_guide:feat:fortunate_one",
+      "name": "Fortunate One",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 89,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:goblin_gunslinger",
+      "name": "Goblin Gunslinger",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 305,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "advanced_race_guide:feat:great_hatred",
+      "name": "Great Hatred",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 42,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:greater_brand",
+      "name": "Greater Brand",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 267,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_race_guide:feat:greater_drow_nobility",
+      "name": "Greater Drow Nobility",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 272,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:green",
+      "name": "Green",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 342,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:heavenly_radiance",
+      "name": "Heavenly Radiance",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 210,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_race_guide:feat:heavenly_radiance_flare_burst",
+      "name": "Flare Burst",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 223,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Heavenly Radiance ~ Flare  Burst' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_race_guide:feat:heavenly_radiance_searing_light",
+      "name": "Searing Light",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 225,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Heavenly Radiance ~ Searing Light' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_race_guide:feat:heavenly_radiance_sunbeam",
+      "name": "Sunbeam",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 227,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Heavenly Radiance ~ Sunbeam' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_race_guide:feat:heavenly_radiance_wake_of_light",
+      "name": "Wake of Light",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 224,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Heavenly Radiance ~ Wake of Light' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_race_guide:feat:heavenly_radiance_wandering_star_motes",
+      "name": "Wandering Star Motes",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 226,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Heavenly Radiance ~ Wandering Star Motes' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_race_guide:feat:human_spirit",
+      "name": "Human Spirit",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 53,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "advanced_race_guide:feat:improved_drow_nobility",
+      "name": "Improved Drow Nobility",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 273,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:long_nose_form",
+      "name": "Long-Nose Form",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 406,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "advanced_race_guide:feat:magical_tail",
+      "name": "Magical Tail",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 152,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "advanced_race_guide:feat:mother_s_gift",
+      "name": "Mother's Gift",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 128,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_race_guide:feat:mother_s_gift_hag_claws",
+      "name": "Hag Claws",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 132,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Mother's Gift ~ Hag Claws' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_race_guide:feat:mother_s_gift_surprisingly_tough",
+      "name": "Surprisingly Tough",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 133,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Mother's Gift ~ Surprisingly Tough' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_race_guide:feat:mother_s_gift_uncanny_resistance",
+      "name": "Uncanny Resistance",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 134,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Mother's Gift ~ Uncanny Resistance' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_race_guide:feat:multitalented_mastery",
+      "name": "Multitalented Mastery",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 54,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_race_guide:feat:multitalented_mastery_bonus_hit_point",
+      "name": "Bonus Hit Point",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 61,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Multitalented Mastery ~ Bonus Hit Point' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_race_guide:feat:multitalented_mastery_bonus_skill_point",
+      "name": "Bonus Skill Rank",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 62,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "named-sub-choice-key",
+      "sub_reason": "corpus_key 'Multitalented Mastery ~ Bonus Skill Point' carries PCGen's explicit chooser-option KEY marker (' ~ '); this is one option inside a parent class-native chooser feat, decisions.md #38's dominant shape"
+    },
+    {
+      "id": "advanced_race_guide:feat:noble_spell_resistance",
+      "name": "Noble Spell Resistance",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 275,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:orc_weapon_expertise",
+      "name": "Orc Weapon Expertise",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 362,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_race_guide:feat:red",
+      "name": "Red",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 343,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:resilient_brute",
+      "name": "Resilient Brute",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 76,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "advanced_race_guide:feat:risky_striker",
+      "name": "Risky Striker",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 93,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "advanced_race_guide:feat:shadow_ghost",
+      "name": "Shadow Ghost",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 295,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:shared_manipulation",
+      "name": "Shared Manipulation",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 57,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "advanced_race_guide:feat:spit_venom",
+      "name": "Spit Venom",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 165,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "advanced_race_guide:feat:tail_terror",
+      "name": "Tail Terror",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 336,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "advanced_race_guide:feat:tengu_raven_form",
+      "name": "Tengu Raven Form",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 408,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:triton_portal",
+      "name": "Triton Portal",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 428,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:umbral_scion",
+      "name": "Umbral Scion",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 279,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "advanced_race_guide:feat:uncanny_defense",
+      "name": "Uncanny Defense",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 96,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:white",
+      "name": "White",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 344,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "advanced_race_guide:feat:wings_of_air",
+      "name": "Wings of Air",
+      "book": "advanced_race_guide",
+      "source_file": "arg_feats.lst",
+      "source_line": 399,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:agile_maneuvers",
+      "name": "Agile Maneuvers",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 12,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:arcane_armor_mastery",
+      "name": "Arcane Armor Mastery",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 16,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:arcane_armor_training",
+      "name": "Arcane Armor Training",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 17,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:arcane_strike",
+      "name": "Arcane Strike",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 18,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:blinding_critical",
+      "name": "Blinding Critical",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 26,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:combat_expertise",
+      "name": "Combat Expertise",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 32,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:combat_reflexes",
+      "name": "Combat Reflexes",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 34,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:deadly_aim",
+      "name": "Deadly Aim",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 44,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:defensive_combat_training",
+      "name": "Defensive Combat Training",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 48,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:dodge",
+      "name": "Dodge",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 53,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:double_slice",
+      "name": "Double Slice",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 54,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:extra_channel",
+      "name": "Extra Channel",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 63,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'cleric' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "core_rulebook:feat:extra_lay_on_hands",
+      "name": "Extra Lay On Hands",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 65,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'paladin' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "core_rulebook:feat:extra_mercy",
+      "name": "Extra Mercy",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 66,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'paladin' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "core_rulebook:feat:extra_performance",
+      "name": "Extra Performance",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 67,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'bard' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "core_rulebook:feat:far_shot",
+      "name": "Far Shot",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 69,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:greater_shield_focus",
+      "name": "Greater Shield Focus",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 81,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:greater_spell_focus",
+      "name": "Greater Spell Focus",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 82,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "core_rulebook:feat:greater_two_weapon_fighting",
+      "name": "Greater Two-Weapon Fighting",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 86,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:heighten_spell",
+      "name": "Heighten Spell",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 90,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:heighten_spell_2",
+      "name": "Heighten Spell +2",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 216,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:heighten_spell_3",
+      "name": "Heighten Spell +3",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 217,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:heighten_spell_4",
+      "name": "Heighten Spell +4",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 218,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:heighten_spell_5",
+      "name": "Heighten Spell +5",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 219,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:heighten_spell_6",
+      "name": "Heighten Spell +6",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 220,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:heighten_spell_7",
+      "name": "Heighten Spell +7",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 221,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:heighten_spell_8",
+      "name": "Heighten Spell +8",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 222,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:heighten_spell_9",
+      "name": "Heighten Spell +9",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 223,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:improved_channel",
+      "name": "Improved Channel",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 92,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:improved_two_weapon_fighting",
+      "name": "Improved Two-Weapon Fighting",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 108,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:improved_unarmed_strike",
+      "name": "Improved Unarmed Strike",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 109,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:leadership",
+      "name": "Leadership",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 114,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:leadership_score",
+      "name": "Leadership Score",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 192,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:point_blank_shot",
+      "name": "Point-Blank Shot",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 133,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:power_attack",
+      "name": "Power Attack",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 134,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:rapid_shot",
+      "name": "Rapid Shot",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 139,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:scorpion_style",
+      "name": "Scorpion Style",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 142,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:selective_channeling",
+      "name": "Selective Channeling",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 144,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:shield_focus",
+      "name": "Shield Focus",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 147,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:shield_master",
+      "name": "Shield Master",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 148,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:staggering_critical",
+      "name": "Staggering Critical",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 164,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:stunning_critical",
+      "name": "Stunning Critical",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 170,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:throw_anything",
+      "name": "Throw Anything",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 172,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:two_weapon_defense",
+      "name": "Two-Weapon Defense",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 178,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:two_weapon_fighting",
+      "name": "Two-Weapon Fighting",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 179,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "core_rulebook:feat:two_weapon_rend",
+      "name": "Two-Weapon Rend",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 180,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "core_rulebook:feat:weapon_finesse",
+      "name": "Weapon Finesse",
+      "book": "core_rulebook",
+      "source_file": "cr_feats.lst",
+      "source_line": 183,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "pathfinder_unchained:feat:extra_stamina",
+      "name": "Extra Stamina",
+      "book": "pathfinder_unchained",
+      "source_file": "pu_feats.lst",
+      "source_line": 19,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'any (pathfinder unchained variant rule)' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "pathfinder_unchained:feat:extra_unchained_rogue_talent",
+      "name": "Extra Unchained Rogue Talent",
+      "book": "pathfinder_unchained",
+      "source_file": "pu_feats.lst",
+      "source_line": 29,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'rogue' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "pathfinder_unchained:feat:push_the_limits",
+      "name": "Push the Limits",
+      "book": "pathfinder_unchained",
+      "source_file": "pu_feats.lst",
+      "source_line": 20,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "pathfinder_unchained:feat:signature_skill",
+      "name": "Signature Skill",
+      "book": "pathfinder_unchained",
+      "source_file": "pu_feats.lst",
+      "source_line": 32,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_combat:feat:amateur_gunslinger",
+      "name": "Amateur Gunslinger",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 21,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "ultimate_combat:feat:arc_slinger",
+      "name": "Arc Slinger",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 47,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:channeling_scourge",
+      "name": "Channeling Scourge",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 41,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:crane_style",
+      "name": "Crane Style",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 292,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:djinni_spirit",
+      "name": "Djinni Spirit",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 91,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:djinni_style",
+      "name": "Djinni Style",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 92,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:dragon_roar",
+      "name": "Dragon Roar",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 97,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:earth_child_style",
+      "name": "Earth Child Style",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 101,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:efreeti_stance",
+      "name": "Efreeti Stance",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 103,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:efreeti_style",
+      "name": "Efreeti Style",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 104,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:extra_bane",
+      "name": "Extra Bane",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 110,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'ranger' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_combat:feat:extra_grit",
+      "name": "Extra Grit",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 111,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'gunslinger' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_combat:feat:final_embrace_master",
+      "name": "Final Embrace Master",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 152,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:guided_hand",
+      "name": "Guided Hand",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 161,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_combat:feat:horse_master",
+      "name": "Horse Master",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 175,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:improved_stalwart",
+      "name": "Improved Stalwart",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 186,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:leaping_shot_deed",
+      "name": "Leaping Shot Deed",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 198,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:mantis_style",
+      "name": "Mantis Style",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 199,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:mantis_torment",
+      "name": "Mantis Torment",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 200,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:mantis_wisdom",
+      "name": "Mantis Wisdom",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 201,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:marid_spirit",
+      "name": "Marid Spirit",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 203,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:marid_style",
+      "name": "Marid Style",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 204,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:monkey_moves",
+      "name": "Monkey Moves",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 216,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:monkey_style",
+      "name": "Monkey Style",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 218,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:sea_legs",
+      "name": "Sea Legs",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 271,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_combat:feat:shapeshifting_hunter",
+      "name": "Shapeshifting Hunter",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 281,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:snake_sidewind",
+      "name": "Snake Sidewind",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 309,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:snake_style",
+      "name": "Snake Style",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 310,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:stalwart",
+      "name": "Stalwart",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 322,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:style_feat_wildcard",
+      "name": "Style Feat Wildcard",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 391,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_combat:feat:toughness_vigor_wounds",
+      "name": "Toughness (Vigor/Wounds)",
+      "book": "ultimate_combat",
+      "source_file": "uc_feats.lst",
+      "source_line": 359,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "ultimate_intrigue:feat:betrayal_sense",
+      "name": "Betrayal Sense",
+      "book": "ultimate_intrigue",
+      "source_file": "ui_feats.lst",
+      "source_line": 14,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_intrigue:feat:brilliant_planner",
+      "name": "Brilliant Planner",
+      "book": "ultimate_intrigue",
+      "source_file": "ui_feats.lst",
+      "source_line": 16,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "ultimate_intrigue:feat:careful_sneak",
+      "name": "Careful Sneak",
+      "book": "ultimate_intrigue",
+      "source_file": "ui_feats.lst",
+      "source_line": 21,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_intrigue:feat:conceal_spell",
+      "name": "Conceal Spell",
+      "book": "ultimate_intrigue",
+      "source_file": "ui_feats.lst",
+      "source_line": 28,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_intrigue:feat:criminal_reputation",
+      "name": "Criminal Reputation",
+      "book": "ultimate_intrigue",
+      "source_file": "ui_feats.lst",
+      "source_line": 31,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_intrigue:feat:exquisite_sneak",
+      "name": "Exquisite Sneak",
+      "book": "ultimate_intrigue",
+      "source_file": "ui_feats.lst",
+      "source_line": 40,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_intrigue:feat:feign_curse",
+      "name": "Feign Curse",
+      "book": "ultimate_intrigue",
+      "source_file": "ui_feats.lst",
+      "source_line": 43,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_intrigue:feat:fencing_grace",
+      "name": "Fencing Grace",
+      "book": "ultimate_intrigue",
+      "source_file": "ui_feats.lst",
+      "source_line": 44,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_intrigue:feat:persuasive_bribery",
+      "name": "Persuasive Bribery",
+      "book": "ultimate_intrigue",
+      "source_file": "ui_feats.lst",
+      "source_line": 77,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_intrigue:feat:starry_grace",
+      "name": "Starry Grace",
+      "book": "ultimate_intrigue",
+      "source_file": "ui_feats.lst",
+      "source_line": 96,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_intrigue:feat:street_smarts",
+      "name": "Street Smarts",
+      "book": "ultimate_intrigue",
+      "source_file": "ui_feats.lst",
+      "source_line": 99,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "ultimate_intrigue:feat:street_sweep",
+      "name": "Street Sweep",
+      "book": "ultimate_intrigue",
+      "source_file": "ui_feats.lst",
+      "source_line": 101,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_intrigue:feat:telepathy_tap",
+      "name": "Telepathy Tap",
+      "book": "ultimate_intrigue",
+      "source_file": "ui_feats.lst",
+      "source_line": 108,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:channeled_shield_wall",
+      "name": "Channeled Shield Wall",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 23,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:detect_expertise",
+      "name": "Detect Expertise",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 29,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_magic:feat:discovery_opposition_research",
+      "name": "Discovery (Opposition Research)",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 237,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:discovery_split_slot",
+      "name": "Discovery (Split Slot)",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 238,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'alchemist' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_magic:feat:eldritch_heritage",
+      "name": "Eldritch Heritage",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 37,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "ultimate_magic:feat:evolved_familiar",
+      "name": "Evolved Familiar",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 39,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_magic:feat:extended_bane",
+      "name": "Extended Bane",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 43,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:extra_arcana",
+      "name": "Extra Arcana",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 41,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'wizard (arcane discovery-adjacent)' IS in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_magic:feat:extra_arcane_pool",
+      "name": "Extra Arcane Pool",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 42,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'magus' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_magic:feat:extra_cantrips_or_orisons",
+      "name": "Extra Cantrips or Orisons",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 48,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'wizard/cleric (any 0-level-caster)' IS in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_magic:feat:extra_evolution",
+      "name": "Extra Evolution",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 50,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'summoner (eidolon)' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_magic:feat:extra_ranger_trap",
+      "name": "Extra Ranger Trap",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 51,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_magic:feat:extra_summons",
+      "name": "Extra Summons",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 52,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'summoner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_magic:feat:extra_word",
+      "name": "Extra Word",
+      "book": "ultimate_magic",
+      "source_file": "um_feats_wordsofpower.lst",
+      "source_line": 17,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'cleric (words of power variant)' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_magic:feat:greater_eldritch_heritage",
+      "name": "Greater Eldritch Heritage",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 65,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_magic:feat:implant_bomb",
+      "name": "Implant Bomb",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 71,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:improved_eldritch_heritage",
+      "name": "Improved Eldritch Heritage",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 73,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_magic:feat:improved_monster_lore",
+      "name": "Improved Monster Lore",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 75,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:learn_ranger_trap",
+      "name": "Learn Ranger Trap",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 81,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_magic:feat:life_lure",
+      "name": "Life Lure",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 83,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:meta_word_mastery",
+      "name": "Meta Word Mastery",
+      "book": "ultimate_magic",
+      "source_file": "um_feats_wordsofpower.lst",
+      "source_line": 19,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'cleric (words of power variant)' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_magic:feat:oracular_intuition",
+      "name": "Oracular Intuition",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 86,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:painful_anchor",
+      "name": "Painful Anchor",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 87,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:prodigy",
+      "name": "Prodigy",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 93,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "ultimate_magic:feat:quarterstaff_master",
+      "name": "Quarterstaff Master",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 99,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:radiant_charge",
+      "name": "Radiant Charge",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 102,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:remote_bomb",
+      "name": "Remote Bomb",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 103,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:resilient_eidolon",
+      "name": "Resilient Eidolon",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 104,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:reward_of_life",
+      "name": "Reward of Life",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 106,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:shaping_focus",
+      "name": "Shaping Focus",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 111,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:spell_specialization_abjuration",
+      "name": "Spell Specialization (Abjuration)",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 120,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "ultimate_magic:feat:spell_specialization_conjuration",
+      "name": "Spell Specialization (Conjuration)",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 121,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "ultimate_magic:feat:spell_specialization_divination",
+      "name": "Spell Specialization (Divination)",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 122,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "ultimate_magic:feat:spell_specialization_enchantment",
+      "name": "Spell Specialization (Enchantment)",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 123,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "ultimate_magic:feat:spell_specialization_evocation",
+      "name": "Spell Specialization (Evocation)",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 124,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "ultimate_magic:feat:spell_specialization_illusion",
+      "name": "Spell Specialization (Illusion)",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 125,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "ultimate_magic:feat:spell_specialization_necromancy",
+      "name": "Spell Specialization (Necromancy)",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 126,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "ultimate_magic:feat:spell_specialization_transmutation",
+      "name": "Spell Specialization (Transmutation)",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 127,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "inline-choose",
+      "sub_reason": "CHOOSE: token present on the feat record itself; probe's fixed PROBE_SELECTIONS roster is generic and does not exercise this feat's own named choice list"
+    },
+    {
+      "id": "ultimate_magic:feat:ultimate_resolve",
+      "name": "Ultimate Resolve",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 149,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:uncanny_alertness",
+      "name": "Uncanny Alertness",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 150,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:uncanny_concentration",
+      "name": "Uncanny Concentration",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 151,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:undead_master",
+      "name": "Undead Master",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 152,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:unsanctioned_knowledge",
+      "name": "Unsanctioned Knowledge",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 156,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_magic:feat:versatile_channeler",
+      "name": "Versatile Channeler",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 164,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'cleric' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_magic:feat:voice_of_the_sibyl",
+      "name": "Voice of the Sibyl",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 166,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_magic:feat:warrior_priest",
+      "name": "Warrior Priest",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 167,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_magic:feat:wild_speech",
+      "name": "Wild Speech",
+      "book": "ultimate_magic",
+      "source_file": "um_feats.lst",
+      "source_line": 168,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:access_psionic_talent",
+      "name": "Access Psionic Talent",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 18,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:additional_terror",
+      "name": "Additional Terror",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 19,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_psionics:feat:advanced_archer_path",
+      "name": "Advanced Archer Path",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 20,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:advanced_ascetic_path",
+      "name": "Advanced Ascetic Path",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 21,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:advanced_assassin_path",
+      "name": "Advanced Assassin Path",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 22,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:advanced_brawling_path",
+      "name": "Advanced Brawling Path",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 23,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:advanced_dervish_path",
+      "name": "Advanced Dervish Path",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 25,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:advanced_feral_path",
+      "name": "Advanced Feral Path",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 26,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:advanced_infiltrator_path",
+      "name": "Advanced Infiltrator Path",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 27,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:advanced_interceptor_path",
+      "name": "Advanced Interceptor Path",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 28,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:advanced_mind_knight_path",
+      "name": "Advanced Mind Knight Path",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 29,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:advanced_survivor_path",
+      "name": "Advanced Survivor Path",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 30,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:advanced_weaponmaster_path",
+      "name": "Advanced Weaponmaster Path",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 31,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:assassin_s_venom",
+      "name": "Assassin's Venom",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 37,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:autonomous",
+      "name": "Autonomous",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 38,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "ultimate_psionics:feat:deadly_throw",
+      "name": "Deadly Throw",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 68,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:defensive_tactics",
+      "name": "Defensive Tactics",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 72,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:disciple_of_fear",
+      "name": "Disciple of Fear",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 74,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:efficient_aid",
+      "name": "Efficient Aid",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 82,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:empowered_shot",
+      "name": "Empowered Shot",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 85,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:enlarged_collective",
+      "name": "Enlarged Collective",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 90,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:expanded_collective",
+      "name": "Expanded Collective",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 92,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:expanded_favored_weapon",
+      "name": "Expanded Favored Weapon",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 93,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_psionics:feat:expanded_strategies",
+      "name": "Expanded Strategies",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 98,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_psionics:feat:extended_blast",
+      "name": "Extended Blast",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 103,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:extra_blade_skill",
+      "name": "Extra Blade Skill",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 101,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'aegis/soulknife (psionic)' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_psionics:feat:extra_customization",
+      "name": "Extra Customization",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 104,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'android/construct-kin' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_psionics:feat:extra_insight",
+      "name": "Extra Insight",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 106,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'investigator' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_psionics:feat:extra_power_known",
+      "name": "Extra Power Known",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 107,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'psion/psychic (psionic)' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_psionics:feat:extra_reconfiguration",
+      "name": "Extra Reconfiguration",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 108,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'android/construct' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_psionics:feat:extra_strategy",
+      "name": "Extra Strategy",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 109,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'cavalier/tactician' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_psionics:feat:extra_terrors",
+      "name": "Extra Terrors",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 110,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'dread (psionic)' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_psionics:feat:extra_transfer",
+      "name": "Extra Transfer",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 111,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'occultist/mesmer' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_psionics:feat:fear_mastery",
+      "name": "Fear Mastery",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 125,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:fear_s_reach",
+      "name": "Fear's Reach",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 126,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:fighter_s_blade",
+      "name": "Fighter's Blade",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 130,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:gravitic_stability",
+      "name": "Gravitic Stability",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 141,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "ultimate_psionics:feat:greater_intuitive_shot",
+      "name": "Greater Intuitive Shot",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 143,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:greater_psionic_fist",
+      "name": "Greater Psionic Fist",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 148,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:greater_psionic_shot",
+      "name": "Greater Psionic Shot",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 150,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:greater_psionic_weapon",
+      "name": "Greater Psionic Weapon",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 152,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:harmonic_resonance",
+      "name": "Harmonic Resonance",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 159,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:hawkeye",
+      "name": "Hawkeye",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 160,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:improved_cover_fire",
+      "name": "Improved Cover Fire",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 166,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:improved_disruption",
+      "name": "Improved Disruption",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 169,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:improved_psicrystal",
+      "name": "Improved Psicrystal",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 176,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_psionics:feat:intuitive_fighting",
+      "name": "Intuitive Fighting",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 180,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:intuitive_shot",
+      "name": "Intuitive Shot",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 181,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:knightmare",
+      "name": "Knightmare",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 188,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:mental_leap",
+      "name": "Mental Leap",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 205,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_psionics:feat:mind_blade_knight",
+      "name": "Mind Blade Knight",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 210,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:modified_blast",
+      "name": "Modified Blast",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 214,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:multiple_connections",
+      "name": "Multiple Connections",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 215,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:nomad_s_jump",
+      "name": "Nomad's Jump",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 223,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:open_door",
+      "name": "Open Door",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 229,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:open_minded",
+      "name": "Open Minded",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 230,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "ultimate_psionics:feat:piranha_strike",
+      "name": "Piranha Strike",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 241,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "ultimate_psionics:feat:psicrystal_affinity",
+      "name": "Psicrystal Affinity",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 247,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_psionics:feat:psionic_body",
+      "name": "Psionic Body",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 249,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "ultimate_psionics:feat:psionic_bull_rush",
+      "name": "Psionic Bull Rush",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 250,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:psionic_disarm",
+      "name": "Psionic Disarm",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 253,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:psionic_dodge",
+      "name": "Psionic Dodge",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 254,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:psionic_fist",
+      "name": "Psionic Fist",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 257,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_psionics:feat:psionic_overrun",
+      "name": "Psionic Overrun",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 259,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:psionic_shield_bash",
+      "name": "Psionic Shield Bash",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 261,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:psionic_shot",
+      "name": "Psionic Shot",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 263,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:psionic_stamina",
+      "name": "Psionic Stamina",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 264,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:psionic_sunder",
+      "name": "Psionic Sunder",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 265,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:psionic_talent",
+      "name": "Psionic Talent",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 266,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "ultimate_psionics:feat:psionic_trip",
+      "name": "Psionic Trip",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 267,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:psionic_weapon",
+      "name": "Psionic Weapon",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 270,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_psionics:feat:pyromaniac",
+      "name": "Pyromaniac",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 273,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:raging_hulk",
+      "name": "Raging Hulk",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 284,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:rapid_draw",
+      "name": "Rapid Draw",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 286,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:reckless_offense",
+      "name": "Reckless Offense",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 290,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "ultimate_psionics:feat:ricochet",
+      "name": "Ricochet",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 295,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:selective_power",
+      "name": "Selective Power",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 306,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_psionics:feat:soul_warrior",
+      "name": "Soul Warrior",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 313,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:speed_of_thought",
+      "name": "Speed of Thought",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 314,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_psionics:feat:student_of_the_astral_suit",
+      "name": "Student of the Astral Suit",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 319,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:surging_aura",
+      "name": "Surging Aura",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 320,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "ultimate_psionics:feat:tomb_raider",
+      "name": "Tomb Raider",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 331,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:touch_of_terror",
+      "name": "Touch of Terror",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 333,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:toughened_suit",
+      "name": "Toughened Suit",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 334,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:unlocked_talent",
+      "name": "Unlocked Talent",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 345,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:unwilling_participant",
+      "name": "Unwilling Participant",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 346,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_psionics:feat:wild_talent",
+      "name": "Wild Talent",
+      "book": "ultimate_psionics",
+      "source_file": "up_feats.lst",
+      "source_line": 357,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "ultimate_wilderness:feat:aquatic_combatant",
+      "name": "Aquatic Combatant",
+      "book": "ultimate_wilderness",
+      "source_file": "uw_feats.lst",
+      "source_line": 14,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_wilderness:feat:boon_companion",
+      "name": "Boon Companion",
+      "book": "ultimate_wilderness",
+      "source_file": "uw_feats.lst",
+      "source_line": 21,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_wilderness:feat:climbing_vine",
+      "name": "Climbing Vine",
+      "book": "ultimate_wilderness",
+      "source_file": "uw_feats.lst",
+      "source_line": 143,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "ultimate_wilderness:feat:cover_tracks",
+      "name": "Cover Tracks",
+      "book": "ultimate_wilderness",
+      "source_file": "uw_feats.lst",
+      "source_line": 29,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_wilderness:feat:crashing_wave_buffet",
+      "name": "Crashing Wave Buffet",
+      "book": "ultimate_wilderness",
+      "source_file": "uw_feats.lst",
+      "source_line": 30,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_wilderness:feat:disruptive_companion",
+      "name": "Disruptive Companion",
+      "book": "ultimate_wilderness",
+      "source_file": "uw_feats.lst",
+      "source_line": 152,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "ultimate_wilderness:feat:enhanced_gnome_magic",
+      "name": "Enhanced Gnome Magic",
+      "book": "ultimate_wilderness",
+      "source_file": "uw_feats.lst",
+      "source_line": 41,
+      "bucket": "option-pool (mechanism real, specific pool-slot ungrounded)",
+      "shape": "resource-pool-expansion",
+      "sub_reason": "BONUS:ABILITYPOOL/resource-pool grant; owning class 'unresolved-owner' is NOT in PROBE_CLASSES ['barbarian', 'fighter', 'monk', 'swashbuckler', 'wizard']"
+    },
+    {
+      "id": "ultimate_wilderness:feat:false_trail",
+      "name": "False Trail",
+      "book": "ultimate_wilderness",
+      "source_file": "uw_feats.lst",
+      "source_line": 48,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_wilderness:feat:ferocious_beast",
+      "name": "Ferocious Beast",
+      "book": "ultimate_wilderness",
+      "source_file": "uw_feats.lst",
+      "source_line": 154,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_wilderness:feat:ferocious_feint",
+      "name": "Ferocious Feint",
+      "book": "ultimate_wilderness",
+      "source_file": "uw_feats.lst",
+      "source_line": 155,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_wilderness:feat:frightful_shape",
+      "name": "Frightful Shape",
+      "book": "ultimate_wilderness",
+      "source_file": "uw_feats.lst",
+      "source_line": 55,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_wilderness:feat:green_tongue",
+      "name": "Green Tongue",
+      "book": "ultimate_wilderness",
+      "source_file": "uw_feats.lst",
+      "source_line": 131,
+      "bucket": "unclustered-remainder",
+      "shape": "no-structural-signal",
+      "sub_reason": "no ABILITYPOOL/CHOOSE/PREABILITY/PRESTAT/PRESKILL token matched this feat's .lst line"
+    },
+    {
+      "id": "ultimate_wilderness:feat:photosynthetic_healing",
+      "name": "Photosynthetic Healing",
+      "book": "ultimate_wilderness",
+      "source_file": "uw_feats.lst",
+      "source_line": 145,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    },
+    {
+      "id": "ultimate_wilderness:feat:seasoned_flier",
+      "name": "Seasoned Flier",
+      "book": "ultimate_wilderness",
+      "source_file": "uw_feats.lst",
+      "source_line": 132,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "prereq-stat-or-skill-gap",
+      "sub_reason": "PRESTAT/PRESKILL floor the probe's fixed per-class stat block was not built to satisfy on a per-feat basis"
+    },
+    {
+      "id": "ultimate_wilderness:feat:wild_growth_hex",
+      "name": "Wild Growth Hex",
+      "book": "ultimate_wilderness",
+      "source_file": "uw_feats.lst",
+      "source_line": 110,
+      "bucket": "genuinely-unreachable (needs new probe-fixture capability)",
+      "shape": "chooser-pre-selection-gap",
+      "sub_reason": "PREABILITY names a prior chooser pick the fixed probe fixture never makes"
+    }
+  ]
+}

@@ -139,6 +139,11 @@ largest incident class of that tranche — 10 of 34 — and nothing caught any o
 - **Verify at the widest build scope the repo has.** `cargo build --lib` green is not a completed
   phase: `cargo test` builds bin targets, and one broken bin meant **0 of 502 suites ran** while the
   phase reported COMPLETE.
+- **The PCGen oracle is pinned, never cited by literal local path.** `scripts/pcgen-oracle-pin.env`
+  names the pinned commit; resolve the checkout via `$PCGEN_CORPUS_ROOT` (data) /
+  `$PCGEN_REPO_DIR` (repo root), bootstrapped by `scripts/fetch-pcgen-oracle.sh` — never write
+  `~/workspace/repos/pcgen` literally into new docs or scripts. `scripts/verify.sh` fails its
+  `preflight-oracle` stage when the checkout is absent or off-pin.
 - **A magnitude is not wired until it moves on the twin the player reads** (`docs/release/SD-27-future-state-book-content-ingestion/decisions.md §29.1`).
   Any surface that re-derives a rules number instead of rendering an engine `explanations` row is a
   candidate twin (`§29.2`).

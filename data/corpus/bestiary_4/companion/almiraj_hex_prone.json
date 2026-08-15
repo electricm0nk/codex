@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Almiraj ~ Hex-Prone",
     "delivery": "Supernatural",
     "description": "An almiraj takes a -2 penalty on all saving throws against harmful witch hexes. The duration of any beneficial hexes longer than 1 round that affect an almiraj is increased by 50%%.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialQuality",
     "key": "bestiary_4:companion:almiraj_hex_prone",
     "name": "Hex-Prone",

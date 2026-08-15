@@ -1,5 +1,18 @@
 # Successor Forward-Scope Register — SD-29
 
+> **Rename note (2026-08-14).** Every `SD-31` owner citation in this file originally named
+> `SD-31-pcgen-character-import`, the next bundle in the program at the time this register was
+> written. That package was renamed to `SD-33-pcgen-character-import` (operator ruling 2026-08-14,
+> `docs/release/SD-30-class-feature-archetype-bundle/decisions.md §51`) and the numbers `SD-31`/`SD-32`
+> reused for the two packages split out of SD-30 (`SD-31-corpus-closure-grind`,
+> `SD-32-engine-capability-builds`). This file's owner citations below have been updated in place to
+> `SD-33` to keep pointing at the same package; they are not reassigned to the new SD-31/SD-32.
+>
+> **Update 2026-08-15:** `SD-32-engine-capability-builds` was absorbed into `SD-31-corpus-closure-grind`
+> and deleted (`SD-31-corpus-closure-grind/decisions.md §2`), so the number `SD-32` names no package
+> again. Nothing in this file pointed at it; this note exists so a reader chasing the reused numbers
+> does not go looking.
+
 > **Renamed at package consolidation (2026-08-01).** This file originated in the
 > `SD-29-bestiary-2-3-4-5-content-ingestion` package under the name
 > `forward-scope-register.md`. During consolidation into this directory it collided
@@ -29,12 +42,12 @@ one:
 
 | Entry | What it is | Owner |
 |---|---|---|
-| C1.4a | Frontend preview fixtures are hand-authored, not corpus-derived (`companionCatalogRuntime.ts`) | **SD-31** |
-| C1.4b | `wired-integration-audit.sh` ↔ `sd24_wired_integration_audit.rs` `placeholder` parity — the bundle's one RED instrument | **SD-31** |
-| C1.4c | Decision 41 does not say whether NEW `tests/` files may carry a bundle tag — needs a ruling | **SD-31** |
-| C1.4d | `equipment` and `spell` `SEARCH_Y` constants are uncalibrated in `verify-on-screen.sh` | **SD-31** |
-| C1.5 | The `ABILITY:Internal\|AUTOMATIC\|` bundle hop — 229 monster rows across six books | **SD-31** |
-| C1.6 | `ASPECT:` is modelled by no chassis — 34 grounded companion rows diminished, 1 emptied | **SD-31** |
+| C1.4a | Frontend preview fixtures are hand-authored, not corpus-derived (`companionCatalogRuntime.ts`) | **SD-33** |
+| C1.4b | `wired-integration-audit.sh` ↔ `sd24_wired_integration_audit.rs` `placeholder` parity — the bundle's one RED instrument | **SD-33** |
+| C1.4c | Decision 41 does not say whether NEW `tests/` files may carry a bundle tag — needs a ruling | **SD-33** |
+| C1.4d | `equipment` and `spell` `SEARCH_Y` constants are uncalibrated in `verify-on-screen.sh` | **SD-33** |
+| C1.5 | The `ABILITY:Internal\|AUTOMATIC\|` bundle hop — 229 monster rows across six books | **SD-33** |
+| C1.6 | `ASPECT:` is modelled by no chassis — 34 grounded companion rows diminished, 1 emptied | **SD-33** |
 | C1.3 | `class_feature`, 15,472 units | **SD-30** |
 | C3.1 | DM Toolkit extension as retrofit (Epic 8's `decision-blocked` ruling) | **operator-on-request** |
 | C3.3 | Retroactive magnitude-fidelity sweep over already-landed `static` units | routed 2026-08-12 |
@@ -43,7 +56,7 @@ one:
 **race-variant chassis** — the mechanism the 3 `bestiary` Drow Noble rows and the 2 `core_essentials`
 `PREABILITY`-gated subrace selectors need — has **no owner**. It is not a review finding; it is a
 structural ceiling outside any SD-29 or SD-30 epic, and it needs an operator scope decision before it
-has one. Adding it here under SD-31 to make this table look complete would be the same taxonomy abuse
+has one. Adding it here under SD-33 to make this table look complete would be the same taxonomy abuse
 that produced the premature 2026-08-11 closure. It is stated as a real, measured ceiling in
 `release-notes.md` §Known issues 2 with `Owner: unassigned` written out (`decisions.md §70.3`).
 
@@ -117,7 +130,7 @@ Decision 27 requires every deferred review finding to name an owner; an unowned 
 valid disposition. Four items from the run-2 review are deferred here. Two of them are **fixed in
 this bundle** (`§66.2`, commit `4d22ecbb`) and are not listed.
 
-**Owner: SD-31** (`docs/release/SD-31-pcgen-character-import/`), as the next bundle in the program;
+**Owner: SD-33** (`docs/release/SD-33-pcgen-character-import/`), as the next bundle in the program;
 re-assign here if a different successor is cut first. Naming an owner is what makes a deferral a valid
 disposition under Decision 27 — an unowned deferral is not one.
 
@@ -182,7 +195,7 @@ citing a PASS** — an uncalibrated `SEARCH_Y` is exactly the silent-plausible-s
 
 ### C1.5 — The `ABILITY:Internal|AUTOMATIC|` bundle-ownership hop: 229 units across six books
 
-**Owner: SD-31** (`docs/release/SD-31-pcgen-character-import/`), as the next bundle in the program;
+**Owner: SD-33** (`docs/release/SD-33-pcgen-character-import/`), as the next bundle in the program;
 re-assign here if a different successor is cut first. Same owner and same reasoning as C1.4.
 
 **Status at handoff: fully scanned, counted, checked in and pinned by two executing tests.** This is
@@ -435,7 +448,7 @@ the bundle nothing; running it inside the bundle would cost the lanes cycles the
 
 ### C1.6 — `ASPECT:` is modelled by no chassis in this program: 34 grounded companion rows are diminished by it and 1 is emptied
 
-**Owner: SD-31** (`docs/release/SD-31-pcgen-character-import/`), as the next bundle in the program;
+**Owner: SD-33** (`docs/release/SD-33-pcgen-character-import/`), as the next bundle in the program;
 re-assign here if a different successor is cut first. Same owner and same reasoning as C1.4 and C1.5.
 
 **Status at handoff: measured, named, and blocking exactly one unit.** Recorded by SD-29 Epic 7

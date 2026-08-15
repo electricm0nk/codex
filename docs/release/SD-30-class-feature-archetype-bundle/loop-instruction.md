@@ -42,10 +42,13 @@
 6. **Pilot/scope validation performed for every book-or-class a first cycle will claim** — see
    "Pilot and scope validation" below. Applied to SD-30's own pinned scope 2026-08-11; findings are
    recorded in `decisions.md §39` and must be read before Epic 6 pins a first book.
-7. **Desktop-driver card status known.** `epic-0-desktop-driver` (`kanban.md` Order 0) is either
-   `COMPLETE`, or every cycle that follows records its DoD-item-8 disposition under the interim rule
-   in "Definition of done" item 8 below. No player-visible lane cycle may be dispatched while that
-   card is open **unless** its receipt carries the interim disposition explicitly.
+7. **`epic-0-instrument-apply` card status known.** `epic-0-instrument-apply` (`kanban.md` Order 0,
+   `decisions.md §43`) runs independently of the `class_feature` chain (`epic-1`..`epic-9`) and does
+   not gate or get gated by it — no player-visible lane cycle waits on its completion. This item is
+   satisfied by confirming that fact against `kanban.md`'s own claim-priority note before the first
+   cycle fires; no interim disposition is needed because no gate exists to disposition. (Corrected
+   2026-08-14: the prior text named a nonexistent `epic-0-desktop-driver` card and a DoD-item-8
+   interim rule that does not exist in this file; see `retro.py correction`.)
 
 If any of these is false, the cycle refuses to launch and reports the gap.
 
@@ -64,55 +67,79 @@ units were never started.** (`docs/retro/tranche-9-retrospective.md` §4.1, §9.
 **The numbers below are measured on this box, not carried from that document.** Re-derive them at
 pre-launch and before every wave; they are a snapshot, not a constant.
 
+**Superseded 2026-08-14 (`SD30-PRELAUNCH-002`, `decisions.md §47`'s owed edit).** `decisions.md §47`
+re-derived the box at 8 cores / 45 GB RAM / 968 GB disk (19 % used) on 2026-08-14 and flagged this
+section's SD-29-era 4-core / 80 %-disk numbers as stale but out of that pass's write scope. This
+pre-launch cycle re-measured the same box a few hours later and found it **had changed again** — the
+operator's VM resize had by then landed and gone further than `§47`'s own capture: 24 cores, 167 GB
+RAM. Disk is effectively unchanged in percentage (19→19 %) but grew in absolute headroom because
+usage dropped from 201 G to 178 G after this cycle's `reclaim.sh --apply` freed a 23.8 GB orphaned
+`codex-target-gate-green`. The block below is the live figure; `§47`'s 8-core/45GB capture is left in
+`decisions.md` as its own dated record per this package's standing convention, not overwritten.
+
 ```bash
-df -B1G /                                   # 484 total / 387 used / 98 avail / 80%   (2026-08-11)
+nproc                                       # 24     (2026-08-14, SD30-PRELAUNCH-002; was 8 at §47, 4 at 2026-08-11)
+free -h                                     # 167Gi total / 5.2Gi used / 158Gi free / 162Gi available
+df -B1G /                                   # 968 total / 178 used / 791 avail / 19%   (2026-08-14, post-reclaim)
 grep -n 'PREFLIGHT_DISK_MAX_PERCENT=\|PREFLIGHT_DISK_MIN_FREE_GB=' scripts/verify.sh
-#   verify.sh:244  PREFLIGHT_DISK_MAX_PERCENT=${PREFLIGHT_DISK_MAX_PERCENT:-90}
 #   verify.sh:243  PREFLIGHT_DISK_MIN_FREE_GB=${PREFLIGHT_DISK_MIN_FREE_GB:-20}
-du -sh target /home/ubuntu/cargo-targets/* /tmp/codex-target-* 2>/dev/null
-#   60G  target                                          (the primary checkout's accumulated tree)
-#   27G  /home/ubuntu/cargo-targets/sd29-e2-prelaunch     (one SD-29 cycle's, orphaned)
-#   11G  /tmp/codex-target-sd29-e6-racetrait-extend       (orphaned; AGENTS.md bans /tmp for these)
-nproc                                       # 4      (NOT 2 — see below)
+#   verify.sh:244  PREFLIGHT_DISK_MAX_PERCENT=${PREFLIGHT_DISK_MAX_PERCENT:-90}
+du -sh target /home/ubuntu/cargo-targets/* 2>/dev/null
+#   82G  target                                          (the primary checkout's accumulated tree, grown from 60G at 2026-08-11)
+#   27G  /home/ubuntu/cargo-targets/sd29-e2-prelaunch     (one prior cycle's, orphaned; not reclaimed — outside reclaim.sh's scanned roots)
 grep -n 'cargo build parallelism' scripts/verify.sh   # :47  default 2
 ```
 
-**The budget, derived from those four commands:**
+**The budget, derived from those commands:**
 
 | quantity | value | how |
 |---|---:|---|
-| filesystem | 484 G | `df -B1G /` |
-| currently used | 387 G (80 %) | same |
+| cores | **24** | `nproc` |
+| RAM | 167 Gi total, 158 Gi free | `free -h` |
+| filesystem | 968 G | `df -B1G /` |
+| currently used | 178 G (19 %) | same, post-`reclaim.sh --apply` |
 | `preflight-disk` refuses at | **90 % used** or **< 20 G free** | `verify.sh:243-244` |
-| headroom to the 90 % floor | **48 G** | `0.90 × 484 − 387` |
-| headroom to the 20 G-free floor | 78 G | `98 − 20` |
-| **binding headroom** | **48 G** | the smaller of the two |
-| a full-gate `CARGO_TARGET_DIR`, measured | **27 G – 60 G** | `du -sh` above; 27 G is one SD-29 cycle's, 60 G the accumulated primary |
-| **concurrent full-gate agents this box can carry today** | **1** | `48 G ÷ 60 G = 0` additional cold target dirs beyond the primary; reclaiming the two orphans (38 G) raises headroom to ~86 G, which affords exactly **one** |
+| headroom to the 90 % floor | **693 G** | `0.90 × 968 − 178` |
+| headroom to the 20 G-free floor | 771 G | `791 − 20` |
+| **binding headroom** | **693 G** | the smaller of the two (90 % floor binds) |
+| a full-gate `CARGO_TARGET_DIR`, measured | **27 G – 82 G** | `du -sh` above; 27 G is one prior cycle's fresh footprint, 82 G today's accumulated primary |
+| **concurrent full-gate agents this box can carry today (disk)** | **8** | `693 G ÷ 82 G = 8.4` (conservative: sized on the larger, accumulated-primary footprint, not the smaller fresh one) |
+| **concurrent full-gate agents this box can carry today (CPU)** | **12** | `nproc 24 ÷ default -j 2 per agent = 12`; not binding |
+| **RAM headroom at 8 agents × -j 2** | ample | ~16 concurrent `rustc` jobs × ~2-4 G each ≈ 32-64 G, against 158 Gi free; not binding |
+| **binding constraint** | **disk** | 8 < 12; disk governs |
+| **CAP: concurrent full-gate agents this box can carry today** | **8** | the smaller of the disk/CPU/RAM bounds above |
 
 **Rules, binding on the dispatching session:**
 
-1. **The cap is ONE concurrent full-gate agent** until a wave's own `df` shows otherwise. A
-   "full-gate agent" is any agent that will run `./scripts/verify.sh` without `--only`. Agents doing
-   measurement, doc, or `--only <stage>` work do not count against the cap and may fan out.
+1. **The cap is EIGHT concurrent full-gate agents** (re-derived 2026-08-14, `SD30-PRELAUNCH-002`;
+   was ONE at 2026-08-11's 4-core/80%-disk figures, THREE per `decisions.md §47`'s 8-core capture)
+   until a wave's own `df`/`nproc`/`free -h` shows otherwise. A "full-gate agent" is any agent that
+   will run `./scripts/verify.sh` without `--only`. Agents doing measurement, doc, or `--only <stage>`
+   work do not count against the cap and may fan out. **This is a ceiling, not a target** — dispatch
+   only as many as the wave's actual work supports; SD-30's own `loop-instruction.md` "Dispatch
+   mechanism" callout above still prefers serialized, non-`/batch` dispatch for cycles that touch
+   shared state (`progress.md`, `kanban.md`, `reach_gate.rs`), independent of what disk/CPU can carry.
 2. **The budget is checked before the fan-out, not by each agent afterwards.** `N` concurrent
-   full-gate agents need `N × 60 G` **plus** headroom above the 90 % floor. If the budget does not
+   full-gate agents need `N × 82 G` **plus** headroom above the 90 % floor. If the budget does not
    fit, **dispatch fewer.** An agent refusing at `preflight-disk` is the gate working correctly and
    is not a substitute for admission control — SD-29 proved that costs a lane.
 3. **Every dispatched agent gets its own `CARGO_TARGET_DIR`, named for its role, never under `/tmp`**
-   (`AGENTS.md` §Concurrency; `/tmp` is banned there and two orphans are sitting in it today).
+   (`AGENTS.md` §Concurrency; `/tmp` is banned there).
    Export it in the dispatch, do not leave it to the agent to remember. Delete it at cycle end
    (Cycle-mechanics step 8 already runs `reclaim.sh --apply`).
 4. **Reclaim before the wave, not after the failure.** `scripts/reclaim.sh` (dry run) then `--apply`,
    and record the reclaimed bytes. `reclaim.sh` correctly refuses live target dirs and unpushed
    worktrees, so **`0.0 B` reclaimed means the box is structurally full, not that it is clean** —
    that is the condition to dispatch fewer agents on, and SD-29 read it as noise 14 times.
-5. **CPU: `nproc` is 4 and `verify.sh` defaults to `-j 2`.** Two concurrent full sweeps starve each
-   other for ~15 minutes and the symptom is *a sweep that looks hung*. Before concluding a build has
-   stalled, run `pgrep -fa 'verify.sh|cargo test'` — frozen log timestamps and a frozen `deps/*.d`
-   count under live `rustc` mean **starved, not hung** (`AGENTS.md` rule A12).
-   (The predecessor retrospective repeatedly called this "a two-core box"; `nproc` says 4. The 2 is
-   `verify.sh`'s flag default, not the hardware — corrected 2026-08-11.)
+5. **CPU: `nproc` is 24 and `verify.sh` defaults to `-j 2`.** At the default job count, up to 12
+   concurrent full sweeps fit CPU-wise before sweeps start starving each other (disk caps the wave at
+   8 first). Before concluding a build has stalled, run `pgrep -fa 'verify.sh|cargo test'` — frozen
+   log timestamps and a frozen `deps/*.d` count under live `rustc` mean **starved, not hung**
+   (`AGENTS.md` rule A12).
+   (This box's core count has moved three times on record: 4 at 2026-08-11, 8 at `decisions.md §47`
+   2026-08-14 morning, 24 at this cycle 2026-08-14 afternoon — the operator's VM resize landed and
+   went further than `§47`'s own capture. Re-derive `nproc` every pre-launch; do not carry any of
+   these forward as a constant.)
 6. **Never `pkill -f` a pattern naming a shared tool.** `pgrep -af`, read the listing, `kill` by PID.
    On a shared checkout every agent's gate has the same command line by construction (`AGENTS.md`
    rule A11; one near-miss in SD-29 would have killed a sibling's 45-minute gate).
@@ -156,7 +183,9 @@ print(json.dumps(us[0], indent=1))          # one whole record, not a filtered f
 PY
 
 # 2. The source file itself, read — not counted.
-awk '!/^#/ && !/^SOURCE/ && NF>0' ~/workspace/repos/pcgen/data/pathfinder/paizo/*/<book>/<file>.lst | head -8
+#    $PCGEN_CORPUS_ROOT defaults to ~/workspace/repos/pcgen/data, pinned per
+#    scripts/pcgen-oracle-pin.env (bootstrap: scripts/fetch-pcgen-oracle.sh).
+awk '!/^#/ && !/^SOURCE/ && NF>0' "$PCGEN_CORPUS_ROOT"/pathfinder/paizo/*/<book>/<file>.lst | head -8
 
 # 3. The shape assertion the LANE depends on, stated and tested.
 #    For SD-30 that is: does this book carry the archetype content Epic 5's
@@ -172,9 +201,13 @@ PY
 ```
 
 **If step 3 returns a shape the lane's mechanism cannot act on, the book is not a pilot** — record
-the finding, pick another, and do not weaken the lane to fit the book. **This step was applied to
-SD-30's own pinned scope on 2026-08-11 and it found four books that fail it — see `decisions.md §39`.
-Read that decision before pinning Epic 6's first book.**
+the finding, pick another, and do not weaken the lane to fit the book. **A prior revision of this
+file claimed this step was applied to SD-30's own pinned scope on 2026-08-11 and found four books
+that fail it, citing `decisions.md §39` — that section is about declared-PI reading and contains no
+such finding, and no four-failing-books finding was located anywhere else in `decisions.md` on a
+2026-08-14 search. Treat that finding's record as not located: it must be re-derived (re-run this
+step's process for every book Epic 6 is about to pin) before Epic 6 pins its first book, not assumed
+still valid.** (`retro.py correction` emitted for this citation, 2026-08-14.)
 
 ## Cycle mechanics
 
@@ -205,10 +238,11 @@ each book.
    the book's `books[]` entry in `docs/work-inventory.json` — `kinds`,
    `files_not_enumerated`, `trap_hits`, `reconciliation`. The shape decides the
    cycle; do not assume a template. **Confirm the book has a corpus directory
-   at all** — all sixteen pinned books verified present 2026-08-01 (4 under
-   `roleplaying_game/`, 12 under `campaign_setting/`), so a missing directory
-   now means corpus drift, not expected absence; treat it as the hard stop
-   below. Done once per book, not once per cycle.
+   at all** — the current 23-book `class_feature` roster (`decisions.md §33`,
+   corrected 2026-08-14 from the old sixteen-pinned-books figure, which was
+   retired 2026-08-10) all have verified corpus directories, so a missing
+   directory now means corpus drift, not expected absence; treat it as the
+   hard stop below. Done once per book, not once per cycle.
 0b. **Trap-report** the book, before writing a line of ingest code:
    `cargo run --locked --bin v06_corpus_trap_report -- <book_dir>`. A bare
    book name resolves across all known corpus subtrees (`roleplaying_game`,
@@ -220,11 +254,13 @@ each book.
    prior cycle's `progress.md` entry — including this package's own
    `scope-draft.md` and `decisions.md` — re-derive it yourself with a
    one-line `grep`/`awk`/`python3` command over the actual source data (the
-   PCGen `.lst` tree under `~/workspace/repos/pcgen/data/` for anything not
-   yet ingested, `data/corpus/<book>/` for anything that is), and record the
+   PCGen `.lst` tree under `$PCGEN_CORPUS_ROOT/` — defaults to
+   `~/workspace/repos/pcgen/data`, pinned per `scripts/pcgen-oracle-pin.env`,
+   bootstrapped by `scripts/fetch-pcgen-oracle.sh` — for anything not yet
+   ingested, `data/corpus/<book>/` for anything that is), and record the
    exact command in the cycle receipt. Do not transcribe a count from a doc,
    a summary tool, or memory of a prior cycle. Worked example, this bundle's
-   own data: `awk '!/^#/ && !/^SOURCELONG/ && NF>0' ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst | wc -l`
+   own data: `awk '!/^#/ && !/^SOURCELONG/ && NF>0' "$PCGEN_CORPUS_ROOT"/pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst | wc -l`
    → **2040** (re-derived 2026-08-01), the number to cite for "Occult
    Adventures spell-row count," not a remembered or copied-forward estimate.
    This is the rank-1 finding of **two consecutive retrospectives**, re-run
@@ -391,9 +427,23 @@ All of the following, each checkable by someone who was not present:
    surface that renders it, or in `SUPPORTING_RECORD_TYPES` with why it is a
    facet of an existing family.
 3. `cargo run --locked --bin v06_corpus_trap_report -- --audit` exits `0`.
-4. `cargo run --locked --bin v06_work_inventory` regenerates
-   `docs/work-inventory.json`, the book's units leave `not-started`, and a
-   second run changes only `generated_at`.
+4. **Guarded regen, not a plain run.** A bare `cargo run --locked --bin
+   v06_work_inventory` silently drops every `literal-verified`/
+   `fixture-verified` stamp the committed file carries (P0.1 fixed this from
+   a live hazard into a hard-refusing guard, `state-goals-and-lessons.md`
+   §1.3 hazard 1) — the sanctioned procedure is:
+   ```
+   cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep.json
+   cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture.json
+   CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep.json \
+   DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture.json \
+     cargo run --locked --bin v06_work_inventory
+   ```
+   This regenerates `docs/work-inventory.json`, the book's units leave
+   `not-started`, a second run changes only `generated_at`, AND the run's own
+   guard reports zero stamp loss (it exits 1 naming the dropped count
+   otherwise). `--allow-stamp-loss` is the explicit, logged escape hatch when
+   a stamp loss is intended — never the default path.
 5. The four-check wired-integration audit
    (`docs/governance/no-stub-mvp-doctrine.md` §"Per-cycle audit") is clean.
 6. Any family that could not be surfaced has an `OPEN_FINDINGS` entry in
@@ -444,7 +494,7 @@ ordering this section previously described is retired; the current 9-epic depend
   - The build crashes in a way that requires a non-book-list fix.
   - A cross-bundle reference yields a missing class / monster id that the source bundle's progress file shows as not yet landed.
   - The operator-pinned branch / board diverges from the in-flight branch / board.
-  - **A book on the recorded list has no corpus directory to ingest from.** The cycle reports; the operator re-pins the book list. No known instances as of 2026-08-01 — all sixteen pinned books have verified corpus directories. (An earlier revision named Occult Origins and Haunted Heroes Handbook here; that finding was a bad check — wrong search root and wrong identifier — and both books exist under `player_companion/`. They are deferred by operator choice, not absence; see `scope-draft.md` and `decisions.md` Decision 1.)
+  - **A book on the recorded list has no corpus directory to ingest from.** The cycle reports; the operator re-pins the book list. No known instances as of 2026-08-14 — all 23 `class_feature`-bearing corpus dirs (`decisions.md §33`) have verified corpus directories. (An earlier revision named Occult Origins and Haunted Heroes Handbook here; that finding was a bad check — wrong search root and wrong identifier — and both books exist under `player_companion/`. They are deferred by operator choice, not absence; see `scope-draft.md` and `decisions.md` Decision 1. That earlier revision also referred to "sixteen pinned books," language retired 2026-08-10 by the widened `class_feature` re-scope.)
   - **A record family cannot be surfaced without work outside this bundle's epic structure** (Decision 11's open question). The cycle reports the gap; it does not add an epic and it does not ingest without a reach claim.
   - **A figure derived this cycle disagrees with a figure recorded in this package.** Investigate which is wrong and report; do not overwrite either on the assumption that the newer one wins.
 

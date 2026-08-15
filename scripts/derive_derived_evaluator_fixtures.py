@@ -7,8 +7,10 @@ derived-evaluator-fixtures.json`, the fixture the evaluator-vs-fixture check
 
 WHY THE PROVENANCE RULE MATTERS
 -------------------------------
-`docs/release/SD-32-instrument-coverage-and-consumer-wiring/epic-breakdown.md`
-E6-F1: "A fixture generated from the evaluator's own output is worthless."
+The former `SD-32-instrument-coverage-and-consumer-wiring/epic-breakdown.md` E6-F1 (absorbed into
+`docs/release/SD-30-class-feature-archetype-bundle/`, package deleted per `decisions.md §50`; text
+retrievable from git history at commit `b88b18fa3700125f992e67b0ae29e1d5b70de3c0`):
+"A fixture generated from the evaluator's own output is worthless."
 This repo has a live finding of exactly that shape (SD-29 Epic 10 F3 /
 register C1.4a): frontend preview fixtures were hand-authored rules data with
 nothing pinning them to the corpus, and one shipped wrong rules content to a

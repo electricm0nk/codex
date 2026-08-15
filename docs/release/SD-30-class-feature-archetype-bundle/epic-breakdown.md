@@ -14,7 +14,10 @@ companion_to: ./scope-draft.md, ./decisions.md
 previously carried (Epics 3-18 under the old numbering, matching `kanban.md`'s 21 cards) are
 retired — that book list dissolved into SD-29's corpus-wide scope. SD-30's epics now follow the
 **dependency chain `decisions.md §37` establishes**, not a book list: measurement gates mechanism
-gates chassis sweep. 9 epics total, matching `kanban.md`'s 9 cards.
+gates chassis sweep. **15 epics total as of 2026-08-14 (`decisions.md §45`/`§47`), matching
+`kanban.md`'s 15 cards** — the original 9 (Epic 1-9), plus Epic 0 (instrument-apply, `decisions.md
+§43`), Epic 10 (ingest lanes, `decisions.md §44`), and Epics 11-14 (book onboarding, race chassis,
+verdict paths, cloud fan-out — the 100%-mandate epics, `decisions.md §45`/`§47`).
 
 Epic 1 fires FIRST. Closure fires LAST. Epic 4 (measurement) gates Epic 5 (mechanism) and Epic 6
 (chassis sweep) **per class**, not bundle-wide — see `decisions.md §37`.
@@ -54,9 +57,16 @@ Acceptance:
 - The dashboard producer's `doneness_verdict()` table gains a `done` rung for `wiring_class in
   (static, derived)` when the corpus-sweep / derived-evaluator gate has actually examined and passed
   the record (not merely `held`).
-- Re-running `derive-movable-mass.py` after the rung lands shows the `static`/`derived` `held`
-  population (6,619 units, per the B3 bucket in this session's run) move to `done` for records the
-  gate has passed.
+- Movement is shown by importing the dashboard producer's own `doneness_verdict()` /
+  `_doneness_verdict_uncapped()` and replaying it over `git show <ref>:docs/work-inventory.json` at
+  the pre-rung commit versus the post-rung commit (`done` 3,464 → 5,837, `held` 9,455 → 7,086,
+  re-derived `SD30-E0-F1-001`). **Correction (`SD30-E0-F1-001`, 2026-08-14):** this criterion
+  originally named `artifacts/derive-movable-mass.py` as the re-run instrument; that script
+  predates the `literal-verified`/`fixture-verified` rungs and `raise ValueError`s on any unit
+  carrying either word (confirmed live this cycle — see its own staleness header, added
+  `decisions.md §50`), so it cannot be used to show this criterion's movement. The dashboard
+  producer's own function, replayed over git refs, is the live authority per
+  `state-goals-and-lessons.md §1.1`'s own methodology; use that.
 - No relaxation of what "passed" means — a record the gate has not examined stays `held`, not `done`.
 
 #### SD30-E0-F2 — `computed`-bucket consumer-delta probes, corpus-wide
@@ -87,7 +97,7 @@ Acceptance:
 
 Acceptance:
 
-- Every cycle in this epic re-runs `derive-movable-mass.py` before and after its change and cites both
+- Every cycle in this epic re-runs `docs/release/SD-30-class-feature-archetype-bundle/artifacts/derive-movable-mass.py` before and after its change and cites both
   runs in its `progress.md` receipt.
 - `acceptance-and-verification.md AT-30-015`'s per-kind floor table is updated at epic closure with
   the actual `done` figures achieved.
@@ -179,6 +189,17 @@ Acceptance:
   `progress.md`.
 - A hit is a hard stop for that record (`loop-instruction.md` "Stop vs. press on"), not routed around.
 
+**Status: COMPLETE (`SD30-E3-F1-001`, 2026-08-14, `decisions.md §52`).** Epic 6 (this card's own
+consumer) moved to `SD-31-corpus-closure-grind/epic-breakdown.md` Epic 3 before this cycle fired
+(`decisions.md §51`), so no SD-30 cycle calls the mechanism against a live `class_feature` book —
+`decisions.md §52` found the mechanism itself (`pi_table_sweep::screen_generated_table`, the shared
+`PI_BLACKLIST_TERMS`) already built, already production-wired (two live non-test callers,
+`gen_feat_gap_tables.rs`/`gen_equipment_gap_tables.rs`), and already covering already-shipped
+`class_feature`-shaped content (two `real-leak` baseline rows inside `archetype_tables.rs` files).
+This cycle proved it fails/passes against real `class_feature` content (`tests/pi_table_sweep.rs`,
+two new tests) and documented the exact invocation contract SD-31's Epic 3 must follow — see
+`decisions.md §52.3`.
+
 #### SD30-E3-F2 — Declared-PI reader wired into the `class_feature` ingest/transcription path (2026-08-13, `decisions.md §39`)
 
 **Blocks Epic 6 entirely — no per-book chassis-sweep cycle may claim its class until this feature
@@ -203,9 +224,25 @@ Acceptance:
 - Reclassifying a specific declared-PI row as shippable is `ogl-pi-blacklist.md` §3's per-book
   override — an operator decision a cycle may request but not make unilaterally.
 
+**Status: COMPLETE (`SD30-E3-F2-001`, 2026-08-14, `decisions.md §53`).** Epic 6 (this card's own
+framing, "whichever ingest binary Epic 6 builds") moved to `SD-31-corpus-closure-grind` before this
+cycle fired; `decisions.md §53.1` also corrected `§39.2`'s own premise that no `class_feature` ingest
+path exists at all — `src/bin/ingest_pu_classes.rs` (SD-27) already is one, already production-wired,
+already shipping `data/corpus/pathfinder_unchained/class_feature/`. This cycle wired the shared reader
+(`pi_screening::{declared_product_identity, classify_optional_field_declared}`) into that binary's
+`class_feature`-writing loop exactly as this card's acceptance bullets specify (NAMEISPI-drop before
+other processing, DESCISPI-redact through the shared reader, both counted/named in the run receipt,
+license/pi_field/pi_marker now genuinely populated instead of a hardcoded `Ogl`), proved it against
+real-shaped synthetic rows built through the binary's own production parsing functions (its one real
+source file carries zero live `NAMEISPI`/`DESCISPI` tokens today — `decisions.md §53.2`), and
+documented the invocation contract SD-31's Epic 3 (or any future `class_feature` writer for the 6
+still-exposed books) must follow — see `decisions.md §53.5`.
+
 #### SD30-E3-F3 — Corpus-wide declared-PI backfill sweep, every already-shipped kind
 
-`decisions.md §53.7`'s own scope finding named this as "the successor's first move": the shared
+`SD-29-corpus-wide-catch-up-lanes/decisions.md §53.7`'s own scope finding (bare `decisions.md §53.7`
+before `SD30-CARRY-001`'s citation-qualification fix — this package's own Decision 53 has no `§53.7`,
+`retro.py correction` `1786757789966-sd30-carry-defects-83156a`) named this as "the successor's first move": the shared
 reader is placed in `pi_screening` but only `ingest_race_traits` calls it; every other Pipeline A
 writer and the entire Pipeline B transcription pipeline (`transcribe_monster_tables.py` — drops
 `NAMEISPI:YES`, per lines 780/818, but has never read `DESCISPI:YES`; `transcribe_companion_tables.py`
@@ -226,6 +263,23 @@ Acceptance:
   its own source sweep finds (1 `NAMEISPI:YES` row measured in `decisions.md §39` at
   `dtt_races_companion.lst`, re-derive at time of use).
 
+**Status: COMPLETE (`SD30-E3-F3-001`, 2026-08-14).** The corpus-wide sweep re-run at the start of the
+cycle reproduced `§39.2`'s zero-hits-outside-`race_trait` result byte-identically, so the second
+acceptance bullet is N/A (nothing to resolve). Both transcribers gained the declared-PI reader:
+`transcribe_monster_tables.py`'s `DESCISPI:YES` handling landed at `ability_pi_reason` (line 818) as
+specified — `monster_pi_reason` (line 780) does not, because `MonsterStatBlock` carries no free-text
+field for `DESCISPI:YES` to redact, a correction to this section's own premise recorded in
+`progress.md`'s cycle receipt, not a shortfall. `transcribe_companion_tables.py` gained both tokens at
+both its creature and ability halves; the 1-row `dtt_races_companion.lst` exposure this section names
+re-confirmed byte-identical but turned out to belong to a book (`dirty_tactics_toolbox`) this
+transcriber's `book_dirs()` does not register at all — out of this card's scope, owned by SD-31 book
+onboarding. All 6 registered monster books and all 17 registered companion books regenerate
+byte-identical to `HEAD`, proving zero live behavior change; the new code paths are proven via a
+synthetic-row harness replaying each script's own unmodified `transcribe()` function (15/15 checks
+pass across both scripts). Full detail, commands, and the (superseded, see `SD30-CARRY-001`)
+`§53.7`-citation correction:
+`progress.md`, cycle `SD30-E3-F3-001`.
+
 #### SD30-E3-F4 — Regression gate: a future ingest cannot reintroduce a declared-PI leak
 
 `scripts/verify.sh`'s `pi-sweep` stage and `docs/governance/ogl-pi-blacklist.md` are both
@@ -243,7 +297,18 @@ Acceptance:
   "cheap enough to also run in `quick`" reasoning if the walk stays cheap).
 - The gate fails RED, not warns, if a declared-PI row is found unredacted/undropped in shipped output.
 
+**Scope narrowed 2026-08-14 (`decisions.md §51`, operator ruling).** Epics 4, 5, 6, 10, and 11 below
+are **MOVED** to `SD-31-corpus-closure-grind/epic-breakdown.md` (renumbered Epics 1-5 there). Epics
+12 and 13 are **MOVED** to `SD-32-engine-capability-builds/epic-breakdown.md` (renumbered Epics 1-2
+there). Epic 14 is **SPLIT**: its grind-lane scope moves to `SD-31-corpus-closure-grind/epic-breakdown.md`
+Epic 6, its capability-build-lane scope to `SD-32-engine-capability-builds/epic-breakdown.md` Epic 3.
+Their text below is left visible as historical record of what this package originally scoped, per this
+package's standing convention (original text stays, corrections point forward) — it is not this
+package's live scope. SD-30's own live epics are 0, 1, 2, 3, 7, 8, 9.
+
 ## Epic 4 (SD30-E4) — Per-Class Archetype Measurement (GATES Epics 5 and 6)
+
+**MOVED to `SD-31-corpus-closure-grind/epic-breakdown.md Epic 1` (`decisions.md §51`, 2026-08-14). Text below is historical.**
 
 **Objective:** Extend SD-28 `§63`/`§64`'s hand-verification method — find each named archetype slot's
 base computation in `pilot_compute.rs`, confirm it is unconditional (level-gated only), confirm the
@@ -322,6 +387,8 @@ Acceptance:
 
 ## Epic 5 (SD30-E5) — Archetype Mechanism (supersession shape now, chooser shape when Epic 4 funds it)
 
+**MOVED to `SD-31-corpus-closure-grind/epic-breakdown.md Epic 2` (`decisions.md §51`, 2026-08-14). Text below is historical.**
+
 **Objective:** Wire the 175-mechanism / ~5,775-line supersession shape (`archetype_claims_slot`) for
 each of the 25 measured classes as Epic 4 clears them for scheduling; design and wire the
 chooser-interaction shape for Oracle/Arcanist/Sorcerer once Epic 4-F3 resolves its primitive.
@@ -369,6 +436,8 @@ units) has no equivalent gate — SD-32's spell consumer-delta probe is a preced
 a `class_feature` instrument — and building one is flagged for the operator, not scheduled here.
 
 ## Epic 6 (SD30-E6) — Per-Class Chassis Sweep (the `class_feature` ingest, gated per class on Epics 4/5)
+
+**MOVED to `SD-31-corpus-closure-grind/epic-breakdown.md Epic 3` (`decisions.md §51`, 2026-08-14). Text below is historical.**
 
 **Objective:** The actual per-book, per-class `class_feature` ingest cycles across all 23 in-scope
 books — the direct successor to the old per-book epics 3-18, but scoped by class and gated by
@@ -472,15 +541,30 @@ Acceptance:
 
 #### Closure-F1 — Closure cycle
 
-Acceptance:
+**Narrowed 2026-08-14 (`decisions.md §51`, reconciled `SD30-E9-F1-001`).** The text below predates the
+split and named Epic 4 and "Epics 5-8" — Epics 4/5/6 moved to `SD-31-corpus-closure-grind`, so their
+per-class measurement/mechanism/chassis-sweep coverage is no longer a precondition for *this* package's
+closure; SD-31 owns re-stating that coverage as its own exit criterion. The live acceptance is:
 
-- Epic 4 has either covered every `class_feature`-bearing class or named its own successor for what
-  remains (measurement is not required to reach 100% before closure — the operator may fund a
-  successor for the remainder, per the same pattern `§63`/`§64` used).
-- Epics 5-8 `complete` in `progress.md`.
+- Epics 0, 1, 2, 3, 7, 8 `complete` in `progress.md` **and confirmed on `tranche/10` by content** (grep
+  for the landed symbols, not the card's own status word).
 - `release-notes.md` populated.
+- `state-goals-and-lessons.md` updated at closure.
+- `docs/architecture/` refreshed to this bundle's real closure state.
 - Tranche promotion PR fires: `tranche/10 → develop`; `0.10.<last_build>` remains the post-closure
-  value.
+  value. The operator merges it personally — opening it is this epic's deliverable, merging is not.
+
+Original (pre-split) text, kept for record per this package's standing convention:
+
+- ~~Epic 4 has either covered every `class_feature`-bearing class or named its own successor for what
+  remains (measurement is not required to reach 100% before closure — the operator may fund a
+  successor for the remainder, per the same pattern `§63`/`§64` used).~~ Superseded — Epic 4 moved to
+  SD-31; not this package's criterion.
+- ~~Epics 5-8 `complete` in `progress.md`.~~ Superseded — Epics 5/6 moved to SD-31; Epic 7/8 retained,
+  restated above.
+- `release-notes.md` populated. (retained)
+- Tranche promotion PR fires: `tranche/10 → develop`; `0.10.<last_build>` remains the post-closure
+  value. (retained)
 
 #### Closure-F2 — Workspace-tree removal (move-not-copy) — LANDED under the old slug, verify at closure
 
@@ -492,6 +576,8 @@ Acceptance:
 - The canonical repo-resident home is `docs/release/SD-30-class-feature-archetype-bundle/`.
 
 ## Epic 10 (SD30-E10) — Corpus-Wide Ingest Lanes, folded from SD-29 (NEW, 2026-08-13, `decisions.md §44`)
+
+**MOVED to `SD-31-corpus-closure-grind/epic-breakdown.md Epic 4` (`decisions.md §51`, 2026-08-14). Text below is historical.**
 
 **Objective:** the real per-book ingest that instrument-application (Epic 0) cannot substitute for.
 SD-29 closed (`SD-29-corpus-wide-catch-up-lanes/decisions.md §70`) with its corpus-wide kind lanes at
@@ -550,7 +636,9 @@ precondition, not an optional step.
   work has not yet landed, not 3,447.
 - Runs `scripts/classify_race_trait_rows.py` and `scripts/screen_pcc_load_gates.py` before selecting
   a book (SD-29's own pilot on `inner_sea_intrigue` found it carried zero genuine race traits,
-  `decisions.md §45.1` — this card must not repeat that miss).
+  `SD-29-corpus-wide-catch-up-lanes/decisions.md §45.1` — this package's own Decision 45 has no
+  `§45.1` of its own, qualified 2026-08-14 `SD30-CARRY-001` per the same citation-hygiene pass as the
+  `§53.7` fix above — this card must not repeat that miss).
 
 **Acceptance (per card):** the raw-vs-workable split is recorded with its command before any cycle
 claims; the pre-cycle classifier/screen ran against the candidate book before the round was committed
@@ -571,6 +659,73 @@ exhaustive set.
 `SD-29-corpus-wide-catch-up-lanes/decisions.md §34/§36` (zero-monster books), `§44.4/§45.1/§49.2`
 (race-trait chassis split and pilot-book correction), `§68/§68.1` (negated-PCC-gate screen),
 `§50.1`/this package's own `§39` (declared-PI gate).
+
+## Epic 11 (SD30-E11) — Book Onboarding, 100% mandate (NEW, 2026-08-14, `decisions.md §45`)
+
+**MOVED to `SD-31-corpus-closure-grind/epic-breakdown.md Epic 5` (`decisions.md §51`, 2026-08-14). Text below is historical.**
+
+**Objective:** onboard the 7 `future_state` books — `occult_adventures`, `adventurers_guide`,
+`mythic_adventures`, `inner_sea_magic`, `inner_sea_temples`, `inner_sea_taverns`,
+`inner_sea_faiths` — the population these books add is not yet in the engine at all; closing to
+100% requires bringing it in.
+
+**Derived from:** `decisions.md §45` (the 100%-mandate ruling, item 3).
+
+**Gate:** hard-gated on `epic-3-pi-gate`, same as Epic 6 and Epic 10 — no book's records land before
+its PI screen (declared-PI reader, SD30-E3-F2/F3) is clean.
+
+**Not in this epic:** any book already in-scope under Epic 10's four kind-lanes or Epic 6's
+`class_feature` chassis sweep — this epic covers only the 7 books named above.
+
+## Epic 12 (SD30-E12) — Race Chassis, 100% mandate (NEW, 2026-08-14, `decisions.md §45`)
+
+**MOVED to `SD-32-engine-capability-builds/epic-breakdown.md Epic 1` (`decisions.md §51`, 2026-08-14). Text below is historical.**
+
+**Objective:** build the missing race chassis that Decision §44 (citing `SD-29 §44.4/§45.1/§49.2`)
+found absent for ~2,894 of the corpus's 3,447 `race_trait` units, plus the `race` kind itself
+(103 units, 0% done). That absence was previously ruled structurally unreachable; this epic reverses
+that ruling by building the capability rather than accepting the ceiling.
+
+**Derived from:** `decisions.md §45` (the 100%-mandate ruling, item 1); `decisions.md §44` (the
+original chassis-absence finding, `RaceCorpus::resolve` returning `None` without a chassis).
+
+**Verification:** DoD-8 on-screen verification is mandatory for this epic — a chassis claim is not
+accepted from static/derived instrument output alone.
+
+## Epic 13 (SD30-E13) — Verdict-Path Capability, 100% mandate (NEW, 2026-08-14, `decisions.md §45`)
+
+**MOVED to `SD-32-engine-capability-builds/epic-breakdown.md Epic 2` (`decisions.md §51`, 2026-08-14). Text below is historical.**
+
+**Objective:** give every currently-unmeasurable unit a real, non-placeholder verdict — the ~3,547
+`unknown`/unmeasurable population, including the 2,109-unit `ambiguous` bucket, that
+`state-goals-and-lessons.md` §2.3 (pre-correction) treated as a structural floor.
+
+**Derived from:** `decisions.md §45` (the 100%-mandate ruling, item 2).
+
+**Constraint:** classifier/instrument work under this epic is bound by
+`SD-30-class-feature-archetype-bundle/decisions.md §50(c)` ("the wiring-class classifier is
+accepted on accuracy, not on movement") — a verdict path is validated against known-correct cases
+before it is trusted to move counts, mirroring this package's own proxy-validation discipline
+(`state-goals-and-lessons.md` §3.1's "validate a proxy where it makes its confident claim").
+
+## Epic 14 (SD30-E14) — Cloud Fan-Out Protocol (NEW, 2026-08-14, `decisions.md §47`)
+
+**MOVED to `SD-31-corpus-closure-grind/epic-breakdown.md Epic 6 (grind lanes) / SD-32-engine-capability-builds/epic-breakdown.md Epic 3 (capability-build lanes)` (`decisions.md §51`, 2026-08-14). Text below is historical.**
+
+**Objective:** the local-proof-then-cloud-scale protocol that lets build-heavy, self-contained lanes
+(Epic 10's per-kind ingest, Epic 11's book onboarding) scale to cloud agents after one local proof
+cycle per lane shape.
+
+**Derived from:** `decisions.md §47` (hardware re-derivation and cloud fan-out ruling).
+
+**Rules carried into every cycle dispatched under this epic:**
+
+1. Every cloud agent works its own branch — never two writers on one branch.
+2. The local orchestrator owns all merges to `tranche/10`, verified by content, not commit count.
+3. DoD-8 on-screen verification and dashboard-producer work stay local — no cloud agent runs either.
+
+**Not in this epic:** the ingest/onboarding work itself (Epic 10, Epic 11 own that) — this epic is
+the dispatch protocol enabling it at cloud scale, not the content work.
 
 ## Recommended sequencing (dependency order, not exclusive scope)
 
@@ -594,23 +749,42 @@ other and with the E4/E5/E6 chain.
 
 ## Completion gate
 
-SD-30 closes when:
+**Reconciled 2026-08-14 (`decisions.md §51`, `SD30-E9-F1-001`).** This section predates the
+Phase-3/Phase-4 split and named Epic 4/5/6/10 as SD-30's own closure criteria; those epics moved to
+`SD-31-corpus-closure-grind` (measurement/mechanism/chassis-sweep) with a mirrored "Completion gate"
+section of their own now owning that language. SD-30's **narrowed** completion gate — the one this
+package's own Epic 9 checks — is:
 
-- Epic 4 has measured every `class_feature`-bearing class (or the operator has funded/named a
-  successor for the remainder) and characterized the `unknown` bucket per class.
-- Epic 5 has landed the 175-mechanism supersession shape for the 25 originally-measured classes plus
-  whatever Epic 4 adds, and has either wired or explicitly deferred the chooser-interaction shape for
-  Oracle/Arcanist/Sorcerer.
-- Epic 6's chassis sweep has ingested and reach-gated every class Epic 4/5 cleared.
-- Epic 3's PI-screening gate ran clean (or recorded and resolved hits) on every book touched,
+- Epic 0 (instrument-apply) `complete`.
+- Epic 1 (identifier cleanup) `complete`.
+- Epic 2 (operator pre-launch) `complete`.
+- Epic 3's PI-screening gate ran clean (or recorded and resolved hits) on every book it screened,
   including the declared-PI reader (SD30-E3-F2), the corpus-wide backfill sweep (SD30-E3-F3), and the
-  regression gate (SD30-E3-F4) — not the 55-term blacklist sweep alone (`decisions.md §39`).
-- Epic 10's per-kind ingest cards (F1-F4) have each either reached their measured workable-pool
-  ceiling or named a successor for the remainder — mirroring Epic 4's own closure pattern, not a
-  100%-or-nothing bar (`decisions.md §44`).
+  regression gate (SD30-E3-F4) — not the 55-term blacklist sweep alone (`decisions.md §39`). SD-31's
+  ingest epics continue to invoke this same gate cross-SD (`decisions.md §51` item 4); its closure here
+  does not retire the gate itself, only this package's own dependency on it.
+- Epic 7 (Build Version Numbering) `complete` — **including a recorded green `verify.sh` run at the
+  version-bump tip**, not merely the version strings landing (`SD30-E9-F1-001` found this open at
+  reconciliation time: the card was marked `COMPLETE` in `kanban.md` while its own gate had not yet
+  returned an exit code).
 - Epic 8 (Bundle Code Review) closed, all findings triaged with named owners for deferrals.
-- Epic 9 (Closure) fires.
-- `progress.md` carries the closure receipt.
-- `release-notes.md` is populated.
-- The tranche-promotion PR `tranche/10 → develop` is opened and merged.
+- Epic 9 (Closure) fires: `progress.md` carries the closure receipt, `release-notes.md` is populated,
+  `state-goals-and-lessons.md` is updated, `docs/architecture/` is refreshed, and the tranche-promotion
+  PR `tranche/10 → develop` is **opened** (the operator merges it personally — merging is not this
+  epic's own deliverable, per the loop-instruction's hard rules).
 - `docs/release/SD-30-class-feature-archetype-bundle/` carries the canonical file chassis.
+
+**Not SD-30's own completion criterion, moved to `SD-31-corpus-closure-grind`'s Completion gate:**
+Epic 4 (per-class measurement) reaching every `class_feature`-bearing class or naming a successor;
+Epic 5 (mechanism) landing its supersession/chooser shapes; Epic 6 (chassis sweep) ingesting and
+reach-gating cleared classes; Epic 10 (corpus-wide ingest lanes) reaching workable-pool ceiling per
+kind. SD-31's own `epic-breakdown.md`/`acceptance-and-verification.md` (`AT-31-005`) is where those
+criteria now live and are checked; this package's closure does not wait on them (`decisions.md §51`'s
+narrowing is explicit that measurement/mechanism/ingest completion is no longer this package's own
+exit bar).
+
+**The joint 100% mandate (`decisions.md §45`) is unaffected by this narrowing** — it remains the
+combined exit criterion of the SD-30 → SD-31 → SD-32 program, not something SD-30 alone can or does
+claim to have reached. SD-30's own board contribution stops at Epic 0's instrument-application gain
+(`done` 3,464 → 5,837, `state-goals-and-lessons.md §1.1`); the remainder is SD-31's (per-kind ingest)
+and SD-32's (race chassis, verdict paths) to move.

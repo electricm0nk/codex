@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T15:01:53Z",
+  "ingested_at": "2026-08-15T01:24:22Z",
   "data": {
     "corpus_key": "Calikang ~ Breath Weapon",
     "delivery": "Supernatural",
@@ -35,6 +35,7 @@
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",
-    "derived:bonus"
+    "derived:bonus",
+    "derived:prose_formula_segment"
   ]
 }

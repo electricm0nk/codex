@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T18:45:25Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Tyrannosaurus ~ Powerful Bite",
     "delivery": "Extraordinary",
     "description": "A tyrannosaurus applies twice its Strength modifier to bite damage.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialAttack",
     "key": "beastiary:companion:tyrannosaurus_powerful_bite",
     "name": "Powerful Bite",

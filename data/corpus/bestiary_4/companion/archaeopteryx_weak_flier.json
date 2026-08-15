@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Archaeopteryx ~ Weak Flier",
     "delivery": "Extraordinary",
     "description": "An archaeopteryx can't hover or fly up at an angle greater than 45 degrees while flying. Archaeopteryxes are primitive birds. Instead of beaks, they have lizardlike heads with serrated teeth.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialQuality",
     "key": "bestiary_4:companion:archaeopteryx_weak_flier",
     "name": "Weak Flier",

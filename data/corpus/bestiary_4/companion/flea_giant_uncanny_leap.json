@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Flea (Giant) ~ Uncanny Leap",
     "delivery": "Extraordinary",
     "description": "As a full-round action, a giant flea can jump up to 120 feet. A flea can treat this jump as a charge, as long as the leap is made in a straight line.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialQuality",
     "key": "bestiary_4:companion:flea_giant_uncanny_leap",
     "name": "Uncanny Leap",

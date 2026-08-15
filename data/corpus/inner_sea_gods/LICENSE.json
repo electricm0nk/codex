@@ -1,6 +1,6 @@
 {
   "book": "inner_sea_gods",
-  "classified_at": "2026-08-13T01:02:49Z",
+  "classified_at": "2026-08-15T02:34:27Z",
   "classified_by_cycle": "SD29-E5-F2-010",
   "license_declaration": {
     "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _inner_sea_gods.pcc declares ISOGL:YES at line 17, carries 18 COPYRIGHT lines and a real 9,547-byte OGL.txt",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "PASS -- SD29-E5-F2-010 (monster lane), 2026-08-13T01:02:49Z: every field of the 116 records this run wrote (39 monsters + 77 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 116: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "PASS -- SD29-E5-F2-010 (monster lane), 2026-08-15T02:34:27Z: every field of the 116 records this run wrote (39 monsters + 77 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 116: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
 }

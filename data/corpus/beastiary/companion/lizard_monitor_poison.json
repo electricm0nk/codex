@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T18:45:25Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Lizard Monitor ~ Poison",
     "delivery": "Extraordinary",
@@ -9,6 +9,7 @@
     "description_variables": [
       "PoisonSaveDC"
     ],
+    "description_variants": [],
     "facet": "SpecialAttack",
     "key": "beastiary:companion:lizard_monitor_poison",
     "name": "Poison",

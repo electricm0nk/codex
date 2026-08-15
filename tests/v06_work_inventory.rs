@@ -638,21 +638,57 @@ fn zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown() {
         );
     }
 
-    // No unknown class_feature may carry magnitude_token_count == 0 -- that
-    // combination is now unreachable by construction (it either finds an
-    // owner and grounds/defers through the existing paths, or falls to the
-    // text_only check above and lands not-ingested).
+    // No unknown class_feature may carry magnitude_token_count == 0 AND no
+    // prose-embedded formula -- that combination is unreachable by
+    // construction (it either finds an owner and grounds/defers through the
+    // existing paths, or falls to the text_only check above and lands
+    // not-ingested).
+    //
+    // EXCEPTION carved out SD30-E0-F2 (2026-08-14), found live by this
+    // cycle's own `verify.sh --full` run. Root-caused, not assumed:
+    // `v06_work_inventory.rs`'s own `carries_prose_magnitude` computation
+    // (line ~4505, its own doc comment on `classify()`'s parameter) narrows
+    // to EXACTLY two `wiring_class_reason` values as meaning "a real,
+    // non-guard, non-cross-reference formula was found in prose" --
+    // `prose_expr` and `prose_formula_segment`:
+    //   let carries_prose_magnitude =
+    //       matches!(wc_reason.as_str(), "prose_expr" | "prose_formula_segment");
+    // `classify()`'s `text_only` check (`magnitude_token_count == 0 &&
+    // !carries_prose_magnitude`, landed in `2ce72913`, "teach classify()'s
+    // text_only signal the %N prose-formula pattern") is correctly FALSE for
+    // a unit with zero raw magnitude tokens but either signal detected, so
+    // it falls past the `not_ingested` branch below into `unknown` BY
+    // DESIGN -- the record genuinely needs prose-formula wiring
+    // investigated, a real open question, not "confirmed absent from every
+    // engine table" (the stronger claim `not-ingested` makes and that
+    // `2ce72913` exists to stop over-claiming). The DATA is correct; this
+    // test's invariant predates `2ce72913` and never accounted for the
+    // `carries_prose_magnitude` override, so it is the stale half.
+    //
+    // FIRST PASS of this fix (same cycle) exempted only `prose_formula_segment`
+    // and left 29 `prose_expr` violations uncaught -- re-run of `verify.sh
+    // --full` after landing that first pass caught the incomplete exemption
+    // live (405 -> 29, not -> 0), which is exactly why the source-of-truth
+    // (the `matches!` above) is quoted verbatim here rather than re-derived
+    // by inspection a second time. Narrowed to that exact predicate rather
+    // than deleted: a TRUE zero-magnitude, no-prose-signal unit landing
+    // `unknown` is still a real violation this test must keep catching.
     let mut violations = 0usize;
     for unit in units {
         if unit["status"] == "unknown"
             && unit["kind"] == "class_feature"
             && unit["magnitude_token_count"] == 0
+            && unit["wiring_class_reason"] != "prose_formula_segment"
+            && unit["wiring_class_reason"] != "prose_expr"
         {
             violations += 1;
-            eprintln!("VIOLATION: {} is unknown with magnitude_token_count 0", unit["id"]);
+            eprintln!(
+                "VIOLATION: {} is unknown with magnitude_token_count 0 and wiring_class_reason {}",
+                unit["id"], unit["wiring_class_reason"]
+            );
         }
     }
-    assert_eq!(violations, 0, "found {violations} unknown class_feature units with no magnitude token");
+    assert_eq!(violations, 0, "found {violations} unknown class_feature units with no magnitude token and no prose-formula exception");
 }
 
 /// The inventory must cover EVERY corpus book, including the ones no code has

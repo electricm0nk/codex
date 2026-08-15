@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Beheaded ~ Swarming",
     "delivery": "Extraordinary",
     "description": "The beheaded gains 1 additional Hit Die, the swarm subtype, swarm immunities, and the distraction special ability. It loses its slam attack but gains a swarm attack that deals 1d6 points of damage. This counts as two abilities for the purpose of determining the beheaded's CR.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialAttack",
     "key": "bestiary_4:companion:beheaded_swarming",
     "name": "Swarming",

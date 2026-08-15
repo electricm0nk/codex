@@ -10,10 +10,22 @@ import { assert } from '../testSupport/asserts';
 
 const appRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
+// SD-30 Epic 7 (SD30-E7-F1-001, re-dispatch): the version-bump-to-0.10.0 cycle
+// found this list incomplete. `src/testSupport/makeSurface.ts` is the single
+// source of truth for the test surface fixture (its own doc comment says so),
+// and four more test files assert its `buildLabel` output as a hardcoded
+// literal downstream of `makeSurface()` rather than deriving it — they broke
+// silently the moment `makeSurface.ts` moved to 0.10.0 until added here.
+// Widened to the full consumer surface so a future bump cannot miss them
+// again the same way.
 const FIXTURE_FILES = [
   'src/testerWorkbench/loadTesterWorkbenchSurface.test.ts',
   'src/testerWorkbench/status/createWorkbenchStatus.test.ts',
   'src/testSupport/makeSurface.ts',
+  'src/operatorTriage/buildOperatorTriageDraft.test.ts',
+  'src/testerWorkbench/feedback/evidence/captureFeedbackEvidence.test.ts',
+  'src/testerWorkbench/feedback/enhancement/composeEnhancementRequest.test.ts',
+  'src/testerWorkbench/feedback/bug/composeBugReport.test.ts',
 ];
 
 function readPackageJsonVersion(): string {
@@ -24,14 +36,15 @@ function readPackageJsonVersion(): string {
 // The exact pre-bump literal these fixtures carried before the most recent
 // version bump. Kept one bump behind on purpose: it is the literal a
 // half-applied bump would leave behind, so it is the one worth naming
-// explicitly. Updated to 0.8.0 by the tranche/9 cut (the version files moved
-// 0.8.0 -> 0.9.0 because a NEW tranche/N branch was cut; a bundle's own
-// closure on an unchanged tranche branch does not move the tranche digit).
-// The prior value named here was 'Codex 0.5.96-test', from SD-23's Epic 7
-// build-number increment. Some files also carry unrelated arbitrary version
-// placeholders (e.g. '0.0.0-test') for isolated formatter tests — those
-// aren't "the current build" fixture and must not be flagged here.
-const STALE_LABEL = 'Codex 0.8.0-test';
+// explicitly. Updated to 0.9.0 by SD-30's tranche/10 version-bump cycle
+// (SD30-E7-F1-001; the version files moved 0.9.0 -> 0.10.0 on the
+// already-cut tranche/10 branch — a bundle's own closure does not move the
+// tranche digit, only a NEW tranche/N cut does). The prior value named here
+// was 'Codex 0.8.0-test', from the tranche/9 cut. Some files also carry
+// unrelated arbitrary version placeholders (e.g. '0.0.0-test') for isolated
+// formatter tests — those aren't "the current build" fixture and must not be
+// flagged here.
+const STALE_LABEL = 'Codex 0.9.0-test';
 
 function verifiesFixturesCarryCurrentTrancheBuildLabel() {
   const pkgVersion = readPackageJsonVersion();

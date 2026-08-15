@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Platypus ~ Semiaquatic",
     "delivery": "Extraordinary",
     "description": "Platypuses can hold their breath underwater for up to 5 minutes before they must start attempting Constitution checks to avoid suffocation.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialQuality",
     "key": "bestiary_4:companion:platypus_semiaquatic",
     "name": "Semiaquatic",

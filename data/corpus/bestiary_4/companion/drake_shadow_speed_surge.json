@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Drake (Shadow) ~ Speed Surge",
     "delivery": "Extraordinary",
     "description": "Three times per day as a swift action, a shadow drake may draw on its draconic heritage for a boost of strength and speed to take an additional move action in that round.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialAttack",
     "key": "bestiary_4:companion:drake_shadow_speed_surge",
     "name": "Speed Surge",

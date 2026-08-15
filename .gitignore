@@ -16,3 +16,7 @@ __pycache__/
 # ship to origin; the operator-supplied/ subdirectory is excluded.
 docs/release/SD-*/artifacts/corpus/operator-supplied/**
 !docs/release/SD-*/artifacts/corpus/operator-supplied/README.md
+
+# Wrangler CLI local cache (created by `wrangler pages deploy` etc.)
+# Do not ship; the deploy state is rebuilt on each run.
+.wrangler/

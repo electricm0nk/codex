@@ -29,7 +29,8 @@ that exists once, up front, instead of never.
   `python3 -c "import json; d=json.load(open('docs/work-inventory.json')); print(sorted(set(b['id'] for b in d['books'])))"`,
   37 remain after dropping `beginner_box`.
 - **Publisher**: `PUBNAMELONG:` read directly from each book's own `.pcc` file at
-  `~/workspace/repos/pcgen/data/pathfinder/`, not inferred from its directory path.
+  `$PCGEN_CORPUS_ROOT/pathfinder/` (defaults to `~/workspace/repos/pcgen/data/pathfinder/`, pinned
+  per `scripts/pcgen-oracle-pin.env`), not inferred from its directory path.
 - **OGL declaration mechanism**: checked in this order per book — a real `OGL.txt`
   file in the book's directory; the `.pcc`'s own `COPYRIGHT:` lines (which are the
   book's section-15-shaped attribution text, present even when no separate file

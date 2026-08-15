@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T18:45:25Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Dinosaur (Pteranodon)",
     "delivery": null,
     "description": null,
     "description_variables": [],
+    "description_variants": [],
     "facet": "CompanionAdvancement",
     "key": "beastiary:companion:companion_advancement_dinosaur_pteranodon",
     "name": "Companion Advancement (Dinosaur (Pteranodon))",

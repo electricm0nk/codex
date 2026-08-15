@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Platypus ~ Poison",
     "delivery": "Extraordinary",
     "description": "Spur-injury; save Fort DC 9; frequency 1/round for 4 rounds; effect 1 nonlethal damage; cure 1 save.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialAttack",
     "key": "bestiary_4:companion:platypus_poison",
     "name": "Poison",

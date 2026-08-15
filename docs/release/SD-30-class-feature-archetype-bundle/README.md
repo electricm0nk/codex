@@ -12,6 +12,22 @@ build_version_target: 0.10.<build>
 
 # SD-30 — `class_feature` / Archetype Bundle
 
+## Scope narrowed 2026-08-14 (`decisions.md §51`, operator ruling) — read this before the rest of this file
+
+SD-30 split: **Phase 3 ("the grind")** — per-class `class_feature` measurement/mechanism/chassis-sweep
+(former Epics 4/5/6), corpus-wide ingest lanes (former Epic 10), and 7-book onboarding (former Epic
+11) — moved to `docs/release/SD-31-corpus-closure-grind/`. **Phase 4 ("capability builds")** — race
+chassis (former Epic 12) and verdict-path capability (former Epic 13) — moved to
+`docs/release/SD-32-engine-capability-builds/`. SD-30 retains Epic 0 (instrument-apply), Epic 1
+(identifier cleanup), Epic 2 (pre-launch), Epic 3 (PI-screening gate — now a cross-SD dependency
+consumed by both successor packages), Epic 7 (version numbering), Epic 8 (bundle code review), Epic 9
+(closure epilogue). The rest of this file (Purpose/In-scope/Out-of-scope/Exit-statement below) predates
+the split and describes the **pre-narrowing** charter; it is left visible per this package's standing
+convention (original text stays, corrections point forward) rather than rewritten. SD-30's operative,
+narrowed exit criterion is: **instruments applied (Epic 0) + gates green (Epics 1/2/3/7/8/9)** — see
+`decisions.md §51` for the full disposition and the **joint SD-30→SD-31→SD-32 100% dashboard mandate**
+that remains the program-wide exit bar.
+
 ## Purpose
 
 **Re-scoped 2026-08-10** (operator directive; `decisions.md §33`). SD-30 is
@@ -19,7 +35,7 @@ no longer a sixteen-book content bundle. SD-29's re-scope to corpus-wide kind
 lanes (`SD-29-corpus-wide-catch-up-lanes/decisions.md §38`) claims every kind
 corpus-wide **except `class_feature`** — SD-29's own `§38.4` names
 `class_feature` as staying out of its scope, funded instead through
-`corpus-work-channels.md §9.1`'s per-class archetype-measurement effort,
+`docs/release/corpus-work-channels.md §9.1`'s per-class archetype-measurement effort,
 unassigned to any SD number until now. **SD-30 is that assignment.**
 
 SD-30's new scope is the one kind lane SD-29 cannot take:

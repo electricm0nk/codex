@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T18:45:25Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Octopus ~ Poison",
     "delivery": "Extraordinary",
     "description": "Bite-injury; save Fort DC 13; frequency 1/round for 6 rounds; effect 1 Str; cure 1 save.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialAttack",
     "key": "beastiary:companion:octopus_poison",
     "name": "Poison",

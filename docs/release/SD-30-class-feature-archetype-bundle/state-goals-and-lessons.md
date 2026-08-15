@@ -22,26 +22,53 @@ largest recorded defect class is transcribed-instead-of-derived counts.
 
 ### 1.1 The board (`done`, the product bar)
 
-Re-derived 2026-08-14 by importing the dashboard producer's own `_doneness_verdict_uncapped()` and
-replaying it over `docs/work-inventory.json`:
+**Re-derived 2026-08-14, SD30-E0-F4-001 (epic-0 closure cycle), superseding the table below.**
+Imported the dashboard producer's own `_doneness_verdict_uncapped()` (module import, not
+transcription) and replayed it over `git show <ref>:docs/work-inventory.json`, corpus-wide with
+`beginner_box` excluded (matching the live dashboard's own exclusion, `pf1e_dashboard_producer.py`'s
+`_exclude_books_from_kind_doneness`) — cross-checked byte-for-byte against the live
+`/home/ubuntu/swarm-observer/PF1e-dashboard.json` `work_inventory.by_doneness`/`by_doneness_kind`
+(`generated_at` 2026-08-14T21:26:18Z), which agrees exactly:
 
-| bucket | units |
-|---|---|
-| **done** | **5,837** |
-| held | 6,954 |
-| in-progress | 848 |
-| not-started | 21,319 |
-| unmeasurable | 3,546 |
-| deferred | 36 |
-| **total** | **38,540** |
+```
+python3 -c "
+import json, importlib.util, collections
+spec = importlib.util.spec_from_file_location('m', 'scripts/observer/pf1e_dashboard_producer.py')
+mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+d = json.load(open('docs/work-inventory.json'))['units']
+c = collections.Counter()
+for u in d:
+    if u.get('book') == 'beginner_box': continue
+    c[mod.doneness_verdict(u.get('wiring_class'), u.get('status'), u.get('kind'))] += 1
+print(c)
+"
+```
 
-Per kind, `done` / total:
+| bucket | units (was, F0-close snapshot) | units (now, F4-close, re-derived) |
+|---|---:|---:|
+| **done** | **5,837** | **5,837** (unchanged) |
+| held | 6,954 | 6,916 (−38) |
+| in-progress | 848 | 848 |
+| not-started | 21,319 | 20,895 (−424) |
+| unmeasurable | 3,546 | 3,989 (+443) |
+| deferred | 36 | 36 |
+| **total** | **38,540** | **38,521** (−19: the original table did not exclude `beginner_box`'s 19 units, a bug the live producer's `_exclude_books_from_kind_doneness` already guards against for the corpus-wide total — see that function's own docstring) |
+
+The −38/+443/−424 movement (not `done`-affecting) traces entirely to `feat`: F3's `unknown`-residue
+characterization cycle re-ran the guarded `v06_work_inventory` regen as part of confirming F1's
+static/derived rung, and the regenerated corpus read moved 38 `feat` units from `text-complete`/`held`
+to `unknown`/`unmeasurable` (329→367 `unknown`, matching F3's own re-derived figure in `kanban.md`) —
+a genuine corpus-read correction, not a classifier defect; `done` itself is untouched by it.
+`retro.py correction` event `1786743412894-sd30-e0-f4-report-0f3bbc` (`docs/retro/events/sd30-e0-f4-report.jsonl`).
+
+Per kind, `done` / total (re-derived same command, grouped by `kind`; matches the live dashboard's
+`by_doneness_kind` exactly):
 
 | kind | done | total | % |
 |---|---|---|---|
 | equipment_modifier | 911 | 1,580 | 57.7% |
 | feat | 1,178 | 2,610 | 45.1% |
-| equipment | 2,626 | 6,227 | 42.2% |
+| equipment | 2,626 | 6,208 | 42.3% |
 | companion | 416 | 1,696 | 24.5% |
 | class | 27 | 185 | 14.6% |
 | monster_ability | 334 | 3,107 | 10.7% |
@@ -51,8 +78,11 @@ Per kind, `done` / total:
 | class_feature | 25 | 15,472 | 0.2% |
 | **race** | **0** | **103** | **0.0%** |
 
-`race` at 0% is a **structural closure blocker** for SD-30 by construction
-(`acceptance-and-verification.md` AT-30-015).
+Per-kind `done`/total is unchanged from the F0-close snapshot except `equipment`'s total (6,227 →
+6,208, the same `beginner_box`-exclusion correction as the corpus-wide total above — its `done`/`held`
+split is unaffected). `race` at 0% is a **structural closure blocker**, now owned by
+`SD-31-corpus-closure-grind` (`acceptance-and-verification.md AT-31-005`, moved from this package's
+retired `AT-30-015` per `decisions.md §51`).
 
 ### 1.2 What landed in the handoff session
 
@@ -83,8 +113,15 @@ Per kind, `done` / total:
    (`text-complete` from an unresolved corpus LEVEL) is a live residual instance.
 3. **`done` is unreachable for `ambiguous`** at every status — same shape as the static/derived gap
    that the rungs fixed. Not yet addressed.
-4. **The dashboard producer is not under version control** and runs from cron every 5 minutes under
-   flock. Its `static`/`derived` branch RAISES on an unrecognised status: emitting a new status word
+4. ~~**The dashboard producer is not under version control**~~ **Corrected 2026-08-15
+   (`SD-31-corpus-closure-grind` launch-readiness remediation Step 5, drift D10, closing the loop on
+   its own Step 4 which did the work): false as of `SD-31-corpus-closure-grind` commit `2b232fe1d`
+   (2026-08-15) — `scripts/observer/pf1e_dashboard_producer.py` was already under version control
+   before that commit (it is this repo's own script); that commit additionally imported
+   `~/swarm-observer/PF1e-dashboard.html` byte-identical as `scripts/observer/PF1e-dashboard.html` and
+   symlinked the served file to it, closing the gap this lesson named.** Its (the producer's)
+   `static`/`derived` branch runs from cron every 5 minutes under
+   flock and RAISES on an unrecognised status: emitting a new status word
    from the generator without landing the producer rule in the SAME change crashes the dashboard
    rather than degrading it. Back it up to `/home/ubuntu/swarm-observer/.backups/` before editing.
 5. **`compute_wiring_class_summary()` silently serves a stale wiring-class cache** when its mtime
@@ -109,7 +146,23 @@ SD-30 owns the **full path to closure for every kind**: instrument application A
 3. **Epic 10 — ingest lanes** (F1 monster, F2 spell, F3 race, F4 race_trait), each gated behind the
    PI screen per book.
 
+### 2.2.1 Pointer (2026-08-14, `decisions.md §49`) — table-sheet doneness doctrine
+
+> **Correction/addition:** the operator ratified SD-32 `decisions.md §2`'s open `static`/`derived`
+> "no `done` rung" measurement gate on 2026-08-14, unblocking E5/E6, and stated the underlying
+> doctrine: `done` means the character sheet exposes the end rule with a true resolved value for
+> this character (parameters resolved, rule displayed) — not that the engine simulates the
+> mechanism (dice-rolling, arithmetic happen at the table). See `decisions.md §49` for the verbatim
+> ruling and full consequences; this section's Epic 0/ordering material is otherwise unchanged.
+
 ### 2.3 The honest ceiling
+
+> **Correction (2026-08-14, `decisions.md §45`, operator directive, launch session):** this
+> section's ~81%/100%-not-promised framing is **superseded**. The SD-30 exit bar is now 100% across
+> the board on the PF1e dashboard, via capability-building (race chassis, real verdict paths,
+> book onboarding), not descoping. The measurement below stands as an accurate snapshot of the
+> engine as it stood on the date it was written; it is no longer accepted as the target ceiling.
+> Original text preserved below per this package's standing convention.
 
 Instruments alone cannot close this. Ingest is required for the kinds the operator cares most about
 (`monster` 0.6%, `spell` 1.7%, `race` 0%, `class_feature` 0.2%). The combined bounded estimate is
@@ -179,7 +232,72 @@ how they get followed.
   message dependencies with filesystem ones: a commit is a fact that can be polled; a ping is an
   event that may never fire.
 
-### 3.4 Verification
+### 3.4 Closure-attempt state, 2026-08-14 (`SD30-E9-F1-001`, `epic-9-closure`)
+
+Written at the point `epic-9-closure` first attempted to check the board for a tranche-promotion PR
+and found it not ready. Recorded here because this file is the living state/hazards record, and both
+findings below are new relative to §1.3.
+
+**Card state at this cycle, verified by content (not by `kanban.md`'s own status word):**
+
+- Epics 0, 1, 2, 3 are genuinely `COMPLETE` — each has a `progress.md` receipt and the landed symbol
+  greps this package's own doctrine requires (`epic-0`: `literal-verified`/`fixture-verified` in
+  `pf1e_dashboard_producer.py`; `epic-1`: identifier audit pass; `epic-3`: `pi_table_sweep.rs`,
+  `NAMEISPI`/`DESCISPI` handling in `ingest_pu_classes.rs` and both transcriber scripts, the
+  regression test file — all re-confirmed present at this cycle's `HEAD`).
+- **Epic 7 (`epic-7-version`) is marked `COMPLETE` in `kanban.md` but is not actually gate-confirmed.**
+  The version bump to `0.10.0` landed, but the first `verify.sh` run failed at the `desktop` stage on
+  a stale `Cargo.lock` (fixed, `cca272e8`), and the **retry** gate — the only run since the
+  `Cargo.lock` fix — was found by this cycle **still running** (PID `663386`, launched ~21:40) and,
+  once it reached `frontend-test`, **failed**: `src/release/buildVersionTriple.test.ts` and
+  `src/releaseChecks/buildLabelFixtureFreshness.test.ts` both FAIL, the latter with the message
+  `src/testerWorkbench/loadTesterWorkbenchSurface.test.ts must carry the current tranche's build-label
+  fixture "Codex 0.10.0-test"` — a fixture the version-bump cycle did not update alongside the version
+  triple. **This is a real, live finding, not inferred**: read directly off
+  `/tmp/codex-verify-GyoD6r/frontend-test.log` while the gate was still in flight. `epic-9-closure`
+  did not fix it — the fixture lives inside `epic-7-version`'s own change surface, a different card,
+  and a live gate process from that cycle was still running in the same shared checkout at the time
+  (touching the same tree an in-flight process is reading is the exact hazard `AGENTS.md`'s
+  "one writer per tree" rule exists to prevent). **Whoever next claims `epic-7-version` must update
+  the stale build-label fixture(s) to `"Codex 0.10.0-test"`, re-run the full gate, and only then flip
+  the card `COMPLETE` for real** — `kanban.md`'s current `COMPLETE` mark on that row is premature and
+  should be read as `IN-FLIGHT` in substance until a green gate exists at the version-bump tip.
+- **Epic 8 (`epic-8-code-review`) has not been started at all.** No `progress.md` receipt, `kanban.md`
+  row still `READY`. It hard-blocks `epic-9-closure` (`kanban.md`: "gated on every other card").
+- **Net: the tranche-promotion PR was NOT opened this cycle.** Two real blockers, not one: Epic 8
+  unstarted, and Epic 7's own gate unconfirmed with a genuine new failure discovered while checking.
+  Recorded as `decision-blocked` in `progress.md`, cycle `SD30-E9-F1-001`.
+
+**New hazard for a successor to inherit (add to §1.3's numbered list in substance, not renumbering the
+existing five to avoid breaking prior cross-references):**
+
+6. **A version bump's fixture surface is wider than the three build-config files.** `epic-7-version`
+   updated `apps/desktop/package.json`, `tauri.conf.json`, `src-tauri/Cargo.toml`, and the two
+   `buildVersionTriple.test.ts` files, but missed a build-label string fixture consumed by
+   `src/testerWorkbench/loadTesterWorkbenchSurface.test.ts` and asserted fresh by
+   `src/releaseChecks/buildLabelFixtureFreshness.test.ts`. **A version-bump cycle's own DoD item 1
+   ("`verify.sh` exits 0") is the only mechanism that actually catches this** — grepping the three
+   config files for the new version string, as that cycle's own receipt did, is not sufficient
+   evidence of a complete bump. Do not mark a version-bump card `COMPLETE` before the full gate — not
+   just `root-full`/`root-lib` — has returned a captured exit code. **Resolved**: the re-dispatch
+   cycle (`SD30-E7-F1-001`, 2026-08-14/15) fixed the fixture, polled a full gate inline to
+   `VERIFY_EXIT=0` at `4630fec2`, and the card is genuinely `COMPLETE`.
+7. **A citation-resolution bug can hide behind its own audit's fixture.** `epic-8-code-review`'s DoD-3
+   trap-audit self-check (`corpus_traps.rs`) had a bare-basename `file_basename` bug: a fixture nested
+   one level under a book subdirectory passed for the wrong reason (the citation format the fixture
+   used never actually engaged the `.parent()` fallback the bug lived in). Rebuilding the fixture with
+   a real, directory-prefixed citation shape (matching every real corpus citation) went RED and
+   surfaced that the **identical** bug was independently live in `gen_book_cache.rs`'s own generator
+   — already shipped 3 wrong `wiring_class` stamps into production `inner_sea_gods` monster data. The
+   general lesson: a reviewer's own proposed fixture for a fix is not sufficient evidence the fix
+   engages the real code path — rebuild it to match production shape before trusting it, and when a
+   citation-resolution bug is found in one call site, grep every other call site of the same
+   underlying join/basename pattern before declaring the class of bug closed (`v06_work_inventory.rs`'s
+   `enumerate_file` was found to share it and is **not yet fixed** — `forward-scope-register.md`
+   C1.9). Also: capture the audit's exit code directly, never through `| tail`'s own exit status — this
+   cycle's own first read of `TRAP_AUDIT_EXIT` was silently wrong for exactly that reason.
+
+### 3.5 Verification
 
 - **Capture the exit code directly, never through a pipe, and never infer a pass.** A gate that
   reached its last stage with no visible failures had in fact returned `VERIFY_EXIT=1` on `clippy`.
@@ -190,3 +308,24 @@ how they get followed.
   "wired into a twin the sheet doesn't read" defect class, which has bitten this program three
   times. The harness exists: `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh`, unique
   `RUN_DESKTOP_AGENT` per cycle, never concurrent with `verify.sh`.
+
+### 3.6 Closure, 2026-08-15 (`SD30-E9-F2-001`, `epic-9-closure`, second attempt)
+
+`§3.4`'s two blockers are both resolved and re-confirmed by content at this cycle's own `HEAD`
+(`44497b67e`, pre-this-cycle's-own-doc-commits): `epic-7-version`'s gate green
+(`VERIFY_EXIT=0`, `4630fec2`, `progress.md` `SD30-E7-F1-001` re-dispatch) and `epic-8-code-review`
+complete (`VERIFY_EXIT=0`, `fc461781a`, `progress.md` `SD30-E8-F3-001`, three real defects fixed in
+bundle — see release-notes.md). `v06_corpus_trap_report -- --audit` (DoD item 3) re-derived by this
+cycle independently: `TRAP_AUDIT_EXIT=0`, `259 0 mod-record` — the 177-defect finding `SD30-CARRY-001`
+was dispatched against is genuinely closed, not merely claimed closed. Full accounting is in
+`progress.md`'s `SD30-E9-F2-001` receipt; this section exists only to record that the two things
+`§3.4` said a successor must check were in fact checked, by content, not by trusting the kanban row
+or a prior receipt's own say-so — the standing discipline this whole file exists to enforce.
+
+**No new hazard this cycle.** The five hazards in §1.3 and the two added under §3.4 (now seven total)
+remain the live inheritance for `SD-31-corpus-closure-grind` and `SD-32-engine-capability-builds`, the
+two packages that now carry SD-30's remaining scope forward. In particular: hazard 1 (the
+inventory-regen stamp-loss guard) and hazard 4 (the dashboard producer's unrecognised-status RAISE)
+apply directly to SD-31's ingest-lane cycles; hazard 7 (bare-basename citation-resolution bugs,
+`v06_work_inventory.rs`'s `enumerate_file` still carrying the unconfirmed instance,
+`forward-scope-register.md` C1.9) applies to whichever bundle next touches measurement.

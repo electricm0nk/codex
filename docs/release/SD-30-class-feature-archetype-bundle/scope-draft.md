@@ -218,7 +218,7 @@ have for those two classes).
 `race_trait`, `spell`.
 
 **Per-kind `grounded` vs. `done`, re-derived this session** (command: `cargo run --locked --bin
-v06_work_inventory` then `python3 docs/release/SD-32-instrument-coverage-and-consumer-wiring/artifacts/derive-movable-mass.py`,
+v06_work_inventory` then `python3 docs/release/SD-30-class-feature-archetype-bundle/artifacts/derive-movable-mass.py`,
 validated against the live dashboard cache):
 
 | kind | total | grounded | done | done % | held | not-started+not-ingested | unknown |

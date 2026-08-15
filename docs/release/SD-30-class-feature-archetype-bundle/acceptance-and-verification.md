@@ -35,6 +35,23 @@ Then:
   `src/rules_core/archetype_resolver.rs`, scoped to the target class's own supersession/chooser
   branch only — verified by diff review, not just a path check.
 
+**Book → directory mapping (added 2026-08-14, C12):** `src/rules_core/rules_tables/<book>/` cannot
+be resolved literally for every one of the 23 books — three long book names carry a short directory
+under `src/rules_core/rules_tables/`, verified directly against the checked-out tree:
+
+| book (long name, as used everywhere else in this package) | `rules_tables/` directory |
+|---|---|
+| `core_rulebook` | `crb` |
+| `advanced_players_guide` | `apg` |
+| `advanced_class_guide` | `acg` |
+
+Every other book in the 23-book roster uses its long name as the directory verbatim (e.g.
+`ultimate_magic` → `ultimate_magic`). A book in the roster with no `src/rules_core/rules_tables/`
+directory at all yet (as of 2026-08-14: `adventurers_guide`, `occult_adventures`,
+`inner_sea_taverns`, `inner_sea_magic` have none) means "not yet ingested," not a partition
+violation — the audit predicate for such a book resolves against an as-yet-nonexistent path and a
+first Epic 6 cycle creates it.
+
 Evidence: per-cycle receipt carries the audit command and the captured exit code.
 
 ## AT-30-012 — Per-class measurement gate (NEW, 2026-08-10)
@@ -134,7 +151,7 @@ When the trap-report + work-inventory run.
 
 Then:
 
-- All sixteen in-scope books have a `artifacts/<book>-cycle0-trap-report.md`.
+- All 23 `class_feature`-bearing corpus dirs (`decisions.md §33`) have a `artifacts/<book>-cycle0-trap-report.md`.
 - Per-book inventory findings are recorded.
 
 ## AT-30-009 — Per-entity counts generated
@@ -172,7 +189,7 @@ Then:
 - The source-of-record directory (`programs/codex/requirements/SD-30-.../`) is removed.
 - The canonical repo-resident home (`docs/release/SD-30-class-feature-archetype-bundle/`) carries the 13+ file chassis.
 
-## AT-30-012 — Local-file work-queue dispatch
+## AT-30-016 — Local-file work-queue dispatch (renumbered 2026-08-14, was duplicate AT-30-012)
 
 Given the cycle supervisor.
 
@@ -224,7 +241,18 @@ Evidence: cycle's `verify.sh` full-run log shows `corpus-sweep`, `corpus-sweep-s
 `derived_evaluator_fixture_check` test suite passing over a corpus that includes the cycle's new
 records (examined-record count increases, per `scripts/verify.sh`'s own floor checks).
 
-## AT-30-015 — Widened charter: criteria are `done`, never `ingested`/`grounded`, corpus-wide (NEW, 2026-08-13, `decisions.md §43`)
+## AT-30-015 — MOVED to `SD-31-corpus-closure-grind/acceptance-and-verification.md AT-31-005` (2026-08-14, `decisions.md §51`)
+
+Every kind this criterion's floor table covers (`class_feature`, `monster`, `spell`, `race`,
+`race_trait`) is now owned by `SD-31-corpus-closure-grind`'s ingest epics (`decisions.md §51`'s split).
+The table is reproduced there as `AT-31-005`, with the `race`/`race_trait` rows annotated as depending
+on `SD-32-engine-capability-builds`'s race-chassis epic for their full ceiling. **(Update 2026-08-15:
+that package was absorbed into `SD-31-corpus-closure-grind` and deleted — its race chassis is SD-31's
+Epic 1 and now runs *before* the ingest lanes it gates, `SD-31-corpus-closure-grind/decisions.md §2`.)** Text below is left
+visible as this criterion's original form, per this package's standing convention — not this package's
+live acceptance criterion.
+
+## AT-30-015 (historical) — Widened charter: criteria are `done`, never `ingested`/`grounded`, corpus-wide (NEW, 2026-08-13, `decisions.md §43`)
 
 Given the widened charter (`decisions.md §43`, `scope-draft.md`'s "Widened charter" section) —
 SD-30 now drives all kinds, corpus-wide, to `done`, not merely `grounded` or `ingested`.
@@ -244,39 +272,102 @@ Then:
   at effectively 0.1%) is a **structural closure blocker**, not a kind the bundle can silently skip
   while reporting overall progress on kinds that move faster.
 
-**Per-kind `done` floors/targets (re-derived 2026-08-13, `decisions.md §43`; re-derive at each
-cycle-0 per the standing "generated, never hand-maintained" rule, `decisions.md §12`):**
+**Per-kind `done` floors/targets (re-derived 2026-08-14, superseding the 2026-08-13 table below,
+which predated the `static`/`derived` done-rung landing that moved the corpus-wide board from
+3,464 to 5,837 `done` units and left this table's equipment denominator, feats/other figures, and
+per-kind `done` counts stale). Derivation command (writes no files, reads
+`docs/work-inventory.json` directly — the SD-32 `derive-movable-mass.py` script itself currently
+raises `ValueError` on the new `('static'|'derived', 'literal-verified')` pair and needs its own
+fix before it can be used again for this table; this re-derivation instead applies the *live*
+`_doneness_verdict_uncapped()` table from `scripts/observer/pf1e_dashboard_producer.py`, which does
+recognize `literal-verified`/`fixture-verified`, by hand against the same inventory file):
 
-| kind | total units | `done` today | `done` floor for bundle closure | rationale |
-|---|---:|---:|---:|---:|
-| class | 185 | 27 (14.6%) | 185 (100%) | small population, already instrument-covered, cheapest full closure in the roster |
-| class_feature | 15,472 | 18 (0.1%) | measured per-class via Epic 4 gate, not a blanket % — `decisions.md §37` | population too large and heterogeneous for a flat floor; Epic 4's per-class measurement is the closure instrument |
-| companion | 1,696 | 416 (24.5%) | 922 (54.4%, = current `grounded`) | `NO_GROUNDING_PROBE`-capped kind; floor is the `held` ceiling until a companion consumer-delta probe is built |
-| equipment | 6,208 | 277 (4.5%) | 4,953 (79.8%, = today's done+held) | dominated by the missing `static`/`derived` done rung (4,511 held) |
-| equipment_modifier | 1,580 | 896 (56.7%) | 930 (58.9%, = today's done+held) | already the best-covered kind; floor closes the remaining held units |
-| feat | 2,610 | 1,178 (45.1%) | 1,305 (50.0%, done+held) + `unknown` (329) classified | second-best-covered kind; `unknown` residue needs its own characterization pass (new scope, unassigned) |
-| monster | 1,270 | 7 (0.6%) | 1,242 (97.8%, = today's done+held) | almost entirely `held`, blocked on the `derived` done rung |
-| monster_ability | 3,107 | 334 (10.7%) | 1,629 (52.4%, done+held) | same rung gap as monster |
-| race | 103 | 0 (0.0%) | 103 (100%) | smallest population in the roster; 0% done is a structural blocker per this criterion, not skippable |
-| race_trait | 3,447 | 264 (7.7%) | 513 (14.9%, = today's `grounded`, the `held` ceiling) | classifier-lever-capped (`ambiguous`/`display` mix); see B1/B2 buckets in the movable-mass tool |
-| spell | 2,843 | 47 (1.7%) | 1,235 (43.4%, = today's done+held, `NO_GROUNDING_PROBE`-capped) | no consumer reads a spell magnitude corpus-wide; floor is the `held` ceiling until that changes |
+```
+python3 -c "
+import json, collections
+d = json.load(open('docs/work-inventory.json'))
+units = d['units']
+def uncapped(wc, st):
+    if st == 'deferred-with-reason': return 'deferred'
+    if st in ('not-ingested', 'not-started'): return 'not-started'
+    if st == 'unknown': return 'unmeasurable'
+    if wc == 'ambiguous':
+        return 'held' if st in ('grounded', 'text-complete', 'ingested-magnitude') else (_ for _ in ()).throw(ValueError((wc, st)))
+    if wc == 'display':
+        return 'done' if st == 'text-complete' else 'held' if st == 'grounded' else 'in-progress'
+    if wc in ('static', 'derived'):
+        if st in ('literal-verified', 'fixture-verified'): return 'done'
+        return 'held' if st in ('ingested-magnitude', 'grounded', 'text-complete') else (_ for _ in ()).throw(ValueError((wc, st)))
+    if wc == 'computed':
+        return 'done' if st == 'grounded' else 'in-progress'
+    raise ValueError(wc)
+NO_GROUNDING_PROBE = ('companion', 'spell')
+def verdict(wc, st, k):
+    v = uncapped(wc, st)
+    return 'held' if v == 'in-progress' and k in NO_GROUNDING_PROBE else v
+by_kind = collections.defaultdict(collections.Counter)
+for u in units:
+    k = u['kind']; by_kind[k]['total'] += 1; by_kind[k][verdict(u.get('wiring_class'), u['status'], k)] += 1
+for k in sorted(by_kind):
+    c = by_kind[k]; print(k, c['total'], c.get('done', 0), c.get('held', 0))
+"
+```
+(re-derive at each cycle-0 per the standing "generated, never hand-maintained" rule, `decisions.md
+§12`; this table's totals intentionally do NOT exclude `beginner_box`, matching
+`state-goals-and-lessons.md`'s equipment figure of 2,626/6,227/42.2% and the corpus-wide 5,837-done
+board total — `derive-movable-mass.py`'s own `EXCLUDED_BOOKS = {"beginner_box"}` filter undercounts
+equipment by 19 units relative to that reference and is not applied here.)
+
+| kind | total units | `done` today | `held` today | `done` floor for bundle closure | rationale |
+|---|---:|---:|---:|---:|---|
+| class | 185 | 27 (14.6%) | 0 | 185 (100%) | small population, already instrument-covered, cheapest full closure in the roster |
+| class_feature | 15,472 | 25 (0.2%) | 88 | measured per-class via Epic 4 gate, not a blanket % — `decisions.md §37` | population too large and heterogeneous for a flat floor; Epic 4's per-class measurement is the closure instrument |
+| companion | 1,696 | 416 (24.5%) | 506 | 922 (54.4%, = today's done+held) | `NO_GROUNDING_PROBE`-capped kind; floor is the `held` ceiling until a companion consumer-delta probe is built |
+| equipment | 6,227 | 2,626 (42.2%) | 2,327 | 4,953 (79.5%, = today's done+held) | the `static`/`derived` done rung landed 2026-08-13 and moved this kind from 277 to 2,626 `done`; remaining floor gap is held units awaiting the same rung |
+| equipment_modifier | 1,580 | 911 (57.7%) | 19 | 930 (58.9%, = today's done+held) | already the best-covered kind; floor closes the remaining held units |
+| feat | 2,610 | 1,178 (45.1%) | 127 | 1,305 (50.0%, done+held) + `unknown` (329) classified | second-best-covered kind; `unknown` residue needs its own characterization pass (new scope, unassigned) |
+| monster | 1,270 | 7 (0.6%) | 1,235 | 1,242 (97.8%, = today's done+held) | almost entirely `held`, blocked on the `derived` done rung |
+| monster_ability | 3,107 | 334 (10.7%) | 1,295 | 1,629 (52.4%, done+held) | same rung gap as monster |
+| race | 103 | 0 (0.0%) | 7 | 103 (100%) | smallest population in the roster; 0% done is a structural blocker per this criterion, not skippable |
+| race_trait | 3,447 | 266 (7.7%) | 247 | 513 (14.9%, = today's done+held, the `held` ceiling) | classifier-lever-capped (`ambiguous`/`display` mix); see B1/B2 buckets in the movable-mass tool |
+| spell | 2,843 | 47 (1.7%) | 1,235 | 1,282 (45.1%, = today's done+held, `NO_GROUNDING_PROBE`-capped) | no consumer reads a spell magnitude corpus-wide; floor is the `held` ceiling until that changes |
 
 Evidence: per-cycle receipt re-runs the movable-mass derivation command and cites the resulting
 `done`/`held`/`floor` figures for the kind(s) it touched, cross-referenced against this table.
 
 ## Exit gate checklist
 
-- [ ] All Epic 3+ per-book cycles complete with reach-gate claims.
-- [ ] All trap-reports recorded.
-- [ ] AT-30-002 reach-gate claims have `> 0` matched-tests per cycle.
+**Narrowed 2026-08-14 (`decisions.md §51`).** Items below that referred to the moved Epic 4/5/6/10/11
+scope (per-book/per-class cycles, per-class measurement gate, the per-kind floor table) are struck and
+pointed at `SD-31-corpus-closure-grind/acceptance-and-verification.md`'s own exit-gate checklist, which
+carries the live version. SD-30's own closure checks only its narrowed Epic 0/1/2/3/7/8/9 scope.
+
+- [ ] ~~All Epic 3+ per-book cycles complete with reach-gate claims.~~ MOVED — see
+  `SD-31-corpus-closure-grind/acceptance-and-verification.md`.
+- [ ] ~~All trap-reports recorded.~~ Cycle-0 trap-reports for books Epic 4/6 claimed stay in scope only
+  for whatever SD-30's own Epic 2 (pre-launch) ran before the split; ongoing per-book trap-reports are
+  `SD-31-corpus-closure-grind`'s concern going forward.
+- [ ] AT-30-002 reach-gate claims have `> 0` matched-tests per cycle (still SD-30's own standing
+  requirement for whatever this package's narrowed Epic 0/1/2/3/7/8/9 scope itself ingests, if any).
 - [ ] AT-30-005 build version reads `0.10.<build>`.
-- [ ] AT-30-006 identifier discipline exits 0 across the sixteen books' surface code.
+- [ ] AT-30-006 identifier discipline exits 0 across the 23-book `class_feature` roster's surface code
+  (Epic 1, unaffected by the split — identifier cleanup covers the whole roster regardless of which
+  package later ingests it).
 - [ ] AT-30-007 cross-book precedence (SD-28/SD-29 doctrine) verified across shared records.
-- [ ] AT-30-010 rules-as-data verified across the sixteen books' numerical effects.
+- [ ] AT-30-010 rules-as-data verified across the 23-book `class_feature` roster's numerical effects
+  (applies to whatever SD-30's narrowed scope itself touches; the bulk of this check now runs inside
+  `SD-31-corpus-closure-grind`'s own Epic 3 closure).
 - [ ] AT-30-011 move-not-copy publish landed.
-- [ ] AT-30-012 local-file dispatch verified by Epic 2's pre-flight + Closure.
-- [ ] AT-30-013 bundle code review (Epic 21) closed; all findings triaged with named owners for deferrals.
+- [ ] ~~AT-30-012 per-class measurement gate cross-referenced for every Epic 5/6 cycle's claim this
+  closure.~~ MOVED — Epic 5/6 are now `SD-31-corpus-closure-grind`'s Epic 2/3; see that package's own
+  AT-31-001/AT-31-003.
+- [ ] AT-30-016 local-file dispatch verified by Epic 2's pre-flight + Closure.
+- [ ] AT-30-013 bundle code review (Epic 8) closed; all findings triaged with named owners for
+  deferrals — narrowed scope: reviews this package's own Epic 0/1/2/3/7/8/9 diff. SD-31 and SD-32 run
+  their own code-review deferral per their `README.md`'s "Out of scope" convention (deferred to this
+  package's Epic 8 by design — see both packages' README).
 - [ ] `release-notes.md` populated.
 - [ ] `forward-scope-register.md` reviewed for successor work.
 - [ ] The four deferred books (NPC Codex, Planar Adventures, Occult Origins, Haunted Heroes) recorded as future-acquisition candidates.
-- [ ] AT-30-015 (NEW, 2026-08-13) per-kind `done` figures re-derived and checked against the floor table for every kind touched this closure; no kind sitting at or near 0% `done` reported as "in progress" without naming it a structural blocker.
+- [ ] ~~AT-30-015 per-kind `done` figures re-derived and checked against the floor table.~~ MOVED to
+  `SD-31-corpus-closure-grind/acceptance-and-verification.md AT-31-005`.

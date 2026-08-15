@@ -77,6 +77,37 @@ fn wiring_citation(source: &CorpusSource) -> Option<(&str, u32, &str)> {
     }
 }
 
+/// `path` relative to `index`'s own book_dir, matching `CorpusLines::line`'s
+/// single-level join (D0): the citation's own path tail past the
+/// `/{book_id}/` marker when the marker is present (every real corpus path
+/// carries a directory segment before the book name, e.g.
+/// `campaign_setting/inner_sea_gods/support/isg_races_b4.lst`), or the bare
+/// basename otherwise.
+///
+/// Before this fix, every caller passed a bare `path.rsplit('/').next()`
+/// basename regardless of how deep the citation actually sits under the
+/// book's root -- correct by coincidence for the first nine books this lane
+/// onboarded (this file's own `load_corpus_file_rel` doc comment already
+/// names the reason: their citations all happen to sit directly at the
+/// book's top level), wrong for `inner_sea_gods`, which keeps 3 monster
+/// rows under a `support/` subdirectory. `CorpusLines::line`'s
+/// `dir.join(file)` then silently resolved to a nonexistent top-level path,
+/// `unwrap_or_default()` swallowed the read failure, and the three affected
+/// records shipped stamped `wiring_class: "ambiguous"` (`no_corpus_line`)
+/// instead of the `derived` their real BONUS/DR tokens call for --
+/// `v06_corpus_trap_report -- --audit` catches the same class of citation
+/// resolution bug this fixes; `resolve_book_file`'s own doc comment already
+/// flagged the underlying limitation for the citation/sha256 path, this
+/// closes it for the wiring-class path too (code review finding
+/// SD30-E8-F3-002/003, `decisions.md §51` scope note).
+fn wiring_class_file_arg(book_id: &str, path: &str) -> String {
+    let marker = format!("/{book_id}/");
+    match path.find(&marker) {
+        Some(at) => path[at + marker.len()..].to_string(),
+        None => path.rsplit('/').next().unwrap_or(path).to_string(),
+    }
+}
+
 fn wiring_class_for_source(
     index: &WiringClassIndex,
     lines: &mut codex::rules_core::wiring_class::CorpusLines,
@@ -84,8 +115,8 @@ fn wiring_class_for_source(
 ) -> (String, Vec<String>) {
     match wiring_citation(source) {
         Some((path, line, record_key)) => {
-            let basename = path.rsplit('/').next().unwrap_or(path);
-            index.wiring_class_for(lines, basename, line, record_key, record_key)
+            let file = wiring_class_file_arg(index.book_id(), path);
+            index.wiring_class_for(lines, &file, line, record_key, record_key)
         }
         None => ("ambiguous".to_string(), vec!["no_corpus_line".to_string()]),
     }
@@ -2169,5 +2200,38 @@ fn main() {
                  adds its own book, per this file's own module doc comment)"
             ),
         },
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // Code review finding SD30-E8-F3-002/003: `wiring_class_file_arg` must
+    // preserve every path segment past the book's own `/{book_id}/` marker,
+    // not just the bare basename -- `CorpusLines::line`'s single-level
+    // `dir.join(file)` join otherwise silently resolves a nested citation
+    // to a nonexistent top-level path.
+
+    #[test]
+    fn wiring_class_file_arg_keeps_the_subdirectory_a_bare_basename_would_drop() {
+        let path = "pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_races_b4.lst";
+        assert_eq!(wiring_class_file_arg("inner_sea_gods", path), "support/isg_races_b4.lst");
+    }
+
+    #[test]
+    fn wiring_class_file_arg_is_the_bare_basename_when_the_citation_sits_at_the_book_top_level() {
+        let path = "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst";
+        assert_eq!(wiring_class_file_arg("pathfinder_unchained", path), "pu_abilities_class.lst");
+    }
+
+    #[test]
+    fn wiring_class_file_arg_falls_back_to_the_bare_basename_when_the_book_marker_is_absent() {
+        // No `/{book_id}/` segment anywhere in the path -- a shape this
+        // lane's real corpus paths never produce (every one carries a
+        // subtree prefix before the book name), kept as a defined fallback
+        // rather than a panic so a future caller with an unexpected path
+        // shape degrades to the pre-fix behavior instead of crashing.
+        assert_eq!(wiring_class_file_arg("inner_sea_gods", "isg_races_b4.lst"), "isg_races_b4.lst");
     }
 }

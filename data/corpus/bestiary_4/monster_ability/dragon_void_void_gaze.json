@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T20:36:34Z",
+  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Dragon (Void) ~ Void Gaze",
     "delivery": "Supernatural",
@@ -31,6 +31,7 @@
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",
+    "derived:prose_formula_segment",
     "display:no_magnitude_token"
   ]
 }

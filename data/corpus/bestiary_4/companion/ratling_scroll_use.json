@@ -1,12 +1,13 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T22:19:24Z",
+  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Ratling ~ Scroll Use",
     "delivery": "Extraordinary",
     "description": "A ratling can cast spells from any magic scroll as if it had the spell on its spell list.",
     "description_variables": [],
+    "description_variants": [],
     "facet": "SpecialQuality",
     "key": "bestiary_4:companion:ratling_scroll_use",
     "name": "Scroll Use",

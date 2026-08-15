@@ -1484,8 +1484,31 @@ pub fn audit_ingested_cache(cache_dir: &Path, corpus_root: &Path) -> std::io::Re
                     // first pin the wrong book_dir for every record after
                     // it in the same output book.
                     const RACES_MARKER: &str = "core_essentials/races/";
+                    // A citation nested in a subdirectory the generator's own
+                    // book_dir does NOT reach (e.g. `inner_sea_gods/support/
+                    // isg_races_b4.lst`, a real PCGen include-path fact --
+                    // `_inner_sea_gods.pcc` pulls that file in from a shared
+                    // `support/` subtree) must scope this index to the SAME
+                    // book_dir `gen_book_cache.rs` used when it computed the
+                    // stored `wiring_class` -- the book's own top-level
+                    // directory, always, regardless of how deep the citation
+                    // sits under it (`CorpusLines::line`'s own doc comment
+                    // names this exact single-level-join limit as D0). A bare
+                    // `.parent()` instead reaches directly into `support/`,
+                    // giving this self-check a WIDER book_dir than the
+                    // generator itself had, so it can "see" a `.lst` row the
+                    // generator's own fresh computation could not -- and
+                    // disagree with a stamp that was, by the generator's own
+                    // rule, computed correctly. Anchor on the `/{book}/`
+                    // path segment instead, matching `book_relative`'s own
+                    // convention (every `CompanionBookSpec`/`MonsterBookSpec`
+                    // row's `book_relative` ends in exactly this segment).
+                    let book_marker = format!("/{book}/");
+                    let book_marker_at = rel.find(&book_marker);
                     let book_dir = if let Some(at) = rel.find(RACES_MARKER) {
                         corpus_root.join(&rel[..at + RACES_MARKER.len()])
+                    } else if let Some(at) = book_marker_at {
+                        corpus_root.join(&rel[..at + book_marker.len() - 1])
                     } else {
                         Path::new(rel)
                             .parent()
@@ -1496,13 +1519,31 @@ pub fn audit_ingested_cache(cache_dir: &Path, corpus_root: &Path) -> std::io::Re
                     let index = wiring_indexes
                         .entry(index_key)
                         .or_insert_with(|| WiringClassIndex::build(&book, &book_dir));
-                    // Relative to `index`'s own book_dir (see above): the
-                    // bare filename for every ordinary writer, but
-                    // `<race>/<file>.lst` for the nested core_essentials
-                    // race storage, matching how `ingest_races.rs` itself
-                    // computes `chassis_file_rel_to_races_root`.
+                    // Relative to `index`'s own book_dir (see above), NOT a
+                    // bare basename: `<race>/<file>.lst` for the nested
+                    // core_essentials race storage (matching how
+                    // `ingest_races.rs` itself computes
+                    // `chassis_file_rel_to_races_root`), or the citation's
+                    // own path tail past the `/{book}/` marker for every
+                    // ordinary writer. `CorpusLines::line`'s single-level
+                    // `dir.join(file)` join (D0) means `file` must carry
+                    // every path segment `book_dir` itself does not, or a
+                    // citation nested under a book subdirectory (real
+                    // precedent: `inner_sea_gods/support/isg_races_b4.lst`)
+                    // silently reads a nonexistent top-level path as blank
+                    // via `unwrap_or_default()` and reports a false
+                    // disagreement -- a bare `Path::new(rel).file_name()`
+                    // here reproduced exactly that defect the moment
+                    // `book_dir` above was widened to the book's top level
+                    // (code review finding SD30-E8-F3-002, caught by
+                    // `wiring_class_mismatch_reads_a_citation_nested_one_level_under_a_book_subdirectory`
+                    // going RED against a fixture whose citation actually
+                    // carries a directory segment before the book name, the
+                    // shape none of this file's pre-existing fixtures used).
                     let file_basename = if let Some(at) = rel.find(RACES_MARKER) {
                         rel[at + RACES_MARKER.len()..].to_string()
+                    } else if let Some(at) = book_marker_at {
+                        rel[at + book_marker.len()..].to_string()
                     } else {
                         Path::new(rel).file_name().map(|f| f.to_string_lossy().into_owned()).unwrap_or_default()
                     };
@@ -1767,5 +1808,51 @@ mod tests {
         let mismatches: Vec<_> =
             findings.iter().filter(|f| f.trap == Trap::WiringClassMismatch).collect();
         assert!(mismatches.is_empty(), "field-absent record must be skipped, not flagged: {mismatches:#?}");
+    }
+
+    #[test]
+    fn wiring_class_mismatch_reads_a_citation_nested_one_level_under_a_book_subdirectory() {
+        // Code review finding SD30-E8-F3-002 (`decisions.md §51` scope
+        // note): `SD30-CARRY-001` fixed `book_dir`'s derivation for a
+        // citation shape none of the three existing scratch fixtures
+        // exercise. The fix only engages when `source.path` carries a
+        // directory segment BEFORE the book name (every real corpus path
+        // does, e.g. `campaign_setting/inner_sea_gods/support/
+        // isg_races_b4.lst` -- the `/{book}/` marker needs a leading `/`
+        // to match) -- `ScratchAudit`'s own `write_corpus_line` helper
+        // roots every citation directly at `test_book/...` with no such
+        // prefix, so a naive nested-file fixture built from it would
+        // silently exercise the pre-fix `.parent()` fallback branch
+        // instead of the fix. This fixture therefore builds its own
+        // `roleplaying_game/test_book/support/...` tree by hand so the
+        // `/test_book/` marker actually matches, and proves the
+        // self-check still reads the real row and agrees with a
+        // correctly-stamped `wiring_class` -- not a blank/absent read
+        // silently defaulted by `CorpusLines::line`'s own
+        // `unwrap_or_default()`. Proven RED first against the pre-fix
+        // `file_basename` (a bare `Path::new(rel).file_name()`, dropping
+        // the `support/` segment): the self-check silently read past the
+        // wrong path and reported `derived` disagreeing with `display`
+        // (a real second defect this finding's own regression-test ask
+        // surfaced -- fixed in the same change as this test).
+        let scratch = ScratchAudit::new("nested-support");
+        let nested_dir = scratch.corpus_root.join("roleplaying_game/test_book/support");
+        std::fs::create_dir_all(&nested_dir).unwrap();
+        std::fs::write(nested_dir.join("nested_feats.lst"), "Accursed\tCOST:100*PLUSTOTAL\n").unwrap();
+        let json = r#"{"population":"in_scope","completeness":"full","ingested_at":"2026-08-02T00:00:00Z",
+            "data":{},
+            "source":{"kind":"lst_token","path":"roleplaying_game/test_book/support/nested_feats.lst","sha256":"x","line":1,"record_key":"Accursed"},
+            "wiring_class":"derived","wiring_class_signals":["derived:cost"]}"#;
+        std::fs::write(scratch.cache_dir.join("test_book/feat/accursed.json"), json).unwrap();
+
+        let findings =
+            audit_ingested_cache(&scratch.cache_dir, &scratch.corpus_root).expect("audit runs");
+        let mismatches: Vec<_> =
+            findings.iter().filter(|f| f.trap == Trap::WiringClassMismatch).collect();
+        assert!(
+            mismatches.is_empty(),
+            "a correctly-stamped record cited one level under a book subdirectory must not be \
+             flagged: {mismatches:#?}"
+        );
     }
 }

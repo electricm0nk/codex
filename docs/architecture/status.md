@@ -108,6 +108,34 @@ Per kind (`grounded` / total):
 | `class` | 185 | 27 | |
 | `race` | 103 | 7 | The 7 `race_tables::race_traits()` rows; the *ingest* chassis models 18 races (below) |
 
+**SD-30 CLOSED, 2026-08-15 (`SD30-E9-F2-001`, `epic-9-closure`).** This table's own `grounded`/status
+figures above are unchanged from 2026-08-13 and are **not** re-derived by this closure — SD-30's own
+scope (narrowed `decisions.md §51`: Epics 0/1/2/3/7/8/9 only) never touched per-record `grounded`
+status; that is SD-31's and SD-32's remit going forward (per-class chassis-sweep ingest, corpus-wide
+ingest lanes, race chassis, verdict-path capability — see `SD-30-.../release-notes.md` "What SD-30
+handed to SD-31 and SD-32"). SD-30's Epic 0 (instrument-apply) moved the board's **`done`** metric (a
+different, stricter verdict combining `wiring_class`+`status`+`kind` via
+`pf1e_dashboard_producer.py`'s `doneness_verdict()`, not this table's raw ingest `status`), which this
+table does not track: `done` moved corpus-wide **3,464 → 5,837** (re-confirmed at closure, unchanged
+since Epic 0's own close — see `SD-30-class-feature-archetype-bundle/state-goals-and-lessons.md §1.1`
+for the full per-kind `done` table and its exact re-derivation command). SD-30 also closed its own
+PI-screening gate (declared `NAMEISPI`/`DESCISPI` reading, now wired into `class_feature`'s one
+production ingest binary and backfilled into the monster/companion transcribers —
+`SD-30-.../decisions.md §52-54`), its identifier-cleanup epic, its build-version-numbering epic
+(`0.10.0`, green full gate at `4630fec2`), and its bundle code-review epic (three real defects fixed:
+a dangling PI-dropped grant reference, a citation-resolution bug in the trap-audit self-check, and the
+**same** citation-resolution bug already live in `gen_book_cache.rs`'s generator — which had shipped 3
+wrong `wiring_class` stamps into production `inner_sea_gods` monster data, now regenerated correctly;
+`v06_corpus_trap_report -- --audit` re-derived clean at closure, `TRAP_AUDIT_EXIT=0`, `259 0
+mod-record`). **A full re-pass of this section's own numbers (re-deriving `grounded` per kind, the
+three structural-ceiling classifiers below, and the JSON-corpus-cache/`RuleSetId` rows above) remains
+owed to whichever pass next changes them** — SD-30's own closure did not touch per-record `grounded`
+status, so re-deriving it here would not have reflected this bundle's actual diff; that re-pass is
+`SD-31-corpus-closure-grind`'s to perform as it lands the per-record work this section tracks.
+(`SD-32-engine-capability-builds` was absorbed into SD-31 and deleted 2026-08-15 —
+`SD-31-corpus-closure-grind/decisions.md §2` — after its capability builds were found to be
+prerequisites of SD-31's own lanes rather than a parallel package; SD-31 now owns both.)
+
 ### The three structural ceilings, each measured by a checked-in classifier
 
 A remainder is not a workload. Each of the three lanes SD-29 ran to its

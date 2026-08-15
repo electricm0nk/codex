@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-13T09:17:26Z",
+  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "corpus_key": "Hive Warrior ~ Acid Spit",
     "delivery": "Extraordinary",
@@ -31,8 +31,9 @@
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "wiring_class": "display",
+  "wiring_class": "derived",
   "wiring_class_signals": [
+    "derived:prose_formula_segment",
     "display:no_magnitude_token"
   ]
 }
