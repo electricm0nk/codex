@@ -3,6 +3,9 @@
 ## Pre-loop prerequisites
 
 - `tranche/10` checked out, `git pull --ff-only` clean.
+- The PCGen oracle checkout at the pin (`scripts/pcgen-oracle-pin.env`), verified with
+  `scripts/verify.sh --only preflight-oracle` (bootstrap with `scripts/fetch-pcgen-oracle.sh` if it
+  fails). Resolve via `$PCGEN_CORPUS_ROOT`/`$PCGEN_REPO_DIR`, never a literal local path.
 - `SD-30-class-feature-archetype-bundle`'s Epics 1, 2 and 3 `COMPLETE` — all three closed 2026-08-14,
   cited not re-verified per cycle.
 - `scripts/reachability_audit.py` (Epic 0) exists and has a committed baseline run before any other

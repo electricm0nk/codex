@@ -183,7 +183,9 @@ print(json.dumps(us[0], indent=1))          # one whole record, not a filtered f
 PY
 
 # 2. The source file itself, read — not counted.
-awk '!/^#/ && !/^SOURCE/ && NF>0' ~/workspace/repos/pcgen/data/pathfinder/paizo/*/<book>/<file>.lst | head -8
+#    $PCGEN_CORPUS_ROOT defaults to ~/workspace/repos/pcgen/data, pinned per
+#    scripts/pcgen-oracle-pin.env (bootstrap: scripts/fetch-pcgen-oracle.sh).
+awk '!/^#/ && !/^SOURCE/ && NF>0' "$PCGEN_CORPUS_ROOT"/pathfinder/paizo/*/<book>/<file>.lst | head -8
 
 # 3. The shape assertion the LANE depends on, stated and tested.
 #    For SD-30 that is: does this book carry the archetype content Epic 5's
@@ -252,11 +254,13 @@ each book.
    prior cycle's `progress.md` entry — including this package's own
    `scope-draft.md` and `decisions.md` — re-derive it yourself with a
    one-line `grep`/`awk`/`python3` command over the actual source data (the
-   PCGen `.lst` tree under `~/workspace/repos/pcgen/data/` for anything not
-   yet ingested, `data/corpus/<book>/` for anything that is), and record the
+   PCGen `.lst` tree under `$PCGEN_CORPUS_ROOT/` — defaults to
+   `~/workspace/repos/pcgen/data`, pinned per `scripts/pcgen-oracle-pin.env`,
+   bootstrapped by `scripts/fetch-pcgen-oracle.sh` — for anything not yet
+   ingested, `data/corpus/<book>/` for anything that is), and record the
    exact command in the cycle receipt. Do not transcribe a count from a doc,
    a summary tool, or memory of a prior cycle. Worked example, this bundle's
-   own data: `awk '!/^#/ && !/^SOURCELONG/ && NF>0' ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst | wc -l`
+   own data: `awk '!/^#/ && !/^SOURCELONG/ && NF>0' "$PCGEN_CORPUS_ROOT"/pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst | wc -l`
    → **2040** (re-derived 2026-08-01), the number to cite for "Occult
    Adventures spell-row count," not a remembered or copied-forward estimate.
    This is the rank-1 finding of **two consecutive retrospectives**, re-run

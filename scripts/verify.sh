@@ -75,6 +75,7 @@ REPO_ROOT=$(cd -- "$SCRIPT_DIR/.." && pwd)
 DESKTOP_DIR="$REPO_ROOT/apps/desktop"
 TAURI_DIR="$DESKTOP_DIR/src-tauri"
 BASELINES_FILE="$SCRIPT_DIR/verify-baselines.env"
+PIN_FILE="$SCRIPT_DIR/pcgen-oracle-pin.env"
 
 if [[ ! -f "$BASELINES_FILE" ]]; then
     printf 'verify.sh: missing baselines file: %s\n' "$BASELINES_FILE" >&2
@@ -82,6 +83,13 @@ if [[ ! -f "$BASELINES_FILE" ]]; then
 fi
 # shellcheck source=verify-baselines.env
 . "$BASELINES_FILE"
+
+if [[ ! -f "$PIN_FILE" ]]; then
+    printf 'verify.sh: missing PCGen oracle pin file: %s\n' "$PIN_FILE" >&2
+    exit 2
+fi
+# shellcheck source=pcgen-oracle-pin.env
+. "$PIN_FILE"
 
 # ---------------------------------------------------------------------------
 # Options
@@ -99,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -294,6 +302,92 @@ run_preflight_disk() {
         return
     fi
     stage_pass preflight-disk "disk budget OK"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: preflight-oracle
+#
+# Runs `scripts/fetch-pcgen-oracle.sh --check` — never touches the network.
+# The `corpus-sweep` stage below already sha256-checks every CITED corpus
+# file, but only in the FULL gate, only after a cargo build, and it names
+# what changed rather than what to run to fix it. This stage is the cheap,
+# build-free, whole-cone check that runs first and prints the exact fetch
+# command when the oracle is absent or off-pin — placed in BOTH stage sets
+# (right after preflight-disk) because a `--quick` run with no
+# `PCGEN_CORPUS_ROOT` set does not fail today: corpus-gated tests print
+# `skipping: no PCGEN_CORPUS_ROOT...` and pass (e.g. `tests/sd17_b5_equipment.rs:501`),
+# so a corpus-less quick run is a weaker green with nothing saying so.
+# ---------------------------------------------------------------------------
+
+run_preflight_oracle() {
+    stage_start "preflight-oracle — scripts/fetch-pcgen-oracle.sh --check"
+    local log="$LOG_DIR/preflight-oracle.log"
+
+    ( cd "$REPO_ROOT" && exec bash scripts/fetch-pcgen-oracle.sh --check ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        printf '    FAIL: the PCGen oracle is absent or off-pin. Remediation from the log:\n'
+        sed 's/^/        /' "$log"
+        stage_fail preflight-oracle "exit $status — $log"
+        return
+    fi
+
+    # Exit 0 without the OK token means the script took a path nobody
+    # intended — the same "exit 0 without CLEAN" guard corpus-sweep and
+    # pi-sweep already carry.
+    if ! grep -q '^pcgen-oracle: OK' "$log"; then
+        stage_fail preflight-oracle "exited 0 without the pcgen-oracle: OK token — $log"
+        return
+    fi
+
+    local sha
+    sha=$(sed -n 's/^pcgen-oracle: OK \([0-9a-f]*\).*$/\1/p' "$log" | tail -1)
+    actual "PCGEN_ORACLE_SHA=${sha:-unknown}"
+
+    stage_pass preflight-oracle "oracle at pin ${sha:-$PCGEN_ORACLE_SHA}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: oracle-pin-selftest
+#
+# Mirrors corpus-sweep-selftest verbatim: runs
+# scripts/tests/test_fetch_pcgen_oracle.sh, the detection self-test for
+# fetch-pcgen-oracle.sh. Cheap — a git init in mktemp, no build, no real
+# network — and it never reads the real PCGen checkout.
+# ---------------------------------------------------------------------------
+
+run_oracle_pin_selftest() {
+    stage_start "oracle-pin-selftest — scripts/tests/test_fetch_pcgen_oracle.sh"
+    local log="$LOG_DIR/oracle-pin-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_fetch_pcgen_oracle.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail oracle-pin-selftest "self-test script missing at scripts/tests/test_fetch_pcgen_oracle.sh"
+        return
+    fi
+
+    bash "$script" >"$log" 2>&1
+    local status=$?
+
+    local tally
+    tally=$(sed -n 's/^passed: \([0-9]*\)  failed: \([0-9]*\)$/\1 passed, \2 failed/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail oracle-pin-selftest "self-test exit $status${tally:+; $tally} — $log"
+        return
+    fi
+
+    # A self-test that discovers no cases proves nothing — the same guard
+    # every other selftest stage in this script carries.
+    local passed
+    passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
+    if [[ -z "$passed" || "$passed" -eq 0 ]]; then
+        stage_fail oracle-pin-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass oracle-pin-selftest "${tally:-$passed cases passed}"
 }
 
 # ---------------------------------------------------------------------------
@@ -886,6 +980,11 @@ run_corpus_sweep_selftest() {
 # `PCGEN_CORPUS_ROOT`, defaulting to `$HOME/workspace/repos/pcgen/data` — the
 # same HOME-relative default `v06_work_inventory` uses, per SD-27 decisions.md
 # §30 (workspace/ is Syncthing-synced; an absolute other-user path is not).
+# The cheap, build-free, whole-cone check that this stage's absent-corpus
+# failure mode should point you at FIRST is `preflight-oracle` (above,
+# earlier in both stage sets) — it names the exact fetch command. This stage
+# additionally sha256-checks every CITED corpus file's bytes, which
+# `preflight-oracle` does not: complementary, not redundant.
 #
 # The record count is a FLOOR in scripts/verify-baselines.env, same direction
 # as the test counts: the population growing is fine, the population silently
@@ -1008,6 +1107,8 @@ say "logs:  $LOG_DIR"
 for stage in "${SELECTED[@]}"; do
     case "$stage" in
         preflight-disk)      run_preflight_disk ;;
+        preflight-oracle)    run_preflight_oracle ;;
+        oracle-pin-selftest) run_oracle_pin_selftest ;;
         pi-sweep)            run_pi_sweep ;;
         audit-selftest)      run_audit_selftest ;;
         reclaim-selftest)    run_reclaim_selftest ;;

@@ -798,6 +798,13 @@ itself, so the copies are collapsed into this single epic.
 2. The local orchestrator owns all merges to `tranche/10`, verified by content, not commit count.
 3. DoD-8 on-screen verification and dashboard-producer work stay local — no cloud agent runs either.
    Load-bearing for Epic 1 specifically: its DoD-8 mandate cannot be satisfied by a cloud agent.
+4. **Every cloud runner bootstraps the PCGen oracle before its first `verify.sh`.** Run
+   `scripts/fetch-pcgen-oracle.sh` (network + npm/crates.io egress required), export
+   `PCGEN_CORPUS_ROOT`/`PCGEN_REPO_DIR` from its printed output, and quote the pin SHA
+   (`scripts/pcgen-oracle-pin.env`) in the cycle receipt. A runner that cannot fetch the oracle does
+   not run any corpus-touching lane (Epic 6 ingest, Epic 7 onboarding, `corpus-sweep`) — it is not a
+   local-machine-path problem, it is a hard precondition checked by `verify.sh --only
+   preflight-oracle` before anything else.
 
 **Not in this epic:** the ingest, onboarding, or capability design work itself — this epic is the
 dispatch protocol for scaling work already proven locally.

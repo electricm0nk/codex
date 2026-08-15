@@ -227,3 +227,120 @@ script against the external PCGen oracle tree.
 **Status:** complete for this step's stated scope. Steps 3-6 of the plan (oracle pin, dashboard
 import, drift sweep D1-D14, pre-launch checklist + adversarial verify) are separate steps, not owned
 by this receipt.
+
+---
+
+## 2026-08-15 — Step 3 (S3-oracle): PCGen oracle pin + bootstrap + preflight stages
+
+Actor `sd31-ready-s3`. Started at HEAD `8b76b25628fcdbd2bae17605072a82ea8a206340`
+(`docs(sd31): open cards for six unowned kinds...` — Step 2's commit); tree clean at start.
+Implemented against `~/.claude/plans/conduct-a-launch-readines-zesty-ripple-agent-aplan-code-shapes-409903fa5aadd92c.md`
+§1 (1a-1e).
+
+**Deliverables (commit A):**
+- `scripts/pcgen-oracle-pin.env` — sourced pin file (`PCGEN_ORACLE_REPO`, `PCGEN_ORACLE_SHA`,
+  `PCGEN_ORACLE_SHA_DATE`, `PCGEN_ORACLE_SPARSE_PATHS`), same convention as `verify-baselines.env`.
+- `scripts/fetch-pcgen-oracle.sh` — bootstrap/verify script (`--dest`/`--force`/`--check`/`--quiet`),
+  no `set -e`, no piped exit-status checks; sparse-cone + depth-1 + `--filter=blob:none` fresh fetch,
+  `--force` to move an existing clean off-pin checkout, hard refusal (regardless of `--force`) on any
+  dirty tracked cone file, prints `pcgen-oracle: OK <sha> <dest>` then the two `export` lines on
+  success.
+- `scripts/tests/test_fetch_pcgen_oracle.sh` — 10-scenario detection self-test (11 `pass()` calls;
+  case 6 asserts twice: `--check` and `--force` both refuse a dirty file) against a synthetic local
+  bare "upstream" (two commits, in-cone + out-of-cone files, `uploadpack.allowFilter`/
+  `allowAnySHA1InWant` set). Harness modeled on `scripts/tests/test_corpus_literal_sweep.sh`.
+- `scripts/verify.sh`: sources `scripts/pcgen-oracle-pin.env` next to `BASELINES_FILE` (exit 2 if
+  missing); two new stages, **`preflight-oracle`** and **`oracle-pin-selftest`**, added to both
+  `ALL_STAGES` and `QUICK_STAGES` immediately after `preflight-disk`; dispatch `case` entries added;
+  `corpus-sweep`'s comment block gets a pointer to `preflight-oracle`.
+- `scripts/verify-baselines.env`: one-line pointer to the new pin file.
+- Docs: `AGENTS.md` §Concurrency and Measurement (new bullet — oracle pinned, resolve via
+  `$PCGEN_CORPUS_ROOT`/`$PCGEN_REPO_DIR`, never a literal path); SD-30
+  `loop-instruction.md` step 1b + its worked `awk` example → `$PCGEN_CORPUS_ROOT`; SD-31
+  `loop-instruction.md` override 8 (pin-check is the first command every cycle, pin SHA quoted in
+  every re-derive receipt); SD-31 `epic-breakdown.md` Epic 8 rule 4 (cloud bootstrap); SD-31
+  `technical-requirements.md` prerequisites; `docs/governance/license-matrix.md:32`;
+  `docs/architecture/testing.md` §verify.sh.
+
+**Pin verification (re-derived, not transcribed):**
+```
+git -C ~/workspace/repos/pcgen rev-parse HEAD
+  -> 7f818006e371188e5717fd18d74d18a420747fc6   (matches the brief's pin exactly)
+git -C ~/workspace/repos/pcgen status --porcelain --untracked-files=no | wc -l
+  -> 0   (clean)
+git -C ~/workspace/repos/pcgen remote get-url origin
+  -> https://github.com/PCGen/pcgen.git
+```
+
+**Proofs (all recorded):**
+1. `bash scripts/tests/test_fetch_pcgen_oracle.sh` → `passed: 11  failed: 0`, `SELF-TEST PASSED.`
+   **Mutation-proven, not just green:** temporarily removed the dirty-tracked-cone-file guard from
+   `do_check()` in `fetch-pcgen-oracle.sh`, re-ran the self-test → exactly the two dirty-file
+   assertions (case 6's `--check` and `--force` halves) went RED, everything else stayed PASS;
+   reverted (`diff` against the pre-mutation copy confirmed byte-identical), re-ran → green again.
+   This is the "prove new gates can fail" requirement satisfied for both the fetch script and its
+   self-test in one pass.
+2. `./scripts/verify.sh --only preflight-oracle --only oracle-pin-selftest` → both **PASS**
+   (`oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6`; `11 passed, 0 failed`).
+3. RED proofs. `PCGEN_CORPUS_ROOT=/nonexistent ./scripts/verify.sh --only preflight-oracle` **stayed
+   PASS** — `fetch-pcgen-oracle.sh` resolves its checkout location via `--dest`/`$PCGEN_REPO_DIR`/
+   `$HOME/workspace/repos/pcgen` only (mirrors `src/oracle_validation/pcgen_runner.rs::default_pcgen_repo_dir()`
+   exactly, per design §1b and confirmed by `grep -n PCGEN_REPO_DIR src/oracle_validation/pcgen_runner.rs`);
+   `PCGEN_CORPUS_ROOT` is the script's *derived output* (`$DEST/data`), never an input, so setting it
+   alone changes nothing. Logged as a correction (`docs/retro/events/sd31-ready-s3.jsonl`,
+   `--subject "S3-oracle dispatch brief"`) rather than silently substituted. The command that actually
+   produces the brief's intended RED: `PCGEN_REPO_DIR=/nonexistent ./scripts/verify.sh --only
+   preflight-oracle` → **FAIL**, console shows `no checkout at /nonexistent -- run
+   scripts/fetch-pcgen-oracle.sh --dest /nonexistent to bootstrap it`. Then a scratch clone one commit
+   off the pin: `git clone --depth 50 https://github.com/PCGen/pcgen.git <scratch>`, fetched the pin
+   commit at depth 2 and checked out its **parent** (`6adec3855e1eca54f55e04b3ee67589bcb0e4ec5`) —
+   `PCGEN_REPO_DIR=<scratch> ./scripts/verify.sh --only preflight-oracle` → **FAIL**, naming both SHAs:
+   `HEAD=6adec3855e1eca54f55e04b3ee67589bcb0e4ec5 pinned=7f818006e371188e5717fd18d74d18a420747fc6`.
+4. Real network fetch into the scratchpad (NOT the operator's clone):
+   `bash scripts/fetch-pcgen-oracle.sh --dest <scratchpad>/pcgen-oracle-test/fresh-fetch` →
+   `pcgen-oracle: OK 7f818006e371188e5717fd18d74d18a420747fc6 <dest>` + both export lines, exit 0.
+   `du -sh <dest>` → **108M** (`.git` 22M, `data/` 86M, `system/` 612K — the sparse cone materialized
+   `system/gameModes/Pathfinder` only, not all of `system/gameModes`). Then
+   `PCGEN_CORPUS_ROOT=<dest>/data cargo run --locked --bin corpus_literal_sweep` →
+   `corpus-literal-sweep: 3516 records examined of 9328 read, 36105 tokens compared (9 synthesized),
+   8903 digests checked, 0 findings` / `CLEAN` — **identical** record count, token count, and digest
+   count to the same binary run against the operator's real full clone (re-run for comparison,
+   same output). Proves the sparse cone is sufficient. Scratch clone (`108M`) deleted afterward
+   (`rm -rf <scratchpad>/pcgen-oracle-test`); operator's `~/workspace/repos/pcgen` re-confirmed
+   unchanged at the pin, clean, 0 status lines.
+5. Full `./scripts/verify.sh` at the tip: **started, not yet complete when this receipt was written.**
+   Observed so far, in order: `preflight-disk` PASS, `preflight-oracle` PASS (oracle at pin),
+   `oracle-pin-selftest` PASS (11/0), `pi-sweep` PASS, `audit-selftest` PASS (28/0), `reclaim-selftest`
+   PASS (13/0), `driver-selftest` PASS (7/0), `corpus-sweep-selftest` PASS (15/0), `root-lib` PASS
+   (1777 passed) — then `root-full` (building ~490 test binaries) was still running when this turn
+   ended. `corpus-sweep` itself was independently confirmed CLEAN with the exact record count
+   (`3516`) in proof 4 above, against both the scratch fetch and the real oracle, so the remaining
+   risk is narrow (root-full/desktop/reach/frontend/clippy/class-dump, none of which this step's
+   diff touches except the two new stage functions already proven PASS above). Log:
+   `/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/d9c38510-724f-408f-b3c9-273134333e9d/scratchpad/verify-s3-full.log`.
+   **This is the one open item — see "Remaining" below.**
+
+**Retro events emitted:** one `correction` (`sd31-ready-s3.jsonl`) — the dispatch brief's proof (3)
+named `PCGEN_CORPUS_ROOT` as the env var that forces `preflight-oracle` RED on an absent oracle; the
+actual governing var is `PCGEN_REPO_DIR` (verified against `pcgen_runner.rs`'s own resolution logic
+and by direct command, both cited above).
+
+**Files changed:** `scripts/pcgen-oracle-pin.env` (new), `scripts/fetch-pcgen-oracle.sh` (new),
+`scripts/tests/test_fetch_pcgen_oracle.sh` (new), `scripts/verify.sh`, `scripts/verify-baselines.env`,
+`AGENTS.md`, `docs/architecture/testing.md`, `docs/governance/license-matrix.md`,
+`docs/release/SD-30-class-feature-archetype-bundle/loop-instruction.md`,
+`docs/release/SD-31-corpus-closure-grind/{loop-instruction.md,epic-breakdown.md,technical-requirements.md}`,
+`docs/retro/events/sd31-ready-s3.jsonl` (new, +1 correction event), this file.
+
+**Wired-integration self-check:** `fetch-pcgen-oracle.sh` performs real `git` operations throughout
+(init, remote add, sparse-checkout, fetch, checkout, status, rev-parse) — no stub branches, no
+fixture-only paths, no `exit 0` without the checks that justify it. The self-test builds a real local
+git repo and drives the real script against it; no mocked git.
+
+**Status: incomplete.** Everything above landed and is independently proven except item 5: the FULL
+`./scripts/verify.sh` run at this commit had not finished (was mid-`root-full`) when this turn's
+budget ran out. **Remaining:** let the backgrounded full run finish
+(`/tmp/claude-1000/.../scratchpad/verify-s3-full.log`, watch for `VERIFY_EXIT=`), confirm exit 0, and
+if it is not 0, diagnose and fix before this step is truly closed — do not treat the strong partial
+evidence above (root-lib 1777/1777, all 8 selftest/preflight stages green, corpus-sweep independently
+CLEAN at the exact expected count) as a substitute for the real full-gate exit code.

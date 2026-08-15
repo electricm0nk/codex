@@ -41,6 +41,12 @@ unattended-mode authorization) — read it directly each cycle. This file states
    Structural Exclusion Register entry (`decisions.md §3`, `AT-31-100`). A cycle may propose; only the
    operator grants. Cost is never an exclusion reason.
 7. **Epic 0's audit runs at every epic closure**, and its output goes in the receipt (`decisions.md §4`).
+8. **The PCGen oracle pin is checked first, every cycle.** The first command after the branch-state
+   check (SD-30 loop-instruction.md's cycle-0 step) is `scripts/verify.sh --only preflight-oracle`
+   (or, equivalently, `scripts/fetch-pcgen-oracle.sh --check`). Bootstrap with
+   `scripts/fetch-pcgen-oracle.sh` if it fails. Quote the pin SHA
+   (`scripts/pcgen-oracle-pin.env`'s `PCGEN_ORACLE_SHA`) in every cycle's re-derive receipt — a
+   figure re-derived against an unstated oracle commit is not re-derived.
 
 ## What is not overridden
 
