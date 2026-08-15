@@ -905,3 +905,93 @@ Rust/Python/shell production code changed this cycle — full `./scripts/verify.
 run.
 
 **Status: COMPLETE.**
+
+## 2026-08-15 — SD31-S7-VERSION-001: version bump 0.10.0 -> 0.11.0 for the `tranche/11` cut (`decisions.md §6`, Epic 10)
+
+**Started from HEAD** `1980d6b95` on `tranche/11` (freshly cut, verified `git rev-parse --abbrev-ref
+HEAD`/`git rev-parse HEAD`/`git status --porcelain` clean before any write). Ended at HEAD `0b557ac43`
+before this receipt's own commit.
+
+**Commits:**
+
+- `147f1c2b7` — `feat(sd31): version bump 0.11.0 for tranche/11`.
+- `0b557ac43` — `docs(sd31): SD-31 operates on tranche/11 as release 0.11.<build>`.
+
+**Surface enumerated fresh** (not trusted from the dispatch brief or the prior SD-30 bump), via
+`grep -rn '0\.10\.0'` / `'0\.10\.\${'` across `apps/desktop/package.json`,
+`apps/desktop/src-tauri/tauri.conf.json`, `apps/desktop/src-tauri/Cargo.toml`, `apps/desktop/src/**`,
+`.github/workflows/publish-tester-release.yml`, and a repo-wide unfiltered pass — 15 files bumped:
+
+- `apps/desktop/package.json:4` — `"version": "0.10.0"` -> `"0.11.0"`.
+- `apps/desktop/src-tauri/tauri.conf.json:4` — same.
+- `apps/desktop/src-tauri/Cargo.toml:3` — `version = "0.10.0"` -> `"0.11.0"`.
+- `apps/desktop/src-tauri/Cargo.lock:479` — the `codex-desktop` package entry only (grep-verified no
+  other crate in the lock carries `0.10.0`); **`cargo metadata --locked` confirmed the lock stayed
+  consistent with the hand-edit — no regeneration was required**, because the root package's own
+  `version` field does not participate in dependency-resolution constraints for its dependencies. This
+  differs from `SD30-E7-F1-001`'s precedent (which did need a lock regeneration); noted here so the
+  next bump doesn't assume regeneration is always required.
+- `.github/workflows/publish-tester-release.yml:105` — `VERSION="0.10.${GITHUB_RUN_NUMBER}"` ->
+  `"0.11.${GITHUB_RUN_NUMBER}"`; comment lines 74 and 92 (now ~80/99) updated to record `v0.11.0` and
+  the `tranche/11` bump.
+- 8 files under `apps/desktop/src` carrying the literal `'Codex 0.10.0-test'` -> `'Codex
+  0.11.0-test'` (and `makeSurface.ts`'s `'0.10.0-test'` version field): `testSupport/makeSurface.ts`,
+  `testerWorkbench/loadTesterWorkbenchSurface.test.ts`,
+  `testerWorkbench/status/createWorkbenchStatus.test.ts`, `operatorTriage/buildOperatorTriageDraft.test.ts`,
+  `testerWorkbench/feedback/evidence/captureFeedbackEvidence.test.ts`,
+  `testerWorkbench/feedback/enhancement/composeEnhancementRequest.test.ts`,
+  `testerWorkbench/feedback/bug/composeBugReport.test.ts` — **this is the 7 entries in
+  `releaseChecks/buildLabelFixtureFreshness.test.ts`'s `FIXTURE_FILES` list plus `makeSurface.ts`
+  itself (8 total); the dispatch brief guessed 7, missing `buildOperatorTriageDraft.test.ts`** —
+  caught by the fresh grep, not by trusting the brief's count.
+- `releaseChecks/buildLabelFixtureFreshness.test.ts` — `STALE_LABEL` constant `'Codex 0.9.0-test'` ->
+  `'Codex 0.10.0-test'` (the one-bump-behind literal this check is designed to name, per its own doc
+  comment) plus the surrounding comment block; `FIXTURE_FILES` itself needed no additions.
+- `releaseChecks/buildVersionTriple.test.ts` and `release/buildVersionTriple.test.ts` (two separate
+  copies of the same check) — hardcoded tranche anchor `pkg.startsWith('0.10.')` -> `'0.11.'`, plus the
+  comment blocks naming `tranche/10` -> `tranche/11`. Neither file was named in the dispatch brief;
+  found via the `grep -rn '0\.10\.0'` sweep and confirmed load-bearing (a self-verifying test with one
+  literal anchor, exactly the shape SD-30's Epic 7 lesson warns about).
+
+**Publish counter.** `gh run list --workflow publish-tester-release.yml -L 3 --json
+databaseId,number,conclusion,headBranch,createdAt` — last completed run `#123` (success, `develop`,
+2026-08-14T14:19:28Z, the `PR #360` merge). Next publish from this lineage stamps `0.11.124`.
+
+**Package docs.** `decisions.md` Decision 6 records the ruling, cut point, and closing-PR increment
+rule. `canonical_branch`/`build_version_target` frontmatter updated in README.md, kanban.md,
+epic-breakdown.md, scope-draft.md; `technical-requirements.md`'s checkout line; `decisions.md`
+subsection (d) and `epic-breakdown.md`/`kanban.md`'s Epic 8 rows (owns merges to `tranche/11`, not
+`tranche/10`); `risks-and-open-questions.md` risk 5 restated (separate branch now, not a same-branch
+collision). Epic 10 (`SD31-E10`) added to `epic-breakdown.md` mirroring SD-30 Epic 7, plus its kanban
+row, a `Recommended sequencing` line, and a `Completion gate` line. `loop-instruction.md` grep-checked
+clean, no branch/version literals present, no change needed. Historical `tranche/10` receipts earlier
+in this file left as written, with the dated note now at the top of this file.
+
+**Gate.** Launched `./scripts/verify.sh` immediately after the version-bump commit; ran inline while
+docs edits proceeded. Log: `artifacts/sd31-s7-version-verify.log`.
+
+```
+SUMMARY
+  passed:  19  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-sweep
+  audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop
+  reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump
+
+BASELINE NOTES (not failures — left as-is per instruction, verify-baselines.env not touched):
+  - BASELINE_ROOT_LIB_TESTS: 1776 recorded, 1777 measured.
+  - BASELINE_ROOT_FULL_TESTS: 6398 recorded, 6411 measured.
+  - BASELINE_ROOT_TEST_BINARIES: 547 recorded, 548 measured.
+
+RESULT: PASS
+VERIFY_EXIT=0
+```
+
+19/19 stages passed, including `root-lib` (1777 tests), `root-full` (6411 tests / 548 suites, all 527
+`tests/*.rs` suites executed), `desktop` (445), `reach` (27), `corpus-sweep` (3516/9328 records, 0
+findings), `frontend-test` (99/99 files), `frontend-typecheck` clean, `clippy` (root:46 desktop:7
+warnings, 0 errors, no new errors), `class-dump` (31/31 computing). `verify.sh` itself emitted a
+`derived` verification retro event
+(`docs/retro/events/sd31-ready-s7-version.jsonl`, `id`
+`1786811691317-sd31-ready-s7-version-8aaa1b`).
+
+**Status: COMPLETE.** `HEAD` `1980d6b95` -> `0b557ac43` (+ this receipt's own commit). Epic 10 flipped
+to `COMPLETE` in `kanban.md` on this gate result.
