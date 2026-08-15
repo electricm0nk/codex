@@ -1,26 +1,32 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Amplify Elixir",
-    "school": "Transmutation",
-    "level": 3,
     "description": "This extract greatly enhances the effects of any potion or elixir you consume. For the duration of this extract, any potion or elixir you consume is treated as if it were empowered. Increase all variable numeric effects of the potion or elixir by half. If the potion or elixir does not have any variable numeric effects, it is instead treated as if it were extended (double the duration of the potion or elixir). If the potion or elixir does not have any variable numeric effects, or has an instantaneous duration, amplify elixir has no effect. Amplify elixir affects oils that target you, but it has no effect on oils that target your equipment.",
-    "full_text": true
+    "full_text": true,
+    "key": "Amplify Elixir",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "This extract greatly enhances the effects of any potion or elixir you consume. For the duration of this extract, any potion or elixir you consume is treated as if it were empowered. Increase all variable numeric effects of the potion or elixir by half. If the potion or elixir does not have any variable numeric effects, it is instead treated as if it were extended (double the duration of the potion or elixir). If the potion or elixir does not have any variable numeric effects, or has an instantaneous duration, amplify elixir has no effect. Amplify elixir affects oils that target you, but it has no effect on oils that target your equipment.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
     "line": 1847,
-    "record_key": "Amplify Elixir"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "record_key": "Amplify Elixir",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,25 +1,31 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions like glyph of warding, except that a greater blast glyph deals up to 10d8 points of damage, and a greater spell glyph can store a spell of 6th level or lower. Read magic allows you to identify a greater glyph of warding with a DC 16 Spellcraft check. Material Component: You trace the glyph with incense, which must first be sprinkled with powdered diamond worth at least 400 gp.",
     "key": "Glyph of Warding (Greater)",
-    "school": "Abjuration",
     "level": 6,
-    "description": "This spell functions like glyph of warding, except that a greater blast glyph deals up to 10d8 points of damage, and a greater spell glyph can store a spell of 6th level or lower. Read magic allows you to identify a greater glyph of warding with a DC 16 Spellcraft check. Material Component: You trace the glyph with incense, which must first be sprinkled with powdered diamond worth at least 400 gp."
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "This spell functions like glyph of warding, except that a greater blast glyph deals up to 10d8 points of damage, and a greater spell glyph can store a spell of 6th level or lower. Read magic allows you to identify a greater glyph of warding with a DC 16 Spellcraft check. Material Component: You trace the glyph with incense, which must first be sprinkled with powdered diamond worth at least 400 gp.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
     "line": 1031,
-    "record_key": "Glyph of Warding (Greater).MOD"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Glyph of Warding (Greater).MOD",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

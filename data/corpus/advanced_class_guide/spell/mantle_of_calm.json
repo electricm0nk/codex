@@ -1,27 +1,93 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Mantle of Calm",
-    "school": "Enchantment",
-    "level": 3,
     "description": "You surround yourself with a mantle of calm serenity. You take a -2 penalty on attack rolls, and opponents gain a +2 bonus on saving throws against spells you cast. Any creature affected by a rage effect (barbarian's rage, bloodrager's bloodrage, blood rage monster ability, rage spell, skald's inspired rage raging song, and so on) that strikes you with a melee attack must attempt at a Will saving throw, without the rage effect's bonus to Will; failure means the rage effect ends (as if it were dispelled or the creature voluntarily ended it, as appropriate). If you become affected by a rage effect while this spell is active, this spell immediately ends. If your rage effect comes from a skald's raging song, then it ends only for you, and you cannot re-accept the effects of the song.",
-    "full_text": true
+    "full_text": true,
+    "key": "Mantle of Calm",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Inquisitor,Paladin,Shaman=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Neutralize the rage effects of those who have attacked you.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You surround yourself with a mantle of calm serenity. You take a -2 penalty on attack rolls, and opponents gain a +2 bonus on saving throws against spells you cast. Any creature affected by a rage effect (barbarian's rage, bloodrager's bloodrage, blood rage monster ability, rage spell, skald's inspired rage raging song, and so on) that strikes you with a melee attack must attempt at a Will saving throw, without the rage effect's bonus to Will; failure means the rage effect ends (as if it were dispelled or the creature voluntarily ended it, as appropriate). If you become affected by a rage effect while this spell is active, this spell immediately ends. If your rage effect comes from a skald's raging song, then it ends only for you, and you cannot re-accept the effects of the song.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Emotion|Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "none and Will negates (see text)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/mantleOfCalm.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.186"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "no and yes (see text)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "you"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|TOHIT|-2"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 78,
-    "record_key": "Mantle of Calm"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Mantle of Calm",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:tempbonus",
     "derived:prose_expr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

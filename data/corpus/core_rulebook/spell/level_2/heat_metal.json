@@ -1,25 +1,31 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Heat metal causes metal objects to become red-hot. Unattended, nonmagical metal gets no saving throw. Magical metal is allowed a saving throw against the spell. An item in a creature's possession uses the creature's saving throw bonus unless its own is higher. A creature takes fire damage if its equipment is heated. It takes full damage if its armor, shield, or weapon is affected. The creature takes minimum damage [1 point or 2 points; see the table] if it's not wearing or wielding such an item. On the first round of the spell, the metal becomes warm and uncomfortable to touch but deals no damage. The same effect also occurs on the last round of the spell's duration. During the second [and also the next-to-last] round, intense heat causes pain and damage. In the third, fourth, and fifth rounds, the metal is searing hot, and causes more damage, as shown on the table below. \nRound | Metal Temperature | Damage \n1 | Warm | None \n2 | Hot | 1d4 points \n3-5 | Searing | 2d4 points \n6 | Hot | 1d4 points \n7 | Warm | None \nAny cold intense enough to damage the creature negates fire damage from the spell [and vice versa] on a point-for-point basis. If cast underwater, heat metal deals half damage and boils the surrounding water. Heat metal counters and dispels chill metal.",
     "key": "Heat Metal",
-    "school": "Transmutation",
     "level": 2,
-    "description": "Heat metal causes metal objects to become red-hot. Unattended, nonmagical metal gets no saving throw. Magical metal is allowed a saving throw against the spell. An item in a creature's possession uses the creature's saving throw bonus unless its own is higher. A creature takes fire damage if its equipment is heated. It takes full damage if its armor, shield, or weapon is affected. The creature takes minimum damage [1 point or 2 points; see the table] if it's not wearing or wielding such an item. On the first round of the spell, the metal becomes warm and uncomfortable to touch but deals no damage. The same effect also occurs on the last round of the spell's duration. During the second [and also the next-to-last] round, intense heat causes pain and damage. In the third, fourth, and fifth rounds, the metal is searing hot, and causes more damage, as shown on the table below. \nRound | Metal Temperature | Damage \n1 | Warm | None \n2 | Hot | 1d4 points \n3-5 | Searing | 2d4 points \n6 | Hot | 1d4 points \n7 | Warm | None \nAny cold intense enough to damage the creature negates fire damage from the spell [and vice versa] on a point-for-point basis. If cast underwater, heat metal deals half damage and boils the surrounding water. Heat metal counters and dispels chill metal."
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "Heat metal causes metal objects to become red-hot. Unattended, nonmagical metal gets no saving throw. Magical metal is allowed a saving throw against the spell. An item in a creature's possession uses the creature's saving throw bonus unless its own is higher. A creature takes fire damage if its equipment is heated. It takes full damage if its armor, shield, or weapon is affected. The creature takes minimum damage [1 point or 2 points; see the table] if it's not wearing or wielding such an item. On the first round of the spell, the metal becomes warm and uncomfortable to touch but deals no damage. The same effect also occurs on the last round of the spell's duration. During the second [and also the next-to-last] round, intense heat causes pain and damage. In the third, fourth, and fifth rounds, the metal is searing hot, and causes more damage, as shown on the table below. &nl;Round &pipe; Metal Temperature &pipe; Damage &nl;1 &pipe; Warm &pipe; None &nl;2 &pipe; Hot &pipe; 1d4 points &nl;3-5 &pipe; Searing &pipe; 2d4 points &nl;6 &pipe; Hot &pipe; 1d4 points &nl;7 &pipe; Warm &pipe; None &nl;Any cold intense enough to damage the creature negates fire damage from the spell [and vice versa] on a point-for-point basis. If cast underwater, heat metal deals half damage and boils the surrounding water. Heat metal counters and dispels chill metal.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
     "line": 1049,
-    "record_key": "Heat Metal.MOD"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Heat Metal.MOD",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

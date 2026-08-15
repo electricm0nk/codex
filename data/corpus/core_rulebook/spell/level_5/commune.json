@@ -1,26 +1,32 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You contact your deity-or agents thereof-and ask questions that can be answered by a simple yes or no. [A cleric of no particular deity contacts a philosophically allied deity.] You are allowed one such question per caster level. The answers given are correct within the limits of the entity's knowledge. \"Unclear\" is a legitimate answer, because powerful beings of the Outer Planes are not necessarily omniscient. In cases where a one-word answer would be misleading or contrary to the deity's interests, a short phrase [five words or less] may be given as an answer instead. The spell, at best, provides information to aid character decisions. The entities contacted structure their answers to further their own purposes. If you lag, discuss the answers, or go off to do anything else, the spell ends.",
     "key": "Commune",
-    "school": "Divination",
     "level": 5,
-    "description": "You contact your deity-or agents thereof-and ask questions that can be answered by a simple yes or no. [A cleric of no particular deity contacts a philosophically allied deity.] You are allowed one such question per caster level. The answers given are correct within the limits of the entity's knowledge. \"Unclear\" is a legitimate answer, because powerful beings of the Outer Planes are not necessarily omniscient. In cases where a one-word answer would be misleading or contrary to the deity's interests, a short phrase [five words or less] may be given as an answer instead. The spell, at best, provides information to aid character decisions. The entities contacted structure their answers to further their own purposes. If you lag, discuss the answers, or go off to do anything else, the spell ends."
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "You contact your deity-or agents thereof-and ask questions that can be answered by a simple yes or no. [A cleric of no particular deity contacts a philosophically allied deity.] You are allowed one such question per caster level. The answers given are correct within the limits of the entity's knowledge. \"Unclear\" is a legitimate answer, because powerful beings of the Outer Planes are not necessarily omniscient. In cases where a one-word answer would be misleading or contrary to the deity's interests, a short phrase [five words or less] may be given as an answer instead. The spell, at best, provides information to aid character decisions. The entities contacted structure their answers to further their own purposes. If you lag, discuss the answers, or go off to do anything else, the spell ends.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
     "line": 863,
-    "record_key": "Commune.MOD"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Commune.MOD",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

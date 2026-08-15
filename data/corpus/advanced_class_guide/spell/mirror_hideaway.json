@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Mirror Hideaway",
-    "school": "Transmutation",
-    "level": 2,
     "description": "You transform a mirror into a portal to an extradimensional space. The space can hold as many as eight Medium creatures. Creatures that enter this space are hidden and beyond the reach of spells (including divinations), unless those spells work across planes. If the mirror is covered (such as by a cloth, or by being placed face down or against a wall), the portal becomes inactive. If the mirror is broken or moved more than 5 feet from where it was when you cast the spell, the spell ends; any creatures within the extradimensional space are expelled from it (see below) and become nauseated for 1d6 rounds. Spells cannot be cast across the extradimensional interface, nor can area effects cross it. Those in the space can see and hear through it as if looking through an open window the same size as the mirror. Creatures outside the extradimensional space see only what is normally reflected in the mirror. Any creature in the space can make itself visible in the reflection of the mirror for 1 round at a time, however creatures outside the space cannot hear any sounds that originate inside. Anything inside the extradimensional space is expelled when the spell ends (even if the mirror is covered). Only one creature at a time can enter the mirror, and creatures can enter only if they can fit through an opening the same size as the mirror. For example, a hand mirror isn't big enough for a Small or larger creature to use it as a portal. Objects can enter the extradimensional space only if brought by a creature able to fully pass through the mirror.",
-    "full_text": true
+    "full_text": true,
+    "key": "Mirror Hideaway",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Witch,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "As many as eight creatures hide in an extradimensional space.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You transform a mirror into a portal to an extradimensional space. The space can hold as many as eight Medium creatures. Creatures that enter this space are hidden and beyond the reach of spells (including divinations), unless those spells work across planes. If the mirror is covered (such as by a cloth, or by being placed face down or against a wall), the portal becomes inactive. If the mirror is broken or moved more than 5 feet from where it was when you cast the spell, the spell ends; any creatures within the extradimensional space are expelled from it (see below) and become nauseated for 1d6 rounds. Spells cannot be cast across the extradimensional interface, nor can area effects cross it. Those in the space can see and hear through it as if looking through an open window the same size as the mirror. Creatures outside the extradimensional space see only what is normally reflected in the mirror. Any creature in the space can make itself visible in the reflection of the mirror for 1 round at a time, however creatures outside the space cannot hear any sounds that originate inside. Anything inside the extradimensional space is expelled when the spell ends (even if the mirror is covered). Only one creature at a time can enter the mirror, and creatures can enter only if they can fit through an opening the same size as the mirror. For example, a hand mirror isn't big enough for a Small or larger creature to use it as a portal. Objects can enter the extradimensional space only if brought by a creature able to fully pass through the mirror.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours [D]"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a glass or metal marble and a twisted loop of parchment)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "none"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/mirrorHideaway.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.188"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "no"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one mirror"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 83,
-    "record_key": "Mirror Hideaway"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Mirror Hideaway",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

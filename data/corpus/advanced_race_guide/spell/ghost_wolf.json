@@ -1,23 +1,89 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "This spell conjures a Large, quasi-real, wolflike creature made of roiling black smoke. It functions as phantom steed, except as noted above. In addition, the creature radiates an aura of fear. Any creature with fewer than 6 Hit Dice within 30 feet (except the ghost wolf's rider) must make a Will save or become shaken for 1d4 rounds. A creature that makes its Will save is unaffected by the steed's fear aura for 24 hours. The ghost wolf may also be used in combat. Once per round, the rider may direct the ghost wolf to attack in battle as a free action (bite +10, 1d8+6 points of damage); unlike an animal mount, this does not require a Ride check or any training. Once the ghost wolf attacks, it lasts for only 1 round per level thereafter.",
     "key": "Ghost Wolf",
-    "school": "Conjuration",
     "level": 4,
-    "description": "This spell conjures a Large, quasi-real, wolflike creature made of roiling black smoke. It functions as phantom steed, except as noted above. In addition, the creature radiates an aura of fear. Any creature with fewer than 6 Hit Dice within 30 feet (except the ghost wolf's rider) must make a Will save or become shaken for 1d4 rounds. A creature that makes its Will save is unaffected by the steed's fear aura for 24 hours. The ghost wolf may also be used in combat. Once per round, the rider may direct the ghost wolf to attack in battle as a free action (bite +10, 1d8+6 points of damage); unlike an animal mount, this does not require a Ride check or any training. Once the ghost wolf attacks, it lasts for only 1 round per level thereafter."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=4"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Summoner=2[PREVAREQ:StandardSummoner,1]"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, F"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell conjures a Large, quasi-real, wolflike creature made of roiling black smoke. It functions as phantom steed, except as noted above. In addition, the creature radiates an aura of fear. Any creature with fewer than 6 Hit Dice within 30 feet (except the ghost wolf's rider) must make a Will save or become shaken for 1d4 rounds. A creature that makes its Will save is unaffected by the steed's fear aura for 24 hours. The ghost wolf may also be used in combat. Once per round, the rider may direct the ghost wolf to attack in battle as a free action (bite +10, 1d8+6 points of damage); unlike an animal mount, this does not require a Ride check or any training. Once the ghost wolf attacks, it lasts for only 1 round per level thereafter."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds or (CASTERLEVEL) hours"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsHalfOrc=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "0 Ft"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/coreRaces/halfOrcs.html#_ghost-wolf"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One quasi-real wolf-like creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Conjuration"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 40,
-    "record_key": "Ghost Wolf"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 40,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Ghost Wolf",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",

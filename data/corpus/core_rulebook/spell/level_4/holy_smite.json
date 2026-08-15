@@ -1,26 +1,32 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You draw down holy power to smite your enemies. Only evil and neutral creatures are harmed by the spell; good creatures are unaffected. The spell deals 1d8 points of damage per two caster levels [maximum 5d8] to each evil creature in the area [or 1d6 points of damage per caster level, maximum 10d6, to an evil outsider] and causes it to become blinded for 1 round. A successful Will saving throw reduces damage to half and negates the blinded effect. The spell deals only half damage to creatures who are neither good nor evil, and they are not blinded. Such a creature can reduce that damage by half [down to one-quarter of the roll] with a successful Will save.",
     "key": "Holy Smite",
-    "school": "Evocation",
     "level": 4,
-    "description": "You draw down holy power to smite your enemies. Only evil and neutral creatures are harmed by the spell; good creatures are unaffected. The spell deals 1d8 points of damage per two caster levels [maximum 5d8] to each evil creature in the area [or 1d6 points of damage per caster level, maximum 10d6, to an evil outsider] and causes it to become blinded for 1 round. A successful Will saving throw reduces damage to half and negates the blinded effect. The spell deals only half damage to creatures who are neither good nor evil, and they are not blinded. Such a creature can reduce that damage by half [down to one-quarter of the roll] with a successful Will save."
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "You draw down holy power to smite your enemies. Only evil and neutral creatures are harmed by the spell; good creatures are unaffected. The spell deals 1d8 points of damage per two caster levels [maximum 5d8] to each evil creature in the area [or 1d6 points of damage per caster level, maximum 10d6, to an evil outsider] and causes it to become blinded for 1 round. A successful Will saving throw reduces damage to half and negates the blinded effect. The spell deals only half damage to creatures who are neither good nor evil, and they are not blinded. Such a creature can reduce that damage by half [down to one-quarter of the roll] with a successful Will save.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
     "line": 1064,
-    "record_key": "Holy Smite.MOD"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Holy Smite.MOD",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

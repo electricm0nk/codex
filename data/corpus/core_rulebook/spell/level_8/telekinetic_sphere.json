@@ -1,26 +1,32 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions like resilient sphere, but the creatures or objects caught inside the globe created by the spell are made nearly weightless. Anything contained within a telekinetic sphere weighs only one-sixteenth of its normal weight. You can telekinetically lift anything in the sphere that normally weighs 5,000 pounds or less. The telekinetic control extends from you out to medium range [100 feet + 10 feet per caster level] after the sphere has succeeded in encapsulating its contents. You can move the sphere, along with the objects and creatures it contains that weigh a total of 5,000 pounds or less, by concentrating on the sphere. You can begin moving a sphere in the round after casting the spell. If you concentrate on doing so [a standard action], you can move the sphere as much as 30 feet in a round. If you cease concentrating, the sphere does not move in that round [if on a level surface] or descends at its falling rate [if aloft] until it reaches a level surface. You can resume concentrating on your next turn or any later turn during the spell's duration. The sphere falls at a rate of only 60 feet per round, which is not fast enough to cause damage to the contents of the sphere. You can move the sphere telekinetically even if you are in it.",
     "key": "Telekinetic Sphere",
-    "school": "Evocation",
     "level": 8,
-    "description": "This spell functions like resilient sphere, but the creatures or objects caught inside the globe created by the spell are made nearly weightless. Anything contained within a telekinetic sphere weighs only one-sixteenth of its normal weight. You can telekinetically lift anything in the sphere that normally weighs 5,000 pounds or less. The telekinetic control extends from you out to medium range [100 feet + 10 feet per caster level] after the sphere has succeeded in encapsulating its contents. You can move the sphere, along with the objects and creatures it contains that weigh a total of 5,000 pounds or less, by concentrating on the sphere. You can begin moving a sphere in the round after casting the spell. If you concentrate on doing so [a standard action], you can move the sphere as much as 30 feet in a round. If you cease concentrating, the sphere does not move in that round [if on a level surface] or descends at its falling rate [if aloft] until it reaches a level surface. You can resume concentrating on your next turn or any later turn during the spell's duration. The sphere falls at a rate of only 60 feet per round, which is not fast enough to cause damage to the contents of the sphere. You can move the sphere telekinetically even if you are in it."
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "This spell functions like resilient sphere, but the creatures or objects caught inside the globe created by the spell are made nearly weightless. Anything contained within a telekinetic sphere weighs only one-sixteenth of its normal weight. You can telekinetically lift anything in the sphere that normally weighs 5,000 pounds or less. The telekinetic control extends from you out to medium range [100 feet + 10 feet per caster level] after the sphere has succeeded in encapsulating its contents. You can move the sphere, along with the objects and creatures it contains that weigh a total of 5,000 pounds or less, by concentrating on the sphere. You can begin moving a sphere in the round after casting the spell. If you concentrate on doing so [a standard action], you can move the sphere as much as 30 feet in a round. If you cease concentrating, the sphere does not move in that round [if on a level surface] or descends at its falling rate [if aloft] until it reaches a level surface. You can resume concentrating on your next turn or any later turn during the spell's duration. The sphere falls at a rate of only 60 feet per round, which is not fast enough to cause damage to the contents of the sphere. You can move the sphere telekinetically even if you are in it.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
     "line": 1369,
-    "record_key": "Telekinetic Sphere.MOD"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Telekinetic Sphere.MOD",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

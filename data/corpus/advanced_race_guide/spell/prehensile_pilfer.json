@@ -1,23 +1,81 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "The target's tail moves and acts more quickly, almost with a mind of its own. When making a full-attack action, the target may use its tail to make a dirty trick or steal combat maneuver as a swift action. For the purpose of this attack, the target's tail is a natural weapon with a reach of 5 feet. This spell has no effect on creatures lacking a prehensile tail. If the target already has an extra attack from haste or a similar effect, this spell only allows the tail to make dirty trick and steal combat maneuvers, but does not grant an extra attack.",
     "key": "Prehensile Pilfer",
-    "school": "Transmutation",
     "level": 3,
-    "description": "The target's tail moves and acts more quickly, almost with a mind of its own. When making a full-attack action, the target may use its tail to make a dirty trick or steal combat maneuver as a swift action. For the purpose of this attack, the target's tail is a natural weapon with a reach of 5 feet. This spell has no effect on creatures lacking a prehensile tail. If the target already has an extra attack from haste or a similar effect, this spell only allows the tail to make dirty trick and steal combat maneuvers, but does not grant an extra attack."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Bard,Magus,Sorcerer,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "The target's tail moves and acts more quickly, almost with a mind of its own. When making a full-attack action, the target may use its tail to make a dirty trick or steal combat maneuver as a swift action. For the purpose of this attack, the target's tail is a natural weapon with a reach of 5 feet. This spell has no effect on creatures lacking a prehensile tail. If the target already has an extra attack from haste or a similar effect, this spell only allows the tail to make dirty trick and steal combat maneuvers, but does not grant an extra attack."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsVanara=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude Negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/uncommonRaces/vanaras.html#_prehensile-pilfer"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Transmutation"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 215,
-    "record_key": "Prehensile Pilfer"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 215,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Prehensile Pilfer",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

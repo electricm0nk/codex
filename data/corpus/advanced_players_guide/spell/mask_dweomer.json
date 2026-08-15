@@ -1,26 +1,32 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Mask Dweomer",
-    "school": "Illusion",
-    "level": 1,
     "description": "You mask and manipulate a spell's magic aura to make it harder to detect. Select one spell effect on the target creature or object. You must have either cast this spell yourself or have perceived it by means such as detect magic or arcane sight.  Both the desired spell effect and mask dweomer are hidden from detect magic, although more powerful spells (such as arcane sight) pierce the deception if the caster succeeds on a Will save. Analyze dweomer automatically detects both mask dweomer and any masked spell effects.",
-    "full_text": true
+    "full_text": true,
+    "key": "Mask Dweomer",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "You mask and manipulate a spell's magic aura to make it harder to detect. Select one spell effect on the target creature or object. You must have either cast this spell yourself or have perceived it by means such as detect magic or arcane sight.  Both the desired spell effect and mask dweomer are hidden from detect magic, although more powerful spells (such as arcane sight) pierce the deception if the caster succeeds on a Will save. Analyze dweomer automatically detects both mask dweomer and any masked spell effects.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Illusion"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
     "line": 2005,
-    "record_key": "Mask Dweomer"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "record_key": "Mask Dweomer",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

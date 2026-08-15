@@ -1,27 +1,81 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Spellcrash (Lesser)",
-    "school": "Abjuration",
-    "level": 4,
     "description": "You create a discordant blast of energy that disrupts the target's available magic. If the target prepares spells, it must choose one of its prepared 3rd-level spells, which is immediately lost; if the target has no 3rd-level spells prepared, it must lose a 2ndlevel spell it has prepared (progressing down to 1st-level spell if it has no 2nd-level spells prepared) each round at the start of its turn. If the target is a spontaneous spellcaster, it loses one of its available 3rd-level spell slots; if the target has no available 3rd-level spell slots, it must lose a 2nd-level spell slot (progressing down to 1st-level spell if it has no 2ndlevel spell slots available). If the target has more than one spellcasting class, choose one at random to be affected. This spell has no effect on spell-like abilities. Any spell or spell slot lost because of this spell is treated as if the caster had failed a concentration check while trying to cast it-the spell or spell slot is wasted and has no effect, but is recovered normally the next time the character prepares spells or regains spell slots. There is no initial saving trow for this spell, but the taget can attampt a Will saving throw each round at the end of its turn.",
-    "full_text": true
+    "full_text": true,
+    "key": "Spellcrash (Lesser)",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Sorcerer,Witch,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Target loses a 3rd-level prepared spell or spell slot.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a discordant blast of energy that disrupts the target's available magic. If the target prepares spells, it must choose one of its prepared 3rd-level spells, which is immediately lost; if the target has no 3rd-level spells prepared, it must lose a 2ndlevel spell it has prepared (progressing down to 1st-level spell if it has no 2nd-level spells prepared) each round at the start of its turn. If the target is a spontaneous spellcaster, it loses one of its available 3rd-level spell slots; if the target has no available 3rd-level spell slots, it must lose a 2nd-level spell slot (progressing down to 1st-level spell if it has no 2ndlevel spell slots available). If the target has more than one spellcasting class, choose one at random to be affected. This spell has no effect on spell-like abilities. Any spell or spell slot lost because of this spell is treated as if the caster had failed a concentration check while trying to cast it-the spell or spell slot is wasted and has no effect, but is recovered normally the next time the character prepares spells or regains spell slots. There is no initial saving trow for this spell, but the taget can attampt a Will saving throw each round at the end of its turn.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (see text)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/spellcrash.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 115,
-    "record_key": "Spellcrash (Lesser)"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Spellcrash (Lesser)",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",
     "derived:range_keyword"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

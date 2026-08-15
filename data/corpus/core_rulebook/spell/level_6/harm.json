@@ -1,26 +1,32 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Harm charges a subject with negative energy that deals 10 points of damage per caster level [to a maximum of 150 points at 15th level]. If the creature successfully saves, harm deals half this amount. Harm cannot reduce the target's hit points to less than 1. If used on an undead creature, harm acts like heal.",
     "key": "Harm",
-    "school": "Necromancy",
     "level": 6,
-    "description": "Harm charges a subject with negative energy that deals 10 points of damage per caster level [to a maximum of 150 points at 15th level]. If the creature successfully saves, harm deals half this amount. Harm cannot reduce the target's hit points to less than 1. If used on an undead creature, harm acts like heal."
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "Harm charges a subject with negative energy that deals 10 points of damage per caster level [to a maximum of 150 points at 15th level]. If the creature successfully saves, harm deals half this amount. Harm cannot reduce the target's hit points to less than 1. If used on an undead creature, harm acts like heal.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Necromancy"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
     "line": 1044,
-    "record_key": "Harm.MOD"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Harm.MOD",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

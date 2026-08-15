@@ -1,27 +1,81 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Thorny Entanglement",
-    "school": "Transmutation",
-    "level": 3,
     "description": "This spell functions as entangle, except the plants also grow thorns and can fling them up to 15 feet. Any creature that moves within 15 feet of the spell's area is attacked once on its turn by the animated plants. The plants use your caster level as their base attack bonus and add your spellcasting ability score modifier (Intelligence for witches; Wisdom for druids, rangers, and shamans) to the attack roll. A volley of thorns counts as a thrown weapon and deals 2d6 points of piercing damage on a successful hit. A creature that enters the spell's area or ends its turn there automatically takes 2d6 points of piercing damage.",
-    "full_text": true
+    "full_text": true,
+    "key": "Thorny Entanglement",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Ranger,Shaman,Witch=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "As entangle, plus plants make ranged attacks.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as entangle, except the plants also grow thorns and can fling them up to 15 feet. Any creature that moves within 15 feet of the spell's area is attacked once on its turn by the animated plants. The plants use your caster level as their base attack bonus and add your spellcasting ability score modifier (Intelligence for witches; Wisdom for druids, rangers, and shamans) to the attack roll. A volley of thorns counts as a thrown weapon and deals 2d6 points of piercing damage on a successful hit. A creature that enters the spell's area or ends its turn there automatically takes 2d6 points of piercing damage.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Long"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex partial (see text)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/thornyEntanglement.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "no"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Plants in a 40-ft.-radius spread"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 125,
-    "record_key": "Thorny Entanglement"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Thorny Entanglement",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",
     "derived:range_keyword"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }
