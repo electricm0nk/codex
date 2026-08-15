@@ -2432,7 +2432,40 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         //
         // The three `Mostly Human ~ <Race> ~ Languages` rows below are a
         // DIFFERENT shape of the same outcome, added by SD-31 Epic 1-F2
-        // (2026-08-15): each carries a *positive* `PREFACT:1,ABILITIES,
+        // (2026-08-15).
+        //
+        // CORRECTED 2026-08-15 (`SD31-W2-INTEGRATE-001`, Finding 8; the
+        // original comment below the correction is left visible per this
+        // program's doc convention, and is WRONG about upstream). PCGen DOES
+        // ship a granter for all four races (Ifrit/Oread/Sylph/Undine)
+        // symmetrically: `isr_abilities_race.lst:650/651/652/653` are
+        // `Geneiekin ~ Mostly Human.MOD` rows, each carrying
+        // `FACT:<Race>_ReplaceLanguages|True` AND its own
+        // `ABILITY:<Race> Racial Trait|AUTOMATIC|Mostly Human ~ <Race> ~
+        // Languages|PREFACT:...` grant. Upstream is complete; the gap is
+        // entirely project-side. The BASE row (`isr_abilities_race.lst:649`,
+        // `Geneiekin ~ Mostly Human`) carries
+        // `TYPE:RacialTraits.SpecialQuality.Special Quality` with no
+        // race-scoped TYPE component, so `parse_row` never emits a
+        // `<Race> Racial Trait` classification target for it -- and the
+        // per-race grants live ONLY on the four `.MOD` rows, which
+        // `is_mod_row` deliberately excludes from ingestion
+        // (`ingest_race_traits.rs`'s own test doc already names these exact
+        // rows, filtered "one step later" because "those 5 name races this
+        // project does not model" -- a clause SD-31 Epic 1 made false for
+        // 4 of the 5). Oread's sibling row reaches purely because
+        // `Oread ~ Isolated` (a second, UNRELATED Inner Sea Races row) also
+        // happens to set `Oread_ReplaceLanguages` -- that is an accident of
+        // a second setter, not proof the other three lack one; the Geneiekin
+        // path itself is unmodelled for all four. Concrete remedy: model the
+        // Geneiekin heritage the way Aasimar/Tiefling already are (same
+        // class of work as the already-deferred Dhampir/Skinwalker
+        // heritage build, `OPEN-ISSUES.md` row 13) -- tracked as a follow-on
+        // Epic 1 card, `OPEN-ISSUES.md` row 18, not an accepted permanent
+        // gap.
+        //
+        // ORIGINAL (WRONG) COMMENT, preserved for the record: each row
+        // carries a *positive* `PREFACT:1,ABILITIES,
         // <Race>_ReplaceLanguages=True`, so `race_resolver::classify` reads
         // them as `TraitRole::FlagGranted`, not `Unclassified` -- but no
         // Ifrit/Sylph/Undine alternate in either ARG or Inner Sea Races sets
@@ -2444,8 +2477,13 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         // the presence of that one working case is what proves this is a real
         // upstream content gap for the other three, not a resolver defect: the
         // exact same mechanism reaches Oread's row and only Oread's.
+        // [This inference is backwards -- see the correction above.]
+        //
         // 79 of the book's 82 records reach a player; these three plus
-        // `Human ~ Tribalistic Languages` are the four that do not.
+        // `Human ~ Tribalistic Languages` are the four that do not. The
+        // numeric pin itself is correct and needs no change -- the three
+        // records genuinely do not reach today, only the root-cause
+        // rationale was wrong.
         &[
             "Human ~ Tribalistic Languages",
             "Mostly Human ~ Ifrit ~ Languages",

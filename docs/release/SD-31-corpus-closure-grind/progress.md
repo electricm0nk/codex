@@ -1684,7 +1684,12 @@ directories deep. Test asserts the resolved text AND that it classifies `static`
 field, `MOVE:Walk,30`, is a plain literal) — the correctness bar named in the brief ("resolving to *a*
 row is not the deliverable").
 
-6 new tests, `src/rules_core/wiring_class.rs`.
+5 new tests, `src/rules_core/wiring_class.rs`. **Corrected 2026-08-15 (`SD31-W2-INTEGRATE-001`,
+Finding 3): originally stated as 6. `git diff c99461ac3..79c087240 -- src/rules_core/wiring_class.rs
+| grep '^+.*#\[test\]'` → 12 total; the 5 attributable to this deliverable are the
+`corpus_lines_*` resolution tests (`direct_join_unchanged`, `resolves_a_nested_lst_file`,
+`refuses_to_guess_when_a_nested_basename_collides`, `stays_scoped_to_its_own_book`,
+`still_none_for_a_file_absent`). The other 7 (`d3_*`) belong to Deliverable 2 below.**
 
 ### 2. Deliverable 2 — two `signals()` false positives (OPEN-ISSUES row 2)
 
@@ -1697,8 +1702,18 @@ a `/` (267 unique values) matches PCGen's `<amount>/<bypass-type>` shape, none i
 `<int>/<int>`; every `CR:` value carrying a `/` is exactly the canonical fraction set (`1/2`, `1/3`,
 `1/4`, `1/6`, `1/8`) — `python3 -c "..."` (exact commands in the code comment above `has_arith_scoped`).
 
-**Movement reported in both directions, against the row's own real worked examples (re-derived, not
-transcribed):**
+**Movement, against the row's own real worked examples (re-derived, not transcribed). Corrected
+2026-08-15 (`SD31-W2-INTEGRATE-001`, Finding 2): originally captioned "reported in both
+directions" — that overclaimed a bidirectional control. The full transition matrix (measured via a
+read-only regen, `SD31-W2-INTEGRATE-001` receipt below) is 1,265 `derived`→`static`, 0
+`static`→`derived`, 0 `static`→anything: movement is one-directional by construction, as expected
+of a false-positive fix. The only bidirectional EVIDENCE below is a pair of unchanged-class
+regression guards (`pig`, the synthetic `DR:1*ArmoredDefenseMult/-` row) proving the fix does not
+over-correct a genuine formula — neither is a unit that moved static→derived. The genuine
+other-direction case Finding 1 asked for (a variable-magnitude row that MUST remain/become derived
+after the fix) is now covered by this cycle's own D4 regression tests
+(`d4_dr_variable_amount_slash_is_derived_not_static`,
+`d4_bonus_stat_variable_magnitude_is_derived_not_static`):**
 
 | unit | pre-fix | post-fix | direction |
 |---|---|---|---|
@@ -1708,7 +1723,10 @@ transcribed):**
 | `core_essentials:companion:pig` (`ce_races_familiar_um.lst:28`) | derived | **derived (unchanged)** | regression guard — `BONUS:WEAPONPROF=Bite\|DAMAGE\|max(0,(STR/2))` is a genuine STR-formula that still fires independent of the false positive; the fix does not over-correct |
 | synthetic `DR:1*ArmoredDefenseMult/-` (real corpus shape, multiple rows) | n/a | **derived (regression guard)** | proves the `/` exclusion for `DR:` does not blind the `*` arm |
 
-8 new tests, `src/rules_core/wiring_class.rs`.
+7 new tests, `src/rules_core/wiring_class.rs`. **Corrected 2026-08-15 (`SD31-W2-INTEGRATE-001`,
+Finding 3): originally stated as 8 — see Deliverable 1's correction note above for the full 12-test
+(5+7) split, plus the 1 real-corpus-gated integration test file, for 13 new tests total (not the
+"18" stated in the original cycle's own summary/commit message).**
 
 ### 3. Deliverable 3 — ground-truth validation
 
@@ -2113,16 +2131,24 @@ none invented:**
   (Fetchling/Ifrit/Oread/Sylph/Undine Medium, Grippli Small — each value the race's real `~ Size`
   row's `TEMPLATE:SIZE_` token) and `ALTERNATE_TRAIT_REPLACE_FLAGS` (48 new entries, values read
   verbatim off the committed corpus, not hand-typed).
-- **A genuine, evidenced reach shortfall, recorded rather than hidden.** 3 of the batch's new Inner
-  Sea Races records — `Mostly Human ~ Ifrit/Sylph/Undine ~ Languages` — carry a positive
+- **A genuine, evidenced reach shortfall, recorded rather than hidden — root cause CORRECTED
+  2026-08-15 (`SD31-W2-INTEGRATE-001`, Finding 8).** 3 of the batch's new Inner Sea Races records —
+  `Mostly Human ~ Ifrit/Sylph/Undine ~ Languages` — carry a positive
   `PREFACT:1,ABILITIES,<Race>_ReplaceLanguages=True` gate, but no ARG or ISR alternate for those 3
-  races sets that flag (verified: grepped every alternate's `sets_replace_flags` for the three races,
-  none contains it). Oread's sibling row (`Mostly Human ~ Oread ~ Languages`) DOES reach, because
-  `Oread ~ Isolated` sets `Oread_ReplaceLanguages` — the one working case is what proves the other
-  three are a real upstream content gap, not a resolver defect. Added to
-  `reach_gate.rs`'s `UNREACHED_RECORD_FINDINGS` (extending the existing
+  races sets that flag today, so they genuinely do not reach a player — the numeric pin was and
+  remains correct. ~~Oread's sibling row DOES reach... which proves the other three are a real
+  upstream content gap~~ was the wrong inference: PCGen ships a granter for all four races
+  symmetrically (`isr_abilities_race.lst:650/651/652/653`, `Geneiekin ~ Mostly Human.MOD` rows each
+  carrying `FACT:<Race>_ReplaceLanguages|True`); the gap is entirely project-side — the base row
+  (`:649`) lacks a race-scoped `TYPE`, and the per-race grants live only on `.MOD` rows that
+  `is_mod_row` deliberately excludes from ingestion. Oread's sibling row reaches by accident of a
+  second, unrelated setter (`Oread ~ Isolated`), not because Ifrit/Sylph/Undine lack an upstream
+  path the way Oread has one — the same Geneiekin path is unmodelled for all four. Concrete remedy:
+  model the Geneiekin heritage the way Aasimar/Tiefling already are, same class of work as the
+  already-deferred Dhampir/Skinwalker heritage build (`OPEN-ISSUES.md` row 13). Full correction and
+  worked evidence in `reach_gate.rs`'s `UNREACHED_RECORD_FINDINGS` comment (extending the existing
   `inner_sea_races`/`race_traits` entry) alongside the pre-existing `Human ~ Tribalistic Languages`
-  case, same shape.
+  case, same shape; follow-on tracked at `OPEN-ISSUES.md` row 18.
 - **Two `LICENSE.json` restatements**, each the real on-disk count, not adjusted to make a test
   pass: `advanced_race_guide/LICENSE.json` `records_processed` 649 → 694 (+45, this batch's ARG
   alternates). `inner_sea_races/LICENSE.json` `records_processed` 71 → 82 (+11) and
