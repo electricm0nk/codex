@@ -357,6 +357,7 @@ fn has_arith(value: &str) -> bool {
 /// row 2(b), SD31-E2-F2-001-wiringfix):
 ///   - `DR:` — `<amount>/<bypass-descriptor>` (`DR:10/Cold Iron`, `DR:1/-`).
 ///   - `CR:` — `<int>/<int>` sub-1 challenge-rating fraction (`CR:1/3`).
+///
 /// [`has_scalar_or_arith_for_token`] passes `false` for exactly those two
 /// tokens; every other caller (including [`has_arith`] itself, used by
 /// prose-field `%N`-substitution scanning where `/` is never PCGen's DR or
