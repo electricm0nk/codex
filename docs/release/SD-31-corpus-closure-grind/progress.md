@@ -2705,3 +2705,332 @@ the next wave's obvious targets (see `followups`).
 - `scripts/verify.sh` (Finding 14, new `groundtruth-guard-selftest` stage)
 - `src/rules_core/wiring_class.rs`, `tests/sd31_e2_ground_truth_agreement.rs` (Findings 1/4/9/12)
 - `docs/retro/events/sd31-w2-integrate.jsonl` (new, 10 events)
+
+---
+
+## SD31-E6-F11-002 — `monster` derived-evaluator seam + first batch (2026-08-15)
+
+**cycle-id:** `SD31-E6-F11-002` · **actor:** `sd31-e6-seam` (`RETRO_ACTOR=sd31-e6-seam`) ·
+**worktree:** `/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_e4e73f9a-9af-3` ·
+**branch:** `sd31-e6-seam-SD31-E6-F11-002`
+
+### 0. Checkout assertion
+
+`HEAD` started at `061b623eee3f3a4c4a375032202746d620646e0c` ("Merge PR #362: ci(site) add
+Cloudflare Pages deploy workflow") — NOT descended from `tranche/11`, and the package directory
+(`docs/release/SD-31-corpus-closure-grind/loop-instruction.md`) was absent. `git status --porcelain`
+was empty (clean tree), so per protocol: `git fetch origin && git reset --hard origin/tranche/11`.
+Recovered to `6f857525bcd7917035f07be680d72559010dd0bc` ("docs(sd31): wave-3 disk budget + measured
+post-wave-2 board"). Recorded here per the standing rule — this recovery is otherwise invisible.
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS. `PCGEN_ORACLE_SHA` (from
+`scripts/pcgen-oracle-pin.env`) = `7f818006e371188e5717fd18d74d18a420747fc6`.
+
+### 1. The brief's own headline figure did not hold — re-derived
+
+The card brief (and `SD31-E6-F11-001-held-cell-map.md`) states "**monster** alone has ~1,235 held
+units... **1,229 are the single cell `derived|grounded`**." Re-derived fresh on this checkout, first
+action per the standing "re-derive every figure" rule:
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0, 'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS and u.get('kind')=='monster']
+c = collections.Counter()
+for u in U:
+    v = P.doneness_verdict(u.get('wiring_class'), u.get('status'), 'monster')
+    c[(v, u.get('wiring_class'), u.get('status'))] += 1
+print('total', len(U))
+for k,n in sorted(c.items(), key=lambda kv: -kv[1]): print(n, k)
+"
+```
+→ **total 1,270**: `955 (held, static, grounded)`, `280 (held, derived, grounded)`, `22
+(not-started, static, not-ingested)`, `7 (done, computed, grounded)`, `5 (not-started, derived,
+not-ingested)`, `1 (not-started, static, not-started)`.
+
+**Root cause, traced, not guessed.** `SD31-E2-F2-001-wiringfix` (commit `d07d41b5c`, landed the same
+day, `OPEN-ISSUES.md` row 19) fixed two false-positive `wiring_class` signal bugs and its own
+re-derivation reports the resulting corpus-wide transition matrix as "1,265 `derived`→`static`, 0
+`static`→`derived`." The F11-001 held-cell map was generated from a `docs/work-inventory.json`
+snapshot that **predates** that fix landing on `tranche/11` — 955 of its 1,229 `monster` units are
+exactly this reclassification's victims (`v06_work_inventory` re-derives `wiring_class` fresh from
+the raw `.lst` line every run; nothing here is stamped-and-stale in the LIVE inventory). I verified
+this by hand-tracing one unit end to end: `bonus_bestiary:monster:allip`'s corpus JSON carries a
+STALE stored `"wiring_class": "derived"` field (written at ingest time, before the fix), but its
+LIVE `docs/work-inventory.json` entry already reads `"wiring_class": "static"` — and a scratch test
+against `wiring_class::signals()` on Allip's real raw `.lst` line (row 6,
+`pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst`) confirms `{"static:literal_
+magnitudes_only"}` under the CURRENT classifier. (Scratch test written to `src/rules_core/
+wiring_class.rs`, run, and reverted before commit — `git diff` on that file is empty in this cycle's
+commit.) Independently corroborated at scale by `cargo run --locked --bin v06_corpus_trap_report --
+--audit`, which flags several corpus JSON records' stale stored `wiring_class` (e.g. `Xeph`,
+`Psicrystal`, several `ultimate_wilderness` companions) as `[wiring-class-mismatch]` findings — same
+drift, different symptom, exit 0 (informational, not a hard gate failure).
+
+`retro.py correction` emitted (claimed 1,229, actual 280; `--verified-by` the command above).
+`OPEN-ISSUES.md` row 22.
+
+**This means the real target for this cycle's seam is 280 units, not 1,229** — still the largest
+single reachable `derived`-held population after `spell` (941/926, no seam either), and squarely
+this card's mandate.
+
+### 2. The seam's contract, stated before building it (per the brief)
+
+Traced `apply_done_rung_stamps` (`src/bin/v06_work_inventory.rs` ~3763-3800): a `wiring_class ==
+Derived` unit whose `status` is `ingested-magnitude`/`grounded`/`text-complete` is stamped
+`fixture-verified` iff its `id` (the exact `book:kind:key` string) is in the `derived_fixture_
+verified` set — a flat `BTreeSet<String>` of ids, **entirely kind-agnostic**. That set is built
+generically from `derived_evaluator_fixture_check --json-out`'s `"verified"` array
+(`load_derived_fixture_verified`, same file). **Nothing in `v06_work_inventory.rs` needed to change**
+— the stamp path already treats any kind uniformly; only `derived_evaluator_fixture_check`'s own
+`run_bar_check` needed a monster-shaped source of verified ids. This kept the whole change inside my
+owned files (the derived-evaluator implementation, the check binary, the fixture JSON,
+`scripts/derive_derived_evaluator_fixtures.py`) with zero touches to `v06_work_inventory.rs`.
+
+**The contract:** a `kind=monster` fixture entry names a `unit_id` (matching the work-inventory id
+exactly), a `record_key` (the monster's display name, `MonsterStatBlock.name`), a `book` (the
+work-inventory book id — aliased to the chassis registry's `corpus_book` where they differ, see
+below), a verbatim `corpus_field` (the PCGen `.lst` token that carries the magnitude), a verbatim
+`monster_class_token` (the `MONSTERCLASS:` value the expected value is derived from), and an
+`expected.spell_like_ability_caster_level: i32`. `run_monster_bar_check` resolves the entry through
+`monster_chassis::MONSTER_BOOKS` (the SAME compiled registry `v06_work_inventory`'s own `grounded`
+verdict for `monster` reads — not a second, parallel table), calls
+`spell_like_ability_caster_level(&monster)`, and inserts the `unit_id` into `cleared` iff the result
+equals the fixture's expected value.
+
+### 3. What the seam actually evaluates, and why it is honestly "derived"
+
+Every `monster` record with `wiring_class_reason == "bonus"` (279 of 280) is derived because of a
+genuine PCGen `BONUS:` field whose magnitude is NOT a literal integer. Traced the exact triggering
+field for all 280 via a scratch classifier probe (same revert-before-commit discipline as §1's Allip
+check): 192 of 280 are `BONUS:WEAPONPROF=...|DAMAGE|<formula-with-STR/DEX>` (natural-attack damage
+scaling with an ability modifier); 49 are `ConstrictBonusDamage|STR`(-shaped); 15 `RendBonusDamage`;
+14 `SwallowWholeBonusDamage`; 13 `SLA_CL|max(TL,1)`/`SLA_CL|HD` (spell-like-ability caster level);
+the rest a long tail (`BreathWeaponDice|HD`, `WildEmpathyLVL|HD`, `PowerfulChargeBonusDamage|STR*2`,
+`HydraHeads|HD`, `SR:10+TL`, `PCLEVEL|...`).
+
+**The one clean, honestly-batchable family: `SLA_CL` = the creature's Hit Dice.** PF1's own
+"Spell-Like Abilities" universal monster rule (`Bestiary` Appendix 1, verified against the public PRD
+mirror): *"Unless otherwise noted... the creature's caster level is equal to its Hit Dice."* This
+repo's monster ingest is `completeness: "chassis_only"` and carries no dedicated Hit Dice field, but
+the SAME integer is already captured as the trailing segment of the `MONSTERCLASS:<type>:<HD>` token
+every monster row carries (confirmed: `data/corpus/beastiary/monster/demon_balor.json`'s `data.
+monster_class` = `"Outsider (Fort/Will):20"`, matching the row's own `SPELLS:Innate|...|CASTERLEVEL=
+(max(TL,1))|...` clauses). `spell_like_ability_caster_level()` (`src/rules_core/
+derived_evaluator_fixture_check.rs`) parses that trailing integer and returns it — a genuine
+derivation (parse + rule application, not a disguised copy): `monster_class`'s trailing number and
+`challenge_rating` routinely differ (Linnorm (Crag): `MONSTERCLASS:Dragon:15` at `CR:14` — 15 HD, not
+14 — confirmed on the real corpus record), so this is not tautological.
+
+**Every expected value hand-derived from the corpus, never from the evaluator.** For each of the 7
+fixtures: read the real upstream `.lst` line (grep, by line number, at the pinned oracle SHA), copied
+the `MONSTERCLASS:` token's trailing integer BY HAND as `expected.spell_like_ability_caster_level`,
+and only THEN wrote/ran `spell_like_ability_caster_level()` to confirm agreement. The fixture JSON's
+own `monster_derivation`/`monster_independence` metadata blocks record this. `upstream_lst_sha256`
+recomputed independently via `sha256sum` against the pinned oracle checkout (matches the corpus
+JSON's own `source.sha256` exactly, both files):
+
+| unit_id | upstream line | `MONSTERCLASS:` | expected CL |
+|---|---:|---|---:|
+| `bestiary:monster:demon_balor` | `bestiary/b1_races.lst:93` | `Outsider (Fort/Will):20` | 20 |
+| `bestiary:monster:linnorm_crag` | `:269` | `Dragon:15` | 15 |
+| `bestiary:monster:linnorm_ice` | `:270` | `Dragon:18` | 18 |
+| `bestiary:monster:linnorm_tarn` | `:271` | `Dragon:22` | 22 |
+| `book_of_the_damned_volume_2:monster:demon_brimorak` | `botd2_races.lst:8` | `Outsider (Fort/Ref):6` | 6 |
+| `book_of_the_damned_volume_2:monster:demon_seraptis` | `:9` | `Outsider (Fort/Will):15` | 15 |
+| `book_of_the_damned_volume_2:monster:demon_vavakia` | `:10` | `Outsider (Fort/Will):18` | 18 |
+
+(3 of the 7 — the Linnorms — and `demon_brimorak`/`demon_vavakia` also carry an UNRELATED
+STR-scaling field on the same row, e.g. `ConstrictBonusDamage|STR*1.5`, which this cycle does not
+attempt — the record's `derived` classification does not require every one of its signal-triggering
+fields to be fixture-verified, only the one this fixture names, mirroring the accepted "ground one
+representative, defer the rest with a named diagnostic" precedent Epic 6-F8's option-pool bucket
+already uses.)
+
+### 4. TDD and mutation-proof
+
+Wrote the function's unit tests FIRST (`monster_seam_tests` in `derived_evaluator_fixture_check.rs`:
+the real Demon (Balor) shape, a bare-word type-segment shape, absent-token, malformed-trailing-int)
+against a not-yet-written function — confirmed red, then implemented `spell_like_ability_caster_
+level`, confirmed green. Added `tests/derived_evaluator_fixture_check_monster.rs` (new file, 5
+tests) re-implementing the same four independent guarantees the equipment fixtures' test file states
+(different source artifact / committed first / re-derivable from the pinned field / byte-anchored to
+the same upstream `.lst` the engine's own ingest cites), written independently of both the production
+parser and the fixture's own authoring.
+
+**Live mutation-proof, run and reverted this cycle** (not just an assertion — an actual binary run):
+```
+# baseline
+/home/ubuntu/cargo-targets/sd31-e6-seam/debug/derived_evaluator_fixture_check
+# -> 56 of 101 covered units cleared; 1 failed; 44 not ingested
+# corrupted bestiary:monster:demon_balor's expected caster level 20 -> 99 in the committed JSON
+/home/ubuntu/cargo-targets/sd31-e6-seam/debug/derived_evaluator_fixture_check
+# -> 55 of 101 covered units cleared; 2 failed; 44 not ingested
+# -> FAIL bestiary:monster:demon_balor: corpus row states BONUS:VAR|SLA_CL|HD
+#    (Outsider (Fort/Will):20), expected caster level 99, evaluator produced 20
+# reverted; re-ran -> 56 of 101 cleared again; git diff --stat on the fixture file: 96 insertions,
+# 0 deletions (pure addition, byte-identical to pre-mutation content)
+```
+Also a permanent regression test,
+`a_wrong_expected_caster_level_makes_the_bar_check_fail` (`tests/derived_evaluator_fixture_check_
+monster.rs`), asserts the same comparison against the real resolved Balor stat block.
+
+### 5. Guarded regen — the measured delta
+
+```
+cp docs/work-inventory.json /tmp/work-inventory-BEFORE-sd31-e6-seam.json
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-e6-seam.json
+# -> 3635 records examined of 9447 read, 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-e6-seam.json
+# -> 56 of 101 covered units cleared; 1 failed; 44 not ingested
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-e6-seam.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-e6-seam.json \
+  cargo run --locked --bin v06_work_inventory   # REGEN_EXIT=0, zero stamp loss reported
+```
+`git diff -- docs/work-inventory.json` confirms exactly the 7 target units flip `grounded` →
+`fixture-verified` (cross-tab `fixture-verified: 0→7`, `grounded: 5352→5345`), nothing else moves.
+
+**Board delta, measured with the dashboard producer's own `doneness_verdict()`:**
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+before = json.load(open('/tmp/work-inventory-BEFORE-sd31-e6-seam.json'))
+after = json.load(open('docs/work-inventory.json'))
+def tally(d):
+    U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+    c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+    return len(U), c
+nb, cb = tally(before); na, ca = tally(after)
+print('BEFORE', nb, dict(cb), round(100*cb['done']/nb,4))
+print('AFTER ', na, dict(ca), round(100*ca['done']/na,4))
+"
+```
+→ **BEFORE** 38,521 units, `done` 6,076 (15.7732%) · **AFTER** 38,521 units, `done` **6,083**
+(**15.7914%**) · **delta: +7 done, -7 held**, every other bucket unchanged (`not-started` 20,737,
+`unmeasurable` 4,034, `in-progress` 848, `deferred` 36 — all identical before/after). `docs/
+work-inventory.json` restored per the wave rule: `git checkout -- docs/work-inventory.json` (NOT
+committed).
+
+### 6. Scale plan — what unblocks the remaining 273 of 280
+
+**Per-unit cost, measured from this batch, not estimated.** The 7-unit `SLA_CL|HD` batch (identifying
+the family, hand-reading 7 upstream lines, cross-checking against 7 corpus JSON records, writing the
+fixture entries, running the mutation-proof) took a bounded slice of this cycle alongside building the
+seam itself — the MARGINAL cost per additional unit in the SAME family (once the seam exists) is one
+`grep`/`sed -n` of the upstream line, a hand read of the `MONSTERCLASS:` token, and a JSON entry — a
+script (`scripts/derive_derived_evaluator_fixtures.py`, following the exact pattern that file already
+documents for the equipment `BONUS:STAT` family: `derivation`/`independence`/`generated_by` fields)
+can mechanize this for any record sharing the IDENTICAL bare-`HD` shape.
+
+**What is genuinely batchable vs. what must stay hand-derived**, precisely, re-derived from the full
+280-unit trace (`/tmp/monster_derived_280_classified.tsv`, not committed — regenerate via the
+temporary scratch probe documented in §1/§3 if needed, or treat these counts as this receipt's own
+citation):
+
+| bucket | n | batchable once built? | what it needs |
+|---|---:|---|---|
+| `SLA_CL\|HD` bare (this cycle's family) | 7 | **yes, mechanically** — script reads `MONSTERCLASS:`'s trailing int per matching row | done this cycle |
+| `SLA_CL\|max(TL,1)` / `(max(TL,1))` / `HD-3` / `HD*3/4`, `SR:10+TL`, `VerminEmpathyLVL\|CL` | 7 | yes, once the parser accepts the `max()`/arithmetic wrapper and (for `SR`) a second rule (`SR = 10+TL`, a distinct Universal Monster Rule) — small, scoped parser widening, no new corpus data | a follow-on within THIS seam, no ingest change |
+| ability-score-scaling (`ConstrictBonusDamage\|STR`, `WEAPONPROF=...\|DAMAGE\|<STR/DEX formula>`, `PowerfulChargeBonusDamage`, `BardicPerformanceLVL` mixed with STR fields, etc.) | 266 | **no — structurally blocked**, not a per-unit cost problem | monster ingest is `completeness: "chassis_only"`; `MonsterStatBlock` carries no ability-score field at all, though every sampled row's raw `.lst` line DOES carry the real `BONUS:STAT\|<ability>\|<int>` tokens (e.g. Demon (Balor): `BONUS:STAT\|STR\|24`) — this needs an ingest widening (new field(s) on `MonsterStatBlock`, `scripts/transcribe_monster_tables.py`, and a corpus JSON regen across ~12 already-registered books), a `compute_monster_ability_bonus`-shaped evaluator (`ability_modifier()`, already built at `pilot_compute.rs:8013`, reused, not reinvented), and per-formula fixture derivation (STR, STR*1.5, max(0,STR/2), -STR, 2*STR are the observed shapes) — real, multi-cycle engine + ingest work, same order of magnitude as Epic 5's own per-category equipment-effects rollout |
+
+**Recommended next-wave dispatch, in priority order:**
+1. **Widen `spell_like_ability_caster_level`'s parser** to accept `max(<expr>,1)`/simple arithmetic
+   and add the `SR = 10+TL` rule — unblocks 7 more units with ZERO new corpus data, a same-cycle-sized
+   follow-on to this seam.
+2. **A dedicated ability-score ingest-widening card** (Epic 1/Epic 6-F1 territory, not a fixture-only
+   card) — unblocks the 266-unit majority, the largest single lever left in the `monster` `derived`
+   lane, but is real multi-book engine + ingest work, not a `-003` extension of this card.
+3. **`spell` next** (941/926 `derived`-held, same "no evaluator seam exists" shape this card started
+   from) — a natural sibling seam once the `monster` pattern (parse a corpus-carried token, apply a
+   named rule, hand-derive expected values) is established; spell save-DC/duration/damage-dice scaling
+   is the likely first sub-family, mirroring how this cycle picked the cleanest sub-shape of `monster`
+   first.
+
+### 7. Gate
+
+`./scripts/verify.sh` (full, not `--quick`) launched in the background early per protocol, log at
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F11-002-verify.log`. `VERIFY_EXIT` and the
+`root-full` result are appended to that log directly by the launching command
+(`... ; echo "VERIFY_EXIT=$?" >> "$LOG"`), never inferred. See this cycle's return value for the exit
+code obtained by the time this receipt closes, and the log path for the reader to confirm directly if
+not.
+
+Four-check wired-integration audit (`docs/governance/no-stub-mvp-doctrine.md` §"Per-cycle audit"),
+run against `origin/tranche/11` (this cycle's own base, uncommitted working-tree diff):
+`OK_NO_TOKENS`, `OK_NO_NOOP_HANDLERS`, `OK_NO_MOCK_LEAKS`, `OK_NO_WOULD_STRINGS` — all four clean (no
+`apps/desktop` files touched at all this cycle; the change is `src/rules_core/**` and `tests/**`
+only).
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit`: exit 0. Reports pre-existing
+`[wiring-class-mismatch]` findings on OTHER records (not this cycle's 7 — none of `demon_balor`,
+`linnorm_crag/ice/tarn`, `demon_brimorak/seraptis/vavakia` appear in its output), corroborating §1's
+finding independently; nothing this cycle needed to fix (informational, exit 0, out of this card's
+file territory to remediate the corpus JSON's stale stamps).
+
+### 8. On-screen verification (DoD-8)
+
+**Not attempted this cycle, logged honestly rather than skipped silently.** The `fixture-verified`
+rung this seam adds is an internal engine-evaluator-vs-corpus data-integrity check, not itself a new
+player-visible surface — the monster's `grounded` status (proven by `monster_resolve` returning a
+real stat block) was already reachable before this cycle; nothing about a monster's on-screen
+presentation changed. The `spell_like_ability_caster_level` VALUE is not rendered anywhere in the
+desktop app today (no consumer references `encounters.rs`-shaped monster derived values in
+`apps/desktop/src-tauri`, confirmed by grep). Per the DoD-8 instruction, this is recorded as a
+BLOCKER-shaped shortfall: **if a future wave wires `spell_like_ability_caster_level` (or any
+ability-score-based monster magnitude from §6's scale plan) into a player-visible monster stat-block
+view, that wave owns DoD-8's on-screen capture for it — this cycle's own deliverable is the
+verification instrument, not a new rendered surface.**
+
+### 9. Files changed
+
+- `src/rules_core/derived_evaluator_fixture_check.rs` — `spell_like_ability_caster_level()`,
+  `MonsterFixture`, `load_monster_fixtures`, `run_monster_bar_check`, merged `run_bar_check`,
+  `monster_seam_tests` (5 tests)
+- `tests/derived_evaluator_fixture_check_monster.rs` — new file, 5 tests (the monster-kind guarantees
+  + mutation-proof)
+- `tests/fixtures/rules_core/derived-evaluator-fixtures.json` — new `monster_entries` array (7
+  entries) + `monster_token_family`/`monster_derivation`/`monster_independence` metadata; the
+  existing `entries` array (94 equipment fixtures) is byte-for-byte unchanged (`git diff` shows pure
+  addition, 96 insertions, 0 deletions)
+- `docs/release/SD-31-corpus-closure-grind/kanban.md` — `epic-6-ingest-lanes` row, this cycle's
+  addendum
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` — rows 22 (correction) and 23
+  (RULING-NEEDED / follow-on)
+- `docs/release/SD-31-corpus-closure-grind/progress.md` — this entry
+- `docs/retro/events/sd31-e6-seam.jsonl` — new (this cycle's events)
+- `docs/work-inventory.json` — NOT committed (restored via `git checkout --` per the wave rule)
+
+### 10. Corrected, reworked, or narrowly avoided
+
+- The card brief's own "1,229" headline did not survive re-derivation (§1) — corrected in place with
+  a retro correction, not silently substituted.
+- Nearly built the seam against `xp_for_cr`/`Encounter` (`src/rules_core/encounters.rs`) before
+  checking whether it is wired to any real consumer — it is not (no `apps/desktop` reference at all),
+  unlike `compute_equipment_effects`, which IS wired into `character_hub.rs`. Switched to
+  `spell_like_ability_caster_level` reading a field the chassis registry already serves, and logged
+  the DoD-8 gap honestly (§8) rather than either skipping the note or fabricating a screenshot.
+  Considered constructing a fixture family around ability-score-scaling damage before discovering
+  `MonsterStatBlock` carries no ability-score field at all — building that family this cycle would
+  have required either fabricating a score (a direct anti-gaming violation) or a silent, undocumented
+  ingest change; stopped, logged the real ingest gap instead (`OPEN-ISSUES.md` row 23).
+
+### 11. Addendum — a near-miss caught mid-cycle (not in the original receipt above)
+
+While sanity-checking §9's `scripts/derive_derived_evaluator_fixtures.py` preserve-patch by actually
+running the script (not `--report`), discovered it now derives only **11** fresh equipment candidates
+against this checkout's corpus, not the 94 committed, and — before the preserve-patch — would have
+silently dropped this cycle's new `monster_entries` array too. Restored the fixture file from a
+pre-run backup immediately; verified byte-identical to the pre-run state (`git diff --stat` unchanged:
+96 insertions, 0 deletions, the same pure addition as §9 describes). Root cause: the SAME
+`SD31-E2-F2-001-wiringfix` transition as §1/OPEN-ISSUES rows 22/24 — of the 94 committed equipment
+entries, only 11 are still `wiring_class: derived` on this checkout; 83 moved to `static` and are now
+harmless-but-inert in the fixture file (the stamp path gates on `wiring_class == Derived` before ever
+consulting fixture membership, so this is not a functional defect, only a stale headline count — "56
+of 101 cleared" is an accurate report of what the binary checked, not a claim that 101 rows are
+currently load-bearing; the genuinely live total today is 11 equipment + 7 monster = 18). Full
+writeup: `OPEN-ISSUES.md` row 25. `retro.py near-miss` emitted. Fixed the generator itself to preserve
+`monster_*` keys across a re-run (a real, scoped, committed fix — §9's file list); did NOT investigate
+or clean up the equipment lane's own 83-entry shrinkage (out of this card's `kind=monster` scope).
