@@ -2705,3 +2705,221 @@ the next wave's obvious targets (see `followups`).
 - `scripts/verify.sh` (Finding 14, new `groundtruth-guard-selftest` stage)
 - `src/rules_core/wiring_class.rs`, `tests/sd31_e2_ground_truth_agreement.rs` (Findings 1/4/9/12)
 - `docs/retro/events/sd31-w2-integrate.jsonl` (new, 10 events)
+
+## 2026-08-15 — `SD31-E3-F1-001`: Epic 3 class inventory + per-class hand-verification + chooser-primitive design (`epic-3-measurement`, primary checkout)
+
+`RETRO_ACTOR=sd31-e3-measure CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-e3-measure`. This cycle
+runs in the **primary checkout**, the only writer this wave; five siblings run in worktrees. No
+production code touched (`src/**` read-only per this card's own file territory) — the deliverable is
+measurement, not implementation.
+
+**HEAD started from:** `6f857525bcd7917035f07be680d72559010dd0bc` ("docs(sd31): wave-3 disk budget +
+measured post-wave-2 board"), on `tranche/11`, matching `origin/tranche/11`. `git status --porcelain`
+was NOT empty at start (`docs/retro/events/codex.jsonl` modified, plus two untracked files from other
+sessions: `docs/governance/third-party-tier-licensing-survey.md`,
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W2-INTEGRATE-001-verify.log`) — per the branch-
+state check, this is fine to proceed on since the package directory was already present (no recovery
+needed) and none of those files are this cycle's to touch; left untouched throughout.
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS, `PCGEN_ORACLE_SHA` =
+`7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`), re-confirmed independently
+via `./scripts/fetch-pcgen-oracle.sh --check` → `pcgen-oracle: OK 7f818006e371188e5717fd18d74d18a420747fc6`.
+
+### 0. Inherited-state verification (not re-measurement)
+
+Per the epic-breakdown.md instruction to "verify before extending, do not re-measure": re-derived the
+23-book `class_feature` population fresh (`python3 -c "...cf=[u for u in d['units'] if u['kind']=='class_feature']; print(len(cf), len(set(u['book'] for u in cf)))"` → **15472, 23**, exact per-book counts also re-derived and matched `decisions.md §33` exactly, no correction needed) and spot-checked continued presence for 2 of the 25 already-hand-verified classes (Fighter: `grep -c 'fn fighter_' src/rules_core/pilot_compute.rs` → 6, `compute_fighter_chassis` at line 10129; Skald: `grep -c 'fn skald_\|Skald' src/rules_core/pilot_compute.rs` → 354) rather than re-deriving all 25 ratios from scratch, which the card explicitly warns against burning the cycle on.
+
+### 1. F1 — class inventory: the true 24-class remainder
+
+**Method (the identity join the card demands, not a book-name proxy):** `docs/work-inventory.json`
+carries a separate `kind:"class"` population (185 units) alongside `kind:"class_feature"` — these are
+PCGen's own declared class records (`CLASS` .lst rows), independent of which book each class's
+*archetype content* happens to live in. Filtered to `type_facet` starting `Base.PC` or `Base.Psionic.PC`
+(true player base classes, excluding `PC.Prestige`/`Monster`/`Base.NPC`) across the 23 in-scope books,
+cross-referenced against SD-28 `decisions.md §64`'s 28-class list (25 measured + Oracle/Arcanist/Sorcerer
+excluded):
+
+```
+python3 -c "
+import json
+d=json.load(open('docs/work-inventory.json'))
+u=[x for x in d['units'] if x['kind']=='class']
+for x in sorted(u, key=lambda x:(x['book'], x['name'])):
+    print(x['book'], '|', x['name'], '|', x['type_facet'], '|', x['status'])
+"
+```
+
+**Remainder (24 classes), by book:** Occult Adventures — Kineticist, Medium, Mesmerist, Occultist,
+Psychic, Spiritualist (all 6 `Base.PC.Psychic`/`Base.PC.Spontaneous.Psychic`, matching the brief's own
+"expected: Occultist, Spiritualist, Medium, Mesmerist... at minimum" — Kineticist and Psychic are the
+same book's other 2 new base classes, found by the same join, not separately anticipated). Advanced
+Class Guide — Slayer. Advanced Player's Guide — Antipaladin. Ultimate Combat — Gunslinger, Ninja
+(`Base.PC.Rogue` subtype), Samurai (`Base.PC.Cavalier` subtype). Ultimate Intrigue — Vigilante. Ultimate
+Magic — Magus. Ultimate Wilderness — Shifter. Ultimate Psionics — Aegis, Cryptic, Dread, Marksman,
+Psion, Psychic Warrior, Soulknife, Tactician, Vitalist, Wilder (all 10, `Base.Psionic.PC.*`).
+
+**Negative findings, both re-derived rather than assumed:**
+- **Mythic Adventures:** `mythic_adventures` is absent from the live 23-book `class_feature` roster —
+  `python3 -c "import json;d=json.load(open('docs/work-inventory.json'));print('mythic_adventures' in set(u['book'] for u in d['units'] if u['kind']=='class_feature'))"` → `False`. No path-tier
+  `class_feature` content exists to measure.
+- **Inner Sea archetype content:** the corpus-wide `type_facet` scan for `<Name>Archetype` segments
+  (used to build the F1 remainder) covers every one of the 7 Inner Sea/Book-of-the-Damned books in
+  scope; every `ARCH:` subject it surfaced resolves to an already-measured (25-list) or newly-measured
+  (24-list) class. No Inner-Sea-specific new class identity was found. The `kind:"class"` records from
+  those 7 books are all `PC.Prestige` or `Monster` (verified by direct listing, none `Base.PC`).
+
+Full per-class evidence: `artifacts/SD31-E3-F1-001-clearance-table.json`.
+
+### 2. F2 — per-class hand-verification, extended (24 classes, direct evidence, never blended)
+
+Same method as Decision 64: for each class, enumerate its own archetype-table declared "replaced slot"
+ids from the PCGen corpus (`$PCGEN_CORPUS_ROOT`, oracle-pinned), then grep `src/rules_core/pilot_compute.rs`
+for a real, unconditional base computation of each. Two corpus encodings found, both handled: (a) a flat
+`<Class>_Archetype_<Slot>` FACT-flag list (OA, ACG's Slayer, UC's Gunslinger, UI's Vigilante, UM's Magus,
+UW's Shifter), (b) a dot-joined `TYPE:Archetype.<Class>Archetype.<Slot1>.<Slot2>...` list (Ultimate
+Psionics' 10 classes) — extracted programmatically per class, verified against a hand-read sample of the
+raw `.lst` lines for at least one entry per class before trusting the extraction.
+
+**Headline: 23 of 24 classes measure 0/N wired-able.** The entire Occult Adventures class family
+(Occultist 0/15, Spiritualist 0/20 raw/18 collapsed, Mesmerist 0/14, Medium 0/16, Kineticist 0/25,
+Psychic 0/14) and every non-OA newcomer except one have **zero** base-chassis presence anywhere in
+`pilot_compute.rs` — confirmed by case-sensitive, word-boundary grep per class name, with every
+raw-count hit manually inspected for false positives (e.g. "Medium" the SIZE category vs. Medium the
+CLASS: 73 raw hits, 0 real; "Tactician" the psionic class vs. Cavalier's "Order of the Tactician": 9 raw
+hits, 0 real; "Wilder" vs. "ultimate_wilderness"/"Wilderness": 7 raw hits, 0 real after `\b`-bounding).
+
+**The one exception: Slayer, 4/7 (was NOT in Decision 64's 25-class list despite already having real
+chassis wiring.)** `SLAYER_CLASS_ID`, `is_supported_slayer_single_class` (`acg::class_chassis_resolve`),
+and four grounded formulas (`slayer_sneak_attack_dice`, `slayer_trap_sense_bonus`,
+`slayer_trapfinding_bonus`, `slayer_track_bonus`) plus a talent-count mechanism
+(`slayer_talent_count`) and a stalker-bonus mechanism (`slayer_stalker_bonus`) all already exist —
+Decision 64's 25-class pass simply never ran the archetype-slot measurement against it. Of Slayer's 10
+raw archetype-table slots (`Slayer_Archetype_{ArmorProficiencies,ClassSkills,Proficiencies,Stalker,
+Talent{2,4,6,10},Track,WeaponProficiencies}`), Talent2/4/6/10 collapse to the one `slayer_talent_count`
+mechanism (matching the Ranger/Cleric tiered-collapse precedent), leaving **7 mechanisms, 4 wired**
+(ClassSkills, Stalker, Talent-count, Track) — **ArmorProficiencies/Proficiencies/WeaponProficiencies
+have zero grep evidence anywhere**, not assumed handled elsewhere.
+
+**Three classes (Antipaladin, Ninja, Samurai) carry ZERO archetype-table content in the 23-book scope at
+all** — re-derived by direct substring count (`grep -c "Ninja Archetype" ... -> 0`, `"Samurai Archetype"
+-> 0`; Antipaladin's only 2 hits are the class's own auto-grantor header and a single non-slot alignment-
+bypass utility option, both inspected). These are trivially cleared: there is nothing here for a
+supersession-shape Epic 4 cycle to build.
+
+No blended percentage is reported anywhere in this receipt (Decision 34/64's standing rule) — every
+figure above is per-class.
+
+Full per-class evidence, raw slot lists, and every collapse candidate flagged-but-not-verified:
+`artifacts/SD31-E3-F1-001-clearance-table.json`.
+
+### 3. F3 — chooser-interaction primitive design, then Oracle/Arcanist/Sorcerer re-measured
+
+**Design:** `artifacts/SD31-E3-F3-001-chooser-primitive-design.md`. Recommends reusing
+`archetype_claims_slot` verbatim for the "is this tier still choosable" half (it was never actually
+supersession-specific, only untested against a chooser class) and adding one new, thin
+`chooser_option_selected(input, pool_choice_id, option_id, corpus_pool)` primitive for the "does the
+specific selected option ground" half — rejecting a single unified-abstraction alternative because it
+would re-implement `archetype_claims_slot`'s already-proven logic a second time for no benefit. Full
+tradeoffs, including why a single collapsed wired-able/named fraction is not meaningful for a chooser
+class (the same Decision 34/64 anti-blending rule, applied one level down), are in the design doc.
+
+**Re-measured by the same no-proxy standard, superseding Decision 64's qualitative-only account:**
+
+- **Oracle:** 5/10 mysteries directly wired (Life, Lore, Nature, Bone, Flame; Battle/Heavens/Stone/
+  Waves/Wind are not), 6 tier-1 revelations grounded (Lore mystery has 2: Sidestep Secret AND Lore
+  Keeper) — book-scoped to `advanced_players_guide`, the same book Decision 64 measured against.
+  **Correction:** Decision 64 stated "5 revelations across 5 mysteries"; the current tip has 6. Retro
+  correction emitted (`--verified-by` the const-and-tuple grep in `pilot_compute.rs:2857-2862,14150-14154`).
+  Known additional scope not counted this cycle: `ultimate_magic` +4 mysteries, `ultimate_intrigue` +1,
+  `inner_sea_magic` +1 (20 of 23 books not checked for mysteries).
+- **Arcanist:** 1/46 exploits (`Metamagic Knowledge` only; `Greater Arcanist Exploit`, `Consume Spells`,
+  `Magical Supremacy` and the other 45 exploits remain named-but-not-built per
+  `push_arcanist_exploits_deferred_diagnostic`) — unchanged from Decision 64, now with an exact
+  denominator (46, re-derived: `grep -oE 'KEY:Arcanist Exploit ~ [^\t]+' .../acg_abilities_class.lst |
+  sort -u | wc -l`). Checked 5 other books for additional Arcanist Exploit records: 0 found — ACG appears
+  to be the exploit's sole home book.
+- **Sorcerer:** 2/10 bloodlines (Arcane, Draconic; Aberrant/Abyssal/Celestial/Destined/Elemental/Fey/
+  Infernal/Undead are not) — book-scoped to `core_rulebook`. **This is a floor, not the true total:**
+  `advanced_players_guide` alone adds 10 MORE bloodlines (Aquatic, Boreal, Deep, Dreamspun, Protean,
+  Serpentine, Shadow, Starsoul, Stormborn, Verdant), plus `ultimate_magic` +7, `occult_adventures` +2,
+  `advanced_race_guide` +2 — **at least 31 bloodlines known corpus-wide across 5 of 23 books checked**,
+  materially larger than a book-scoped figure alone would suggest. Named explicitly rather than silently
+  reporting the narrower, more flattering 2/10 as if it were the whole picture.
+
+### 4. Deliverable: the machine-readable clearance table
+
+`artifacts/SD31-E3-F1-001-clearance-table.json` — every one of the 24 newly-measured classes (plus the
+3 chooser-based classes and the 25 inherited classes' spot-check), each with its evidence command,
+`cleared_for_epic_4` flag. All 24 supersession-shape classes are `cleared_for_epic_4: true` — a produced
+figure, even 0/N, IS the clearance Epic 4/5 gate on (per epic-breakdown.md: "a class's Epic 5 cycle
+cannot be scheduled until this epic has produced that class's wired-able/named figure by direct
+evidence" — nothing in that sentence requires the figure be favorable). `kanban.md`'s `epic-3-measurement`
+row updated to name every cleared class, since that row is the gate Epic 4/5 dispatch reads.
+
+### 5. F4 — explicitly NOT claimed
+
+`epic-3-measurement` F4 (`unknown`-bucket characterization) is hard-gated on `epic-2-verdict-paths`
+being `COMPLETE`. Confirmed still not the case this wave: `grep -n "epic-2-verdict-paths" kanban.md` →
+status `READY`, not `COMPLETE` (F3's 409-unit `ambiguous` dead-end still open per that row's own text).
+F4 was not attempted, per the dispatch brief's own explicit instruction not to claim across an open gate.
+
+### 6. Gate
+
+This card's file territory (`docs/release/SD-31-corpus-closure-grind/**` except `OPEN-ISSUES.md`, plus
+read-only `src/**`) changed no production code — a full `./scripts/verify.sh` sweep is not warranted and
+was not run. Ran instead:
+- `./scripts/verify.sh --only preflight-oracle` (twice: cycle start and cycle end) → PASS both times,
+  `VERIFY_EXIT=0`.
+- `python3 -m json.tool docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E3-F1-001-clearance-table.json > /dev/null` → valid JSON, no error (the applicable lint for this cycle's one JSON deliverable;
+  confirmed via `./scripts/verify.sh --list` that no repo-wide JSON-lint stage exists to invoke instead).
+- No `.rs`/`.py`/`.sh` production file was touched; `git status --porcelain` before this commit shows
+  only the two pre-existing untracked files from other sessions (left alone) plus this cycle's own new
+  files under `docs/release/SD-31-corpus-closure-grind/`.
+
+### What I corrected, reworked, or narrowly avoided
+
+- Nearly reported Oracle's mystery-count figure as unchanged from Decision 64 ("5 revelations") before
+  the direct const/tuple grep showed 6 — a real drift, not a transcription error on my part, caught by
+  following the "re-derive, don't transcribe" rule on an inherited figure the brief itself flagged as
+  potentially stale.
+- Nearly reported Slayer as "not yet measured" (it genuinely isn't in the 25-list) before grepping
+  `pilot_compute.rs` directly and finding real, substantial existing chassis wiring — would have under-
+  reported an already-measurable class as a bigger gap than it is.
+- Deliberately did NOT collapse tiered archetype slots (GunTraining1-4, VigilanteTalent2-18,
+  CrypticInsight2-16, PsychicWarriorBonusFeat1-11, Kineticist's Infusion/UtilityWildTalent tiers) into
+  single mechanisms the way Slayer's Talent2-10 was collapsed — flagged each as a "plausible collapse
+  candidate, not verified" in the clearance table rather than asserting a collapsed count I had not
+  individually confirmed maps to one real shared formula (Decision 64's own precedent: Monk's 21 slots
+  do NOT collapse despite superficially looking tiered, so collapsing without per-slot confirmation would
+  risk exactly the "generalizing from a favorable subset" instrument failure Decision 64's own text warns
+  about).
+- Did not fabricate a corpus-wide bloodline/mystery/exploit total — reported the book-scoped figure
+  Decision 64's own convention uses, explicitly flagged as a floor with the specific additional books
+  and counts found, rather than either quietly under-reporting (hiding the extra 21+ bloodlines) or
+  guessing a corpus-wide total from partial data.
+- Did not attempt to build `chooser_option_selected` — F3 asks for a design decision, not an
+  implementation; conflating the two would be scope expansion on a read-only-`src/**` card.
+
+### Board delta
+
+This card changes no `docs/work-inventory.json` inputs and touches no `wiring_class`/`status` field —
+zero board movement is the correct, honest result for a pure-measurement cycle. The clearance table is
+what unblocks Epic 4/5's OWN future board movement across the 24 newly-cleared classes plus Slayer's
+already-partial wiring.
+
+### Retro events
+
+Emitted to `docs/retro/events/sd31-e3-measure.jsonl`: two `correction` events — (1) Oracle revelation
+count, 5→6, `--verified-by` the `pilot_compute.rs` grep above; (2) Slayer's missed-already-measurable
+status, `--verified-by` the chassis-function grep above. No `deferral` — every measured class got a
+real, direct-evidence figure, even where that figure is 0/N.
+
+### Files changed
+
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E3-F1-001-clearance-table.json` (new)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E3-F3-001-chooser-primitive-design.md` (new)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E3-F1-001-verify.log` (new, `VERIFY_EXIT=0`)
+- `docs/release/SD-31-corpus-closure-grind/kanban.md` (`epic-3-measurement` row)
+- `docs/release/SD-31-corpus-closure-grind/progress.md` (this entry)
+- `docs/retro/events/sd31-e3-measure.jsonl` (new, 2 events)

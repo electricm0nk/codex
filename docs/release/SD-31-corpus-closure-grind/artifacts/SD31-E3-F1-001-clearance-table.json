@@ -1,0 +1,99 @@
+{
+  "generated_at": "2026-08-15",
+  "cycle_id": "SD31-E3-F1-001",
+  "card": "epic-3-measurement",
+  "method": "Per Decision 64 (SD-28 decisions.md, adopted SD-30 decisions.md Decision 34): for each class, enumerate its own archetype-table 'replaced slot' ids declared in the PCGen corpus (PREFACT/TYPE. token lists on that class's own *_Archetype_* archetype records), then grep src/rules_core/pilot_compute.rs for a real, unconditional (level-gated only) base computation of each slot's real id. wired_able is a count of slot ids with direct grep evidence of a computing function/const in pilot_compute.rs, never inferred from a near-miss name. named is the raw distinct slot-id count found in the class's own book-of-origin corpus file (via $PCGEN_CORPUS_ROOT), before any tier-collapse analysis, UNLESS collapsed_named is present (only computed where explicitly stated below). All commands are re-runnable against $PCGEN_CORPUS_ROOT (pinned oracle 7f818006e371188e5717fd18d74d18a420747fc6) and src/rules_core/pilot_compute.rs at this cycle's HEAD.",
+  "inherited_state": {
+    "source": "SD-28 decisions.md Decision 64, adopted SD-30 decisions.md Decision 34",
+    "classes_measured": 25,
+    "total_wired_able_slots": 263,
+    "total_named_slots": 475,
+    "total_mechanisms_after_collapse": 175,
+    "spot_verification_this_cycle": [
+      {"class": "Fighter", "check": "grep -c 'fn fighter_' src/rules_core/pilot_compute.rs -> 6; compute_fighter_chassis present at line 10129", "result": "still real, not fully re-derived to the exact 1/22 ratio"},
+      {"class": "Skald", "check": "grep -c 'fn skald_\\|Skald' src/rules_core/pilot_compute.rs -> 354 hits", "result": "still substantively present, not fully re-derived to the exact 10/10 ratio"}
+    ],
+    "note": "Per the card's own instruction ('verify before extending, do not re-measure'), this cycle spot-checked continued presence for 2 of the 25 classes (opposite ends of the wired-able spectrum) rather than re-deriving all 25 ratios from scratch. No drift found in the spot check. The 3 excluded classes (Oracle, Arcanist, Sorcerer) ARE re-measured below with new, precise figures superseding Decision 64's qualitative account (see chooser_based_classes)."
+  },
+  "eleven_unmodelled_base_class_features_incidental_finding": {
+    "source": "SD-28 decisions.md Decision 64 (unchanged, not re-verified this cycle)",
+    "note": "Recorded so this epic does not rediscover them as new findings, per epic-breakdown.md's own instruction."
+  },
+  "newly_measured_classes": [
+    {"class": "Occultist", "book": "occult_adventures", "wired_able": 0, "named_raw": 15, "collapse_note": "no numbered tiers found (ClassSkills, Implements, ImplementMastery, Implement6, MentalFocus, Spellcasting, MagicItemSkill, ObjectReading, ShiftFocus, MagicCircles, BindingCircles, FastCircles, WeaponAndArmorProficiency, AuraSight, OutsideContact) -- named_raw already equals mechanism count", "evidence_wired": "grep -ic occultist src/rules_core/pilot_compute.rs -> 0", "evidence_named": "grep -oE 'Occultist_Archetype_[A-Za-z0-9]+' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst | sort -u | wc -l -> 15", "cleared_for_epic_4": true},
+    {"class": "Spiritualist", "book": "occult_adventures", "wired_able": 0, "named_raw": 20, "named_collapsed": 18, "collapse_note": "2 case-variant corpus typos collapse to their canonical siblings: bondedManifestation==BondedManifestation, dualbond==DualBond", "evidence_wired": "grep -ic spiritualist src/rules_core/pilot_compute.rs -> 0", "evidence_named": "grep -oE 'Spiritualist_Archetype_[A-Za-z0-9]+' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst | sort -u | wc -l -> 20", "cleared_for_epic_4": true},
+    {"class": "Mesmerist", "book": "occult_adventures", "wired_able": 0, "named_raw": 14, "collapse_note": "BoldStare vs BoldStare7 kept distinct (different mechanical tiers, not verified duplicate) -- not collapsed", "evidence_wired": "grep -ic mesmerist src/rules_core/pilot_compute.rs -> 0", "evidence_named": "grep -oE 'Mesmerist_Archetype_[A-Za-z0-9]+' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst | sort -u | wc -l -> 14", "cleared_for_epic_4": true},
+    {"class": "Medium", "book": "occult_adventures", "wired_able": 0, "named_raw": 16, "evidence_wired": "grep -inE '\\bmedium\\b' src/rules_core/pilot_compute.rs -> 73 hits, ALL are the size category 'Medium' (armor/weapon/race text), 0 are the class -- verified by manual sample of every non-size-context hit", "evidence_named": "grep -oE 'Medium_Archetype_[A-Za-z0-9]+' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst | sort -u | wc -l -> 16", "cleared_for_epic_4": true},
+    {"class": "Kineticist", "book": "occult_adventures", "wired_able": 0, "named_raw": 25, "collapse_note": "Infusion/1/3/5/9/11/13 (7 tiers) and UtilityWildTalent/2/4/6/8/12/16/20 (7 tiers, note base 'BasicUtilityWildTalent' is a distinct 8th name) are plausible tier-collapse candidates by the Decision-64 pattern, NOT verified/collapsed this cycle -- named_raw is the uncollapsed floor", "evidence_wired": "grep -ic kineticist src/rules_core/pilot_compute.rs -> 0", "evidence_named": "grep -oE 'Kineticist_Archetype_[A-Za-z0-9]+' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst | sort -u | wc -l -> 25", "cleared_for_epic_4": true},
+    {"class": "Psychic", "book": "occult_adventures", "wired_able": 0, "named_raw": 14, "evidence_wired": "grep -icE '\\bpsychic\\b' src/rules_core/pilot_compute.rs -> 0", "evidence_named": "grep -oE 'Psychic_Archetype_[A-Za-z0-9]+' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst | sort -u | wc -l -> 14", "cleared_for_epic_4": true},
+    {"class": "Slayer", "book": "advanced_class_guide", "wired_able": 4, "named_raw": 10, "named_collapsed": 7, "collapse_note": "Talent2/Talent4/Talent6/Talent10 (4 tiers) collapse to 1 mechanism (slayer_talent_count(level), the same tiered-slot precedent as Ranger's FavoredEnemy2/3/4 in Decision 64)", "wired_slots": ["ClassSkills (selected_skill_class_skill_bonus_applies widening)", "Stalker (slayer_stalker_bonus fn, line 17152)", "Track (slayer_track_bonus fn, line 17054)", "Talent-tier-count (slayer_talent_count fn, line 17076; only ONE specific talent, Foil Scrutiny, has its own bonus computed -- the COUNT grounds unconditionally, matching Ranger's combat_style_bonus_feat count precedent)"], "not_wired_slots": ["ArmorProficiencies", "Proficiencies", "WeaponProficiencies"], "evidence_wired": "grep -n 'slayer_' src/rules_core/pilot_compute.rs | grep -iE 'trap_sense|trapfinding|sneak_attack|class_skill|track|stalker|proficienc|talent' -- see fn names at lines 17023/17035/17045/17054/17076/17152; grep -n proficienc src/rules_core/pilot_compute.rs -i | grep -i slayer -> 0 hits (proficiencies not found)", "evidence_named": "grep -oE 'Slayer_Archetype_[A-Za-z0-9]+' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst | sort -u | wc -l -> 10", "finding": "Slayer was NOT in Decision 64's 25-class list despite having real, substantial base-chassis wiring (SLAYER_CLASS_ID const, is_supported_slayer_single_class, acg::class_chassis_resolve) -- a missed-already-measurable class, corrected this cycle.", "cleared_for_epic_4": true},
+    {"class": "Antipaladin", "book": "advanced_players_guide", "wired_able": 0, "named_raw": 0, "note": "Genuinely 0 archetype-table content in the 23-book scope: only 2 'Antipaladin Archetype' corpus hits total, one the class's own AUTOMATIC grantor header, the other a single non-slot 'Alternate Alignment' alignment-bypass utility option (not a base-feature swap). Trivially cleared -- nothing here for a supersession-shape Epic 4 cycle to build.", "evidence_named": "grep -n 'Antipaladin Archetype' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst -> 2 lines, both inspected", "cleared_for_epic_4": true},
+    {"class": "Gunslinger", "book": "ultimate_combat", "wired_able": 0, "named_raw": 17, "collapse_note": "GunTraining/GunTraining1/2/3/4 (5 tokens) is a plausible tier-collapse candidate, NOT verified/collapsed this cycle", "evidence_wired": "grep -icE '\\bGunslinger\\b' src/rules_core/pilot_compute.rs -> 0", "evidence_named": "grep -oE 'Gunslinger_Archetype_[A-Za-z0-9]+' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst | sort -u | wc -l -> 17", "cleared_for_epic_4": true},
+    {"class": "Ninja", "book": "ultimate_combat", "wired_able": 0, "named_raw": 0, "note": "0 'Ninja Archetype' corpus hits in the 23-book scope -- genuinely no archetype table exists for this class here (confirmed, not a missed grep pattern: both the FACT-flag and TYPE. patterns return 0, and a direct 'Ninja Archetype' substring count is 0). Trivially cleared.", "evidence_named": "grep -c 'Ninja Archetype' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst -> 0", "cleared_for_epic_4": true},
+    {"class": "Samurai", "book": "ultimate_combat", "wired_able": 0, "named_raw": 0, "note": "Same finding as Ninja: 0 'Samurai Archetype' corpus hits in the 23-book scope. Trivially cleared.", "evidence_named": "grep -c 'Samurai Archetype' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst -> 0", "cleared_for_epic_4": true},
+    {"class": "Vigilante", "book": "ultimate_intrigue", "wired_able": 0, "named_raw": 21, "collapse_note": "VigilanteTalent/2/4/6/8/10/12/14/16/18 (10 tokens) is a plausible tier-collapse candidate, NOT verified/collapsed this cycle", "evidence_wired": "grep -icE '\\bVigilante\\b' src/rules_core/pilot_compute.rs -> 0", "evidence_named": "grep -oE 'Vigilante_Archetype_[A-Za-z0-9]+' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst | sort -u | wc -l -> 21", "cleared_for_epic_4": true},
+    {"class": "Magus", "book": "ultimate_magic", "wired_able": 0, "named_raw": 7, "evidence_wired": "grep -inE 'Magus' src/rules_core/pilot_compute.rs -> 2 hits, both comments about the Swashbuckler/Magus deed-borrowing seam, 0 own-chassis computation", "evidence_named": "grep -oE 'Magus_Archetype_[A-Za-z0-9]+' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst | sort -u | wc -l -> 7", "cleared_for_epic_4": true},
+    {"class": "Shifter", "book": "ultimate_wilderness", "wired_able": 0, "named_raw": 12, "evidence_wired": "grep -icE '\\bShifter\\b' src/rules_core/pilot_compute.rs -> 0", "evidence_named": "grep -oE 'Shifter_Archetype_[A-Za-z0-9]+' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst | sort -u | wc -l -> 12", "cleared_for_epic_4": true},
+    {"class": "Aegis", "book": "ultimate_psionics", "wired_able": 0, "named_raw": 14, "evidence_wired": "grep -icE '\\bAegis\\b' src/rules_core/pilot_compute.rs -> 0", "evidence_named": "TYPE:Archetype.AegisArchetype.* dot-list extraction over $PCGEN_CORPUS_ROOT/pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst -> 14 distinct tokens", "cleared_for_epic_4": true},
+    {"class": "Cryptic", "book": "ultimate_psionics", "wired_able": 0, "named_raw": 17, "collapse_note": "CrypticInsight2/4/8/10/12/16 (6 tokens) is a plausible tier-collapse candidate, NOT verified/collapsed this cycle", "evidence_wired": "grep -icE '\\bCryptic\\b' src/rules_core/pilot_compute.rs -> 0", "evidence_named": "TYPE:Archetype.CrypticArchetype.* dot-list extraction -> 17 distinct tokens", "cleared_for_epic_4": true},
+    {"class": "Dread", "book": "ultimate_psionics", "wired_able": 0, "named_raw": 10, "evidence_wired": "grep -icE '\\bDread\\b' src/rules_core/pilot_compute.rs -> 1 hit ('a sense of growing dread', a Skald flavor-text comment, not the class) -- 0 real", "evidence_named": "TYPE:Archetype.DreadArchetype.* dot-list extraction -> 10 distinct tokens", "cleared_for_epic_4": true},
+    {"class": "Marksman", "book": "ultimate_psionics", "wired_able": 0, "named_raw": 9, "evidence_wired": "grep -icE '\\bMarksman\\b' src/rules_core/pilot_compute.rs -> 0", "evidence_named": "TYPE:Archetype.MarksmanArchetype.* dot-list extraction -> 9 distinct tokens", "cleared_for_epic_4": true},
+    {"class": "Psion", "book": "ultimate_psionics", "wired_able": 0, "named_raw": 9, "evidence_wired": "grep -icE '\\bPsion\\b' src/rules_core/pilot_compute.rs -> 0", "evidence_named": "TYPE:Archetype.PsionArchetype.* dot-list extraction -> 9 distinct tokens", "cleared_for_epic_4": true},
+    {"class": "Psychic Warrior", "book": "ultimate_psionics", "wired_able": 0, "named_raw": 21, "collapse_note": "BonusFeat1/2/5/8/11 (5 tokens) is a plausible tier-collapse candidate, NOT verified/collapsed this cycle", "evidence_wired": "grep -icE 'PsychicWarrior|Psychic Warrior' src/rules_core/pilot_compute.rs -> 0", "evidence_named": "TYPE:Archetype.PsychicWarriorArchetype.* dot-list extraction -> 21 distinct tokens", "cleared_for_epic_4": true},
+    {"class": "Soulknife", "book": "ultimate_psionics", "wired_able": 0, "named_raw": 14, "corpus_typo_note": "'SoulkifeQuickDraw' (missing 'n') appears verbatim in the corpus alongside the correctly-spelled 'Soulknife*' tokens -- counted as its own distinct declared slot, not merged, since it is a real corpus string, not this cycle's invention", "evidence_wired": "grep -icE '\\bSoulknife\\b' src/rules_core/pilot_compute.rs -> 0", "evidence_named": "TYPE:Archetype.SoulknifeArchetype.* dot-list extraction -> 14 distinct tokens", "cleared_for_epic_4": true},
+    {"class": "Tactician", "book": "ultimate_psionics", "wired_able": 0, "named_raw": 12, "evidence_wired": "grep -icE '\\bTactician\\b' src/rules_core/pilot_compute.rs -> 9 hits, ALL are Cavalier's 'Order of the Tactician' teamwork-feat mechanic (BONUS:ABILITYPOOL|Tactician Teamwork Feat), not the psionic Tactician base class -- verified by reading every hit's context (lines 2122-2126, 11027, 11147-11236, 62863)", "evidence_named": "TYPE:Archetype.TacticianArchetype.* dot-list extraction -> 12 distinct tokens", "cleared_for_epic_4": true},
+    {"class": "Vitalist", "book": "ultimate_psionics", "wired_able": 0, "named_raw": 10, "evidence_wired": "grep -icE '\\bVitalist\\b' src/rules_core/pilot_compute.rs -> 0", "evidence_named": "TYPE:Archetype.VitalistArchetype.* dot-list extraction -> 10 distinct tokens", "cleared_for_epic_4": true},
+    {"class": "Wilder", "book": "ultimate_psionics", "wired_able": 0, "named_raw": 11, "evidence_wired": "grep -icE '\\bWilder\\b' src/rules_core/pilot_compute.rs -> 0 (raw un-bounded grep returns 7, all substring hits inside 'Wilderness'/'ultimate_wilderness' -- \\b-bounded is the correct check)", "evidence_named": "TYPE:Archetype.WilderArchetype.* dot-list extraction -> 11 distinct tokens", "cleared_for_epic_4": true}
+  ],
+  "totals_newly_measured": {
+    "classes": 24,
+    "wired_able_sum": 4,
+    "named_raw_sum": 268,
+    "note": "No blended percentage reported (Decision 34/64's standing rule) -- this sum is a denominator-accounting convenience only, not a program percentage."
+  },
+  "chooser_based_classes": {
+    "design_doc": "SD31-E3-F3-001-chooser-primitive-design.md",
+    "classes": [
+      {
+        "class": "Oracle",
+        "book_measured": "advanced_players_guide",
+        "mysteries_named_in_book": 10,
+        "mysteries_wired": 5,
+        "wired_mysteries": ["Life", "Lore", "Nature", "Bone", "Flame"],
+        "not_wired_mysteries": ["Battle", "Heavens", "Stone", "Waves", "Wind"],
+        "tier1_revelations_grounded": 6,
+        "revelation_detail": "Life->Channel, Lore->Sidestep Secret, Lore->Lore Keeper (Lore mystery has 2 grounded revelations), Nature->Nature's Whispers, Bone->Near Death, Flame->Cinder Dance",
+        "correction": "Decision 64 stated '5 revelations across 5 mysteries'. Current tip has 6 revelations across the same 5 mysteries (Lore mystery gained a second). Emitted as a retro.py correction this cycle.",
+        "known_additional_scope_not_counted": "ultimate_magic +4 mysteries, ultimate_intrigue +1, inner_sea_magic +1 (6 more known mysteries corpus-wide, not exhaustively counted -- 20 of 23 books not checked for mysteries)",
+        "evidence": "grep -n 'ORACLE_.*_REVELATION\\b' src/rules_core/pilot_compute.rs | grep const; grep -oE 'KEY:[A-Za-z]+ Mystery\\b' $PCGEN_CORPUS_ROOT/.../advanced_players_guide/apg_abilities_class.lst | sort -u -> 10",
+        "cleared_for_epic_4": "N/A -- chooser shape, not supersession; see design doc"
+      },
+      {
+        "class": "Arcanist",
+        "book_measured": "advanced_class_guide",
+        "exploits_named_in_book": 46,
+        "exploits_wired": 1,
+        "wired_exploit": "Metamagic Knowledge (ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID, ground_or_block_arcanist_metamagic_knowledge)",
+        "not_wired": "45 of 46 exploits + Greater Arcanist Exploit + Consume Spells + Magical Supremacy remain named-but-not-built (push_arcanist_exploits_deferred_diagnostic, line 16073) -- unchanged from Decision 64",
+        "known_additional_scope_not_counted": "0 additional 'Arcanist Exploit ~' records found in ultimate_magic, ultimate_intrigue, occult_adventures, horror_adventures, advanced_race_guide -- ACG (46) appears to be the exploit's sole home book (5 of 23 books checked)",
+        "evidence": "grep -oE 'KEY:Arcanist Exploit ~ [^\\t]+' $PCGEN_CORPUS_ROOT/.../advanced_class_guide/acg_abilities_class.lst | sort -u | wc -l -> 46",
+        "cleared_for_epic_4": "N/A -- chooser shape, not supersession; see design doc"
+      },
+      {
+        "class": "Sorcerer",
+        "book_measured": "core_rulebook",
+        "bloodlines_named_in_book": 10,
+        "bloodlines_wired": 2,
+        "wired_bloodlines": ["Arcane", "Draconic"],
+        "not_wired_bloodlines": ["Aberrant", "Abyssal", "Celestial", "Destined", "Elemental", "Fey", "Infernal", "Undead"],
+        "known_additional_scope_not_counted": "advanced_players_guide +10 bloodlines (Aquatic, Boreal, Deep, Dreamspun, Protean, Serpentine, Shadow, Starsoul, Stormborn, Verdant), ultimate_magic +7, occult_adventures +2, advanced_race_guide +2 -- 31 known corpus-wide across 5 books checked (18 of 23 not checked), materially larger than the 10-bloodline core_rulebook floor",
+        "evidence": "grep -oE 'KEY:Sorcerer Bloodline ~ [A-Za-z]+' $PCGEN_CORPUS_ROOT/.../core_rulebook/cr_abilities_class.lst | sort -u -> 10; const SORCERER_BLOODLINE_CHOICE_ID/ARCANE_BLOODLINE_SELECTION_ID/DRACONIC_BLOODLINE_SELECTION_ID at src/rules_core/pilot_compute.rs:1679-1681",
+        "cleared_for_epic_4": "N/A -- chooser shape, not supersession; see design doc"
+      }
+    ]
+  },
+  "explicitly_not_found_in_scope": {
+    "mythic_adventures": "Not one of the 23 in-scope class_feature books (re-derived: 'mythic_adventures' absent from the 23-book list at docs/release/SD-31-corpus-closure-grind/decisions.md and from python3 -c \"import json;d=json.load(open('docs/work-inventory.json'));print(set(u['book'] for u in d['units'] if u['kind']=='class_feature'))\"). No mythic path-tier class_feature units exist to measure this cycle.",
+    "inner_sea_archetype_content": "The 6 Inner Sea books in the 23-book list (inner_sea_combat, inner_sea_magic, book_of_the_damned_volume_2, inner_sea_world_guide, inner_sea_intrigue, inner_sea_taverns, book_of_the_damned_volume_1) were checked for ARCH:<name> archetype-record prefixes during F1's enumeration pass; every subject found there resolves to one of the 25-class inherited list or the 24 newly-measured classes above -- no additional class identity surfaced from Inner Sea content specifically."
+  }
+}
