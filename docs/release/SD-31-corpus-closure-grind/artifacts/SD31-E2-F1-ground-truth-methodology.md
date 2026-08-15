@@ -44,6 +44,17 @@ Fixed seed (`random.seed(31)`, chosen for SD-31) over `docs/work-inventory.json`
 
 150 total after de-duplication (no unit drawn twice).
 
+**Reproducibility gap (`NOTED 2026-08-15`, Opus adversarial-review CONFIRMED finding).** Neither the
+sampling script (`sample_units.py`, `random.seed(31)`) nor the two evidence-extraction scripts
+described above were committed alongside this artifact — `git diff --stat` between `origin/tranche/11`
+and this branch's merge-base shows 6 files, all under `docs/`, zero `.py`/`.rs`. The stratified draw
+therefore cannot be re-run or independently audited by a later cycle, and the claim that the
+evidence-extraction scripts were "pure evidence extraction, no verdict output" — the assertion that
+keeps this cycle inside Decision 1(e) item 1's "no classifier before the sample" gate — cannot be
+checked by anyone but the labeller. Tracked as `OPEN-ISSUES.md` row 4 (owner: Epic 2, `NOTE`):
+commit the sampling script (or inline it verbatim) alongside any future re-draw so the draw is
+independently reproducible.
+
 **Re-derived population counts** (commands, run against this cycle's checkout of
 `docs/work-inventory.json`):
 
@@ -86,6 +97,27 @@ those two classes — by design, per the card's "oversample the two populations 
 decide" instruction.
 
 **Population tags:** `null` (general sample) 70, `ambiguous_target` 40, `display_grounded_target` 40.
+
+**Stratification depth caveat (`NOTED 2026-08-15`, Opus adversarial-review CONFIRMED finding).** The
+sample meets the letter of SD31-E2-F1's own size/stratification floor (150 ≥ 100, all 5 classes, 11
+kinds ≥ 4), but is thin against SD31-E2-F2's *own* acceptance criterion, which requires the agreement
+rate "reported per class AND per kind, plus its full confusion matrix":
+```
+python3 -c "
+import json, collections
+d = json.load(open('docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E2-F1-ground-truth-sample-v1.json'))
+print(collections.Counter(r['kind'] for r in d))
+ct = collections.Counter((r['hand_wiring_class'], r['kind']) for r in d)
+print(len(ct), 'occupied cells,', sum(1 for v in ct.values() if v <= 2), 'with n<=2')
+"
+# -> 45 occupied (class, kind) cells, 31 of them n<=2
+```
+Every unit of *independently-evidenced* signal in the sample sits almost entirely in the 40
+`no_corpus_line`-tagged units plus 5 strays (engine-class evidenced-unit counts: `display` 0,
+`computed` 0, `static` 2, `derived` 3, `ambiguous` 40 — see the Result section's Correction 2 for the
+full evidence-quality picture). **F2 must not report a per-class/per-kind rate for a cell this sample
+does not defensibly cover**; either a future re-draw widens thin cells, or F2 states explicitly which
+cells it is not permitted to report on. Tracked as `OPEN-ISSUES.md` row 5 (owner: Epic 2, `NOTE`).
 
 ## Labelling method
 
@@ -282,36 +314,83 @@ case sensitivity).
 
 ## Result
 
+**CORRECTED 2026-08-15 (`SD31-W1-INTEGRATE-001`, fixing two Opus adversarial-review CONFIRMED
+findings against this section).** The table and the two headline percentages below were wrong or
+unusable as originally published. Both defects and their fixes are recorded here rather than
+silently edited in place, per this program's correction convention.
+
 | | count |
 |---|---:|
 | Sampled units | 150 |
 | Agree with engine's current `wiring_class` | 107 |
 | Disagree | 43 |
-| ...of which: `no_corpus_line` bug (Finding A) | 40 |
+| ...of which: `no_corpus_line` bug (Finding A) | **38** (corrected from 40 — see below) |
 | ...of which: `BONUS:STAT`/`DR`/`CR` "/" false positive (Finding B) | 3 |
 | ...of which: case-sensitive scalar miss (Finding C) | included above (1, also counted toward the 43 — see note below) |
 
-Note: Finding C's 1 unit and 2 of the 3 Finding-B units are disjoint from the 40 no_corpus_line units,
-so 40 + 3 = 43 accounts for the full disagreement count exactly (Finding C's unit is one of the 3
-Finding-B-adjacent... to be precise: Finding B is exactly 3 units, Finding C is exactly 1 additional
-unit, judgement-call unit `martial_artist_martial_arts_master` is 1 more — 40 + 3 + 1 + 1 = 45, but
-`favored_enemy_humanoid_changeling` and `exciter_rapture`'s judgement calls are already inside the 40
-no_corpus_line units (they coincidentally class-match `ambiguous` but for the wrong reason, and are
-*not* counted as disagreements by the `hand_wiring_class != engine_wiring_class` metric the JSON uses,
-since the final class label is the same). Exact per-unit accounting is in
-`SD31-E2-F1-ground-truth-sample-v1.json`'s `agrees_with_engine` field — trust that field, not this
-prose summary, for the authoritative count.
+**Correction 1 — the `no_corpus_line` attribution was 40, the true figure is 38.** Two of the 40
+`no_corpus_line`-tagged units actually **agree** with the engine (both land on `ambiguous` for a
+different reason than the engine's, so they are not disagreements at all): re-derived by
+```
+python3 -c "
+import json
+d = json.load(open('docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E2-F1-ground-truth-sample-v1.json'))
+ncl = [r for r in d if 'no_corpus_line_bug' in r['token_evidence']]
+print(len(ncl), sum(1 for r in ncl if not r['agrees_with_engine']), sum(1 for r in ncl if r['agrees_with_engine']))
+print([r['id'] for r in ncl if r['agrees_with_engine']])
+"
+# -> 40 38 2
+# -> ['core_essentials:race_trait:favored_enemy_humanoid_changeling', 'horror_adventures:class_feature:exciter_rapture']
+```
+38 (no_corpus_line disagreements) + 3 (Finding B) + 1 (Finding C, subset of Finding B's 3) + 1
+(judgement-call unit `martial_artist_martial_arts_master`) = 43, the disagreement total, with no
+double count: the 2 agreeing `no_corpus_line` units are excluded from every disagreement bucket.
+Exact per-unit accounting is in `SD31-E2-F1-ground-truth-sample-v1.json`'s `agrees_with_engine`
+field — trust that field, not this prose summary, for the authoritative count. Retro `correction`
+event emitted this cycle: subject this file's original Result table, claimed 40, actual 38,
+`--verified-by` the command above.
 
-**Excluding the `no_corpus_line` population** (a single, fixable root cause, not a diffuse
-classification-boundary problem): 110 non-`no_corpus_line` units, 105 agree, 5 disagree — a raw 95.5%
-agreement rate on the population the current determinator can actually see, with the 5 disagreements
-themselves clustering into two more named, systematic causes (Findings B and C) rather than being
-independent noise.
+**Correction 2 — the 95.5% and 71.3% headline agreement figures are WITHDRAWN.** Both numbers
+were composed almost entirely of unevidenced rows and must not be cited, quoted, or acted on
+(including as grounds for a Decision 1(e) item 4 "close Epic 2 at F1" call) until the artifact is
+re-labelled. Re-derived:
+```
+python3 -c "
+import json
+d = json.load(open('docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E2-F1-ground-truth-sample-v1.json'))
+BOIL = \"confirmed from the unit's full token closure\"
+isb = lambda r: r['token_evidence'].startswith(BOIL)
+non = [r for r in d if 'no_corpus_line_bug' not in r['token_evidence']]
+ag = [r for r in non if r['agrees_with_engine']]
+print('excl-no_corpus_line:', len(non), 'agree:', len(ag), 'of-those-boilerplate:', sum(isb(r) for r in ag))
+for pop in (None, 'ambiguous_target', 'display_grounded_target'):
+    g = [r for r in d if r['population'] == pop]
+    print(pop, 'n=', len(g), 'agree=', sum(r['agrees_with_engine'] for r in g), 'boilerplate=', sum(isb(r) for r in g))
+"
+# -> excl-no_corpus_line: 110 agree: 105 of-those-boilerplate: 105   (the withdrawn "95.5%")
+# -> None n=70 agree=57 boilerplate=56 | ambiguous_target n=40 agree=10 boilerplate=9
+# -> display_grounded_target n=40 agree=40 boilerplate=40             (the withdrawn "71.3%" traces to the
+#    same defect: 105 of 150's agreements carry a single canned string, not a quoted token)
+```
+105 of the 150 labels — including **all 40** of the `display_grounded_target` population (the exact
+population AT-31-010 binds into Epic 2's acceptance) and all of engine classes `display` (54/54) and
+`computed` (14/14) — carry the identical boilerplate string `"confirmed from the unit's full token
+closure ... -- matches engine's own wiring_class and reason"` as their `token_evidence`, which quotes
+no token from the record and is a restatement of the engine's own output. Every one of those 105
+agrees with the engine (105/105), so the field is a perfect function of `agrees_with_engine`, not of
+the record — it cannot detect a systematic engine error in the one population Epic 2 exists to test.
+**No agreement/accuracy rate may be quoted from this artifact** until those 105 units (and
+particularly the 40 `display_grounded_target` units) are re-labelled with an actual quoted token or
+an explicit absence-of-token statement drawn from that unit's own row. Tracked as `OPEN-ISSUES.md`
+row 3 (owner: Epic 2, `BLOCKER`-severity for any F1-close decision, not for this integration cycle).
 
-Per Decision 1(e) item 4: this sample does **not** show "the current classifier substantially correct
-and any contradiction rare" across the *whole* board — the `no_corpus_line` bug alone means 80.9% of
-the `ambiguous` population is misclassified by a fixable defect, which is neither "substantially
-correct" for that population nor "rare". SD31-E2-F2 (classifier build) is therefore **in scope**, but
-its first task per this sample's evidence should be fixing `CorpusLines::line()`'s path resolution
-(Finding A) before any new classifier logic is evaluated against ground truth — otherwise F2's
-accuracy numbers measure the path bug, not classification quality.
+**What still stands, unwithdrawn.** The 45 non-boilerplate, record-evidenced labels (43 disagree, 2
+agree) are unaffected by Correction 2 — they carry real quoted evidence and their per-unit findings
+(A, B, C above) are load-bearing as written. Per Decision 1(e) item 4: this sample does **not** show
+"the current classifier substantially correct and any contradiction rare" across the *whole* board —
+the `no_corpus_line` bug alone means 80.9% of the `ambiguous` population is misclassified by a fixable
+defect, which is neither "substantially correct" for that population nor "rare". SD31-E2-F2
+(classifier build) is therefore **in scope**, but its first task per this sample's evidence should be
+fixing `CorpusLines::line()`'s path resolution (Finding A) before any new classifier logic is
+evaluated against ground truth — otherwise F2's accuracy numbers measure the path bug, not
+classification quality. This conclusion does not depend on either withdrawn headline figure.

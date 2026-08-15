@@ -16,10 +16,32 @@ THE GRID
 FULL `WIRING_CLASS_VALUES x status_vocabulary` cross product -- not just the
 `(wiring_class, status)` pairs actually present on the board -- widened by
 any wiring_class/status word actually observed on a real unit but absent
-from the producer's/document's own declared vocabulary (a novel word is
-exactly the failure mode this audit exists to catch; silently excluding it
-from the grid would be the "reimplemented table that drifts" hazard applied
-to the grid instead of the verdict function).
+from the producer's/document's own declared vocabulary (a NOVEL WIRING_CLASS
+word is exactly the failure mode this audit exists to catch; silently
+excluding it from the grid would be the "reimplemented table that drifts"
+hazard applied to the grid instead of the verdict function).
+
+CORRECTED CLAIM (2026-08-15, Opus adversarial-review CONFIRMED finding
+against an earlier revision of this paragraph and of commit `eadb263f7`'s
+message). The detection envelope above is proven only for a NOVEL
+WIRING_CLASS WORD, not for a novel STATUS word landing on a real `computed`
+or `display` unit: both branches' catch-all `else` in
+`_doneness_verdict_uncapped` (`computed`: `DONENESS_DONE if status ==
+"grounded" else DONENESS_IN_PROGRESS`; `display`: `... else
+DONENESS_IN_PROGRESS`) silently absorbs an unrecognised status word into
+`in-progress` -- never raises `ValueError`, never reported as `unmapped`,
+never moves the ceiling. Mutation-tested: forcing 3 real `computed` units to
+a fabricated status leaves `unmapped_cells_with_units` empty and the
+reported ceiling unchanged (`ok=True`, exit 0), where a fabricated
+WIRING_CLASS word on 1 real unit correctly fails (`ok=False`, exit 1). The
+producer's own `doneness_verdict()` docstring states the intended contract
+covers both axes; this audit's status-axis coverage does not yet meet it.
+Non-blocking (the miss cannot make a unit vanish from a rollup, only
+misclassify it within `computed`/`display`'s existing branches) --
+tracked as `OPEN-ISSUES.md` row 6, owner Epic 0, remedy: have `audit()`
+additionally report cells whose `(wiring_class, status)` pair is absent from
+the producer's/document's declared status vocabulary yet resolved by a
+catch-all branch, flagged `default-absorbed` alongside `unmapped`.
 
 Two kinds of dead-end cell are reported:
 

@@ -78,12 +78,17 @@ Acceptance:
   the Structural Exclusion Register** (`decisions.md §3`) — never left unowned.
 - The known dead-ends at authoring time, to be re-derived not transcribed: `wiring_class ==
   ambiguous` reaches `done` from no status (2,109 units); `unmeasurable`/`status == unknown` totals
-  3,989 (`class_feature` 3,622 + `feat` 367); `race` 103 units at 0 % and `race_trait` 3,284 not-done.
+  3,989 (`class_feature` 3,622 + `feat` 367); `race` 103 units at 0 % and `race_trait` 3,284 not-done
+  (authoring-time; re-derived 2026-08-15 as **3,181 not-done of 3,447, 266 done** —
+  `python3 -c "import json,importlib.util; spec=importlib.util.spec_from_file_location('P','scripts/observer/pf1e_dashboard_producer.py'); P=importlib.util.module_from_spec(spec); spec.loader.exec_module(P); d=json.load(open('docs/work-inventory.json')); U=[u for u in d['units'] if (u.get('book') or 'unknown') not in P.EXCLUDED_BOOKS and u.get('kind')=='race_trait']; nd=sum(1 for u in U if P.doneness_verdict(u.get('wiring_class') or 'ambiguous', u.get('status') or 'unknown','race_trait')!='done'); print(len(U),nd)"`
+  → `3447 3181`; see `artifacts/SD31-E0-F1-001-baseline.md`).
 
 ## Epic 1 (SD31-E1) — Race Chassis, 100 % mandate (moved from SD32-E1, orig. SD30-E12)
 
 **Objective:** build the missing race chassis that `SD-30 decisions.md §44` (citing SD-29
-`§44.4`/`§45.1`/`§49.2`) found absent for ~2,894 of the corpus's 3,447 `race_trait` units, plus the
+`§44.4`/`§45.1`/`§49.2`) found absent for ~2,894 of the corpus's 3,447 `race_trait` units
+(authoring-time; re-derived 2026-08-15 as 3,181 not-done of 3,447, 266 done — see Epic 0-F2's
+parenthetical above for the exact command and `artifacts/SD31-E0-F1-001-baseline.md`), plus the
 `race` kind itself (103 units, 0 % done). That absence was previously ruled structurally unreachable;
 this epic reverses that ruling by building the capability rather than accepting the ceiling.
 
