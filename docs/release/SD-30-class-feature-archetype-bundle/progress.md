@@ -2921,7 +2921,12 @@ updated `apps/desktop/src-tauri/Cargo.lock` as `cca272e8` ("fix(sd30): update de
 for dependency re-resolution after version bump").
 
 **RETRY GATE (resumption cycle 2026-08-14 21:40:00Z):** Full `verify.sh` gate re-run launched in 
-background, PID 663386, log at `artifacts/sd30-e7-f1-verify-retry.log`. Awaiting completion.
+background, PID 663386, log at `artifacts/sd30-e7-f1-verify-retry.log`. Gate progressed through:
+- root-full: PASS (6405 passed across 548 suites, all 527 tests/*.rs suites executed)
+- desktop: in progress (~11:35 elapsed as of final check)
+Remaining stages: reach, corpus-sweep, frontend, clippy, class-dump, then SUMMARY.
+Exit code capture: gate background process monitoring for completion; exit code will be appended here
+upon return or next cycle resumption. Do not pause waiting for completion — background tasks active.
 
 Pre-gate stages from first run (2026-08-14 20:18:00Z):
 - preflight-disk: PASS (695G available, 29% used)
