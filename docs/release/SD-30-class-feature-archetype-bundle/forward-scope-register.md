@@ -185,6 +185,66 @@ file path directly) and route the fix through `C1.5`'s declared-PI reader
 gate. Reclassifying a specific declared-PI row as shippable remains `ogl-pi-blacklist.md` §3's
 per-book override, an operator decision, never a lane's own call.
 
+### C1.8 — Wire `v06_corpus_trap_report -- --audit` into `scripts/verify.sh` as a real stage (2026-08-15, `SD30-E8-F3-001`)
+
+**Owner:** `SD-31-corpus-closure-grind` (monster/race_trait grind lanes already own re-deriving this
+audit's per-book coverage as part of their own closure work).
+
+**What SD-30 delivers:** the audit is now a real, non-vacuous gate — `epic-8-code-review` proved it
+can both fail (3 real `wiring-class-mismatch` defects, `data/corpus/inner_sea_gods/monster/
+{psychopomp_ahmuuth,steward_of_the_skein,the_first_blade}.json`) and pass (exit 0 after the fix),
+closing the objection that previously blocked wiring it in ("a gate that cannot fail proves
+nothing"). Both the self-check (`src/pcgen_import/corpus_traps.rs`'s `audit_ingested_cache`) and the
+generator it checks against (`src/bin/gen_book_cache.rs`'s `wiring_class_for_source`) had the
+identical bare-basename bug for a citation nested under a book subdirectory; both are fixed, with
+unit-test coverage a directory-prefixed fixture proves actually exercises the fix (see
+`artifacts/sd30-e8-code-review.md`, Finding 2). The 3 affected records are regenerated and correct
+on `tranche/10`.
+
+**What SD-31 must do:** decide and land the `scripts/verify.sh` stage itself — which books/kinds it
+runs the audit against corpus-wide (today's audit covers every book under `data/corpus/` with a
+populated `cache_dir`, so likely all of them, but that is SD-31's call to confirm against its own
+book-onboarding schedule), and how a future legitimate `wiring_class: "ambiguous"`/`no_corpus_line`
+record (a record genuinely sourced from a second source with no real corpus line, per
+`wiring_citation`'s own `WebSecondSource`/`SameBookFallback` cases) is told apart from a future real
+regression, so the new stage doesn't false-positive on day one. Not a re-open of the underlying
+defect — that part is closed; this is purely the CI-wiring decision `epic-8-code-review` itself has
+no authority to make unilaterally for a repo-wide gate, and which SD-30's scope note bars extending
+into (moved-epic ingest-lane territory).
+
+### C1.9 — `v06_work_inventory.rs`'s own citation resolution shares the nested-subdirectory bug C1.8's two fixes closed (2026-08-15, `SD30-E8-F3-001`)
+
+**Owner:** whichever bundle next touches the measurement instrument (`v06_work_inventory.rs`) —
+Epic 0 (`epic-0-instrument-apply`) is CLOSED for SD-30, so this is not a live SD-30 card; the
+natural owner is `SD-31-corpus-closure-grind`, which already re-derives measurement figures as part
+of its own closure work, or a future `SD-32-engine-capability-builds` cycle if the fix is judged
+capability-shaped rather than grind-shaped.
+
+**What SD-30 found, not fixed:** `epic-8-code-review` fixed the identical bare-basename citation
+bug in two places this cycle (`src/pcgen_import/corpus_traps.rs`'s audit self-check and
+`src/bin/gen_book_cache.rs`'s generator — see `artifacts/sd30-e8-code-review.md` Finding 2). While
+checking whether that fix could move `docs/work-inventory.json`'s own board (it cannot — confirmed:
+`v06_work_inventory.rs` recomputes `wiring_class` fresh from raw PCGen `.lst` provenance via its own
+`token_closure_rows` call, never reads a shipped corpus JSON's own `wiring_class` field, so this
+cycle's 3-record data fix has zero board effect in either direction), the SAME bug shape was found
+in the instrument's own `enumerate_file` (`rel = path.file_name()`, a bare basename, joined against
+a top-level `book_paths` entry exactly like the two now-fixed copies).
+
+**Consequence, unconfirmed:** any book with a real citation nested under a subdirectory (the
+`inner_sea_gods/support/` shape is the one confirmed real precedent so far) may have its
+`wiring_class`/`wiring_class_reason`/`wiring_class_signals` silently misclassified in
+`docs/work-inventory.json` itself — the actual measurement board, not just a shipped-record stamp.
+Not confirmed to move any unit's doneness bucket; not confirmed NOT to, either.
+
+**What the next owner must do:** (1) fix `enumerate_file`'s `rel` derivation the same way
+(`wiring_class_file_arg`/`file_basename`'s `/{book}/`-marker approach, or extract a single shared
+helper all three call sites use, closing the defect class structurally instead of a third parallel
+copy); (2) run the DoD item 4 GUARDED regen procedure (`corpus_literal_sweep` →
+`derived_evaluator_fixture_check` → guarded `v06_work_inventory`, never a bare run —
+`state-goals-and-lessons.md` §1.3 hazard 1) to re-measure; (3) report the board's movement via the
+dashboard producer's own `doneness_verdict()` replayed at both ends, per this program's anti-gaming
+doctrine (`decisions.md §50(a)`) — not the raw `wiring_class` reclassification count.
+
 ## Class 2 — RETIRED 2026-08-10 (book-list deferrals, moot under the `class_feature` re-scope)
 
 **The four book-specific deferrals below (C2.1-C2.4) are retired, not merely stale.** They deferred

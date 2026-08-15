@@ -50,6 +50,14 @@ impl WiringClassIndex {
         CorpusLines::new(&self.book_paths)
     }
 
+    /// The `book_id` this index was built with -- lets a caller holding
+    /// only the index (not the original `book_id` string) derive a
+    /// citation's path correctly relative to this index's own `book_dir`,
+    /// e.g. `gen_book_cache.rs`'s `wiring_class_file_arg`.
+    pub fn book_id(&self) -> &str {
+        &self.book_id
+    }
+
     /// `(wiring_class id, sorted wiring_class_signals)` for one record,
     /// given the SAME `file`/`line`/`name`/`key` the generator already
     /// resolved for its `source.path`/`source.line` citation. `file` is

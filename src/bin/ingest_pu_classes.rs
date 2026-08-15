@@ -579,6 +579,22 @@ fn parse_grant(mod_target: &str, clause: &str) -> Option<ClassFeatureGrant> {
     })
 }
 
+/// Drops any grant whose `feature_key` names a feature row PCGen itself
+/// declares `NAMEISPI:YES` on. Those rows are dropped by the per-feature
+/// loop and never shipped as their own `class_feature` record, so a
+/// class-variant chassis that still lists them as granted would ship a
+/// dangling reference the corpus does not provide (code review finding
+/// SD30-E8-F2). Mirrors `ingest_race_traits.rs`'s ordering, which drops a
+/// PI-declared row before any chassis-level list derives from it.
+fn drop_pi_named_grants(variant_grants: Vec<ClassFeatureGrant>, feature_rows: &[&LstRow]) -> Vec<ClassFeatureGrant> {
+    let pi_dropped_keys: BTreeSet<&str> = feature_rows
+        .iter()
+        .filter(|frow| declared_product_identity_of(frow).name)
+        .map(|frow| frow.record_key())
+        .collect();
+    variant_grants.into_iter().filter(|g| !pi_dropped_keys.contains(g.feature_key.as_str())).collect()
+}
+
 // ---------------------------------------------------------------------
 // Chassis overrides (Unchained Monk only, in practice)
 // ---------------------------------------------------------------------
@@ -919,6 +935,20 @@ fn main() {
     for (variant_key, spec) in VARIANTS {
         let Some(row) = variant_rows.get(*variant_key) else { continue };
         let variant_grants = grants.get(*variant_key).cloned().unwrap_or_default();
+        // A grant naming a feature row PCGen itself declares `NAMEISPI:YES`
+        // on must never reach the class-variant record: that row is
+        // DROPPED (never emitted as its own `class_feature` JSON) by the
+        // per-feature loop below, which runs *after* this point. Without
+        // this filter the variant's own `feature_grants` would still list
+        // the dropped key, shipping a reference the corpus does not
+        // provide -- code review finding SD30-E8-F2, `decisions.md §51`
+        // scope note. Computed here, before `feature_grants` is captured
+        // into `ClassVariantCacheData` and written to disk, so the
+        // record on disk can never disagree with what the per-feature loop
+        // actually emits. Mirrors `ingest_race_traits.rs`'s ordering, which
+        // drops a PI-declared row before any chassis-level list is derived
+        // from it. See `drop_pi_named_grants_test` below for the proof.
+        let variant_grants = drop_pi_named_grants(variant_grants, feature_rows.get(*variant_key).map(Vec::as_slice).unwrap_or_default());
         grants_per_class.insert((*variant_key).to_string(), variant_grants.len());
 
         // Hit-die override: resolve the applied template to its `HITDIE:`.
@@ -1286,6 +1316,62 @@ mod tests {
     #[test]
     fn parse_grant_ignores_non_automatic_clauses() {
         assert!(parse_grant("X", "Special Ability|VIRTUAL|Something").is_none());
+    }
+
+    // --- PI-named grant filtering (code review finding SD30-E8-F2) -----
+    //
+    // Proves `drop_pi_named_grants` actually filters a dangling reference,
+    // not merely that it compiles: one clean row survives, one
+    // `NAMEISPI:YES` row's grant is dropped, and a grant naming a feature
+    // key that doesn't appear in `feature_rows` at all (an orphan grant,
+    // unrelated to PI) is left untouched -- the function must not over-drop.
+
+    #[test]
+    fn drop_pi_named_grants_removes_only_the_grant_naming_a_nameispi_row() {
+        let clean = row("Ki Pool\tKEY:Unchained Monk ~ Ki Pool\tTYPE:Unchained Monk Class Feature");
+        let secret = row(
+            "Secret Feature\tKEY:Unchained Monk ~ Secret Feature\tNAMEISPI:YES\tTYPE:Unchained Monk Class Feature",
+        );
+        let feature_rows: Vec<&LstRow> = vec![&clean, &secret];
+
+        let grants = vec![
+            ClassFeatureGrant {
+                feature_key: "Unchained Monk ~ Ki Pool".to_string(),
+                feature_category: "Unchained Monk Class Feature".to_string(),
+                min_level: None,
+                granted_by_key: "Monk ~ Unchained Class".to_string(),
+                suppressed_by_var: None,
+            },
+            ClassFeatureGrant {
+                feature_key: "Unchained Monk ~ Secret Feature".to_string(),
+                feature_category: "Unchained Monk Class Feature".to_string(),
+                min_level: None,
+                granted_by_key: "Monk ~ Unchained Class".to_string(),
+                suppressed_by_var: None,
+            },
+            ClassFeatureGrant {
+                feature_key: "Unchained Monk ~ Orphan (no feature row)".to_string(),
+                feature_category: "Unchained Monk Class Feature".to_string(),
+                min_level: None,
+                granted_by_key: "Monk ~ Unchained Class".to_string(),
+                suppressed_by_var: None,
+            },
+        ];
+
+        let filtered = drop_pi_named_grants(grants, &feature_rows);
+        let kept: Vec<&str> = filtered.iter().map(|g| g.feature_key.as_str()).collect();
+
+        // The PI-declared grant is gone -- the class-variant record can no
+        // longer ship a dangling reference to a dropped feature row.
+        assert!(!kept.contains(&"Unchained Monk ~ Secret Feature"));
+        // The clean grant survives untouched.
+        assert!(kept.contains(&"Unchained Monk ~ Ki Pool"));
+        // A grant naming no feature row at all (a different, pre-existing
+        // defect class the later `declared: BTreeSet` sanity check catches)
+        // is not this function's concern and must not be silently dropped
+        // here too -- that would hide the orphan-grant check's own finding.
+        assert!(kept.contains(&"Unchained Monk ~ Orphan (no feature row)"));
+        assert_eq!(filtered.len(), 2);
     }
 
     // --- chassis overrides ---------------------------------------------

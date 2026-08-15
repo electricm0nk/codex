@@ -3647,3 +3647,211 @@ One item reclaimed (this cycle's own now-pushed `CARGO_TARGET_DIR` build artifac
 bytes — consistent with this package's prior cycles' own reclaim accounting for a just-finished,
 already-pushed cycle's target dir). A second immediate re-run reports 0 items — nothing further to
 reclaim.
+
+---
+
+## Cycle `SD30-E8-F3-001` — `epic-8-code-review` (SD30-E8-F1/F2/F3 closure)
+
+**Actor:** `sd30-e8-triage`. **HEAD at start:** `7eda1d11cd0863eee1b40eabcc02ff37546fa04a` (tree dirty
+at start with another session's in-flight work — `.gitignore`, `docs/retro/events/codex.jsonl`
+modified, untracked `.github/workflows/deploy-site.yml` — none of it touched or staged this cycle,
+per shared-checkout discipline).
+
+**Card:** review the bundle's full diff, fix real defects, triage the rest with a named disposition
+and owner. Dispatched with two reviewer-surfaced findings that survived an adversarial verifier pass
+(default REFUTED); both were independently re-verified by content this cycle before acting on them,
+per the card's own instruction ("treat them as leads, not verdicts").
+
+### What this cycle did
+
+1. Re-derived the diff scope: `git merge-base origin/develop HEAD` = `2ff809d4c233094e49d7f3a7fb5dd6f2fe371f20`
+   (== `origin/develop` tip), matching the reviewers' own established branch point. `git diff --stat
+   origin/develop...HEAD`: 3,146 files, +23,214/-7,389 (unchanged from the review's own count).
+2. **Finding 1** (`ingest_pu_classes.rs`, dangling PI-dropped grant reference) — verified true by
+   reading the exact lines cited, **fixed in bundle**.
+3. **Finding 2** (`corpus_traps.rs`, DoD-3 gate not wired + zero test coverage) — verified true,
+   and investigating it properly (building a *representative* fixture, not the reviewer's own
+   narrower ask) surfaced **a third, more serious defect**: the same bare-basename bug the finding
+   flagged in the audit self-check was also live in `gen_book_cache.rs`'s own generator, and it had
+   already shipped 3 real wrong `wiring_class` stamps in production monster corpus data. **Fixed in
+   bundle** (both the audit and the generator, plus a regen of the 3 affected records). The
+   `verify.sh`-wiring half of the finding is **deferred** (real scope-boundary reason, not
+   avoidance — see below).
+4. Full review recorded as a durable artifact:
+   `docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e8-code-review.md`.
+5. `forward-scope-register.md` Class 1 gained **C1.8** (the `verify.sh`-wiring deferral, owner
+   `SD-31-corpus-closure-grind`).
+6. Four `scripts/retro.py` events emitted, one per finding-plus-consequence, each with
+   `--verified-by`: `correction` `1786761343834-sd30-e8-triage-18a374` (Finding 1),
+   `correction` `1786761362379-sd30-e8-triage-2e6fb4` + `near-miss`
+   `1786761370569-sd30-e8-triage-ac4682` (Finding 2, the audit fix),
+   `correction` `1786761387987-sd30-e8-triage-fb3fff` (the generator fix + regen),
+   `deferral` `1786761388158-sd30-e8-triage-e79db2` (the `verify.sh`-wiring deferral).
+
+### Finding 1 detail — dangling PI-dropped grant reference (`ingest_pu_classes.rs`)
+
+Verified by reading `src/bin/ingest_pu_classes.rs:919-947` and `:1033-1049` directly: `variant_grants`
+was captured into `ClassVariantCacheData.feature_grants` and written to disk via `write_record`
+**before** the per-feature-row loop's own `NAMEISPI:YES` drop check ran. A future PI-dropped feature
+row would ship a dangling grant reference in the class-variant JSON.
+
+Fix: extracted `drop_pi_named_grants(variant_grants, feature_rows) -> Vec<ClassFeatureGrant>`,
+called before `feature_grants` is captured, filtering any grant whose `feature_key` names a
+`NAMEISPI:YES`-declared row — mirrors `ingest_race_traits.rs`'s own drop-before-derivation ordering.
+
+Test: `drop_pi_named_grants_removes_only_the_grant_naming_a_nameispi_row` — proves the function
+drops only the PI-named grant, keeps a clean one, and does not over-drop an unrelated orphan grant
+(a different, pre-existing check's own concern). `cargo test --locked --bin ingest_pu_classes`:
+`24/24 pass` (was 23; +1).
+
+Re-derivation: `cargo run --locked --bin ingest_pu_classes` regenerated against the live corpus;
+`git diff -- data/corpus/pathfinder_unchained/ | grep -v '^ ' | grep -E '^[+-]' | grep -v '^+++\|^---' | grep -v ingested_at`
+→ **no output** — the fix is a byte-for-byte no-op on today's shipped data (0 live
+`NAMEISPI:YES` rows, re-confirmed:
+`grep -oE 'NAMEISPI:[A-Za-z]*|DESCISPI:[A-Za-z]*' ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst`
+→ no output). Timestamp-only regen reverted (`git checkout -- data/corpus/pathfinder_unchained/`).
+
+### Finding 2 detail — the audit fix, the deeper generator defect, and the regen
+
+The reviewer's own ask (a fixture nested one level under a book subdirectory) was built naively
+first and **passed for the wrong reason**: `ScratchAudit`'s citations carry no directory segment
+before the book name, so the `/{book}/` marker `SD30-CARRY-001`'s fix actually added never engaged
+— the fixture silently exercised the pre-fix `.parent()` fallback. Rebuilding it with a real,
+directory-prefixed path (matching every real corpus citation's shape) went **RED**: the self-check
+computed `display` (blank-content default) instead of `derived`, because `file_basename` was still a
+bare `Path::new(rel).file_name()`, dropping the very subdirectory segment `book_dir` had just been
+widened to require. `CorpusLines::line`'s single-level `dir.join(file)` join silently resolved to a
+nonexistent path; `unwrap_or_default()` swallowed the failure.
+
+Confirmed this was live, not hypothetical: with only the `book_dir` half of the fix corrected (not
+yet `file_basename`), `cargo run --locked --bin v06_corpus_trap_report -- --audit` against the real
+corpus surfaced **3 real production defects** in `data/corpus/inner_sea_gods/monster/`
+(`psychopomp_ahmuuth`, `steward_of_the_skein`, `the_first_blade`), all citing
+`pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_races_b4.lst`, all shipped
+`wiring_class: "ambiguous"` (`no_corpus_line`) where their real `BONUS`/`DR` tokens call for
+`derived`. **Self-caught authoring mistake, corrected in place**: the first check of this read
+`EXIT=0` because the exit code was read through `tail`'s own exit status (`| tail -40; echo
+"EXIT=$?"`), not `cargo run`'s — re-run with the exit code captured directly in the same shell
+statement per this package's own doctrine, giving the true `TRAP_AUDIT_EXIT=2`.
+
+Traced the disagreement to its root rather than accepting the audit as newly-authoritative:
+`src/bin/gen_book_cache.rs`'s `wiring_class_for_source` (the function that originally stamped these
+3 records) has the **identical** bare-basename bug. `gen_book_cache.rs`'s own `load_corpus_file_rel`
+doc comment already names this exact hazard for a sibling code path ("`inner_sea_gods` keeps 3
+monster rows and 16 ability rows under `support/`... joining onto the root there fails outright"),
+already fixed for citation/sha256 resolution (`resolve_book_file`'s recursive walk) but not for
+`wiring_class_for_source`, a separate call.
+
+Fix: `wiring_class_file_arg(book_id, path)` (mirrors the audit's own marker-based derivation) plus a
+new `pub fn book_id(&self) -> &str` accessor on `WiringClassIndex` (previously private) so all 9
+`wiring_class_for_source` call sites pick up the fix without a signature change.
+
+Regen: `cargo run --locked --bin gen_book_cache -- inner_sea_gods` (the book's own already-wired
+generator — a mechanical regen of already-shipped content using the same tool `SD30-CARRY-001`'s own
+10-book re-ingest already used for this class of fix, not new ingest or new PI screening).
+`git diff -- data/corpus/inner_sea_gods/`: 116 files touched (39 monster + 77 monster_ability +
+`LICENSE.json`); `git diff -- data/corpus/inner_sea_gods/ | grep -v '^ ' | grep -E '^[+-]' | grep -v '^+++\|^---' | grep -v ingested_at`
+shows **exactly**: `LICENSE.json`'s `classified_at` timestamp, and the 3 expected
+`wiring_class`/`wiring_class_signals` field pairs (`ambiguous`/`["no_corpus_line"]` →
+`derived`/`["derived:bonus"]` or `["derived:bonus","derived:dr"]`) — no other field on any of the
+116 records changed.
+
+Tests: `wiring_class_mismatch_reads_a_citation_nested_one_level_under_a_book_subdirectory`
+(`corpus_traps.rs`, proven RED against the pre-`file_basename`-fix code before landing the fix, GREEN
+after); `wiring_class_file_arg_keeps_the_subdirectory_a_bare_basename_would_drop`,
+`..._is_the_bare_basename_when_the_citation_sits_at_the_book_top_level`,
+`..._falls_back_to_the_bare_basename_when_the_book_marker_is_absent` (`gen_book_cache.rs`'s first
+`#[cfg(test)]` module — none existed before) — 3/3 pass. `cargo test --locked --lib -j 2`:
+**1777/1777 pass**, unchanged count — no regression.
+
+Final re-derivation: `cargo run --locked --bin v06_corpus_trap_report -- --audit`, exit code
+captured directly: **`TRAP_AUDIT_EXIT=0`**, `259 0 mod-record`, no other defects — genuinely GREEN
+over the same corpus that reported 3 real defects two runs earlier.
+
+Deferred (not fixed): wiring the audit into `scripts/verify.sh` itself. Reasoning and owner in
+`forward-scope-register.md` C1.8 — the audit is now a real, non-vacuous gate (the previously-blocking
+objection is closed), but which books/kinds it covers corpus-wide and how a future legitimate
+`no_corpus_line` record is told apart from a future real regression is a repo-wide gate-shape
+decision beyond this card's remit, and out of scope per the SD-30/SD-31 split.
+
+### A self-inflicted near-miss during this cycle (shared-checkout hazard)
+
+Launched `./scripts/verify.sh` early per doctrine, then **kept editing source**
+(`gen_book_cache.rs`, `cache_gen/mod.rs`) while its `root-full` stage was still mid-build — the exact
+class of hazard `AGENTS.md`'s "one writer per tree" rule exists to prevent, self-inflicted this time
+rather than another session's. The gate correctly caught it: `root-full` failed with a real compile
+error (`error[E0599]: no method named 'book_id' found for reference '&WiringClassIndex'` — a
+half-landed edit sequence the build's own snapshot caught mid-flight, not a false reading). Killed
+the stale run and every stray `cargo`/`rustc` process it and a concurrent foreground `cargo test`
+had spawned (confirmed clear via `ps aux`), confirmed `cargo test --locked --lib -j 2` was clean
+standalone (1777/1777) once all edits were stable, then relaunched the gate fresh. No commit was
+made against the inconsistent state; no fabricated pass was recorded.
+
+
+### Definition of done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **PASS. `VERIFY_EXIT=0`, captured directly (`echo "VERIFY_EXIT=$?" >> "$LOG"` in the same shell statement), 16/16 stages: preflight-disk, pi-sweep, audit-selftest, reclaim-selftest, driver-selftest, corpus-sweep-selftest, root-lib (1777 passed), root-full (6410 passed across 548 suites, all 527 tests/*.rs suites executed), desktop (445 passed), reach (27 passed), corpus-sweep (3516/9328, 0 findings), frontend-install, frontend-test (99/99), frontend-typecheck, clippy (root:46/desktop:7 warnings, 0 errors), class-dump (31/31 computing).** |
+| 2 | Reach stage claim, nonzero | Same run as item 1 — standing-health check; no new player-visible family this cycle (no `reach_gate.rs` change). |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **PASS, re-derived, `TRAP_AUDIT_EXIT=0`** (exit captured directly, not through a pipe — corrected in place after a first, mis-captured read; see Finding 2 detail above). Real GREEN over corpus data this cycle's own regen changed, not a fabricated pass. |
+| 4 | Guarded work-inventory regen | N/A — this cycle did not touch `docs/work-inventory.json`'s own classification inputs (no `class_feature` ingest, no `feat`/kind change); not run. |
+| 5 | Four-check wired-integration audit | **PASS**, re-run at final state: `bash scripts/wired-integration-audit.sh` → `OK_NO_TOKENS`/`OK_NO_NOOP_HANDLERS`/`OK_NO_MOCK_LEAKS`/`OK_NO_WOULD_STRINGS`, `AUDIT PASSED`, exit 0. |
+| 6 | `OPEN_FINDINGS` for any unsurfaced family | N/A — no new record family surfaced or left unsurfaced (`apps/desktop/src-tauri/src/reach_gate.rs` untouched by this cycle). |
+| 7 | Baseline movements own commit | N/A — `scripts/verify-baselines.env` not touched. |
+| 8 | On-screen verification | **N/A, reasoned not waived.** No player-visible field changed: the `ingest_pu_classes.rs` fix is a no-op on today's shipped data (0 live `NAMEISPI:YES` rows); the `corpus_traps.rs`/`gen_book_cache.rs` fix changes only `wiring_class`/`wiring_class_signals` (internal classification metadata — confirmed by grep, not read by any `apps/desktop/src-tauri` catalog/reach path) on 3 monster records, no display field. |
+
+### Gate log
+
+```
+$ export RETRO_ACTOR=sd30-e8-triage CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-e8-triage
+$ ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+Launched twice. **First launch raced against this cycle's own concurrent source edits**
+(edited `gen_book_cache.rs`/`cache_gen/mod.rs` while `root-full` was mid-build) and correctly
+failed on a real, transient snapshot inconsistency (`error[E0599]: no method named 'book_id'
+found` -- see "self-inflicted near-miss" above); killed, all stray processes confirmed clear via
+`ps aux`, `cargo test --locked --lib -j 2` confirmed clean standalone (1777/1777) once every edit
+was stable, then relaunched clean.
+
+**Second (final) launch:**
+
+```
+VERIFY_EXIT=0
+16/16 stages PASS: preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest
+  corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install
+  frontend-test frontend-typecheck clippy class-dump
+BASELINE NOTES (advisory, RESULT still PASS, not a failure):
+  BASELINE_ROOT_LIB_TESTS 1776 recorded / 1777 measured (+1: this cycle's new
+    drop_pi_named_grants test)
+  BASELINE_ROOT_FULL_TESTS 6398 recorded / 6410 measured (+5 this cycle's own: 1 ingest_pu_classes
+    + 1 corpus_traps + 3 gen_book_cache; the remaining +7 over the 6398 floor pre-dates this cycle,
+    already noted un-bumped by SD30-CARRY-001's own receipt)
+  BASELINE_ROOT_TEST_BINARIES 547 recorded / 548 measured (+1: gen_book_cache.rs's first-ever
+    `#[cfg(test)]` module)
+RESULT: PASS
+```
+
+Baselines are floors, not bumped this cycle (DoD item 7: a baseline bump is its own reviewable
+commit; this cycle's own new tests only ever move the measured count UP from the floor, which is
+the passing direction, not the failing one -- nothing to reconcile).
+
+Total wall time ~19 minutes (launch ~22:33, `VERIFY_EXIT=` line ~22:52 EDT) on a warm
+`CARGO_TARGET_DIR` (37% disk used throughout, no `preflight-disk` pressure).
+
+Log: `/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/d9c38510-724f-408f-b3c9-273134333e9d/scratchpad/verify_sd30_e8_run2.log`.
+
+### Findings register
+
+| # | Title | Severity | Disposition | Owner |
+|---|---|---|---|---|
+| 1 | Dangling PI-dropped grant reference (`ingest_pu_classes.rs`) | medium | **fixed-in-bundle** | — |
+| 2a | `corpus_traps.rs` audit self-check: bare-basename `file_basename` misreads a nested citation | medium | **fixed-in-bundle** | — |
+| 2b | `gen_book_cache.rs` generator: identical bug, already shipped 3 wrong stamps | medium (real, live) | **fixed-in-bundle** | — |
+| 2c | Wire `v06_corpus_trap_report -- --audit` into `scripts/verify.sh` | medium | **deferred** | `SD-31-corpus-closure-grind` (`forward-scope-register.md` C1.8) |
+| 3 | `v06_work_inventory.rs`'s `enumerate_file` shares the identical bare-basename citation bug (self-found, not in the reviewer set) | medium (unconfirmed board effect) | **deferred** | next measurement-touching bundle, likely `SD-31-corpus-closure-grind` (`forward-scope-register.md` C1.9) |
+
+### Commit, push, reclaim
+
+__COMMIT_DETAIL__
