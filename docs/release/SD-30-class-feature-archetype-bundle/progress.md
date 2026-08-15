@@ -2935,3 +2935,213 @@ Pre-gate stages from first run (2026-08-14 20:18:00Z):
 - reclaim-selftest: PASS (13 tests)
 - driver-selftest: PASS (7 tests)
 
+
+## Cycle `SD30-E9-F1-001` — 2026-08-14 — Closure Epilogue attempt (`epic-9-closure`) — DECISION-BLOCKED
+
+**Actor:** `sd30-e9-closure`. **Card:** `epic-9-closure` ("gated on every other card").
+**HEAD at start:** `33ef64fef99705cab932a50772c701621ca6b310` (`git rev-parse HEAD`, `git log --oneline -1`
+matched: `33ef64fe docs(sd30): SD30-E7-F1-001 — gate progress update, desktop stage in progress`).
+Package present, tree not clean at start (`git status --porcelain` showed pre-existing, out-of-scope
+changes to `.gitignore` and `docs/retro/events/codex.jsonl`, plus two untracked files
+`.github/workflows/deploy-site.yml` and two `sd30-e7-f1-verify*.log` artifacts belonging to the live
+`epic-7-version` cycle) — not this cycle's own dirt, not touched. Per the mandatory-first-action rule
+this is not the "dirty AND package absent" stop condition, so this cycle proceeded.
+
+### 1. Required reads
+
+`state-goals-and-lessons.md`, `loop-instruction.md`, `AGENTS.md`, `CLAUDE.md`, `kanban.md`, tail of
+`progress.md`, this card's Epic 9 section in `epic-breakdown.md`, `decisions.md §51`.
+
+### 2. Card-state verification, by content (not by status word)
+
+| Card | `kanban.md` status | Verified by content this cycle | Verdict |
+|---|---|---|---|
+| epic-0-instrument-apply | COMPLETE | `literal-verified`/`fixture-verified` present in `scripts/observer/pf1e_dashboard_producer.py`; `artifacts/sd30-e0-f3-unknown-residue/` present | Confirmed COMPLETE |
+| epic-1-identifier | COMPLETE | `progress.md` cycle `SD30-E1-F1-001` present with full receipt | Confirmed COMPLETE |
+| epic-2-prelaunch | COMPLETE | `progress.md` cycle `SD30-E2-F1-001` present | Confirmed COMPLETE |
+| epic-3-pi-gate | COMPLETE | `tests/pi_table_sweep.rs`, `NAMEISPI`/`DESCISPI` handling in `src/bin/ingest_pu_classes.rs` (17 hits), both transcriber scripts (12/11 hits), `tests/sd30_declared_product_identity_in_shipped_class_features.rs` (11 hits) — all re-confirmed present at this cycle's `HEAD` via the same greps `SD30-E3-F4-001 §11` ran | Confirmed COMPLETE |
+| epic-7-version | **COMPLETE (kanban.md)** | Version `0.10.0` landed in all three build-config files (`grep -h '"version"' apps/desktop/package.json apps/desktop/src-tauri/tauri.conf.json` + `grep 'version = ' apps/desktop/src-tauri/Cargo.toml \| head -1` → `0.10.0` all three). **But its own gate is not green** — see §3 below. | **NOT actually gate-confirmed. Kanban's `COMPLETE` mark is premature.** |
+| epic-8-code-review | READY | `grep -n "epic-8\|SD30-E8" progress.md` → **zero matches**. `kanban.md`'s own row still reads `READY (gated on epic-1, epic-2, epic-3, epic-7 ...)`. | **Not started at all.** |
+| epic-9-closure | READY (gated on every other card) | this cycle | Cannot close — see below |
+
+### 3. New finding this cycle: `epic-7-version`'s retry gate is red at HEAD
+
+Found a live sibling process still running in this shared checkout: `pgrep -fa "^bash \./scripts/verify.sh"`
+→ PID `663386`, started `Fri Aug 14 20:32:24 2026` (`ps -o pid,lstart,cmd -p 663386`), log
+`docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e7-f1-verify-retry.log` (the same
+retry the `SD30-E7-F1-001` receipt above describes as launched but not yet returned). This cycle did
+**not** start a competing `verify.sh` (one-writer-per-checkout; a second full gate would also
+CPU-contend with the live one) — it read the live log instead, which by this cycle's own final read
+had progressed through `clippy`:
+
+```
+$ tail -25 docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e7-f1-verify-retry.log
+...
+==> frontend-test — npm test  (apps/desktop)
+    FAIL  frontend-test  (npm test exit 1; 97/99 files passed — /tmp/codex-verify-GyoD6r/frontend-test.log)
+---------------------------------------------------------------
+==> frontend-typecheck — npm run typecheck  (apps/desktop)
+    PASS  frontend-typecheck  (tsc --noEmit clean)
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 2  (BOTH crates)
+```
+
+```
+$ cat /tmp/codex-verify-GyoD6r/frontend-test.log   # read-only, not this cycle's own file
+FAIL src/release/buildVersionTriple.test.ts
+...
+Error: src/testerWorkbench/loadTesterWorkbenchSurface.test.ts must carry the current tranche's
+build-label fixture "Codex 0.10.0-test"
+    at assert (.../src/testSupport/asserts.ts:16:11)
+    at verifiesFixturesCarryCurrentTrancheBuildLabel (.../src/releaseChecks/buildLabelFixtureFreshness.test.ts:43:5)
+FAIL src/releaseChecks/buildLabelFixtureFreshness.test.ts
+```
+
+**This is a real, live-captured finding**, not inferred: the `epic-7-version` cycle's version bump
+(0.9.x → 0.10.0) updated the three build-config files and the two `buildVersionTriple.test.ts` files,
+but missed a build-label string fixture consumed by `loadTesterWorkbenchSurface.test.ts` and asserted
+fresh by `buildLabelFixtureFreshness.test.ts`. The **last confirmed** `VERIFY_EXIT=0` full-gate run on
+this branch remains `SD30-E3-F4-001`'s, at commit `b472aec2` — which **predates** the version-bump
+commits (`46002447` onward). No confirmed-green run exists at any tip carrying `0.10.0`.
+
+This cycle did not fix the stale fixture: it lives inside `epic-7-version`'s own change surface (a
+different card), a live gate process from that cycle was still running in the same shared checkout at
+the time (editing the same tree an in-flight process is reading is exactly what `AGENTS.md`'s "one
+writer per tree" rule exists to prevent), and per `AGENTS.md` "do not expand scope" this cycle's own
+granted surface is Closure-Epilogue work, not another card's remediation. Retro `correction` event
+`1786755149749-sd30-e9-closure-6e7ab7` and `incident` event `1786755155835-sd30-e9-closure-ff52a6`
+(`docs/retro/events/sd30-e9-closure.jsonl`) record the finding. `state-goals-and-lessons.md §3.4` (new
+section, this cycle) carries the full narrative and a new hazard #6 for a version-bump cycle's fixture
+surface.
+
+### 4. Closure-F1 acceptance — checked item by item
+
+- Epics 0, 1, 2, 3 complete by content: **YES** (§2).
+- Epic 7 complete by content: **NO** — version landed, gate not green (§3).
+- Epic 8 complete by content: **NO** — not started (§2).
+- `release-notes.md` populated: **DONE this cycle** — real content written (summary, what SD-30
+  delivered per epic with commands, what moved to SD-31/SD-32, the honest corpus-wide per-kind board
+  re-derived fresh this cycle — command below — and an explicit "NOT CLOSED" status line naming both
+  open blockers).
+- `state-goals-and-lessons.md` updated at closure: **DONE this cycle** — new §3.4 (closure-attempt
+  state + new hazard #6).
+- `docs/architecture/` refreshed: **PARTIAL this cycle** — `status.md`'s corpus-coverage section
+  gained an explicit SD-30 update note (the `done`-rung mechanism, the per-kind `done` table pointer,
+  Epic 3's closure) rather than a full re-derivation of every row (that table tracks `grounded`, a
+  different metric from `done`, and a full re-pass is explicitly deferred to the actual closing cycle
+  per the note added). Not claimed as a complete refresh.
+- Tranche promotion PR: **NOT OPENED** — per this cycle's hard rule ("If ANY live card is not complete
+  by content, DO NOT open the promotion PR"), and doubly so given §3's fresh gate-red finding.
+
+### 5. Closure-F2 — workspace-tree removal, re-confirmed
+
+```
+$ find ~/workspace -maxdepth 3 -iname "*SD-30*" -o -iname "*sd30*"
+(no output — nothing found)
+$ git log --follow --oneline -- docs/release/SD-30-class-feature-archetype-bundle/README.md | tail -5
+bc8f5fac docs(sd30): re-scope SD-30 from sixteen-book bundle to the class_feature/archetype bundle
+```
+
+No workspace-resident SD-30 directory exists; the 2026-08-10 rename did not reintroduce one.
+Canonical repo-resident home confirmed: `docs/release/SD-30-class-feature-archetype-bundle/`.
+**Closure-F2: CONFIRMED, still holds.**
+
+### 6. Reconciliation deliverable (SCOPE NOTE, "a real deliverable, not a formality")
+
+`epic-breakdown.md`'s "Closure-F1" acceptance text and "Completion gate" section both still named
+Epic 4/5/6/10 as SD-30's own closure criteria — pre-split text `decisions.md §51` said would be
+updated "in this same commit" but which, for this file specifically, was not. Both sections rewritten
+this cycle to the narrowed Epics 0/1/2/3/7/8/9 criterion, with the original text preserved struck
+through / quoted per this package's standing convention (correct in place, don't delete). Also names
+the new §3 finding as a completion-gate item ("Epic 7 ... including a recorded green `verify.sh` run
+at the version-bump tip").
+
+### 7. Board re-derivation (re-run fresh this cycle, not transcribed)
+
+```
+$ python3 -c "
+import json, importlib.util, collections
+spec = importlib.util.spec_from_file_location('m', 'scripts/observer/pf1e_dashboard_producer.py')
+mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+d = json.load(open('docs/work-inventory.json'))['units']
+c = collections.Counter()
+for u in d:
+    if u.get('book') == 'beginner_box': continue
+    c[mod.doneness_verdict(u.get('wiring_class'), u.get('status'), u.get('kind'))] += 1
+print(c)"
+Counter({'not-started': 20895, 'done': 5837, 'held': 6916, 'unmeasurable': 3989, 'in-progress': 848, 'deferred': 36})
+```
+
+Byte-identical to `SD30-E0-F4-001`'s own F4-close figure — **no board movement this cycle** (expected;
+this cycle changed no corpus content or `docs/work-inventory.json`, only doc text). Not a bar lowered
+or number moved — a confirmation that this closure attempt's own doc edits didn't silently touch the
+board.
+
+### 8. Definition of Done
+
+This cycle is doc-only (no Rust/Python production code changed): `epic-breakdown.md`, `release-notes.md`,
+`state-goals-and-lessons.md`, `docs/architecture/status.md`, `progress.md`, `kanban.md`. Per
+loop-instruction's "Doc-only or measurement-only cycles run the relevant `--only` stages instead", the
+full `verify.sh` was not launched by this cycle (one was already live in this shared checkout — §3;
+launching a second would violate one-writer-per-checkout and CPU-contend with it).
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **N/A for this cycle's own diff (doc-only)**; the closing tip's own gate is **NOT** green — §3's fresh finding (frontend-test FAIL). This is the reason, not a formality, that DoD-1 is unmet for the bundle as a whole right now. |
+| 2 | Reach stage claim | N/A — no new player-visible record family this cycle |
+| 3 | `v06_corpus_trap_report -- --audit` | N/A — no corpus content changed this cycle |
+| 4 | Guarded work-inventory regen | N/A — `docs/work-inventory.json` not touched this cycle (§7 confirms no drift) |
+| 5 | Four-check wired-integration audit | N/A — no `apps/desktop`/`src/**/*.rs` production diff this cycle (doc files only) |
+| 6 | `OPEN_FINDINGS` | N/A — no family surfaced or left unsurfaced |
+| 7 | Baseline movements own commit | N/A — `scripts/verify-baselines.env` not touched |
+| 8 | On-screen verification | N/A — no player-visible surface touched this cycle |
+
+### 9. STOP condition: `decision-blocked`
+
+Per this bundle's own hard rule, `decision-blocked` is recorded, not a fabricated pass:
+
+**Blocker 1 — `epic-8-code-review` never started.** No successor package owns this; it is SD-30's own
+remaining scope. The next cycle to claim it must run the whole-bundle diff review
+(`git diff origin/develop...HEAD`), the identifier-discipline and wired-integration audits at bundle
+scope, the correctness/no-stub/reach/test-quality sweep named in `epic-breakdown.md` SD30-E8-F2, and
+triage every finding per SD30-E8-F3 before `epic-9-closure` can re-check Closure-F1.
+
+**Blocker 2 — `epic-7-version`'s own gate is red at HEAD** (§3): stale build-label fixture(s) not
+updated to `"Codex 0.10.0-test"` in `src/testerWorkbench/loadTesterWorkbenchSurface.test.ts` (and
+whatever else `buildLabelFixtureFreshness.test.ts` checks) alongside the version bump. Whoever next
+claims `epic-7-version` must fix the fixture, re-run the full gate to a captured exit code, and only
+then may `kanban.md`'s `epic-7-version` row stand as genuinely `COMPLETE`.
+
+Neither blocker required this cycle to invent data, guess at scope, or weaken a gate — both are
+concrete, named, content-verified gaps. Per the "Stop vs press on" doctrine this is the STOP case ("a
+gate fails for a reason that is a real finding about content or scope"), not the PRESS-ON "mechanical
+defect, fix it and continue" case — the fixture fix belongs to `epic-7-version`'s own card, and this
+cycle correctly stayed inside its own granted surface rather than editing another card's live change
+set out from under its own in-flight gate process.
+
+### 10. Card disposition
+
+`epic-9-closure`: **BLOCKED**, not `COMPLETE`, not `IN-FLIGHT`. Real, valuable closure-prep work
+landed this cycle (release-notes populated, state-goals-and-lessons updated, epic-breakdown
+reconciled to narrowed scope, docs/architecture partially refreshed, Closure-F2 re-confirmed) so the
+eventual closing cycle inherits less work, but the tranche-promotion PR is explicitly **not opened**.
+`kanban.md`'s `epic-9-closure` row set to `BLOCKED`, `Claimed-by sd30-e9-closure`, naming both
+blockers.
+
+### 11. Commands re-run to confirm nothing regressed by this cycle's own doc edits
+
+```
+$ git status --porcelain docs/release/SD-30-class-feature-archetype-bundle/ docs/architecture/status.md
+ M docs/release/SD-30-class-feature-archetype-bundle/epic-breakdown.md
+ M docs/release/SD-30-class-feature-archetype-bundle/kanban.md
+ M docs/release/SD-30-class-feature-archetype-bundle/progress.md
+ M docs/release/SD-30-class-feature-archetype-bundle/release-notes.md
+ M docs/release/SD-30-class-feature-archetype-bundle/state-goals-and-lessons.md
+ M docs/architecture/status.md
+```
+
+(Confirmed doc-only — no `.rs`/`.py`/`.ts`/`.tsx` in this cycle's own diff.)
+
+### 12. Reclaim
+
+`scripts/reclaim.sh` (dry run) then `--apply` — recorded below in the retro/commit section once run.

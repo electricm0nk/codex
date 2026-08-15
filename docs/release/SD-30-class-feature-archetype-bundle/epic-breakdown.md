@@ -538,15 +538,30 @@ Acceptance:
 
 #### Closure-F1 — Closure cycle
 
-Acceptance:
+**Narrowed 2026-08-14 (`decisions.md §51`, reconciled `SD30-E9-F1-001`).** The text below predates the
+split and named Epic 4 and "Epics 5-8" — Epics 4/5/6 moved to `SD-31-corpus-closure-grind`, so their
+per-class measurement/mechanism/chassis-sweep coverage is no longer a precondition for *this* package's
+closure; SD-31 owns re-stating that coverage as its own exit criterion. The live acceptance is:
 
-- Epic 4 has either covered every `class_feature`-bearing class or named its own successor for what
-  remains (measurement is not required to reach 100% before closure — the operator may fund a
-  successor for the remainder, per the same pattern `§63`/`§64` used).
-- Epics 5-8 `complete` in `progress.md`.
+- Epics 0, 1, 2, 3, 7, 8 `complete` in `progress.md` **and confirmed on `tranche/10` by content** (grep
+  for the landed symbols, not the card's own status word).
 - `release-notes.md` populated.
+- `state-goals-and-lessons.md` updated at closure.
+- `docs/architecture/` refreshed to this bundle's real closure state.
 - Tranche promotion PR fires: `tranche/10 → develop`; `0.10.<last_build>` remains the post-closure
-  value.
+  value. The operator merges it personally — opening it is this epic's deliverable, merging is not.
+
+Original (pre-split) text, kept for record per this package's standing convention:
+
+- ~~Epic 4 has either covered every `class_feature`-bearing class or named its own successor for what
+  remains (measurement is not required to reach 100% before closure — the operator may fund a
+  successor for the remainder, per the same pattern `§63`/`§64` used).~~ Superseded — Epic 4 moved to
+  SD-31; not this package's criterion.
+- ~~Epics 5-8 `complete` in `progress.md`.~~ Superseded — Epics 5/6 moved to SD-31; Epic 7/8 retained,
+  restated above.
+- `release-notes.md` populated. (retained)
+- Tranche promotion PR fires: `tranche/10 → develop`; `0.10.<last_build>` remains the post-closure
+  value. (retained)
 
 #### Closure-F2 — Workspace-tree removal (move-not-copy) — LANDED under the old slug, verify at closure
 
@@ -729,23 +744,42 @@ other and with the E4/E5/E6 chain.
 
 ## Completion gate
 
-SD-30 closes when:
+**Reconciled 2026-08-14 (`decisions.md §51`, `SD30-E9-F1-001`).** This section predates the
+Phase-3/Phase-4 split and named Epic 4/5/6/10 as SD-30's own closure criteria; those epics moved to
+`SD-31-corpus-closure-grind` (measurement/mechanism/chassis-sweep) with a mirrored "Completion gate"
+section of their own now owning that language. SD-30's **narrowed** completion gate — the one this
+package's own Epic 9 checks — is:
 
-- Epic 4 has measured every `class_feature`-bearing class (or the operator has funded/named a
-  successor for the remainder) and characterized the `unknown` bucket per class.
-- Epic 5 has landed the 175-mechanism supersession shape for the 25 originally-measured classes plus
-  whatever Epic 4 adds, and has either wired or explicitly deferred the chooser-interaction shape for
-  Oracle/Arcanist/Sorcerer.
-- Epic 6's chassis sweep has ingested and reach-gated every class Epic 4/5 cleared.
-- Epic 3's PI-screening gate ran clean (or recorded and resolved hits) on every book touched,
+- Epic 0 (instrument-apply) `complete`.
+- Epic 1 (identifier cleanup) `complete`.
+- Epic 2 (operator pre-launch) `complete`.
+- Epic 3's PI-screening gate ran clean (or recorded and resolved hits) on every book it screened,
   including the declared-PI reader (SD30-E3-F2), the corpus-wide backfill sweep (SD30-E3-F3), and the
-  regression gate (SD30-E3-F4) — not the 55-term blacklist sweep alone (`decisions.md §39`).
-- Epic 10's per-kind ingest cards (F1-F4) have each either reached their measured workable-pool
-  ceiling or named a successor for the remainder — mirroring Epic 4's own closure pattern, not a
-  100%-or-nothing bar (`decisions.md §44`).
+  regression gate (SD30-E3-F4) — not the 55-term blacklist sweep alone (`decisions.md §39`). SD-31's
+  ingest epics continue to invoke this same gate cross-SD (`decisions.md §51` item 4); its closure here
+  does not retire the gate itself, only this package's own dependency on it.
+- Epic 7 (Build Version Numbering) `complete` — **including a recorded green `verify.sh` run at the
+  version-bump tip**, not merely the version strings landing (`SD30-E9-F1-001` found this open at
+  reconciliation time: the card was marked `COMPLETE` in `kanban.md` while its own gate had not yet
+  returned an exit code).
 - Epic 8 (Bundle Code Review) closed, all findings triaged with named owners for deferrals.
-- Epic 9 (Closure) fires.
-- `progress.md` carries the closure receipt.
-- `release-notes.md` is populated.
-- The tranche-promotion PR `tranche/10 → develop` is opened and merged.
+- Epic 9 (Closure) fires: `progress.md` carries the closure receipt, `release-notes.md` is populated,
+  `state-goals-and-lessons.md` is updated, `docs/architecture/` is refreshed, and the tranche-promotion
+  PR `tranche/10 → develop` is **opened** (the operator merges it personally — merging is not this
+  epic's own deliverable, per the loop-instruction's hard rules).
 - `docs/release/SD-30-class-feature-archetype-bundle/` carries the canonical file chassis.
+
+**Not SD-30's own completion criterion, moved to `SD-31-corpus-closure-grind`'s Completion gate:**
+Epic 4 (per-class measurement) reaching every `class_feature`-bearing class or naming a successor;
+Epic 5 (mechanism) landing its supersession/chooser shapes; Epic 6 (chassis sweep) ingesting and
+reach-gating cleared classes; Epic 10 (corpus-wide ingest lanes) reaching workable-pool ceiling per
+kind. SD-31's own `epic-breakdown.md`/`acceptance-and-verification.md` (`AT-31-005`) is where those
+criteria now live and are checked; this package's closure does not wait on them (`decisions.md §51`'s
+narrowing is explicit that measurement/mechanism/ingest completion is no longer this package's own
+exit bar).
+
+**The joint 100% mandate (`decisions.md §45`) is unaffected by this narrowing** — it remains the
+combined exit criterion of the SD-30 → SD-31 → SD-32 program, not something SD-30 alone can or does
+claim to have reached. SD-30's own board contribution stops at Epic 0's instrument-application gain
+(`done` 3,464 → 5,837, `state-goals-and-lessons.md §1.1`); the remainder is SD-31's (per-kind ingest)
+and SD-32's (race chassis, verdict paths) to move.

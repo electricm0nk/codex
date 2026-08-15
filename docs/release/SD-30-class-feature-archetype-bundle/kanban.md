@@ -61,7 +61,7 @@ surface the operator and orchestrator both read for live progress. No card outra
 | `epic-6-chassis-sweep` | **MOVED to `SD-31-corpus-closure-grind/kanban.md` `epic-3-chassis-sweep` (`decisions.md §51`)** | Per-Class Chassis Sweep | per-class `class_feature` ingest across the 23 in-scope books, reach-gate claim per record | — | — | — |
 | `epic-7-version` | COMPLETE | Build Version Numbering | first concrete value `0.10.<build>` | sd30-e7-version | 2026-08-14T20:18:00Z | `SD30-E7-F1-001` |
 | `epic-8-code-review` | READY (gated on epic-1, epic-2, epic-3, epic-7 — narrowed 2026-08-14, `decisions.md §51`; no longer gated on epic-5/epic-6, moved) | Bundle Code Review | full-bundle diff review vs. branch point (`decisions.md §26`) | — | — | — |
-| `epic-9-closure` | READY (gated on every other card) | Closure Epilogue | tranche promotion PR | — | — | — |
+| `epic-9-closure` | BLOCKED (epic-8-code-review not started; epic-7-version's own gate red at HEAD — see Update below) | Closure Epilogue | tranche promotion PR | sd30-e9-closure | 2026-08-14T22:20:00Z | `SD30-E9-F1-001` |
 | `epic-10-ingest-lanes` | **MOVED to `SD-31-corpus-closure-grind/kanban.md` `epic-4-ingest-lanes` (`decisions.md §51`)** | Corpus-Wide Ingest Lanes, folded from SD-29 | per-kind ingest: SD30-E10-F1 `monster`, F2 `spell`, F3 `race`, F4 `race_trait` — each runs the raw-vs-workable split + pre-cycle classifier screen before claiming a book (SD-29 lessons, `decisions.md §44`) | — | — | — |
 | `epic-11-book-onboarding` | **MOVED to `SD-31-corpus-closure-grind/kanban.md` `epic-5-book-onboarding` (`decisions.md §51`)** | Book Onboarding, 100% mandate | onboard the 7 `future_state` books (`occult_adventures`, `adventurers_guide`, `mythic_adventures`, `inner_sea_magic`, `inner_sea_temples`, `inner_sea_taverns`, `inner_sea_faiths`) — PI screen (epic-3) clean per book before any record is written (`decisions.md §45`) | — | — | — |
 | `epic-12-race-chassis` | **MOVED to `SD-32-engine-capability-builds/kanban.md` `epic-1-race-chassis` (`decisions.md §51`)** | Race Chassis, 100% mandate | build the missing race chassis closing the ~2,894 chassis-blocked `race_trait` units plus the `race` kind — DoD-8 on-screen verification mandatory (`decisions.md §45`) | — | — | — |
@@ -311,6 +311,27 @@ Full receipt, all commands verbatim, DoD table: `progress.md`, cycle `SD30-E3-F2
 
 **`SD30-E3-F2` sub-scope COMPLETE. `epic-3-pi-gate` stays `IN-FLIGHT` — F3/F4 remain open and still
 hard-block `epic-6-chassis-sweep`'s successor card in `SD-31-corpus-closure-grind`.**
+
+## Update (2026-08-14, `SD30-E9-F1-001`) — `epic-9-closure` attempted, BLOCKED (not COMPLETE)
+
+Verified every live card by content, not status word. `epic-0`/`epic-1`/`epic-2`/`epic-3` confirmed
+genuinely `COMPLETE`. `epic-7-version`'s `COMPLETE` mark is **premature**: its retry gate (live PID
+`663386` at the time of this check) FAILED at `frontend-test` — `src/release/buildVersionTriple.test.ts`
+and `src/releaseChecks/buildLabelFixtureFreshness.test.ts` both FAIL, a stale build-label fixture
+(`"Codex 0.10.0-test"`) not updated alongside the version bump. `epic-8-code-review` was found **not
+started at all** (zero `progress.md` receipt). Both are real, content-verified blockers, not this
+cycle's invention. Per the loop-instruction's hard rule, the tranche-promotion PR was **not opened**.
+Closure-prep work landed anyway (does not require Epic 8/7 to be safe or valuable): `release-notes.md`
+populated for real, `state-goals-and-lessons.md §3.4` added (closure-attempt state + new hazard #6, a
+version-bump cycle's fixture surface being wider than the build-config files it obviously touches),
+`epic-breakdown.md`'s Closure-F1 acceptance and Completion-gate sections reconciled to the narrowed
+post-split scope (`decisions.md §51`'s "a real deliverable" instruction), `docs/architecture/status.md`
+partially refreshed, Closure-F2 (workspace-tree removal) re-confirmed still holding. Full receipt:
+`progress.md`, cycle `SD30-E9-F1-001`.
+
+**Next cycle to claim `epic-9-closure` needs, in order: (1) `epic-7-version` fixes the stale build-label
+fixture and obtains a captured `VERIFY_EXIT=0`; (2) `epic-8-code-review` runs its whole-bundle diff
+review and closes; (3) re-check Closure-F1 and open the PR.**
 
 ## Operator override slot
 

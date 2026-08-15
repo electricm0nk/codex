@@ -108,6 +108,23 @@ Per kind (`grounded` / total):
 | `class` | 185 | 27 | |
 | `race` | 103 | 7 | The 7 `race_tables::race_traits()` rows; the *ingest* chassis models 18 races (below) |
 
+**SD-30 partial update, 2026-08-14 (`SD30-E9-F1-001`, `epic-9-closure` attempt — bounded scope, not
+a full re-verification).** This table's own `grounded`/status figures above are unchanged from
+2026-08-13 and are **not** re-derived by this pass — SD-30's Epic 0 (instrument-apply) moved the
+board's **`done`** metric (a different, stricter verdict combining `wiring_class`+`status`+`kind`
+via `pf1e_dashboard_producer.py`'s `doneness_verdict()`, not this table's raw ingest `status`), which
+this table does not track. `done` moved corpus-wide **3,464 → 5,837** (re-confirmed this cycle,
+unchanged since Epic 0's own close — see `SD-30-class-feature-archetype-bundle/state-goals-and-
+lessons.md §1.1` for the full per-kind `done` table and its exact re-derivation command). SD-30 also
+closed its own PI-screening gate (declared `NAMEISPI`/`DESCISPI` reading, now wired into
+`class_feature`'s one production ingest binary and backfilled into the monster/companion
+transcribers — `SD-30-.../decisions.md §52-54`) and its identifier-cleanup epic. **A full re-pass of
+this whole section (re-deriving `grounded` per kind, the three structural-ceiling classifiers below,
+and the JSON-corpus-cache/`RuleSetId` rows above) is still owed at SD-30's actual closure** — this
+package's `epic-8-code-review` had not yet started as of this update, so SD-30 itself has not closed;
+this partial update exists so the eventual closing cycle is not starting from a completely stale
+`docs/architecture/` (unchanged since `tranche/9`) but it is not a substitute for that closing pass.
+
 ### The three structural ceilings, each measured by a checked-in classifier
 
 A remainder is not a workload. Each of the three lanes SD-29 ran to its

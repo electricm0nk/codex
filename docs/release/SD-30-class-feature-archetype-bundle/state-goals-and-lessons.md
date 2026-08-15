@@ -225,7 +225,56 @@ how they get followed.
   message dependencies with filesystem ones: a commit is a fact that can be polled; a ping is an
   event that may never fire.
 
-### 3.4 Verification
+### 3.4 Closure-attempt state, 2026-08-14 (`SD30-E9-F1-001`, `epic-9-closure`)
+
+Written at the point `epic-9-closure` first attempted to check the board for a tranche-promotion PR
+and found it not ready. Recorded here because this file is the living state/hazards record, and both
+findings below are new relative to §1.3.
+
+**Card state at this cycle, verified by content (not by `kanban.md`'s own status word):**
+
+- Epics 0, 1, 2, 3 are genuinely `COMPLETE` — each has a `progress.md` receipt and the landed symbol
+  greps this package's own doctrine requires (`epic-0`: `literal-verified`/`fixture-verified` in
+  `pf1e_dashboard_producer.py`; `epic-1`: identifier audit pass; `epic-3`: `pi_table_sweep.rs`,
+  `NAMEISPI`/`DESCISPI` handling in `ingest_pu_classes.rs` and both transcriber scripts, the
+  regression test file — all re-confirmed present at this cycle's `HEAD`).
+- **Epic 7 (`epic-7-version`) is marked `COMPLETE` in `kanban.md` but is not actually gate-confirmed.**
+  The version bump to `0.10.0` landed, but the first `verify.sh` run failed at the `desktop` stage on
+  a stale `Cargo.lock` (fixed, `cca272e8`), and the **retry** gate — the only run since the
+  `Cargo.lock` fix — was found by this cycle **still running** (PID `663386`, launched ~21:40) and,
+  once it reached `frontend-test`, **failed**: `src/release/buildVersionTriple.test.ts` and
+  `src/releaseChecks/buildLabelFixtureFreshness.test.ts` both FAIL, the latter with the message
+  `src/testerWorkbench/loadTesterWorkbenchSurface.test.ts must carry the current tranche's build-label
+  fixture "Codex 0.10.0-test"` — a fixture the version-bump cycle did not update alongside the version
+  triple. **This is a real, live finding, not inferred**: read directly off
+  `/tmp/codex-verify-GyoD6r/frontend-test.log` while the gate was still in flight. `epic-9-closure`
+  did not fix it — the fixture lives inside `epic-7-version`'s own change surface, a different card,
+  and a live gate process from that cycle was still running in the same shared checkout at the time
+  (touching the same tree an in-flight process is reading is the exact hazard `AGENTS.md`'s
+  "one writer per tree" rule exists to prevent). **Whoever next claims `epic-7-version` must update
+  the stale build-label fixture(s) to `"Codex 0.10.0-test"`, re-run the full gate, and only then flip
+  the card `COMPLETE` for real** — `kanban.md`'s current `COMPLETE` mark on that row is premature and
+  should be read as `IN-FLIGHT` in substance until a green gate exists at the version-bump tip.
+- **Epic 8 (`epic-8-code-review`) has not been started at all.** No `progress.md` receipt, `kanban.md`
+  row still `READY`. It hard-blocks `epic-9-closure` (`kanban.md`: "gated on every other card").
+- **Net: the tranche-promotion PR was NOT opened this cycle.** Two real blockers, not one: Epic 8
+  unstarted, and Epic 7's own gate unconfirmed with a genuine new failure discovered while checking.
+  Recorded as `decision-blocked` in `progress.md`, cycle `SD30-E9-F1-001`.
+
+**New hazard for a successor to inherit (add to §1.3's numbered list in substance, not renumbering the
+existing five to avoid breaking prior cross-references):**
+
+6. **A version bump's fixture surface is wider than the three build-config files.** `epic-7-version`
+   updated `apps/desktop/package.json`, `tauri.conf.json`, `src-tauri/Cargo.toml`, and the two
+   `buildVersionTriple.test.ts` files, but missed a build-label string fixture consumed by
+   `src/testerWorkbench/loadTesterWorkbenchSurface.test.ts` and asserted fresh by
+   `src/releaseChecks/buildLabelFixtureFreshness.test.ts`. **A version-bump cycle's own DoD item 1
+   ("`verify.sh` exits 0") is the only mechanism that actually catches this** — grepping the three
+   config files for the new version string, as that cycle's own receipt did, is not sufficient
+   evidence of a complete bump. Do not mark a version-bump card `COMPLETE` before the full gate — not
+   just `root-full`/`root-lib` — has returned a captured exit code.
+
+### 3.5 Verification
 
 - **Capture the exit code directly, never through a pipe, and never infer a pass.** A gate that
   reached its last stage with no visible failures had in fact returned `VERIFY_EXIT=1` on `clippy`.
