@@ -856,17 +856,17 @@ const MAX_NESTED_LST_DEPTH: usize = 3;
 
 /// Resolve `file`'s real path under a book's `dir`.
 ///
-/// Tries the direct single-level `dir.join(file)` first — the fast, common
-/// case, and the ONLY path any already-resolving unit takes, so no
-/// currently-correct resolution changes which file it reads. If that
-/// misses, searches `dir` up to [`MAX_NESTED_LST_DEPTH`] levels deep for a
-/// file with that exact basename. Several books nest their `.lst` files
-/// (`core_essentials/races/<race>/`, `ultimate_combat/support/`,
-/// `horror_adventures/support/`, `inner_sea_world_guide/_pfs/`,
-/// `advanced_race_guide/_pfs/`, `adventurers_guide/support/`, ...); the
-/// prior single-level join silently missed all of them and fell to D0
-/// `ambiguous:no_corpus_line` for ~1,707 corpus-real units
-/// (`OPEN-ISSUES.md` row 1).
+/// Checks the direct single-level `dir.join(file)` first — the fast,
+/// common case, and (proven below) the ONLY match any already-resolving
+/// unit has, so no currently-correct resolution changes which file it
+/// reads. If that misses, searches `dir` up to [`MAX_NESTED_LST_DEPTH`]
+/// levels deep for a file with that exact basename. Several books nest
+/// their `.lst` files (`core_essentials/races/<race>/`,
+/// `ultimate_combat/support/`, `horror_adventures/support/`,
+/// `inner_sea_world_guide/_pfs/`, `advanced_race_guide/_pfs/`,
+/// `adventurers_guide/support/`, ...); the prior single-level join
+/// silently missed all of them and fell to D0 `ambiguous:no_corpus_line`
+/// for ~1,707 corpus-real units (`OPEN-ISSUES.md` row 1).
 ///
 /// A bounded walk, not an unbounded recursive glob of the whole tree —
 /// and the resolution bar is the *correct* file, not merely *a* file with
@@ -875,19 +875,23 @@ const MAX_NESTED_LST_DEPTH: usize = 3;
 /// wiring-class read if picked by accident (this program's repeat
 /// identifier-scope-collision hazard). Enumeration across the full
 /// 38-book corpus (this cycle's receipt) found **zero** basenames
-/// duplicated within any one book's tree at any depth, so an exact
-/// basename match under a book's own directory is unambiguous today — but
-/// this function still refuses to guess if a future corpus revision
+/// duplicated within any one book's tree at any depth — INCLUDING
+/// root-vs-nested (`SD31-W2-INTEGRATE-001`, Finding 4: the direct-join
+/// candidate is now collected alongside the nested-search matches below,
+/// not returned early, so a root-shadowing-nested duplicate refuses to
+/// guess too, not just a nested-vs-nested one) — so an exact basename
+/// match under a book's own directory is unambiguous today, but this
+/// function still refuses to guess if a future corpus revision
 /// introduces one: more than one match resolves to `None`, the same
 /// outcome as no match, never a silently-wrong pick. Cross-book
 /// collisions cannot occur by construction: the search is confined to the
 /// single `dir` the caller's own `book` key maps to.
 fn resolve_corpus_file(dir: &std::path::Path, file: &str) -> Option<PathBuf> {
+    let mut matches: Vec<PathBuf> = Vec::new();
     let direct = dir.join(file);
     if direct.is_file() {
-        return Some(direct);
+        matches.push(direct);
     }
-    let mut matches: Vec<PathBuf> = Vec::new();
     let mut stack = vec![(dir.to_path_buf(), 0usize)];
     while let Some((d, depth)) = stack.pop() {
         if depth > MAX_NESTED_LST_DEPTH {
@@ -898,7 +902,12 @@ fn resolve_corpus_file(dir: &std::path::Path, file: &str) -> Option<PathBuf> {
             let path = entry.path();
             if path.is_dir() {
                 stack.push((path, depth + 1));
-            } else if path.file_name().and_then(|n| n.to_str()) == Some(file) {
+            } else if depth > 0 && path.file_name().and_then(|n| n.to_str()) == Some(file) {
+                // `depth > 0`: the book-root's own direct entries were
+                // already checked above via `direct` -- only NESTED
+                // matches are collected here, so a root-level file is
+                // never pushed into `matches` twice under two different
+                // `PathBuf` values for the same real path.
                 matches.push(path);
             }
         }
@@ -1649,6 +1658,42 @@ mod tests {
         // `OPEN-ISSUES.md` as an informational finding rather than fixed
         // here.
         assert_eq!(lines.line("test_book", "shared.lst", 2), None);
+    }
+
+    // Collision safety, the ROOT-shadows-NESTED axis (`SD31-W2-INTEGRATE-001`,
+    // Finding 4). Before this fix, `resolve_corpus_file`'s direct
+    // `dir.join(file)` fast path returned EARLY, before the nested-search
+    // collision scan ran at all — so a book carrying `shared.lst` at its
+    // ROOT *and* `sub/shared.lst` nested would silently resolve every
+    // caller against the root copy, never detecting the nested duplicate.
+    // Corpus-wide enumeration found zero real instances of this shape
+    // (`resolve_corpus_file`'s doc comment), so this is a defensive guard
+    // against a future corpus revision, exactly like the nested-vs-nested
+    // test above — but it must refuse to guess here too, not just there.
+    #[test]
+    fn corpus_lines_refuses_to_guess_when_a_root_file_shadows_a_nested_basename_collision() {
+        let book = ScratchBook::new("root_shadow_collision");
+        book.write("shared.lst", "Root Row\tTYPE:General\n");
+        book.write_nested("sub/shared.lst", "Nested Row\tTYPE:General\n");
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert("test_book".to_string(), book.root.clone());
+        let mut lines = CorpusLines::new(&book_paths);
+        // Line 2, not 1 -- same pre-existing empty-buffer quirk noted above.
+        assert_eq!(lines.line("test_book", "shared.lst", 2), None);
+    }
+
+    // Regression guard alongside the root-shadow test: a book with ONLY a
+    // root-level file (no nested duplicate) must still resolve it via the
+    // fast path, proving the collision-safety fix does not regress the
+    // ordinary single-match case.
+    #[test]
+    fn corpus_lines_direct_join_still_resolves_when_no_nested_duplicate_exists() {
+        let book = ScratchBook::new("root_only_no_collision");
+        book.write("solo.lst", "Solo Row\tTYPE:General\n");
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert("test_book".to_string(), book.root.clone());
+        let mut lines = CorpusLines::new(&book_paths);
+        assert_eq!(lines.line("test_book", "solo.lst", 1).as_deref(), Some("Solo Row\tTYPE:General"));
     }
 
     // Collision safety, the other axis: a same-named nested file in TWO
