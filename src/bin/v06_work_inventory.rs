@@ -2900,7 +2900,10 @@ const STATUS_VOCABULARY: &[(&str, &str)] = &[
          `text-complete`, which it supersedes for a unit the sweep actually reached: only the \
          producer's `static`/`derived` doneness rung (operator directive 2026-08-13) maps this to \
          `done`. A unit the sweep did not reach, or a sweep that found any mismatch anywhere, \
-         leaves every unit at its ordinary status -- this word is never assigned on trust.",
+         leaves every unit at its ordinary status -- this word is never assigned on trust. \
+         Meaningful only on a `static`/`derived` unit; if a later reclassification leaves it on \
+         any other class the producer reads it as `held`, and the next regen re-derives the \
+         status from the class.",
     ),
     (
         "fixture-verified",
@@ -2911,7 +2914,9 @@ const STATUS_VOCABULARY: &[(&str, &str)] = &[
          fixture actually covers: only the producer's `static`/`derived` doneness rung (operator \
          directive 2026-08-13) maps this to `done`. Coverage is 94 of 2,879 held `derived` units \
          by the fixture's own design, not a sample -- a unit outside that coverage, or one the \
-         check ran and failed, keeps its ordinary status and stays `held`.",
+         check ran and failed, keeps its ordinary status and stays `held`. Meaningful only on a \
+         `static`/`derived` unit; if a later reclassification leaves it on any other class the \
+         producer reads it as `held`, and the next regen re-derives the status from the class.",
     ),
     (
         "ingested-magnitude",
@@ -3740,6 +3745,134 @@ fn load_derived_fixture_verified(path: &Path) -> BTreeSet<String> {
     out
 }
 
+/// Applies the `static`/`derived` done-rung stamps in place (operator
+/// directive 2026-08-13, answering SD-32 decisions.md §2), extracted from
+/// `main`'s two inline loops (launch-readiness remediation Step 4D) so the
+/// invariant the dashboard producer's `held` mapping for unmapped
+/// `(ambiguous, literal-/fixture-verified)` cells depends on -- that this
+/// generator can NEVER emit those cells -- has a test next to the code that
+/// makes it true, not just a comment claiming it.
+///
+/// `wiring_class == Static` items whose status is one of the three the
+/// sweep's bar supersedes (`ingested-magnitude`/`grounded`/`text-complete`)
+/// and whose own `(book, source_file, source_line)` triple is in
+/// `sweep_verified` are upgraded to `literal-verified`. `wiring_class ==
+/// Derived` items meeting the same status bar, joined on `id` against
+/// `derived_fixture_verified`, are upgraded to `fixture-verified`. Every
+/// other `wiring_class` -- `Display`, `Computed`, and, load-bearingly,
+/// `Ambiguous` -- is left untouched by both loops regardless of whether its
+/// `(book, file, line)`/`id` happens to appear in either verified set: the
+/// `match` on `item.wiring_class` gates entry, so membership in a verified
+/// set is necessary but never sufficient. A unit the sweep/fixture check did
+/// not reach, or reached and failed, keeps its ordinary status and stays
+/// `held`, same as before this rung existed.
+fn apply_done_rung_stamps(
+    inventory: &mut [InventoryUnit],
+    sweep_verified: &BTreeSet<(String, String, usize)>,
+    derived_fixture_verified: &BTreeSet<String>,
+) {
+    for item in inventory.iter_mut() {
+        match item.wiring_class {
+            wiring_class::WiringClass::Static => {
+                if matches!(
+                    item.verdict.status,
+                    "ingested-magnitude" | "grounded" | "text-complete"
+                ) && sweep_verified.contains(&(
+                    item.unit.book.clone(),
+                    item.unit.provenance.file.clone(),
+                    item.unit.provenance.line,
+                )) {
+                    item.verdict.status = "literal-verified";
+                }
+            }
+            wiring_class::WiringClass::Derived => {
+                if matches!(
+                    item.verdict.status,
+                    "ingested-magnitude" | "grounded" | "text-complete"
+                ) && derived_fixture_verified.contains(&item.id)
+                {
+                    item.verdict.status = "fixture-verified";
+                }
+            }
+            // Display, Computed, Ambiguous: never stamped, on purpose -- see
+            // the function doc comment and
+            // `ambiguous_display_computed_items_in_both_verified_sets_stay_unstamped`
+            // below.
+            wiring_class::WiringClass::Display
+            | wiring_class::WiringClass::Computed
+            | wiring_class::WiringClass::Ambiguous => {}
+        }
+    }
+}
+
+#[cfg(test)]
+mod apply_done_rung_stamps_tests {
+    use super::*;
+
+    fn unit(id: &str, wc: wiring_class::WiringClass, status: &'static str, line: usize) -> InventoryUnit {
+        InventoryUnit {
+            id: id.to_string(),
+            unit: CorpusUnit {
+                book: "core_rulebook".to_string(),
+                kind: Kind::Feat,
+                key: id.to_string(),
+                name: id.to_string(),
+                origin: Origin::Declared,
+                provenance: Provenance { file: "test.lst".to_string(), line },
+                magnitude_token_count: 0,
+                type_facet: None,
+                visible: true,
+            },
+            verdict: Verdict {
+                status,
+                evidence: "test".to_string(),
+                reason: None,
+                engine_book: None,
+            },
+            wiring_class: wc,
+            wiring_class_reason: "test".to_string(),
+            wiring_class_signals: BTreeSet::new(),
+        }
+    }
+
+    /// The invariant the dashboard producer's `held` mapping for the
+    /// unmapped `(ambiguous, literal-verified|fixture-verified)` cells
+    /// (launch-readiness remediation Step 4D) depends on: this generator
+    /// can NEVER emit those cells, because the stamping gate is
+    /// `wiring_class`, not membership in either verified set. Proven by
+    /// putting an Ambiguous item's own `(book, file, line)`/`id` in BOTH
+    /// verified sets and confirming its status never moves -- same for
+    /// Display and Computed, the two other non-`Static`/`Derived` classes.
+    /// A Static control item in the same run IS stamped, proving the
+    /// verified sets themselves are wired correctly (this isn't an
+    /// empty-set false negative).
+    #[test]
+    fn ambiguous_display_computed_items_in_both_verified_sets_stay_unstamped() {
+        let mut inventory = vec![
+            unit("ambiguous_one", wiring_class::WiringClass::Ambiguous, "grounded", 1),
+            unit("display_one", wiring_class::WiringClass::Display, "text-complete", 2),
+            unit("computed_one", wiring_class::WiringClass::Computed, "grounded", 3),
+            unit("static_control", wiring_class::WiringClass::Static, "grounded", 4),
+        ];
+        let sweep_verified: BTreeSet<(String, String, usize)> = inventory
+            .iter()
+            .map(|u| (u.unit.book.clone(), u.unit.provenance.file.clone(), u.unit.provenance.line))
+            .collect();
+        let derived_fixture_verified: BTreeSet<String> =
+            inventory.iter().map(|u| u.id.clone()).collect();
+
+        apply_done_rung_stamps(&mut inventory, &sweep_verified, &derived_fixture_verified);
+
+        assert_eq!(inventory[0].verdict.status, "grounded", "Ambiguous must stay unstamped");
+        assert_eq!(inventory[1].verdict.status, "text-complete", "Display must stay unstamped");
+        assert_eq!(inventory[2].verdict.status, "grounded", "Computed must stay unstamped");
+        assert_eq!(
+            inventory[3].verdict.status, "literal-verified",
+            "Static control must be stamped -- proves the verified sets are wired correctly"
+        );
+    }
+}
+
 /// The set of unit `id`s carrying a done-rung stamp (`literal-verified` or
 /// `fixture-verified`) in a `work-inventory.json` document. Shared by the
 /// regenerator's own stamp-loss guard (see [`stamp_loss`]) and its tests, so
@@ -4545,54 +4678,20 @@ fn main() {
         std::process::exit(1);
     }
 
-    // The `static` done rung (operator directive 2026-08-13, answering SD-32
-    // decisions.md §2): upgrade a unit's status to `literal-verified` when,
-    // and only when, `wiring_class == Static`, its existing status is one of
-    // the three the sweep's bar supersedes, AND its own `(book, source_file,
-    // source_line)` triple is in `corpus_literal_sweep --json-out`'s verified
-    // set. Applied here, before `by_status`/`by_kind`/`by_book` are
-    // aggregated below, so every rollup in this file's output -- corpus-wide
-    // totals, per-book, per-kind -- agrees with the per-unit `status` field
-    // the final `units` array carries; doing this only in the serializer
-    // would leave the aggregates stale (caught by this generator's own
-    // idempotence contract before it ever reached the dashboard). A unit the
-    // sweep did not reach (no shipped `data/corpus` record, or a
-    // digest-only comparison) keeps its ordinary status and stays `held`,
-    // same as before this rung existed.
-    for item in &mut inventory {
-        if item.wiring_class == wiring_class::WiringClass::Static
-            && matches!(item.verdict.status, "ingested-magnitude" | "grounded" | "text-complete")
-            && sweep_verified.contains(&(
-                item.unit.book.clone(),
-                item.unit.provenance.file.clone(),
-                item.unit.provenance.line,
-            ))
-        {
-            item.verdict.status = "literal-verified";
-        }
-    }
-
-    // The `derived` done rung, same operator directive: upgrade a unit's
-    // status to `fixture-verified` when, and only when, `wiring_class ==
-    // Derived`, its existing status is one of the three the fixture check's
-    // bar supersedes, AND its own `id` is in
-    // `derived_evaluator_fixture_check --json-out`'s verified set --
-    // `run_bar_check` only ever inserts a `unit_id` there after the
-    // engine's evaluator matched the pinned fixture exactly, so this is a
-    // direct join, unlike the static rung's book/file/line reconstruction.
-    // A unit outside the fixture's 94-entry coverage, or one the check ran
-    // and failed, keeps its ordinary status and stays `held` -- most of the
-    // 2,879 held `derived` units are NOT in `derived_fixture_verified` and
-    // this loop does nothing for them, which is the honest, intended
-    // outcome, not a bug.
-    for item in &mut inventory {
-        if item.wiring_class == wiring_class::WiringClass::Derived
-            && matches!(item.verdict.status, "ingested-magnitude" | "grounded" | "text-complete")
-            && derived_fixture_verified.contains(&item.id)
-        {
-            item.verdict.status = "fixture-verified";
-        }
-    }
+    // The `static`/`derived` done rungs (operator directive 2026-08-13,
+    // answering SD-32 decisions.md §2). Extracted into
+    // `apply_done_rung_stamps` (launch-readiness remediation Step 4D) so the
+    // stamping invariant it relies on -- an `Ambiguous`/`Display`/`Computed`
+    // item present in BOTH verified sets is left unstamped, because the
+    // stamp only ever means something on a `Static`/`Derived` unit -- has a
+    // `#[test]` next to it rather than living only as inline behaviour.
+    // Applied here, before `by_status`/`by_kind`/`by_book` are aggregated
+    // below, so every rollup in this file's output -- corpus-wide totals,
+    // per-book, per-kind -- agrees with the per-unit `status` field the
+    // final `units` array carries; doing this only in the serializer would
+    // leave the aggregates stale (caught by this generator's own
+    // idempotence contract before it ever reached the dashboard).
+    apply_done_rung_stamps(&mut inventory, &sweep_verified, &derived_fixture_verified);
 
     // --- aggregate ---------------------------------------------------------
     let mut by_kind: BTreeMap<&str, usize> = BTreeMap::new();

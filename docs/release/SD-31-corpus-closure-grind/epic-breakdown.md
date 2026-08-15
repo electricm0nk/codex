@@ -54,6 +54,15 @@ Acceptance:
   never by reimplementing its table, which would drift from the thing it audits.
 - Output: per-kind and corpus-wide **reachable ceiling** (share of units for which a `done`-producing
   cell is reachable), plus a named list of every dead-end cell and its unit count.
+- **`reachability_audit.py` evaluates `_doneness_verdict_uncapped` over the FULL
+  `WIRING_CLASS_VALUES × status_vocabulary` grid** (not just cells on the board); every cell that
+  raises `ValueError` is reported as `dead-end (unmapped)` with its on-board unit count, and any such
+  cell with count > 0 fails the audit outright, because those units are absent from every rollup.
+  (Launch-readiness remediation Step 4D / design pass §3: this is exactly the shape blocker B6 was —
+  `(ambiguous, literal-verified|fixture-verified)` raised, unmapped, until this same remediation fixed
+  the producer's table to return `held` for it. `scripts/tests/test_pf1e_dashboard_producer.py`'s
+  `test_full_grid_yields_no_unmapped_cells` proves the producer side of this grid is currently clean;
+  this audit is the standing, corpus-live check that it stays that way.)
 - The audit is proven able to fail before it is trusted: its own tests feed it a fabricated dead-end
   and confirm it is reported. `SD-30 state-goals-and-lessons.md §3.1` — this repo has shipped three
   gates that could not fail, each caught only by running it against a known-answer case.

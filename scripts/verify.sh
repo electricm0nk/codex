@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -388,6 +388,55 @@ run_oracle_pin_selftest() {
     fi
 
     stage_pass oracle-pin-selftest "${tally:-$passed cases passed}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: producer-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_pf1e_dashboard_producer.py` --
+# the doneness-verdict-table self-test (launch-readiness remediation Step
+# 4D, blocker B6). Grids `WIRING_CLASS_VALUES x` the generator's own status
+# vocabulary over a fabricated document and asserts nothing lands in
+# `doneness_unmapped`, plus the specific `(ambiguous, literal-/fixture-
+# verified) -> held` and `(static, literal-verified) -> done` rulings. Cheap
+# (stdlib unittest, no build, no network, a temp file per test) — placed in
+# BOTH stage sets next to oracle-pin-selftest/corpus-sweep-selftest, the
+# same "self-test for a table that raises on purpose deserves its own gate"
+# reasoning those two carry.
+# ---------------------------------------------------------------------------
+
+run_producer_selftest() {
+    stage_start "producer-selftest — python3 -m unittest scripts/tests/test_pf1e_dashboard_producer.py"
+    local log="$LOG_DIR/producer-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_pf1e_dashboard_producer.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail producer-selftest "self-test script missing at scripts/tests/test_pf1e_dashboard_producer.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    # unittest's own summary line, e.g. "Ran 5 tests in 0.010s" -- parsed the
+    # same way the bash selftests parse their own "passed: N  failed: M"
+    # tally, so a run that silently discovered 0 tests (a bad import path, a
+    # renamed TestCase) is caught the same way as those stages' "0 cases ran"
+    # guard, not read as a vacuous pass.
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail producer-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail producer-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass producer-selftest "$ran cases passed"
 }
 
 # ---------------------------------------------------------------------------
@@ -1109,6 +1158,7 @@ for stage in "${SELECTED[@]}"; do
         preflight-disk)      run_preflight_disk ;;
         preflight-oracle)    run_preflight_oracle ;;
         oracle-pin-selftest) run_oracle_pin_selftest ;;
+        producer-selftest)   run_producer_selftest ;;
         pi-sweep)            run_pi_sweep ;;
         audit-selftest)      run_audit_selftest ;;
         reclaim-selftest)    run_reclaim_selftest ;;

@@ -3594,7 +3594,18 @@ def _doneness_verdict_uncapped(wiring_class: str, status: str) -> str:
     # no per-status special-casing: any evidence-bearing status under an
     # unresolved wiring class is `held`.
     if wiring_class == "ambiguous":
-        if status in ("grounded", "text-complete", "ingested-magnitude"):
+        # `literal-verified`/`fixture-verified` are evidence-bearing statuses too: the stamp
+        # proves the LITERAL matched (static's bar) or the EVALUATOR matched (derived's bar),
+        # neither of which is known to be THIS unit's bar while its class is unresolved -- the
+        # unit could be `computed`, whose bar (an observed consumer delta) neither stamp meets.
+        # Same lower-bound rule as `grounded` above: never more favourable than the least
+        # favourable class the unit could turn out to be. The generator cannot emit this cell
+        # (its stamping loops are gated on Static/Derived and re-derived every run); it can only
+        # arise from an in-place `wiring_class` rewrite, and on the next regen the stamp goes
+        # away and the unit reads `held` anyway -- so `held` is the one verdict that does not
+        # depend on which tool ran last. (Launch-readiness remediation Step 4D, blocker B6.)
+        if status in ("grounded", "text-complete", "ingested-magnitude",
+                      "literal-verified", "fixture-verified"):
             return DONENESS_HELD
         raise ValueError(f"doneness: unmapped {wiring_class!r} + {status!r}")
     if wiring_class == "display":
