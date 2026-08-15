@@ -1730,9 +1730,17 @@ build — a new card, not a `-002` extension).
 work was complete. **Zero production code changed this cycle** (only new doc artifacts +
 `OPEN-ISSUES.md`/`progress.md` edits; `tests/fixtures/rules_core/derived-evaluator-fixtures.json`
 and every `.rs`/`.py` production file are untouched — `git diff --stat` confirms). Log:
-`artifacts/SD31-E6-F11-001-verify.log`. `VERIFY_EXIT=<see log tail — appended once background run
-completes; if this receipt was committed before it finished, the log's own `SUMMARY` block and the
-appended `VERIFY_EXIT=` line are the source of truth, not this sentence>`.
+`artifacts/SD31-E6-F11-001-verify.log`. **`VERIFY_EXIT=0`**, `RESULT: PASS`, all 21 stages passed
+(`preflight-disk`, `preflight-oracle`, `oracle-pin-selftest`, `producer-selftest`,
+`reachability-audit-selftest`, `reachability-audit` 94.53 %, `pi-sweep`, `audit-selftest`,
+`reclaim-selftest`, `driver-selftest`, `corpus-sweep-selftest`, `root-lib` 1,777 passed, `root-full`
+6,411 passed/548 suites, `desktop` 445 passed, `reach` 27 passed, `corpus-sweep` 3,516 examined/0
+findings, `frontend-install`, `frontend-test` 99/99, `frontend-typecheck`, `clippy` 0 errors,
+`class-dump` 31/31). The three stale `verify-baselines.env` counters `OPEN-ISSUES.md` row 7 already
+flagged (`BASELINE_ROOT_LIB_TESTS`/`BASELINE_ROOT_FULL_TESTS`/`BASELINE_ROOT_TEST_BINARIES`) still
+report the same drift; unedited here for the same out-of-scope reason. Confirmed by the auto-emitted
+`verification` retro event (`docs/retro/events/sd31-e6-heldcells.jsonl`, `head 73d214ac6`,
+`duration_seconds 1689`).
 
 ### Files changed
 
