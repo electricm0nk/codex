@@ -27,10 +27,17 @@ that silently disappears.
    honestly. The failure mode is using it as the deferral hatch it replaced. **Mitigation:**
    `decisions.md §3` requires the proving command, the named missing capability, an Epic 0 audit run,
    and **operator sign-off** — and states explicitly that cost is never an exclusion reason.
-5. **Shared-checkout collision with SD-30's still-open promotion PR.** `tranche/10` carries SD-30's
-   closure and PR #363, unmerged. A cycle here commits to the same branch. **Mitigation:** the standing
-   shared-checkout discipline (`git status` before every git write, never `git add -A`, never
-   `git stash`) applies unchanged; the operator holds the merge.
+5. **Shared-checkout history with SD-30's still-open promotion PR.** `tranche/11` was cut from
+   `tranche/10`'s tip, not `develop`, because `tranche/10`'s own promotion PR #363 (SD-30's) is still
+   open — so `tranche/11` carries `tranche/10`'s (and thus SD-30's) full history (`decisions.md §6`,
+   operator ruling 2026-08-15). This package now commits to `tranche/11`, a separate branch from
+   `tranche/10`, so there is no longer a same-branch collision with SD-30 cycles; the residual risk is
+   that the eventual `tranche/11 -> develop` PR could pick up unexpected diff if `#363` merges with
+   further SD-30 changes before this package closes. **Mitigation:** the standing shared-checkout
+   discipline (`git status` before every git write, never `git add -A`, never `git stash`) applies
+   unchanged; a `git merge origin/develop` into `tranche/11` after `#363` lands is expected to be
+   clean (SD-30's work is already present via shared history); the operator holds the merge on both
+   branches.
 
 ## Resolved by `decisions.md §2` (kept as record, not live risks)
 

@@ -3,7 +3,7 @@ canonical: true
 owner: god-emporer
 status: planning-ready (SD-32 absorbed, epics re-sequenced, operator ruling 2026-08-15)
 date: 2026-08-15
-canonical_branch: tranche/10
+canonical_branch: tranche/11
 ---
 
 # SD-31 — Local-file Work Queue
@@ -42,7 +42,8 @@ to avoid drift between two copies of the same legend text.
 | `epic-5-chassis-sweep` | READY (per-class, gated on `epic-3` + `epic-4` for the target class; F3 additionally gated on `epic-2` and `epic-3`-F4) | Per-Class Chassis Sweep | per-class `class_feature` ingest across the 23 in-scope books, reach-gate claim per record; **F4 (added 2026-08-15) — the 36 `deferred-with-reason` units, each with a real path or a proposed register entry** | — | — | — |
 | `epic-6-ingest-lanes` | READY for F1/F2/F5/F6/F7/F8/F9/F10/F11; **F3 and F4 gated on `epic-1` per race batch** | Corpus-Wide Ingest Lanes, folded from SD-29 | per-kind ingest/instrument: F1 `monster` (fixture-coverage lane, rewritten 2026-08-15), F2 `spell`, F3 `race`, F4 `race_trait`, **F5 `equipment`, F6 `equipment_modifier`, F7 `companion`, F8 `feat` (routes SD-30 E0-F3's 217-unit probe-fixture residue), F9 `monster_ability`, F10 `class` (all added 2026-08-15, blocker B2), F11 held static/derived residual (added 2026-08-15, blocker B4)** — each runs the raw-vs-workable split + pre-cycle classifier screen before claiming a book | — | — | — |
 | `epic-7-book-onboarding` | READY | Book Onboarding, 100 % mandate | onboard the 7 `future_state` books — PI screen cited clean per book before any record is written | — | — | — |
-| `epic-8-cloud-fanout` | READY (per lane shape, after one local proof cycle) | Cloud Fan-Out Protocol (grind **and** capability lanes) | local-proof-then-cloud-scale protocol; local orchestrator owns all `tranche/10` merges; DoD-8 and dashboard-producer work stay local | — | — | — |
+| `epic-8-cloud-fanout` | READY (per lane shape, after one local proof cycle) | Cloud Fan-Out Protocol (grind **and** capability lanes) | local-proof-then-cloud-scale protocol; local orchestrator owns all `tranche/11` merges (updated from `tranche/10`, `decisions.md §6`); DoD-8 and dashboard-producer work stay local | — | — | — |
+| `epic-10-version-numbering` | IN-FLIGHT (F1 landed; gate pending, `SD31-S7-VERSION-001`) | Build Version Numbering | version-bump 0.11.0 for the `tranche/11` cut (`decisions.md §6`) — package.json/tauri.conf.json/Cargo.toml/Cargo.lock, the publish-workflow VERSION stamp, and the full test-fixture literal surface (8 files) | sd31-ready-s7-version | 2026-08-15 | `SD31-S7-VERSION-001` |
 | `epic-9-closure` | READY (gated on every other card) | Closure and the 100 % Exit Gate | `epic-0` audit at closing tip → reachable ceiling 100 % or signed register entries → **F3 bundle code review of this package's own diff (added 2026-08-15)** → closure receipt + promotion PR (opened, not merged) | — | — | — |
 
 ## The two gates that exist because of the merge

@@ -100,8 +100,9 @@ Reproduced from `SD-30-class-feature-archetype-bundle/decisions.md §47`: hardwa
 45GB RAM / 968GB disk at 19% used, captured 2026-08-14), concurrency cap of three concurrent
 build-capable agents (re-derived empirically per the existing budget discipline), and the cloud
 fan-out rules — every cloud agent works its own branch, never two writers on one branch; the local
-orchestrator owns all merges to `tranche/10`, verified by content not commit count; DoD-8 on-screen
-verification and dashboard-producer work stay local. Governs this package's Epic 6.
+orchestrator owns all merges to `tranche/11` (updated from `tranche/10` by `decisions.md §6`, the
+tranche/11 branch cut), verified by content not commit count; DoD-8 on-screen verification and
+dashboard-producer work stay local. Governs this package's Epic 6.
 
 **Superseded 2026-08-15 (launch-readiness remediation Step 5, drift D2), on two counts, per this
 program's "original text stays visible, correction points forward, dated" convention:**
@@ -458,3 +459,45 @@ attributed, already is that record.
 
 **Authority:** operator ruling 2026-08-15 (verbatim above, as recorded in the launch-readiness plan);
 figures re-derived the same day by the commands in this section.
+
+## Decision 6 — Release 0.11.<build> on tranche/11 (operator ruling 2026-08-15)
+
+**Status:** New. Operator ruling, 2026-08-15, verbatim: "it goes without saying - SD-31 will be
+release 0.11.xxx. And will be operating against branch tranche/11."
+
+**The cut.** `tranche/11` was cut from `tranche/10`'s tip, commit `1980d6b95` — not from `develop` —
+because `PR #363` (`tranche/10 -> develop`) is still open (the operator holds sole merge authority and
+has not merged it). This mirrors the precedent set at the `tranche/9 -> tranche/10` boundary: `PR #360`
+(`tranche/9 -> develop`) was a true merge commit, and `tranche/10` was cut from `develop` at that
+point, cleanly. Here, with `#363` still open, cutting from `develop` would have missed all of SD-30's
+work; cutting from `tranche/10`'s own tip instead means `tranche/11` carries SD-30's full history. A
+later `git merge origin/develop` into `tranche/11` is expected to be clean once `#363` lands (SD-30's
+work will already be present via the shared history), and the eventual `tranche/11 -> develop` PR will
+show only SD-31's own diff against that merged base.
+
+**This program's rule, restated so Epic 9 does not re-derive it:** the tranche digit bumps only on a
+NEW `tranche/N` branch cut for the next bundle — never automatically at a bundle's own closure while
+still on the same tranche branch (`SD-22 decisions.md §2`, `SD-21 decisions.md §18`). `tranche/11`
+being newly cut (this ruling) is what authorizes the advance from `0.10` to `0.11`; nothing else does.
+
+**First concrete value.** `0.11.<build>`, where `<build>` is the current build-counter state
+(`GITHUB_RUN_NUMBER` on `publish-tester-release.yml`) at the time of cycle close. The last completed
+run of that workflow before this cycle was run `#123` (success, 2026-08-14, `PR #360` merge to
+`develop`); the next publish from this lineage would stamp `0.11.124`. Landed as commit `147f1c2b7`
+on `tranche/11` this cycle (`SD31-E10-F1-001`).
+
+**Closing-PR increment rule** (restated from `SD-30 decisions.md §15` / the 2026-07-17 build-version
+amendment, so this package does not re-derive it): major stays `0` until first main-publish;
+tranche-base is the numeral in the branch name (`11`); build is a monotonic counter that never resets.
+Tranche-promotion increments only on the `tranche/11 -> develop` PR. The closure Epic's (Epic 9's)
+recorded value is `0.11.<last_build>` at the time that PR is opened.
+
+**What this changes in the package**, landed together with this decision: `README.md`,
+`scope-draft.md`, `epic-breakdown.md`, and `kanban.md` frontmatter move `canonical_branch` to
+`tranche/11` and `build_version_target` to `0.11.<build>`; `loop-instruction.md` and
+`technical-requirements.md` update their checkout instructions; `epic-breakdown.md` gains **Epic 10**
+recording the bump itself; `risks-and-open-questions.md` risk 5 is restated for the new shared-history
+shape; historical receipts in `progress.md` that say `tranche/10` are left as written — they were true
+when recorded — with a dated note added at the top instead.
+
+**Authority:** operator ruling, 2026-08-15, verbatim above.

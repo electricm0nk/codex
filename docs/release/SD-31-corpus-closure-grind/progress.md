@@ -1,5 +1,12 @@
 # SD-31 Progress Log
 
+**Note (2026-08-15, `decisions.md §6`): every `tranche/10` / `origin/tranche/10` reference below this
+point is a historical receipt, correct at the time it was written — this package's cycles committed to
+`tranche/10` before that date.** From SD31-S7-VERSION-001 forward, this package operates on
+`tranche/11` (cut from `tranche/10`'s tip `1980d6b95`, operator ruling 2026-08-15) at release
+`0.11.<build>`. Do not edit the historical entries below to say `tranche/11` — they describe what was
+true when recorded.
+
 ## Split from SD-30 (2026-08-14)
 
 Package created by operator ruling 2026-08-14 ("split phase 3 and phase 4 into their own SD's; SD-31

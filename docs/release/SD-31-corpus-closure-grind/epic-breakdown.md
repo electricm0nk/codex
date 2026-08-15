@@ -3,8 +3,8 @@ canonical: true
 owner: god-emporer
 status: planning-ready (SD-32 absorbed and epics re-sequenced, operator ruling 2026-08-15)
 date: 2026-08-15
-canonical_branch: tranche/10
-build_version_target: 0.10.<build>
+canonical_branch: tranche/11
+build_version_target: 0.11.<build>
 companion_to: ./scope-draft.md, ./decisions.md
 ---
 
@@ -851,7 +851,8 @@ itself, so the copies are collapsed into this single epic.
 **Rules carried into every cycle dispatched under this epic:**
 
 1. Every cloud agent works its own branch — never two writers on one branch.
-2. The local orchestrator owns all merges to `tranche/10`, verified by content, not commit count.
+2. The local orchestrator owns all merges to `tranche/11` (updated from `tranche/10`, `decisions.md
+   §6`, the `tranche/11` branch cut), verified by content, not commit count.
 3. DoD-8 on-screen verification and dashboard-producer work stay local — no cloud agent runs either.
    Load-bearing for Epic 1 specifically: its DoD-8 mandate cannot be satisfied by a cloud agent.
 4. **Every cloud runner bootstraps the PCGen oracle before its first `verify.sh`.** Run
@@ -947,6 +948,37 @@ review precedent — the launch-readiness plan's own Step 6):
   owner — never left undisposed. A `scripts/retro.py` event is emitted per finding with
   `--verified-by`.
 
+## Epic 10 (SD31-E10) — Build Version Numbering (NEW, `decisions.md §6`)
+
+**Objective:** mirrors `SD-30-class-feature-archetype-bundle/epic-breakdown.md` Epic 7 — keep the
+version triple (`package.json`/`tauri.conf.json`/`Cargo.toml`) and the publish-workflow stamp in
+lockstep with the branch this package operates on, at the tranche cut that authorizes the advance.
+
+**Derived from:** `decisions.md §6` (operator ruling 2026-08-15: SD-31 is release `0.11.<build>` on
+`tranche/11`, cut from `tranche/10`'s tip `1980d6b95`).
+
+### Feature seeds
+
+#### SD31-E10-F1 — Version patch
+
+Acceptance:
+
+- First concrete value: `0.11.<build>` (read from the current build counter — `GITHUB_RUN_NUMBER` on
+  `publish-tester-release.yml` — at cycle close; last completed run before this cycle was `#123`, so
+  the next publish from this lineage stamps `0.11.124`).
+- The bump landed as commit `147f1c2b7` on `tranche/11` — this cycle (`SD31-S7-VERSION-001`).
+- Closing-PR iteration on Closure increments per the 2026-07-17 build-version amendment (restated in
+  `decisions.md §6`): the `tranche/11 -> develop` PR is what advances `<build>` for Epic 9's closure
+  receipt.
+- **LESSON, carried forward from `SD30-E7-F1-001`:** the fixture surface is wider than the three
+  config files. This cycle's fresh enumeration (`decisions.md §6`'s commit message) found **8**
+  literal-carrying files, not the 7 the dispatch brief guessed — `buildOperatorTriageDraft.test.ts`
+  was missing from the brief's list. The next bump must re-enumerate fresh
+  (`grep -rn '0\.11\.0\|0\.11\.\${'` across the same surface — `apps/desktop/package.json`,
+  `apps/desktop/src-tauri/tauri.conf.json`, `apps/desktop/src-tauri/Cargo.toml`, `apps/desktop/src/**`,
+  `.github/workflows/publish-tester-release.yml`) rather than trusting this list, per this same
+  lesson repeating itself once already.
+
 ## Recommended sequencing
 
 ```
@@ -966,6 +998,9 @@ Track C - ingest and onboarding, after their gates:
   E7 (book onboarding) may start immediately - PI gate already satisfied.
 
 E8 (cloud fan-out) becomes available to any lane shape with one local proof cycle.
+E10 (version numbering) lands once, at the tranche cut, ahead of any other work on the new branch —
+  this cycle landed it first (`SD31-E10-F1`, commit `147f1c2b7`) before any other lane touched
+  `tranche/11`.
 E9 (closure) fires LAST, against the E0 audit, with no deferral hatch.
 ```
 
@@ -1001,5 +1036,8 @@ SD-31 closes when:
   outside this epic's card roster as of this closure**.
 - Epic 7 has onboarded all 7 `future_state` books, PI-clean.
 - Epic 8 has run at least one local-proof-then-cloud-scale cycle per lane shape it claims a role in.
+- **Epic 10 landed the 0.11.0 bump** (`SD31-E10-F1`, commit `147f1c2b7`, `tranche/11`); Epic 9's
+  closing-PR increment rule (`decisions.md §6`) applies to the `<build>` position at the time the
+  `tranche/11 -> develop` PR is opened.
 - Epic 9's exit gate passes; `progress.md` carries the closure receipt; the promotion PR is opened, not
   merged — the operator holds sole merge authority.
