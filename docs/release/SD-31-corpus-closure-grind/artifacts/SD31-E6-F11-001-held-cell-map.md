@@ -138,7 +138,17 @@ for the 2,367 no-directory units (Epic 5/Epic 6-F1..F10's job), or an operator r
 `web_second_source`/`lst_corrected_ingest`/`lst_inherited_copy` need a *different* done-bar than
 byte-match-the-literal (logged to `OPEN-ISSUES.md` below).
 
-### `derived` (2,777 held units) → `derived_evaluator_fixture_check` → `fixture-verified`
+### `derived` (2,792 held units) → `derived_evaluator_fixture_check` → `fixture-verified`
+
+**Corrected 2026-08-15 (`SD31-W2-INTEGRATE-001`, Finding 6):** this section originally published
+`2,777`, a subtotal that dropped the 15-unit `derived|text-complete|spell` cell (listed in this
+page's own per-kind table below and included in its `941 spell` row, then omitted from the prose
+subtotal). Re-derived: `python3 -c "import sys,json,collections; sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P; d=json.load(open('docs/work-inventory.json')); U=[u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]; c=collections.Counter(u.get('wiring_class') for u in U if P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind'))=='held'); print(dict(c))"`
+→ `{'display': 1243, 'derived': 2792, 'ambiguous': 400, 'static': 2481}`, sum 6916 (matches this
+page's own `TOTAL_HELD`). The per-kind table below already summed to 2,792 correctly — only this
+prose subtotal and the one two paragraphs down were wrong. This package had already established
+2,792 once before (`progress.md:188`/`:240`, retro correction `1786803206746-sd31-ready-s2-919f72`);
+this fix restores it.
 
 `src/rules_core/derived_evaluator_fixture_check.rs::run_bar_check` is **hard-locked to
 `kind == "equipment"`**: `ingested_equipment_dir` only ever opens `data/corpus/<book>/equipment/`,
@@ -159,7 +169,7 @@ comparison (`bar_check`, lines 118-159) reads exactly one field off the result �
 | 1 | feat | **no** |
 | 1 | race_trait | **no** |
 
-**2,704 of the 2,777 held `derived` units (97.4 %) sit under a `kind` the instrument cannot
+**2,719 of the 2,792 held `derived` units (97.4 %) sit under a `kind` the instrument cannot
 evaluate no matter what the fixture file contains** — adding a `monster`/`spell`/`companion`/
 `monster_ability` entry to `derived-evaluator-fixtures.json` today would not move a single unit; the
 checker would either not find the record (no `equipment/` dir for that kind) or dereference a field
@@ -169,7 +179,9 @@ finding for `monster` generalized and re-proven for the other three kinds by the
 The remaining 73+5 = 78 units are `kind=equipment`/`equipment_modifier` and *could* be reached in
 principle. Deliverable 2 traces exactly how far that principle goes in the real corpus — see below.
 
-### `display` (1,243 held) and `ambiguous` (309 held) — no rung exists yet, by design
+### `display` (1,243 held) and `ambiguous` (400 held) — no rung exists yet, by design
+
+**Corrected 2026-08-15 (`SD31-W2-INTEGRATE-001`, Finding 7):** originally published as `309`. Same tally command as the correction above, `c['ambiguous']` → **400**. No filter (text-complete exclusion, stale board) reproduces 309; the error also broke this page's own three-population reconciliation (see the fix below).
 
 Both are explicitly excluded from `apply_done_rung_stamps`. Their bar is not "run a check" but
 "resolve the classifier" — `display|grounded` means the wiring-class determinator found no
@@ -187,11 +199,11 @@ yet"). This matches the epic-breakdown's own framing for `monster_ability`'s 981
 Three distinct populations have no path to `done` today under any binary that exists in this repo,
 and none of them are fixed by "grow the fixture JSON":
 
-1. **2,704 `derived`-held units outside `kind=equipment`** (monster/spell/companion/monster_ability/
+1. **2,719 `derived`-held units outside `kind=equipment`** (monster/spell/companion/monster_ability/
    class_feature/feat/race_trait) — the checker's evaluator seam does not exist for these kinds.
 2. **2,481 `static`-held units, 100 % of them** — see the three-way breakdown above (no corpus dir /
    `raw_tokens`-absent / provenance-excluded).
-3. **1,552 `display`+`ambiguous`-held units** — capability-blocked on Epic 2, already tracked as such
+3. **1,643 `display`+`ambiguous`-held units** (1,243 + 400, corrected from the originally-published 1,552 — `SD31-W2-INTEGRATE-001`, Finding 7) — capability-blocked on Epic 2, already tracked as such
    in `kanban.md`; not a new finding, cited here for completeness of the 6,916 total.
 
 Logged as `RULING-NEEDED` rows in `OPEN-ISSUES.md` (below) with the proving commands.

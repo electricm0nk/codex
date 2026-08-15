@@ -1906,11 +1906,16 @@ adjacent test.
   abacus.json`).
 - `derived_evaluator_fixture_check`: confirmed by code read
   (`src/rules_core/derived_evaluator_fixture_check.rs`) it is hard-locked to `kind=equipment` and to
-  one field (`item.ability_bonus`, a `BONUS:STAT` chain). **2,704 of 2,777 `derived`-held units
-  (97.4 %) sit under a kind the checker cannot evaluate at all** (monster/spell/companion/
-  monster_ability/class_feature/feat/race_trait).
-- `display`/`ambiguous` (1,552 held): confirmed capability-blocked on Epic 2's not-yet-built
-  verdict-path classifier, matching the epic-breakdown's own framing.
+  one field (`item.ability_bonus`, a `BONUS:STAT` chain). ~~**2,704 of 2,777 `derived`-held units
+  (97.4 %) sit under a kind the checker cannot evaluate at all**~~ **Corrected 2026-08-15
+  (`SD31-W2-INTEGRATE-001`, Finding 6): 2,719 of 2,792 (97.4 %)** — the original subtotal dropped
+  the 15-unit `derived|text-complete|spell` cell. Same populations affected: monster/spell/
+  companion/monster_ability/class_feature/feat/race_trait.
+- ~~`display`/`ambiguous` (1,552 held)~~: **corrected 2026-08-15 (`SD31-W2-INTEGRATE-001`,
+  Finding 7): 1,643 held** (1,243 `display` + 400 `ambiguous`, not 309) — confirmed
+  capability-blocked on Epic 2's not-yet-built verdict-path classifier, matching the
+  epic-breakdown's own framing. Re-derivation command and full explanation in
+  `artifacts/SD31-E6-F11-001-held-cell-map.md` (Findings 6/7 correction notes).
 
 Logged `OPEN-ISSUES.md` rows 11 (RULING-NEEDED, the `static` provenance question) and 12
 (RULING-NEEDED, the `derived` kind-lock and the dispatch choice between `ultimate_equipment` ingest
