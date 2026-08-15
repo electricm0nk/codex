@@ -2761,3 +2761,84 @@ encountered. If a resumption is needed: tail the verify log for `VERIFY_EXIT=`, 
 log's `SUMMARY` block, and flip DoD item 1 (and this section) accordingly — items 2-11 above are
 already settled regardless of the gate's remaining stages' outcome, since this cycle's diff is
 Rust-test-only and adds no new production code path beyond the test file itself.
+
+### 14. Gate completion — `VERIFY_EXIT=0` obtained, cycle closes out
+
+Watched to completion (no second gate launched — same PID, `423242`-equivalent for this cycle, `wc -l`
+on the log confirms a single monotonically-growing run). Full log:
+`docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e3-f4-verify.log`.
+
+```
+==> root-full — cargo test --locked --no-fail-fast -j 2  (repo root)
+    PASS  root-full  (6405 passed across 548 suites, all 527 tests/*.rs suites executed)
+==> reach — cargo test --locked -j 2 reach_gate  (apps/desktop/src-tauri)
+    PASS  reach  (27 passed)
+==> corpus-sweep — cargo run --locked --bin corpus_literal_sweep  (repo root)
+    PASS  corpus-sweep  (3516 records examined of 9328 read, 36105 tokens compared (9 synthesized), 8903 digests checked, 0 findings)
+==> clippy — cargo clippy --locked --tests -j 2  (BOTH crates)
+    PASS  clippy  (root:46 desktop:7 warnings, 0 errors)
+==> class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)
+    PASS  class-dump  (31/31 computing)
+
+SUMMARY
+  passed:  16  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump
+
+BASELINE NOTES (not failures — update deliberately):
+  - BASELINE_ROOT_FULL_TESTS baseline is stale: 6398 recorded, 6405 measured.
+  - BASELINE_ROOT_TEST_BINARIES baseline is stale: 547 recorded, 548 measured.
+
+RESULT: PASS
+VERIFY_EXIT=0
+```
+
+`VERIFY_EXIT=0` captured directly from the log's own append (`echo "VERIFY_EXIT=$?" >> "$LOG"` in the
+wrapper this cycle launched — not through a pipe, not inferred). 16/16 stages PASS. `root-full`'s
+`6405` (up from `SD30-E3-F3-001`'s `6402`) and `548` binaries (up from `547`) are exactly `+3`
+tests/`+1` binary — this cycle's own three new tests in one new file, confirming the suite is both
+compiled and executed by `root-full`, not merely present on disk (the acceptance's "wired into
+`verify.sh`" requirement, empirically closed). Per DoD item 7's own doctrine (`check_floor` only
+fails going *below* a floor, `scripts/verify.sh:214-225`, quoted §5 above), a rising baseline gap is
+advisory, not blocking — `RESULT: PASS` confirms it. `BASELINE_ROOT_FULL_TESTS`/
+`BASELINE_ROOT_TEST_BINARIES` staleness predates this cycle (already 6398-vs-6402 stale before this
+cycle added 3 more) and is not this card's dedicated-commit obligation per DoD item 7's own "their
+own reviewable commit" instruction and `SD30-E3-F3-001 §12`'s identical precedent.
+
+**DoD item 2 re-confirmed from the gate's own output, not inferred:** `reach` stage PASSED with **27**
+matched tests (nonzero — not the "0 matched tests" hard-failure case), byte-identical to
+`SD30-E3-F3-001`'s figure, unaffected by this Rust-test-only cycle.
+
+### 15. Final Definition of Done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **PASS.** `VERIFY_EXIT=0`, 16/16 stages, captured directly from the log (§14). |
+| 2 | Reach stage claim | **PASS (re-confirmed), N/A rationale also holds** — `reach` ran and PASSED with 27 tests (§14); no new player-visible family this cycle (§ "Reach" note, §12 row 2 unchanged). |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **Exit 2, 177 pre-existing `wiring-class-mismatch`, 0 `class_feature`** (§10) — byte-identical to every prior F-card in this epic, confirmed unrelated to this cycle's diff. |
+| 4 | Guarded work-inventory regen | **N/A** — no corpus content or `docs/work-inventory.json` changed this cycle (§12 row 4 unchanged). |
+| 5 | Four-check wired-integration audit | **PASS** (§9). |
+| 6 | `OPEN_FINDINGS` | **N/A** — no family surfaced or left unsurfaced. |
+| 7 | Baseline movements own commit | **N/A for this card, noted not blocking** (§14). |
+| 8 | On-screen verification | **N/A** — no player-visible desktop-app surface touched (§12 row 8 unchanged). |
+
+### 16. Card and epic disposition (final)
+
+**`SD30-E3-F4` sub-scope: COMPLETE.** All DoD items PASS or N/A-with-reason, gate green (16/16),
+regression suite proven both synthetically and against real shipped output (RED-then-GREEN, §6).
+
+**`epic-3-pi-gate`: COMPLETE.** F1-F4 all confirmed on `tranche/10` by content (§11's grep, re-run
+clean at this cycle's own `HEAD`). `kanban.md`'s `epic-3-pi-gate` row flipped `IN-FLIGHT` ->
+`COMPLETE`. `decisions.md §54` records the closure.
+
+**Cycle status: COMPLETE.** No STOP condition was encountered at any point; no `decision-blocked`
+entry is warranted. `head_before = 1450ad73`, work committed at `af21ecf0`
+("feat(sd30): SD30-E3-F4-001 — class_feature PI regression gate"), pushed to `origin/tranche/10`
+before the gate finished (per "commit and push as you go" / "always land the commit before
+returning, even if the gate has not finished"); this section and the kanban flip are a follow-up
+doc-only update once `VERIFY_EXIT=0` was obtained, landing in a second commit.
+
+`scripts/reclaim.sh` (dry run) then `--apply`: **0.0 B reclaimed both times** — every candidate
+(orphaned `codex-target-*` dirs, `/tmp/codex-verify-*` logs, worktree branches) was correctly refused
+as live/protected (target dirs in active use, verify-logs too young, worktrees checked out, branches
+unmerged with upstream present) — per `state-goals-and-lessons.md`'s own hazard doctrine, this means
+the box is structurally full, not that it is clean; not a signal to act on for this cycle (no disk
+pressure was hit — `preflight-disk` passed cleanly throughout, §14).
