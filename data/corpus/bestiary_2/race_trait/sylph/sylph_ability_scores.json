@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T19:20:03Z",
+  "ingested_at": "2026-08-15T21:57:38Z",
   "data": {
     "key": "Sylph ~ Ability Scores",
     "name": "+2 Dexterity, +2 Intelligence, -2 Constitution",
@@ -80,7 +80,6 @@
   "pi_marker": null,
   "wiring_class": "computed",
   "wiring_class_signals": [
-    "computed:pre_guard",
-    "derived:bonus"
+    "computed:pre_guard"
   ]
 }

@@ -222,6 +222,8 @@ fn diagnostic_book_id(race_catalog_book_code: &str) -> String {
         // same mismatch class `diagnostic_book_id`'s own doc comment names
         // for CRB/B1/ARG, just not yet hit for this book.
         "B2" => "bestiary_2".to_string(),
+        // Skinwalker follow-on batch (2026-08-15), same mismatch class.
+        "B5" => "bestiary_5".to_string(),
         other => other.to_string(),
     }
 }
@@ -1269,9 +1271,10 @@ mod tests {
             "the panel's per-book race counts must sum to exactly the races the catalog serves"
         );
         assert_eq!(
-            panel_total, 24,
-            "24 in-scope races today: CRB's 7 plus Bestiary 1's 11 plus Bestiary 2's 6 \
-             (SD-31 Epic 1-F2, 2026-08-15)"
+            panel_total, 25,
+            "25 in-scope races today: CRB's 7 plus Bestiary 1's 11 plus Bestiary 2's 6 \
+             (SD-31 Epic 1-F2, 2026-08-15) plus Bestiary 5's 1 (Skinwalker follow-on batch, \
+             2026-08-15)"
         );
     }
 

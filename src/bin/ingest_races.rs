@@ -96,12 +96,15 @@ struct RaceSpec {
     book: &'static str,
 }
 
-/// The 24 races whose true source book is registered in this project
+/// The 25 races whose true source book is registered in this project
 /// (`decisions.md §25.3`'s original 18 -- Core Rulebook's 7 and Bestiary 1's
-/// 11 -- plus SD-31 Epic 1's first chassis batch: Bestiary 2's 6 standard,
-/// non-heritage races).
+/// 11 -- plus SD-31 Epic 1's Bestiary 2 batch of 6 standard, non-heritage
+/// races, plus this follow-on batch's Skinwalker).
 ///
-/// **SD-31 Epic 1-F2 (2026-08-15) widened this from 18 to 24.** The original
+/// **SD-31 Epic 1-F2 (2026-08-15) widened this from 18 to 24; a same-day
+/// follow-on batch widened it again to 25 (Skinwalker, chassis + standard
+/// tier only -- see the `skinwalker` entry's own comment below for why its
+/// heritage rows are excluded).** The original
 /// doc comment here read "The 18 races whose true source book is already
 /// ingested" and this module's own header doc called the other 19 ARG
 /// reprints (Bestiary 2/3/4, Inner Sea World Guide) permanently out of scope
@@ -155,6 +158,28 @@ const IN_SCOPE_RACES: &[RaceSpec] = &[
     RaceSpec { dir: "oread", book: "bestiary_2" },
     RaceSpec { dir: "sylph", book: "bestiary_2" },
     RaceSpec { dir: "undine", book: "bestiary_2" },
+    // `# B5 races` -- Bestiary 5, SD-31 Epic 1 follow-on batch (2026-08-15).
+    // `data/corpus/bestiary_5/` is a real, registered corpus book directory
+    // (SD-29's monster-lane ingest). Skinwalker's chassis+standard-trait
+    // rows (`skinwalker_races.lst`, `skinwalker_abilities_race.lst`,
+    // `skinwalker_abilities_globalvar.lst`) are the identical flat shape
+    // this loop already handles for every other race -- verified by suffix:
+    // `find_single` matches exactly one file per suffix in the race's
+    // directory, and none of Skinwalker's three heritage-only files
+    // (`skinwalker_abilities_race_subrace.lst`,
+    // `skinwalker_abilitycategories_subrace.lst`,
+    // `skinwalker_templates_subrace.lst`) end in the suffixes this loop
+    // looks for. **Skinwalker's heritage rows themselves are NOT ingested by
+    // this batch.** Unlike Dhampir/Aasimar/Tiefling, Skinwalker's heritage
+    // shape does not have a `<race>_abilities_globalvar_subrace.lst` file at
+    // all for `ingest_race_traits.rs`'s `subrace_grants()` to read -- each
+    // heritage alternate sets its `Skinwalker_Replace*` FACT flags directly
+    // on its OWN constituent trait rows (via a `PREMULT` gate on the
+    // selector), a structurally different shape `subrace_grants()` cannot
+    // parse without new code. That is a genuinely new mechanism, deferred
+    // (not stubbed) to a follow-on batch; see `ingest_race_traits.rs`'s own
+    // `BOOK_SOURCES` doc comment for the worked example.
+    RaceSpec { dir: "skinwalker", book: "bestiary_5" },
 ];
 
 /// Heuristic OGL/PI screen (`docs/governance/ogl-pi-blacklist.md`) — the
@@ -914,8 +939,11 @@ fn main() {
     let mut wiring_lines = wiring_index.lines();
 
     // Clear only the two content-kind directories this tool owns, so a
-    // race removed from scope cannot linger as a stale record.
-    for book in ["core_rulebook", "beastiary", "bestiary_2"] {
+    // race removed from scope cannot linger as a stale record. This list
+    // must name every distinct `book` value `IN_SCOPE_RACES` uses -- missed
+    // once for `bestiary_5` when Skinwalker was added (caught by the pinned
+    // schema test below going 24 instead of 25, not by inspection).
+    for book in ["core_rulebook", "beastiary", "bestiary_2", "bestiary_5"] {
         for kind in ["race", "race_trait"] {
             let dir = out_root.join(book).join(kind);
             if dir.exists() {
@@ -1619,7 +1647,7 @@ mod tests {
         let mut races = 0usize;
         let mut traits = 0usize;
 
-        for book in ["core_rulebook", "beastiary", "bestiary_2"] {
+        for book in ["core_rulebook", "beastiary", "bestiary_2", "bestiary_5"] {
             let race_dir = root.join(book).join("race");
             let mut race_files: Vec<PathBuf> =
                 fs::read_dir(&race_dir).expect("race dir must exist").filter_map(Result::ok).map(|e| e.path()).collect();
@@ -1670,11 +1698,14 @@ mod tests {
 
         // Pinned counts, derived from the real corpus (`decisions.md
         // §25.3`: Core Rulebook's 7 races + Bestiary 1's 11, plus SD-31
-        // Epic 1-F2's Bestiary 2 batch of 6: 24 races / 232 standard
-        // racial trait records, re-measured 2026-08-15 by running this
-        // binary against the real corpus, not invented).
-        assert_eq!(races, 24, "24 in-scope race chassis records");
-        assert_eq!(traits, 232, "232 standard racial trait records");
+        // Epic 1-F2's Bestiary 2 batch of 6, plus this follow-on batch's
+        // Skinwalker (Bestiary 5, chassis + 9 standard-tier traits only --
+        // heritage rows excluded, see `IN_SCOPE_RACES`'s doc comment): 25
+        // races / 241 standard racial trait records, re-measured
+        // 2026-08-15 by running this binary against the real corpus, not
+        // invented).
+        assert_eq!(races, 25, "25 in-scope race chassis records");
+        assert_eq!(traits, 241, "241 standard racial trait records");
     }
 
     // -----------------------------------------------------------------

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T19:20:15Z",
+  "ingested_at": "2026-08-15T21:52:14Z",
   "data": {
     "key": "Half-Orc ~ Pain Tolerance",
     "name": "Pain Tolerance",
@@ -85,7 +85,6 @@
   "pi_marker": null,
   "wiring_class": "computed",
   "wiring_class_signals": [
-    "computed:pre_guard",
-    "derived:dr"
+    "computed:pre_guard"
   ]
 }

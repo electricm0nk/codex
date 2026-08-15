@@ -4250,6 +4250,8 @@ mod tests {
                 "race:oread",
                 "race:sylph",
                 "race:undine",
+                // Bestiary 5's 1, the Skinwalker follow-on batch (2026-08-15).
+                "race:skinwalker",
             ]
         );
     }

@@ -982,9 +982,9 @@ mod tests {
         let menu = menu();
         assert_eq!(
             menu.races.len(),
-            24,
-            "24 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
-             Bestiary 2 batch of 6 (2026-08-15)"
+            25,
+            "25 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
+             Bestiary 2 batch of 6 (2026-08-15) + the Skinwalker follow-on batch's 1"
         );
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
@@ -1812,9 +1812,13 @@ mod tests {
         // moves it" shape APG/HA/CE already established does not apply here
         // -- this batch DOES add a `race/` chassis (6 new ones), which is
         // exactly why `standard` moves this time and did not for those books.
-        assert_eq!((standard, alternates), (230, 330));
+        // The Skinwalker follow-on batch (2026-08-15) adds 1 more race/
+        // chassis and 9 more standard rows (230 -> 239); `alternates` is
+        // unchanged (330) -- this batch does not ingest Skinwalker's
+        // heritage-shaped alternates.
+        assert_eq!((standard, alternates), (239, 330));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 560);
+        assert_eq!(checked, 569);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.

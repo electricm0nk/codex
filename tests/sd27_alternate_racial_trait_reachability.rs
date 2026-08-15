@@ -248,10 +248,11 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
         .count();
     assert_eq!(
         all,
-        628,
+        637,
         "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
          + 43 Horror Adventures + 64 Core Essentials heritage rows + SD-31 Epic 1-F2's \
-         113 (57 standard + 42 ARG + 6 Inner Sea Races + 8 grant-linked, 2026-08-15)"
+         113 (57 standard + 42 ARG + 6 Inner Sea Races + 8 grant-linked, 2026-08-15) + the \
+         Skinwalker follow-on batch's 9 standard rows"
     );
     assert_eq!(arg, 201, "ARG's 201 ingested race-trait records (156 -> 201 by SD-31 Epic 1-F2)");
 
@@ -303,7 +304,11 @@ fn no_ingested_race_trait_key_contains_a_colon_so_the_storage_namespace_is_lossl
             checked += 1;
         }
     }
-    assert_eq!(checked, 628, "515 -> 628 by SD-31 Epic 1-F2 (2026-08-15)");
+    assert_eq!(
+        checked,
+        637,
+        "515 -> 628 by SD-31 Epic 1-F2 (2026-08-15); 628 -> 637 by the Skinwalker follow-on batch"
+    );
 }
 
 // ---------------------------------------------------------------------------

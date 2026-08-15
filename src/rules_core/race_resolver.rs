@@ -921,6 +921,8 @@ const RACE_SIZES: &[(&str, SizeCategory)] = &[
     ("Oread", SizeCategory::Medium),       // TEMPLATE:SIZE_M
     ("Sylph", SizeCategory::Medium),       // TEMPLATE:SIZE_M
     ("Undine", SizeCategory::Medium),      // TEMPLATE:SIZE_M
+    // Bestiary 5's 1, SD-31 Epic 1 follow-on batch (2026-08-15).
+    ("Skinwalker", SizeCategory::Medium),  // TEMPLATE:SIZE_M, over a chassis FACT:BaseSize|S
 ];
 
 /// Creature size for a loose race identifier — a `race:<slug>` character-input
@@ -1756,16 +1758,18 @@ mod tests {
     /// license-validates. 24 races: `decisions.md §25.3`'s original 18 plus
     /// SD-31 Epic 1-F2's Bestiary 2 batch of 6 (2026-08-15).
     #[test]
-    fn all_twenty_four_in_scope_races_load_from_the_real_on_disk_corpus() {
+    fn all_twenty_five_in_scope_races_load_from_the_real_on_disk_corpus() {
         let corpus = all_books();
         assert_eq!(
             corpus.race_keys().len(),
-            24,
-            "24 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6"
+            25,
+            "25 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 + Bestiary 5's 1 \
+             (Skinwalker, chassis + standard tier only)"
         );
         assert_eq!(corpus.chassis("Dwarf").expect("Dwarf").book_id, "core_rulebook");
         assert_eq!(corpus.chassis("Tengu").expect("Tengu").book_id, "beastiary");
         assert_eq!(corpus.chassis("Fetchling").expect("Fetchling").book_id, "bestiary_2");
+        assert_eq!(corpus.chassis("Skinwalker").expect("Skinwalker").book_id, "bestiary_5");
         // ARG contributes traits, never a race chassis (decisions.md §25.2:
         // ARG declares zero races of its own).
         assert!(
@@ -2054,7 +2058,10 @@ mod tests {
         let count = |role: TraitRole| corpus.traits.values().flatten().filter(|t| t.role == role).count();
         // 173 -> 230 by SD-31 Epic 1-F2 (2026-08-15): Bestiary 2's 6-race
         // batch adds 57 new standard (`is_racial_default`) rows.
-        assert_eq!(count(TraitRole::Default), 230);
+        // 230 -> 239 by the Skinwalker follow-on batch (2026-08-15): 9 new
+        // standard-tier trait rows (chassis + default tier only -- the
+        // heritage-shaped alternates are NOT ingested by this batch).
+        assert_eq!(count(TraitRole::Default), 239);
         // 153 ARG + Monster Codex's 4 + the Advanced Player's Guide's 1
         // (`Half-Orc ~ Plagueborn`) + Inner Sea Races' 67 + Horror
         // Adventures' 41, all landed by SD-29's race-trait lane, + SD-31
@@ -2104,12 +2111,13 @@ mod tests {
         assert_eq!(count(TraitRole::Unclassified), 2);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            628,
+            637,
             "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
              + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
              + the 48 replacement rows they grant) + SD-31 Epic 1-F2's 113 (57 standard \
              + 42 ARG alternates + 3 ARG grant-linked rows + 6 Inner Sea Races alternates \
-             + 5 Inner Sea Races grant-linked/positive-gate rows, 2026-08-15)"
+             + 5 Inner Sea Races grant-linked/positive-gate rows, 2026-08-15) + the \
+             Skinwalker follow-on batch's 9 standard-tier rows"
         );
     }
 
@@ -2473,7 +2481,11 @@ mod tests {
     #[test]
     fn the_hand_modelled_race_size_table_matches_the_corpus_for_all_in_scope_races() {
         let corpus = all_books();
-        assert_eq!(RACE_SIZES.len(), 24, "18 original + SD-31 Epic 1-F2's Bestiary 2 batch of 6");
+        assert_eq!(
+            RACE_SIZES.len(),
+            25,
+            "18 original + SD-31 Epic 1-F2's Bestiary 2 batch of 6 + the Skinwalker follow-on batch"
+        );
         for key in corpus.race_keys() {
             let resolved = corpus.resolve(key, &[]).expect("resolves");
             assert_eq!(
