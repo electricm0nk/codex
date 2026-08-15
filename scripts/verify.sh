@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -437,6 +437,91 @@ run_producer_selftest() {
     fi
 
     stage_pass producer-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: reachability-audit-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_reachability_audit.py` --
+# SD31-E0-F1's own self-test (`decisions.md §4`). Feeds
+# `scripts/reachability_audit.py` a FABRICATED dead-end (a wiring_class/
+# status pair `_doneness_verdict_uncapped()` has no rule for) and confirms
+# it is both reported and fails the audit's own exit code, per "prove it can
+# fail before it is trusted" (`SD-30 state-goals-and-lessons.md §3.1`).
+# Cheap (stdlib unittest, no build, no network) -- placed in BOTH stage sets
+# next to producer-selftest, the same self-test-for-a-table-that-raises-on-
+# purpose reasoning that stage carries.
+# ---------------------------------------------------------------------------
+
+run_reachability_audit_selftest() {
+    stage_start "reachability-audit-selftest — python3 -m unittest scripts/tests/test_reachability_audit.py"
+    local log="$LOG_DIR/reachability-audit-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_reachability_audit.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail reachability-audit-selftest "self-test script missing at scripts/tests/test_reachability_audit.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail reachability-audit-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail reachability-audit-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass reachability-audit-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: reachability-audit
+#
+# Runs `scripts/reachability_audit.py` against the live `docs/work-inventory.json`
+# (SD31-E0-F1/F2, `decisions.md §4`) -- the standing gate: does a path to
+# `done` exist, given current engine capability, for every unit on the
+# board? Exits non-zero ONLY when a `(wiring_class, status)` cell raises
+# `ValueError` (unmapped -- absent from every rollup) AND carries on-board
+# units; a `no-done-path` dead end (today: `ambiguous`, Decision 4's
+# 2,109-unit gap) is a KNOWN, epic-owned capability gap, reported but not by
+# itself gate-failing, so this stage does not turn permanently red while
+# Epic 1/Epic 2 are still in flight. The reachable-ceiling number itself is
+# read from this stage's own log, not re-derived by the caller.
+# ---------------------------------------------------------------------------
+
+run_reachability_audit() {
+    stage_start "reachability-audit — python3 scripts/reachability_audit.py"
+    local log="$LOG_DIR/reachability-audit.log"
+    local script="$REPO_ROOT/scripts/reachability_audit.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail reachability-audit "script missing at scripts/reachability_audit.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ceiling
+    ceiling=$(sed -n 's/^  REACHABLE CEILING: \([0-9.]*\)%.*$/\1/p' "$log" | tail -1)
+    actual "REACHABILITY_CEILING_PERCENT=${ceiling:-unknown}"
+
+    if (( status != 0 )); then
+        printf '    FAIL: an unmapped (wiring_class, status) cell carries on-board units. From the log:\n'
+        grep -A5 'FAIL: unmapped' "$log" | sed 's/^/        /'
+        stage_fail reachability-audit "exit $status — $log"
+        return
+    fi
+
+    stage_pass reachability-audit "reachable ceiling ${ceiling:-unknown}%"
 }
 
 # ---------------------------------------------------------------------------
@@ -1159,6 +1244,8 @@ for stage in "${SELECTED[@]}"; do
         preflight-oracle)    run_preflight_oracle ;;
         oracle-pin-selftest) run_oracle_pin_selftest ;;
         producer-selftest)   run_producer_selftest ;;
+        reachability-audit-selftest) run_reachability_audit_selftest ;;
+        reachability-audit)  run_reachability_audit ;;
         pi-sweep)            run_pi_sweep ;;
         audit-selftest)      run_audit_selftest ;;
         reclaim-selftest)    run_reclaim_selftest ;;
