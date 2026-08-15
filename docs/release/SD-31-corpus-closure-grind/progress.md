@@ -1617,3 +1617,127 @@ Unchanged since orchestration start: no board mutation occurred in this wave (Ep
 Epic 2-F1 hand-labelled a 150-unit sample outside the board proper). This is the real starting point
 for the next wave, re-derived not carried forward.
 
+
+## SD31-E6-F11-001 — Held-cell map + exhaustive fixture-coverage search (`epic-6-ingest-lanes` F1/F11)
+
+**Actor:** sd31-e6-heldcells (worktree `wf_49e8e5da-ca5-4`, branch `sd31-e6-heldcells`).
+**HEAD started from:** the worktree's local branch was cut at `061b623ee` (PR #362 merge, no SD-31
+package dir) — recovered per the mandatory branch-state check: `git status --porcelain` was empty,
+so `git fetch origin && git reset --hard origin/tranche/11` ran, landing at `c99461ac3` ("docs(sd31):
+wave-2 disk budget + the ambiguous-bucket lever wave 1 surfaced"), then cut `sd31-e6-heldcells` from
+there. Recorded per the "silently recovered and did not say so" rule.
+**Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`),
+confirmed via `./scripts/verify.sh --only preflight-oracle` → PASS before any other command.
+
+### Deliverable 1 — held-cell map
+
+Full artifact: `artifacts/SD31-E6-F11-001-held-cell-map.md`. Re-derived, from
+`docs/work-inventory.json` (`generated_at 2026-08-15T01:34:18Z`) via the dashboard producer's own
+`doneness_verdict()`:
+```
+python3 -c "... P.doneness_verdict(u.get('wiring_class'), u.get('status'), u.get('kind')) ..."
+```
+→ **TOTAL_HELD 6,916 of 38,521**, every `(wiring_class, status, kind)` cell enumerated and sorted
+(largest: `static|ingested-magnitude|equipment` 2,175; `derived|grounded|monster` 1,229;
+`display|grounded|monster_ability` 981).
+
+Traced `apply_done_rung_stamps` (`src/bin/v06_work_inventory.rs` ~3763-3800): only `static`
+(→ `corpus_literal_sweep` → `literal-verified`) and `derived` (→ `derived_evaluator_fixture_check`
+→ `fixture-verified`) are ever stamped; `display`/`computed`/`ambiguous` never are, proven by the
+adjacent test.
+
+**Headline finding: neither instrument has a currently-reachable target, corpus-wide, right now.**
+- `corpus_literal_sweep`: ran it (`cargo run --locked --bin corpus_literal_sweep --json-out ...` →
+  3,516 examined, CLEAN). Joined its verified `(book, source_file, source_line)` set against all
+  2,481 `static`-held units: **0 overlap**. Root-caused into three buckets — 2,367 no corpus
+  directory at all (real ingest gap), 95 `lst_token`-sourced but missing `raw_tokens` (excluded by
+  `parse_transcription`, `src/rules_core/corpus_literal_sweep.rs:324`), 19 `lst_corrected_ingest`/
+  `lst_inherited_copy` (deliberately excluded). The largest cell (2,175-unit
+  `equipment|ingested-magnitude`) is dominated by a 4th case: `source.kind: "web_second_source"`
+  records with no `.lst` path/line at all (e.g. `data/corpus/advanced_players_guide/equipment/
+  abacus.json`).
+- `derived_evaluator_fixture_check`: confirmed by code read
+  (`src/rules_core/derived_evaluator_fixture_check.rs`) it is hard-locked to `kind=equipment` and to
+  one field (`item.ability_bonus`, a `BONUS:STAT` chain). **2,704 of 2,777 `derived`-held units
+  (97.4 %) sit under a kind the checker cannot evaluate at all** (monster/spell/companion/
+  monster_ability/class_feature/feat/race_trait).
+- `display`/`ambiguous` (1,552 held): confirmed capability-blocked on Epic 2's not-yet-built
+  verdict-path classifier, matching the epic-breakdown's own framing.
+
+Logged `OPEN-ISSUES.md` rows 8 (RULING-NEEDED, the `static` provenance question) and 9
+(RULING-NEEDED, the `derived` kind-lock and the dispatch choice between `ultimate_equipment` ingest
+vs. a new `monster` evaluator seam).
+
+### Deliverable 2 — the fixture-coverage search
+
+Exhaustively checked the *only* reachable pool (`kind=equipment`, `BONUS:STAT` chain):
+```
+python3 -c "... glob data/corpus/*/equipment/**/*.json, filter qualifiers[0]=='STAT' ..."
+```
+→ **51** `BONUS:STAT` equipment records corpus-wide. Cross-referenced against the 94-entry
+`tests/fixtures/rules_core/derived-evaluator-fixtures.json` and `docs/work-inventory.json`: **49
+already `fixture-verified`, 1 `computed`(not `derived`), 1 already `done` via `computed`+`grounded`.
+Zero are both `held` and `derived`. The pool is 100 % consumed.**
+
+Individually checked all 73 units in the `derived|ingested-magnitude|equipment` held cell: 60 are
+`ultimate_equipment` (book has no `data/corpus/` directory — real ingest gap, Epic 6-F2/F5); the
+other 13 carry `WEAPON|DAMAGE|min(STR,0)` bow-scaling, `DR:n/type`, or pure-prose magnitude shapes
+the checker's `ability_bonus`-only comparison cannot read (confirmed per-record against real
+`raw_bonus_chains`) — a fixture for any of them would fail by construction, not by a fixable bug.
+`advanced_players_guide:equipment:spindle_of_perfect_knowledge`, the fixture file's one existing
+`FAIL`, traced to root cause: the shipped corpus JSON is `source.kind: web_second_source` with no
+`raw_bonus_chains` at all, so the fixture (correctly, independently derived from the PCGen `.lst`
+oracle per its own `independence` contract) is catching a real ingestion gap, not an evaluator bug —
+no code fix applies.
+
+Also checked the one other already-built, already-tested comparable field the checker doesn't read
+(`weapon_enhancement_bonus`, `src/rules_core/equipment_effects/equipmods.rs`): 12 real corpus
+candidates found, all already `wiring_class=computed`+`status=grounded`=`done` — extending the
+checker to this field today would move 0 units.
+
+**Result: 0 new fixtures landed.** `tests/fixtures/rules_core/derived-evaluator-fixtures.json` is
+unmodified this cycle (`git diff --stat` on it: empty). This is a genuine, fully re-derived negative
+result, not a shortfall of effort — see Decision 1(a)/the card's own "if you find yourself tempted,
+STOP" instruction. Fabricating a fixture for any of the checked candidates would have failed by
+construction or no-op'd (`not_ingested`), which is exactly the gaming risk the brief flagged as this
+wave's primary risk.
+
+**Guarded regen, measured per the wave rule:**
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-e6-heldcells.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-e6-heldcells.json
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+```
+→ `doneness_verdict()` tally **identical before/after** in every bucket (`held` 6,916 both runs) —
+confirms the committed `docs/work-inventory.json` was already generated with both reports applied
+(already at this cycle's re-derived ceiling) and confirms this cycle's own regen changed nothing.
+Restored per the wave rule: `git checkout -- docs/work-inventory.json` (never committed — verified
+`git status --porcelain` clean of it before commit below).
+
+### Deliverable 3 — scale plan
+
+Full table in `artifacts/SD31-E6-F11-001-held-cell-map.md`. Headline: **per-unit cost for the
+`kind=equipment` "grow fixtures" lever is not a cost number, it is a zero-supply number** — the
+lever is exhausted, not expensive. The three real next levers, in priority order: (1) an operator
+ruling on `static`'s non-`lst_token`-provenance units (up to 2,481 units, no new evaluator code —
+highest leverage found this cycle), (2) `ultimate_equipment` book ingest (60 of the 73 equipment
+units), (3) a new `monster` evaluator seam (1,229 units, the single largest cell, but a multi-cycle
+build — a new card, not a `-002` extension).
+
+### Gate
+
+`./scripts/verify.sh` (full, no `--only`) launched in the background as soon as the analysis/artifact
+work was complete. **Zero production code changed this cycle** (only new doc artifacts +
+`OPEN-ISSUES.md`/`progress.md` edits; `tests/fixtures/rules_core/derived-evaluator-fixtures.json`
+and every `.rs`/`.py` production file are untouched — `git diff --stat` confirms). Log:
+`artifacts/SD31-E6-F11-001-verify.log`. `VERIFY_EXIT=<see log tail — appended once background run
+completes; if this receipt was committed before it finished, the log's own `SUMMARY` block and the
+appended `VERIFY_EXIT=` line are the source of truth, not this sentence>`.
+
+### Files changed
+
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F11-001-held-cell-map.md` (new)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` (rows 8, 9 appended)
+- `docs/release/SD-31-corpus-closure-grind/progress.md` (this entry)
+- `docs/work-inventory.json` — regenerated locally for measurement only, restored via
+  `git checkout --`, never committed (wave rule).
