@@ -17,7 +17,9 @@ const appRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 // literal downstream of `makeSurface()` rather than deriving it — they broke
 // silently the moment `makeSurface.ts` moved to 0.10.0 until added here.
 // Widened to the full consumer surface so a future bump cannot miss them
-// again the same way.
+// again the same way. Confirmed still complete at the 0.10.0 -> 0.11.0
+// tranche/11 bump (SD31-E10-F1-001): all 7 entries below were re-grepped
+// fresh against the live tree rather than trusted from this list.
 const FIXTURE_FILES = [
   'src/testerWorkbench/loadTesterWorkbenchSurface.test.ts',
   'src/testerWorkbench/status/createWorkbenchStatus.test.ts',
@@ -36,15 +38,15 @@ function readPackageJsonVersion(): string {
 // The exact pre-bump literal these fixtures carried before the most recent
 // version bump. Kept one bump behind on purpose: it is the literal a
 // half-applied bump would leave behind, so it is the one worth naming
-// explicitly. Updated to 0.9.0 by SD-30's tranche/10 version-bump cycle
-// (SD30-E7-F1-001; the version files moved 0.9.0 -> 0.10.0 on the
-// already-cut tranche/10 branch — a bundle's own closure does not move the
+// explicitly. Updated to 0.10.0 by SD-31's tranche/11 version-bump cycle
+// (SD31-E10-F1-001; the version files moved 0.10.0 -> 0.11.0 on the
+// already-cut tranche/11 branch — a bundle's own closure does not move the
 // tranche digit, only a NEW tranche/N cut does). The prior value named here
-// was 'Codex 0.8.0-test', from the tranche/9 cut. Some files also carry
+// was 'Codex 0.9.0-test', from the tranche/10 cut. Some files also carry
 // unrelated arbitrary version placeholders (e.g. '0.0.0-test') for isolated
 // formatter tests — those aren't "the current build" fixture and must not be
 // flagged here.
-const STALE_LABEL = 'Codex 0.9.0-test';
+const STALE_LABEL = 'Codex 0.10.0-test';
 
 function verifiesFixturesCarryCurrentTrancheBuildLabel() {
   const pkgVersion = readPackageJsonVersion();
