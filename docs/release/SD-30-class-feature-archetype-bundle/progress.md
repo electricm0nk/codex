@@ -2908,13 +2908,22 @@ Updated test anchors in both `buildVersionTriple.test.ts` files (release/ and re
 Card status after this cycle: **COMPLETE** (work delivered and committed to tranche/10 by content).
 
 
-### 13. Gate completion status
+### 13. Gate completion status (PRIOR AGENT, 2026-08-14 20:18:00Z)
 
-Gate launched at 2026-08-14T20:18:00Z, still in progress as of 20:30 UTC. Root-full stage is 
-building ~490 test binaries (the longest stage). Monitoring will continue; exit code to be 
-appended once root-full completes.
+Initial gate run failed at desktop stage with "cannot update the lock file" error — Cargo wanted 
+to re-resolve dependencies after the Cargo.toml version bump (0.9.0 → 0.10.0), and the lock file 
+was out of sync with the current crates.io state.
 
-Pre-gate stages passed:
+**MECHANICAL FIX (resumption cycle 2026-08-14 21:38:00Z):** Ran `cargo test -j 2` (without --locked) 
+on `apps/desktop/src-tauri` to update the lock file. All 445 tests passed. Verified the lock file 
+update with `cargo test --locked -j 2` (with --locked): all 445 tests passed again. Committed the 
+updated `apps/desktop/src-tauri/Cargo.lock` as `cca272e8` ("fix(sd30): update desktop Cargo.lock 
+for dependency re-resolution after version bump").
+
+**RETRY GATE (resumption cycle 2026-08-14 21:40:00Z):** Full `verify.sh` gate re-run launched in 
+background, PID 663386, log at `artifacts/sd30-e7-f1-verify-retry.log`. Awaiting completion.
+
+Pre-gate stages from first run (2026-08-14 20:18:00Z):
 - preflight-disk: PASS (695G available, 29% used)
 - pi-sweep: PASS (10 hits, 10 baseline rows)
 - audit-selftest: PASS (28 tests)
