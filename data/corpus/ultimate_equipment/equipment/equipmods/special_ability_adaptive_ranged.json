@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 1000.0,
+    "description": "The wielder can fire the bow with a lesser Strength bonus (and cause less damage) if desired.",
+    "key": "Special Ability ~ Adaptive ~ Ranged",
+    "name": "Adaptive",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGE",
+          "STR"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Adaptive ~ Ranged"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Bow.Composite.Adaptive"
+      },
+      {
+        "key": "COST",
+        "value": "1000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Adaptive"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "3,WeaponEnhancement,Bow,Composite"
+      },
+      {
+        "key": "SPROP",
+        "value": "The wielder can fire the bow with a lesser Strength bonus (and cause less damage) if desired."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 176,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "record_key": "Special Ability ~ Adaptive ~ Ranged",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

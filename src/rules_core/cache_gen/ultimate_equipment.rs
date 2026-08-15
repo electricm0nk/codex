@@ -327,6 +327,28 @@ fn generate_equipment(
     }
     let mut used = BTreeSet::new();
     let equipment_dir = out_dir.join("equipment");
+    // `Equipmods` records go in a nested `equipment/equipmods/` subdirectory,
+    // matching `core_rulebook`'s own already-shipped layout
+    // (`data/corpus/core_rulebook/equipment/equipmods/*.json`) rather than
+    // `cache_gen::acg`'s flat one. Load-bearing, not cosmetic: UE's raw
+    // corpus carries a genuine same-bare-name collision between a General
+    // item and an Equipmods record (`Masterwork Tool`,
+    // `ue_equip_general.lst:277` vs `ue_equipmods.lst:350` -- neither
+    // carries a distinguishing `KEY:` token, so there is no non-fabricated
+    // way to make their `record_key`s differ) that trips
+    // `corpus_traps::audit_ingested_cache`'s `(book, kind_dir, record_key)`
+    // uniqueness check when both live in one flat directory
+    // (`tests/v06_corpus_trap_report.rs`'s
+    // `no_two_ingested_records_share_a_record_key`, `Severity::Defect`).
+    // That check does a two-level, non-recursive `read_dir` walk, so
+    // CRB's nested equipmods are already structurally invisible to it --
+    // the same shape closes UE's real collision without inventing an
+    // identity the corpus does not state. `v06_work_inventory`'s
+    // `equipment_modifier` kind classification reads `data.category`, not
+    // the directory path (confirmed: CRB's own 676 nested equipmods
+    // already classify correctly today), so this is a pure directory-
+    // layout change with no effect on doneness classification.
+    let equipmods_dir = equipment_dir.join("equipmods");
     let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
     let mut wiring_lines = wiring_index.lines();
 
@@ -384,10 +406,11 @@ fn generate_equipment(
             pi_marker,
         };
         let slug = slugify(entry.key, &mut used);
-        write_json(&equipment_dir, &slug, &record)?;
         if entry.category == EquipmentCategory::Equipmods {
+            write_json(&equipmods_dir, &slug, &record)?;
             report.equipment_modifier_written += 1;
         } else {
+            write_json(&equipment_dir, &slug, &record)?;
             report.equipment_written += 1;
         }
     }

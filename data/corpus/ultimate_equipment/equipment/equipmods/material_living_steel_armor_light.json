@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 500.0,
+    "description": "35 hp/inch, hardness 15",
+    "key": "Material ~ Living Steel ~ Armor / Light",
+    "name": "Living Steel",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Material ~ Living Steel ~ Armor / Light"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.Armor"
+      },
+      {
+        "key": "COST",
+        "value": "500"
+      },
+      {
+        "key": "ITYPE",
+        "value": "LivingSteel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Metal,Light"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,Artisan,Spell Component"
+      },
+      {
+        "key": "SPROP",
+        "value": "35 hp/inch, hardness 15"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 47,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "record_key": "Material ~ Living Steel ~ Armor / Light",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}
