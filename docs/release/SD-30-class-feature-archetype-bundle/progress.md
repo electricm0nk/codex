@@ -3625,3 +3625,25 @@ closes DoD-3 bundle-wide — `v06_corpus_trap_report -- --audit` now exits 0, a 
 to GREEN, not a scope narrowing. Items 2 and 3 are doc-hygiene/ruling items, both closed with a
 recorded, verifiable disposition. Added as a row in `kanban.md` (Order 1.5, ahead of `epic-8`/`epic-9`
 since it is a prerequisite carry-over fix, not a new epic) so the closure cycle can see it.
+
+### Commit, push, reclaim
+
+Committed `b32926f2` ("fix(sd30): SD30-CARRY-001 — carry-over defects: DoD-3 wiring-class-mismatch
+177->0, citation drift, identifier-discipline ruling"), 3,020 files changed (the 10 books' corpus
+regen + `corpus_traps.rs` + `docs/work-inventory.json` + the four `docs/release/SD-30-.../*.md` files
++ this cycle's own new `docs/retro/events/sd30-carry-defects.jsonl`) — staged by explicit path
+(directory names for the 10 corpus subtrees, individual files for everything else), never `git add
+-A`; the pre-existing sibling-session dirt (`.gitignore`, `docs/retro/events/codex.jsonl`, untracked
+`.github/workflows/deploy-site.yml`) left staged/untracked exactly as found. Pushed to
+`origin/tranche/10`: `git rev-parse HEAD` == `git rev-parse origin/tranche/10` == `b32926f2`, confirmed
+after push, not assumed from the push command's own exit code alone.
+
+```
+$ ./scripts/reclaim.sh --apply
+reclaimed: 1 item(s), 0.0B total
+```
+
+One item reclaimed (this cycle's own now-pushed `CARGO_TARGET_DIR` build artifact set counted at 0
+bytes — consistent with this package's prior cycles' own reclaim accounting for a just-finished,
+already-pushed cycle's target dir). A second immediate re-run reports 0 items — nothing further to
+reclaim.
