@@ -1318,3 +1318,156 @@ in here.
 
 **Status: COMPLETE, gate green.** `HEAD 65decb5e0` → `4f8b7b6c1` (code+baseline commits) → this
 receipt's commit.
+## SD31-E2-F1-001 — Epic 2 F1: hand-labelled ground-truth sample (the gate that runs first)
+
+**Role:** sd31-e2-groundtruth. **Worktree:** `/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_09fec605-4d0-3`,
+branch `sd31/e2-groundtruth`. **HEAD start:** `65decb5e0` (`docs(sd31): W1-preflight`), recovered onto
+via `git fetch origin && git reset --hard origin/tranche/11` — the worktree was cut before the SD-31
+package directory existed in it; `git status --porcelain` was clean, package dir absent, recovered per
+protocol and recorded here. **Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`), confirmed via `./scripts/verify.sh --only preflight-oracle` -> PASS.
+
+**Card:** `epic-2-verdict-paths`, feature seed **SD31-E2-F1 only**. No classifier code written this
+cycle (the acceptance-mandated gate). Full acceptance read from `epic-breakdown.md` "## Epic 2
+(SD31-E2)" and `decisions.md` Decision 1(e).
+
+### What landed
+
+- `artifacts/SD31-E2-F1-ground-truth-sample-v1.json` — 150 hand-labelled units, one object per unit:
+  `id`, `kind`, `book`, `name`, `population` (`null` / `ambiguous_target` / `display_grounded_target`),
+  `engine_wiring_class` + `engine_wiring_class_reason` + `engine_status` (as of this cycle's
+  `docs/work-inventory.json`), `hand_wiring_class`, `confidence` (`high`/`medium`), `agrees_with_engine`
+  (bool), `token_evidence` (the specific corpus tokens deciding the label), `source_file`/`source_line`.
+- `artifacts/SD31-E2-F1-ground-truth-methodology.md` — sampling method, stratification table, judgement
+  calls, and three named findings (A: `no_corpus_line` path-resolution bug, load-bearing; B: `BONUS:STAT`
+  selector-name + `DR:`/`CR:` "/" notation false positives for `derived`; C: case-sensitive scalar-match
+  false negative).
+
+### Sampling — re-derived, commands in the methodology note
+
+150 units total: 70 general-stratified (14 per wiring class × proportional-by-kind), 40 oversampled from
+`wiring_class == 'ambiguous'` (re-derived **2,109**, matches `decisions.md` Decision 1(e) exactly), 40
+oversampled from `wiring_class == 'display' AND status == 'grounded'` (re-derived **1,243**, matches
+AT-31-010). Fixed seed `random.seed(31)`. All 5 wiring classes and all 11 corpus kinds represented
+(floor was 5 classes / 4 kinds). `beginner_box` excluded (matches the live dashboard producer).
+
+```
+python3 -c "
+import json, collections
+d = json.load(open('docs/work-inventory.json'))
+units = [u for u in d['units'] if u.get('book') != 'beginner_box']
+print(collections.Counter(u.get('wiring_class') for u in units))
+print('ambiguous', len([u for u in units if u.get('wiring_class')=='ambiguous']))
+print('display+grounded', len([u for u in units if u.get('wiring_class')=='display' and u.get('status')=='grounded']))
+"
+# -> Counter({'display': 14366, 'computed': 8477, 'static': 7394, 'derived': 6175, 'ambiguous': 2109})
+# -> ambiguous 2109
+# -> display+grounded 1243
+```
+
+### Labelling — read the whole corpus record, not a filtered field
+
+For every sampled unit: resolved the book directory under `$PCGEN_CORPUS_ROOT`
+(`/home/ubuntu/workspace/repos/pcgen/data/pathfinder/...`), read the base `.lst` row at
+`source_file`/`source_line` **searched recursively** under the book directory (not assumed to sit at
+book root — see Finding A below, which exists precisely because the production code does NOT search
+recursively), then searched every `.lst` file in that book tree for `.MOD` rows targeting the unit's
+`name`/`corpus_key` (the GE-01 token closure). Applied D0-D6 from
+`docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.md`
+directly to the raw tokens — independently of running the production determinator — so the sample can
+serve as ground truth for it, per Decision 1(e) item 1.
+
+### Result: 150 sampled, 107 agree with the engine's current `wiring_class`, 43 disagree
+
+**Finding A (load-bearing).** `wiring_class::CorpusLines::line()` (`src/rules_core/wiring_class.rs:758`)
+resolves a unit's row via a single-level `dir.join(file)`. Several books' `.lst` files live nested
+(`core_essentials/races/<race>/`, `ultimate_combat/support/`, `horror_adventures/support/`,
+`inner_sea_world_guide/_pfs/`, etc.) — the join silently misses and the unit falls to
+`ambiguous:no_corpus_line`. Re-derived corpus-wide:
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+units = [u for u in d['units'] if u.get('book') != 'beginner_box']
+print(len([u for u in units if u.get('wiring_class_reason') == 'no_corpus_line']))
+"
+# -> 1707
+```
+
+**1,707 units** (was documented as 47 in the GE-01 doc, now stale — `retro.py correction` emitted,
+`--verified-by` the command above plus a recursive-glob confirmation that all 1,707 are findable).
+That is **80.9% of the whole 2,109-unit `ambiguous` population.** Recursive search confirms **100%
+(1,707/1,707)** are resolvable — none are genuinely provenance-free. Within this sample, 40 units carry
+this reason; I hand-resolved all 40 from their real rows: 19 `display`, 12 `computed`, 4 `derived`, 3
+`static`, 2 `ambiguous` (for real reasons, not the bug). Not a blocker to this card (the sample itself
+is unaffected — hand-labelled from the real row, not the engine's `ambiguous` verdict) but load-bearing
+for Epic 2-F2 (classifier build) and F3 (`ambiguous` dead-end closure): F3's Structural Exclusion
+Register review must not run against the current 97%-inflated bucket. Logged
+`artifacts/OPEN-ISSUES.md` row 1 (`NOTE`).
+
+**Finding B.** `BONUS:STAT|<ABILITY>|<value>` fields trip the scalar scanner via the STAT *selector*
+token (`STR`/`DEX`/.../`CHA` collide with `SCALARS_WORD`) regardless of whether `<value>` is itself
+scalar-dependent; `DR:`/`CR:` "value/type" notation (e.g. `DR:10/Cold Iron`, `CR:1/3`) trips
+`has_arith`'s unconditional `/` check. 3 units hit this as a clean single-cause misclassification
+(`core_rulebook:race_trait:2_dexterity`, `ultimate_equipment:equipment:staff_of_mithral_might`,
+`bestiary:monster:neothelid` — all engine=`derived`, true=`static`). Logged `OPEN-ISSUES.md` row 2
+(`NOTE`); `retro.py note` emitted.
+
+**Finding C (minor).** `has_scalar`'s substring check is case-sensitive; lowercase PCGen function
+calls like `classlevel("Druid")` don't match `"CLASSLEVEL"`. 1 unit
+(`ultimate_magic:class_feature:dragon_shaman_totem_transformation`, engine=`static`, true=`derived`).
+`retro.py note` emitted.
+
+**Excluding the `no_corpus_line` population** (a single fixable root cause): 110 units, 105 agree
+(95.5%), 5 disagree (Findings B, C, and one bare-variable-reference judgement call). Per Decision 1(e)
+item 4, this sample does **not** show "substantially correct, contradiction rare" across the whole
+board (the `no_corpus_line` bug alone misclassifies 80.9% of `ambiguous`), so **SD31-E2-F2 (classifier
+build) is in scope** — but its first task per this evidence should be fixing `CorpusLines::line()`'s
+path join before evaluating any new logic against ground truth, or F2's accuracy numbers will measure
+the path bug rather than classification quality.
+
+### Judgement calls (methodology note has full detail)
+
+1. Bare cross-referenced non-literal/non-scalar `BONUS:VAR` values (e.g. `...|FavoredBaseBonus`,
+   `...|MonkLVL`) hand-labelled `ambiguous` (determination failure) rather than the production
+   fallback's `static` — medium confidence, 2 units.
+2. A `PRE*` guard scoped to record eligibility rather than to the magnitude itself
+   (`core_essentials:race:changeling`'s `PREGENDER:F`) — labelled `computed` for consistency with the
+   rest of the guard-bearing sample, medium confidence.
+3. A prose ability-score grant the mechanical grant/refer word-list doesn't cleanly match
+   (`exciter_rapture`'s "gained"/"bonus to" wording) — labelled `ambiguous` at medium confidence,
+   coincidentally class-matching the engine via the unrelated `no_corpus_line` bug.
+
+### Verification run this cycle
+
+No production code changed — docs/artifacts only. Per the card brief, a full `./scripts/verify.sh` is
+not warranted; ran the two applicable stages:
+
+```
+./scripts/verify.sh --only preflight-oracle   # PASS -- oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6
+./scripts/verify.sh --only preflight-disk     # PASS -- 19% used, 791G available
+```
+
+`scripts/verify.sh` has no dedicated JSON/doc-lint stage (`ALL_STAGES` is entirely Rust/frontend
+build/test plus the two preflight checks above and several `*-selftest` stages that test the gate's own
+tooling, not artifact docs) — confirmed by reading `ALL_STAGES=(...)` in `scripts/verify.sh:110`
+directly rather than assuming. The JSON file's own validity was checked directly:
+`python3 -c "import json; d=json.load(open('...SD31-E2-F1-ground-truth-sample-v1.json')); assert len(d)==150; assert len(d)==len(set(r['id'] for r in d))"` -> passes, 150 unique ids, no schema violations.
+
+### Retro events emitted
+
+- `correction` (`sd31-e2-groundtruth` shard): GE-01 doc's stale 47-unit `no_corpus_line` figure ->
+  1,707, `--verified-by` the re-derivation command + recursive-glob confirmation.
+- `note` × 2: Findings B and C (classifier-accuracy gaps distinct from Finding A).
+
+### Status: COMPLETE at feature-seed scope (SD31-E2-F1 only)
+
+Per the card brief: *"If you find yourself writing [a classifier], you have exceeded the card."* No
+classifier code was written, tuned, or sketched. SD31-E2-F2 (classifier build/accept) and F3
+(`ambiguous` dead-end closure) remain open, gated on this F1 deliverable per
+`epic-breakdown.md`/`decisions.md` Decision 1(e) — both should read Finding A before starting.
+
+`HEAD` before this receipt: `65decb5e0`. Committed on branch `sd31/e2-groundtruth`, pushed to
+`origin/sd31/e2-groundtruth` — **not merged by this cycle**; a later integration cycle merges it onto
+`tranche/11` per the workflow's worktree-isolation instructions.
