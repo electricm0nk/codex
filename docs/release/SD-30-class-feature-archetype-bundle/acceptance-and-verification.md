@@ -246,7 +246,9 @@ records (examined-record count increases, per `scripts/verify.sh`'s own floor ch
 Every kind this criterion's floor table covers (`class_feature`, `monster`, `spell`, `race`,
 `race_trait`) is now owned by `SD-31-corpus-closure-grind`'s ingest epics (`decisions.md §51`'s split).
 The table is reproduced there as `AT-31-005`, with the `race`/`race_trait` rows annotated as depending
-on `SD-32-engine-capability-builds`'s race-chassis epic for their full ceiling. Text below is left
+on `SD-32-engine-capability-builds`'s race-chassis epic for their full ceiling. **(Update 2026-08-15:
+that package was absorbed into `SD-31-corpus-closure-grind` and deleted — its race chassis is SD-31's
+Epic 1 and now runs *before* the ingest lanes it gates, `SD-31-corpus-closure-grind/decisions.md §2`.)** Text below is left
 visible as this criterion's original form, per this package's standing convention — not this package's
 live acceptance criterion.
 

@@ -36,16 +36,22 @@ not a stub, not a mocked builder — matching `SD-30-.../decisions.md §18`'s pr
 
 ## AT-31-003 — Cross-SD PI-gate citation is mandatory before any ingest cycle claims a book
 
-Given a cycle about to claim `epic-3-chassis-sweep`, `epic-4-ingest-lanes`, or `epic-5-book-onboarding`
+Given a cycle about to claim `epic-5-chassis-sweep`, `epic-6-ingest-lanes`, or `epic-7-book-onboarding`
 for a specific book.
 
 When the claim is recorded in `kanban.md`/`progress.md`.
 
 Then the cycle's first receipt cites the specific `SD-30-class-feature-archetype-bundle/progress.md`
 entry showing that book's declared-PI screen (SD30-E3-F2/F3) as `COMPLETE`. A claim without that
-citation is a protocol violation, flagged at this package's own Bundle Code Review (deferred to
-`SD-30-.../epic-8-code-review`, since this package does not run a separate code-review epic — see
-`README.md`'s "Out of scope").
+citation is a protocol violation. The production path must also *call* the documented readers
+(`forward-scope-register.md` `G1.4` blacklist sweep, `G1.5` declared-PI reader) — a cited receipt with
+no reader call in the ingest binary satisfies neither this criterion nor the gate it stands for.
+
+**Note on where a violation is caught.** An earlier revision deferred this to
+`SD-30-.../epic-8-code-review`. SD-30 closed 2026-08-14 and its Epic 8 reviewed SD-30's own diff, which
+does not include this package's work — so that deferral now points at a review that already happened.
+Whether this package runs a review step of its own is an open question
+(`risks-and-open-questions.md` open question 2), and Epic 9's exit gate is the current backstop.
 
 ## AT-31-004 — Raw-vs-workable split precedes any ingest-lane cycle (SD-29 lesson, inherited)
 
@@ -117,7 +123,7 @@ cites the resulting `done`/`held`/`floor` figures for the kind(s) it touched.
 
 ## AT-31-006 — Book onboarding is PI-clean before any record ships
 
-Given one of the 7 `future_state` books (Epic 5).
+Given one of the 7 `future_state` books (Epic 7).
 
 When the first record for that book lands in `rules_tables/`.
 
@@ -125,13 +131,113 @@ Then the book's declared-PI screen (SD30-E3-F2/F3, cross-SD gate, AT-31-003) is 
 first, and the 55-term blacklist sweep (`scripts/verify.sh` `pi-sweep`) is clean for the book's newly
 generated content.
 
+## AT-31-007 — Race chassis: DoD-8 on-screen verification mandatory (absorbed from `SD-32` AT-32-001; orig. SD30-E12)
+
+Given a new race chassis entry (Epic 1).
+
+When the chassis lands and a character sheet is built with that race.
+
+Then a real, on-screen character sheet (not a static/derived instrument report alone) shows the race's
+true ability score modifiers, size, speed, and languages — DoD-8 verification is not satisfied by a
+passing unit test or a green dashboard cell alone.
+
+## AT-31-008 — Race chassis does not break the 18 already-modeled races (absorbed from `SD-32` AT-32-002)
+
+Given any chassis-build change under Epic 1.
+
+When the change lands.
+
+Then `RaceCorpus::resolve` still returns the correct value for every one of the 18 previously-modeled
+races — a regression test proves this, not an assertion.
+
+## AT-31-009 — Classifier accepted on accuracy, never on movement (absorbed from `SD-32` AT-32-003; rule at `decisions.md` Decision 1(e))
+
+Given the verdict-path classifier (Epic 2).
+
+When its output is evaluated for acceptance.
+
+Then:
+
+- The acceptance criterion is agreement rate against a ≥100-unit hand-labelled sample (stratified
+  across the five wiring classes and at least four kinds, labelled before the classifier existed),
+  reported per class and per kind, with a full confusion matrix.
+- Movement is reported in both directions; a net-negative effect on `done` is a passing outcome if the
+  sample supports it.
+- There is no target count of units moved anywhere in this epic's acceptance. A classifier presented
+  with "we moved N units to done" as its primary evidence is rejected pending the sample-agreement
+  evidence instead.
+
+## AT-31-010 — The `ambiguous` dead-end is closed or signed off (Epic 2-F3)
+
+Given `wiring_class == ambiguous`, which at authoring time reached `done` from **no status at all**
+(2,109 units — re-derive, `decisions.md §2`).
+
+When Epic 2 closes.
+
+Then either `scripts/reachability_audit.py` shows `ambiguous` reaching `done` from at least one status,
+or every affected unit carries a signed `AT-31-100` register entry. Epic 2 may not close leaving the
+class structurally unreachable and unregistered — that outcome silently caps the board below 100 % and
+is the specific failure the merge exists to prevent.
+
+## AT-31-100 — The Structural Exclusion Register (`decisions.md §3`)
+
+Given a unit this package cannot bring to `done`.
+
+When a cycle proposes to remove it from the 100 % denominator.
+
+Then the register entry carries **all four** of: (1) the exact command, run this cycle, showing no path
+to `done` exists for that unit; (2) the named missing capability and why building it is genuinely
+impossible or out-of-charter — **cost is never an exclusion reason**; (3) the Epic 0 audit run that
+reproduces the finding independently; (4) **operator sign-off, with its date**.
+
+A cycle may **propose**; only the operator **grants**. An unsigned proposal leaves the unit in the
+denominator and its epic open. The register lives in this file, below, and is the only mechanism by
+which this package's 100 % bar can be reduced.
+
+### Register
+
+| ID | Unit(s) | Missing capability | Proving command | Epic 0 run | Operator sign-off |
+|---|---|---|---|---|---|
+| — | *(empty at authoring; entries added only with sign-off)* | — | — | — | — |
+
+## AT-31-101 — The two internal capability gates are observed
+
+Given a cycle about to claim `epic-6-ingest-lanes` F3/F4, or `epic-3-measurement` F4, or
+`epic-5-chassis-sweep` F3.
+
+When it makes the claim.
+
+Then its receipt cites, respectively: the named Epic 1 race batch covering the races the target book's
+rows reference (an epic-level "in flight" is **not** an open gate — the batch list in `kanban.md` is);
+or `epic-2-verdict-paths` at `COMPLETE`. A claim across an open gate is out of protocol, identical in
+standing to a PI-gate violation.
+
+## AT-31-102 — Reachable ceiling is reported, never assumed
+
+Given any epic closure, and the package closure.
+
+When the receipt is written.
+
+Then `scripts/reachability_audit.py` was run at that tip and its **reachable ceiling** figure and
+dead-end list are quoted in the receipt. At package closure the ceiling reads **100 %**, or every
+shortfall unit carries a signed `AT-31-100` entry. A receipt that quotes a sub-100 % ceiling and
+proceeds to close without signed entries is not a valid closure.
+
 ## Exit gate checklist
 
 - [ ] AT-31-001 — no blended per-class measurement figure reported, ever.
-- [ ] AT-31-002 — reach-gate claims `> 0` matched-tests per cycle, every record ingested under Epic 3/4/5.
-- [ ] AT-31-003 — every ingest-cycle claim cites its cross-SD PI-gate `COMPLETE` receipt.
-- [ ] AT-31-004 — raw-vs-workable split recorded with command, every Epic 4 card, before the cycle that used it.
+- [ ] AT-31-002 — reach-gate claims `> 0` matched-tests per cycle, every record ingested under Epics 5/6/7.
+- [ ] AT-31-003 — every ingest-cycle claim cites the PI-gate `COMPLETE` receipt for its specific book.
+- [ ] AT-31-004 — raw-vs-workable split recorded with command, every Epic 6 card, before the cycle that used it.
 - [ ] AT-31-005 — per-kind `done` figures re-derived and checked against the floor table at closure.
 - [ ] AT-31-006 — all 7 `future_state` books onboarded PI-clean.
+- [ ] AT-31-007 — DoD-8 on-screen verification recorded for every race added.
+- [ ] AT-31-008 — the 18 previously-modeled races still resolve, proven by regression test.
+- [ ] AT-31-009 — classifier accepted on sample agreement, with both-direction movement reported.
+- [ ] AT-31-010 — `ambiguous` reaches `done`, or every affected unit is signed off.
+- [ ] AT-31-100 — no unit left the denominator without an operator-signed register entry.
+- [ ] AT-31-101 — no cycle claimed across an open capability gate.
+- [ ] AT-31-102 — reachability audit run at the closing tip; **reachable ceiling 100 %**, or every
+      shortfall unit signed off.
 - [ ] `forward-scope-register.md` reviewed for successor work.
 - [ ] `release-notes.md` populated.

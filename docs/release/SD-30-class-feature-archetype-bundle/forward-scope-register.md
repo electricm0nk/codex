@@ -217,8 +217,10 @@ into (moved-epic ingest-lane territory).
 **Owner:** whichever bundle next touches the measurement instrument (`v06_work_inventory.rs`) —
 Epic 0 (`epic-0-instrument-apply`) is CLOSED for SD-30, so this is not a live SD-30 card; the
 natural owner is `SD-31-corpus-closure-grind`, which already re-derives measurement figures as part
-of its own closure work, or a future `SD-32-engine-capability-builds` cycle if the fix is judged
-capability-shaped rather than grind-shaped.
+of its own closure work. (An earlier revision named `SD-32-engine-capability-builds` as an
+alternative owner if the fix were judged capability-shaped; that package was absorbed into SD-31 on
+2026-08-15 — `SD-31-corpus-closure-grind/decisions.md §2` — so SD-31 owns both shapes and there is no
+alternative owner to choose between.)
 
 **What SD-30 found, not fixed:** `epic-8-code-review` fixed the identical bare-basename citation
 bug in two places this cycle (`src/pcgen_import/corpus_traps.rs`'s audit self-check and

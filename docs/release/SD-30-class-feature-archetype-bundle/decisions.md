@@ -1786,6 +1786,15 @@ without a stated home.
 
 ## Decision 51 — SD-30 splits: Phase 3 ("the grind") to SD-31, Phase 4 ("capability builds") to SD-32; existing SD-31 renamed to SD-33 (2026-08-14, operator ruling)
 
+> **SUPERSEDED IN PART, 2026-08-15.** The two-package split this decision created was merged back into
+> one the following day: `SD-32-engine-capability-builds` was absorbed into `SD-31-corpus-closure-grind`
+> and deleted, and SD-31's epics were re-sequenced so the capability builds run *before* the grind lanes
+> that depend on them. The split had inverted that dependency — 8,524 units (22.1 % of the board) cannot
+> reach `done` until the capability lands, giving a 77.9 % ceiling, and SD-31's completion gate carried a
+> per-cycle deferral hatch pointed at exactly those lanes. See `SD-31-corpus-closure-grind/decisions.md
+> §2` for the ruling, the derivation and the new epic order. **Everything below stands as the record of
+> what was decided on 2026-08-14**; the SD-31→SD-33 rename and SD-30's own narrowed scope are unaffected.
+
 **Status:** New. Operator ruling, 2026-08-14, verbatim:
 
 > ok, let's split phase 3 and phase 4 into their own SD's. SD-31 and SD-32. Take the existing SD-31 and

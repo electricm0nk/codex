@@ -7,6 +7,11 @@
 > reused for the two packages split out of SD-30 (`SD-31-corpus-closure-grind`,
 > `SD-32-engine-capability-builds`). This file's owner citations below have been updated in place to
 > `SD-33` to keep pointing at the same package; they are not reassigned to the new SD-31/SD-32.
+>
+> **Update 2026-08-15:** `SD-32-engine-capability-builds` was absorbed into `SD-31-corpus-closure-grind`
+> and deleted (`SD-31-corpus-closure-grind/decisions.md §2`), so the number `SD-32` names no package
+> again. Nothing in this file pointed at it; this note exists so a reader chasing the reused numbers
+> does not go looking.
 
 > **Renamed at package consolidation (2026-08-01).** This file originated in the
 > `SD-29-bestiary-2-3-4-5-content-ingestion` package under the name

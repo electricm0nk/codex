@@ -131,8 +131,10 @@ mod-record`). **A full re-pass of this section's own numbers (re-deriving `groun
 three structural-ceiling classifiers below, and the JSON-corpus-cache/`RuleSetId` rows above) remains
 owed to whichever pass next changes them** — SD-30's own closure did not touch per-record `grounded`
 status, so re-deriving it here would not have reflected this bundle's actual diff; that re-pass is
-`SD-31-corpus-closure-grind`'s and `SD-32-engine-capability-builds`'s to perform as they land the
-per-record work this section tracks.
+`SD-31-corpus-closure-grind`'s to perform as it lands the per-record work this section tracks.
+(`SD-32-engine-capability-builds` was absorbed into SD-31 and deleted 2026-08-15 —
+`SD-31-corpus-closure-grind/decisions.md §2` — after its capability builds were found to be
+prerequisites of SD-31's own lanes rather than a parallel package; SD-31 now owns both.)
 
 ### The three structural ceilings, each measured by a checked-in classifier
 

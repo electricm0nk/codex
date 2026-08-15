@@ -1,29 +1,53 @@
 # SD-31 Risks and Open Questions
 
+Rewritten 2026-08-15 after `decisions.md §2` absorbed SD-32 and re-sequenced the epics. The two
+largest risks this file previously carried — the cross-SD race-chassis dependency and cross-package
+concurrency — were **structural consequences of the split, and the merge removed them**. They are kept
+below as resolved entries, because a risk that was retired by a decision is more useful than a risk
+that silently disappears.
+
 ## Primary risks
 
-1. **Cross-SD gate drift.** This package's Epic 3/4/5 depend on `SD-30-class-feature-archetype-bundle`'s
-   Epic 3 (PI-screening) staying current. If SD-30 re-opens a book's PI screen (a regression found by
-   its Epic 3-F4 regression gate), a cycle here that cited an earlier `COMPLETE` receipt without
-   re-checking is now claiming against a stale gate. Mitigation: AT-31-003 requires citing the specific
-   receipt, not just "PI gate is generally clean."
-2. **Race/race_trait chassis dependency on SD-32.** Epic 4-F3/F4's ceiling (513/3,447 `race_trait`,
-   0/103 `race`) is real and low until SD-32's race-chassis epic lands. A cycle that assumes the chassis
-   exists without checking `SD-32-engine-capability-builds/kanban.md` first will misreport its own
-   ceiling.
-3. **Concurrency collision with SD-30's Epic 0 and SD-32.** All three packages can run concurrently
-   (file-disjoint by design), but a cycle here touching `src/rules_core/rules_tables/<book>/` for a
-   book SD-30's Epic 0 or SD-32's classifier work is also reading (not writing) could still race on a
-   shared regeneration step (`cargo run --locked --bin v06_work_inventory`). Mitigation: the standing
-   shared-checkout discipline (`git status` before every git write, no `git add -A`) applies unchanged.
+1. **PI-gate citation drift.** Epics 5/6/7 depend on `SD-30-class-feature-archetype-bundle`'s Epic 3
+   (PI-screening) staying current. SD-30 closed with that gate `COMPLETE`, but if its Epic 3-F4
+   regression gate ever goes red for a book, a cycle here that cited an earlier `COMPLETE` receipt
+   without re-checking is claiming against a stale gate. **Mitigation:** `AT-31-003` requires citing
+   the specific receipt for the specific book, not "the PI gate is generally clean," and requires the
+   production path to actually call the readers (`G1.4`/`G1.5` contracts).
+2. **A capability gate opened too early.** Epic 6-F3/F4 open **per race batch** as Epic 1 delivers, and
+   Epic 3-F4/Epic 5-F3 open when Epic 2 completes. A cycle that reads "Epic 1 is in flight" as "the
+   gate is open" will ingest against a chassis that does not cover its book's races and produce records
+   that cannot ground. **Mitigation:** the gate state is a named race-batch list in `kanban.md`, written
+   by Epic 1-F3 as each batch lands — not an epic-level status word.
+3. **The reachability audit becoming a report nobody acts on.** Epic 0's output is only useful if a
+   dead-end it names gets an owner. **Mitigation:** `decisions.md §4` requires every dead-end to be
+   assigned to an epic or proposed to the Structural Exclusion Register, and Epic 9 cannot close over
+   an unowned one.
+4. **Exclusion-register creep.** The register exists so genuinely-unreachable units can be excluded
+   honestly. The failure mode is using it as the deferral hatch it replaced. **Mitigation:**
+   `decisions.md §3` requires the proving command, the named missing capability, an Epic 0 audit run,
+   and **operator sign-off** — and states explicitly that cost is never an exclusion reason.
+5. **Shared-checkout collision with SD-30's still-open promotion PR.** `tranche/10` carries SD-30's
+   closure and PR #363, unmerged. A cycle here commits to the same branch. **Mitigation:** the standing
+   shared-checkout discipline (`git status` before every git write, never `git add -A`, never
+   `git stash`) applies unchanged; the operator holds the merge.
+
+## Resolved by `decisions.md §2` (kept as record, not live risks)
+
+- ~~**Race/race_trait chassis dependency on SD-32.**~~ Resolved: the race chassis is Epic 1 of this
+  package and runs before the lanes consuming it. There is no sibling package to check.
+- ~~**Concurrency collision with SD-32.**~~ Resolved: no SD-32 exists. Concurrency inside this package
+  is governed by the file-disjointness stated in `epic-breakdown.md` (capability track vs.
+  `class_feature` track) and the standing per-checkout writer rule.
 
 ## Open questions
 
-1. **Does Epic 4-F3/F4's ceiling re-derivation happen automatically, or does a cycle have to notice
-   SD-32 landed?** Not yet decided — no automated cross-SD trigger exists in this repo's tooling.
-   Current answer: manual check, per `loop-instruction.md` override 5, until/unless the operator funds
-   a cross-SD notification mechanism (out of scope for either package unless explicitly requested).
-2. **Does this package run its own Bundle Code Review, or defer to SD-30's Epic 8?** Currently deferred
-   to SD-30's Epic 8 (see `README.md` "Out of scope") on the theory that one whole-program review is
-   cheaper than three duplicate ones. If the three packages' closures end up badly desynchronized in
-   time, this may need revisiting — flagged, not decided here.
+1. **Do `equipment`/`equipment_modifier`/`companion`/`feat`/`monster_ability` get cards?** They are in
+   the 100 % denominator but no card claims them (`forward-scope-register.md G1.3`). Epic 0's audit
+   will surface their reachability, and Epic 9 cannot close over them silently — but whether they open
+   as Epic 6 cards or as their own epic is not yet decided. **This is the most likely source of a
+   late scope surprise in this package**, and it is named here rather than discovered at closure.
+2. **Does this package run its own Bundle Code Review, or rely on SD-30's Epic 8?** SD-30's Epic 8
+   reviewed SD-30's diff, which does not include this package's work. Currently unresolved; the
+   conservative reading is that Epic 9 needs a review step of its own before the exit gate. Flagged,
+   not decided.

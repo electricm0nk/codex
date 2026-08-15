@@ -1,8 +1,8 @@
 ---
 canonical: true
 owner: god-emporer
-status: planning-ready (split from SD-30, operator ruling 2026-08-14)
-date: 2026-08-14
+status: planning-ready (SD-32 absorbed, epics re-sequenced, operator ruling 2026-08-15)
+date: 2026-08-15
 ---
 
 # SD-31 Loop Instruction
@@ -14,23 +14,33 @@ unattended-mode authorization) — read it directly each cycle. This file states
 
 ## Overrides
 
-1. **Card source:** this package's own `kanban.md`, not SD-30's — `epic-1-measurement` through
-   `epic-6-cloud-fanout`.
-2. **Cross-SD PI-gate check is a cycle-0 precondition, every cycle in Epic 3/4/5:** before claiming a
+1. **Card source:** this package's own `kanban.md`, not SD-30's — `epic-0-reachability-audit` through
+   `epic-9-closure`, in that claim-priority order. Capability (Epics 1-2) precedes the lanes consuming
+   it; see `decisions.md §2` for why, and do not re-order by convenience.
+2. **PI-gate citation is a cycle-0 precondition, every cycle in Epics 5/6/7:** before claiming a
    card that touches a specific book, read `SD-30-class-feature-archetype-bundle/kanban.md` and confirm
    `epic-3-pi-gate`'s state for that book (cite the SD-30 `progress.md` receipt showing SD30-E3-F2/F3
    `COMPLETE` for it). A cycle that skips this check is out of protocol (`acceptance-and-verification.md
    AT-31-003`).
 3. **Progress receipts land in this package's own `progress.md`**, not SD-30's — even though the cycle
    consumes an SD-30 gate, the receipt for work done under this package's epics is recorded here.
-4. **Concurrency/hardware numbers:** use `SD-30-class-feature-archetype-bundle/decisions.md §47`'s
-   2026-08-14 capture (8 cores / 45GB / 968GB at 19% used, 3-agent cap) — same box, same session,
-   nothing to re-derive at split time; re-derive per the standing rule if a cycle finds the numbers
-   stale.
-5. **Race/race_trait cross-SD dependency (Epic 4-F3/F4):** a cycle working these cards checks whether
-   `SD-32-engine-capability-builds/`'s race-chassis epic has landed before assuming the ~2,894-unit
-   chassis-blocked remainder is still out of reach; if it has landed, re-derive the workable pool before
-   planning further rounds.
+4. **Concurrency/hardware numbers:** `SD-30 decisions.md §47`'s 8-core capture is **stale** — SD-30's
+   own pre-launch cycle re-measured the box on 2026-08-14 at **24 cores / 167 GiB / 968 GB at 19 %
+   used**, computed a full-gate cap of **8**, and wrote the new figures into `SD-30
+   loop-instruction.md`'s "Concurrency and resource budget" section. Read that section, not `§47`, and
+   re-derive before any wave per the standing rule — this box has now moved twice in one week.
+5. **The two internal capability gates are hard, and they are per-batch, not per-epic** (`decisions.md
+   §2`, `kanban.md` "The two gates that exist because of the merge"). Before claiming `epic-6-ingest-lanes`
+   F3/F4, read the named race-batch list Epic 1-F3 maintains in `kanban.md` and confirm the batch covers
+   the races the target book's rows reference — "Epic 1 is in flight" is not an open gate. Before
+   claiming Epic 3-F4 or Epic 5-F3, confirm `epic-2-verdict-paths` is `COMPLETE`. Re-derive the workable
+   pool after every chassis batch; the 553-unit `race_trait` figure is a function of Epic 1's output,
+   not a constant.
+6. **Deferral is not available to a cycle.** "Named a successor for the remainder" is struck from this
+   package (`decisions.md §2` item 5). A unit leaves the 100 % denominator only via an operator-signed
+   Structural Exclusion Register entry (`decisions.md §3`, `AT-31-100`). A cycle may propose; only the
+   operator grants. Cost is never an exclusion reason.
+7. **Epic 0's audit runs at every epic closure**, and its output goes in the receipt (`decisions.md §4`).
 
 ## What is not overridden
 

@@ -14,9 +14,10 @@ build_version_target: 0.11.<build>
 **Renamed from SD-31, operator ruling 2026-08-14** ("ok, let's split phase 3 and phase 4 into their
 own SD's. SD-31 and SD-32. Take the existing SD-31 and rename it to SD-33"). The `SD-31`/`SD31`
 identifiers throughout this package's own files were renamed in place (`git mv`, history preserved);
-`SD-31` and `SD-32` now name the two packages split out of `SD-30-class-feature-archetype-bundle`
-(`docs/release/SD-31-corpus-closure-grind/`, `docs/release/SD-32-engine-capability-builds/`) — not
-this package. Historical citations to "SD-31" in other packages' closed decision/progress records
+`SD-31` now names the package split out of `SD-30-class-feature-archetype-bundle`
+(`docs/release/SD-31-corpus-closure-grind/`) — not this package. `SD-32` was also split out of SD-30
+at the same time (`SD-32-engine-capability-builds`) but was absorbed back into SD-31 and deleted on
+2026-08-15 (`SD-31-corpus-closure-grind/decisions.md §2`); that number currently names no package. Historical citations to "SD-31" in other packages' closed decision/progress records
 (e.g. `SD-29-corpus-wide-catch-up-lanes/`) predate this rename and are left as-is per this program's
 standing convention (original text stays visible, a correction pointer added where the reference is
 still a live pointer rather than a closed narrative record).

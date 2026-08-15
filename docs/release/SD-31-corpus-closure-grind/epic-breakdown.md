@@ -1,8 +1,8 @@
 ---
 canonical: true
 owner: god-emporer
-status: planning-ready (split from SD-30, operator ruling 2026-08-14)
-date: 2026-08-14
+status: planning-ready (SD-32 absorbed and epics re-sequenced, operator ruling 2026-08-15)
+date: 2026-08-15
 canonical_branch: tranche/10
 build_version_target: 0.10.<build>
 companion_to: ./scope-draft.md, ./decisions.md
@@ -10,32 +10,190 @@ companion_to: ./scope-draft.md, ./decisions.md
 
 # SD-31 Epic Breakdown
 
-**Moved from `SD-30-class-feature-archetype-bundle/epic-breakdown.md` Epics 4, 5, 6, 10, 11, and 14
-(operator ruling 2026-08-14, "split phase 3 and phase 4 into their own SD's").** Feature-seed content
-below is reproduced from the origin epics with IDs renumbered `SD30-E{4,5,6,10,11,14}-F*` →
-`SD31-E{1..6}-F*`; each section's opening line records its SD-30 origin. Acceptance criteria are
-otherwise unchanged from what SD-30 had measured/decided as of the split.
+**Origin.** Epics 3-8 were moved from `SD-30-class-feature-archetype-bundle/epic-breakdown.md`
+(Epics 4, 5, 6, 10, 11, 14) by operator ruling 2026-08-14, `SD-30 decisions.md §51`. Epics 1 and 2
+were moved from `SD-32-engine-capability-builds/epic-breakdown.md` (its Epics 1 and 2, themselves
+SD-30's Epics 12 and 13) by operator ruling 2026-08-15, `decisions.md §2`, which absorbed that package
+and deleted it. Epics 0 and 9 are new in that same ruling. Feature-seed acceptance content is
+reproduced from the origin epics unchanged except where this file states otherwise; each section
+records its origin.
 
-Epic 1 fires first (measurement gates everything downstream, per-class). Epic 4 (ingest lanes) and
-Epic 5 (book onboarding) are independent of the Epic 1/2/3 `class_feature` chain — different kinds/
-books — but share the same cross-SD PI-gate dependency on `SD-30-class-feature-archetype-bundle`'s
-Epic 3.
+**Why this order.** The prior arrangement scheduled the capability builds (race chassis, verdict
+paths) *after* the grind lanes that cannot reach `done` without them — 8,524 units, 22.1 % of the
+board, with a ceiling of 77.9 % reachable without them. `decisions.md §2` carries the derivation.
+**Capability now comes first, and the dependencies that used to be cross-package handoffs are internal
+hard gates.**
 
-## Epic 1 (SD31-E1) — Per-Class Archetype Measurement (moved from SD30-E4; GATES Epics 2 and 3)
+**What runs concurrently.** Epics 1 and 2 (engine capability: race-chassis data model, wiring-class
+classifier) are file-disjoint from Epics 3-5 (the `class_feature` measurement→mechanism→sweep chain,
+which touches `pilot_compute.rs`, `archetype_resolver.rs` and `rules_tables/<book>/`). Those two
+tracks run in parallel from the start. What may **not** start early is any lane whose units are
+capability-blocked: Epic 6-F3/F4 and the `unknown`-bucket work in Epic 3-F4 / Epic 5-F3.
+
+## Epic 0 (SD31-E0) — Reachability Audit (NEW, `decisions.md §4`)
+
+**Objective:** answer, mechanically and for every unit on the board, *given current engine capability,
+does a path to `done` exist?* Publish the **reachable ceiling** and give every gap a name.
+
+**Why it exists:** the `ambiguous` dead-end — 2,109 units with no path to `done` at any status — was
+present in the engine before either successor package was authored, is detectable by a five-line
+query, and was found by neither authoring pass. It surfaced only when the operator asked whether the
+sequencing could strand the mandate.
+
+**Standing, not one-shot.** Runs before this package's first cycle, at every epic closure, and before
+any closure receipt is written.
+
+### Feature seeds
+
+#### SD31-E0-F1 — `scripts/reachability_audit.py`
+
+Acceptance:
+
+- For each `(wiring_class, status, kind)` cell present on the board, the audit reports whether
+  `doneness_verdict()` can return `done`, by **importing the dashboard producer's own function** —
+  never by reimplementing its table, which would drift from the thing it audits.
+- Output: per-kind and corpus-wide **reachable ceiling** (share of units for which a `done`-producing
+  cell is reachable), plus a named list of every dead-end cell and its unit count.
+- The audit is proven able to fail before it is trusted: its own tests feed it a fabricated dead-end
+  and confirm it is reported. `SD-30 state-goals-and-lessons.md §3.1` — this repo has shipped three
+  gates that could not fail, each caught only by running it against a known-answer case.
+- Wired into `scripts/verify.sh` as its own stage, or run as a required step in the cycle procedure
+  with its output in the receipt — cycle's choice, recorded either way.
+
+#### SD31-E0-F2 — Baseline run and gap ownership
+
+Acceptance:
+
+- A baseline run is committed as an artifact under `artifacts/`, with the commit and the command.
+- Every dead-end the baseline reports is either **assigned to an epic in this file** or **proposed to
+  the Structural Exclusion Register** (`decisions.md §3`) — never left unowned.
+- The known dead-ends at authoring time, to be re-derived not transcribed: `wiring_class ==
+  ambiguous` reaches `done` from no status (2,109 units); `unmeasurable`/`status == unknown` totals
+  3,989 (`class_feature` 3,622 + `feat` 367); `race` 103 units at 0 % and `race_trait` 3,284 not-done.
+
+## Epic 1 (SD31-E1) — Race Chassis, 100 % mandate (moved from SD32-E1, orig. SD30-E12)
+
+**Objective:** build the missing race chassis that `SD-30 decisions.md §44` (citing SD-29
+`§44.4`/`§45.1`/`§49.2`) found absent for ~2,894 of the corpus's 3,447 `race_trait` units, plus the
+`race` kind itself (103 units, 0 % done). That absence was previously ruled structurally unreachable;
+this epic reverses that ruling by building the capability rather than accepting the ceiling.
+
+**Derived from:** `SD-30 decisions.md §45` item 1; `SD-30 decisions.md §44` (the original
+chassis-absence finding, `RaceCorpus::resolve` returning `None` without a chassis).
+
+**Gates:** Epic 6-F3 (`race` lane) and Epic 6-F4 (`race_trait` lane) beyond their chassis-blind
+ceiling. This was a cross-package handoff before `decisions.md §2`; it is now an internal hard gate.
+
+**Verification:** DoD-8 on-screen verification is mandatory for this epic — a chassis claim is not
+accepted from static/derived instrument output alone, and this is not weakened by the merge.
+
+### Feature seeds
+
+#### SD31-E1-F1 (was SD32-E1-F1) — Chassis design: what makes a race "modeled"
+
+Acceptance:
+
+- A direct enumeration (grepped, not estimated) of the chassis-blind population's source races — which
+  named races the corpus's `race_trait` rows reference that the engine's 18 modeled races do not cover.
+- A design decision on the chassis shape: does each new race need a full `RaceCorpus` entry (ability
+  score modifiers, size, speed, languages, the works) or a narrower "recognized name, traits resolve"
+  shim — recorded with its tradeoffs, not assumed.
+- The design cites `RaceCorpus::resolve`'s current signature and what changes to accommodate the new
+  races without breaking the 18 already-modeled races' resolution.
+
+#### SD31-E1-F2 (was SD32-E1-F2) — Chassis build, per race (or race batch)
+
+Acceptance:
+
+- Each new race's chassis entry lands with the same rigor as the 18 existing ones — no placeholder
+  ability scores, no stub trait list.
+- `RaceCorpus::resolve` returns a real value (not `None`) for every race this feature seed adds.
+- DoD-8 on-screen verification: a character sheet built with the new race shows its real ability score
+  modifiers, size and speed — not a default or blank value silently substituted.
+
+#### SD31-E1-F3 (was SD32-E1-F3, rewritten by `decisions.md §2`) — Ceiling release to Epic 6
+
+Acceptance:
+
+- Each landed race batch is recorded in `progress.md` with the races it covers, and Epic 6-F3/F4's
+  card gate in `kanban.md` is updated to name the batch — the gate opens per race batch, not
+  all-or-nothing, so ingest starts as soon as any chassis is real.
+- No `race`/`race_trait` unit is marked `done` by this epic. `done` is Epic 6's ingest claim, made once
+  the chassis this epic built lets a real record ground.
+- **Changed by the merge:** this was a cross-package notification to a separate SD. It is now an
+  in-package gate update, so the "notified via receipt, cited by the other package's next cycle"
+  choreography is gone; the gate state lives in this package's own `kanban.md`.
+
+## Epic 2 (SD31-E2) — Verdict-Path Capability, 100 % mandate (moved from SD32-E2, orig. SD30-E13)
+
+**Objective:** give every currently-unmeasurable unit a real, non-placeholder verdict.
+
+**Scope, corrected 2026-08-15 (`decisions.md §2`).** The origin charter described the target as "the
+~3,547 unmeasurable units incl. the 2,109-unit `ambiguous` bucket." Those are **two nearly disjoint
+populations, not a nested one**: 3,989 `unmeasurable` (all `status == unknown`) and 2,109 `ambiguous`
+(1,590 `not-started`, 400 `held`, 119 `unmeasurable`), overlapping by 119. The real target is their
+union, ~5,979 units. Re-derive before planning; do not transcribe these.
+
+**Derived from:** `SD-30 decisions.md §45` item 2.
+
+**Gates:** Epic 3-F4 (`unknown`-bucket characterization) and Epic 5-F3 (`unknown`-bucket disposal).
+Cross-package handoff before `decisions.md §2`; internal hard gate now.
+
+**Constraint:** classifier/instrument work here is bound by `decisions.md` Decision 1(e) — the
+wiring-class classifier is accepted on **accuracy, not on movement**. A verdict path is validated
+against known-correct cases before it is trusted to move counts.
+
+### Feature seeds
+
+#### SD31-E2-F1 (was SD32-E2-F1) — Hand-labelled ground-truth sample (the gate that runs first)
+
+Acceptance:
+
+- At least 100 units, stratified across the five wiring classes and at least four kinds, hand-labelled
+  from the corpus record — the whole record, not a field-filtered grep.
+- Labels committed, with the token evidence for each label recorded by the labeller.
+- No classifier code is written before this sample is committed.
+
+#### SD31-E2-F2 (was SD32-E2-F2) — Classifier build and acceptance
+
+Acceptance:
+
+- The classifier's acceptance criterion is its agreement rate against the F1 sample, reported per class
+  and per kind, plus its full confusion matrix.
+- Movement is reported in both directions — units moved toward AND away from `done`-producing cells.
+- If F1's sample shows the current classifier substantially correct and any contradiction rare, F2 is
+  **not dispatched**: this feature seed closes with the affected units reported "examined, correctly
+  classified, left alone," per Decision 1(e) item 4.
+
+#### SD31-E2-F3 (was SD32-E2-F3, rewritten by `decisions.md §2`) — `ambiguous` dead-end closure
+
+Acceptance:
+
+- **The `ambiguous` wiring class must end this epic with a path to `done`, or an entry in the
+  Structural Exclusion Register bearing operator sign-off.** Re-run Epic 0's audit to prove which.
+  This is the single largest structural gap on the board and the merge exists because of it: closing
+  this epic while `ambiguous` still reaches `done` from no status leaves 2,109 units permanently
+  outside the 100 % bar.
+- Units the classifier resolves to a real wiring class get their new verdict recorded and are picked
+  up by Epic 3-F4 / Epic 5-F3's next disposition cycle — an in-package gate now, not a handoff.
+- Units confirmed genuinely unreachable are **proposed** to the Structural Exclusion Register with the
+  four items `decisions.md §3` requires. A cycle may propose; only the operator grants.
+
+## Epic 3 (SD31-E3) — Per-Class Archetype Measurement (was SD31-E1; orig. SD30-E4; GATES Epics 4 and 5)
 
 **Objective:** Extend SD-28 `§63`/`§64`'s hand-verification method — find each named archetype slot's
 base computation in `pilot_compute.rs`, confirm it is unconditional (level-gated only), confirm the
 slot name maps to a real id, report per class, never blended, no automated proxy — to every
-`class_feature`-bearing class this bundle has not yet measured. Also owns characterizing the
-`unknown` bucket (`SD-30-.../decisions.md §38`) and designing the chooser-interaction primitive for
-the 3 classes excluded so far (Oracle, Arcanist, Sorcerer).
+`class_feature`-bearing class not yet measured. Also owns characterizing the `unknown` bucket
+(`SD-30 decisions.md §38`) and designing the chooser-interaction primitive for the 3 classes excluded
+so far (Oracle, Arcanist, Sorcerer).
 
-**Derived from:** `SD-30-class-feature-archetype-bundle/decisions.md §34, §37, §38`;
-`SD-28-ultimate-book-content-ingestion/decisions.md §60, §63, §64`; `corpus-work-channels.md §9.1`.
+**Derived from:** `SD-30 decisions.md §34, §37, §38`; `SD-28-ultimate-book-content-ingestion/decisions.md
+§60, §63, §64`; `corpus-work-channels.md §9.1`.
 
-**Status:** Gates Epic 2 (mechanism) and Epic 3 (chassis sweep) **per class** — a specific class's
-Epic 3 cycle cannot be scheduled until this epic has produced that class's `wired-able / named` figure
-by direct evidence.
+**Status:** Gates Epic 4 (mechanism) and Epic 5 (chassis sweep) **per class** — a class's Epic 5 cycle
+cannot be scheduled until this epic has produced that class's `wired-able / named` figure by direct
+evidence. Runs concurrently with Epics 1 and 2 (different files), except F4 below.
 
 ### Inherited starting state — verify before extending, do not re-measure
 
@@ -46,25 +204,25 @@ by direct evidence.
   names.
 - 3 classes excluded, own wiring shape: Oracle, Arcanist, Sorcerer — choice-based, need the
   chooser-interaction primitive, not `archetype_claims_slot`.
-- 11 unmodelled base-class features found incidentally (`SD-30-.../decisions.md §34` lists all eleven)
-  — recorded so this epic does not rediscover them as new findings.
+- 11 unmodelled base-class features found incidentally (`SD-30 decisions.md §34` lists all eleven) —
+  recorded so this epic does not rediscover them as new findings.
 
 ### Feature seeds
 
-#### SD31-E1-F1 (was SD30-E4-F1) — Class inventory: which classes remain unmeasured
+#### SD31-E3-F1 (was SD31-E1-F1 / SD30-E4-F1) — Class inventory: which classes remain unmeasured
 
 Acceptance:
 
-- A direct enumeration (grepped, not estimated) of every class with `class_feature` records across
-  the 23 in-scope books, cross-referenced against SD-28 `§64`'s 28-class list, producing a named
-  remainder (expected: Occultist, Spiritualist, Medium, Mesmerist from Occult Adventures at minimum;
-  Mythic Adventures path-tier features if any resolve to `class_feature`; any Inner Sea archetype
-  content not already covered as a tier-1/tier-2 archetype swap).
+- A direct enumeration (grepped, not estimated) of every class with `class_feature` records across the
+  23 in-scope books, cross-referenced against SD-28 `§64`'s 28-class list, producing a named remainder
+  (expected: Occultist, Spiritualist, Medium, Mesmerist from Occult Adventures at minimum; Mythic
+  Adventures path-tier features if any resolve to `class_feature`; any Inner Sea archetype content not
+  already covered as a tier-1/tier-2 archetype swap).
 - Report is per-class, cites the corpus files grepped, and does not assume book-of-origin implies
-  class-of-origin (the class-grant boundary with SD-28, `decisions.md §5`, is a name/identity join,
-  not a book join).
+  class-of-origin (the class-grant boundary with SD-28, `SD-30 decisions.md §5`, is a name/identity
+  join, not a book join).
 
-#### SD31-E1-F2 (was SD30-E4-F2) — Per-class hand-verification, extended
+#### SD31-E3-F2 (was SD31-E1-F2 / SD30-E4-F2) — Per-class hand-verification, extended
 
 Acceptance:
 
@@ -74,7 +232,7 @@ Acceptance:
 - No blended percentage reported across classes, ever.
 - A near-miss slot name is not counted as evidence without direct confirmation.
 
-#### SD31-E1-F3 (was SD30-E4-F3) — Chooser-interaction primitive design (Oracle, Arcanist, Sorcerer)
+#### SD31-E3-F3 (was SD31-E1-F3 / SD30-E4-F3) — Chooser-interaction primitive design (Oracle, Arcanist, Sorcerer)
 
 Acceptance:
 
@@ -84,34 +242,38 @@ Acceptance:
 - Once designed, Oracle/Arcanist/Sorcerer are measured by the same no-proxy, per-class standard as the
   supersession-shape classes, producing their own `wired-able / named` figures.
 
-#### SD31-E1-F4 (was SD30-E4-F4) — `unknown`-bucket characterization, per class
+#### SD31-E3-F4 (was SD31-E1-F4 / SD30-E4-F4) — `unknown`-bucket characterization, per class
+
+**HARD-GATED ON EPIC 2.** Changed by `decisions.md §2`: this seed previously routed
+genuinely-unreachable content to a separate package's verdict-path epic. That epic is now Epic 2 of
+this package and runs **before** this seed, so the routing is a gate, not a handoff. A cycle claiming
+this seed before Epic 2 is `COMPLETE` is out of protocol.
 
 Acceptance:
 
 - For each class this epic measures, its share of the `unknown` bucket is characterized using SD-28
-  `§52`/`§53`'s already-proven distinction: option-pool sub-choice content (real chooser,
-  canonical-narrowing is the deliberate design, not a gap) vs. genuinely-unreachable content (no
-  chooser code at all, needs net-new engine work — routed to `SD-32-engine-capability-builds/`'s
-  verdict-path epic if it needs a new capability) vs. residual unclustered content (not yet
-  characterized).
+  `§52`/`§53`'s proven distinction: option-pool sub-choice content (real chooser, canonical-narrowing
+  is the deliberate design, not a gap) vs. genuinely-unreachable content (no chooser code at all —
+  now resolved by Epic 2's verdict path, or proposed to the Structural Exclusion Register) vs.
+  residual unclustered content.
 - No `unknown` unit's status is changed by this feature seed alone — characterization, not
   reclassification, per SD-28 `§52`'s standing constraint.
 
-## Epic 2 (SD31-E2) — Archetype Mechanism (moved from SD30-E5)
+## Epic 4 (SD31-E4) — Archetype Mechanism (was SD31-E2; orig. SD30-E5)
 
 **Objective:** Wire the 175-mechanism / ~5,775-line supersession shape (`archetype_claims_slot`) for
-each measured class as Epic 1 clears them for scheduling; design and wire the chooser-interaction
-shape for Oracle/Arcanist/Sorcerer once Epic 1-F3 resolves its primitive.
+each measured class as Epic 3 clears them; design and wire the chooser-interaction shape for
+Oracle/Arcanist/Sorcerer once Epic 3-F3 resolves its primitive.
 
-**Derived from:** `SD-30-class-feature-archetype-bundle/decisions.md §34`;
-`SD-28-ultimate-book-content-ingestion/decisions.md §59, §60, §63, §64`.
+**Derived from:** `SD-30 decisions.md §34`; `SD-28-ultimate-book-content-ingestion/decisions.md §59,
+§60, §63, §64`.
 
-**Status:** Gated on Epic 1 clearing the specific class(es) a cycle targets. Gates Epic 3 for the same
-class (ingestion is sequenced after wiring per class).
+**Status:** Gated on Epic 3 clearing the specific class(es) a cycle targets. Gates Epic 5 for the same
+class.
 
 ### Feature seeds
 
-#### SD31-E2-F1 (was SD30-E5-F1) — Supersession-shape wiring, per measured class
+#### SD31-E4-F1 (was SD31-E2-F1 / SD30-E5-F1) — Supersession-shape wiring, per measured class
 
 Acceptance:
 
@@ -121,72 +283,79 @@ Acceptance:
   `build_pilot_headless_receipt`, not a unit test on the resolver alone.
 - No `§59` vacuity-audit citation touched without being addressed.
 
-#### SD31-E2-F2 (was SD30-E5-F2) — Chooser-interaction primitive, once designed
+#### SD31-E4-F2 (was SD31-E2-F2 / SD30-E5-F2) — Chooser-interaction primitive, once designed
 
 Acceptance:
 
-- `archetype_resolver.rs` (or a sibling module) gains the chooser-interaction primitive Epic 1-F3
+- `archetype_resolver.rs` (or a sibling module) gains the chooser-interaction primitive Epic 3-F3
   designs.
 - Oracle/Arcanist/Sorcerer's measured wireable mechanisms wire through it, proven reachable the same
   way as the supersession shape.
 
-## Epic 3 (SD31-E3) — Per-Class Chassis Sweep (moved from SD30-E6; the `class_feature` ingest, gated per class on Epics 1/2)
+## Epic 5 (SD31-E5) — Per-Class Chassis Sweep (was SD31-E3; orig. SD30-E6)
 
 **Objective:** The actual per-book, per-class `class_feature` ingest cycles across all 23 in-scope
 books, scoped by class and gated by measurement.
 
-**Derived from:** `SD-30-class-feature-archetype-bundle/decisions.md §33, §35, §37`.
+**Derived from:** `SD-30 decisions.md §33, §35, §37`.
 
-**Cross-SD gate:** hard-blocked on `SD-30-class-feature-archetype-bundle`'s Epic 3 (PI-Screening
-Provenance Gate), specifically SD30-E3-F2 (declared-PI reader). No cycle here may claim a book before
-that book's declared-PI screen is `COMPLETE` in SD-30. SD-31 does not re-run or duplicate the gate.
+**Cross-SD gate — SATISFIED.** Hard-blocked on `SD-30-class-feature-archetype-bundle`'s Epic 3
+(PI-Screening Provenance Gate), specifically SD30-E3-F2 (declared-PI reader). **SD-30 closed
+2026-08-14 with `epic-3-pi-gate` COMPLETE (all of F1-F4) and PR #363 open**, so this gate is
+discharged — but a cycle still cites the SD-30 receipt for the book it touches, and calls the
+documented invocation contract (`SD-30 decisions.md §52.3` blacklist sweep, `§53.5` declared-PI
+reader) before writing any generated record. SD-31 does not re-run or duplicate the gate.
 
 ### Feature seeds
 
-#### SD31-E3-F1 (was SD30-E6-F1) — Per-class ingest, scheduled by Epic 1's clearance order
+#### SD31-E5-F1 (was SD31-E3-F1 / SD30-E6-F1) — Per-class ingest, scheduled by Epic 3's clearance order
 
 Acceptance:
 
-- A cycle-batch targets one class (or a small set of related classes in one book) only after Epic 1
-  has produced that class's `wired-able / named` figure and Epic 2 has wired its supersession (or
+- A cycle-batch targets one class (or a small set of related classes in one book) only after Epic 3 has
+  produced that class's `wired-able / named` figure and Epic 4 has wired its supersession (or
   chooser-interaction) mechanisms.
 - Canonical `class_feature` records land in `src/rules_core/rules_tables/<book>/`, one per real
   feature, matching the class's measured wireable set.
-- Reach-gate claim executes the real IPC builder for each record (`apps/desktop/src-tauri/src/reach_gate.rs`).
+- Reach-gate claim executes the real IPC builder for each record
+  (`apps/desktop/src-tauri/src/reach_gate.rs`).
 
-#### SD31-E3-F2 (was SD30-E6-F2) — Occultist/Spiritualist/Medium/Mesmerist canonical definitions (class-grant boundary with SD-28)
-
-Acceptance:
-
-- This package owns the canonical class definition for these four shared classes per
-  `SD-30-.../decisions.md §5` — SD-28 references, does not redefine.
-- Cross-book conflict rule (`decisions.md §16`) applies if Ultimate Intrigue and Occult Adventures
-  wording diverges on the same class.
-
-#### SD31-E3-F3 (was SD30-E6-F3) — `unknown`-bucket disposal, per Epic 1's characterization
+#### SD31-E5-F2 (was SD31-E3-F2 / SD30-E6-F2) — Occultist/Spiritualist/Medium/Mesmerist canonical definitions
 
 Acceptance:
 
-- Units Epic 1-F4 characterizes as option-pool content with a real chooser get their representative
+- This package owns the canonical class definition for these four shared classes per `SD-30
+  decisions.md §5` — SD-28 references, does not redefine.
+- Cross-book conflict rule (`SD-30 decisions.md §16`) applies if Ultimate Intrigue and Occult
+  Adventures wording diverges on the same class.
+
+#### SD31-E5-F3 (was SD31-E3-F3 / SD30-E6-F3) — `unknown`-bucket disposal, per Epic 3's characterization
+
+**HARD-GATED ON EPIC 2 AND EPIC 3-F4.** Same change as Epic 3-F4: the successor package this seed used
+to route to is now Epic 2 of this package and runs first.
+
+Acceptance:
+
+- Units Epic 3-F4 characterizes as option-pool content with a real chooser get their representative
   option grounded (canonical narrowing), the rest deferred with a named diagnostic.
-- Units characterized as genuinely unreachable are NOT silently ingested as if grounded; named findings
-  routed to `SD-32-engine-capability-builds/`'s verdict-path epic if the operator funds the engine
-  change.
+- Units characterized as genuinely unreachable are NOT silently ingested as if grounded. After Epic 2,
+  "genuinely unreachable" requires an Epic 0 audit run confirming no path exists, and it is a
+  **proposal** to the Structural Exclusion Register — not a disposal a cycle performs on its own
+  authority.
 
-## Epic 4 (SD31-E4) — Corpus-Wide Ingest Lanes, folded from SD-29 (moved from SD30-E10)
+## Epic 6 (SD31-E6) — Corpus-Wide Ingest Lanes, folded from SD-29 (was SD31-E4; orig. SD30-E10)
 
-**Objective:** the real per-book ingest that SD-30's instrument-application epic (Epic 0) cannot
-substitute for. SD-29 closed with its corpus-wide kind lanes at a *measured* ceiling, not an exhausted
-one; SD-30 inherited them (`SD-30-.../decisions.md §44`), and this package now carries them forward.
+**Objective:** the real per-book ingest that instrument application cannot substitute for. SD-29 closed
+with its corpus-wide kind lanes at a *measured* ceiling, not an exhausted one; SD-30 inherited them
+(`SD-30 decisions.md §44`), and this package carries them forward.
 
-**Cross-SD gate:** hard-gated behind `SD-30-class-feature-archetype-bundle`'s Epic 3 (PI-Screening
-Provenance Gate), exactly like Epic 3 above. Also gated behind SD-30's Epic 1/Epic 2 (identifier
-cleanup, pre-launch trap-report).
+**Gates:** SD-30's Epic 3 PI gate (satisfied, cite per book, as Epic 5 above) and SD-30's Epic 1/Epic 2
+(both COMPLETE). **F3 and F4 are additionally hard-gated on Epic 1 of this package**, per race batch.
 
 **Per-kind cards**, each running the raw-vs-workable split and the pre-cycle row-classifier screen
-before planning cycles:
+before planning cycles. Every figure below is a split-time snapshot — re-derive at time of use.
 
-#### SD31-E4-F1 (was SD30-E10-F1) — `monster` ingest lane (1,242 grounded / 7 done, 0.6%)
+#### SD31-E6-F1 (was SD31-E4-F1 / SD30-E10-F1) — `monster` ingest lane (1,242 grounded / 7 done, 0.6 %)
 
 - Pilot book selection runs `scripts/screen_pcc_load_gates.py` and a monster-count check
   (`cargo run --locked --bin v06_work_inventory` per-book breakdown) before committing a round —
@@ -195,96 +364,151 @@ before planning cycles:
   (negated-PCC-gate exclusions) before scheduling any cycle.
 - Mirrors SD-29 Epic 3's monster-ingest pipeline (same `rules_tables/*.rs` shape).
 
-#### SD31-E4-F2 (was SD30-E10-F2) — `spell` ingest lane (623 grounded / 47 done, 1.7%)
+#### SD31-E6-F2 (was SD31-E4-F2 / SD30-E10-F2) — `spell` ingest lane (623 grounded / 47 done, 1.7 %)
 
-- `spell`'s `computed` bucket has no consumer-delta probe corpus-wide (owned by SD-30's Epic 0); this
-  card's ingest work raises `grounded`/`held`, not `done`, until that probe lands.
+- `spell`'s `computed` bucket consumer-delta probe was owned by SD-30's Epic 0, which closed
+  2026-08-14 — **verify by content what that epic actually landed for `spell`** before assuming this
+  lane's ingest work can raise `done` rather than only `grounded`/`held`.
 - Runs the same pre-cycle screen as F1 before selecting a book.
 
-#### SD31-E4-F3 (was SD30-E10-F3) — `race` ingest lane (7 grounded / 0 done, 0.0%)
+#### SD31-E6-F3 (was SD31-E4-F3 / SD30-E10-F3) — `race` ingest lane (7 grounded / 0 done, 0.0 %)
 
+- **HARD-GATED ON EPIC 1**, per race batch: no cycle claims a book before Epic 1 has landed a chassis
+  covering the races that book's rows reference. This was a cross-SD dependency on a package scheduled
+  *after* this lane; `decisions.md §2` inverted the order and made it an internal gate.
 - Runs `scripts/classify_race_trait_rows.py` before selecting any book or committing a round.
-- **Cross-SD dependency:** the ~2,894-unit chassis-blocked remainder is out of this card's reach until
-  `SD-32-engine-capability-builds/`'s race-chassis epic lands; this card runs its own chassis-blind
-  ceiling now and re-runs once SD-32 delivers.
 
-#### SD31-E4-F4 (was SD30-E10-F4) — `race_trait` ingest lane (513 grounded / 264 done, 7.7%)
+#### SD31-E6-F4 (was SD31-E4-F4 / SD30-E10-F4) — `race_trait` ingest lane (513 grounded / 264 done, 7.7 %)
 
-- Raw remainder is not workload: of 3,447 corpus `race_trait` units, only 553 carry a
-  `TYPE:<Race> Racial Trait` component naming one of the 18 races the engine models. This card's
-  workable pool is 553 minus whatever F3's `race`-chassis work has not yet landed.
+- **HARD-GATED ON EPIC 1**, per race batch, same as F3.
+- Raw remainder is not workload: of 3,447 corpus `race_trait` units, only 553 carried a
+  `TYPE:<Race> Racial Trait` component naming one of the 18 races the engine modeled at split time.
+  That 553 is a **function of Epic 1's output**, not a constant — re-derive it after each chassis
+  batch rather than treating it as this lane's ceiling.
 - Runs `scripts/classify_race_trait_rows.py` and `scripts/screen_pcc_load_gates.py` before selecting a
   book.
-- Same cross-SD dependency on SD-32's race chassis as F3, for the remainder beyond 553.
 
 **Acceptance (per card):** the raw-vs-workable split is recorded with its command before any cycle
 claims; the pre-cycle classifier/screen ran against the candidate book before the round was committed;
-PI screen clean for the book (cross-SD gate, SD-30 Epic 3) before any record is written; reach-gate-
-satisfied per record ingested; units found structurally unreachable are named findings routed to a
-successor, not silently ingested as if grounded.
+PI screen cited clean for the book before any record is written; reach-gate satisfied per record
+ingested; units found structurally unreachable are proposed to the Structural Exclusion Register with
+`decisions.md §3`'s four items, never silently ingested as if grounded and never deferred by cycle fiat.
 
-**Not in this epic:** `class_feature` ingest (Epic 3, above). `equipment`/`equipment_modifier`/
-`companion`/`feat`/`monster_ability` — not named in the operator's cited frustration list; a future
-pass may open cards for them under this same epic without a new operator ruling.
+**Not in this epic:** `class_feature` ingest (Epic 5). `equipment`/`equipment_modifier`/`companion`/
+`feat`/`monster_ability` — not named in the operator's cited frustration list; a future pass may open
+cards for them under this epic without a new operator ruling. **Note for Epic 9:** those kinds are in
+the 100 % denominator even though no card currently claims them — Epic 0's audit will surface them and
+Epic 9 cannot close over them silently.
 
-## Epic 5 (SD31-E5) — Book Onboarding, 100% mandate (moved from SD30-E11)
+## Epic 7 (SD31-E7) — Book Onboarding, 100 % mandate (was SD31-E5; orig. SD30-E11)
 
 **Objective:** onboard the 7 `future_state` books — `occult_adventures`, `adventurers_guide`,
-`mythic_adventures`, `inner_sea_magic`, `inner_sea_temples`, `inner_sea_taverns`,
-`inner_sea_faiths` — the population these books add is not yet in the engine at all; closing to 100%
-requires bringing it in.
+`mythic_adventures`, `inner_sea_magic`, `inner_sea_temples`, `inner_sea_taverns`, `inner_sea_faiths`.
+The population these books add is not yet in the engine at all; closing to 100 % requires bringing it in.
 
-**Derived from:** `SD-30-class-feature-archetype-bundle/decisions.md §45` (the 100%-mandate ruling,
-item 3).
+**Derived from:** `SD-30 decisions.md §45` item 3.
 
-**Cross-SD gate:** hard-gated on `SD-30-class-feature-archetype-bundle`'s Epic 3 (PI-screening), same
-as Epic 3/Epic 4 above — no book's records land before its PI screen is clean.
+**Gate:** SD-30's Epic 3 PI screen cited clean per book before any record lands (satisfied at package
+level; cited per book).
 
-**Not in this epic:** any book already in-scope under Epic 4's four kind-lanes or Epic 3's
-`class_feature` chassis sweep — this epic covers only the 7 books named above.
+**Cost note, not a scope note:** the recorded calibration is ~1.5-2 h per book of real work, dominated
+by fixed per-file cost (~7 count-pinning files), with content nearly free after that. Do not
+extrapolate a blended per-record rate.
 
-## Epic 6 (SD31-E6) — Cloud Fan-Out Protocol (moved from SD30-E14, scoped to grind lanes)
+**Not in this epic:** any book already in-scope under Epic 6's kind lanes or Epic 5's chassis sweep.
+
+## Epic 8 (SD31-E8) — Cloud Fan-Out Protocol (merged: was SD31-E6 + SD32-E3; orig. SD30-E14)
 
 **Objective:** the local-proof-then-cloud-scale protocol that lets build-heavy, self-contained lanes
-(Epic 4's per-kind ingest, Epic 5's book onboarding) scale to cloud agents after one local proof cycle
-per lane shape.
+scale to cloud agents after one local proof cycle per lane shape. Covers **both** lane families now:
+the grind lanes (Epic 6 ingest, Epic 7 onboarding) and the capability-build lanes (Epic 1's per-race
+rollout once its design is proven on one race).
 
-**Derived from:** `SD-30-class-feature-archetype-bundle/decisions.md §47` (hardware re-derivation and
-cloud fan-out ruling).
+**Merged by `decisions.md §2`:** SD-31 and SD-32 each carried an independent copy of this protocol with
+identical rules, on the reasoning that their lane shapes never overlap. One package cannot drift from
+itself, so the copies are collapsed into this single epic.
 
-**Rules carried into every cycle dispatched under this epic** (unchanged from SD-30's original):
+**Derived from:** `SD-30 decisions.md §47`.
+
+**Rules carried into every cycle dispatched under this epic:**
 
 1. Every cloud agent works its own branch — never two writers on one branch.
 2. The local orchestrator owns all merges to `tranche/10`, verified by content, not commit count.
 3. DoD-8 on-screen verification and dashboard-producer work stay local — no cloud agent runs either.
+   Load-bearing for Epic 1 specifically: its DoD-8 mandate cannot be satisfied by a cloud agent.
 
-**Not in this epic:** the ingest/onboarding work itself (Epic 4, Epic 5 own that) — this epic is the
-dispatch protocol enabling it at cloud scale. `SD-32-engine-capability-builds/` carries its own copy of
-this protocol scoped to its own lane shapes (race chassis, verdict paths) — the two are siblings, not a
-shared epic, because their file scopes never overlap.
+**Not in this epic:** the ingest, onboarding, or capability design work itself — this epic is the
+dispatch protocol for scaling work already proven locally.
+
+## Epic 9 (SD31-E9) — Closure and the 100 % Exit Gate (NEW, `decisions.md §2`/`§3`)
+
+**Objective:** close this package against a mechanically checkable bar, so that "SD-31 closed but the
+mandate silently did not" is a state that cannot be reached without an operator having signed for it.
+
+### Feature seeds
+
+#### SD31-E9-F1 — The exit gate
+
+Acceptance:
+
+- Epic 0's reachability audit re-run at the closing tip, with its output in the receipt.
+- **`reachable ceiling == 100 %`, OR every shortfall unit carries a Structural Exclusion Register entry
+  with operator sign-off** (`decisions.md §3`). No third option exists. In particular the phrase "or
+  named a successor for the remainder," struck from this package by `decisions.md §2`, is not
+  reintroduced.
+- Board position stated per kind — `done`/total with the command — and the delta from this package's
+  opening baseline, computed by replaying the dashboard producer's own `doneness_verdict()` over
+  `git show <ref>:docs/work-inventory.json` at both ends, never by comparing status counts.
+- `./scripts/verify.sh` green at the closing tip, exit code captured directly.
+- `release-notes.md` populated; `docs/architecture/` refreshed.
+
+#### SD31-E9-F2 — Honest-closure precedent
+
+Acceptance:
+
+- SD-29's closure history is the standard: its first attempt was premature and the operator reopened
+  it, its second refused to close with 63 workable units outstanding, its third closed honestly. A
+  closure cycle that cannot meet F1 writes a closure-blocked receipt naming exactly what is
+  outstanding — it does not close and it does not open a promotion PR.
 
 ## Recommended sequencing
 
 ```
-E1 (per-class measurement, ongoing) -> E2 (per-class mechanism, gated per class on E1) -> E3
-   (per-class chassis sweep, gated per class on E1+E2)
-E4 (ingest lanes) and E5 (book onboarding) run independently of E1/E2/E3 — different kinds/books —
-   sharing only the cross-SD PI-gate dependency on SD-30's Epic 3.
-E6 (cloud fan-out) is a dispatch protocol available to E4/E5 once each lane shape has one local proof
-   cycle.
+E0 (reachability audit) runs FIRST and re-runs at every epic closure.
+
+Track A - capability, must lead the lanes that consume it:
+  E1 (race chassis)  -> opens E6-F3 / E6-F4 per race batch
+  E2 (verdict paths) -> opens E3-F4 and E5-F3; must resolve the `ambiguous` dead-end or register it
+
+Track B - class_feature chain, file-disjoint from Track A, runs concurrently from the start:
+  E3 (measurement, per class) -> E4 (mechanism, per class) -> E5 (chassis sweep, per class)
+  ...except E3-F4 and E5-F3, which wait on E2.
+
+Track C - ingest and onboarding, after their gates:
+  E6-F1 (monster) and E6-F2 (spell) may start immediately - not capability-blocked.
+  E6-F3 / E6-F4 (race, race_trait) start per race batch as E1 delivers.
+  E7 (book onboarding) may start immediately - PI gate already satisfied.
+
+E8 (cloud fan-out) becomes available to any lane shape with one local proof cycle.
+E9 (closure) fires LAST, against the E0 audit, with no deferral hatch.
 ```
 
 ## Completion gate
 
 SD-31 closes when:
 
-- Epic 1 has measured every remaining `class_feature`-bearing class (or named a successor).
-- Epic 2 has landed the supersession shape for every class Epic 1 clears, and resolved or explicitly
-  deferred the chooser-interaction shape for Oracle/Arcanist/Sorcerer.
-- Epic 3's chassis sweep has ingested and reach-gated every class Epic 1/2 cleared.
-- Epic 4's four per-kind ingest cards have each reached their measured workable-pool ceiling (noting
-  the race/race_trait cross-SD dependency on SD-32) or named a successor.
-- Epic 5 has onboarded all 7 `future_state` books, PI-clean.
-- Epic 6 has run at least one local-proof-then-cloud-scale cycle per lane shape it claims a role in.
-- `progress.md` carries the closure receipt; this package's contribution to the joint
-  SD-30→SD-31→SD-32 100% mandate is stated explicitly, not assumed.
+- **Epic 0's audit reports a reachable ceiling of 100 %**, or every shortfall unit carries an
+  operator-signed Structural Exclusion Register entry (`decisions.md §3`).
+- Epic 1 has landed a race chassis for the chassis-blind population, DoD-8 verified per race added.
+- Epic 2 has landed the ground-truth sample and either a validated classifier or a documented close-at-F1,
+  **and the `ambiguous` wiring class has a path to `done` or a signed register entry**.
+- Epic 3 has measured every remaining `class_feature`-bearing class.
+- Epic 4 has landed the supersession shape for every class Epic 3 clears, and resolved the
+  chooser-interaction shape for Oracle/Arcanist/Sorcerer.
+- Epic 5's chassis sweep has ingested and reach-gated every class Epics 3/4 cleared.
+- Epic 6's four per-kind ingest cards have each reached a ceiling that is **a capability fact, not a
+  scheduling artifact** — F3/F4 re-derived after Epic 1's final chassis batch.
+- Epic 7 has onboarded all 7 `future_state` books, PI-clean.
+- Epic 8 has run at least one local-proof-then-cloud-scale cycle per lane shape it claims a role in.
+- Epic 9's exit gate passes; `progress.md` carries the closure receipt; the promotion PR is opened, not
+  merged — the operator holds sole merge authority.

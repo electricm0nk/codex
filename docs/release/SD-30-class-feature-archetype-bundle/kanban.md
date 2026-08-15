@@ -69,6 +69,21 @@ surface the operator and orchestrator both read for live progress. No card outra
 | `epic-13-verdict-paths` | **MOVED to `SD-32-engine-capability-builds/kanban.md` `epic-2-verdict-paths` (`decisions.md §51`)** | Verdict-Path Capability, 100% mandate | real (non-placeholder) verdict paths for the ~3,547 unmeasurable units incl. 2,109 `ambiguous`; classifier work bound by `SD-30-class-feature-archetype-bundle/decisions.md §50(c)`'s accuracy-not-movement rule (`decisions.md §45`) | — | — | — |
 | `epic-14-cloud-fanout` | **SPLIT (`decisions.md §51`): grind-lane scope MOVED to `SD-31-corpus-closure-grind/kanban.md` `epic-6-cloud-fanout`; capability-build-lane scope MOVED to `SD-32-engine-capability-builds/kanban.md` `epic-3-cloud-fanout`. No `epic-14` remains in this file.** | Cloud Fan-Out Protocol | local-proof-then-cloud-scale protocol for lane B/C shapes (epic-10, epic-11); local orchestrator owns all `tranche/10` merges, DoD-8/dashboard-producer work stays local (`decisions.md §47`) | — | — | — |
 
+## Update (2026-08-15) — the two successor packages became one
+
+Rows above marked **MOVED to `SD-32-engine-capability-builds/`** (`epic-12-race-chassis`,
+`epic-13-verdict-paths`) and the capability-lane half of `epic-14-cloud-fanout` now resolve to
+**`SD-31-corpus-closure-grind/`**. That package absorbed SD-32 and deleted it on operator ruling
+2026-08-15 (`SD-31-corpus-closure-grind/decisions.md §2`), after the split was found to have scheduled
+the capability builds *after* the SD-31 lanes that cannot reach `done` without them — 8,524 units,
+22.1 % of the board, ceiling 77.9 %. Resolution map: `epic-12-race-chassis` → SD-31 `epic-1-race-chassis`;
+`epic-13-verdict-paths` → SD-31 `epic-2-verdict-paths`; `epic-14-cloud-fanout` → SD-31
+`epic-8-cloud-fanout` (both lane families, one copy). SD-31's own epics were renumbered in the same
+ruling — its `epic-1-measurement`..`epic-6-cloud-fanout` are now `epic-3-measurement`..`epic-8-cloud-fanout`;
+the full map is in `SD-31-corpus-closure-grind/README.md`. **The rows above are left as written**, per
+this package's standing convention (historical text stays, corrections point forward), and SD-30 itself
+is closed — nothing here is claimable.
+
 ## Retired cards (sixteen-book era, 2026-08-01 to 2026-08-10) — historical record, not claimable
 
 `epic-3-oa` through `epic-18-bd2` (Occult Adventures, Horror Adventures, Mythic Adventures, Monster
