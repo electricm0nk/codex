@@ -735,3 +735,166 @@ figure corrections emitted via `retro.py correction`; one additional drift found
 re-scan (`release-notes.md`); full package re-scan for SD-32-as-live and stale epic numbers came back
 clean beyond the named items. 16 files touched, all `docs/`, all doc-only — no Rust/Python/shell
 production code changed this cycle.
+
+---
+
+## 2026-08-15 — S6-prelaunch: SD-30 seven-item pre-launch checklist, run for SD-31
+
+`RETRO_ACTOR=sd31-ready-s6 CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-ready-s6`. Doc-only step
+(no Rust/Python/shell production code touched) — the checklist is `SD-30-class-feature-archetype-bundle/loop-instruction.md`
+"Pre-launch checklist" section (lines 31-45), run against this package's own `kanban.md`/branch/box per
+the plan's Step 6 part 1 instruction. Started at HEAD `583aaecdf05c84e9ffec7946ac5782e2ae0457f` (matches
+the tip left by S5); tree was clean at start (`git status --porcelain` empty) and stayed clean through
+every read-only command below.
+
+**1. `kanban.md` exists and lists a ready queue, epic-0 first.**
+`docs/release/SD-31-corpus-closure-grind/kanban.md`'s Cards table: `epic-0-reachability-audit` is row
+1, status `READY`, Order 1 ("Reachability Audit (standing gate)"). "Claim-priority order is the table
+order, top-down" (kanban.md, above the table) — epic-0 is dispatched first by construction. **PASS.**
+
+**2. Branch pushed, `tranche/10` == origin.**
+```
+git fetch origin tranche/10 && git rev-parse HEAD && git rev-parse origin/tranche/10
+```
+→ both `583aaecdf05c84e9ffec7946ac5782e2ae0457f`. **PASS.** (Fetch printed a harmless
+`/tmp/codex-cred-helper.sh store: 1: /tmp/codex-cred-helper.sh: not found` line — a stale credential
+helper hook, not a fetch/push failure; the fetch itself succeeded and the SHA compare is exact.)
+
+**3. OAuth credentials valid.**
+```
+gh auth status
+```
+→ `Logged in to github.com account electricm0nk ... Active account: true ... Token scopes: 'project',
+'repo', 'workflow', 'write:packages'`. **PASS for push** (repo scope present, matches this cycle's own
+push at the end of this receipt). One gap noted and defaulted-past per unattended-mode protocol: `!
+Missing required token scopes: 'read:org'` — not required by any push/PR-open operation this package's
+epics perform (`gh pr create` needs `repo`, which is present); flagged here, not blocking.
+
+**4. Working tree clean.**
+```
+git status --porcelain
+```
+→ empty, before and after every command in this receipt except this file's own edit and the
+`retro.py`/git commands the closing steps run. **PASS.**
+
+**5. Wave disk budget, re-derived (not carried from S3/S4/S5's captures), SD-30 loop-instruction
+"Concurrency and resource budget" method:**
+```
+nproc                    # 24
+free -h                  # 167Gi total / 7.6Gi used / 1.8Gi free / 160Gi available
+df -B1G /                # 968 total / 443 used / 526 avail / 46%
+grep -n 'PREFLIGHT_DISK_MIN_FREE_GB=\|PREFLIGHT_DISK_MAX_PERCENT=' scripts/verify.sh
+#   :251 PREFLIGHT_DISK_MIN_FREE_GB=${PREFLIGHT_DISK_MIN_FREE_GB:-20}
+#   :252 PREFLIGHT_DISK_MAX_PERCENT=${PREFLIGHT_DISK_MAX_PERCENT:-90}
+du -sh target                                    # 83G  (primary checkout's accumulated tree)
+du -sh /home/ubuntu/cargo-targets/*              # 14 other agents' dirs, 3.3G-30G each, none
+                                                  #   this cycle's to reclaim (see item 9 below)
+```
+| quantity | value | how |
+|---|---:|---|
+| cores | 24 | `nproc` |
+| RAM | 167 Gi total, 160 Gi available | `free -h` (raw `free` col reads 1.8 Gi — page cache, not a real constraint; `available` is the operative figure, matching SD-30's own method) |
+| filesystem | 968 G | `df -B1G /` |
+| currently used | 443 G (46 %) | same |
+| `preflight-disk` refuses at | 90 % used or < 20 G free | `verify.sh:251-252` |
+| headroom to the 90 % floor | **428.2 G** | `0.90 × 968 − 443` |
+| headroom to the 20 G-free floor | 506 G | `526 − 20` |
+| binding headroom | **428.2 G** | the smaller (90 % floor binds) |
+| a full-gate `CARGO_TARGET_DIR`, measured | 83 G | `du -sh target` (conservative: today's accumulated primary, the SD-30 method's own choice over a fresher/smaller sibling) |
+| concurrent full-gate agents (disk) | **5** | `428.2 ÷ 83 = 5.16` → floor 5 |
+| concurrent full-gate agents (CPU) | 12 | `24 ÷ 2` default `-j`; not binding |
+| RAM headroom at 5 agents × `-j 2` | ample | ~10 concurrent `rustc` jobs × 2-4 G ≈ 20-40 G against 160 Gi available; not binding |
+| binding constraint | **disk** | 5 < 12 |
+| **CAP: concurrent full-gate agents this box can carry today** | **5** | smaller of disk/CPU/RAM bounds |
+
+This is a fresh re-derivation, not a carry-forward: the box's disk usage moved from the 178 G/19 %
+figure SD-30's own loop-instruction last captured (2026-08-14) to 443 G/46 % now (SD-31's own S3/S4/S5
+cycles each left an 27-30 G `CARGO_TARGET_DIR` under `/home/ubuntu/cargo-targets/` — see item 9), and
+the cap moved with it, 8 → **5**. **PASS** (budget computed and recorded before any wave fires; no wave
+has fired yet under this receipt).
+
+**6. Pilot/scope validation — N/A by scope, stated.**
+SD-30 loop-instruction's "Pilot and scope validation" section (lines 155-203) is **"REQUIRED before a
+first cycle pins a book or class"** — i.e. it is performed by the first Epic 3/5/6 cycle that actually
+claims a specific book, using the three-command at-source procedure against
+`$PCGEN_CORPUS_ROOT`/`docs/work-inventory.json`, not by the pre-launch checklist itself. This S6 cycle
+opens no kanban card, claims no book, and pins no class — it is a doc-only checklist-and-receipt step.
+**N/A for this cycle; not satisfied-in-advance.** The obligation carries forward unchanged to whichever
+cycle first claims `epic-3-measurement`, `epic-5-chassis-sweep`, or `epic-6-ingest-lanes` for a named
+book/class — that cycle must still run and record all three commands per the loop-instruction text
+before pinning, exactly as SD-30 required. Recorded here so the launch declaration below does not
+silently treat this item as done.
+
+**7. `epic-0-reachability-audit` card status known.**
+```
+grep -n "epic-0" docs/release/SD-31-corpus-closure-grind/kanban.md
+```
+→ `epic-0-reachability-audit | READY | Order 1 — Reachability Audit (standing gate) | ...`. Per
+`kanban.md`'s own claim-priority note, epic-0 is claimed *first* (top-down table order) rather than
+running fully decoupled the way SD-30's `epic-0-instrument-apply` did — a real difference from the
+SD-30 checklist's item 7 wording, noted rather than silently equated. The only downstream gate
+naming epic-0 explicitly is `epic-9-closure` ("`epic-0` audit at closing tip"), which is expected
+(closure needs the final audit) and not a mid-run block on any other epic. **PASS** (status known:
+`READY`, unclaimed, first in priority order, gates only closure).
+
+**Plus: `./scripts/verify.sh --only preflight-oracle` green, SHA recorded.**
+```
+RETRO_ACTOR=sd31-ready-s6 CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-ready-s6 \
+  ./scripts/verify.sh --only preflight-oracle > "$LOG" 2>&1; echo VERIFY_EXIT=$? >> "$LOG"
+```
+→
+```
+==> preflight-oracle — scripts/fetch-pcgen-oracle.sh --check
+    PASS  preflight-oracle  (oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6)
+SUMMARY
+  passed:  1  preflight-oracle
+RESULT: PASS
+VERIFY_EXIT=0
+```
+Pin SHA `7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`, dated 2026-06-17)
+matches the live oracle at `/home/ubuntu/workspace/repos/pcgen`, confirmed independently via
+`./scripts/fetch-pcgen-oracle.sh --check` → `pcgen-oracle: OK 7f818006e371188e5717fd18d74d18a420747fc6
+/home/ubuntu/workspace/repos/pcgen`. **PASS.**
+
+**Plus: `scripts/reclaim.sh` dry run, then `--apply`.**
+```
+./scripts/reclaim.sh            # dry run
+./scripts/reclaim.sh --apply
+```
+→ dry run: `would reclaim: 0 item(s), 0.0B total; skipped: 36 item(s)`. `--apply`: `reclaimed: 0
+item(s), 0.0B total; skipped: 36 item(s)`. Both runs skip the same 36 items — 1 stray cargo-target dir
+outside its scanned roots, 13 `/tmp/codex-verify-*` logs (too young), 8 forbidden-path worktrees, 14
+branches (unmerged-with-upstream or checked-out-in-a-worktree). **Observed, not a blocker, but flagged
+per SD-30's own "0.0 B reclaimed means the box is structurally full, not that it is clean" doctrine —
+here the doctrine's premise doesn't hold as stated: `reclaim.sh`'s `cargo-target` sweep only scans
+`$RECLAIM_SCRATCHPAD_ROOT` (default `/tmp/claude-1000`) and `$RECLAIM_CACHE_ROOT` (default
+`$HOME/.cache`) — it never scans `/home/ubuntu/cargo-targets/`, which is where this package's own
+per-agent `CARGO_TARGET_DIR`s (S3/S4/S5/S6 and 10+ sibling SD-30 agents, 3.3G-30G each, ~230G total)
+actually live. The 443G/46% disk figure in item 5 is real and the cap of 5 stands on it, but the
+0.0B reclaim result is not evidence the box is clean or full — it is evidence `reclaim.sh` cannot see
+that directory at all. This is a gap in `reclaim.sh`'s scanned-roots list, not this cycle's to fix
+(doc-only step, no code write authorized); default-and-flag for the operator / a future code-touching
+cycle.**
+
+### Launch declaration
+
+**LAUNCH-READY**, with two named, non-blocking gaps carried forward (not silently marked done):
+
+1. Item 6 (pilot/scope validation) is genuinely N/A-by-scope for this checklist-only cycle and remains
+   an open obligation on the first cycle that claims a book/class — that cycle must run it, not assume
+   this receipt covers it.
+2. `scripts/reclaim.sh` does not scan `/home/ubuntu/cargo-targets/`, so its `0.0B reclaimed` result
+   under-reports true reclaimable space and should not be read as "box is full" or "box is clean" —
+   either reading is unsupported by what the tool actually checked. Disk budget (item 5, cap **5**
+   concurrent full-gate agents) was computed from `df` directly, not from the reclaim result, so this
+   gap does not invalidate the cap.
+
+All seven SD-30-shaped checklist items, plus `preflight-oracle` (green, pin `7f818006e37...`) and the
+reclaim dry-run/`--apply` pair, are satisfied or explicitly accounted for. `git status --porcelain`
+clean throughout; `origin/tranche/10 == HEAD` (`583aaecdf...`) before this receipt's own commit.
+
+**Verify.** Doc-only step; only `--only preflight-oracle` run (see above), `VERIFY_EXIT=0`. No
+Rust/Python/shell production code changed this cycle — full `./scripts/verify.sh` not required and not
+run.
+
+**Status: COMPLETE.**
