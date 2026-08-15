@@ -272,7 +272,23 @@ existing five to avoid breaking prior cross-references):**
    ("`verify.sh` exits 0") is the only mechanism that actually catches this** — grepping the three
    config files for the new version string, as that cycle's own receipt did, is not sufficient
    evidence of a complete bump. Do not mark a version-bump card `COMPLETE` before the full gate — not
-   just `root-full`/`root-lib` — has returned a captured exit code.
+   just `root-full`/`root-lib` — has returned a captured exit code. **Resolved**: the re-dispatch
+   cycle (`SD30-E7-F1-001`, 2026-08-14/15) fixed the fixture, polled a full gate inline to
+   `VERIFY_EXIT=0` at `4630fec2`, and the card is genuinely `COMPLETE`.
+7. **A citation-resolution bug can hide behind its own audit's fixture.** `epic-8-code-review`'s DoD-3
+   trap-audit self-check (`corpus_traps.rs`) had a bare-basename `file_basename` bug: a fixture nested
+   one level under a book subdirectory passed for the wrong reason (the citation format the fixture
+   used never actually engaged the `.parent()` fallback the bug lived in). Rebuilding the fixture with
+   a real, directory-prefixed citation shape (matching every real corpus citation) went RED and
+   surfaced that the **identical** bug was independently live in `gen_book_cache.rs`'s own generator
+   — already shipped 3 wrong `wiring_class` stamps into production `inner_sea_gods` monster data. The
+   general lesson: a reviewer's own proposed fixture for a fix is not sufficient evidence the fix
+   engages the real code path — rebuild it to match production shape before trusting it, and when a
+   citation-resolution bug is found in one call site, grep every other call site of the same
+   underlying join/basename pattern before declaring the class of bug closed (`v06_work_inventory.rs`'s
+   `enumerate_file` was found to share it and is **not yet fixed** — `forward-scope-register.md`
+   C1.9). Also: capture the audit's exit code directly, never through `| tail`'s own exit status — this
+   cycle's own first read of `TRAP_AUDIT_EXIT` was silently wrong for exactly that reason.
 
 ### 3.5 Verification
 
@@ -285,3 +301,24 @@ existing five to avoid breaking prior cross-references):**
   "wired into a twin the sheet doesn't read" defect class, which has bitten this program three
   times. The harness exists: `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh`, unique
   `RUN_DESKTOP_AGENT` per cycle, never concurrent with `verify.sh`.
+
+### 3.6 Closure, 2026-08-15 (`SD30-E9-F2-001`, `epic-9-closure`, second attempt)
+
+`§3.4`'s two blockers are both resolved and re-confirmed by content at this cycle's own `HEAD`
+(`44497b67e`, pre-this-cycle's-own-doc-commits): `epic-7-version`'s gate green
+(`VERIFY_EXIT=0`, `4630fec2`, `progress.md` `SD30-E7-F1-001` re-dispatch) and `epic-8-code-review`
+complete (`VERIFY_EXIT=0`, `fc461781a`, `progress.md` `SD30-E8-F3-001`, three real defects fixed in
+bundle — see release-notes.md). `v06_corpus_trap_report -- --audit` (DoD item 3) re-derived by this
+cycle independently: `TRAP_AUDIT_EXIT=0`, `259 0 mod-record` — the 177-defect finding `SD30-CARRY-001`
+was dispatched against is genuinely closed, not merely claimed closed. Full accounting is in
+`progress.md`'s `SD30-E9-F2-001` receipt; this section exists only to record that the two things
+`§3.4` said a successor must check were in fact checked, by content, not by trusting the kanban row
+or a prior receipt's own say-so — the standing discipline this whole file exists to enforce.
+
+**No new hazard this cycle.** The five hazards in §1.3 and the two added under §3.4 (now seven total)
+remain the live inheritance for `SD-31-corpus-closure-grind` and `SD-32-engine-capability-builds`, the
+two packages that now carry SD-30's remaining scope forward. In particular: hazard 1 (the
+inventory-regen stamp-loss guard) and hazard 4 (the dashboard producer's unrecognised-status RAISE)
+apply directly to SD-31's ingest-lane cycles; hazard 7 (bare-basename citation-resolution bugs,
+`v06_work_inventory.rs`'s `enumerate_file` still carrying the unconfirmed instance,
+`forward-scope-register.md` C1.9) applies to whichever bundle next touches measurement.

@@ -1,21 +1,23 @@
 # SD-30 Release Notes
 
-**Populated `SD30-E9-F1-001`, 2026-08-14.** This bundle's scope was narrowed mid-run
-(`decisions.md §51`, 2026-08-14): Epics 4/5/6/10/11 (per-class measurement, archetype mechanism,
-chassis-sweep ingest, corpus-wide ingest lanes, book onboarding) moved to
-`SD-31-corpus-closure-grind/`; Epics 12/13 (race chassis, verdict-path capability) moved to
+**Populated `SD30-E9-F1-001`, 2026-08-14; updated CLOSED `SD30-E9-F2-001`, 2026-08-15.** This
+bundle's scope was narrowed mid-run (`decisions.md §51`, 2026-08-14): Epics 4/5/6/10/11 (per-class
+measurement, archetype mechanism, chassis-sweep ingest, corpus-wide ingest lanes, book onboarding)
+moved to `SD-31-corpus-closure-grind/`; Epics 12/13 (race chassis, verdict-path capability) moved to
 `SD-32-engine-capability-builds/`. What follows describes what **this** package, narrowed to Epics 0,
 1, 2, 3, 7, 8, 9, actually delivered — not the wider sixteen-book/all-kinds charter this package
 carried at points in its own history. The per-cycle receipts in `progress.md` are the per-record
 evidence; this document summarizes the release.
 
-**Status at population: NOT CLOSED.** `epic-8-code-review` has not been claimed or started
-(confirmed by content: no `SD30-E8` receipt exists anywhere in `progress.md`, `kanban.md`'s
-`epic-8-code-review` row is still `READY`). Per this package's own hard rule ("If ANY live card is not
-complete by content, DO NOT open the promotion PR"), the tranche-promotion PR is **not** opened by this
-cycle. This document is populated now so the closing cycle does not have to re-derive it from scratch;
-the "Summary"/"tranche promotion PR" lines below are written as of this cycle and must be re-confirmed,
-not re-derived, once Epic 8 actually lands and the PR is opened.
+**Status: CLOSED, `SD30-E9-F2-001`, 2026-08-15.** Both blockers the first closure attempt
+(`SD30-E9-F1-001`) correctly refused to paper over are resolved and re-confirmed by content this
+cycle: `epic-7-version`'s own gate is green (`SD30-E7-F1-001` re-dispatch, `VERIFY_EXIT=0` at
+`4630fec2`, the first confirmed-green full gate at any `0.10.0` tip), and `epic-8-code-review` ran
+to completion (`SD30-E8-F3-001`, three real findings fixed in bundle, `VERIFY_EXIT=0` at `fc461781a`).
+Epics 0/1/2/3/7/8 are all `complete` in `progress.md` **and** re-confirmed on `tranche/10` by content
+this cycle (symbol grep against the actual `HEAD`, not a card status word — see `progress.md`
+`SD30-E9-F2-001` §2). The tranche-promotion PR `tranche/10 → develop` is opened by this cycle; the
+operator merges it personally.
 
 ## Summary
 
@@ -27,7 +29,8 @@ not re-derived, once Epic 8 actually lands and the PR is opened.
   'version = ' apps/desktop/src-tauri/Cargo.toml | head -1` → `"0.10.0"`). The build counter
   (`GITHUB_RUN_NUMBER`) substitutes for the final digit at publish time; the repo carries the base
   triple only.
-- **HEAD at population:** `33ef64fe` (`git rev-parse HEAD`).
+- **HEAD at population (`SD30-E9-F1-001`):** `33ef64fe`. **HEAD at closure (`SD30-E9-F2-001`,
+  before this cycle's own doc-only commits):** `44497b67e` (`git rev-parse HEAD`).
 
 ## What SD-30 delivered
 
@@ -78,10 +81,24 @@ not re-derived, once Epic 8 actually lands and the PR is opened.
     a planted leak, so a future ingest cannot silently reintroduce a declared-PI leak into shipped
     `class_feature` content.
 - **Epic 7 — build version numbering.** Version triple set to `0.10.0` across the three build-config
-  files; test anchors updated in both `buildVersionTriple.test.ts` locations. **Open at population
-  time** (see "Known issues" below) — the version-bump commits required an unlocked `cargo test` to
-  re-resolve `apps/desktop/src-tauri/Cargo.lock`, and the retry gate launched afterward has not yet
-  returned an exit code as of this document's population.
+  files; test anchors updated in both `buildVersionTriple.test.ts` locations. **Closed for real,
+  `SD30-E7-F1-001` re-dispatch, 2026-08-14/15.** The first version-bump commit missed a build-label
+  string fixture (`src/testerWorkbench/loadTesterWorkbenchSurface.test.ts`, asserted fresh by
+  `src/releaseChecks/buildLabelFixtureFreshness.test.ts`) and a CI publish-workflow version stamp; both
+  fixed, and the re-dispatch cycle polled a full `verify.sh` inline to a captured exit code
+  (`VERIFY_EXIT=0`, 16/16 stages, at `4630fec2`) — the first confirmed-green full gate at any tip
+  carrying `0.10.0`.
+- **Epic 8 — bundle code review.** `SD30-E8-F3-001`, 2026-08-15. Reviewed the full bundle diff against
+  `origin/develop` (3,146 files, +23,214/-7,389). Three real defects found and fixed in bundle: (1) a
+  dangling PI-dropped grant reference in `ingest_pu_classes.rs` (a future `NAMEISPI:YES` feature row
+  would have shipped an orphan grant in class-variant JSON — 0-record no-op on today's corpus, fixed
+  before it could bite); (2) the DoD-3 trap-audit self-check's own bare-basename citation bug, which
+  masked (3) the identical bug already live in `gen_book_cache.rs`'s generator, which had already
+  shipped 3 wrong `wiring_class` stamps into production `inner_sea_gods` monster data — fixed and the
+  3 records regenerated (verified byte-for-byte: only the 3 expected `wiring_class` field-pairs
+  changed). `VERIFY_EXIT=0`, 16/16 stages, at `fc461781a`. One finding (wiring the trap-audit into
+  `scripts/verify.sh` itself) deferred to `SD-31-corpus-closure-grind` (`forward-scope-register.md`
+  C1.8) as a repo-wide gate-shape decision outside this card's remit.
 
 ## What SD-30 handed to SD-31 and SD-32
 
@@ -134,28 +151,42 @@ achieved alone.
   `fixture-verified` rungs: `done` means the character sheet exposes the end rule with a true resolved
   value, not that the engine merely simulates the mechanism.
 
-## Known issues / open items at population time
+## Known issues / open items at closure
 
-1. **`epic-8-code-review` not started.** Blocks this package's own closure (`decisions.md §51`'s
-   narrowed exit criterion). No successor package owns it — it is this package's own remaining scope.
-2. **`epic-7-version`'s gate exit code not confirmed at HEAD.** `kanban.md` marked the card `COMPLETE`
-   at 20:18 on 2026-08-14, before its own gate returned; the version-bump commits required an unlocked
-   `cargo test` to fix `Cargo.lock`, and the subsequent retry gate (PID `663386` as observed by this
-   cycle, launched ~21:40) was still running (in the `desktop` stage) as of this cycle's own
-   observation and has not yet appended a `VERIFY_EXIT=` line to any log. The last **confirmed** green
-   full-gate run on this branch is `VERIFY_EXIT=0` at commit `b472aec2` (`epic-3-pi-gate`'s own close),
-   which predates the version-bump commits — so no confirmed-green run exists yet at any tip that
-   includes `0.10.0`. This is a real open item for whichever cycle claims closure next, not fabricated
-   or inferred away by this document.
+Both open items named at population time (`epic-8-code-review` not started; `epic-7-version`'s gate
+not confirmed) are **resolved** — see the Epic 7/Epic 8 bullets above. Remaining open items at actual
+closure:
+
+1. **The `v06_corpus_trap_report -- --audit` gate is not wired into `scripts/verify.sh`.**
+   (`epic-8-code-review` finding 2c, `forward-scope-register.md` C1.8.) The audit is a real,
+   non-vacuous gate as of this bundle (`epic-8-code-review` fixed its own bare-basename bug and the
+   generator bug it was masking), and re-derived independently by this closing cycle:
+   `cargo run --locked --bin v06_corpus_trap_report -- --audit` → `TRAP_AUDIT_EXIT=0` (`259 0
+   mod-record`, no defects). It is **not currently a `scripts/verify.sh` stage**; wiring it in is a
+   repo-wide gate-shape decision (which books/kinds it covers corpus-wide, how a legitimate
+   `no_corpus_line` record is told apart from a future real regression) beyond any one card's remit,
+   deferred to `SD-31-corpus-closure-grind`.
+2. **`v06_work_inventory.rs`'s `enumerate_file` shares the identical bare-basename citation bug**
+   that `epic-8-code-review` found and fixed in two other call sites (`corpus_traps.rs`'s
+   self-check, `gen_book_cache.rs`'s generator) — self-found during that cycle's investigation, not
+   in the reviewer's original finding set, and **not itself fixed** (unconfirmed board effect;
+   `forward-scope-register.md` C1.9, owner the next measurement-touching bundle, likely
+   `SD-31-corpus-closure-grind`).
 3. **The 100% dashboard mandate** (`decisions.md §45`) remains unreached corpus-wide (15.2% `done`,
    table above) and is not claimed as reached by this bundle — it is the joint SD-30 → SD-31 → SD-32
-   exit criterion.
+   exit criterion. SD-30's own contribution is Epic 0's rung-application gain (`done` 3,464 → 5,837);
+   the remainder is SD-31's (per-kind ingest, per-class chassis sweep) and SD-32's (race chassis,
+   verdict-path capability) to move.
 
 ## Verification evidence
 
-Per-cycle receipts, with the command behind every figure, are in `progress.md`. The last confirmed
-`VERIFY_EXIT=0` full-gate run on `tranche/10` prior to this document's population is recorded at
-`SD30-E3-F4-001`'s receipt (commit `b472aec2`, 16/16 stages PASS, `reach` 27 matched tests).
+Per-cycle receipts, with the command behind every figure, are in `progress.md`. The full gate is
+green at both epics that carried code changes after population: `epic-7-version`
+(`VERIFY_EXIT=0`, 16/16 stages, `4630fec2`) and `epic-8-code-review` (`VERIFY_EXIT=0`, 16/16 stages,
+`fc461781a`). This closing cycle (`SD30-E9-F2-001`) launched its own full `verify.sh` at the closing
+tip; see `progress.md`'s `SD30-E9-F2-001` receipt for the captured exit code and log path (launched
+in background per this package's own gate-sequencing doctrine — doc-only cycles may run `--only`
+stages, but this cycle chose the full sweep for the strongest possible closing-tip evidence).
 
 ## Update eligibility
 

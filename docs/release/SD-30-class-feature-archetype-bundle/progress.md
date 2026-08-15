@@ -3884,3 +3884,248 @@ branch. This cycle's own `CARGO_TARGET_DIR`
 script, expected. 0.0B here reads as "nothing eligible yet on a busy shared box," not "structurally
 full": `df -B1G /` throughout this cycle held at 35-37% used, 617-636G available, `preflight-disk`
 passed clean on every gate run.
+
+## Cycle `SD30-E9-F2-001` — 2026-08-15 — `epic-9-closure`, second attempt: SD-30 CLOSED
+
+**Actor:** `sd30-e9-closure`. **HEAD at start:** `44497b67ef40f9760cefff290737f21d0f3d5730`
+(`origin/tranche/10` at the same commit, confirmed via `git fetch origin tranche/10; git rev-parse
+HEAD origin/tranche/10` before any edit). Tree dirty at start with another session's own in-flight
+work — `.gitignore` (a `.wrangler/` ignore-rule addition), `docs/retro/events/codex.jsonl` (another
+actor's own retro shard, continuously appended by that session throughout this cycle), untracked
+`.github/workflows/deploy-site.yml` — none of it touched or staged this cycle, per shared-checkout
+discipline (confirmed unstaged both before and after this cycle's own commit).
+
+### 1. Card and prior-attempt state, verified by content
+
+`SD30-E9-F1-001` (the first closure attempt, `state-goals-and-lessons.md §3.4`) correctly refused to
+open the promotion PR on two named blockers: `epic-8-code-review` unstarted, and `epic-7-version`'s
+own gate red at HEAD. `kanban.md`'s own row for `epic-9-closure` (pre-this-cycle) already recorded
+that Blocker 2 (the `epic-7-version` gate) had been resolved by a re-dispatch cycle
+(`SD30-E7-F1-001`); Blocker 1 (`epic-8-code-review`) was dispatched separately and its own row read
+`COMPLETE`. Per this bundle's own doctrine ("verify every card status by CONTENT ... never by reading
+a card status or trusting this list"), both were re-checked independently this cycle rather than
+trusted:
+
+- **`epic-7-version`**: `grep -n '"version"' apps/desktop/package.json
+  apps/desktop/src-tauri/tauri.conf.json` and `grep '^version' apps/desktop/src-tauri/Cargo.toml` all
+  read `0.10.0`. `progress.md`'s own `SD30-E7-F1-001` (re-dispatch) receipt §6 records a full gate
+  polled inline to `VERIFY_EXIT=0`, 16/16 stages, at `4630fec2` — the first confirmed-green gate at
+  any `0.10.0` tip.
+- **`epic-8-code-review`**: `grep -n "drop_pi_named_grants" src/bin/ingest_pu_classes.rs` and
+  `grep -n "wiring_class_file_arg" src/bin/gen_book_cache.rs` both hit — the two fixes the receipt
+  describes are genuinely present on `tranche/10`. `progress.md`'s `SD30-E8-F3-001` receipt records
+  `VERIFY_EXIT=0`, 16/16 stages, at `fc461781a`, and a findings register with 3 fixed-in-bundle items
+  and 1 deferred with a named owner (`forward-scope-register.md` C1.8).
+- **Epics 0/1/2/3**: re-confirmed present at this cycle's own `HEAD` by the same greps
+  `SD30-E9-F1-001 §2` and `SD30-CARRY-001 §11` already ran (`literal-verified`/`fixture-verified` in
+  `pf1e_dashboard_producer.py`; `tests/pi_table_sweep.rs`; `NAMEISPI`/`DESCISPI` handling in
+  `src/bin/ingest_pu_classes.rs`; `tests/sd30_declared_product_identity_in_shipped_class_features.rs`)
+  — all present, unchanged since their own closing cycles.
+
+**Conclusion: both `SD30-E9-F1-001` blockers are genuinely resolved.** All six live cards
+(epic-0/1/2/3/7/8) are `COMPLETE` in `progress.md` and confirmed on `tranche/10` by content.
+
+### 2. DoD item 3, checked explicitly (per this card's own instruction not to let it pass in silence)
+
+`SD30-CARRY-001` was dispatched to fix or hand off the DoD-3 `v06_corpus_trap_report -- --audit`
+177-defect red state. Re-derived independently this cycle, exit code captured directly in the same
+shell statement (not through `tail`):
+
+```
+$ export RETRO_ACTOR=sd30-e9-closure CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-e9-closure
+$ cargo run --locked --bin v06_corpus_trap_report -- --audit > /tmp/.../trap_audit.log 2>&1
+$ echo "TRAP_AUDIT_EXIT=$?" >> /tmp/.../trap_audit.log
+TRAP_AUDIT_EXIT=0
+     TRAP   DEFECT  trap
+      259        0  mod-record
+No defects: every ingested record's citation agrees with the line it names.
+```
+
+**GREEN.** DoD item 3 is genuinely satisfied at this cycle's own re-derivation — the 177/178-defect
+red state `SD30-CARRY-001` and `epic-8-code-review`'s own generator fix (§2, `progress.md`
+`SD30-E8-F3-001`) resolved is confirmed still resolved, not merely claimed. Nothing to disclose as
+red for this closure.
+
+### 3. Closure-F1 acceptance — final check
+
+| Item | Result |
+|---|---|
+| Epics 0, 1, 2, 3, 7, 8 complete by content | **YES** — §1 above. |
+| `release-notes.md` populated | **YES**, rewritten this cycle from the prior "NOT CLOSED" population to reflect actual closure: Epic 7/Epic 8 outcomes, re-derived board table, "Known issues at closure" (the two `SD30-E9-F1-001` blockers marked resolved; the two real open items — DoD-3 not wired into `verify.sh`, `v06_work_inventory.rs`'s shared bare-basename bug — carried forward with owners), verification evidence section pointing at this cycle's own full gate. |
+| `state-goals-and-lessons.md` updated at closure | **YES** — new hazard 7 (citation-resolution bugs hiding behind their own audit fixture, with the resolution note on hazard 6) and new §3.6 recording this closure, both added in place, nothing rewritten or deleted. |
+| `docs/architecture/` refreshed | **YES, bounded scope, stated as such.** The SD-30 status note in `docs/architecture/status.md` §"Kind coverage" is rewritten from "partial update... SD-30 itself has not closed" to "CLOSED", naming Epic 7/8's real outcomes and this cycle's own DoD-3 re-derivation. **Not done**: a full re-derivation of the `grounded`-per-kind table, the three structural-ceiling classifiers, or the JSON-corpus-cache/`RuleSetId` rows in that same section — SD-30's own scope (Epics 0/1/2/3/7/8/9) never touched per-record `grounded` status or ingested any corpus content, so re-running those derivations would reproduce the identical 2026-08-13 figures already on record, not reflect this bundle's actual diff. Re-deriving numbers this bundle's own diff cannot have moved is not a refresh, it is a repetition; the note says explicitly that re-pass is owed to whichever of SD-31/SD-32 next changes those numbers. |
+| Tranche promotion PR | **OPENED this cycle** — §5 below. |
+
+### 4. Board re-derivation (re-run fresh this cycle, not transcribed)
+
+```
+$ python3 -c "
+import json, importlib.util, collections
+spec = importlib.util.spec_from_file_location('m', 'scripts/observer/pf1e_dashboard_producer.py')
+mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+d = json.load(open('docs/work-inventory.json'))['units']
+c = collections.Counter()
+for u in d:
+    if u.get('book') == 'beginner_box': continue
+    c[mod.doneness_verdict(u.get('wiring_class'), u.get('status'), u.get('kind'))] += 1
+print(c)"
+Counter({'not-started': 20895, 'held': 6916, 'done': 5837, 'unmeasurable': 3989, 'in-progress': 848, 'deferred': 36})
+```
+
+Byte-identical to every prior re-derivation since Epic 0's own close (`SD30-E0-F4-001`,
+`SD30-E9-F1-001 §7`) — **no board movement this cycle**, expected: this cycle's own diff is doc-only
+(`release-notes.md`, `state-goals-and-lessons.md`, `docs/architecture/status.md`, `kanban.md`,
+`progress.md`), no corpus content or `docs/work-inventory.json` touched. Per-kind table unchanged from
+`state-goals-and-lessons.md §1.1`; not re-transcribed here, cited by reference.
+
+Total `done` **5,837 / 38,521 = 15.15%** corpus-wide — the honest board position at SD-30's own
+closure. SD-30's own contribution is Epic 0's rung-application gain (3,464 → 5,837); the 100% mandate
+(`decisions.md §45`) is **not** claimed reached by this bundle — it is the joint SD-30 → SD-31 → SD-32
+program exit criterion, and the remainder (per-kind ingest, per-class chassis sweep, race chassis,
+verdict-path capability) is SD-31's and SD-32's to move, per `decisions.md §51`'s split and this
+package's own `release-notes.md` "What SD-30 handed to SD-31 and SD-32".
+
+### 5. Closure-F2 — workspace-tree removal, re-confirmed a third time
+
+```
+$ find ~/workspace -maxdepth 3 -iname "*SD-30*" -o -iname "*sd30*"
+(no output)
+```
+
+No workspace-resident SD-30 directory exists; the 2026-08-10 rename did not reintroduce one.
+**Closure-F2: CONFIRMED, still holds.**
+
+### 6. Full gate — launched early, doc work done while it ran
+
+```
+$ export RETRO_ACTOR=sd30-e9-closure CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-e9-closure
+$ ./scripts/verify.sh > docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e9-f2-verify.log 2>&1
+$ echo "VERIFY_EXIT=$?" >> docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e9-f2-verify.log
+```
+
+Launched at HEAD `44497b67e` (before this cycle's own doc edits — the closing tip's code content is
+identical to `fc461781a`, `epic-8-code-review`'s own commit, since `44497b67e` itself is a doc-only
+append). `git rev-parse HEAD` re-confirmed unchanged (`44497b67e`) both before and after the ~24-minute
+run — no concurrent writer touched this checkout's tracked source during the gate. Doc edits
+(`release-notes.md`, `state-goals-and-lessons.md`, `docs/architecture/status.md`, this receipt,
+`kanban.md`) were written while the gate ran, per this package's own gate-sequencing doctrine.
+
+```
+SUMMARY
+  passed:  16  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest
+                corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep
+                frontend-install frontend-test frontend-typecheck clippy class-dump
+
+  root-lib              PASS  1777 passed
+  root-full              PASS  6410 passed across 548 suites, all 527 tests/*.rs suites executed
+  desktop                PASS  445 passed
+  reach                  PASS  27 passed
+  corpus-sweep            PASS  3516 records examined of 9328 read, 0 findings
+  frontend-test           PASS  99/99 files
+  frontend-typecheck     PASS  tsc --noEmit clean
+  clippy                  PASS  root:46 desktop:7 warnings, 0 errors
+  class-dump              PASS  31/31 computing
+
+BASELINE NOTES (advisory, RESULT still PASS):
+  BASELINE_ROOT_LIB_TESTS 1776 recorded / 1777 measured
+  BASELINE_ROOT_FULL_TESTS 6398 recorded / 6410 measured
+  BASELINE_ROOT_TEST_BINARIES 547 recorded / 548 measured
+
+RESULT: PASS
+VERIFY_EXIT=0
+```
+
+Same drift `epic-8-code-review`'s own receipt already reported and deliberately left un-bumped
+(DoD item 7: a bump is its own reviewable commit, never folded into a fix or a closure) — not this
+cycle's own diff (zero Rust test functions or binaries added/removed by any doc-only commit), and not
+bumped here either, for the same reason. Wall time ~24 minutes (launched ~23:01 EDT, `VERIFY_EXIT=`
+line ~23:25). Log:
+`docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e9-f2-verify.log`. The auto-emitted
+`verification` retro event (`1786764331801-sd30-e9-closure-731983`,
+`docs/retro/events/sd30-e9-closure.jsonl`) records the same PASS at `head: 44497b67e`.
+
+**This is the first confirmed-green full gate at the exact tip `epic-9-closure` closes from** — every
+prior confirmed-green gate this bundle recorded (`4630fec2`, `fc461781a`) predates this cycle's own
+doc commits, though none of those commits touch code, so the gate's verdict over shipped
+Rust/TS/Python content is unchanged by them.
+
+### 7. Wired-integration audit (DoD item 5), run standalone
+
+```
+$ bash scripts/wired-integration-audit.sh
+OK_NO_TOKENS / OK_NO_NOOP_HANDLERS / OK_NO_MOCK_LEAKS / OK_NO_WOULD_STRINGS
+AUDIT PASSED. All four checks clean. EXIT=0
+```
+
+### 8. The 100% mandate — where it stands (explicit, per this card's hard rule not to drop it quietly)
+
+`decisions.md §45` made the 100%-on-the-dashboard bar the **joint SD-30 → SD-31 → SD-32 program exit
+criterion**, not SD-30 alone. SD-30's own closure does **not** claim it reached: `done` stands at
+15.15% corpus-wide (§4). SD-30's own board contribution is Epic 0's instrument-application gain
+(3,464 → 5,837, +2,373 — the cheapest movement available, already spent). The remainder is owned:
+**`SD-31-corpus-closure-grind`** (per-class `class_feature` measurement/mechanism/chassis-sweep,
+corpus-wide `monster`/`spell`/`race`/`race_trait` ingest lanes, 7-book onboarding — the bulk of the
+raw `not-started`/`held` population) and **`SD-32-engine-capability-builds`** (race chassis closing
+the ~2,894 chassis-blocked `race_trait` units plus `race`'s own 0% floor, verdict-path capability for
+the ~3,547 `unmeasurable` units). Neither successor package has closed as of this cycle; the mandate
+is unreached, not abandoned, and this document does not claim otherwise.
+
+### 9. Definition of Done — final
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **PASS.** `VERIFY_EXIT=0`, captured directly, 16/16 stages, at the closing tip's own code content (§6). |
+| 2 | Reach stage claim, nonzero | **PASS.** 27 matched tests (§6) — a gate that asserts something, not an empty inventory. |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **PASS, re-derived independently, `TRAP_AUDIT_EXIT=0`** (§2). Checked explicitly per this card's own instruction; genuinely green, nothing to disclose. |
+| 4 | Guarded work-inventory regen | **N/A** — this cycle touched no corpus content and no `docs/work-inventory.json` classification input (doc-only diff, confirmed §4's byte-identical re-derivation). |
+| 5 | Four-check wired-integration audit | **PASS** (§7). |
+| 6 | `OPEN_FINDINGS` for any unsurfaced family | **N/A** — `reach_gate.rs` untouched this cycle, no new family surfaced. |
+| 7 | Baseline movements own commit | **N/A this cycle** — pre-existing drift (§6), deliberately not bumped, not this cycle's own diff. |
+| 8 | On-screen verification | **N/A** — no player-visible surface changed this cycle (doc-only: `release-notes.md`, `state-goals-and-lessons.md`, `docs/architecture/status.md`, `kanban.md`, this receipt). |
+
+**All eight DoD items accounted for, none silently skipped, DoD item 3 explicitly checked and found
+GREEN.**
+
+### 10. Retrospective events
+
+- `verification` (auto-emitted by `verify.sh`) `1786764331801-sd30-e9-closure-731983` — full gate
+  PASS at `44497b67e` (§6).
+- `note` `1786764370900-sd30-e9-closure-4c9e18` — closure milestone recorded (`docs/retro/events/sd30-e9-closure.jsonl`).
+
+### 11. Card and epic disposition
+
+**`epic-9-closure`: COMPLETE.** All Closure-F1 acceptance items met (§3); Closure-F2 re-confirmed
+(§5); the full gate is green at the closing tip's own code content (§6); DoD item 3 explicitly checked
+GREEN (§2). `kanban.md` flipped to `COMPLETE`, `Claimed-by sd30-e9-closure`, `Claimed-at` this cycle's
+timestamp, `Cycle-id SD30-E9-F2-001`.
+
+**SD-30 is CLOSED.** All seven live cards (epic-0, epic-1, epic-2, epic-3, epic-carry-001, epic-7,
+epic-8, epic-9) are `COMPLETE` in `progress.md` and confirmed on `tranche/10` by content. The
+tranche-promotion PR is opened by this cycle (§12 below) and NOT merged — the operator merges it
+personally, per this card's own hard rule.
+
+### 12. Tranche promotion PR
+
+Opened via `gh pr create`, base `develop`, head `tranche/10`. `GITHUB_RUN_NUMBER` re-derived fresh at
+PR-open time (not transcribed from `SD30-E7-F1-001 §9`'s snapshot):
+
+```
+$ gh run list --workflow=publish-tester-release.yml --limit 1 --json number,conclusion,createdAt
+[{"conclusion":"success","createdAt":"2026-08-14T14:19:28Z","number":123}]
+```
+
+Still `123` (no publish run since `SD30-E7-F1-001`'s own snapshot) — the next `publish-tester-release`
+run would stamp `0.10.124`; the PR body states this as the closure value per `decisions.md §15`'s
+increment rule, without bumping the tranche digit (already cut at `tranche/10`, not moved again by
+this bundle's own closure).
+
+### 13. Commit, push, reclaim
+
+Staged by explicit path (never `git add -A`); the pre-existing sibling-session dirt (`.gitignore`,
+`docs/retro/events/codex.jsonl`, untracked `.github/workflows/deploy-site.yml`) left exactly as found,
+confirmed unstaged both before and after this cycle's own commit. This cycle's own new
+`docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e9-f2-verify.log` and
+`docs/retro/events/sd30-e9-closure.jsonl` staged alongside the doc edits.
+
+`reclaim.sh` run at cycle end per doctrine (not only when disk pressure is visible) — see the trailing
+receipt line for the reclaimed-bytes figure, appended after the commit/push below.
