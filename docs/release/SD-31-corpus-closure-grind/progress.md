@@ -2617,11 +2617,21 @@ Launched in the background BEFORE this receipt was written:
 LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W2-INTEGRATE-001-verify.log
 ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
 ```
-Confirmed live-progressing while this receipt was written (not stalled): `groundtruth-guard-selftest`
+Confirmed live-progressing throughout this receipt's writing (not stalled): `groundtruth-guard-selftest`
 (the new stage) PASS (14 cases), `reachability-audit` PASS (98.94%), `pi-sweep`/`audit-selftest`/
-`reclaim-selftest`/`driver-selftest`/`corpus-sweep-selftest` all PASS, `root-lib` PASS (1,795 passed).
-See `$LOG` for the terminal `VERIFY_EXIT` — if this receipt was committed before the run finished,
-that is stated explicitly in the section below, not implied.
+`reclaim-selftest`/`driver-selftest`/`corpus-sweep-selftest` all PASS, `root-lib` PASS (1,795
+passed), `root-full` PASS (6,430 passed across 549 suites, all 528 `tests/*.rs` suites executed).
+
+**This cycle returns before the gate finished.** At return time the log was still progressing
+through `desktop — cargo test --locked -j 2` (apps/desktop/src-tauri) — a fresh compile in this
+run's own `CARGO_TARGET_DIR`, corroborated live (`tail`/`pgrep`/`ps -o etimes=`) rather than assumed
+frozen, ~11 minutes into the overall run at last check, no stall. No `VERIFY_EXIT` was obtained by
+return time; per loop-instruction.md's stop-vs-press-on rule, "ran out of budget" is not "blocked" —
+this is explicitly sanctioned rather than treated as a red gate. `$LOG` (this same file) carries the
+authoritative terminal `VERIFY_EXIT` whenever the process completes; check it directly, do not infer
+a result from this receipt's absence of one. Every stage through `root-full` — everything this
+cycle's own changes could plausibly regress (`wiring_class.rs`, `resolve_corpus_file`,
+`ground_truth_evidence_guard.py`, `verify.sh` itself) — is confirmed green above.
 
 ### 6. Board headline, re-derived at the integrated tip
 
