@@ -3034,3 +3034,17 @@ currently load-bearing; the genuinely live total today is 11 equipment + 7 monst
 writeup: `OPEN-ISSUES.md` row 25. `retro.py near-miss` emitted. Fixed the generator itself to preserve
 `monster_*` keys across a re-run (a real, scoped, committed fix — §9's file list); did NOT investigate
 or clean up the equipment lane's own 83-entry shrinkage (out of this card's `kind=monster` scope).
+
+### 12. Gate status at cycle return
+
+`root-lib` PASS (1800 tests, includes the 5 new `monster_seam_tests`). `root-full` PASS (6440 passed
+across 550 suites, all 529 `tests/*.rs` suites executed — includes both new test files,
+`derived_evaluator_fixture_check` (5/5) and `derived_evaluator_fixture_check_monster` (5/5)). The
+`desktop` stage (`cargo test --locked -j 2` under `apps/desktop/src-tauri`) started but had not
+finished by cycle return — six agents are building concurrently on this box this wave
+(`pgrep -fa 'cargo test'` shows 2+ concurrent `cargo test --locked --no-fail-fast` processes besides
+this cycle's own). `VERIFY_EXIT` was not yet obtained; per protocol this is stated honestly rather
+than inferred. Log: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F11-002-verify.log`
+(the launching command appends `VERIFY_EXIT=<code>` to this same file the moment the gate returns —
+check its tail directly). Every stage through `root-full` — the stage this cycle's own new code and
+tests build/run under — is green.
