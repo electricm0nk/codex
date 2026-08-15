@@ -2,23 +2,39 @@
 canonical: true
 owner: sd31-e2-groundtruth
 purpose: Methodology note for the SD31-E2-F1 hand-labelled ground-truth sample (Epic 2's F1 gate).
-cycle: SD31-E2-F1-001
+cycle: SD31-E2-F1-001, extended SD31-E2-F1-002
 date: 2026-08-15
 data_file: SD31-E2-F1-ground-truth-sample-v1.json
 ---
 
 # SD31-E2-F1 — Hand-labelled ground-truth sample, methodology note
 
-**Card:** `epic-2-verdict-paths`, feature seed SD31-E2-F1 only. **No classifier code was written this
+**Card:** `epic-2-verdict-paths`, feature seed SD31-E2-F1 (original draw, `SD31-E2-F1-001`) and its
+repair (`SD31-E2-F1-002`, `OPEN-ISSUES.md` rows 3/4/5). **No classifier code was written in either
 cycle** — this is the gate that runs first, per `epic-breakdown.md` "## Epic 2 (SD31-E2)" and
 `decisions.md` Decision 1(e).
 
+**`SD31-E2-F1-002` (this revision) did three things** to the artifact `SD31-E2-F1-001` produced, each
+recorded in its own section below rather than silently folded into the original text:
+
+1. **Re-labelled all 105 canned units** (`OPEN-ISSUES.md` row 3, `BLOCKER`) — see "Re-labelling the
+   105 canned units" below.
+2. **Widened the sample by 35 units** targeting thin `(hand_wiring_class, kind)` cells
+   (`OPEN-ISSUES.md` row 5) using a newly-committed, seeded sampling script
+   (`scripts/sample_ground_truth_units.py`) that also partially resolves `OPEN-ISSUES.md` row 4 — see
+   "Widening the sample" below. **185 units total after this cycle**, not 150.
+3. **Added a machine-checkable evidence-provenance guard** (`scripts/ground_truth_evidence_guard.py`
+   + `scripts/tests/test_ground_truth_evidence_guard.py`) that would have caught the original 105-unit
+   defect, and used it to find a further, smaller defect in the untouched 45 — see "The evidence guard"
+   below.
+
 ## What this is
 
-150 units, hand-labelled from the corpus record (the whole record — base `.lst` row plus every
-`.MOD` row targeting it, read directly under `$PCGEN_CORPUS_ROOT`, plus the unit's full JSON object
-in `docs/work-inventory.json`), each with a `wiring_class` label, the token evidence that decides it,
-and a confidence. The labelling method applies
+185 units (150 from `SD31-E2-F1-001`'s original draw + 35 from `SD31-E2-F1-002`'s widening draw),
+hand-labelled from the corpus record (the whole record — base `.lst` row plus every `.MOD` row
+targeting it, read directly under `$PCGEN_CORPUS_ROOT`, plus the unit's full JSON object in
+`docs/work-inventory.json`), each with a `wiring_class` label, the token evidence that decides it, and
+a confidence. The labelling method applies
 `docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.md`'s
 D0–D6 rules directly to the corpus tokens I read — the same taxonomy the production determinator
 (`src/rules_core/wiring_class.rs`) implements, but arrived at independently per unit rather than by
@@ -42,18 +58,24 @@ Fixed seed (`random.seed(31)`, chosen for SD-31) over `docs/work-inventory.json`
    `"population": "display_grounded_target"`. This is the population AT-31-010 binds into Epic 2's
    acceptance.
 
-150 total after de-duplication (no unit drawn twice).
+150 total after de-duplication (no unit drawn twice). This is the `SD31-E2-F1-001` draw ("v1
+draw" below); it is joined by a 35-unit widening draw from `SD31-E2-F1-002` (see "Widening the
+sample" below), for **185 total** in the committed data file.
 
-**Reproducibility gap (`NOTED 2026-08-15`, Opus adversarial-review CONFIRMED finding).** Neither the
-sampling script (`sample_units.py`, `random.seed(31)`) nor the two evidence-extraction scripts
-described above were committed alongside this artifact — `git diff --stat` between `origin/tranche/11`
-and this branch's merge-base shows 6 files, all under `docs/`, zero `.py`/`.rs`. The stratified draw
-therefore cannot be re-run or independently audited by a later cycle, and the claim that the
-evidence-extraction scripts were "pure evidence extraction, no verdict output" — the assertion that
-keeps this cycle inside Decision 1(e) item 1's "no classifier before the sample" gate — cannot be
-checked by anyone but the labeller. Tracked as `OPEN-ISSUES.md` row 4 (owner: Epic 2, `NOTE`):
-commit the sampling script (or inline it verbatim) alongside any future re-draw so the draw is
-independently reproducible.
+**Reproducibility gap — v1 draw only, NOT fully resolved this cycle (`OPEN-ISSUES.md` row 4,
+originally `NOTE`d 2026-08-15, Opus adversarial-review CONFIRMED finding).** Neither the v1 sampling
+script (`sample_units.py`, `random.seed(31)`) nor the two evidence-extraction scripts described above
+were committed alongside the original artifact — `git diff --stat` between `origin/tranche/11` and
+that branch's merge-base showed 6 files, all under `docs/`, zero `.py`/`.rs`. **`SD31-E2-F1-002` does
+NOT reconstruct that missing script or the v1 draw** — a reconstruction could not prove the original
+draw was unbiased, and presenting one as the original would be worse than admitting the gap plainly:
+**the v1 150-unit draw remains permanently non-reproducible.** What this cycle DID do is commit a
+real, runnable, seeded sampling script for every draw from here forward
+(`scripts/sample_ground_truth_units.py`, `python3 -m unittest scripts/tests/test_sample_ground_truth_units.py`
+proves it deterministic/stratifying/exclusion-respecting/verdict-free) and use it for the 35-unit
+widening draw below — that draw, and only that draw, is independently re-runnable and auditable. The
+claim that the v1 evidence-extraction scripts were "pure evidence extraction, no verdict output" still
+cannot be checked by anyone but the original `SD31-E2-F1-001` labeller.
 
 **Re-derived population counts** (commands, run against this cycle's checkout of
 `docs/work-inventory.json`):
@@ -78,9 +100,40 @@ display+grounded 1243
 Both match `decisions.md` Decision 1(e)'s corrected figures (2,109 / 1,243) exactly — re-derived
 independently, not transcribed.
 
+## Widening the sample (`SD31-E2-F1-002`, `OPEN-ISSUES.md` row 5)
+
+The v1 draw left 30 of 44 occupied `(hand_wiring_class, kind)` cells at `n<=2` — too thin for
+SD31-E2-F2's per-class-AND-per-kind agreement rate plus confusion matrix. `SD31-E2-F1-002` widened it:
+
+```
+$ python3 scripts/sample_ground_truth_units.py \
+    --inventory docs/work-inventory.json \
+    --exclude-ids-from <150-id list from the v1 draw> \
+    --current-cell-counts <(hand_wiring_class, kind) -> count, computed from the v1 draw> \
+    --target-per-cell 2 --seed 31 --out widening_draw.json
+# -> drew 35 units across 28 (engine_wiring_class, kind) cells
+```
+
+**Stratification target is necessarily `engine_wiring_class`, not `hand_wiring_class`.** A pre-draw
+script cannot stratify on a label that does not exist until a human reads the record — the same
+constraint the v1 draw worked under. Given how large this cycle's relabelling correction rate turned
+out to be (see "Re-labelling the 105 canned units" below), several widened units landed, once hand-
+labelled, in a *different* cell than the one they were drawn to fill — the net effect on thin-cell
+count was smaller than the 35-unit draw size might suggest (see "Stratification actually achieved"
+below for the honest before/after).
+
+All 35 were hand-labelled to the identical whole-record standard as the relabelled 105 (base row via a
+recursive search, full `.MOD` closure, real quoted tokens, `confidence`, `corpus_path_verified`) — no
+shortcut for being a smaller batch. **13 of the 35 (37%) disagreed with the engine**, a materially
+higher rate than the v1 draw's non-`no_corpus_line` disagreement rate, because the widening draw was
+necessarily concentrated in exactly the kinds/classes the v1 draw under-sampled, several of which turn
+out to be exactly where `Finding A`'s bug and a previously-unnoticed variant of `Finding B` cluster —
+see Findings D–F below.
+
 ## Stratification actually achieved
 
-**By `wiring_class`** (engine's current label, 150 total):
+**By `wiring_class`** (engine's current label, v1 draw only, 150 total — unchanged from
+`SD31-E2-F1-001`, reproduced here for its own record):
 
 | class | units | kinds represented |
 |---|---:|---|
@@ -96,22 +149,38 @@ oversampled populations (`ambiguous_target`, `display_grounded_target`) both dra
 those two classes — by design, per the card's "oversample the two populations Epic 2 must actually
 decide" instruction.
 
-**Population tags:** `null` (general sample) 70, `ambiguous_target` 40, `display_grounded_target` 40.
+**Population tags (185 total, post-`SD31-E2-F1-002`):** `null` (v1 general sample) 70,
+`ambiguous_target` (v1 oversample) 40, `display_grounded_target` (v1 oversample) 40,
+`widening_batch_v2` (`SD31-E2-F1-002`) 35.
 
-**Stratification depth caveat (`NOTED 2026-08-15`, Opus adversarial-review CONFIRMED finding).** The
-sample meets the letter of SD31-E2-F1's own size/stratification floor (150 ≥ 100, all 5 classes, 11
-kinds ≥ 4), but is thin against SD31-E2-F2's *own* acceptance criterion, which requires the agreement
-rate "reported per class AND per kind, plus its full confusion matrix":
+**Stratification depth caveat, UPDATED `SD31-E2-F1-002` — improved but NOT resolved.** The v1-draw
+finding (`OPEN-ISSUES.md` row 5, `NOTE`) was: sample meets the letter of SD31-E2-F1's own size/
+stratification floor (150 ≥ 100, all 5 classes, 11 kinds ≥ 4), but is thin against SD31-E2-F2's *own*
+acceptance criterion, which requires the agreement rate "reported per class AND per kind, plus its
+full confusion matrix" — 45 occupied `(hand_wiring_class, kind)` cells, 31 of them `n<=2`. Re-derived
+against the current 185-unit file, by **hand-label** (the axis F2 actually needs, not the engine label
+the pre-widen table above uses):
 ```
 python3 -c "
 import json, collections
 d = json.load(open('docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E2-F1-ground-truth-sample-v1.json'))
-print(collections.Counter(r['kind'] for r in d))
 ct = collections.Counter((r['hand_wiring_class'], r['kind']) for r in d)
 print(len(ct), 'occupied cells,', sum(1 for v in ct.values() if v <= 2), 'with n<=2')
 "
-# -> 45 occupied (class, kind) cells, 31 of them n<=2
+# -> 48 occupied (class, kind) cells, 29 of them n<=2
 ```
+**The 35-unit widening draw moved this from 31/45 thin to 29/48 thin — a real but modest
+improvement, not a fix.** Root cause: `scripts/sample_ground_truth_units.py` (see "Widening the
+sample" above) can only stratify a pre-draw by `engine_wiring_class`, since `hand_wiring_class` does
+not exist until a human reads the record — and this cycle's own correction rate (13 of 35 widened
+units disagreed with the engine, on top of the v1 draw's own high disagreement rate in exactly the
+populations that were oversampled) means a meaningful fraction of units drawn to fill an
+engine-labelled thin cell landed, once hand-labelled, in a *different* cell instead. **F2 still must
+not report a per-class/per-kind rate for a cell this sample does not defensibly cover** (`n<=2`); a
+further widening pass stratified by `hand_wiring_class` from a prior partial draw (i.e. drawing again
+only after seeing where THIS draw's hand-labels actually landed, repeating until each target cell's
+gap closes) would do better, but was out of this cycle's bounded time budget after the 105-unit
+relabel. `OPEN-ISSUES.md` row 5 stays open with this narrower, re-derived shape rather than closing.
 Every unit of *independently-evidenced* signal in the sample sits almost entirely in the 40
 `no_corpus_line`-tagged units plus 5 strays (engine-class evidenced-unit counts: `display` 0,
 `computed` 0, `static` 2, `derived` 3, `ambiguous` 40 — see the Result section's Correction 2 for the
@@ -312,6 +381,95 @@ formula, but lowercase `classlevel(...)` doesn't match `"CLASSLEVEL"`, and the f
 corpus-wide this cycle (out of scope — flagged for Epic 2-F2 to re-derive if it chooses to fix the
 case sensitivity).
 
+## Finding D (`SD31-E2-F1-002`) — `SPELLS:` fields carrying a scalar-dependent formula are never scanned
+
+`signals()` scans two field categories only: `MAGNITUDE_TOKENS`-prefixed fields, and `prose_fields`
+(`DESC:`/`DURATION:`/`TARGETAREA:`/`SPROP:`/`RANGE:`/`SPECIALS:`/`BENEFIT:`). `SPELLS:` — PCGen's field
+for granting a spell-like ability, e.g. `SPELLS:Ice Staff|CASTERLEVEL=10|Cone of Cold,15+CHA` — is in
+neither list, so a save DC or other formula stated only inside a `SPELLS:` field is invisible to the
+scanner regardless of how it is written.
+
+- `bestiary_4:monster_ability:winter_hag_ice_staff` — engine: `display:no_magnitude_token` (the row's
+  ONLY field of any kind carrying content is the `SPELLS:` grant; nothing else on the row is scanned).
+  True: `derived` — `Cone of Cold,15+CHA` is an unambiguous CHA-scalar save-DC formula (`CHA` is in
+  `SCALARS_WORD`). Contrast with `core_rulebook:race_trait:racial_sla_death_knell` elsewhere in this
+  sample, whose SLA DC is built through a `BONUS:VAR` chain instead of an inline `SPELLS:` formula and
+  is correctly scanned — the difference between the two units is purely which PCGen authoring
+  convention was used for otherwise-equivalent content.
+- `bestiary_2:monster:spriggan` (widening batch) independently carries the same pattern
+  (`SPELLS:Innate|TIMES=ATWILL|CASTERLEVEL=4|Flare,10+CHA+SprigganMagicBonus|...`) but lands on
+  `computed` anyway via a genuine, same-row `PREVAREQ` guard on a separate `BONUS:VAR` field — so this
+  specific unit's verdict is unaffected, but it corroborates that the `SPELLS:`-field gap is not a
+  one-off.
+
+Not quantified corpus-wide this cycle (would require a `SPELLS:`-field grep across all 23 in-scope
+books, out of this card's bounded scope) — flagged for Epic 2-F2.
+
+## Finding E (`SD31-E2-F1-002`) — `PLUS:` fields (equipment-modifier equivalent-bonus values) are never scanned
+
+Similarly, `PLUS:` — PCGen's field for a weapon/armor special ability's equivalent enhancement-bonus
+value (used in cost/stacking calculations, e.g. `PLUS:3` for a +3-equivalent special ability) — is not
+in `MAGNITUDE_TOKENS`. A record whose only magnitude is a `PLUS:` field falls through to
+`display:no_magnitude_token` even though it carries a real, literal numeric value.
+
+- `core_rulebook:equipment_modifier:special_ability_ghost_touch_armor` — engine: `display`. True:
+  `static` (`PLUS:3`, a flat literal — not scalar-dependent, so `static` rather than `derived`).
+- `ultimate_combat:equipment_modifier:special_ability_reliable_firearm` (widening batch) — engine:
+  `display`. True: `static` (`PLUS:1`). Corroborates this is a recurring `equipment_modifier`-kind
+  pattern, not a one-off.
+
+Two units this cycle, both `equipment_modifier`. Not quantified corpus-wide (out of scope) — flagged
+for Epic 2-F2; likely a small, cleanly-fixable addition to `MAGNITUDE_TOKENS`.
+
+## Finding F (`SD31-E2-F1-002`) — `ASPECT:` fields carrying a scalar-dependent formula are never scanned, and `Finding B`'s false positive is not always rescued
+
+Two related widening-batch findings, both concentrated in exactly the `no_corpus_line`-bug population
+Finding A already flagged as load-bearing:
+
+**F1 — `ASPECT:` fields.** Like `SPELLS:` (Finding D), `ASPECT:` is in neither `MAGNITUDE_TOKENS` nor
+`prose_fields`. `bestiary_5:monster_ability:chuspiki_air_blast` states its real magnitude only there:
+`ASPECT:Ability Benefit|(%1d6+%2 damage, 30-ft. range)|HD/2|HD/2+CON/2` — an unambiguous HD/CON-scalar
+damage formula. This unit is a *double* gap: (1) its base row lives under
+`support/b5_abilities_race_oa.lst`, only reachable by a recursive search, so it currently lands in
+`ambiguous:no_corpus_line` (Finding A) and the engine never even reaches the row; (2) even a fixed
+path join would still miss it, because `ASPECT:` is unscanned. True class: `derived`.
+
+**F2 — `Finding B`'s false positive is not universally rescued.** `OPEN-ISSUES.md` row 2 documented
+the `BONUS:STAT` selector-name / `DR:`-slash false positive and checked three sampled units, all of
+which happened to also carry a genuinely separate scalar/arithmetic field that independently justified
+`derived` — the false positive was noise, not an error, in every case row 2 checked. **That does not
+hold universally.** Three widening-batch units carry the false positive with NO rescuing genuine
+signal anywhere in their closure:
+
+- `ultimate_equipment:equipment:belt_of_stoneskin` — sole trigger `DR:10/Adamantine` (bypass-slash false
+  positive); `COST:60000`/`WT:10` are flat literals, nothing else on the row. Engine: `derived`. True:
+  `static`.
+- `bestiary_2:monster:twigjack` — every `BONUS:STAT` field is a selector-name false positive
+  (`STR`/`DEX`/`CON`/`WIS`/`CHA`); every `BONUS:VAR` field (`AC_Natural_Armor`, `DarkvisionRange`,
+  `SneakAttackDice`) is a flat literal. Engine: `derived`. True: `static`.
+- `horror_adventures:race:undead_phantom` — same shape as `twigjack`: `BONUS:STAT` selector-name false
+  positives only, `MOVE:Walk,30`/`REACH:5` flat literals. Engine: `derived`. True: `static`.
+
+Also two related, judgement-call false positives discovered this cycle in `derived:prose_expr`, the
+same general shape as Finding B but in the *prose* scanner rather than the field scanner: a
+parenthesised group citing another spell's or ability's own FIXED stat block (using `CL`/`HD` as plain
+abbreviations, e.g. `(Will DC 16, CL 9th)`, `(CL 1st; concentration +0)`) trips `has_scalar` exactly
+like a genuine formula would, because the check cannot distinguish "this parenthetical states a
+formula" from "this parenthetical cites a fixed number using a scalar's own abbreviation":
+
+- `mythic_adventures:equipment:chaos_hammer` — the false-positive citation coexists with a SEPARATE,
+  genuine `ambiguous:prose_scaling_phrase` signal ("increases to 1d10 points of damage per caster
+  level") elsewhere in the same closure; `classify()`'s highest-bar-wins ordering lets the
+  false-positive `derived` signal outrank the genuine `ambiguous` one. Engine: `derived`. True (medium
+  confidence — a genuine judgement call): `ambiguous`.
+- `bestiary_3:race_trait:fuath_spell_like_abilities` — no other signal anywhere in the closure once the
+  false positive is discounted. Engine: `derived`. True (medium confidence): `display`.
+
+**Six widening-batch units total for this finding, all `derived`→`static`/`ambiguous`/`display`
+corrections** — the highest concentration of any single finding this cycle, and confirmation that
+Finding B's "the false positive is always rescued" observation was itself only checked against 3
+units and does not generalize.
+
 ## Result
 
 **CORRECTED 2026-08-15 (`SD31-W1-INTEGRATE-001`, fixing two Opus adversarial-review CONFIRMED
@@ -394,3 +552,143 @@ defect, which is neither "substantially correct" for that population nor "rare".
 fixing `CorpusLines::line()`'s path resolution (Finding A) before any new classifier logic is
 evaluated against ground truth — otherwise F2's accuracy numbers measure the path bug, not
 classification quality. This conclusion does not depend on either withdrawn headline figure.
+
+## Re-labelling the 105 canned units (`SD31-E2-F1-002`, `OPEN-ISSUES.md` row 3)
+
+**Every one of the 105 boilerplate `token_evidence` strings Correction 2 identified was re-labelled
+this cycle from the actual corpus record — none remain.**
+
+**How the 105 were identified**, programmatically, not by eye (the same detection Correction 2's
+command above uses): `token_evidence.startswith("confirmed from the unit's full token closure")`.
+**How the untouched 45 were identified**: the complement — every record whose `token_evidence` does
+NOT match that prefix. Verified after relabelling: `0` of 185 records still carry the boilerplate
+string.
+
+**Method, identical to the v1 draw's own** (see "Labelling method" above), applied independently to
+each of the 105: resolve the book directory, find the base row by a **recursive** search under the
+book directory (not the single-level join Finding A tracks — see "path recorded as evidence" below),
+collect every `.MOD` row targeting the unit's `name` or `corpus_key`, read the WHOLE closure, apply
+D0–D6 by hand, and write `token_evidence` as a rationale sentence followed by a
+`Quoted tokens (verbatim from the row(s) below): <substring> | <substring> | ...` marker whose
+segments were each verified — programmatically, before being written — to appear byte-for-byte in the
+extracted corpus text (`scripts/ground_truth_evidence_guard.py`, see below, re-verifies the same claim
+independently, after the fact, using its own separately-written corpus-resolution code).
+
+**Path recorded as evidence.** Every relabelled record now also carries `corpus_path_verified`: the
+list of file paths (relative to the book directory) this cycle actually read the row/`.MOD` rows from.
+For the 3 relabelled units whose real row lives in a nested subdirectory (`inner_sea_world_guide:race:
+gecko_giant` → `_pfs/pfs_iswg_races.lst`; `core_essentials:race:aasimar` →
+`races/aasimar/aasimar_races.lst`; `core_essentials:race_trait:aasimar_garuda_blooded` →
+`races/aasimar/aasimar_abilities_race_subrace.lst`), this is the SAME nested-path shape Finding A
+tracks corpus-wide — recorded here as its own piece of evidence for whoever fixes
+`CorpusLines::line()`'s join.
+
+**Outcome: 103 of 105 confirmed the engine's existing verdict with real, quoted, independently-derived
+evidence (previously canned, now genuine); 2 disagreed** (new findings this cycle, not carried forward
+from any prior labeller):
+
+| | count |
+|---|---:|
+| Re-labelled | 105 |
+| Confirmed (engine's verdict is genuinely correct, now with real evidence) | 103 |
+| Corrected (engine's verdict is wrong — new findings) | 2 |
+| ...of which: Finding D (`SPELLS:` field unscanned) | 1 (`bestiary_4:monster_ability:winter_hag_ice_staff`, `display`→`derived`) |
+| ...of which: Finding E (`PLUS:` field unscanned) | 1 (`core_rulebook:equipment_modifier:special_ability_ghost_touch_armor`, `display`→`static`) |
+
+Both corrections are inside the `display_grounded_target`/`None` populations Correction 2 flagged as
+totally unevidenced — meaning the 40-unit `display_grounded_target` population AT-31-010 binds into
+Epic 2's acceptance is now **39 confirmed `display` + 1 corrected to `derived`**, not the withdrawn
+"40/40 agree."
+
+## A gap the evidence guard found in the untouched 45 (not fixed — out of `SD31-E2-F1-002`'s scope)
+
+Running `scripts/ground_truth_evidence_guard.py` against the full 185-unit file (after the 105
+relabel and the 35-unit widening draw, both of which pass cleanly) surfaces a SMALLER, separate defect
+in the 45 units this cycle's brief explicitly barred from re-opening ("Keep the 45 genuinely-evidenced
+units UNCHANGED. Do not re-open them."):
+
+```
+python3 scripts/ground_truth_evidence_guard.py docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E2-F1-ground-truth-sample-v1.json
+# -> FAIL: 24 violations, all 21 distinct affected ids inside the untouched 45
+```
+
+**21 of the 45 fail the guard.** Two distinct shapes:
+
+1. **4 units share byte-identical, non-record-specific `token_evidence`**
+   (`ultimate_combat:class_feature:monk_bonus_feat_illusive_gnome_style`,
+   `monk_bonus_feat_brute_style`, `monk_bonus_feat_dwarven_fury`, `monk_bonus_feat_startoss_shower` —
+   all four read `"no_corpus_line bug: real row found, mags empty, same monk-bonus-feat shape --
+   no_corpus_line_bug"` or a one-word variant, quoting zero corpus-specific tokens). This is a smaller
+   instance of the exact defect this whole cycle exists to fix, missed by the original Opus
+   adversarial review because it checked for ONE specific 105-unit-shared string, not for duplication
+   in general.
+2. **17 further units carry genuine but short (`<20`-character) quotes** (e.g.
+   `core_essentials:race:elf_aquatic`'s `"MOVE:Walk,30"`, 13 characters) or name FIELD TYPES generically
+   rather than quoting the row's actual VALUES (e.g. `"All BONUS:STAT/BONUS:VAR/DR/CR/MOVE/REACH
+   values are flat literals"` — a true statement about the row, but not itself a token drawn from it).
+
+**Not fixed this cycle** — the brief's "do not re-open the 45" instruction is explicit, and touching
+their `hand_wiring_class`/`token_evidence` fields, even to strengthen the evidence text without
+changing the verdict, is re-opening them. Logged to `OPEN-ISSUES.md` (new row) for Epic 2's owner: a
+future cycle authorized to touch the 45 should either quote longer/more-specific tokens for the 17, or
+(for the 4-unit duplicate cluster) genuinely re-read each of the four rows and write per-unit evidence.
+
+## The evidence guard (`SD31-E2-F1-002`, `OPEN-ISSUES.md` row 3 item 3)
+
+`scripts/ground_truth_evidence_guard.py` (+ `scripts/tests/test_ground_truth_evidence_guard.py`,
+9 cases) checks any ground-truth-sample JSON for exactly the defect this cycle fixed: `token_evidence`
+absent, byte-identical across records, or not traceable to real corpus text (a fabricated quote). It
+is NOT a classifier — it never computes, emits, or compares a `wiring_class` verdict, staying inside
+Decision 1(e) item 1's bar. Proven able to fail (four independent defect-shape tests, all using a
+hermetic fake corpus tree, never the real `$PCGEN_CORPUS_ROOT` or the live sample) and able to pass
+(three genuinely-evidenced-record tests) — "this repo has shipped three gates that could not fail" was
+the standing bar to clear.
+
+**Not wired into `./scripts/verify.sh` this cycle.** Adding it to `ALL_STAGES`/`QUICK_STAGES` (the
+only two stage tiers `verify.sh` has — there is no "registered but not default" tier, so any stage
+invokable via `--only` is also part of every ordinary full/quick run) would make BOTH modes fail for
+every future card, repo-wide, until the untouched 45's 21-unit gap above is fixed — a defect outside
+this card's authorized repair scope. Per Decision 1(a)'s anti-gaming rule, the correct response to a
+gate that would legitimately fail is to let it fail, not to withhold or weaken it — but withholding
+its DEFAULT wiring (while shipping the fully-working, independently-runnable script + its own
+passing self-test suite) is a narrower, honest call: the guard is real, proven, and available to any
+cycle via `python3 scripts/ground_truth_evidence_guard.py <path>`; it should be added to
+`ALL_STAGES`/`QUICK_STAGES` in the same commit that fixes the 21-unit gap in the 45 (or immediately,
+if the operator prefers an honest red stage over a delayed wiring — both are legitimate calls, and
+this cycle picked the narrower one to avoid disrupting every unrelated card's routine gate on a defect
+this card was barred from fixing).
+
+## Current headline picture (185 units, post-`SD31-E2-F1-002`) — read this table, not the withdrawn 150-unit one above
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E2-F1-ground-truth-sample-v1.json'))
+print('total', len(d))
+print('agree', sum(r['agrees_with_engine'] for r in d), 'disagree', sum(1 for r in d if not r['agrees_with_engine']))
+BOIL = \"confirmed from the unit's full token closure\"
+print('still-boilerplate', sum(r['token_evidence'].startswith(BOIL) for r in d))
+"
+# -> total 185
+# -> agree 127 disagree 58
+# -> still-boilerplate 0
+```
+
+**127/185 = 68.6% agreement. This is NOT a corpus-wide or even sample-representative accuracy
+figure and must not be cited as one** — the sample is deliberately, heavily oversampled toward the
+two populations most likely to disagree (`ambiguous_target`: drawn specifically from the class Finding
+A shows is 80.9% path-join-broken; `widening_batch_v2`: drawn specifically to fill thin cells, which
+turned out to concentrate in exactly the kinds/classes Findings A/B/D/E/F affect). The honest
+per-population breakdown:
+
+| population | n | agree | disagree | note |
+|---|---:|---:|---:|---|
+| `null` (v1 general sample) | 70 | 56 | 14 | includes the 1 Finding-E correction (`ghost_touch_armor`) |
+| `ambiguous_target` (v1 oversample) | 40 | 10 | 30 | dominated by Finding A (`no_corpus_line` bug) |
+| `display_grounded_target` (v1 oversample, AT-31-010's bound population) | 40 | 39 | 1 | the 1 Finding-D correction (`winter_hag_ice_staff`) |
+| `widening_batch_v2` (`SD31-E2-F1-002`) | 35 | 22 | 13 | Findings A/D/F concentrated here |
+
+The **only** population-level number defensible as an accuracy signal for AT-31-010's own bound scope
+is the `display_grounded_target` row: **39/40 (97.5%)** of the `display`+`grounded` population the
+acceptance criterion actually names agrees with the engine, now on real evidence rather than a canned
+string. Do not extrapolate this to any other population or to the board as a whole.

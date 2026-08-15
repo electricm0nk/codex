@@ -11,9 +11,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Whole base row (+.MOD closure where present) read field-by-field: no field begins with any MAGNITUDE_TOKENS prefix (BONUS:/TEMPBONUS:/DEFINE:/COST:/WT:/CR:/AC:/ACCHECK:/DAMAGE:/CRITMULT:/CRITRANGE:/RANGE:/REACH:/MOVE:/HITDIE:/LEVELADJUSTMENT:/SR:/DR:/SPELLFAILURE:/STAT:) -- confirms display:no_magnitude_token is genuinely correct, not merely engine-asserted. Quoted tokens (verbatim from the row(s) below): KEY:Warpriest Bonus Feat ~ Covering Defense | PREABILITY:1,CATEGORY=FEAT,Shield Focus",
     "source_file": "acg_abilities_class.lst",
-    "source_line": 4320
+    "source_line": 4320,
+    "corpus_path_verified": [
+      "acg_abilities_class.lst"
+    ]
   },
   {
     "id": "inner_sea_combat:class_feature:shoanti_burn_rider_cinder_dance",
@@ -27,9 +30,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Whole base row (+.MOD closure where present) read field-by-field: no field begins with any MAGNITUDE_TOKENS prefix (BONUS:/TEMPBONUS:/DEFINE:/COST:/WT:/CR:/AC:/ACCHECK:/DAMAGE:/CRITMULT:/CRITRANGE:/RANGE:/REACH:/MOVE:/HITDIE:/LEVELADJUSTMENT:/SR:/DR:/SPELLFAILURE:/STAT:) -- confirms display:no_magnitude_token is genuinely correct, not merely engine-asserted. Quoted tokens (verbatim from the row(s) below): KEY:Shoanti Burn Rider ~ Cinder Dance | TYPE:Barbarian Class Feature.SpecialQuality.Extraordinary",
     "source_file": "isc_abilities_class.lst",
-    "source_line": 197
+    "source_line": 197,
+    "corpus_path_verified": [
+      "isc_abilities_class.lst"
+    ]
   },
   {
     "id": "adventurers_guide:class_feature:death_slayer_infuse_sabre",
@@ -43,9 +49,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Whole base row (+.MOD closure where present) read field-by-field: no field begins with any MAGNITUDE_TOKENS prefix (BONUS:/TEMPBONUS:/DEFINE:/COST:/WT:/CR:/AC:/ACCHECK:/DAMAGE:/CRITMULT:/CRITRANGE:/RANGE:/REACH:/MOVE:/HITDIE:/LEVELADJUSTMENT:/SR:/DR:/SPELLFAILURE:/STAT:) -- confirms display:no_magnitude_token is genuinely correct, not merely engine-asserted. Quoted tokens (verbatim from the row(s) below): KEY:Death Slayer ~ Infuse Sabre | DESC:Once|PREVARLT:DeathSlayerLVL,7",
     "source_file": "ag_abilities_class.lst",
-    "source_line": 132
+    "source_line": 132,
+    "corpus_path_verified": [
+      "ag_abilities_class.lst"
+    ]
   },
   {
     "id": "advanced_race_guide:feat:natural_charmer",
@@ -59,9 +68,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Whole base row (+.MOD closure where present) read field-by-field: no field begins with any MAGNITUDE_TOKENS prefix (BONUS:/TEMPBONUS:/DEFINE:/COST:/WT:/CR:/AC:/ACCHECK:/DAMAGE:/CRITMULT:/CRITRANGE:/RANGE:/REACH:/MOVE:/HITDIE:/LEVELADJUSTMENT:/SR:/DR:/SPELLFAILURE:/STAT:) -- confirms display:no_magnitude_token is genuinely correct, not merely engine-asserted. Quoted tokens (verbatim from the row(s) below): PRESTAT:1,CHA=17 | PREFACT:1,TEMPLATES,IsDhampir=true",
     "source_file": "arg_feats.lst",
-    "source_line": 248
+    "source_line": 248,
+    "corpus_path_verified": [
+      "arg_feats.lst"
+    ]
   },
   {
     "id": "inner_sea_bestiary:monster_ability:deadly_mantis_fling",
@@ -75,9 +87,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Whole base row (+.MOD closure where present) read field-by-field: no field begins with any MAGNITUDE_TOKENS prefix (BONUS:/TEMPBONUS:/DEFINE:/COST:/WT:/CR:/AC:/ACCHECK:/DAMAGE:/CRITMULT:/CRITRANGE:/RANGE:/REACH:/MOVE:/HITDIE:/LEVELADJUSTMENT:/SR:/DR:/SPELLFAILURE:/STAT:) -- confirms display:no_magnitude_token is genuinely correct, not merely engine-asserted. Quoted tokens (verbatim from the row(s) below): KEY:Deadly Mantis ~ Fling | TYPE:SpecialAttack.Extraordinary",
     "source_file": "isb_abilities_race.lst",
-    "source_line": 215
+    "source_line": 215,
+    "corpus_path_verified": [
+      "isb_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_3:race_trait:gourd_leshy_ensnare",
@@ -91,9 +106,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Whole base row (+.MOD closure where present) read field-by-field: no field begins with any MAGNITUDE_TOKENS prefix (BONUS:/TEMPBONUS:/DEFINE:/COST:/WT:/CR:/AC:/ACCHECK:/DAMAGE:/CRITMULT:/CRITRANGE:/RANGE:/REACH:/MOVE:/HITDIE:/LEVELADJUSTMENT:/SR:/DR:/SPELLFAILURE:/STAT:) -- confirms display:no_magnitude_token is genuinely correct, not merely engine-asserted. Quoted tokens (verbatim from the row(s) below): KEY:Gourd Leshy ~ Ensnare | DC 12 Reflex save",
     "source_file": "b3_abilities_race.lst",
-    "source_line": 1191
+    "source_line": 1191,
+    "corpus_path_verified": [
+      "b3_abilities_race.lst"
+    ]
   },
   {
     "id": "core_rulebook:equipment_modifier:special_ability_ghost_touch_armor",
@@ -104,12 +122,15 @@
     "engine_wiring_class": "display",
     "engine_wiring_class_reason": "no_magnitude_token",
     "engine_status": "text-complete",
-    "hand_wiring_class": "display",
+    "hand_wiring_class": "static",
     "confidence": "high",
-    "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "agrees_with_engine": false,
+    "token_evidence": "CORRECTION (new finding, SD31-E2-F1-002 Finding E): the row's only magnitude is PLUS:3 -- PCGen's literal numeric field for a special ability's equivalent-enhancement-bonus value (used in weapon/armor special-ability cost calculations). PLUS: is not in MAGNITUDE_TOKENS, so signals() never sees it and the row falls through to display:no_magnitude_token even though it carries a real, literal numeric magnitude. The value (3) is flat -- no scalar, no arithmetic -- so the correct class is static, not display. Quoted tokens (verbatim from the row(s) below): PLUS:3",
     "source_file": "cr_equipmods.lst",
-    "source_line": 333
+    "source_line": 333,
+    "corpus_path_verified": [
+      "cr_equipmods.lst"
+    ]
   },
   {
     "id": "bestiary_3:companion:raktavarna_master_s_eyes",
@@ -123,9 +144,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Whole base row (+.MOD closure where present) read field-by-field: no field begins with any MAGNITUDE_TOKENS prefix (BONUS:/TEMPBONUS:/DEFINE:/COST:/WT:/CR:/AC:/ACCHECK:/DAMAGE:/CRITMULT:/CRITRANGE:/RANGE:/REACH:/MOVE:/HITDIE:/LEVELADJUSTMENT:/SR:/DR:/SPELLFAILURE:/STAT:) -- confirms display:no_magnitude_token is genuinely correct, not merely engine-asserted. Quoted tokens (verbatim from the row(s) below): KEY:Raktavarna ~ Master's Eyes | TYPE:RaktavarnaRacialAbility.SpecialQuality.Supernatural",
     "source_file": "b3_abilities_familiar.lst",
-    "source_line": 74
+    "source_line": 74,
+    "corpus_path_verified": [
+      "b3_abilities_familiar.lst"
+    ]
   },
   {
     "id": "occult_adventures:spell:occultist_spell_chill_metal",
@@ -139,9 +163,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Whole base row (+.MOD closure where present) read field-by-field: no field begins with any MAGNITUDE_TOKENS prefix (BONUS:/TEMPBONUS:/DEFINE:/COST:/WT:/CR:/AC:/ACCHECK:/DAMAGE:/CRITMULT:/CRITRANGE:/RANGE:/REACH:/MOVE:/HITDIE:/LEVELADJUSTMENT:/SR:/DR:/SPELLFAILURE:/STAT:) -- confirms display:no_magnitude_token is genuinely correct, not merely engine-asserted. Quoted tokens (verbatim from the row(s) below): Occultist Spell ~ Chill Metal | OUTPUTNAME:Chill Metal",
     "source_file": "oa_spells.lst",
-    "source_line": 1111
+    "source_line": 1111,
+    "corpus_path_verified": [
+      "oa_spells.lst"
+    ]
   },
   {
     "id": "core_rulebook:equipment:musical_instrument_lute",
@@ -155,9 +182,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Whole base row (+.MOD closure where present) read field-by-field: no field begins with any MAGNITUDE_TOKENS prefix (BONUS:/TEMPBONUS:/DEFINE:/COST:/WT:/CR:/AC:/ACCHECK:/DAMAGE:/CRITMULT:/CRITRANGE:/RANGE:/REACH:/MOVE:/HITDIE:/LEVELADJUSTMENT:/SR:/DR:/SPELLFAILURE:/STAT:) -- confirms display:no_magnitude_token is genuinely correct, not merely engine-asserted. Quoted tokens (verbatim from the row(s) below): KEY:Musical Instrument (Lute) | BASEITEM:Lute (Base)",
     "source_file": "cr_equip_general.lst",
-    "source_line": 221
+    "source_line": 221,
+    "corpus_path_verified": [
+      "cr_equip_general.lst"
+    ]
   },
   {
     "id": "inner_sea_world_guide:race:gecko_giant",
@@ -171,9 +201,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Whole base row (+.MOD closure where present) read field-by-field: no field begins with any MAGNITUDE_TOKENS prefix (BONUS:/TEMPBONUS:/DEFINE:/COST:/WT:/CR:/AC:/ACCHECK:/DAMAGE:/CRITMULT:/CRITRANGE:/RANGE:/REACH:/MOVE:/HITDIE:/LEVELADJUSTMENT:/SR:/DR:/SPELLFAILURE:/STAT:) -- confirms display:no_magnitude_token is genuinely correct, not merely engine-asserted. Quoted tokens (verbatim from the row(s) below): Gecko (Giant).MOD | TYPE:PFSNotLegal",
     "source_file": "pfs_iswg_races.lst",
-    "source_line": 9
+    "source_line": 9,
+    "corpus_path_verified": [
+      "_pfs/pfs_iswg_races.lst"
+    ]
   },
   {
     "id": "ultimate_psionics:class:unlocked_talent",
@@ -187,9 +220,13 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Whole base row (+.MOD closure where present) read field-by-field: no field begins with any MAGNITUDE_TOKENS prefix (BONUS:/TEMPBONUS:/DEFINE:/COST:/WT:/CR:/AC:/ACCHECK:/DAMAGE:/CRITMULT:/CRITRANGE:/RANGE:/REACH:/MOVE:/HITDIE:/LEVELADJUSTMENT:/SR:/DR:/SPELLFAILURE:/STAT:) -- confirms display:no_magnitude_token is genuinely correct, not merely engine-asserted. Quoted tokens (verbatim from the row(s) below): CLASS:Unlocked Talent | FACT:SpellType|Psionic",
     "source_file": "up_classes.lst",
-    "source_line": 1303
+    "source_line": 1303,
+    "corpus_path_verified": [
+      "up_classes.lst",
+      "up_feats.lst"
+    ]
   },
   {
     "id": "advanced_class_guide:class_feature:investigator_discovery_combine_extracts",
@@ -203,9 +240,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Whole base row (+.MOD closure where present) read field-by-field: no field begins with any MAGNITUDE_TOKENS prefix (BONUS:/TEMPBONUS:/DEFINE:/COST:/WT:/CR:/AC:/ACCHECK:/DAMAGE:/CRITMULT:/CRITRANGE:/RANGE:/REACH:/MOVE:/HITDIE:/LEVELADJUSTMENT:/SR:/DR:/SPELLFAILURE:/STAT:) -- confirms display:no_magnitude_token is genuinely correct, not merely engine-asserted. Quoted tokens (verbatim from the row(s) below): KEY:Investigator ~ Discovery ~ Combine Extracts | PREVARGTEQ:InvestigatorLVL,8",
     "source_file": "acg_abilities_class.lst",
-    "source_line": 1317
+    "source_line": 1317,
+    "corpus_path_verified": [
+      "acg_abilities_class.lst"
+    ]
   },
   {
     "id": "advanced_class_guide:feat:disarming_threat_deed",
@@ -219,9 +259,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Whole base row (+.MOD closure where present) read field-by-field: no field begins with any MAGNITUDE_TOKENS prefix (BONUS:/TEMPBONUS:/DEFINE:/COST:/WT:/CR:/AC:/ACCHECK:/DAMAGE:/CRITMULT:/CRITRANGE:/RANGE:/REACH:/MOVE:/HITDIE:/LEVELADJUSTMENT:/SR:/DR:/SPELLFAILURE:/STAT:) -- confirms display:no_magnitude_token is genuinely correct, not merely engine-asserted. Quoted tokens (verbatim from the row(s) below): PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Amateur Swashbuckler] | PRESKILL:2,Diplomacy=2,Intimidate=2",
     "source_file": "acg_feats.lst",
-    "source_line": 38
+    "source_line": 38,
+    "corpus_path_verified": [
+      "acg_feats.lst"
+    ]
   },
   {
     "id": "ultimate_wilderness:class_feature:shifter_aspect_tiger_minor",
@@ -235,9 +278,12 @@
     "hand_wiring_class": "computed",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Magnitude field's own value carries an inline PREVARGTEQ guard pipe-segment -- computed:pre_guard confirmed. Quoted tokens (verbatim from the row(s) below): BONUS:VAR|TigerAspectDexBonus|2|PREVARGTEQ:ShifterTigerAspectLVL,8",
     "source_file": "uw_abilities_class.lst",
-    "source_line": 94
+    "source_line": 94,
+    "corpus_path_verified": [
+      "uw_abilities_class.lst"
+    ]
   },
   {
     "id": "inner_sea_intrigue:class_feature:rogue_talent_innocuous_servant",
@@ -251,9 +297,12 @@
     "hand_wiring_class": "computed",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Magnitude field's own value carries an inline PREVARGTEQ guard pipe-segment -- computed:pre_guard confirmed. Quoted tokens (verbatim from the row(s) below): BONUS:VAR|InnocuousServantBonus|2|PREVARGTEQ:RogueTalentLVL,8",
     "source_file": "isi_abilities_class.lst",
-    "source_line": 265
+    "source_line": 265,
+    "corpus_path_verified": [
+      "isi_abilities_class.lst"
+    ]
   },
   {
     "id": "core_rulebook:race_trait:racial_sla_death_knell",
@@ -267,9 +316,13 @@
     "hand_wiring_class": "computed",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "SPELLS: field carries an inline PRE*-guard pipe-segment; separately, the DC is built through a genuine derived formula (10+RacialSLA_DeathKnell_SpellLVL+RacialSLA_DeathKnell_DCMod, itself fed by BONUS:VAR|RacialSLA_DeathKnell_DCMod|CHA|TYPE=Base) -- computed correctly outranks derived. Quoted tokens (verbatim from the row(s) below): PREVAREQ:RacialSLA_DeathKnell_AtWill,0 | BONUS:VAR|RacialSLA_DeathKnell_DC|10+RacialSLA_DeathKnell_SpellLVL+RacialSLA_DeathKnell_DCMod",
     "source_file": "cr_abilities_race.lst",
-    "source_line": 253
+    "source_line": 253,
+    "corpus_path_verified": [
+      "cr_abilities_race.lst",
+      "cr_spells.lst"
+    ]
   },
   {
     "id": "advanced_players_guide:companion:temp_evolution_ability_increase_dex",
@@ -283,9 +336,12 @@
     "hand_wiring_class": "computed",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Row carries a magnitude field (BONUS:VAR|TempEvolutionCost|-2 etc.) AND several standalone PRE*-prefixed guard fields (PRERACE:1,RACETYPE=Eidolon; PREVARGTEQ:EidolonTempEvolutionPool,2) gating the whole record's applicability -- computed:pre_guard is real. Note: CHOOSE:NOCHOICE is also present, and the prefix-only CHOOSE: scan reports 'choice' as the reason string even though NOCHOICE explicitly means no player choice is offered here -- a real reason-string quirk, but it does not change the CLASS verdict since the independent PRE guards on the magnitude fields already establish computed on their own. Quoted tokens (verbatim from the row(s) below): PRERACE:1,RACETYPE=Eidolon | BONUS:VAR|TempEvolutionCost|-2",
     "source_file": "apg_abilities_companion.lst",
-    "source_line": 255
+    "source_line": 255,
+    "corpus_path_verified": [
+      "apg_abilities_companion.lst"
+    ]
   },
   {
     "id": "core_essentials:monster_ability:breath_weapon_prismatic_spray",
@@ -299,9 +355,12 @@
     "hand_wiring_class": "computed",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "A magnitude field's own value carries an inline PRE*-guard pipe-segment (PREABILITY:...) -- unambiguous computed:pre_guard; also independently derived:bonus via BONUS:VAR|BreathWeaponDC|10+(HD/2)+CON|TYPE=Base, but computed correctly outranks derived per classify()'s highest-bar-wins order. Quoted tokens (verbatim from the row(s) below): BONUS:VAR|BreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)",
     "source_file": "ce_abilities_race.lst",
-    "source_line": 1317
+    "source_line": 1317,
+    "corpus_path_verified": [
+      "ce_abilities_race.lst"
+    ]
   },
   {
     "id": "ultimate_equipment:equipment_modifier:material_whipwood",
@@ -315,9 +374,12 @@
     "hand_wiring_class": "computed",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Standalone (negated) PRETYPE guard field on a row that also carries a literal magnitude field -- computed:pre_guard confirmed. Quoted tokens (verbatim from the row(s) below): !PRETYPE:1,Artisan,Spell Component | BONUS:VAR|CMD_Sunder|2",
     "source_file": "ue_equipmods.lst",
-    "source_line": 57
+    "source_line": 57,
+    "corpus_path_verified": [
+      "ue_equipmods.lst"
+    ]
   },
   {
     "id": "core_rulebook:feat:improved_overrun",
@@ -331,9 +393,12 @@
     "hand_wiring_class": "computed",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Standalone PREABILITY guard field on a row that also carries a (literal) magnitude field -- computed:pre_guard confirmed; the magnitude value itself (2) is flat, so without the guard this would be static, exactly matching the row-wide-scan design intent. Quoted tokens (verbatim from the row(s) below): PREABILITY:1,CATEGORY=FEAT,Power Attack | BONUS:VAR|CMB_Overrun,CMD_Overrun|2",
     "source_file": "cr_feats.lst",
-    "source_line": 103
+    "source_line": 103,
+    "corpus_path_verified": [
+      "cr_feats.lst"
+    ]
   },
   {
     "id": "inner_sea_gods:equipment:cloak_of_the_crusader",
@@ -347,9 +412,12 @@
     "hand_wiring_class": "computed",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Magnitude field's own value carries an inline PREDEITY guard pipe-segment -- the +1 natural-armor bonus only applies to a specific deity's worshippers. computed:pre_guard confirmed. Quoted tokens (verbatim from the row(s) below): BONUS:COMBAT|AC|1|TYPE=NaturalArmor|PREDEITY:1,Iomedae",
     "source_file": "isg_equip.lst",
-    "source_line": 183
+    "source_line": 183,
+    "corpus_path_verified": [
+      "isg_equip.lst"
+    ]
   },
   {
     "id": "inner_sea_races:spell:murderous_crow",
@@ -363,9 +431,12 @@
     "hand_wiring_class": "computed",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "RANGE:Medium is itself a magnitude field (RANGE_KEYWORDS); a standalone PREFACT guard field elsewhere on the same row gates the whole spell to orc-blooded casters -- computed:pre_guard confirmed; also independently derived:prose_expr/derived:range_keyword, but computed outranks. Quoted tokens (verbatim from the row(s) below): PREFACT:1,TEMPLATES,IsOrc=true | RANGE:Medium",
     "source_file": "isr_spells.lst",
-    "source_line": 32
+    "source_line": 32,
+    "corpus_path_verified": [
+      "isr_spells.lst"
+    ]
   },
   {
     "id": "advanced_players_guide:class:alchemist",
@@ -379,9 +450,14 @@
     "hand_wiring_class": "computed",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Base CLASS row alone carries multiple BONUS:VAR|...|PREVAREQ:... fields (fractional-BAB/save toggles) -- a magnitude field with an inline PRE*-guard pipe-segment. 106 further .MOD rows (apg_abilities_globalvar.lst + PFS) layer PREVARGTEQ-gated ABILITY grants and BONUS:VAR|..._CF_*|1|TYPE=Boolean|PREFACT:... toggles on top -- genuinely computed, not merely engine-asserted. Quoted tokens (verbatim from the row(s) below): BONUS:VAR|ClassBABModerate|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalBAB,1",
     "source_file": "apg_classes.lst",
-    "source_line": 11
+    "source_line": 11,
+    "corpus_path_verified": [
+      "_pfs/pfs_apg_classes.lst",
+      "apg_abilities_globalvar.lst",
+      "apg_classes.lst"
+    ]
   },
   {
     "id": "bestiary:monster:horse_pony",
@@ -395,9 +471,12 @@
     "hand_wiring_class": "computed",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "BONUS:VAR|Docile|1 is a magnitude field; a separate ABILITY:...|PREVARLT:Docile,1 field on the same row carries a genuine PRE*-guard pipe-segment, which is what the code's row-wide guard scan (any field, not just the magnitude one) is designed to catch when a magnitude exists anywhere on the row -- computed:pre_guard confirmed. Quoted tokens (verbatim from the row(s) below): ABILITY:Special Ability|AUTOMATIC|Horse ~ Docile|PREVARLT:Docile,1 | BONUS:VAR|Docile|1",
     "source_file": "b1_races.lst",
-    "source_line": 236
+    "source_line": 236,
+    "corpus_path_verified": [
+      "b1_races.lst"
+    ]
   },
   {
     "id": "core_essentials:race:aasimar",
@@ -411,9 +490,13 @@
     "hand_wiring_class": "computed",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Base CLASS row (found only via a RECURSIVE search -- the real path is races/aasimar/aasimar_races.lst, two directories below the book root, which the production single-level CorpusLines::line() join (OPEN-ISSUES row 1) cannot reach) carries no magnitude field by itself, but 18 .MOD rows in the same races/aasimar/ subtree (found via the SEPARATE, already-recursive build_mod_index walk) carry PREFACT-guarded BONUS:VAR toggle fields -- the .MOD closure alone is sufficient for computed:pre_guard to fire correctly even though the base row itself was unreachable by the buggy join. Corroborates OPEN-ISSUES row 1: this unit escaped the no_corpus_line bucket only because its .MOD rows carried the real signal. Quoted tokens (verbatim from the row(s) below): BONUS:VAR|Aasimar_ReplaceAbilityScores|1|TYPE=Boolean|PREFACT:1,ABILITIES,Aasimar_ReplaceAbilityScores=True",
     "source_file": "aasimar_races.lst",
-    "source_line": 6
+    "source_line": 6,
+    "corpus_path_verified": [
+      "races/aasimar/aasimar_abilities_globalvar.lst",
+      "races/aasimar/aasimar_races.lst"
+    ]
   },
   {
     "id": "ultimate_magic:class_feature:wood_mystery_bend_the_grain",
@@ -427,9 +510,12 @@
     "hand_wiring_class": "computed",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "A second DESC field carries an inline PRECLASS guard pipe-segment; the row is also independently derived via a genuine min()/classlevel() formula, but computed outranks derived per classify(). Quoted tokens (verbatim from the row(s) below): DESC:You can use this ability to push wood away from you, as repel wood.|PRECLASS:1,Oracle=11 | BONUS:VAR|BendTheGrainTimes|1+min(2,classlevel(\"Oracle\")/7)",
     "source_file": "um_abilities_class.lst",
-    "source_line": 511
+    "source_line": 511,
+    "corpus_path_verified": [
+      "um_abilities_class.lst"
+    ]
   },
   {
     "id": "advanced_race_guide:race_trait:tiefling_scaled_skin",
@@ -443,9 +529,12 @@
     "hand_wiring_class": "computed",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Genuine player choice (CHOOSE:STRING|Cold|Electricity|Fire, MULT:YES) selects which of three PRE*-guarded BONUS:VAR resistance fields applies -- real computed:choice, unlike the NOCHOICE case above. Quoted tokens (verbatim from the row(s) below): CHOOSE:STRING|Cold|Electricity|Fire | BONUS:VAR|ColdResistanceBonus|5|TYPE=Resistance|PREABILITY:1,CATEGORY=Special Ability,Tiefling ~ Scaled Skin (Cold)",
     "source_file": "arg_abilities_race.lst",
-    "source_line": 751
+    "source_line": 751,
+    "corpus_path_verified": [
+      "arg_abilities_race.lst"
+    ]
   },
   {
     "id": "ultimate_equipment:equipment:taiaha",
@@ -459,9 +548,13 @@
     "hand_wiring_class": "static",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "The row's only MAGNITUDE_TOKENS-prefixed field(s) carry flat literal values: no SCALARS_WORD/SCALARS_SUBSTRING token and no *, /, min(, max(, or qualifying '+<UPPERCASE run>' construction -- static:literal_magnitudes_only confirmed against the actual field text, not merely asserted. Quoted tokens (verbatim from the row(s) below): CRITMULT:x2 | DAMAGE:1d10",
     "source_file": "ue_equip_arms_armor.lst",
-    "source_line": 361
+    "source_line": 361,
+    "corpus_path_verified": [
+      "ue_equip_arms_armor.lst",
+      "ue_profs_weapon.lst"
+    ]
   },
   {
     "id": "core_rulebook:equipment:spell_component_pouch",
@@ -475,9 +568,12 @@
     "hand_wiring_class": "static",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "The row's only MAGNITUDE_TOKENS-prefixed field(s) carry flat literal values: no SCALARS_WORD/SCALARS_SUBSTRING token and no *, /, min(, max(, or qualifying '+<UPPERCASE run>' construction -- static:literal_magnitudes_only confirmed against the actual field text, not merely asserted. Quoted tokens (verbatim from the row(s) below): COST:5 | WT:2",
     "source_file": "cr_equip_general.lst",
-    "source_line": 228
+    "source_line": 228,
+    "corpus_path_verified": [
+      "cr_equip_general.lst"
+    ]
   },
   {
     "id": "adventurers_guide:equipment:banner_of_the_scarlet_rose",
@@ -491,9 +587,12 @@
     "hand_wiring_class": "static",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "The row's only MAGNITUDE_TOKENS-prefixed field(s) carry flat literal values: no SCALARS_WORD/SCALARS_SUBSTRING token and no *, /, min(, max(, or qualifying '+<UPPERCASE run>' construction -- static:literal_magnitudes_only confirmed against the actual field text, not merely asserted. Quoted tokens (verbatim from the row(s) below): COST:18000 | WT:3",
     "source_file": "ag_equip_magic_items.lst",
-    "source_line": 4
+    "source_line": 4,
+    "corpus_path_verified": [
+      "ag_equip_magic_items.lst"
+    ]
   },
   {
     "id": "ultimate_magic:class_feature:dragon_shaman_totem_transformation",
@@ -523,9 +622,12 @@
     "hand_wiring_class": "static",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "The row's only MAGNITUDE_TOKENS-prefixed field(s) carry flat literal values: no SCALARS_WORD/SCALARS_SUBSTRING token and no *, /, min(, max(, or qualifying '+<UPPERCASE run>' construction -- static:literal_magnitudes_only confirmed against the actual field text, not merely asserted. Quoted tokens (verbatim from the row(s) below): BONUS:VAR|ElectricityResistanceBonus|5",
     "source_file": "up_abilities_race.lst",
-    "source_line": 659
+    "source_line": 659,
+    "corpus_path_verified": [
+      "up_abilities_race.lst"
+    ]
   },
   {
     "id": "core_rulebook:spell:remove_disease",
@@ -539,9 +641,12 @@
     "hand_wiring_class": "static",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "The row's only MAGNITUDE_TOKENS-prefixed field(s) carry flat literal values: no SCALARS_WORD/SCALARS_SUBSTRING token and no *, /, min(, max(, or qualifying '+<UPPERCASE run>' construction -- static:literal_magnitudes_only confirmed against the actual field text, not merely asserted. Quoted tokens (verbatim from the row(s) below): RANGE:Touch",
     "source_file": "cr_spells.lst",
-    "source_line": 491
+    "source_line": 491,
+    "corpus_path_verified": [
+      "cr_spells.lst"
+    ]
   },
   {
     "id": "core_essentials:race_trait:maneuverability_clumsy",
@@ -555,9 +660,12 @@
     "hand_wiring_class": "static",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "The row's only MAGNITUDE_TOKENS-prefixed field(s) carry flat literal values: no SCALARS_WORD/SCALARS_SUBSTRING token and no *, /, min(, max(, or qualifying '+<UPPERCASE run>' construction -- static:literal_magnitudes_only confirmed against the actual field text, not merely asserted. Quoted tokens (verbatim from the row(s) below): BONUS:SKILL|Fly|-8",
     "source_file": "ce_abilities_race.lst",
-    "source_line": 1376
+    "source_line": 1376,
+    "corpus_path_verified": [
+      "ce_abilities_race.lst"
+    ]
   },
   {
     "id": "ultimate_wilderness:companion:companion_body_type_piscine",
@@ -571,9 +679,12 @@
     "hand_wiring_class": "static",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "The row's only MAGNITUDE_TOKENS-prefixed field(s) carry flat literal values: no SCALARS_WORD/SCALARS_SUBSTRING token and no *, /, min(, max(, or qualifying '+<UPPERCASE run>' construction -- static:literal_magnitudes_only confirmed against the actual field text, not merely asserted. Quoted tokens (verbatim from the row(s) below): BONUS:SLOTS|Armor|-1",
     "source_file": "uw_abilities_companion.lst",
-    "source_line": 394
+    "source_line": 394,
+    "corpus_path_verified": [
+      "uw_abilities_companion.lst"
+    ]
   },
   {
     "id": "core_rulebook:feat:point_blank_shot",
@@ -587,9 +698,12 @@
     "hand_wiring_class": "static",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "The row's only MAGNITUDE_TOKENS-prefixed field(s) carry flat literal values: no SCALARS_WORD/SCALARS_SUBSTRING token and no *, /, min(, max(, or qualifying '+<UPPERCASE run>' construction -- static:literal_magnitudes_only confirmed against the actual field text, not merely asserted. Quoted tokens (verbatim from the row(s) below): BONUS:COMBAT|TOHIT-SHORTRANGE,DAMAGE-SHORTRANGE|1",
     "source_file": "cr_feats.lst",
-    "source_line": 133
+    "source_line": 133,
+    "corpus_path_verified": [
+      "cr_feats.lst"
+    ]
   },
   {
     "id": "ultimate_equipment:equipment_modifier:special_quality_scatter_firearm",
@@ -603,9 +717,12 @@
     "hand_wiring_class": "static",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "The row's only MAGNITUDE_TOKENS-prefixed field(s) carry flat literal values: no SCALARS_WORD/SCALARS_SUBSTRING token and no *, /, min(, max(, or qualifying '+<UPPERCASE run>' construction -- static:literal_magnitudes_only confirmed against the actual field text, not merely asserted. Quoted tokens (verbatim from the row(s) below): COST:0",
     "source_file": "ue_equipmods.lst",
-    "source_line": 172
+    "source_line": 172,
+    "corpus_path_verified": [
+      "ue_equipmods.lst"
+    ]
   },
   {
     "id": "bestiary:race:iron_cobra_darkwood_cobra",
@@ -619,9 +736,12 @@
     "hand_wiring_class": "static",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "The row's only MAGNITUDE_TOKENS-prefixed field(s) carry flat literal values: no SCALARS_WORD/SCALARS_SUBSTRING token and no *, /, min(, max(, or qualifying '+<UPPERCASE run>' construction -- static:literal_magnitudes_only confirmed against the actual field text, not merely asserted. Quoted tokens (verbatim from the row(s) below): MOVE:Swim,30,Climb,20",
     "source_file": "b1_races.lst",
-    "source_line": 254
+    "source_line": 254,
+    "corpus_path_verified": [
+      "b1_races.lst"
+    ]
   },
   {
     "id": "bestiary_2:monster:petitioner_human",
@@ -635,9 +755,12 @@
     "hand_wiring_class": "static",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "The row's only MAGNITUDE_TOKENS-prefixed field(s) carry flat literal values: no SCALARS_WORD/SCALARS_SUBSTRING token and no *, /, min(, max(, or qualifying '+<UPPERCASE run>' construction -- static:literal_magnitudes_only confirmed against the actual field text, not merely asserted. Quoted tokens (verbatim from the row(s) below): REACH:5 | CR:1",
     "source_file": "b2_races.lst",
-    "source_line": 670
+    "source_line": 670,
+    "corpus_path_verified": [
+      "b2_races.lst"
+    ]
   },
   {
     "id": "inner_sea_temples:equipment:altar_of_the_dawnflower",
@@ -651,9 +774,12 @@
     "hand_wiring_class": "static",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "The row's only MAGNITUDE_TOKENS-prefixed field(s) carry flat literal values: no SCALARS_WORD/SCALARS_SUBSTRING token and no *, /, min(, max(, or qualifying '+<UPPERCASE run>' construction -- static:literal_magnitudes_only confirmed against the actual field text, not merely asserted. Quoted tokens (verbatim from the row(s) below): COST:10000 | WT:250",
     "source_file": "istem_equip_magic_items.lst",
-    "source_line": 3
+    "source_line": 3,
+    "corpus_path_verified": [
+      "istem_equip_magic_items.lst"
+    ]
   },
   {
     "id": "ultimate_combat:class_feature:martial_artist_martial_arts_master",
@@ -683,9 +809,12 @@
     "hand_wiring_class": "derived",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "RANGE:Close matches a RANGE_KEYWORDS entry (derived:range_keyword); TARGETAREA (a prose field) carries a parenthesised CASTERLEVEL*2 expression (derived:prose_expr) -- both genuine. Quoted tokens (verbatim from the row(s) below): RANGE:Close | TARGETAREA:Up to (CASTERLEVEL*2) of plant creatures",
     "source_file": "cr_spells.lst",
-    "source_line": 112
+    "source_line": 112,
+    "corpus_path_verified": [
+      "cr_spells.lst"
+    ]
   },
   {
     "id": "advanced_class_guide:class_feature:abjuration_savant_school_energy_absorption",
@@ -699,9 +828,12 @@
     "hand_wiring_class": "derived",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Magnitude field's value is a genuine multiplication of a class-level scalar -- derived:bonus confirmed. Quoted tokens (verbatim from the row(s) below): BONUS:VAR|AbjurationEnergyAbsorption|ArcanistSavantSchoolLVL*3",
     "source_file": "acg_abilities_class.lst",
-    "source_line": 2555
+    "source_line": 2555,
+    "corpus_path_verified": [
+      "acg_abilities_class.lst"
+    ]
   },
   {
     "id": "bestiary:monster:neothelid",
@@ -731,9 +863,12 @@
     "hand_wiring_class": "derived",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "DESC carries a %1 placeholder whose substituted formula segment (GhoranRogueEnemyHumanoidHalfling/2) contains genuine division -- derived:prose_formula_segment confirmed; note the row has NO MAGNITUDE_TOKENS field at all (display:no_magnitude_token also fires as a co-signal) yet derived correctly wins because classify() checks derived: before falling back to display:. Quoted tokens (verbatim from the row(s) below): to her sneak attack damage | GhoranRogueEnemyHumanoidHalfling/2",
     "source_file": "uw_abilities_race.lst",
-    "source_line": 262
+    "source_line": 262,
+    "corpus_path_verified": [
+      "uw_abilities_race.lst"
+    ]
   },
   {
     "id": "core_essentials:companion:pig",
@@ -747,9 +882,12 @@
     "hand_wiring_class": "derived",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Named directly in OPEN-ISSUES row 2 as a false-positive-but-correct-anyway case: BONUS:STAT|...|<int> fields are flat literals (STAT-selector-name collision with SCALARS_WORD, not a real scalar-dependent value), but the SEPARATE BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2)) field is a genuine STR-scalar formula for bite damage -- derived is the correct class regardless of the co-occurring false positive. Quoted tokens (verbatim from the row(s) below): BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2)) | BONUS:STAT|STR|0",
     "source_file": "ce_races_familiar_um.lst",
-    "source_line": 28
+    "source_line": 28,
+    "corpus_path_verified": [
+      "ce_races_familiar_um.lst"
+    ]
   },
   {
     "id": "core_rulebook:race_trait:2_dexterity",
@@ -795,9 +933,12 @@
     "hand_wiring_class": "derived",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "DESC carries a %1 placeholder whose substituted formula segment (CL/2+10+max(DEX,STR)) is genuine scalar+arithmetic -- derived:prose_formula_segment confirmed. Quoted tokens (verbatim from the row(s) below): DC = %1 | CL/2+10+max(DEX,STR)",
     "source_file": "acg_feats.lst",
-    "source_line": 85
+    "source_line": 85,
+    "corpus_path_verified": [
+      "acg_feats.lst"
+    ]
   },
   {
     "id": "bestiary:race:iron_cobra_adamantine_cobra",
@@ -811,9 +952,12 @@
     "hand_wiring_class": "derived",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "MOD row carries a genuine HD*5 arithmetic/scalar formula for max HP -- derived:bonus is correct on its own merits. DR:10/- also fires derived:dr, but per OPEN-ISSUES row 2 that specific trigger is a known false positive (PCGen's literal DR-bypass slash notation, not division) -- the record still lands on the correct class only because the separate HD*5 formula is genuine, exactly the 'neothelid' pattern OPEN-ISSUES row 2 describes. Quoted tokens (verbatim from the row(s) below): BONUS:HP|CURRENTMAX|HD*5 | DR:10/-",
     "source_file": "b1_races.lst",
-    "source_line": 250
+    "source_line": 250,
+    "corpus_path_verified": [
+      "b1_races.lst"
+    ]
   },
   {
     "id": "core_rulebook:equipment_modifier:special_ability_amulet_of_mighty_fists_base",
@@ -827,9 +971,12 @@
     "hand_wiring_class": "derived",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "COST field is a genuine PLUSTOTAL-scalar quadratic formula (price scales with enhancement bonus squared) -- derived:cost confirmed. Quoted tokens (verbatim from the row(s) below): COST:4000*PLUSTOTAL*PLUSTOTAL",
     "source_file": "cr_equipmods.lst",
-    "source_line": 263
+    "source_line": 263,
+    "corpus_path_verified": [
+      "cr_equipmods.lst"
+    ]
   },
   {
     "id": "occult_adventures:class:psychic_detective",
@@ -843,9 +990,12 @@
     "hand_wiring_class": "derived",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Caster-level formula sums three class-tracking variables, one of which (PsychicDetectiveLVL) contains a 2+ consecutive-uppercase run after a '+' -- has_arith's own documented pattern -- derived:bonus confirmed. Quoted tokens (verbatim from the row(s) below): BONUS:VAR|Caster_Level_PsychicDetective|PsychicDetectiveLVL+Caster_Level_Bonus+CasterLevelBLPsychicDetective",
     "source_file": "oa_classes.lst",
-    "source_line": 192
+    "source_line": 192,
+    "corpus_path_verified": [
+      "oa_classes.lst"
+    ]
   },
   {
     "id": "ultimate_intrigue:spell:matchmaker",
@@ -859,9 +1009,12 @@
     "hand_wiring_class": "derived",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "RANGE:Medium matches RANGE_KEYWORDS (derived:range_keyword); DURATION carries a parenthesised CASTERLEVEL expression (derived:prose_expr) -- both genuine. Quoted tokens (verbatim from the row(s) below): RANGE:Medium | DURATION:(CASTERLEVEL) hours",
     "source_file": "ui_spells.lst",
-    "source_line": 76
+    "source_line": 76,
+    "corpus_path_verified": [
+      "ui_spells.lst"
+    ]
   },
   {
     "id": "horror_adventures:class_feature:elder_mythos_scholar_eldritch_infusion",
@@ -875,9 +1028,12 @@
     "hand_wiring_class": "derived",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "DESC carries a %1 placeholder whose substituted formula segment (10*WizardLVL) is genuine scalar+arithmetic -- derived:prose_formula_segment confirmed. Quoted tokens (verbatim from the row(s) below): for %1 minutes | 10*WizardLVL",
     "source_file": "ha_abilities_class.lst",
-    "source_line": 306
+    "source_line": 306,
+    "corpus_path_verified": [
+      "ha_abilities_class.lst"
+    ]
   },
   {
     "id": "bestiary:monster:dog_riding",
@@ -891,9 +1047,12 @@
     "hand_wiring_class": "derived",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "Bite damage bonus is a genuine max()/STR-scalar formula -- derived:bonus confirmed (same pattern as core_essentials:companion:pig below). Quoted tokens (verbatim from the row(s) below): BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
     "source_file": "b1_races.lst",
-    "source_line": 124
+    "source_line": 124,
+    "corpus_path_verified": [
+      "b1_races.lst"
+    ]
   },
   {
     "id": "advanced_class_guide:class_feature:warpriest_bonus_feat_double_slice",
@@ -905,11 +1064,14 @@
     "engine_wiring_class_reason": "prose_ability_scaling",
     "engine_status": "not-ingested",
     "hand_wiring_class": "ambiguous",
-    "confidence": "high",
+    "confidence": "medium",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "ability_scaling() match: 'Add' (ABILITY_GRANT_WORDS) precedes 'your Strength ... bonus' -- a genuine prose-only Strength-scaling grant with no BONUS:/DEFINE: chassis behind it. Ambiguous is a defensible determination-failure verdict here (the record needs a real wiring decision, not a confident derived/static guess), matching the rubric's documented intent for this signal. Quoted tokens (verbatim from the row(s) below): Add your Strength bonus to damage rolls made with your off-hand weapon.",
     "source_file": "acg_abilities_class.lst",
-    "source_line": 4224
+    "source_line": 4224,
+    "corpus_path_verified": [
+      "acg_abilities_class.lst"
+    ]
   },
   {
     "id": "ultimate_combat:class_feature:master_of_many_styles_octopus_style",
@@ -985,11 +1147,14 @@
     "engine_wiring_class_reason": "prose_ability_scaling",
     "engine_status": "text-complete",
     "hand_wiring_class": "ambiguous",
-    "confidence": "high",
+    "confidence": "medium",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "MOD row's BENEFIT carries 'equal to 3 + your Intelligence modifier' -- ability_scaling() match ('equal to' + 'your Intelligence ... modifier'), genuine prose-only Int-scaling grant, no chassis. Ambiguous confirmed defensible. Quoted tokens (verbatim from the row(s) below): 3 + your Intelligence modifier",
     "source_file": "uca_feats.lst",
-    "source_line": 25
+    "source_line": 25,
+    "corpus_path_verified": [
+      "uca_feats.lst"
+    ]
   },
   {
     "id": "core_rulebook:spell:nightmare",
@@ -1001,11 +1166,14 @@
     "engine_wiring_class_reason": "prose_scaling_phrase",
     "engine_status": "grounded",
     "hand_wiring_class": "ambiguous",
-    "confidence": "high",
+    "confidence": "medium",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "MOD row's DESC carries 'per caster level' verbatim (a fixed prose_scaling_phrases entry), stating a genuine caster-level-scaling stun duration (for the caster of a countering dispel evil) with no BONUS:/DEFINE: chassis. Ambiguous confirmed defensible. Quoted tokens (verbatim from the row(s) below): stunned for 10 minutes per caster level of the dispel evil",
     "source_file": "cr_spells.lst",
-    "source_line": 413
+    "source_line": 413,
+    "corpus_path_verified": [
+      "cr_spells.lst"
+    ]
   },
   {
     "id": "occult_adventures:equipment:shrunken_head",
@@ -1017,11 +1185,14 @@
     "engine_wiring_class_reason": "prose_scaling_phrase",
     "engine_status": "not-started",
     "hand_wiring_class": "ambiguous",
-    "confidence": "high",
+    "confidence": "medium",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "SPROP field (a scanned prose_field) carries 'per level' verbatim describing a genuine spell-level-scaling magic-item effect with no chassis. Ambiguous confirmed defensible. Quoted tokens (verbatim from the row(s) below): 1 negative level per level of spell absorbed",
     "source_file": "oa_equip.lst",
-    "source_line": 99
+    "source_line": 99,
+    "corpus_path_verified": [
+      "oa_equip.lst"
+    ]
   },
   {
     "id": "core_essentials:monster_ability:leshy_verdant_burst",
@@ -1033,11 +1204,14 @@
     "engine_wiring_class_reason": "prose_scaling_phrase",
     "engine_status": "not-ingested",
     "hand_wiring_class": "ambiguous",
-    "confidence": "high",
+    "confidence": "medium",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "'per HD' is a literal entry in prose_scaling_phrases -- genuine per-HD healing scaling stated only in DESC prose, no chassis. Ambiguous confirmed defensible. Quoted tokens (verbatim from the row(s) below): heal 1d8 points of damage plus 1 point per HD of the slain leshy",
     "source_file": "ce_abilities_race.lst",
-    "source_line": 2337
+    "source_line": 2337,
+    "corpus_path_verified": [
+      "ce_abilities_race.lst"
+    ]
   },
   {
     "id": "core_essentials:race:elf_aquatic",
@@ -1241,11 +1415,14 @@
     "engine_wiring_class_reason": "prose_ability_scaling",
     "engine_status": "not-started",
     "hand_wiring_class": "ambiguous",
-    "confidence": "high",
+    "confidence": "medium",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "ability_scaling() match: 'equal to' precedes 'your Constitution modifier' -- genuine prose-only Con-scaling grant, no chassis. Ambiguous confirmed defensible. Quoted tokens (verbatim from the row(s) below): lasts for a number of rounds equal to your Constitution modifier",
     "source_file": "oa_abilities_class.lst",
-    "source_line": 684
+    "source_line": 684,
+    "corpus_path_verified": [
+      "oa_abilities_class.lst"
+    ]
   },
   {
     "id": "advanced_class_guide:class_feature:cult_leader_class_skills",
@@ -1257,11 +1434,14 @@
     "engine_wiring_class_reason": "prose_scaling_phrase",
     "engine_status": "unknown",
     "hand_wiring_class": "ambiguous",
-    "confidence": "high",
+    "confidence": "medium",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "'per Level' is a literal prose_scaling_phrases entry; the same sentence states the real formula (4 + Int modifier) with no BONUS:/DEFINE: backing (the row's own BONUS:SKILLPOINTS|NUMBER|2 field is a flat, unrelated literal). Ambiguous confirmed defensible. Quoted tokens (verbatim from the row(s) below): Skill Ranks per Level: 4 + Int modifier.",
     "source_file": "acg_abilities_class.lst",
-    "source_line": 3950
+    "source_line": 3950,
+    "corpus_path_verified": [
+      "acg_abilities_class.lst"
+    ]
   },
   {
     "id": "ultimate_combat:class_feature:monk_bonus_feat_brute_style",
@@ -1337,11 +1517,14 @@
     "engine_wiring_class_reason": "prose_ability_scaling",
     "engine_status": "not-started",
     "hand_wiring_class": "ambiguous",
-    "confidence": "high",
+    "confidence": "medium",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "ability_scaling() match: 'equal to' precedes 'your Wisdom modifier' -- genuine prose-only Wis-scaling grant, no chassis. Ambiguous confirmed defensible. Quoted tokens (verbatim from the row(s) below): a number of times per day equal to your Wisdom modifier",
     "source_file": "oa_abilities_class.lst",
-    "source_line": 1258
+    "source_line": 1258,
+    "corpus_path_verified": [
+      "oa_abilities_class.lst"
+    ]
   },
   {
     "id": "horror_adventures:class_feature:exciter_rapture",
@@ -1561,11 +1744,14 @@
     "engine_wiring_class_reason": "prose_ability_scaling",
     "engine_status": "not-started",
     "hand_wiring_class": "ambiguous",
-    "confidence": "high",
+    "confidence": "medium",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "ability_scaling() match: 'add' precedes 'your Dexterity ... bonus' (the nearer construction wins over the following 'instead of ... your Strength bonus' refer-clause) -- genuine prose-only Dex-for-Str-damage grant, no chassis. Ambiguous confirmed defensible. Quoted tokens (verbatim from the row(s) below): add your Dexterity bonus to damage rolls instead of your Strength bonus",
     "source_file": "ag_feats.lst",
-    "source_line": 28
+    "source_line": 28,
+    "corpus_path_verified": [
+      "ag_feats.lst"
+    ]
   },
   {
     "id": "ultimate_wilderness:feat:extended_animal_focus",
@@ -1577,11 +1763,14 @@
     "engine_wiring_class_reason": "prose_ability_scaling",
     "engine_status": "text-complete",
     "hand_wiring_class": "ambiguous",
-    "confidence": "high",
+    "confidence": "medium",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "ability_scaling() match: 'Add' precedes 'your Wisdom bonus' -- genuine prose-only Wis-scaling grant, no chassis. Ambiguous confirmed defensible. Quoted tokens (verbatim from the row(s) below): Add your Wisdom bonus (minimum 1) to the number of minutes per day",
     "source_file": "uw_feats.lst",
-    "source_line": 46
+    "source_line": 46,
+    "corpus_path_verified": [
+      "uw_feats.lst"
+    ]
   },
   {
     "id": "core_rulebook:spell:blasphemy",
@@ -1593,11 +1782,14 @@
     "engine_wiring_class_reason": "prose_scaling_phrase",
     "engine_status": "grounded",
     "hand_wiring_class": "ambiguous",
-    "confidence": "high",
+    "confidence": "medium",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "MOD row's DESC carries 'per caster level' verbatim (fixed phrase) plus a full HD/caster-level graduated effect table -- genuine prose-only scaling, no chassis. Ambiguous confirmed defensible. Quoted tokens (verbatim from the row(s) below): 3d6 points of damage + 1 point per caster level [maximum +25]",
     "source_file": "cr_spells.lst",
-    "source_line": 57
+    "source_line": 57,
+    "corpus_path_verified": [
+      "cr_spells.lst"
+    ]
   },
   {
     "id": "ultimate_magic:equipment:the_formulae_of_master_gebr",
@@ -1689,11 +1881,14 @@
     "engine_wiring_class_reason": "prose_scaling_phrase",
     "engine_status": "not-ingested",
     "hand_wiring_class": "ambiguous",
-    "confidence": "high",
+    "confidence": "medium",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "'per level' is a literal prose_scaling_phrases entry describing genuine duration scaling with no chassis. Ambiguous confirmed defensible. Quoted tokens (verbatim from the row(s) below): for 1 round per level",
     "source_file": "apg_abilities_class.lst",
-    "source_line": 144
+    "source_line": 144,
+    "corpus_path_verified": [
+      "apg_abilities_class.lst"
+    ]
   },
   {
     "id": "core_essentials:race_trait:duergar_languages",
@@ -1721,11 +1916,14 @@
     "engine_wiring_class_reason": "prose_scaling_phrase",
     "engine_status": "text-complete",
     "hand_wiring_class": "ambiguous",
-    "confidence": "high",
+    "confidence": "medium",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "'your character level' is a literal prose_scaling_phrases entry (added for exactly this kind of level-substitution clause) -- genuine prose-only scaling, no chassis. Ambiguous confirmed defensible. Quoted tokens (verbatim from the row(s) below): Treat your character level as your hunter level",
     "source_file": "acg_feats.lst",
-    "source_line": 154
+    "source_line": 154,
+    "corpus_path_verified": [
+      "acg_feats.lst"
+    ]
   },
   {
     "id": "ultimate_magic:spell:symbol_of_slowing",
@@ -1737,11 +1935,14 @@
     "engine_wiring_class_reason": "prose_scaling_phrase",
     "engine_status": "not-ingested",
     "hand_wiring_class": "ambiguous",
-    "confidence": "high",
+    "confidence": "medium",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "'per caster level' is a literal prose_scaling_phrases entry describing genuine duration scaling, no chassis. Ambiguous confirmed defensible. Quoted tokens (verbatim from the row(s) below): slowed (as the slow spell) for 1 round per caster level",
     "source_file": "um_spells.lst",
-    "source_line": 215
+    "source_line": 215,
+    "corpus_path_verified": [
+      "um_spells.lst"
+    ]
   },
   {
     "id": "ultimate_magic:equipment:master_books_of_rul_thaven",
@@ -1768,12 +1969,15 @@
     "engine_wiring_class": "display",
     "engine_wiring_class_reason": "no_magnitude_token",
     "engine_status": "grounded",
-    "hand_wiring_class": "display",
+    "hand_wiring_class": "derived",
     "confidence": "high",
-    "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "agrees_with_engine": false,
+    "token_evidence": "CORRECTION (new finding, SD31-E2-F1-002 Finding D): the row's only magnitude is inside a SPELLS: field ('Cone of Cold,15+CHA') -- the spell-like ability's save DC is a genuine CHA-scalar formula (CHA is in SCALARS_WORD). signals() never scans SPELLS: fields at all -- SPELLS: is absent from both MAGNITUDE_TOKENS and prose_fields -- so the DC formula is invisible to the scanner and the row falls through to display:no_magnitude_token even though it plainly carries a scalar-dependent magnitude. Contrast with core_rulebook:race_trait:racial_sla_death_knell in this same sample, whose SLA DC is built through a BONUS:VAR chain instead of an inline SPELLS: formula and is correctly scanned. True class is derived, not display. Quoted tokens (verbatim from the row(s) below): SPELLS:Ice Staff|CASTERLEVEL=10|Cone of Cold,15+CHA",
     "source_file": "b4_abilities_race.lst",
-    "source_line": 1460
+    "source_line": 1460,
+    "corpus_path_verified": [
+      "b4_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_4:monster_ability:freezing_flow_jagged_slam",
@@ -1787,9 +1991,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Freezing Flow ~ Jagged Slam | critical range of 19-20",
     "source_file": "b4_abilities_race.lst",
-    "source_line": 717
+    "source_line": 717,
+    "corpus_path_verified": [
+      "b4_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary:monster_ability:froghemoth_immunity_to_electricity",
@@ -1803,9 +2010,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Froghemoth ~ Immunity to Electricity | ASPECT:Immunity|Electricity (partial)",
     "source_file": "b1_abilities_race.lst",
-    "source_line": 624
+    "source_line": 624,
+    "corpus_path_verified": [
+      "b1_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_2:monster_ability:olethrodaemon_adamantine_claws",
@@ -1819,9 +2029,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Olethrodaemon ~ Adamantine Claws | treated as though they were adamantine",
     "source_file": "b2_abilities_race.lst",
-    "source_line": 312
+    "source_line": 312,
+    "corpus_path_verified": [
+      "b2_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary:monster_ability:tarrasque_bleed",
@@ -1835,9 +2048,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Tarrasque ~ Bleed | ASPECT:Immunity|Bleed",
     "source_file": "b1_abilities_race.lst",
-    "source_line": 1180
+    "source_line": 1180,
+    "corpus_path_verified": [
+      "b1_abilities_race.lst"
+    ]
   },
   {
     "id": "horror_adventures:monster_ability:hive_warrior_rending_mandibles",
@@ -1851,9 +2067,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Hive Warrior ~ Rending Mandibles | deals equal damage to the creature's armor",
     "source_file": "ha_abilities_race.lst",
-    "source_line": 286
+    "source_line": 286,
+    "corpus_path_verified": [
+      "ha_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_2:monster_ability:lurker_in_light_daylight_door",
@@ -1867,9 +2086,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Lurker in Light ~ Daylight Door | areas of bright light",
     "source_file": "b2_abilities_race.lst",
-    "source_line": 787
+    "source_line": 787,
+    "corpus_path_verified": [
+      "b2_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary:monster_ability:shark_keen_scent",
@@ -1883,9 +2105,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Shark ~ Keen Scent | ASPECT:Ability Benefit|(180 ft.)",
     "source_file": "b1_abilities_race.lst",
-    "source_line": 1114
+    "source_line": 1114,
+    "corpus_path_verified": [
+      "b1_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary:monster_ability:cheetah_sprint",
@@ -1899,9 +2124,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Cheetah ~ Sprint | 10 times its normal speed",
     "source_file": "b1_abilities_race.lst",
-    "source_line": 196
+    "source_line": 196,
+    "corpus_path_verified": [
+      "b1_abilities_race.lst"
+    ]
   },
   {
     "id": "inner_sea_bestiary:monster_ability:deadly_mantis_rending_mandibles",
@@ -1915,9 +2143,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Deadly Mantis ~ Rending Mandibles | DC 31 Reflex save",
     "source_file": "isb_abilities_race.lst",
-    "source_line": 216
+    "source_line": 216,
+    "corpus_path_verified": [
+      "isb_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_4:monster_ability:colossus_stone_siege_tower",
@@ -1931,9 +2162,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Colossus (Stone) ~ Siege Tower | reload themselves at the start",
     "source_file": "b4_abilities_race.lst",
-    "source_line": 411
+    "source_line": 411,
+    "corpus_path_verified": [
+      "b4_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_2:monster_ability:gray_render_double_damage_against_objects",
@@ -1947,9 +2181,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Gray Render ~ Double Damage Against Objects | deals double damage",
     "source_file": "b2_abilities_race.lst",
-    "source_line": 626
+    "source_line": 626,
+    "corpus_path_verified": [
+      "b2_abilities_race.lst"
+    ]
   },
   {
     "id": "inner_sea_bestiary:monster_ability:fungus_queen_compel_plants",
@@ -1963,9 +2200,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Fungus Queen ~ Compel Plants | as if they weren't immune to them",
     "source_file": "isb_abilities_race.lst",
-    "source_line": 74
+    "source_line": 74,
+    "corpus_path_verified": [
+      "isb_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_4:monster_ability:death_dog_disease",
@@ -1979,9 +2219,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Death Dog ~ Disease | Wormpox",
     "source_file": "b4_abilities_race.lst",
-    "source_line": 436
+    "source_line": 436,
+    "corpus_path_verified": [
+      "b4_abilities_race.lst"
+    ]
   },
   {
     "id": "inner_sea_bestiary:monster_ability:annihilator_booster_jets",
@@ -1995,9 +2238,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Annihilator ~ Booster Jets | fly speed of 60 ft",
     "source_file": "isb_abilities_race.lst",
-    "source_line": 289
+    "source_line": 289,
+    "corpus_path_verified": [
+      "isb_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary:monster_ability:balor_vorpal_strike",
@@ -2011,9 +2257,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Balor ~ Vorpal Strike | gains the vorpal weapon quality",
     "source_file": "b1_abilities_race.lst",
-    "source_line": 277
+    "source_line": 277,
+    "corpus_path_verified": [
+      "b1_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_4:monster_ability:kapre_confounding_aura",
@@ -2027,9 +2276,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Kapre ~ Confounding Aura | DC of all Survival checks is increased by 15",
     "source_file": "b4_abilities_race.lst",
-    "source_line": 983
+    "source_line": 983,
+    "corpus_path_verified": [
+      "b4_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_4:monster_ability:bodythief_absorb_essence",
@@ -2043,9 +2295,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Bodythief ~ Absorb Essence | gain 4 negative levels",
     "source_file": "b4_abilities_race.lst",
-    "source_line": 317
+    "source_line": 317,
+    "corpus_path_verified": [
+      "b4_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary:monster_ability:neothelid_trace_teleport",
@@ -2059,9 +2314,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Neothelid ~ Trace Teleport | seen casually",
     "source_file": "b1_abilities_race.lst",
-    "source_line": 975
+    "source_line": 975,
+    "corpus_path_verified": [
+      "b1_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary:monster_ability:dark_folk_poison_use",
@@ -2075,9 +2333,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Dark Folk ~ Poison Use | ASPECT:Ability Benefit",
     "source_file": "b1_abilities_race.lst",
-    "source_line": 258
+    "source_line": 258,
+    "corpus_path_verified": [
+      "b1_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_2:monster_ability:jabberwock_whiffling",
@@ -2091,9 +2352,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Jabberwock ~ Whiffling | DC 10 Strength check",
     "source_file": "b2_abilities_race.lst",
-    "source_line": 727
+    "source_line": 727,
+    "corpus_path_verified": [
+      "b2_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_4:monster_ability:dinosaur_velociraptor_leaping_charge",
@@ -2107,9 +2371,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Dinosaur (Velociraptor) ~ Leaping Charge | deals double damage with its talons",
     "source_file": "b4_abilities_race.lst",
-    "source_line": 493
+    "source_line": 493,
+    "corpus_path_verified": [
+      "b4_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_4:monster_ability:graeae_fate_casting",
@@ -2123,9 +2390,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Graeae ~ Fate Casting | as if by the divination spell",
     "source_file": "b4_abilities_race.lst",
-    "source_line": 796
+    "source_line": 796,
+    "corpus_path_verified": [
+      "b4_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_4:monster_ability:karkinoi_sideways_scuttle",
@@ -2139,9 +2409,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Karkinoi ~ Sideways Scuttle | move up to 10 feet instead of 5 feet",
     "source_file": "b4_abilities_race.lst",
-    "source_line": 987
+    "source_line": 987,
+    "corpus_path_verified": [
+      "b4_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_2:monster_ability:nightcrawler_cold",
@@ -2155,9 +2428,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Nightcrawler ~ Cold | 4d6 cold damage with bite and sting",
     "source_file": "b2_abilities_race.lst",
-    "source_line": 887
+    "source_line": 887,
+    "corpus_path_verified": [
+      "b2_abilities_race.lst"
+    ]
   },
   {
     "id": "inner_sea_gods:monster_ability:chalkost_change_shape",
@@ -2171,9 +2447,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Chalkost ~ Change Shape | same statistics as a normal boar",
     "source_file": "isg_abilities_races.lst",
-    "source_line": 275
+    "source_line": 275,
+    "corpus_path_verified": [
+      "isg_abilities_races.lst"
+    ]
   },
   {
     "id": "book_of_the_damned_volume_2:monster_ability:seraptis_ravenous_embrace",
@@ -2187,9 +2466,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Seraptis ~ Ravenous Embrace | PRERULE:1,DisplayFullAbility",
     "source_file": "botd2_abilities_race.lst",
-    "source_line": 19
+    "source_line": 19,
+    "corpus_path_verified": [
+      "botd2_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_4:monster_ability:mindslaver_mold_avoidance",
@@ -2203,9 +2485,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Mindslaver Mold ~ Avoidance | Reflex save as an immediate action",
     "source_file": "b4_abilities_race.lst",
-    "source_line": 1083
+    "source_line": 1083,
+    "corpus_path_verified": [
+      "b4_abilities_race.lst"
+    ]
   },
   {
     "id": "inner_sea_intrigue:companion:clockwork_familiar_wand_installation",
@@ -2219,9 +2504,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Clockwork Familiar ~ Wand Installation | spit a glob of acid up to 30 feet",
     "source_file": "isi_abilities_race_companion.lst",
-    "source_line": 32
+    "source_line": 32,
+    "corpus_path_verified": [
+      "isi_abilities_race_companion.lst"
+    ]
   },
   {
     "id": "bestiary_3:companion:dimetrodon_tearing_bite",
@@ -2235,9 +2523,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Dimetrodon ~ Tearing Bite | threat range of 19-20",
     "source_file": "b3_abilities_companion.lst",
-    "source_line": 32
+    "source_line": 32,
+    "corpus_path_verified": [
+      "b3_abilities_companion.lst"
+    ]
   },
   {
     "id": "ultimate_wilderness:companion:mongoose_poison_resistance",
@@ -2251,9 +2542,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Mongoose ~ Poison Resistance | ASPECT:SaveBonus|+4 on saves vs. poison from snakes.",
     "source_file": "uw_abilities_companion.lst",
-    "source_line": 288
+    "source_line": 288,
+    "corpus_path_verified": [
+      "uw_abilities_companion.lst"
+    ]
   },
   {
     "id": "ultimate_wilderness:companion:dweomer_cap_aura_luminescence",
@@ -2267,9 +2561,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Dweomer Cap ~ Aura Luminescence | dim light in a 10-foot radius",
     "source_file": "uw_abilities_companion.lst",
-    "source_line": 227
+    "source_line": 227,
+    "corpus_path_verified": [
+      "uw_abilities_companion.lst"
+    ]
   },
   {
     "id": "bestiary_4:companion:companion_dinosaur_styracosaurus_reflexive_strike",
@@ -2283,9 +2580,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Companion (Dinosaur (Styracosaurus)) ~ Reflexive Strike | three additional attacks of opportunity",
     "source_file": "b4_abilities_companion.lst",
-    "source_line": 23
+    "source_line": 23,
+    "corpus_path_verified": [
+      "b4_abilities_companion.lst"
+    ]
   },
   {
     "id": "ultimate_wilderness:companion:petrifern_self_petrification",
@@ -2299,9 +2599,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Petrifern ~ Self-Petrification | natural armor bonus to AC increases by 5",
     "source_file": "uw_abilities_companion.lst",
-    "source_line": 303
+    "source_line": 303,
+    "corpus_path_verified": [
+      "uw_abilities_companion.lst"
+    ]
   },
   {
     "id": "core_rulebook:class_feature:druid_trackless_step",
@@ -2315,9 +2618,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Druid ~ Trackless Step | leave no trail in natural surroundings",
     "source_file": "cr_abilities_class.lst",
-    "source_line": 762
+    "source_line": 762,
+    "corpus_path_verified": [
+      "cr_abilities_class.lst"
+    ]
   },
   {
     "id": "pathfinder_unchained:class_feature:unchained_monk_evasion",
@@ -2331,9 +2637,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Unchained Monk ~ Evasion | SERVESAS:ABILITY=Special Ability|Monk ~ Evasion",
     "source_file": "pu_abilities_class.lst",
-    "source_line": 465
+    "source_line": 465,
+    "corpus_path_verified": [
+      "pu_abilities_class.lst"
+    ]
   },
   {
     "id": "core_essentials:race_trait:aasimar_garuda_blooded",
@@ -2347,9 +2656,13 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Aasimar ~ Garuda-Blooded | TEMPLATE:Aasimar ~ Garuda-Blooded",
     "source_file": "aasimar_abilities_race_subrace.lst",
-    "source_line": 14
+    "source_line": 14,
+    "corpus_path_verified": [
+      "races/aasimar/aasimar_abilities_globalvar_subrace.lst",
+      "races/aasimar/aasimar_abilities_race_subrace.lst"
+    ]
   },
   {
     "id": "core_rulebook:feat:martial_weapon_proficiency",
@@ -2363,9 +2676,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): CHOOSE:WEAPONPROFICIENCY | AUTO:WEAPONPROF|%LIST",
     "source_file": "cr_feats.lst",
-    "source_line": 120
+    "source_line": 120,
+    "corpus_path_verified": [
+      "cr_feats.lst"
+    ]
   },
   {
     "id": "bestiary:monster_ability:mite_hatred",
@@ -2379,9 +2695,12 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Mite ~ Hatred | +1 bonus on attack rolls against humanoid creatures",
     "source_file": "b1_abilities_race.lst",
-    "source_line": 933
+    "source_line": 933,
+    "corpus_path_verified": [
+      "b1_abilities_race.lst"
+    ]
   },
   {
     "id": "bestiary_4:companion:nycar_poison",
@@ -2395,8 +2714,677 @@
     "hand_wiring_class": "display",
     "confidence": "high",
     "agrees_with_engine": true,
-    "token_evidence": "confirmed from the unit's full token closure (base row + any .MOD rows) read directly from $PCGEN_CORPUS_ROOT / data/corpus -- matches engine's own wiring_class and reason",
+    "token_evidence": "display_grounded_target population unit (AT-31-010's own bound population). Whole base row read: no MAGNITUDE_TOKENS-prefixed field anywhere in the row; any numbers present (DC/damage/duration) are flat literals inside DESC/ASPECT prose, not a scanned magnitude field, and no CHOOSE:/TEMPBONUS:/PRE*-guarded magnitude exists to make this anything but text-only. Quoted tokens (verbatim from the row(s) below): KEY:Nycar ~ Poison | save Fort DC 12",
     "source_file": "b4_abilities_companion.lst",
-    "source_line": 94
+    "source_line": 94,
+    "corpus_path_verified": [
+      "b4_abilities_companion.lst"
+    ]
+  },
+  {
+    "id": "inner_sea_intrigue:companion:clockwork_spy_record_audio",
+    "kind": "companion",
+    "book": "inner_sea_intrigue",
+    "name": "Record Audio",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "ambiguous",
+    "engine_wiring_class_reason": "prose_scaling_phrase",
+    "engine_status": "grounded",
+    "hand_wiring_class": "ambiguous",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "'per Hit Die' is a literal prose_scaling_phrases entry ('per hd'); genuine prose-only HD-scaling recording-capacity grant, no BONUS:/DEFINE: chassis. Ambiguous confirmed defensible. Quoted tokens (verbatim from the row(s) below): record up to 1 hour of sound per Hit Die it possesses",
+    "source_file": "isi_abilities_race_companion.lst",
+    "source_line": 11,
+    "corpus_path_verified": [
+      "isi_abilities_race_companion.lst"
+    ]
+  },
+  {
+    "id": "ultimate_wilderness:companion:eidolon_subtype_plant",
+    "kind": "companion",
+    "book": "ultimate_wilderness",
+    "name": "Plant",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "ambiguous",
+    "engine_wiring_class_reason": "no_corpus_line",
+    "engine_status": "not-ingested",
+    "hand_wiring_class": "computed",
+    "confidence": "high",
+    "agrees_with_engine": false,
+    "token_evidence": "CORRECTION -- OPEN-ISSUES row 1 pattern: base row lives under support/uw_abilities_companion_pu.lst (only reachable via a recursive search), so the engine landed this unit in ambiguous:no_corpus_line without ever reading it. The real row carries a standalone PREVARGTEQ guard field AND several BONUS:VAR magnitude fields on the SAME row -- genuinely computed:pre_guard, not ambiguous. Quoted tokens (verbatim from the row(s) below): PREVARGTEQ:MASTERVAR(\"EidolonIsPlant\"),1 | BONUS:VAR|EidolonBiped|1",
+    "source_file": "uw_abilities_companion_pu.lst",
+    "source_line": 9,
+    "corpus_path_verified": [
+      "support/uw_abilities_companion_pu.lst"
+    ]
+  },
+  {
+    "id": "core_rulebook:equipment:scroll_of_fireball",
+    "kind": "equipment",
+    "book": "core_rulebook",
+    "name": "Scroll of Fireball",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "ambiguous",
+    "engine_wiring_class_reason": "prose_scaling_phrase",
+    "engine_status": "ingested-magnitude",
+    "hand_wiring_class": "ambiguous",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "SPROP/DESC carry 'per level' verbatim (fixed phrase) describing the scroll's spell-effect damage scaling with caster level, no BONUS:/DEFINE: chassis behind it (the scroll's own COST/WT/EQMOD fields are all literal). Ambiguous confirmed defensible. Quoted tokens (verbatim from the row(s) below): 1d6 damage per level, 20-ft. radius.",
+    "source_file": "cr_equip_magic_items.lst",
+    "source_line": 1083,
+    "corpus_path_verified": [
+      "cr_equip_magic_items.lst"
+    ]
+  },
+  {
+    "id": "occult_adventures:monster:kami_shikigami",
+    "kind": "monster",
+    "book": "occult_adventures",
+    "name": "Shikigami",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "ambiguous",
+    "engine_wiring_class_reason": "no_corpus_line",
+    "engine_status": "not-started",
+    "hand_wiring_class": "static",
+    "confidence": "high",
+    "agrees_with_engine": false,
+    "token_evidence": "CORRECTION -- OPEN-ISSUES row 1 pattern: base row lives under support/oa_races_b3.lst (recursive search only). All BONUS:STAT fields are flat literals (STAT-selector false-positive collisions, Finding B); DR:5/cold iron is the DR-bypass-slash false positive, also Finding B. No genuine scalar/arithmetic field and no PRE guard exists anywhere in the row -- true class is static, not ambiguous. Quoted tokens (verbatim from the row(s) below): BONUS:STAT|STR|-2 | DR:5/cold iron",
+    "source_file": "oa_races_b3.lst",
+    "source_line": 6,
+    "corpus_path_verified": [
+      "support/oa_races_b3.lst"
+    ]
+  },
+  {
+    "id": "inner_sea_gods:monster:psychopomp_ahmuuth",
+    "kind": "monster",
+    "book": "inner_sea_gods",
+    "name": "Psychopomp (Ahmuuth)",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "ambiguous",
+    "engine_wiring_class_reason": "no_corpus_line",
+    "engine_status": "grounded",
+    "hand_wiring_class": "static",
+    "confidence": "high",
+    "agrees_with_engine": false,
+    "token_evidence": "CORRECTION -- OPEN-ISSUES row 1 pattern: base row lives under support/isg_races_b4.lst (recursive search only). All BONUS:STAT/VAR/SR/CR fields are flat literals; the BONUS:STAT selector-name collision (Finding B) is the only thing resembling a signal, with no rescue and no PRE guard anywhere. True class is static, not ambiguous. Quoted tokens (verbatim from the row(s) below): BONUS:STAT|DEX,WIS,CHA|2 | SR:15",
+    "source_file": "isg_races_b4.lst",
+    "source_line": 11,
+    "corpus_path_verified": [
+      "support/isg_races_b4.lst"
+    ]
+  },
+  {
+    "id": "bestiary_5:monster_ability:chuspiki_air_blast",
+    "kind": "monster_ability",
+    "book": "bestiary_5",
+    "name": "Air Blast",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "ambiguous",
+    "engine_wiring_class_reason": "no_corpus_line",
+    "engine_status": "not-ingested",
+    "hand_wiring_class": "derived",
+    "confidence": "high",
+    "agrees_with_engine": false,
+    "token_evidence": "CORRECTION -- double gap. (1) OPEN-ISSUES row 1 pattern: base row lives under support/b5_abilities_race_oa.lst (recursive search only), so the engine never reached it. (2) NEW finding (Finding F): even if it had, the row's genuine magnitude (HD/2 and HD/2+CON/2 damage formulas) lives entirely inside an ASPECT: field, which -- like SPELLS: (Finding D) -- is in neither MAGNITUDE_TOKENS nor prose_fields, so signals() would still miss it and land the row on display:no_magnitude_token (DESC alone carries no scalar/scaling phrase). True class is derived: the ability's damage genuinely scales with the creature's Hit Dice and Constitution. Quoted tokens (verbatim from the row(s) below): ASPECT:Ability Benefit|(%1d6+%2 damage, 30-ft. range)|HD/2|HD/2+CON/2",
+    "source_file": "b5_abilities_race_oa.lst",
+    "source_line": 15,
+    "corpus_path_verified": [
+      "support/b5_abilities_race_oa.lst"
+    ]
+  },
+  {
+    "id": "core_essentials:race:undine",
+    "kind": "race",
+    "book": "core_essentials",
+    "name": "Undine",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "ambiguous",
+    "engine_wiring_class_reason": "no_corpus_line",
+    "engine_status": "not-ingested",
+    "hand_wiring_class": "static",
+    "confidence": "high",
+    "agrees_with_engine": false,
+    "token_evidence": "CORRECTION -- OPEN-ISSUES row 1 pattern: base row lives under races/undine/undine_races.lst (recursive search only). MOVE:Walk,30 is the row's sole magnitude field, a flat literal; no PRE guard exists anywhere. True class is static, not ambiguous. Quoted tokens (verbatim from the row(s) below): MOVE:Walk,30",
+    "source_file": "undine_races.lst",
+    "source_line": 6,
+    "corpus_path_verified": [
+      "races/undine/undine_races.lst"
+    ]
+  },
+  {
+    "id": "core_essentials:race:kasatha",
+    "kind": "race",
+    "book": "core_essentials",
+    "name": "Kasatha",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "ambiguous",
+    "engine_wiring_class_reason": "no_corpus_line",
+    "engine_status": "not-ingested",
+    "hand_wiring_class": "static",
+    "confidence": "high",
+    "agrees_with_engine": false,
+    "token_evidence": "CORRECTION -- OPEN-ISSUES row 1 pattern: base row lives under races/kasatha/kasatha_races.lst (recursive search only). Same shape as core_essentials:race:undine above: MOVE:Walk,30 is the sole, literal magnitude field, no PRE guard anywhere. True class is static, not ambiguous. Quoted tokens (verbatim from the row(s) below): MOVE:Walk,30",
+    "source_file": "kasatha_races.lst",
+    "source_line": 6,
+    "corpus_path_verified": [
+      "races/kasatha/kasatha_races.lst"
+    ]
+  },
+  {
+    "id": "core_essentials:race_trait:sylph_type",
+    "kind": "race_trait",
+    "book": "core_essentials",
+    "name": "Native Outsider",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "ambiguous",
+    "engine_wiring_class_reason": "no_corpus_line",
+    "engine_status": "not-ingested",
+    "hand_wiring_class": "display",
+    "confidence": "high",
+    "agrees_with_engine": false,
+    "token_evidence": "CORRECTION -- OPEN-ISSUES row 1 pattern: base row lives under races/sylph/sylph_abilities_race.lst (recursive search only). The row carries a real PRE guard field, but NO magnitude-token field exists anywhere on the row -- and the guard-scan that produces computed:pre_guard only runs when a magnitude is present on that same row (`if !mags.is_empty()`), so the guard is genuinely inert here. DESC is a plain, non-scaling sentence. True class is display, not ambiguous. Quoted tokens (verbatim from the row(s) below): !PREFACT:1,ABILITIES,Sylph_ReplaceType=True",
+    "source_file": "sylph_abilities_race.lst",
+    "source_line": 15,
+    "corpus_path_verified": [
+      "races/sylph/sylph_abilities_race.lst"
+    ]
+  },
+  {
+    "id": "advanced_players_guide:companion:temp_evolution_resist_sonic",
+    "kind": "companion",
+    "book": "advanced_players_guide",
+    "name": "Resistance ~ Sonic",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "computed",
+    "engine_wiring_class_reason": "pre_guard",
+    "engine_status": "not-ingested",
+    "hand_wiring_class": "computed",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "Standalone (negated) PREABILITY guard field on the SAME base row as a literal magnitude field -- computed:pre_guard confirmed, same shape as the F1 sample's temp_evolution_ability_increase_dex. Quoted tokens (verbatim from the row(s) below): !PREABILITY:1,CATEGORY=Special Ability,Evolution ~ Resist Sonic | BONUS:VAR|TempEvolutionCost|-1",
+    "source_file": "apg_abilities_companion.lst",
+    "source_line": 238,
+    "corpus_path_verified": [
+      "apg_abilities_companion.lst"
+    ]
+  },
+  {
+    "id": "core_rulebook:equipment:potion_of_fox_s_cunning",
+    "kind": "equipment",
+    "book": "core_rulebook",
+    "name": "Potion of Fox's Cunning",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "computed",
+    "engine_wiring_class_reason": "tempbonus",
+    "engine_status": "ingested-magnitude",
+    "hand_wiring_class": "computed",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "A TEMPBONUS: field is present -- the direct, unconditional computed:tempbonus check fires regardless of any guard. Confirmed. Quoted tokens (verbatim from the row(s) below): TEMPBONUS:ANYPC|STAT|INT|4|TYPE=Enhancement",
+    "source_file": "cr_equip_magic_items.lst",
+    "source_line": 510,
+    "corpus_path_verified": [
+      "cr_equip_magic_items.lst"
+    ]
+  },
+  {
+    "id": "mythic_adventures:equipment_modifier:legendary_item_intelligent_item_spellcasting_2nd_level_spell_3_per_day",
+    "kind": "equipment_modifier",
+    "book": "mythic_adventures",
+    "name": "Legendary Intelligent Item / Spellcasting 2nd-level spell 3/day",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "computed",
+    "engine_wiring_class_reason": "choice",
+    "engine_status": "not-started",
+    "hand_wiring_class": "computed",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "Genuine player choice (CHOOSE:EQBUILDER.SPELL, selecting an Arcane/Divine 2nd-level spell) on a row that also carries magnitude fields -- computed:choice confirmed, a real choice unlike the F1 sample's CHOOSE:NOCHOICE case. Quoted tokens (verbatim from the row(s) below): CHOOSE:EQBUILDER.SPELL|Arcane,Divine|2|2 | BONUS:VAR|IntItemCost|7200",
+    "source_file": "ma_equipmods.lst",
+    "source_line": 124,
+    "corpus_path_verified": [
+      "ma_equipmods.lst"
+    ]
+  },
+  {
+    "id": "core_rulebook:feat:greater_sunder",
+    "kind": "feat",
+    "book": "core_rulebook",
+    "name": "Greater Sunder",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "computed",
+    "engine_wiring_class_reason": "pre_guard",
+    "engine_status": "grounded",
+    "hand_wiring_class": "computed",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "Standalone PREABILITY guard field on the same single base row as a literal magnitude field -- computed:pre_guard confirmed. Quoted tokens (verbatim from the row(s) below): PREABILITY:2,CATEGORY=FEAT,Improved Sunder,Power Attack | BONUS:VAR|CMB_Sunder|2",
+    "source_file": "cr_feats.lst",
+    "source_line": 84,
+    "corpus_path_verified": [
+      "cr_feats.lst"
+    ]
+  },
+  {
+    "id": "bestiary_2:monster:spriggan",
+    "kind": "monster",
+    "book": "bestiary_2",
+    "name": "Spriggan",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "computed",
+    "engine_wiring_class_reason": "pre_guard",
+    "engine_status": "grounded",
+    "hand_wiring_class": "computed",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "Magnitude field's own value carries an inline PREVAREQ guard pipe-segment -- computed:pre_guard confirmed. Also carries a SPELLS: field with genuine CHA-scalar DC formulas (Flare,10+CHA+SprigganMagicBonus etc.) that the scanner never sees (Finding D pattern), but that does not change the verdict since computed already wins via the PREVAREQ guard. Quoted tokens (verbatim from the row(s) below): BONUS:VAR|SneakAttackDice|2|PREVAREQ:SizeAlterationActive,0",
+    "source_file": "b2_races.lst",
+    "source_line": 827,
+    "corpus_path_verified": [
+      "b2_races.lst"
+    ]
+  },
+  {
+    "id": "bestiary_2:monster_ability:chernobue_horrific_appearance",
+    "kind": "monster_ability",
+    "book": "bestiary_2",
+    "name": "Horrific Appearance",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "computed",
+    "engine_wiring_class_reason": "pre_guard",
+    "engine_status": "grounded",
+    "hand_wiring_class": "computed",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "Magnitude field's own value carries an inline PREABILITY guard pipe-segment -- computed:pre_guard confirmed; also independently derived:bonus via BONUS:VAR|ChernobueHorrificAppearanceDC|10+TL/2+CHA, but computed outranks. Quoted tokens (verbatim from the row(s) below): BONUS:VAR|ChernobueHorrificAppearanceDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Horrific Appearance)",
+    "source_file": "b2_abilities_race.lst",
+    "source_line": 998,
+    "corpus_path_verified": [
+      "b2_abilities_race.lst"
+    ]
+  },
+  {
+    "id": "core_rulebook:spell:bless",
+    "kind": "spell",
+    "book": "core_rulebook",
+    "name": "Bless",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "computed",
+    "engine_wiring_class_reason": "tempbonus",
+    "engine_status": "grounded",
+    "hand_wiring_class": "computed",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "MOD row carries a TEMPBONUS: field -- the direct computed:tempbonus check fires for this row on its own regardless of any guard. Confirmed. Quoted tokens (verbatim from the row(s) below): TEMPBONUS:ANYPC|COMBAT|TOHIT|1|TYPE=Morale",
+    "source_file": "cr_spells.lst",
+    "source_line": 59,
+    "corpus_path_verified": [
+      "cr_spells.lst"
+    ]
+  },
+  {
+    "id": "ultimate_equipment:equipment:belt_of_stoneskin",
+    "kind": "equipment",
+    "book": "ultimate_equipment",
+    "name": "Belt of Stoneskin",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "derived",
+    "engine_wiring_class_reason": "dr",
+    "engine_status": "ingested-magnitude",
+    "hand_wiring_class": "static",
+    "confidence": "high",
+    "agrees_with_engine": false,
+    "token_evidence": "CORRECTION -- an unrescued instance of Finding B (OPEN-ISSUES row 2). DR:10/Adamantine is the DR-bypass-slash false positive; COST:60000 and WT:10 are the row's only other magnitude fields and both are flat literals. Unlike the F1 sample's neothelid/2_dexterity/companion-pig examples, there is NO separate genuine scalar/arithmetic field here to rescue the verdict -- true class is static, not derived. This means OPEN-ISSUES row 2's claim that this false positive always lands on the correct class anyway does not hold universally. Quoted tokens (verbatim from the row(s) below): DR:10/Adamantine | COST:60000",
+    "source_file": "ue_equip_magic_items.lst",
+    "source_line": 463,
+    "corpus_path_verified": [
+      "ue_equip_magic_items.lst"
+    ]
+  },
+  {
+    "id": "mythic_adventures:equipment:chaos_hammer",
+    "kind": "equipment",
+    "book": "mythic_adventures",
+    "name": "Chaos Hammer",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "derived",
+    "engine_wiring_class_reason": "prose_expr",
+    "engine_status": "not-started",
+    "hand_wiring_class": "ambiguous",
+    "confidence": "medium",
+    "agrees_with_engine": false,
+    "token_evidence": "CORRECTION -- judgement call. The reported derived:prose_expr fires from '(Will DC 16, CL 9th)' in one .MOD row's SPROP -- a parenthesised CITATION of another spell's own FIXED stat block (a flavor-text reference, not a formula this record computes), the same false-positive shape as bestiary_3:race_trait:fuath_spell_like_abilities below. Meanwhile a SEPARATE .MOD row's DESC states genuine caster-level-scaling mythic damage ('per caster level', a real prose_scaling_phrases hit with no BONUS:/DEFINE: chassis) -- classify()'s highest-bar-wins ordering lets the false-positive derived signal outrank the genuine ambiguous one whenever both are present in one unit's closure. The true class is ambiguous (the real magnitude is prose-only scaling with no chassis), not derived. Quoted tokens (verbatim from the row(s) below): can strike the ground to create the effects of the chaos hammer spell (Will DC 16, CL 9th) | increases to 1d10 points of damage per caster level",
+    "source_file": "ma_equip.lst",
+    "source_line": 14,
+    "corpus_path_verified": [
+      "ma_equip.lst",
+      "ma_spells.lst"
+    ]
+  },
+  {
+    "id": "core_rulebook:equipment_modifier:special_quality_locked_gauntlet",
+    "kind": "equipment_modifier",
+    "book": "core_rulebook",
+    "name": "Locked Gauntlets",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "derived",
+    "engine_wiring_class_reason": "bonus",
+    "engine_status": "ingested-magnitude",
+    "hand_wiring_class": "derived",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "Genuine SIZE-dependent weight-addition arithmetic formula (multiple '*' operators) -- derived:bonus confirmed, no false-positive involved. Quoted tokens (verbatim from the row(s) below): BONUS:EQM|WEIGHTADD|5*(((SIZE<=3)*.5)+(SIZE==4)+(SIZE==5)+((SIZE>=6)*(2^(SIZE-5))))",
+    "source_file": "cr_equipmods.lst",
+    "source_line": 53,
+    "corpus_path_verified": [
+      "cr_equipmods.lst"
+    ]
+  },
+  {
+    "id": "ultimate_magic:feat:remote_bomb",
+    "kind": "feat",
+    "book": "ultimate_magic",
+    "name": "Remote Bomb",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "derived",
+    "engine_wiring_class_reason": "prose_formula_segment",
+    "engine_status": "unknown",
+    "hand_wiring_class": "derived",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "BENEFIT carries a %1 placeholder whose substituted formula segment is the bare scalar 'TL' (a literal SCALARS_WORD entry, total-level) -- derived:prose_formula_segment confirmed genuine. Quoted tokens (verbatim from the row(s) below): increases to %1 minutes | between you and the bomb.|TL",
+    "source_file": "um_feats.lst",
+    "source_line": 103,
+    "corpus_path_verified": [
+      "um_feats.lst"
+    ]
+  },
+  {
+    "id": "bestiary_2:monster:twigjack",
+    "kind": "monster",
+    "book": "bestiary_2",
+    "name": "Twigjack",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "derived",
+    "engine_wiring_class_reason": "bonus",
+    "engine_status": "grounded",
+    "hand_wiring_class": "static",
+    "confidence": "high",
+    "agrees_with_engine": false,
+    "token_evidence": "CORRECTION -- another unrescued Finding B instance. Every BONUS:STAT field is a flat-literal selector-name false positive; BONUS:VAR|AC_Natural_Armor, BONUS:VAR|DarkvisionRange, and BONUS:VAR|SneakAttackDice are all flat literals with no scalar/arith. No genuine derived trigger exists anywhere on the row. True class is static, not derived. Quoted tokens (verbatim from the row(s) below): BONUS:STAT|STR|-2 | BONUS:VAR|SneakAttackDice|2",
+    "source_file": "b2_races.lst",
+    "source_line": 880,
+    "corpus_path_verified": [
+      "b2_races.lst"
+    ]
+  },
+  {
+    "id": "horror_adventures:race:undead_phantom",
+    "kind": "race",
+    "book": "horror_adventures",
+    "name": "Undead Phantom",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "derived",
+    "engine_wiring_class_reason": "bonus",
+    "engine_status": "not-ingested",
+    "hand_wiring_class": "static",
+    "confidence": "high",
+    "agrees_with_engine": false,
+    "token_evidence": "CORRECTION -- another unrescued Finding B instance. Every BONUS:STAT field is a flat-literal selector-name false positive; MOVE:Walk,30 and REACH:5 are flat literals. No genuine derived trigger exists anywhere on the row. True class is static, not derived. Quoted tokens (verbatim from the row(s) below): BONUS:STAT|STR|2 | MOVE:Walk,30",
+    "source_file": "ha_races.lst",
+    "source_line": 8,
+    "corpus_path_verified": [
+      "ha_races.lst"
+    ]
+  },
+  {
+    "id": "bestiary_3:race_trait:fuath_spell_like_abilities",
+    "kind": "race_trait",
+    "book": "bestiary_3",
+    "name": "Spell-Like Abilities",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "derived",
+    "engine_wiring_class_reason": "prose_expr",
+    "engine_status": "not-ingested",
+    "hand_wiring_class": "display",
+    "confidence": "medium",
+    "agrees_with_engine": false,
+    "token_evidence": "CORRECTION -- judgement call, same false-positive shape as chaos_hammer above. The reported derived:prose_expr fires from '(CL 1st; concentration +0)' in DESC -- a parenthesised citation of the FIXED caster level at which these spell-like abilities function, not a scaling formula. No MAGNITUDE_TOKENS field exists anywhere on the row and no other prose signal fires. With the false positive discounted, the true class is display (a text-only record whose SLAs are wired, if at all, through a separate ABILITY-grant mechanism not present in this closure), not derived. Quoted tokens (verbatim from the row(s) below): (CL 1st; concentration +0)",
+    "source_file": "b3_abilities_race.lst",
+    "source_line": 1018,
+    "corpus_path_verified": [
+      "b3_abilities_race.lst"
+    ]
+  },
+  {
+    "id": "bestiary_3:race_trait:iku_turso_light_lure",
+    "kind": "race_trait",
+    "book": "bestiary_3",
+    "name": "Light Lure",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "derived",
+    "engine_wiring_class_reason": "prose_expr",
+    "engine_status": "not-ingested",
+    "hand_wiring_class": "derived",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "Parenthesised DESC clause states a genuine formula (the effect's caster level literally equals the creature's HD, not a fixed-value citation) -- derived:prose_expr confirmed genuine, contrast with the chaos_hammer and fuath corrections below where the same signal fires on a fixed-value citation instead. Quoted tokens (verbatim from the row(s) below): (CL equals the iku-turso's HD)",
+    "source_file": "b3_abilities_race.lst",
+    "source_line": 1073,
+    "corpus_path_verified": [
+      "b3_abilities_race.lst"
+    ]
+  },
+  {
+    "id": "ultimate_psionics:class:gifted_blade_marksman_power_list",
+    "kind": "class",
+    "book": "ultimate_psionics",
+    "name": "Gifted Blade Marksman Power List",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "display",
+    "engine_wiring_class_reason": "no_magnitude_token",
+    "engine_status": "not-ingested",
+    "hand_wiring_class": "display",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "Whole row read: no MAGNITUDE_TOKENS field present -- display:no_magnitude_token confirmed. Quoted tokens (verbatim from the row(s) below): CLASS:Gifted Blade Marksman Power List | FACT:SpellType|Psionic",
+    "source_file": "up_classes.lst",
+    "source_line": 597,
+    "corpus_path_verified": [
+      "up_classes.lst"
+    ]
+  },
+  {
+    "id": "ultimate_combat:equipment_modifier:special_ability_reliable_firearm",
+    "kind": "equipment_modifier",
+    "book": "ultimate_combat",
+    "name": "Reliable",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "display",
+    "engine_wiring_class_reason": "no_magnitude_token",
+    "engine_status": "text-complete",
+    "hand_wiring_class": "static",
+    "confidence": "high",
+    "agrees_with_engine": false,
+    "token_evidence": "CORRECTION -- corroborates F1's Finding E. PLUS:1 is the row's only magnitude, a literal PCGen equivalent-enhancement-bonus field absent from MAGNITUDE_TOKENS. True class is static, not display. Quoted tokens (verbatim from the row(s) below): PLUS:1",
+    "source_file": "uc_equipmods.lst",
+    "source_line": 21,
+    "corpus_path_verified": [
+      "uc_equipmods.lst"
+    ]
+  },
+  {
+    "id": "mythic_adventures:equipment_modifier:legendary_item_foe_biting",
+    "kind": "equipment_modifier",
+    "book": "mythic_adventures",
+    "name": "Foe-Biting",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "display",
+    "engine_wiring_class_reason": "no_magnitude_token",
+    "engine_status": "not-started",
+    "hand_wiring_class": "display",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "Whole row read: no MAGNITUDE_TOKENS field present (PRETYPE guards are ungoverned -- mags is empty so the guard-scan never runs); SPROP is flat prose with no scaling phrase or ability-score grant. display:no_magnitude_token confirmed. Quoted tokens (verbatim from the row(s) below): PRETYPE:1,Legendary | PRETYPE:1,Artifact",
+    "source_file": "ma_equipmods.lst",
+    "source_line": 32,
+    "corpus_path_verified": [
+      "ma_equipmods.lst"
+    ]
+  },
+  {
+    "id": "inner_sea_world_guide:race:charau_ka",
+    "kind": "race",
+    "book": "inner_sea_world_guide",
+    "name": "Charau-ka",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "display",
+    "engine_wiring_class_reason": "no_magnitude_token",
+    "engine_status": "not-ingested",
+    "hand_wiring_class": "display",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "Same shape as F1's gecko_giant: the only row for this id is a PFS-legality flag with a single TYPE: field, no magnitude. display:no_magnitude_token confirmed. Quoted tokens (verbatim from the row(s) below): Charau-ka.MOD | TYPE:PFSNotLegal",
+    "source_file": "pfs_iswg_races.lst",
+    "source_line": 15,
+    "corpus_path_verified": [
+      "_pfs/pfs_iswg_races.lst"
+    ]
+  },
+  {
+    "id": "occult_adventures:spell:occultist_spell_transmute_rock_to_mud",
+    "kind": "spell",
+    "book": "occult_adventures",
+    "name": "Occultist Spell ~ Transmute Rock To Mud",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "display",
+    "engine_wiring_class_reason": "no_magnitude_token",
+    "engine_status": "not-started",
+    "hand_wiring_class": "display",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "Same shape as F1's occultist_spell_chill_metal: an OUTPUTNAME/CLASSES/PREFACT-only .MOD stub row, no magnitude field. display:no_magnitude_token confirmed. Quoted tokens (verbatim from the row(s) below): OUTPUTNAME:Transmute Rock To Mud | CLASSES:.CLEARALL",
+    "source_file": "oa_spells.lst",
+    "source_line": 1278,
+    "corpus_path_verified": [
+      "oa_spells.lst"
+    ]
+  },
+  {
+    "id": "ultimate_magic:class_feature:shark_shaman_animal_companion",
+    "kind": "class_feature",
+    "book": "ultimate_magic",
+    "name": "Animal Companion",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "static",
+    "engine_wiring_class_reason": "literal_magnitudes_only",
+    "engine_status": "not-ingested",
+    "hand_wiring_class": "static",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "Row's magnitude fields are flat literals (no scalar/arith in either BONUS:VAR value) and no PRE guard field exists anywhere in the row. static:literal_magnitudes_only confirmed. Quoted tokens (verbatim from the row(s) below): BONUS:VAR|DruidAnimalTerrainDomainNotAllowed|1",
+    "source_file": "um_abilities_class.lst",
+    "source_line": 1213,
+    "corpus_path_verified": [
+      "um_abilities_class.lst"
+    ]
+  },
+  {
+    "id": "advanced_players_guide:class_feature:admixture_school_elemental_manipulation",
+    "kind": "class_feature",
+    "book": "advanced_players_guide",
+    "name": "Elemental Manipulation",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "static",
+    "engine_wiring_class_reason": "literal_magnitudes_only",
+    "engine_status": "unknown",
+    "hand_wiring_class": "static",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "IMPORTANT row-scoping check: the base row's BONUS:VAR value ('EvocationSchoolLVL') contains no SCALARS_WORD/SCALARS_SUBSTRING token and no arithmetic -- not derived. The MOD row's PREVARLT:Wizard_CF_SchoolPower8,1 guard field sits on a SEPARATE row from the magnitude field: signals() is computed independently PER CORPUS ROW and closure_signals only unions the resulting signal SETS, so a guard on one row can never combine with a magnitude on another row to produce computed:pre_guard -- confirmed by tracing the algorithm, not assumed. static:literal_magnitudes_only is genuinely correct here. Quoted tokens (verbatim from the row(s) below): BONUS:VAR|AdmixtureElementalManipulationTimes|EvocationSchoolLVL",
+    "source_file": "apg_abilities_class.lst",
+    "source_line": 3334,
+    "corpus_path_verified": [
+      "apg_abilities_class.lst"
+    ]
+  },
+  {
+    "id": "advanced_players_guide:companion:evolution_remove_claws",
+    "kind": "companion",
+    "book": "advanced_players_guide",
+    "name": "Remove Base Form Claws",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "static",
+    "engine_wiring_class_reason": "literal_magnitudes_only",
+    "engine_status": "not-ingested",
+    "hand_wiring_class": "static",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "Single literal magnitude field, no PRE guard field anywhere in the row, no CHOOSE. static:literal_magnitudes_only confirmed. Quoted tokens (verbatim from the row(s) below): BONUS:VAR|RemoveEidolonBaseClaws|1",
+    "source_file": "apg_abilities_companion.lst",
+    "source_line": 74,
+    "corpus_path_verified": [
+      "apg_abilities_companion.lst"
+    ]
+  },
+  {
+    "id": "core_rulebook:feat:improved_unarmed_strike",
+    "kind": "feat",
+    "book": "core_rulebook",
+    "name": "Improved Unarmed Strike",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "static",
+    "engine_wiring_class_reason": "literal_magnitudes_only",
+    "engine_status": "unknown",
+    "hand_wiring_class": "static",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "Single literal magnitude field, no guard, no scaling phrase in DESC/BENEFIT. static:literal_magnitudes_only confirmed. Quoted tokens (verbatim from the row(s) below): BONUS:VAR|UnarmedLethal|1|TYPE=Boolean",
+    "source_file": "cr_feats.lst",
+    "source_line": 109,
+    "corpus_path_verified": [
+      "cr_feats.lst"
+    ]
+  },
+  {
+    "id": "core_essentials:monster_ability:grab_tentacles",
+    "kind": "monster_ability",
+    "book": "core_essentials",
+    "name": "Grab",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "static",
+    "engine_wiring_class_reason": "literal_magnitudes_only",
+    "engine_status": "not-ingested",
+    "hand_wiring_class": "static",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "Only magnitude field is a flat literal. Both DESC fields carry a PRERULE guard pipe-segment, which has_guard() explicitly excludes (PRERULE is a renderer directive, not a rules guard) -- confirmed these do not produce a spurious computed:pre_guard. static:literal_magnitudes_only confirmed. Quoted tokens (verbatim from the row(s) below): BONUS:VAR|CMB_Grapple|4",
+    "source_file": "ce_abilities_race.lst",
+    "source_line": 2096,
+    "corpus_path_verified": [
+      "ce_abilities_race.lst"
+    ]
+  },
+  {
+    "id": "inner_sea_gods:spell:rovagug_s_fury",
+    "kind": "spell",
+    "book": "inner_sea_gods",
+    "name": "Rovagug's Fury",
+    "population": "widening_batch_v2",
+    "engine_wiring_class": "static",
+    "engine_wiring_class_reason": "literal_magnitudes_only",
+    "engine_status": "not-ingested",
+    "hand_wiring_class": "static",
+    "confidence": "high",
+    "agrees_with_engine": true,
+    "token_evidence": "RANGE:30 ft. is the row's sole magnitude field -- not a RANGE_KEYWORDS entry (Close/Medium/Long) and not scalar/arith. TARGETAREA ('Cone-shaped burst') and DESC carry no scaling language. static:literal_magnitudes_only confirmed. Quoted tokens (verbatim from the row(s) below): RANGE:30 ft.",
+    "source_file": "isg_spells.lst",
+    "source_line": 51,
+    "corpus_path_verified": [
+      "isg_spells.lst"
+    ]
   }
 ]
