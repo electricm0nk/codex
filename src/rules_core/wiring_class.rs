@@ -348,7 +348,28 @@ fn has_scalar(value: &str) -> bool {
 
 /// `ARITH.search(value)`: `[*/]|\+\s*\w*[A-Z]{2,}|MIN\(|MAX\(|min\(|max\(`.
 fn has_arith(value: &str) -> bool {
-    if value.contains('*') || value.contains('/') {
+    has_arith_scoped(value, true)
+}
+
+/// As [`has_arith`], but `allow_slash` toggles whether a bare `/` counts as
+/// division. Two `MAGNITUDE_TOKENS` reserve `/` as a literal notation
+/// separator in PCGen's own grammar, never an operator (`OPEN-ISSUES.md`
+/// row 2(b), SD31-E2-F2-001-wiringfix):
+///   - `DR:` — `<amount>/<bypass-descriptor>` (`DR:10/Cold Iron`, `DR:1/-`).
+///   - `CR:` — `<int>/<int>` sub-1 challenge-rating fraction (`CR:1/3`).
+/// [`has_scalar_or_arith_for_token`] passes `false` for exactly those two
+/// tokens; every other caller (including [`has_arith`] itself, used by
+/// prose-field `%N`-substitution scanning where `/` is never PCGen's DR or
+/// CR notation) keeps the original unscoped behaviour. Corpus-wide
+/// re-derivation this cycle (38 known book directories) found every `DR:`
+/// value carrying a `/` matches the bypass shape (none is an ambiguous
+/// bare `<int>/<int>` that could plausibly be division) and every `CR:`
+/// value carrying a `/` is the canonical fraction set (`1/2`, `1/3`,
+/// `1/4`, `1/6`, `1/8`); a genuinely dynamic DR still signals via its own
+/// `*` (`DR:1*ArmoredDefenseMult/-`) or a `min(`/`max(` call, so scoping
+/// the `/` exclusion to these two tokens cannot hide a real DR/CR formula.
+fn has_arith_scoped(value: &str, allow_slash: bool) -> bool {
+    if value.contains('*') || (allow_slash && value.contains('/')) {
         return true;
     }
     if value.to_ascii_lowercase().contains("min(") || value.to_ascii_lowercase().contains("max(")
@@ -397,6 +418,45 @@ fn has_arith(value: &str) -> bool {
 /// rule for a `MAGNITUDE_TOKENS` field's own value.
 fn has_scalar_or_arith(value: &str) -> bool {
     has_scalar(value) || has_arith(value)
+}
+
+/// `BONUS:STAT|<selector>|<magnitude>[|<tag>=<val>...]` (and the
+/// structurally identical `TEMPBONUS:STAT|...`) puts an ability-score
+/// SELECTOR — not a magnitude — in the field's second pipe segment.
+/// Scanning the whole value for a scalar word makes any such field
+/// misclassify `derived` purely because the selector happens to spell a
+/// scalar name (`BONUS:STAT|DEX|2|TYPE=Racial` is a flat literal +2, not a
+/// DEX-dependent formula; `OPEN-ISSUES.md` row 2(a),
+/// SD31-E2-F2-001-wiringfix). This strips exactly that one segment before
+/// the scalar/arith scan runs; every other pipe segment — the real
+/// magnitude and any `TYPE=`/tag segments — is scanned in full, unchanged.
+/// A value that does not start with the literal `STAT|` sub-token (i.e.
+/// every `MAGNITUDE_TOKENS` field except `BONUS:STAT`/`TEMPBONUS:STAT`) is
+/// returned untouched.
+fn strip_stat_selector(value: &str) -> std::borrow::Cow<'_, str> {
+    let mut parts = value.splitn(3, '|');
+    match (parts.next(), parts.next(), parts.next()) {
+        (Some("STAT"), Some(_selector), Some(rest)) => rest.to_string().into(),
+        // `STAT|<selector>` with nothing after it (no magnitude segment at
+        // all) has no selector-collision magnitude to false-positive on.
+        (Some("STAT"), Some(_selector), None) => "".into(),
+        _ => value.into(),
+    }
+}
+
+/// [`has_scalar_or_arith`], scoped per `MAGNITUDE_TOKENS` field: strips a
+/// `BONUS:STAT`/`TEMPBONUS:STAT` selector segment before the scalar scan
+/// ([`strip_stat_selector`]), and disables the `/`-as-division arm of
+/// [`has_arith_scoped`] for `CR:`/`DR:` specifically, where PCGen's own
+/// grammar reserves `/` as a literal notation separator. The single call
+/// site is the `MAGNITUDE_TOKENS` loop in [`signals_with_rules`]; prose-field
+/// scanning (`has_prose_formula_segment`) keeps calling the unscoped
+/// [`has_scalar_or_arith`] because CR/DR bypass notation never appears in
+/// a prose field.
+fn has_scalar_or_arith_for_token(token: &str, value: &str) -> bool {
+    let scan_value = strip_stat_selector(value);
+    let allow_slash = token != "CR" && token != "DR";
+    has_scalar(&scan_value) || has_arith_scoped(&scan_value, allow_slash)
 }
 
 /// `(^|\|)!?PRE(?!RULE)[A-Z]+:` — a conditional guard, excluding
@@ -556,7 +616,7 @@ pub fn signals_with_rules(raw: &str, rules: &SignalRules) -> BTreeSet<String> {
         if token == "RANGE" && RANGE_KEYWORDS.contains(&value.trim()) {
             out.insert("derived:range_keyword".to_string());
         }
-        if has_scalar_or_arith(value) {
+        if has_scalar_or_arith_for_token(token, value) {
             out.insert(format!("derived:{}", token.to_ascii_lowercase()));
         }
     }
@@ -739,6 +799,71 @@ pub fn build_mod_index(
     index
 }
 
+/// Maximum subdirectory depth (below the book root) [`resolve_corpus_file`]
+/// searches when the direct `dir.join(file)` join misses. Corpus-derived
+/// (`OPEN-ISSUES.md` row 1, SD31-E2-F2-001-wiringfix's receipt): a full
+/// walk of all 38 known book directories found the deepest real `.lst`
+/// nesting today is 2 subdirectory levels
+/// (`core_essentials/races/<race>/*.lst`); this constant carries one
+/// level of headroom above that measured maximum without becoming an
+/// unbounded walk of the whole book tree.
+const MAX_NESTED_LST_DEPTH: usize = 3;
+
+/// Resolve `file`'s real path under a book's `dir`.
+///
+/// Tries the direct single-level `dir.join(file)` first — the fast, common
+/// case, and the ONLY path any already-resolving unit takes, so no
+/// currently-correct resolution changes which file it reads. If that
+/// misses, searches `dir` up to [`MAX_NESTED_LST_DEPTH`] levels deep for a
+/// file with that exact basename. Several books nest their `.lst` files
+/// (`core_essentials/races/<race>/`, `ultimate_combat/support/`,
+/// `horror_adventures/support/`, `inner_sea_world_guide/_pfs/`,
+/// `advanced_race_guide/_pfs/`, `adventurers_guide/support/`, ...); the
+/// prior single-level join silently missed all of them and fell to D0
+/// `ambiguous:no_corpus_line` for ~1,707 corpus-real units
+/// (`OPEN-ISSUES.md` row 1).
+///
+/// A bounded walk, not an unbounded recursive glob of the whole tree —
+/// and the resolution bar is the *correct* file, not merely *a* file with
+/// the right name: a same-named `.lst` file in a different subdirectory
+/// of the same book, or of a different book, would silently corrupt the
+/// wiring-class read if picked by accident (this program's repeat
+/// identifier-scope-collision hazard). Enumeration across the full
+/// 38-book corpus (this cycle's receipt) found **zero** basenames
+/// duplicated within any one book's tree at any depth, so an exact
+/// basename match under a book's own directory is unambiguous today — but
+/// this function still refuses to guess if a future corpus revision
+/// introduces one: more than one match resolves to `None`, the same
+/// outcome as no match, never a silently-wrong pick. Cross-book
+/// collisions cannot occur by construction: the search is confined to the
+/// single `dir` the caller's own `book` key maps to.
+fn resolve_corpus_file(dir: &std::path::Path, file: &str) -> Option<PathBuf> {
+    let direct = dir.join(file);
+    if direct.is_file() {
+        return Some(direct);
+    }
+    let mut matches: Vec<PathBuf> = Vec::new();
+    let mut stack = vec![(dir.to_path_buf(), 0usize)];
+    while let Some((d, depth)) = stack.pop() {
+        if depth > MAX_NESTED_LST_DEPTH {
+            continue;
+        }
+        let Ok(entries) = std::fs::read_dir(&d) else { continue };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                stack.push((path, depth + 1));
+            } else if path.file_name().and_then(|n| n.to_str()) == Some(file) {
+                matches.push(path);
+            }
+        }
+    }
+    match matches.len() {
+        1 => matches.pop(),
+        _ => None,
+    }
+}
+
 /// Read+cache raw `.lst` text so a unit's base corpus row can be fetched by
 /// `(book, source_file, source_line)` without re-reading the file per unit.
 pub struct CorpusLines<'a> {
@@ -753,8 +878,8 @@ impl<'a> CorpusLines<'a> {
 
     /// The 1-based `line`'s raw text in `book`'s `file`, or `None` if the
     /// book/file/line does not resolve (D0 -- a synthetic generator target
-    /// with no real corpus provenance, e.g. a `core_essentials` race file
-    /// nested two directories deeper than this single-level join reaches).
+    /// with no real corpus provenance, or a same-book basename collision
+    /// [`resolve_corpus_file`] refuses to guess between).
     pub fn line(&mut self, book: &str, file: &str, line: usize) -> Option<String> {
         let key = (book.to_string(), file.to_string());
         if !self.cache.contains_key(&key) {
@@ -762,7 +887,9 @@ impl<'a> CorpusLines<'a> {
                 self.cache.insert(key.clone(), Vec::new());
                 return None;
             };
-            let text = std::fs::read_to_string(dir.join(file)).unwrap_or_default();
+            let text = resolve_corpus_file(dir, file)
+                .and_then(|p| std::fs::read_to_string(p).ok())
+                .unwrap_or_default();
             self.cache.insert(key.clone(), text.split('\n').map(|s| s.to_string()).collect());
         }
         let buf = &self.cache[&key];
@@ -999,6 +1126,126 @@ mod tests {
         assert_eq!(reason, "bonus");
     }
 
+    // D3 — `BONUS:STAT` selector false positive (`OPEN-ISSUES.md` row 2(a),
+    // SD31-E2-F2-001-wiringfix). `core_rulebook/cr_abilities_race.lst:149`,
+    // "+2 Dexterity" (re-derived this cycle): the sole magnitude field is
+    // `BONUS:STAT|DEX|2|TYPE=Racial`, a flat literal +2. A pre-fix scan read
+    // the WHOLE field value (`STAT|DEX|2|TYPE=Racial`), where the
+    // ability-SELECTOR `DEX` collides with `SCALARS_WORD` and wrongly
+    // signals `derived`; the value itself (`2`) is not scalar-dependent.
+    // True class is `static`, confirmed against the ground-truth sample's
+    // hand label (`SD31-E2-F1-ground-truth-sample-v1.json`,
+    // `core_rulebook:race_trait:2_dexterity`, `hand_wiring_class: static`).
+    #[test]
+    fn d3_bonus_stat_selector_flat_literal_is_static_not_derived() {
+        let (class, reason) = cls(
+            "+2 Dexterity\tCATEGORY:Special Ability\tTYPE:AbilityBonus\tVISIBLE:DISPLAY\tSTACK:NO\tMULT:NO\tBONUS:STAT|DEX|2|TYPE=Racial",
+        );
+        assert_eq!(class, WiringClass::Static);
+        assert_eq!(reason, "literal_magnitudes_only");
+    }
+
+    // Same false positive, a second real row:
+    // `ultimate_equipment/ue_equip_magic_items.lst:397`, "Staff of Mithral
+    // Might" (re-derived this cycle) — `BONUS:STAT|INT|2|TYPE=Enhancement`
+    // is the only field that would otherwise signal `derived`; every other
+    // magnitude field on the row (COST/WT/CRITMULT/CRITRANGE/DAMAGE/
+    // ALTDAMAGE) is a plain literal. Padding tab fields the real row also
+    // carries (PROFICIENCY/TYPE/ALTTYPE/EQMOD/SPELLS/etc.) are omitted here
+    // because `signals_with_rules` never scans them (not a `MAGNITUDE_TOKENS`
+    // or `prose_fields` prefix) — dropping them changes nothing `tab_fields`
+    // would see. Ground truth: `ultimate_equipment:equipment:staff_of_mithral_might`,
+    // `hand_wiring_class: static`.
+    #[test]
+    fn d3_bonus_stat_selector_false_positive_second_real_row() {
+        let (class, reason) = cls(
+            "Staff of Mithral Might\tCOST:58000\tWT:7\tCRITMULT:x2\tCRITRANGE:1\tDAMAGE:1d6\tALTDAMAGE:1d6\tBONUS:STAT|INT|2|TYPE=Enhancement",
+        );
+        assert_eq!(class, WiringClass::Static);
+        assert_eq!(reason, "literal_magnitudes_only");
+    }
+
+    // Regression guard: the STAT-selector strip must not blind the scan to
+    // a GENUINE scalar/arithmetic magnitude living elsewhere in the same
+    // `BONUS:` token family on the same row.
+    // `core_essentials/ce_races_familiar_um.lst:28`, "Pig" (re-derived this
+    // cycle) — `BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))` is a real
+    // STR-dependent formula, entirely separate from the row's six
+    // `BONUS:STAT|<ability>|<flat-int>` fields and its `CR:1/3` fraction.
+    // Ground truth (`core_essentials:companion:pig`) confirms `derived` is
+    // still the correct class after both false-positive fixes land.
+    #[test]
+    fn d3_bonus_stat_false_positive_does_not_hide_a_real_bonus_formula() {
+        let (class, reason) = cls(
+            "Pig\tSTARTFEATS:1\tSIZE:S\tMOVE:Walk,30\tREACH:5\t\
+             BONUS:STAT|STR|0\tBONUS:STAT|DEX|2\tBONUS:STAT|CON|4\t\
+             BONUS:STAT|INT|-8\tBONUS:STAT|WIS|2\tBONUS:STAT|CHA|-6\t\
+             BONUS:VAR|AC_Natural_Armor|1|TYPE=Base\tBONUS:VAR|RaceSizeIsLong|1|TYPE=Base\t\
+             BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))\tCR:1/3",
+        );
+        assert_eq!(class, WiringClass::Derived);
+        assert_eq!(reason, "bonus");
+    }
+
+    // D3 — `CR:`/`DR:` `/` bypass-and-fraction notation is not arithmetic
+    // (`OPEN-ISSUES.md` row 2(b)). `CR:1/3` is Pathfinder's literal sub-1
+    // challenge-rating fraction, not a division; a pre-fix `has_arith`'s
+    // unconditional `value.contains('/')` misread it as `derived:cr`.
+    // Corpus-wide re-derivation this cycle (38 books) found every `CR:`
+    // value carrying a `/` is exactly this `<int>/<int>` shape.
+    #[test]
+    fn d3_cr_fraction_slash_is_not_arithmetic() {
+        let (class, reason) = cls("Fractional Threat\tCR:1/3\tMOVE:Walk,20");
+        assert_eq!(class, WiringClass::Static);
+        assert_eq!(reason, "literal_magnitudes_only");
+    }
+
+    // `DR:10/Cold Iron` is PCGen's `<amount>/<bypass-type>` notation, not
+    // division. Corpus-wide re-derivation this cycle found all 267 `DR:`
+    // values carrying a `/` follow this shape; none is an ambiguous bare
+    // `<int>/<int>` that could plausibly be real division.
+    #[test]
+    fn d3_dr_bypass_slash_is_not_arithmetic() {
+        let (class, reason) = cls("Iron Hide\tDR:10/Cold Iron\tMOVE:Walk,30");
+        assert_eq!(class, WiringClass::Static);
+        assert_eq!(reason, "literal_magnitudes_only");
+    }
+
+    // Regression guard: a genuinely dynamic DR must still signal `derived`
+    // via its own `*`, even though the trailing `/` is no longer treated
+    // as arithmetic for the `DR:` token. Real corpus shape (multiple rows),
+    // `DR:1*ArmoredDefenseMult/-`.
+    #[test]
+    fn d3_dr_bypass_slash_fix_does_not_hide_a_real_multiplicative_dr() {
+        let (class, reason) = cls("Armored Defense\tDR:1*ArmoredDefenseMult/-\tMOVE:Walk,30");
+        assert_eq!(class, WiringClass::Derived);
+        assert_eq!(reason, "dr");
+    }
+
+    // Full real row, both false positives compounded in one record:
+    // `bestiary/b1_races.lst:305`, "Neothelid" (re-derived this cycle) —
+    // six `BONUS:STAT|<ability>|<int>` fields (selector collision) plus
+    // `DR:10/Cold Iron` (slash bypass) were the record's ONLY two
+    // derived-triggering signals; with both fixed the record has no
+    // genuine scalar/arithmetic magnitude anywhere and its true class is
+    // `static`, matching the ground-truth hand label
+    // (`bestiary:monster:neothelid`,
+    // `SD31-E2-F1-ground-truth-sample-v1.json`, `hand_wiring_class: static`,
+    // `confidence: high`).
+    #[test]
+    fn d3_neothelid_compounded_false_positives_resolve_to_static() {
+        let (class, reason) = cls(
+            "Neothelid\tSTARTFEATS:1\tSIZE:G\tMOVE:Walk,30,Fly,60\tREACH:20\t\
+             BONUS:STAT|STR|20\tBONUS:STAT|DEX|-4\tBONUS:STAT|CON|14\t\
+             BONUS:STAT|INT|6\tBONUS:STAT|WIS|4\tBONUS:STAT|CHA|10\t\
+             BONUS:VAR|AC_Natural_Armor|26|TYPE=Base\tBONUS:VAR|BlindsightRange|100|TYPE=Base\t\
+             BONUS:VAR|Maneuverability|4\tBONUS:VAR|NoTypeTraits|1\t\
+             DEFINE:Maneuverability|0\tDEFINE:NoTypeTraits|0\tSR:26\tDR:10/Cold Iron\tCR:15",
+        );
+        assert_eq!(class, WiringClass::Static);
+        assert_eq!(reason, "literal_magnitudes_only");
+    }
+
     // D3 — derived:prose_expr
     #[test]
     fn d3_prose_expr_is_derived() {
@@ -1179,5 +1426,170 @@ mod tests {
         };
         let sigs = signals_with_rules(raw, &custom);
         assert!(sigs.contains("ambiguous:prose_scaling_phrase"));
+    }
+
+    // --- D0 corpus-row resolution (`OPEN-ISSUES.md` row 1,
+    // SD31-E2-F2-001-wiringfix) ------------------------------------------
+
+    /// A scratch corpus directory, cleaned up on drop, so these tests
+    /// never touch the real PCGen checkout `PCGEN_CORPUS_ROOT` would
+    /// point at. Same pattern as `v06_work_inventory`'s own
+    /// `wiring_class_wiring_tests::ScratchBook`, plus `write_nested` for
+    /// the subdirectory shapes this deliverable is about.
+    struct ScratchBook {
+        root: PathBuf,
+    }
+
+    impl ScratchBook {
+        fn new(name: &str) -> Self {
+            let root = std::env::temp_dir()
+                .join(format!("codex_wiring_class_resolve_test_{name}_{}", std::process::id()));
+            let _ = std::fs::remove_dir_all(&root);
+            std::fs::create_dir_all(&root).unwrap();
+            ScratchBook { root }
+        }
+
+        fn write(&self, filename: &str, contents: &str) {
+            std::fs::write(self.root.join(filename), contents).unwrap();
+        }
+
+        /// `relative` may contain `/` path separators; parent directories
+        /// are created as needed.
+        fn write_nested(&self, relative: &str, contents: &str) {
+            let path = self.root.join(relative);
+            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+            std::fs::write(path, contents).unwrap();
+        }
+    }
+
+    impl Drop for ScratchBook {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    // Regression guard: the single-level `dir.join(file)` fast path must
+    // resolve identically to before this deliverable for every book whose
+    // `.lst` files sit directly in the book root (every currently-resolving
+    // unit).
+    #[test]
+    fn corpus_lines_direct_join_unchanged_for_a_flat_book_layout() {
+        let book = ScratchBook::new("directjoin");
+        book.write("flat_file.lst", "Row One\tTYPE:General\n");
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert("test_book".to_string(), book.root.clone());
+        let mut lines = CorpusLines::new(&book_paths);
+        assert_eq!(
+            lines.line("test_book", "flat_file.lst", 1).as_deref(),
+            Some("Row One\tTYPE:General")
+        );
+    }
+
+    // The failing case this deliverable exists to fix: a real corpus row
+    // that the pre-fix single-level join could not reach at all.
+    // `core_essentials/races/android/android_races.lst:6`, "Android"
+    // (re-derived this cycle) — `book_paths["core_essentials"]` is the
+    // book ROOT, but the file lives two directories deeper
+    // (`races/android/`). Before this fix, `CorpusLines::line()` returned
+    // `None` here and the unit fell to D0 `ambiguous:no_corpus_line`
+    // despite the row genuinely existing
+    // (`docs/work-inventory.json`, `core_essentials:race:android`,
+    // pre-fix `wiring_class_reason: no_corpus_line`).
+    #[test]
+    fn corpus_lines_resolves_a_nested_lst_file_the_direct_join_misses() {
+        let book = ScratchBook::new("nested_android");
+        book.write_nested(
+            "races/android/android_races.lst",
+            "\n\n\n\n\nAndroid\tSORTKEY:a_base_pc\tSTARTFEATS:1\tFACT:BaseSize|M\tMOVE:Walk,30\tABILITY:Internal|AUTOMATIC|Racial Traits ~ Android\tLEGS:2\tHANDS:2\tRACETYPE:Humanoid\tTYPE:Base.PC\tSOURCEPAGE:p.xx\tFACT:IsPC|True\n",
+        );
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert("core_essentials".to_string(), book.root.clone());
+        let mut lines = CorpusLines::new(&book_paths);
+
+        let row = lines.line("core_essentials", "android_races.lst", 6);
+        assert_eq!(
+            row.as_deref(),
+            Some(
+                "Android\tSORTKEY:a_base_pc\tSTARTFEATS:1\tFACT:BaseSize|M\tMOVE:Walk,30\tABILITY:Internal|AUTOMATIC|Racial Traits ~ Android\tLEGS:2\tHANDS:2\tRACETYPE:Humanoid\tTYPE:Base.PC\tSOURCEPAGE:p.xx\tFACT:IsPC|True"
+            )
+        );
+        // The correctness bar is the whole point: the resolved row must
+        // classify as the record genuinely implies (`static` — its only
+        // magnitude field, `MOVE:Walk,30`, is a plain literal), not merely
+        // resolve to SOME text.
+        let (class, _, _) = determine(row.as_deref());
+        assert_eq!(class, WiringClass::Static);
+    }
+
+    // Collision safety: a same-named `.lst` file nested under two
+    // different subdirectories of the SAME book. Corpus-wide enumeration
+    // (this cycle's receipt) found zero such collisions across all 38
+    // known book directories today, so this is a defensive guard against
+    // a future corpus revision, not a currently-triggered case — but it
+    // proves the implementation never silently picks one arbitrary match
+    // over another (which a naive `find`-style first-match glob would):
+    // resolving to the WRONG file is worse than resolving to none, so an
+    // ambiguous basename must resolve `None`, exactly like no match.
+    #[test]
+    fn corpus_lines_refuses_to_guess_when_a_nested_basename_collides_within_one_book() {
+        let book = ScratchBook::new("collision");
+        book.write_nested("races/alpha/shared.lst", "Alpha Row\tTYPE:General\n");
+        book.write_nested("races/beta/shared.lst", "Beta Row\tTYPE:General\n");
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert("test_book".to_string(), book.root.clone());
+        let mut lines = CorpusLines::new(&book_paths);
+        // Line 2, not 1: an unresolved file caches as a 1-element buffer
+        // (`"".split('\n')` yields one empty string, not zero elements) --
+        // a PRE-EXISTING quirk of the `unwrap_or_default()` + `split('\n')`
+        // pattern this deliverable did not touch, under which `line == 1`
+        // against ANY unresolved file returns `Some("")` rather than
+        // `None`. Zero real corpus units carry `source_line == 1` in the
+        // `no_corpus_line` population today (re-derived this cycle), so it
+        // is out of this deliverable's bounded scope; logged to
+        // `OPEN-ISSUES.md` as an informational finding rather than fixed
+        // here.
+        assert_eq!(lines.line("test_book", "shared.lst", 2), None);
+    }
+
+    // Collision safety, the other axis: a same-named nested file in TWO
+    // DIFFERENT books must never cross-resolve — book A's lookup must
+    // return book A's content even though book B carries an
+    // identically-named file at the identical relative path. This is the
+    // "a shared name does not mean a shared thing" hazard this program has
+    // been bitten by repeatedly, proven directly rather than assumed from
+    // `book_paths` scoping alone.
+    #[test]
+    fn corpus_lines_nested_resolution_stays_scoped_to_its_own_book_not_a_same_named_sibling() {
+        let book_a = ScratchBook::new("crossbook_a");
+        let book_b = ScratchBook::new("crossbook_b");
+        book_a.write_nested("support/shared_name.lst", "From Book A\tTYPE:General\n");
+        book_b.write_nested("support/shared_name.lst", "From Book B\tTYPE:General\n");
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert("book_a".to_string(), book_a.root.clone());
+        book_paths.insert("book_b".to_string(), book_b.root.clone());
+        let mut lines = CorpusLines::new(&book_paths);
+        assert_eq!(
+            lines.line("book_a", "shared_name.lst", 1).as_deref(),
+            Some("From Book A\tTYPE:General")
+        );
+        assert_eq!(
+            lines.line("book_b", "shared_name.lst", 1).as_deref(),
+            Some("From Book B\tTYPE:General")
+        );
+    }
+
+    // A file genuinely absent from the book tree at any depth must still
+    // resolve `None` — the bounded nested search must not manufacture a
+    // match, and must not panic or loop on an ordinary empty book.
+    #[test]
+    fn corpus_lines_still_none_for_a_file_absent_at_every_depth() {
+        let book = ScratchBook::new("absent");
+        book.write_nested("races/oread/oread_races.lst", "Oread\tTYPE:Base.PC\n");
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert("test_book".to_string(), book.root.clone());
+        let mut lines = CorpusLines::new(&book_paths);
+        // Line 2, see the comment in the collision test above for why 1
+        // is excluded here.
+        assert_eq!(lines.line("test_book", "does_not_exist.lst", 2), None);
     }
 }
