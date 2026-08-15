@@ -1297,3 +1297,24 @@ full background sweep, both green: `reachability-audit-selftest` 11/11, `reachab
 **Status: COMPLETE** (code + tests + verify.sh wiring + baseline artifact + ownership table). Full-gate
 `VERIFY_EXIT` recorded once the background run finishes; see the log at
 `artifacts/SD31-E0-F1-001-verify.log`.
+
+### 6. Gate result (full run completed)
+
+`VERIFY_EXIT=0`. **21/21 stages passed**, including both new stages:
+`reachability-audit-selftest` (11 cases passed), `reachability-audit` (reachable ceiling 94.53%).
+Full summary line: `passed: 21  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+reachability-audit-selftest reachability-audit pi-sweep audit-selftest reclaim-selftest
+driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install
+frontend-test frontend-typecheck clippy class-dump`. Log: `artifacts/SD31-E0-F1-001-verify.log`.
+
+**Baseline drift noted, not remediated this cycle (out of this card's scope — no Rust test was added
+by this card):** the gate's own "BASELINE NOTES" flagged `BASELINE_ROOT_LIB_TESTS` (1776→1777),
+`BASELINE_ROOT_FULL_TESTS` (6398→6411) and `BASELINE_ROOT_TEST_BINARIES` (547→548) as stale — these
+counts moved from work landed on other cards before this cycle's HEAD, not from anything this cycle
+added (`reachability_audit.py`/its tests are pure Python, touching no Rust suite). Per SD-30
+`loop-instruction.md` DoD item 7, a baseline movement is "a separate reviewable commit carrying
+`--show-actuals` output" — left for the card whose Rust change actually moved these counts, not folded
+in here.
+
+**Status: COMPLETE, gate green.** `HEAD 65decb5e0` → `4f8b7b6c1` (code+baseline commits) → this
+receipt's commit.
