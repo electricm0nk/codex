@@ -4119,6 +4119,12 @@ run would stamp `0.10.124`; the PR body states this as the closure value per `de
 increment rule, without bumping the tranche digit (already cut at `tranche/10`, not moved again by
 this bundle's own closure).
 
+**PR opened:** `gh pr create --base develop --head tranche/10 ...` →
+**https://github.com/electricm0nk/codex/pull/363**, `state: OPEN`, `mergeable: MERGEABLE`
+(`gh pr view 363 --json number,url,state,baseRefName,headRefName,mergeable`, re-checked after
+opening). **NOT MERGED** — per this card's own hard rule the operator merges the tranche-promotion PR
+personally; this cycle's own authority stops at opening it.
+
 ### 13. Commit, push, reclaim
 
 Staged by explicit path (never `git add -A`); the pre-existing sibling-session dirt (`.gitignore`,
