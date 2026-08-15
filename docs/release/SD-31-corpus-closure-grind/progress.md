@@ -1617,3 +1617,250 @@ Unchanged since orchestration start: no board mutation occurred in this wave (Ep
 Epic 2-F1 hand-labelled a 150-unit sample outside the board proper). This is the real starting point
 for the next wave, re-derived not carried forward.
 
+
+---
+
+## SD31-E2-F2-001-wiringfix — `epic-2-verdict-paths` D1/D2 fix, ground-truth validation, board delta
+
+**Cycle:** SD31-E2-F2-001-wiringfix. **Actor:** sd31-e2-wiringfix. **Checkout:** primary
+(`/home/ubuntu/workspace/repos/codex`), branch `tranche/11`, sole writer this wave.
+
+**HEAD at start:** `c99461ac3d391d81b898005c58c80e518b4701ae` (`docs(sd31): wave-2 disk budget +
+the ambiguous-bucket lever wave 1 surfaced`) — clean checkout, package directory present, no
+recovery needed. One pre-existing untracked file not created by this cycle
+(`docs/governance/third-party-tier-licensing-survey.md`) and one pre-existing modified file
+(`docs/retro/events/codex.jsonl`) left untouched, per git discipline.
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS, `PCGEN_ORACLE_SHA=
+7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+
+**Branch tip after this cycle's code commit:** `d07d41b5c` (pushed to `origin/tranche/11`).
+
+### 1. Deliverable 1 — `CorpusLines` nested corpus-row resolution (OPEN-ISSUES row 1)
+
+Re-derived the corpus shape before choosing a strategy, corpus-wide (not just the 6 books named in
+the row):
+
+```
+python3 -c "
+import os, collections
+root = os.environ['PCGEN_CORPUS_ROOT']
+... (full script in commit body / this receipt's history) ...
+"
+```
+→ **38 known book directories** (`pathfinder/paizo/roleplaying_game/*` + the 13 `EXTRA_BOOK_DIRS`),
+**max real `.lst` nesting depth = 2 subdirectory levels** (`core_essentials/races/<race>/*.lst`),
+**zero within-book duplicate `.lst` basenames at any depth, in any of the 38 books.** This is the
+"prefer bounded, read the shape first" tradeoff the brief asked for: `resolve_corpus_file()` tries the
+direct `dir.join(file)` join first (unchanged for every currently-resolving unit, by construction —
+it returns immediately if that file exists), then a bounded walk capped at `MAX_NESTED_LST_DEPTH = 3`
+(one level of headroom above the measured max of 2) rather than an unbounded recursive glob
+(`build_mod_index`'s existing `.MOD` indexer already does an unbounded walk; I deliberately did not
+copy that shape here since resolution correctness — not `.MOD` discovery — is the point of this
+deliverable). A within-book basename collision resolves `None` (same outcome as no match) rather than
+guessing — corpus-wide enumeration found zero today, so this is a proven-safe default, not an assumed
+one, and the collision-refusal behavior is directly tested (`corpus_lines_refuses_to_guess_when_a_
+nested_basename_collides_within_one_book`), as is cross-book isolation (`corpus_lines_nested_
+resolution_stays_scoped_to_its_own_book_not_a_same_named_sibling`).
+
+**No-regression guard, corpus-wide (not just the unit test):**
+```
+python3 -c "
+import json, os
+... enumerate every unit whose wiring_class_reason != 'no_corpus_line', check os.path.isfile(dir/file) ...
+"
+```
+→ **36,833 currently-resolving units checked, 0 mismatches at the direct-join fast path** — the 131
+units whose base-row direct join independently misses were ALREADY not resolving via `CorpusLines`
+before this cycle (their pre-fix classification came entirely from `.MOD`-row signals via
+`build_mod_index`'s separate, unbounded, always-on walk); my fix newly resolves their base row too
+(additional correctness, not a regression of an already-correct read) and can only ever ADD signals to
+their closure, never remove one (`closure_signals_with_rules` unions).
+
+**Real failing-case test, from a unit that exists today and resolves to `None`:**
+`core_essentials:race:android`, `android_races.lst:6`
+(`$PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/core_essentials/races/android/
+android_races.lst:6`) — pre-fix `wiring_class_reason: no_corpus_line`; the row genuinely exists 2
+directories deep. Test asserts the resolved text AND that it classifies `static` (its only magnitude
+field, `MOVE:Walk,30`, is a plain literal) — the correctness bar named in the brief ("resolving to *a*
+row is not the deliverable").
+
+6 new tests, `src/rules_core/wiring_class.rs`.
+
+### 2. Deliverable 2 — two `signals()` false positives (OPEN-ISSUES row 2)
+
+(a) `strip_stat_selector()` excludes the `BONUS:STAT`/`TEMPBONUS:STAT` selector's own pipe segment
+(e.g. the `DEX` in `STAT|DEX|2|TYPE=Racial`) before the scalar-word scan runs; every other segment —
+the real magnitude and any `TYPE=`/tag segments — is scanned unchanged.
+(b) `has_arith_scoped()`'s `allow_slash` disables the `/`-as-division arm specifically for `CR:`/`DR:`
+tokens. Re-derived corpus-wide before scoping the exclusion (not assumed): every `DR:` value carrying
+a `/` (267 unique values) matches PCGen's `<amount>/<bypass-type>` shape, none is an ambiguous bare
+`<int>/<int>`; every `CR:` value carrying a `/` is exactly the canonical fraction set (`1/2`, `1/3`,
+`1/4`, `1/6`, `1/8`) — `python3 -c "..."` (exact commands in the code comment above `has_arith_scoped`).
+
+**Movement reported in both directions, against the row's own real worked examples (re-derived, not
+transcribed):**
+
+| unit | pre-fix | post-fix | direction |
+|---|---|---|---|
+| `core_rulebook:race_trait:2_dexterity` (`cr_abilities_race.lst:149`, `BONUS:STAT\|DEX\|2\|TYPE=Racial`) | derived | **static** | toward `done`-adjacent (matches hand label) |
+| `ultimate_equipment:equipment:staff_of_mithral_might` (`ue_equip_magic_items.lst:397`) | derived | **static** | toward `done`-adjacent (matches hand label) |
+| `bestiary:monster:neothelid` (`b1_races.lst:305`, both bugs compound: 6× `BONUS:STAT` + `DR:10/Cold Iron`) | derived | **static** | toward `done`-adjacent (matches hand label) |
+| `core_essentials:companion:pig` (`ce_races_familiar_um.lst:28`) | derived | **derived (unchanged)** | regression guard — `BONUS:WEAPONPROF=Bite\|DAMAGE\|max(0,(STR/2))` is a genuine STR-formula that still fires independent of the false positive; the fix does not over-correct |
+| synthetic `DR:1*ArmoredDefenseMult/-` (real corpus shape, multiple rows) | n/a | **derived (regression guard)** | proves the `/` exclusion for `DR:` does not blind the `*` arm |
+
+8 new tests, `src/rules_core/wiring_class.rs`.
+
+### 3. Deliverable 3 — ground-truth validation
+
+Genuinely-evidenced units identified programmatically:
+```
+python3 -c "import json; d=json.load(open('artifacts/SD31-E2-F1-ground-truth-sample-v1.json'));
+BOIL=\"confirmed from the unit's full token closure\";
+print(sum(1 for r in d if not r['token_evidence'].startswith(BOIL)))"
+```
+→ **45** (matches OPEN-ISSUES row 3's `150 - 105 = 45`; of these, **40** carry pre-fix
+`engine_wiring_class == 'ambiguous'`, matching the brief's "~40 of those are exactly the `ambiguous`
+population you are moving").
+
+New real-corpus-gated test, `tests/sd31_e2_ground_truth_agreement.rs`
+(`cargo test --locked --test sd31_e2_ground_truth_agreement -- --ignored`, `PCGEN_CORPUS_ROOT` set):
+resolves each of the 45 units' BASE corpus row via the fixed `CorpusLines`/`determine()` (single row,
+not full `.MOD` closure — documented limitation in the test's own module doc, since the ground-truth
+JSON does not carry `corpus_key`, which a `.MOD` lookup needs, and reconstructing one risks a second,
+drifting definition) and compares to `hand_wiring_class`, per-unit, not blended.
+
+**Result: 40/45 (88.9 %) agree.** Per-unit disagreement analysis (the default assumption per the
+brief is that the fix is wrong until proven otherwise from the row — traced all 5 to source):
+
+| unit | engine (fixed) | hand | root cause (from the labeller's own `token_evidence`) |
+|---|---|---|---|
+| `ultimate_magic:class_feature:dragon_shaman_totem_transformation` | static | derived | `has_scalar`'s `SCALARS_SUBSTRING` check is case-sensitive; misses lowercase `classlevel("Druid")` |
+| `ultimate_combat:class_feature:martial_artist_martial_arts_master` | static | ambiguous | bare non-scalar variable (`MonkLVL`) — labeller's own documented judgement call, not a bug |
+| `core_essentials:race_trait:favored_enemy_humanoid_changeling` | static | ambiguous | same bare-variable judgement call (`FavoredHumanoidChangeling`/`FavoredBaseBonus`) |
+| `horror_adventures:class_feature:exciter_rapturous_rage` | static | derived | `has_arith`'s `+`-uppercase-run rule does not match `+(SpiritualistLVL>=14)` — a `+` immediately followed by `(`, not a bare word |
+| `horror_adventures:class_feature:exciter_rapture` | static | ambiguous | same bare-variable judgement call (`RaptureLVL`), labeller notes only medium confidence |
+
+All 5 are traced to **three** separate, real, but explicitly out-of-scope classifier gaps — none is
+OPEN-ISSUES row 2's two named findings. Logged as OPEN-ISSUES row 9 rather than fixed (undispatched
+scope expansion on a shared function) or silently averaged away. The test's own assertion
+(`assert_eq!(agree, 40, ...)`) is a permanent regression guard, not a one-off report.
+
+Also found and logged (row 8): a structurally-related but unfixed `STAT:` (bare, not `BONUS:STAT`)
+false-positive shape, not verified to move any real unit — flagged for the next classifier-touching
+cycle, not fixed here (out of named scope).
+
+Also found and logged (row 10): a pre-existing (not introduced this cycle) `CorpusLines::line()`
+cache quirk where `line == 1` against any unresolved file returns `Some("")` instead of `None` — zero
+real units affected (`source_line == 1` never occurs in the `no_corpus_line` population), left
+unfixed, emitted as a `correction` retro event (my own test initially assumed the wrong behavior at
+`line == 1`, caught by the test itself failing, then verified and fixed the test + logged the quirk).
+
+### 4. Board delta — guarded regen, run locally, measured, NOT committed (wave rule)
+
+```
+export CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-e2-wiringfix-regen
+cargo run --locked --bin corpus_literal_sweep -- --json-out .../sweep-sd31-e2-wiringfix.json
+  → corpus-literal-sweep: 3516 records examined of 9328 read, 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out .../fixture-sd31-e2-wiringfix.json
+  → 49/94 covered units cleared, 1 pre-existing unrelated failure
+    (advanced_players_guide:equipment:spindle_of_perfect_knowledge -- derived EVALUATOR, not
+    wiring_class; not investigated further, out of this card's scope), 44 not ingested; exit 0
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+  → REGEN_EXIT=0, guard reports zero stamp loss (no `--allow-stamp-loss` needed)
+```
+
+Doneness verdict replayed via `scripts/observer/pf1e_dashboard_producer.py`'s own `doneness_verdict()`
+over both the committed baseline (`git show c99461ac3:docs/work-inventory.json`, wave 1's
+`SD31-W1-INTEGRATE-001` tip — my own starting HEAD, so this isolates exactly this cycle's code change)
+and the fresh regen, `beginner_box` excluded per the live producer's own convention:
+
+| verdict | before | after | Δ |
+|---|---:|---:|---:|
+| `done` | 5,837 | **5,997** | **+160** |
+| `not-started` | 20,895 | 20,850 | −45 |
+| `unmeasurable` | 3,989 | 4,034 | +45 |
+| `held` | 6,916 | **6,756** | **−160** |
+| `in-progress` | 848 | 848 | 0 |
+| `deferred` | 36 | 36 | 0 |
+| **`ambiguous` wiring-class population** | **2,109** | **409** | **−1,700 (−80.6 %)** |
+| `no_corpus_line` remaining | 1,707 | **0** | **−1,707 (fully eliminated)** |
+
+`done`'s +160 and `held`'s −160 net exactly — the clearest single visible shift is
+`race_trait`: `done` 266→**399** (+133), `held` 247→**114** (−133) (per-kind cross-tab, same script).
+`equipment` `done` 2,626→2,650 (+24, `held` 2,327→2,303, −24); `feat` `done` 1,178→1,181 (+3, `held`
+89→86, −3). `class_feature`'s `not-started`→`unmeasurable` shift (11,703→11,658 / 3,622→3,667, net 45)
+traced to source (not left as an unexplained cross-tab wobble): 45 `class_feature` units move
+`status: not-ingested → unknown` alongside `wiring_class: ambiguous → derived` — the pre-fix
+`ambiguous` verdict was masking these as a placeholder `not-ingested`; post-fix they get their TRUE
+wiring_class (`derived`) and an honest (if still ungrounded) `unknown` status, which is a correctness
+improvement (separating "we don't know how it's wired" from "we know it's `derived` but haven't proven
+it's grounded") even though it does not itself move them to `done`. Verified via a direct per-unit
+diff, not inferred: `horror_adventures:class_feature:dark_elementalist_soul_power` and 4 others,
+`status not-ingested -> unknown | wc ambiguous -> derived`.
+
+`ambiguous` by kind, before → after: `class_feature` 1,084→202, `feat` 86→83, `spell` 62→62 (unchanged
+— no `spell` unit hit either fix), `equipment` 59→25, `class` 1→**0**, `race_trait` 690→15,
+`monster_ability` 49→16, `companion` 25→6, `race` 49→**0**, `monster` 4→**0**. `class`, `race` and
+`monster` are fully cleared of the `ambiguous` wiring class.
+
+`git checkout -- docs/work-inventory.json` run immediately after measurement — confirmed clean
+(`git status --porcelain docs/work-inventory.json` → empty) before this receipt was written. The
+integration cycle owns the one committed regen this wave.
+
+### 5. Reachability audit — reachable-ceiling movement
+
+```
+python3 scripts/reachability_audit.py    # run against the (uncommitted, since-reverted) fresh regen
+```
+→ **AUDIT_EXIT=0**. Reachable ceiling **94.53 % (36,412/38,521) → 98.94 % (38,112/38,521)**, **+4.41
+points / +1,700 units** — exactly the `ambiguous` population's own reduction (2,109−409=1,700),
+corroborating the two figures independently. Dead-end cells unchanged in COUNT (9) but not in
+population: every `ambiguous|*` cell's unit count dropped (`ambiguous|not-ingested` 174 vs. wave 1's
+committed-baseline figure of far more, `ambiguous|grounded` 45, `ambiguous|unknown` 9 — matching Epic
+2's own 119-unit `ambiguous ∩ unmeasurable` overlap figure exactly). Full log:
+`artifacts/SD31-E2-F2-001-wiringfix-audit.log`. The gate's own `reachability-audit` stage (which reads
+the COMMITTED `docs/work-inventory.json`, not this cycle's discarded local regen) correctly still
+reports 94.53 % — this is expected, not a discrepancy: the ceiling only moves once the integration
+cycle runs its one sanctioned committed regen.
+
+### 6. Gate — two runs, one real failure found and fixed in between
+
+**Run 1** (`SD31-E2-F2-001-wiringfix-verify.log`, `CARGO_TARGET_DIR=sd31-e2-wiringfix`), launched in
+the background immediately after commit `d07d41b5c`, per gate-sequencing discipline. Every stage
+through `frontend-typecheck` passed, including `root-lib` (**1,789 passed**, exactly reconciling
+against `--show-actuals`, see Deliverable 4 above, committed as `e219fed2f` once these numbers were
+confirmed) and `root-full` (**6,423 passed across 549 suites**). The `clippy` stage FAILED:
+`root: 57 warnings exceeds recorded ceiling 46`. Root-caused while the gate was still running (not
+inferred, not excused): `has_arith_scoped`'s new doc comment ran a markdown bullet list straight into
+the following prose paragraph with no blank line, and clippy's `doc_lazy_continuation` lint correctly
+flagged it — 11 new warnings (`src/rules_core/wiring_class.rs:360-370` in the pre-fix commit),
+confirmed by reading `/tmp/codex-verify-pGF0n3/clippy-root.log` directly (46 pre-existing + 11 new =
+57, matching exactly). This is squarely "a mechanical defect (... lint fix) — fix it and continue" per
+the Stop-vs-press-on doctrine, not a `decision-blocked` case: one blank `///` line added, verified
+clean (0 `wiring_class.rs` warnings) with a standalone `cargo clippy --locked --tests` re-run in a
+throwaway `CARGO_TARGET_DIR` before committing, landed as its own commit `b1139db41` (a lint-only fix
+belongs in its own commit, not folded into a build/measurement receipt), pushed. Run 1 finished with
+`VERIFY_EXIT=1` (the real, deserved clippy failure) — the exact log/exit is not overwritten, kept as
+the honest record of the defect. Full log: `artifacts/SD31-E2-F2-001-wiringfix-verify.log`.
+
+**Run 2** (`SD31-E2-F2-001-wiringfix-verify-v2.log`, `CARGO_TARGET_DIR=sd31-e2-wiringfix-v2`,
+launched fresh, in the background, immediately after `b1139db41` was pushed — not waiting for run 1
+to finish first, since run 1's failure was already root-caused and its fix already committed) is the
+DoD-governing run. At the time this receipt was finalized: `preflight-disk` through `root-lib`
+(**1,789 passed**, identical to run 1 — same commit's tests, confirming the lint-only fix changed
+nothing test-visible), `root-full` (**6,423 passed across 549 suites, all 528 `tests/*.rs` suites
+executed**, identical to run 1), all green; `desktop` (`cargo test --locked -j 2
+apps/desktop/src-tauri`) was still compiling from a cold `CARGO_TARGET_DIR` (heavier crate —
+`tauri`/`icu4x` et al.) — **`VERIFY_EXIT` for run 2 not yet obtained at receipt-writing time.**
+Per gate-sequencing discipline this is not treated as a stop: run 1 already exercised every stage
+except `clippy` against this exact source tree and passed 20/21 (`desktop`: 445 passed); the one
+failing stage's root cause (the doc-comment lint) was independently re-verified clean **three separate
+times** before this receipt was written — (1) a standalone `cargo clippy --locked --tests` in a
+throwaway target dir immediately after the fix (0 `wiring_class.rs` warnings, exit 0), (2) run 1's own
+now-obsolete `clippy-root.log` inspected directly to confirm the exact 46+11=57 arithmetic, (3) the
+`sd31_e2_ground_truth_agreement` integration test re-run at the post-fix HEAD (`b1139db41`) in its own
+throwaway target dir, confirming the 40/45 agreement figure is unchanged by the lint fix. Follow-up:
+tail `artifacts/SD31-E2-F2-001-wiringfix-verify-v2.log` for the terminal `VERIFY_EXIT`; a green run 2
+is expected but not yet confirmed on paper.
+
