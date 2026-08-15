@@ -1,0 +1,172 @@
+{
+  "dead_end_cells": [
+    {
+      "cell": "ambiguous|deferred-with-reason",
+      "detail": "wiring_class 'ambiguous' has no status in the current grid that reaches 'done'",
+      "reason": "no-done-path",
+      "status": "deferred-with-reason",
+      "unit_count": 0,
+      "unit_count_by_kind": {},
+      "wiring_class": "ambiguous"
+    },
+    {
+      "cell": "ambiguous|fixture-verified",
+      "detail": "wiring_class 'ambiguous' has no status in the current grid that reaches 'done'",
+      "reason": "no-done-path",
+      "status": "fixture-verified",
+      "unit_count": 0,
+      "unit_count_by_kind": {},
+      "wiring_class": "ambiguous"
+    },
+    {
+      "cell": "ambiguous|grounded",
+      "detail": "wiring_class 'ambiguous' has no status in the current grid that reaches 'done'",
+      "reason": "no-done-path",
+      "status": "grounded",
+      "unit_count": 278,
+      "unit_count_by_kind": {
+        "class_feature": 1,
+        "companion": 2,
+        "monster": 3,
+        "monster_ability": 10,
+        "race": 7,
+        "race_trait": 223,
+        "spell": 32
+      },
+      "wiring_class": "ambiguous"
+    },
+    {
+      "cell": "ambiguous|ingested-magnitude",
+      "detail": "wiring_class 'ambiguous' has no status in the current grid that reaches 'done'",
+      "reason": "no-done-path",
+      "status": "ingested-magnitude",
+      "unit_count": 28,
+      "unit_count_by_kind": {
+        "equipment": 20,
+        "spell": 8
+      },
+      "wiring_class": "ambiguous"
+    },
+    {
+      "cell": "ambiguous|literal-verified",
+      "detail": "wiring_class 'ambiguous' has no status in the current grid that reaches 'done'",
+      "reason": "no-done-path",
+      "status": "literal-verified",
+      "unit_count": 0,
+      "unit_count_by_kind": {},
+      "wiring_class": "ambiguous"
+    },
+    {
+      "cell": "ambiguous|not-ingested",
+      "detail": "wiring_class 'ambiguous' has no status in the current grid that reaches 'done'",
+      "reason": "no-done-path",
+      "status": "not-ingested",
+      "unit_count": 1501,
+      "unit_count_by_kind": {
+        "class_feature": 901,
+        "companion": 23,
+        "equipment": 13,
+        "feat": 2,
+        "monster_ability": 39,
+        "race": 42,
+        "race_trait": 464,
+        "spell": 17
+      },
+      "wiring_class": "ambiguous"
+    },
+    {
+      "cell": "ambiguous|not-started",
+      "detail": "wiring_class 'ambiguous' has no status in the current grid that reaches 'done'",
+      "reason": "no-done-path",
+      "status": "not-started",
+      "unit_count": 89,
+      "unit_count_by_kind": {
+        "class": 1,
+        "class_feature": 63,
+        "equipment": 3,
+        "feat": 15,
+        "monster": 1,
+        "race_trait": 3,
+        "spell": 3
+      },
+      "wiring_class": "ambiguous"
+    },
+    {
+      "cell": "ambiguous|text-complete",
+      "detail": "wiring_class 'ambiguous' has no status in the current grid that reaches 'done'",
+      "reason": "no-done-path",
+      "status": "text-complete",
+      "unit_count": 94,
+      "unit_count_by_kind": {
+        "equipment": 23,
+        "feat": 69,
+        "spell": 2
+      },
+      "wiring_class": "ambiguous"
+    },
+    {
+      "cell": "ambiguous|unknown",
+      "detail": "wiring_class 'ambiguous' has no status in the current grid that reaches 'done'",
+      "reason": "no-done-path",
+      "status": "unknown",
+      "unit_count": 119,
+      "unit_count_by_kind": {
+        "class_feature": 119
+      },
+      "wiring_class": "ambiguous"
+    }
+  ],
+  "dead_end_unit_total": 2109,
+  "excluded_books": [
+    "beginner_box"
+  ],
+  "grid_cells_evaluated": 45,
+  "known_populations": {
+    "ambiguous_wiring_class_units": 2109,
+    "race_not_done": 103,
+    "race_total": 103,
+    "race_trait_not_done": 3181,
+    "race_trait_total": 3447,
+    "unmeasurable_unknown_status_by_kind": {
+      "class_feature": 3622,
+      "feat": 367
+    },
+    "unmeasurable_unknown_status_units": 3989
+  },
+  "ok": true,
+  "reachable_ceiling": 0.945251,
+  "reachable_ceiling_by_kind": {
+    "class": 0.994595,
+    "class_feature": 0.929938,
+    "companion": 0.985259,
+    "equipment": 0.990496,
+    "equipment_modifier": 1.0,
+    "feat": 0.96705,
+    "monster": 0.99685,
+    "monster_ability": 0.984229,
+    "race": 0.524272,
+    "race_trait": 0.799826,
+    "spell": 0.978192
+  },
+  "source_generated_at": "2026-08-15T01:34:18Z",
+  "statuses_evaluated": [
+    "deferred-with-reason",
+    "fixture-verified",
+    "grounded",
+    "ingested-magnitude",
+    "literal-verified",
+    "not-ingested",
+    "not-started",
+    "text-complete",
+    "unknown"
+  ],
+  "total_units": 38521,
+  "unmapped_cells_with_units": [],
+  "wiring_classes_evaluated": [
+    "ambiguous",
+    "computed",
+    "derived",
+    "display",
+    "static"
+  ]
+}

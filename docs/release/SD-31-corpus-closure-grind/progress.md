@@ -1110,3 +1110,190 @@ snapshot (`generated_at 2026-08-15T01:34:18Z`), unchanged since the orchestrator
 earlier the same day — no board mutation occurred between the two reads.
 
 **Status: COMPLETE.** No code change; docs-only commit. `HEAD 3f756b4b9` -> (this receipt's commit).
+
+## SD31-E0-F1-001 — Reachability audit: build, self-test, baseline (`epic-0-reachability-audit`)
+
+**Actor:** `sd31-e0-audit`. **Checkout:** primary, `tranche/11`. **HEAD at start:** `65decb5e0`.
+**Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`./scripts/verify.sh --only preflight-oracle` → PASS, `scripts/pcgen-oracle-pin.env`).
+
+### 0. Claim
+
+`kanban.md`'s `epic-0-reachability-audit` row flipped `READY` → `IN-FLIGHT` (`sd31-e0-audit`,
+2026-08-15, `SD31-E0-F1-001`) before any code was written, per its "Cycle claims" section.
+
+### 1. SD31-E0-F1 — `scripts/reachability_audit.py`
+
+Built per `epic-breakdown.md` "Epic 0 (SD31-E0)" acceptance and `decisions.md §4`. TDD: the self-test
+(`scripts/tests/test_reachability_audit.py`) was written first, confirmed failing for the intended
+reason (`FileNotFoundError` — the module did not exist yet), then the module was written to green.
+
+**Design decisions, recorded because the acceptance text underdetermines them:**
+
+- Imports `pf1e_dashboard_producer` via `importlib.util.spec_from_file_location`, the exact convention
+  `scripts/tests/test_pf1e_dashboard_producer.py` already uses, and calls
+  `producer._doneness_verdict_uncapped(wc, status)` directly — never a reimplemented copy of its
+  branches.
+- The full grid is `producer.WIRING_CLASS_VALUES` (5) × the LIVE `docs/work-inventory.json`'s own
+  `status_vocabulary` field (9 keys) — not a hand-duplicated status-word tuple. This sources the grid
+  from the same document the audit runs over, rather than risking the drift
+  `test_pf1e_dashboard_producer.py`'s own comment flags for its hand-copied `STATUS_WORDS`.
+  **Widened further**: any wiring_class/status word actually observed on a real unit is added to the
+  grid even if absent from either declared vocabulary — a NEW word landing in the corpus must be
+  graded by this audit, not silently skipped.
+- Two dead-end reasons, not one: `unmapped` (the raw `ValueError` case the acceptance text names
+  explicitly — "any such cell with count > 0 fails the audit outright") and `no-done-path` (a
+  wiring_class for which NO status in the grid reaches `done` — today only `ambiguous`, a real,
+  currently-open, epic-owned capability gap). **Only `unmapped`-with-units fails the audit's exit
+  code.** A `no-done-path` cell is reported and depresses the reachable ceiling but does not itself
+  flip `ok` to `False` — reasoned explicitly in a `progress.md`-recorded default (see "Judgment calls"
+  below), since the opposite choice would make `./scripts/verify.sh` permanently red for the entire
+  remaining life of Epic 1/Epic 2, which no acceptance text asks for and Decision 4 explicitly frames
+  as "a capability gap with a name" to be owned, not a per-run gate failure.
+- `known_populations()` re-derives the three non-grid figures F2's acceptance names (unmeasurable/
+  unknown by kind; race/race_trait not-done) directly from the document, since the grid mechanism
+  cannot see the race/race_trait chassis-absence gap at all (it spans every wiring_class — confirmed
+  this cycle, see §3 below) — folded into the same script/JSON output so the baseline artifact is
+  self-contained rather than needing a second, separate re-derivation pass.
+
+**Wired into `./scripts/verify.sh`** as two stages, in BOTH `ALL_STAGES` and `QUICK_STAGES`, placed
+immediately after `producer-selftest` (the stage it depends on the conventions of):
+
+- `reachability-audit-selftest` — `python3 -m unittest scripts/tests/test_reachability_audit.py`.
+- `reachability-audit` — `python3 scripts/reachability_audit.py` against the live
+  `docs/work-inventory.json`; publishes `REACHABILITY_CEILING_PERCENT` as an `actual` line.
+
+Both stages follow `run_producer_selftest`/`run_preflight_oracle`'s exact log-capture/exit-code
+conventions (direct capture, never piped; `stage_start`/`stage_pass`/`stage_fail`).
+
+### 2. Prove it can fail (before it is trusted)
+
+`python3 -m unittest -v scripts/tests/test_reachability_audit.py` → **11 cases, all green**:
+
+```
+test_ambiguous_is_a_known_dead_end_but_does_not_fail_ok ... ok
+test_clean_document_passes ... ok
+test_cli_exits_nonzero_on_fabricated_unmapped_cell ... ok
+test_cli_exits_zero_on_clean_document ... ok
+test_cli_json_out_writes_the_same_result ... ok
+test_fabricated_unmapped_status_is_reported ... ok
+test_fabricated_unmapped_wiring_class_at_a_status_the_generic_rules_catch_is_no_done_path_not_unmapped ... ok
+test_fabricated_unmapped_wiring_class_is_reported ... ok
+test_real_inventory_ambiguous_is_the_known_no_done_path_class ... ok
+test_real_inventory_has_no_unmapped_cells ... ok
+test_real_inventory_reachable_ceiling_is_between_0_and_1 ... ok
+
+Ran 11 tests in 1.9s — OK
+```
+
+**The fabricated dead-end that proves the negative case:** a unit with `wiring_class:
+"quantum-entangled"`, `status: "grounded"` — an unrecognised wiring_class hit at an EVIDENTIARY status
+(one of `grounded`/`text-complete`/`ingested-magnitude`/`literal-verified`/`fixture-verified`), which
+is the only path in `_doneness_verdict_uncapped()` that reaches its final
+`raise ValueError(f"doneness: unknown wiring_class {wiring_class!r}")` — confirmed by first writing the
+test with a NON-evidentiary status (`not-started`) and watching it fail for the WRONG reason (the
+generic top-level `not-started` → `not-started` rule resolves for any wiring_class, bogus or not, so
+that cell is `no-done-path`, not `unmapped` — a genuine finding about the producer's own control flow,
+not a test bug; kept as its own passing test
+`test_fabricated_unmapped_wiring_class_at_a_status_the_generic_rules_catch_is_no_done_path_not_unmapped`
+rather than discarded, since it documents a real, non-obvious shape of the function this audit
+depends on). Confirmed both the Python `audit()` result (`unmapped_cells_with_units` non-empty,
+`ok=False`) and the CLI (`returncode != 0`, the cell string present in stdout) go non-zero/False for
+this case, and confirmed the clean-document / real-corpus cases each stay green.
+
+### 3. SD31-E0-F2 — Baseline run and gap ownership
+
+**Exact command** (commit `eadb263f7d6b7f124a45547aa0a5a6f77ab2db9c`, the code commit landed
+immediately before this receipt):
+
+```
+python3 scripts/reachability_audit.py \
+  --json-out docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E0-F1-001-baseline.json \
+  > docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E0-F1-001-baseline.txt 2>&1
+```
+
+Committed under `artifacts/`: `SD31-E0-F1-001-baseline.{md,json,txt}`. Full write-up (dead-end table,
+per-kind ceiling, ownership table) in the `.md`; raw text and JSON alongside it.
+
+**Headline: reachable ceiling 94.53 % (36,412 / 38,521)** — matches `decisions.md §5`'s cited figure
+exactly, now independently reproduced by the script itself rather than carried by source pending the
+script's existence (that decision's own text flagged this: "before `scripts/reachability_audit.py`
+exists ... this figure is not independently re-derived in this decision").
+
+**Re-derived, not transcribed** (all four known-dead-end figures F2's acceptance text names):
+
+| population | authoring-time figure | re-derived this cycle |
+|---|---:|---:|
+| `ambiguous` (no path to `done` at any status) | ~2,109 | **2,109** — exact match |
+| `unmeasurable`/`status==unknown` | 3,989 (class_feature 3,622 + feat 367) | **3,989** (class_feature **3,622** + feat **367**) — exact match |
+| `race` not-done | 103 units at 0 % | **103 / 103 (0.00 % done)** — exact match |
+| `race_trait` not-done | ~3,284 | **3,181** — **drifted**; `retro.py correction` emitted (see below) |
+
+**Correction emitted:** `race_trait` not-done is 3,181 today, not the ~3,284 authoring-time estimate —
+266 `race_trait` units already reached `done` between the decision's authoring and this cycle (real
+forward progress, not a measurement error).
+`--subject "epic-breakdown.md Epic 0-F2 / decisions.md §4"` `--claimed "~3,284"` `--actual "3,181"`
+`--verified-by "python3 scripts/reachability_audit.py ... commit eadb263f7"` — landed in
+`docs/retro/events/sd31-e0-audit.jsonl`, event id `1786815164579-sd31-e0-audit-c70e09`.
+
+**A genuine finding, not just a re-derivation:** the grid-based per-kind reachable ceiling reports
+`race` at 52.43 % and `race_trait` at 79.98 % — deceptively high, because most `race`/`race_trait`
+units carry a non-`ambiguous` wiring_class (confirmed: `race` not-done spans `{ambiguous 49, display
+22, static 21, derived 7, computed 4}`; `race_trait` not-done spans `{display 1377, computed 737,
+ambiguous 690, derived 226, static 151}` — command in the baseline `.md`'s "Caution" section), so the
+grid sees a done-reaching status exists for their wiring_class and calls them reachable. The grid
+cannot see the actual blocker (`SD-30 decisions.md §44`'s missing `RaceCorpus` chassis) — a
+kind-specific structural gap entirely outside the wiring_class/status model. This is exactly why
+`known_populations()`'s direct re-derivation (103/103, 3,181/3,447 not-done) is reported alongside the
+grid figures rather than instead of them — quoting only the grid's 52-80 % would materially
+understate the race/race_trait gap.
+
+**Ownership — every dead-end and known-gap population assigned, none unowned, no SER proposal
+needed this cycle:**
+
+| population | owning epic |
+|---|---|
+| `ambiguous` (2,109 units, all 9 grid dead-end cells) | Epic 2 — Verdict-Path Capability (`kanban.md`: "`ambiguous` dead-end closed or registered"; `decisions.md §2` item 4: Epic 2's target is the union of `unmeasurable`+`ambiguous`, ~5,979 units) |
+| `unmeasurable`/`status==unknown` (3,989) | Epic 2 — Verdict-Path Capability (the other half of the same ~5,979-unit union target) |
+| `race` not-done (103/103) | Epic 1 — Race Chassis, 100 % mandate (`epic-breakdown.md` Epic 1 objective) |
+| `race_trait` not-done (3,181) | Epic 1 — Race Chassis, 100 % mandate (same objective; ceiling releases to Epic 6-F4 per race batch as Epic 1-F3 lands) |
+
+Per `decisions.md §3`, an unsigned proposal would leave a unit in the denominator with its epic open —
+moot here since every population found already has an owning epic on the books; **`OPEN-ISSUES.md`
+gets no new row this cycle** (nothing to propose, nothing unowned).
+
+### 4. Gate
+
+Launched `./scripts/verify.sh` (full, not `--quick`) in the background as soon as the code commit
+landed, per "GATE SEQUENCING":
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E0-F1-001-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+`RETRO_ACTOR=sd31-e0-audit`, `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-e0-audit` exported for
+the run. **New stages confirmed passing early in the run:**
+`reachability-audit-selftest (11 cases passed)`, `reachability-audit (reachable ceiling 94.53%)` — both
+seen green in the log before this receipt was written; full-run exit code recorded in the STRUCTURED
+OUTPUT / final commit of this cycle once obtained (see also `--only` spot-checks below, run before the
+full background sweep, both green: `reachability-audit-selftest` 11/11, `reachability-audit`
+`reachable ceiling 94.53%`).
+
+### 5. Judgment calls (recorded per unattended-mode protocol)
+
+- **Exit-code scope for `reachability-audit`:** chose to fail the stage ONLY on an unmapped cell
+  carrying on-board units, not on any `no-done-path` dead end. The acceptance text is explicit about
+  the former ("any such cell with count > 0 fails the audit outright") and silent on the latter; the
+  safer default that does not contradict Decision 4's own framing (a capability gap is owned, tracked,
+  and closed by Epic 1/Epic 2 — never a reason for `./scripts/verify.sh` itself to go permanently red
+  for the remaining life of those epics) was chosen and is recorded here for operator review.
+- **Card status → `COMPLETE`, not left `IN-FLIGHT`:** the card's stated deliverable (build, self-test,
+  wire into verify.sh, commit baseline, assign ownership) is fully done. Decision 4's "standing gate,
+  not one-shot" framing governs future INVOCATIONS of the now-built tool (at every epic closure, before
+  any closure receipt), not a re-claim of this kanban row each time — recorded explicitly on the row
+  itself so a future reader does not mistake "COMPLETE" for "never runs again."
+
+**Status: COMPLETE** (code + tests + verify.sh wiring + baseline artifact + ownership table). Full-gate
+`VERIFY_EXIT` recorded once the background run finishes; see the log at
+`artifacts/SD31-E0-F1-001-verify.log`.

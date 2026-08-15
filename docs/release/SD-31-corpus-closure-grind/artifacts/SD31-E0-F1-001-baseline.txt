@@ -1,0 +1,34 @@
+reachability_audit: 38521 units (excl. beginner_box)
+  grid: 5 wiring classes x 9 statuses = 45 cells evaluated
+  REACHABLE CEILING: 94.53%  (36412 / 38521)
+  per-kind reachable ceiling:
+    class                 99.46%
+    class_feature         92.99%
+    companion             98.53%
+    equipment             99.05%
+    equipment_modifier   100.00%
+    feat                  96.70%
+    monster               99.69%
+    monster_ability       98.42%
+    race                  52.43%
+    race_trait            79.98%
+    spell                 97.82%
+  dead-end cells: 9
+    [no-done-path] ambiguous|deferred-with-reason           units=0      wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|fixture-verified               units=0      wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|grounded                       units=278    wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|ingested-magnitude             units=28     wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|literal-verified               units=0      wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|not-ingested                   units=1501   wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|not-started                    units=89     wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|text-complete                  units=94     wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+    [no-done-path] ambiguous|unknown                        units=119    wiring_class 'ambiguous' has no status in the current grid that reaches 'done'
+  known populations (re-derived, not transcribed):
+    ambiguous_wiring_class_units: 2109
+    unmeasurable_unknown_status_units: 3989
+    unmeasurable_unknown_status_by_kind: {'class_feature': 3622, 'feat': 367}
+    race_total: 103
+    race_not_done: 103
+    race_trait_total: 3447
+    race_trait_not_done: 3181
+  json written to docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E0-F1-001-baseline.json
