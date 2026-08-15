@@ -159,3 +159,52 @@ available on the board today. It is dispatched here as this wave's primary card,
 adversarial reviewer whose explicit job is to prove the fix resolves each unit to its **correct**
 row rather than merely to *a* row — the anti-gaming risk on a change of this size is exactly that.
 
+
+### Wave budget — `sd31-w3-grind` (dispatcher-computed, before fan-out)
+
+Computed at `tranche/11` tip `a272396d3`, after hand-reclaiming two non-live wave-2 target dirs.
+Wave 2's own integration gate was still on its final `clippy` stage in
+`/home/ubuntu/cargo-targets/sd31-w2-integrate` at dispatch time, so that dir was **left alone** —
+every PID under `pgrep -fa 'verify.sh|cargo '` was checked against `/proc/<pid>/environ`'s
+`CARGO_TARGET_DIR` before anything was removed, per the never-`pkill`-a-shared-pattern rule.
+
+```
+pgrep -fa 'verify.sh|cargo '                       # 4 live PIDs, all CARGO_TARGET_DIR=sd31-w2-integrate
+tr '\0' '\n' < /proc/<pid>/environ | grep CARGO_TARGET_DIR   # per PID, before removing anything
+rm -rf /home/ubuntu/cargo-targets/sd31-e2-wiringfix-v2       # 28 G, its gate had finished PASS
+rm -rf /home/ubuntu/cargo-targets/sd31-w2-refute-wiringfix   # 129 M, read-only agent, finished
+df -B1G /                                          # 968 total / 184 used / 785 avail / 19%
+```
+
+| quantity | value | how |
+|---|---:|---|
+| filesystem / used | 968 G / **184 G (19 %)** | `df -B1G /`, post-reclaim |
+| headroom to the 90 %-used floor | **687.2 G** | `0.90 × 968 − 184` |
+| conservative full-gate footprint | 83 G | accumulated-primary `target/`; a fresh per-agent dir measured 28–29 G this wave |
+| cap — concurrent full-gate agents (disk) | **8** | `687.2 ÷ 83 = 8.3`, floored |
+| cap — concurrent full-gate agents (CPU) | 12 | `nproc 24 ÷ -j 2`; not binding |
+| **this wave dispatches** | **6 build agents** (+3 read-only Opus verifiers, which do not count) | `6 × 83 = 498 G` against 687 G headroom |
+
+**Wave 2's gate outcome, for the record.** The wiringfix cycle's re-run
+(`artifacts/SD31-E2-F2-001-wiringfix-verify-v2.log`) closed **`RESULT: PASS`, `VERIFY_EXIT=0`**,
+resolving the "terminal exit code not obtained" follow-up it returned. The integration cycle's own
+gate passed every stage through `frontend-typecheck` (root-lib 1795, root-full 6430 across 549
+suites, desktop 445, reach 27, corpus-sweep 0 findings, frontend 99/99) and was still running
+`clippy`, the final stage, when wave 3 was dispatched.
+
+### Board after wave 2 (measured at `a272396d3`, not carried)
+
+| figure | wave-1 baseline | after wave 2 | delta |
+|---|---:|---:|---:|
+| `done` / 38,521 | 5,837 (15.15 %) | **6,076 (15.77 %)** | **+239** |
+| reachable ceiling | 94.53 % | **98.94 %** | **+4.41 pts (+1,700 units)** |
+| `ambiguous` dead-end population | 2,109 | **409** | **−1,700** |
+| `race_trait` done | 266 (7.7 %) | **478 (13.9 %)** | +212 |
+| `held` | 6,916 | 6,790 | −126 |
+| `not-started` | 20,895 | 20,737 | −158 |
+
+The reachable ceiling is now the binding fact for planning: **98.94 %** of the board can reach
+`done` with today's engine capability, so from here the gap is overwhelmingly *grind*, not
+*capability*. Wave 3 is sized accordingly — six lanes, each targeting the largest not-done mass its
+kind carries.
+
