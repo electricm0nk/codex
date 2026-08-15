@@ -1,0 +1,3251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PF1e Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+  --fg: #e8e8ea;
+  --bg: #0e1018;
+  --panel: #181a23;
+  --panel2: #1f222d;
+  --muted: #6b7080;
+  --border: #2a2d3a;
+  --accent: #6abf7b;
+  --warn: #d4a04a;
+  --err: #c75050;
+  --info: #6b9ad4;
+  --full: #6abf7b;
+  --partial: #d4a04a;
+  --unassigned: #4a4f5e;
+
+  /* Status vocabulary. Deliberately NOT a red/green binary: the generator
+     distinguishes "we proved it" from "we have not looked", and collapsing
+     those to a single "not done" colour is the misreading this dashboard
+     exists to prevent. */
+  --st-grounded: #6abf7b;
+  --st-text-complete: #4f9e68;
+  --st-ingested-magnitude: #6b9ad4;
+  --st-not-ingested: #d4a04a;
+  --st-not-started: #3a3f4e;
+  --st-deferred: #8a7fb5;
+  --st-unknown: #7a5f52;
+
+  /* wiring_class vocabulary (added 2026-08-07, GE-09). Orthogonal to the
+     status colours above -- this axis is "what kind of evidence would prove
+     this unit", not "have we proved it". `ambiguous` gets its own colour on
+     purpose: it is an undone work item, not a rounding error folded into
+     something else. */
+  --wc-display: #4f9e68;
+  --wc-static: #6b9ad4;
+  --wc-derived: #8a7fb5;
+  --wc-computed: #d4a04a;
+  --wc-ambiguous: #c75050;
+
+  /* Doneness (added 2026-08-12, SD-29 decisions.md §46). This is the axis that
+     answers "how done is this", and it is the CROSS of status x wiring_class,
+     not a third independent vocabulary. `held` is a distinct colour from `done`
+     on purpose -- it must never read as done, and it must never read as the
+     same shade of unfinished as `in-progress`. `unmeasurable` is greyed toward
+     the ground colour because it is a defect in the instruments, not a claim
+     about the content. */
+  --dn-done: #3fa66a;
+  --dn-held: #5fa8a0;
+  --dn-in-progress: #6b9ad4;
+  --dn-not-started: #3a3f4e;
+  --dn-unmeasurable: #7a5f52;
+  --dn-deferred: #8a7fb5;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0; background: var(--bg); color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px; line-height: 1.45;
+}
+a { color: var(--info); text-decoration: none; cursor: pointer; }
+a:hover { text-decoration: underline; }
+code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+/* ============================ header ============================ */
+/* Round 28 fix (supervisor CSS-defect finding, 2026-08-13): `.header` is the
+   ONLY element allowed to declare `position: sticky; top: 0` in this
+   stylesheet. `.crumbs` below used to also claim `top: 0`, which put both
+   elements in the same 0-offset sticky band with `.header` winning on
+   z-index -- so once the page scrolled, `.crumbs` (and routeAndScroll()'s
+   scroll target) landed hidden behind the header instead of below it.
+   `--header-height` is measured at runtime (see syncHeaderHeight() in the
+   script below, driven by a ResizeObserver on #header) because the header's
+   height is no longer fixed -- the round-27 chip strip can wrap onto
+   multiple lines depending on viewport width/content, so a hardcoded pixel
+   offset would silently go stale the next time header content changes.
+   `.crumbs`' `top` AND `scroll-margin-top` (Defect 2) both read this same
+   variable so they cannot drift out of sync with each other. */
+:root { --header-height: 0px; }
+.header {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--panel); border-bottom: 1px solid var(--border);
+  padding: 0.55em 1.2em;
+}
+.header-top {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 1em; flex-wrap: wrap;
+}
+.header h1 {
+  margin: 0; font-size: 1em; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.freshness { font-size: 0.78em; color: var(--muted); }
+.freshness.stale { color: var(--warn); }
+.usage { display: flex; gap: 1.2em; font-size: 0.78em; flex-wrap: wrap; }
+.usage .gauge { display: flex; flex-direction: column; align-items: flex-end; }
+.usage .gauge .label { color: var(--muted); font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em; }
+.usage .gauge .value { font-weight: 600; }
+
+/* completion summary */
+.completion { display: flex; align-items: center; gap: 1.1em; margin-top: 0.5em; flex-wrap: wrap; }
+/* THE headline figure (SD-29 QA finding F27, round 4, 2026-08-12): the
+   in-scope "fully usable" doneness percentage is the one number the
+   surrounding prose calls "the headline" everywhere on this page, so it
+   gets the most prominent treatment on the page — bigger than `.pct-big`
+   ever was, since `.pct-big` used to be spent on secondary figures
+   (classes/races counts) while this number rendered inside `.pct-caption`,
+   2.5x smaller than the numbers around it. */
+.headline-num { font-size: 3em; font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+.headline-num .unit { font-size: 0.35em; font-weight: 500; color: var(--muted); margin-left: 0.15em; }
+/* F7 fix (round 5, SD-29 QA finding #7, 2026-08-12): `.pct-big`/`.pct-big
+   .unit` deleted here -- dead since F27 (round 4) replaced its only user
+   with `.headline-num`; grepped the file and confirmed no element still
+   references the class before removing it. */
+/* Secondary "quick status" figures (classes/races counts) — demoted below
+   the headline's prominence, round 4 (F27): still legible, no longer
+   competing with the one number that matters most on this page. */
+.pct-small { font-size: 1.1em; font-weight: 600; line-height: 1.3; color: var(--fg); }
+.pct-small .unit { font-size: 0.7em; font-weight: 500; color: var(--muted); margin-left: 0.15em; }
+.pct-caption { font-size: 0.76em; color: var(--muted); max-width: 34em; }
+/* `n/a` = no measurement attempt exists behind this figure at all --
+   distinct from a real, measured `0`/`0%` (round 11, operator UI-first
+   reframe, 2026-08-12). Deliberately NOT red/yellow (this is not a problem
+   to fix, it's an honest "not yet checked") and deliberately NOT the same
+   muted grey as ordinary secondary text, so it still stands out as its own
+   token rather than blending into `.pct-caption`/`.of` prose. Uses the
+   `--dn-unmeasurable` brown already reserved for "a gap in the instrument,
+   not a claim about the content" (see the doneness palette above). */
+.na { color: var(--dn-unmeasurable); font-style: italic; font-weight: 500; }
+.bar { display: flex; height: 12px; border-radius: 3px; overflow: hidden;
+       flex: 1 1 260px; min-width: 200px; background: var(--st-not-started); }
+.bar > span { display: block; height: 100%; }
+.legend { display: flex; gap: 0.85em; flex-wrap: wrap; font-size: 0.72em; margin-top: 0.45em; color: var(--muted); }
+.legend .chip { display: flex; align-items: center; gap: 0.35em; }
+.legend .sw { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+
+/* Compact sticky-header lane selector (round 27 fix): one line-height chip
+   per lane instead of renderByLane()'s full card (ladder, legend,
+   capability sentence). Kept small on purpose -- the full grid now lives in
+   the Overview view content, this is only "which lane, how done, jump" so
+   the sticky header stays a fraction of the viewport rather than most/all
+   of it. */
+.lane-strip { display: flex; gap: 0.45em; flex-wrap: wrap; margin-top: 0.55em; }
+.lane-chip {
+  display: flex; align-items: center; gap: 0.5em;
+  padding: 0.3em 0.65em; font-size: 0.78em;
+}
+.lane-chip .lane-chip-label { color: var(--fg); }
+.lane-chip .lane-chip-pct { font-weight: 700; color: var(--muted); }
+.lane-chip.selected-lane .lane-chip-pct { color: var(--info); }
+
+/* ============================ nav / crumbs ============================ */
+.crumbs {
+  padding: 0.5em 1.2em; font-size: 0.82em; color: var(--muted);
+  border-bottom: 1px solid var(--border); background: #14161e;
+  position: sticky; top: var(--header-height, 0px); z-index: 10;
+  /* Defect 2 fix: without scroll-margin-top, scrollIntoView({block:"start"})
+     lands #crumbs' top edge at the viewport's literal top edge -- which is
+     still underneath the sticky .header occupying that same band. Same
+     --header-height variable as `top` above, on purpose (see comment on
+     .header): one runtime measurement feeds both, so they cannot disagree. */
+  scroll-margin-top: var(--header-height, 0px);
+  display: flex; gap: 0.5em; align-items: center; flex-wrap: wrap;
+}
+.crumbs .sep { opacity: 0.5; }
+.crumbs .here { color: var(--fg); }
+
+main { padding: 1.1em 1.2em 4em; max-width: 1500px; margin: 0 auto; }
+
+/* ============================ cards ============================ */
+.grid { display: grid; gap: 0.8em; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); }
+.card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
+  padding: 0.85em 0.95em; cursor: pointer; transition: border-color .12s, transform .12s;
+}
+.card:hover { border-color: var(--info); transform: translateY(-1px); }
+.card.flat { cursor: default; }
+.card.flat:hover { border-color: var(--border); transform: none; }
+/* Round 21 QA finding 6: lane grid never showed which lane you're
+   currently inside on its level-2/level-3 pages. Driven by route() via
+   updateLaneSelection(), toggled on the matching .card[data-kind]. */
+.card.selected-lane { border-color: var(--info); box-shadow: 0 0 0 1px var(--info) inset; }
+.card h3 { margin: 0 0 0.15em; font-size: 0.93em; font-weight: 600; }
+.card .sub { font-size: 0.76em; color: var(--muted); margin-bottom: 0.6em; }
+.card .metric { display: flex; align-items: baseline; gap: 0.4em; margin-bottom: 0.45em; }
+.card .metric .n { font-size: 1.35em; font-weight: 700; }
+.card .metric .of { font-size: 0.78em; color: var(--muted); }
+
+.section-title {
+  font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted); margin: 1.6em 0 0.6em; font-weight: 600;
+}
+.section-title:first-child { margin-top: 0; }
+
+/* ============================ tables ============================ */
+table { border-collapse: collapse; width: 100%; font-size: 0.85em; }
+th, td { text-align: left; padding: 0.4em 0.7em; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em;
+     position: sticky; top: 0; background: var(--bg); z-index: 2; }
+tbody tr:hover { background: #171a24; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 6px; }
+
+.pill { display: inline-block; padding: 0.08em 0.5em; border-radius: 10px;
+        font-size: 0.88em; white-space: nowrap; }
+.pill.st { color: #0e1018; font-weight: 600; }
+
+/* ============================ search ============================ */
+.searchbar { display: flex; gap: 0.6em; margin-bottom: 0.8em; flex-wrap: wrap; align-items: center; }
+.searchbar input[type=search] {
+  flex: 1 1 300px; min-width: 200px;
+  background: var(--panel2); border: 1px solid var(--border); border-radius: 5px;
+  color: var(--fg); padding: 0.5em 0.7em; font-size: 0.95em; font-family: inherit;
+}
+.searchbar input[type=search]:focus { outline: none; border-color: var(--info); }
+.searchbar select {
+  background: var(--panel2); border: 1px solid var(--border); border-radius: 5px;
+  color: var(--fg); padding: 0.5em 0.6em; font-size: 0.88em; font-family: inherit;
+}
+.filters { display: flex; gap: 0.4em; flex-wrap: wrap; margin-bottom: 0.7em; }
+.fchip {
+  border: 1px solid var(--border); background: var(--panel); color: var(--muted);
+  border-radius: 12px; padding: 0.18em 0.7em; font-size: 0.78em; cursor: pointer;
+  display: flex; align-items: center; gap: 0.35em; font-family: inherit;
+}
+.fchip.on { color: var(--fg); border-color: currentColor; }
+.fchip .sw { width: 8px; height: 8px; border-radius: 2px; }
+/* Round 21 QA finding 9: emitted on the "none"/"n/a" category chip
+   (renderCategoryFilters) with no matching rule -- dashed border marks it
+   as the odd-one-out group, distinct from a real category chip, same
+   muted-but-legible language as .pill's own "uncategorised" tag. */
+.fchip.uncategorised { border-style: dashed; font-style: italic; }
+.result-note { font-size: 0.8em; color: var(--muted); margin: 0.5em 0; }
+.result-note strong { color: var(--fg); }
+
+button.more {
+  margin: 0.9em auto 0; display: block; background: var(--panel2); color: var(--fg);
+  border: 1px solid var(--border); border-radius: 5px; padding: 0.5em 1.2em;
+  font-size: 0.85em; cursor: pointer; font-family: inherit;
+}
+button.more:hover { border-color: var(--info); }
+
+/* ============================ states ============================ */
+.banner { padding: 0.6em 1em; border-radius: 5px; margin-bottom: 1em; font-size: 0.85em; }
+.banner.err { background: #2a1618; border: 1px solid var(--err); color: #f0c0c0; }
+.banner.warn { background: #2a2417; border: 1px solid var(--warn); color: #f0dcb0; }
+.banner.info { background: #16202a; border: 1px solid var(--info); color: #c0dcf0; }
+.empty { color: var(--muted); padding: 1.5em; text-align: center; font-size: 0.9em; }
+.spinner { color: var(--muted); padding: 2em; text-align: center; }
+.note-body { font-size: 0.85em; color: #c9ccd6; white-space: pre-wrap; margin-top: 0.4em; }
+</style>
+</head>
+<body>
+
+<div class="header" id="header">
+  <div class="header-top">
+    <h1>PF1e Dashboard</h1>
+    <div class="usage" id="usage"></div>
+  </div>
+  <div id="completion"></div>
+</div>
+
+<div class="crumbs" id="crumbs"></div>
+
+<main>
+  <div id="banner"></div>
+  <div id="view"><div class="spinner">Loading dashboard data…</div></div>
+</main>
+
+<script>
+"use strict";
+
+const JSON_URL = "PF1e-dashboard.json";
+const REFRESH_MS = 60000;
+
+let DATA = null;
+const SHARDS = new Map();   // kind -> {fields, rows}
+
+/* The producer's status vocabulary, in the order it should read: proven first,
+   then partial, then untouched. Keys match work_inventory.by_status exactly. */
+const STATUS_ORDER = [
+  "grounded", "text-complete", "ingested-magnitude",
+  "not-ingested", "not-started", "deferred-with-reason", "unknown",
+];
+const STATUS_COLOR = {
+  "grounded": "var(--st-grounded)",
+  "text-complete": "var(--st-text-complete)",
+  "ingested-magnitude": "var(--st-ingested-magnitude)",
+  "not-ingested": "var(--st-not-ingested)",
+  "not-started": "var(--st-not-started)",
+  "deferred-with-reason": "var(--st-deferred)",
+  "unknown": "var(--st-unknown)",
+};
+/* Matches the producer: only positive proof counts as done. ingested-magnitude
+   is deliberately excluded -- the engine holds the numbers but no consumer
+   delta was observed, and counting it would overstate completion. (Round 9,
+   SD-29 QA: the PROVEN_STATUSES array that used to encode this was dead code
+   -- confirmed by grep, only its own definition and comments referenced it --
+   removed rather than left as an invitation to re-derive a raw-status number
+   under doneness-shaped language. `proven` itself comes from the producer's
+   `wi.proven_units`, not a client-side sum.) */
+
+/* wiring_class (GE-09): orthogonal to status above. `computed` first because
+   it carries the highest evidence bar (an observed consumer delta), then
+   descending the lattice display < static < derived < computed, with
+   `ambiguous` always last and always shown -- it is a work item, not folded
+   into any "done" bucket and never hidden when its count is 0. */
+const WIRING_CLASS_ORDER = ["computed", "derived", "static", "display", "ambiguous"];
+const WIRING_CLASS_COLOR = {
+  "computed": "var(--wc-computed)",
+  "derived": "var(--wc-derived)",
+  "static": "var(--wc-static)",
+  "display": "var(--wc-display)",
+  "ambiguous": "var(--wc-ambiguous)",
+};
+
+/* The class names are the determinator's vocabulary and stay authoritative in
+   the payload, in `decisions.md`, and in every command a reader might run --
+   but they do not say what the unit needs in terms anyone can act on, which is
+   what made this panel unreadable. Render the plain phrasing, keep the
+   technical word visible next to it rather than hidden in a tooltip, so a
+   reader can still tie a bar back to the docs. */
+const WIRING_CLASS_LABEL = {
+  "computed": "changes the character sheet",
+  "derived": "calculates from a formula",
+  "static": "stores the book’s number",
+  "display": "shows text",
+  "ambiguous": "could not be classified",
+};
+
+/* Doneness (2026-08-12). Ladder order, best evidence first, matching the
+   producer's DONENESS_VALUES exactly -- the two must not drift, and the viewer
+   never re-sorts by count. `unmeasurable` and `deferred` sit at the end because
+   neither is a rung: one is an instrument defect, the other a recorded ruling. */
+const DONENESS_ORDER = [
+  "done", "held", "in-progress", "not-started", "unmeasurable", "deferred",
+];
+const DONENESS_COLOR = {
+  "done": "var(--dn-done)",
+  "held": "var(--dn-held)",
+  "in-progress": "var(--dn-in-progress)",
+  "not-started": "var(--dn-not-started)",
+  "unmeasurable": "var(--dn-unmeasurable)",
+  "deferred": "var(--dn-deferred)",
+};
+const DONENESS_LABEL = {
+  "done": "done",
+  "held": "held — as proven as the instrument allows",
+  "in-progress": "part way",
+  "not-started": "not started",
+  "unmeasurable": "can’t be measured",
+  "deferred": "deferred, with a reason",
+};
+
+/* Plain-English rewrite of the ladder above (2026-08-12, "readability" pass).
+   The operator named `grounded`/`derived` as specifically unreadable, and
+   that verdict extends to every term of art this dashboard used to put in
+   front of a reader: `held`, `wiring_class`, `status`, `unit`, `reach`,
+   `computed`/`static`/`display`/`derived`, `ingested-magnitude`,
+   `not-ingested`, `text-complete`, `ambiguous`. None of those words appear in
+   PLAIN_DONENESS_LABEL or PLAIN_DONENESS_BLURB below, or anywhere else this
+   dashboard renders by default -- the technical vocabulary (DONENESS_LABEL,
+   STATUS_ORDER, WIRING_CLASS_ORDER, and everything derived from them) is
+   still shipped, but only inside the collapsed "For engineers" disclosure
+   built by renderEngineerDisclosure(), so an auditor can still tie a plain
+   sentence back to the determinator's own words on request. */
+/* F3 fix (round 5, SD-29 QA finding #3, 2026-08-12): PLAIN_DONENESS_LABEL
+   (the doneness-ladder axis) and STATUS_LABEL (the raw-status axis, below)
+   both render on the same screens -- e.g. the per-record "How usable"
+   column and the filter chips above the same table -- describing two
+   DIFFERENT, non-matching sets of rows. Four entries here used to share the
+   EXACT string with a STATUS_LABEL entry ("held"/"ingested-magnitude" both
+   "recorded, not yet double-checked"; "not-started" and STATUS's
+   "not-started"/"not-ingested" both "not started"; "unmeasurable" and
+   STATUS's "unknown" both "can't be measured yet"; "deferred" and STATUS's
+   "deferred-with-reason" both "skipped on purpose"). Identical wording on
+   two different axes reads as the SAME claim, so a chip and a pill built
+   from different data can flatly contradict each other's tooltip while
+   using the same words. Reworded every doneness-axis label to be visibly
+   distinct from its raw-status counterpart; verified pairwise against
+   STATUS_LABEL below (see the label-collision harness assertion). */
+const PLAIN_DONENESS_LABEL = {
+  "done": "fully usable",
+  "held": "filed, but unconfirmed",
+  "in-progress": "partly working",
+  "not-started": "nothing done yet",
+  "unmeasurable": "can’t be checked yet",
+  "deferred": "intentionally left out",
+};
+/* One clause of plain-English context per rung, used as the tooltip/caption
+   text in place of the old `meaning[v]` strings (which are full of the same
+   banned vocabulary and only appear in the engineer disclosure now). */
+/* F29 audit, re-verified round 5 (SD-29 QA finding #1, 2026-08-12): after
+   round 5 reverted round 4's `ambiguous`+`grounded` -> `done` shortcut,
+   `held` is once again ALL evidence-bearing statuses (`grounded`,
+   `text-complete`, `ingested-magnitude`) under both `static`/`derived` units
+   and `ambiguous` units -- a single, simpler member shape than round 4 left
+   behind. The blurb below still holds: neither shape has had its evidence
+   confirmed against the bar its wiring_class would require (unknown for the
+   `ambiguous` case, known-but-uninstrumented for `static`/`derived`), which
+   is exactly what "filed, but unconfirmed" (PLAIN_DONENESS_LABEL) and the
+   blurb below both say. "real data" (not "real number") is kept from the
+   round-4 wording so the sentence
+   doesn't imply every `held` record is a numeric value -- a `text-complete`
+   record can be prose (a description, a prerequisite list) with no number
+   in it at all. */
+const PLAIN_DONENESS_BLURB = {
+  "done": "a player can rely on this without caveats.",
+  "held": "the game has the real data on file, but nobody has finished checking that the game actually applies it correctly.",
+  "in-progress": "partway there — some of what it needs exists, some doesn’t yet.",
+  "not-started": "nobody has worked on this yet.",
+  "unmeasurable": "our own checking tools can’t currently tell — a gap in the checker, not a claim about the content.",
+  "deferred": "ruled out of scope on purpose, with a reason on record — not pending work.",
+};
+
+/* ======================= per-lane capability sentences =======================
+   The operator's own bar: "classes calculate", "equipment costs money and
+   weight, it also affects abilities (ie +1 long sword vs +2 long sword)".
+   Each lane needs its OWN sentence, because "fully usable" means something
+   different for a spell than for a suit of armor. Grounded in what the
+   `wiring_class` lattice actually proves (see WIRING_CLASS_LABEL above,
+   which is the source these were written from): `computed` wiring is the
+   only class that reaches the game actually reading the number back out and
+   using it; `static`/`derived` can prove the number is filed correctly but
+   never graduate to "done" under today's checks (SD-29 decisions.md §46);
+   `display` is text on a card. Written to describe what "done" proves for
+   that lane, not to claim more than the ladder below it can back up. */
+const LANE_ORDER = [
+  "class", "race", "feat", "spell", "equipment", "equipment_modifier",
+  "class_feature", "race_trait", "monster", "monster_ability", "companion",
+];
+const LANE_LABEL = {
+  "class": "Classes",
+  "race": "Races",
+  "feat": "Feats",
+  "spell": "Spells",
+  "equipment": "Equipment",
+  "equipment_modifier": "Equipment upgrades",
+  "class_feature": "Class features",
+  "race_trait": "Race traits",
+  "monster": "Monsters",
+  "monster_ability": "Monster abilities",
+  "companion": "Companions & familiars",
+};
+const LANE_CAPABILITY = {
+  "class": "A class is fully usable when the game can calculate its numbers for you, automatically, at every level — not just when its name and description are on file.",
+  "race": "A race is fully usable when picking it actually grants the traits and bonuses the book promises, not just when the race is listed as an option.",
+  "feat": "A feat counts as done here in two different senses this dashboard does not blur together: showing correctly on your sheet with its name, description and prerequisites (the great majority of what’s “done” today), and separately, visibly changing your character’s numbers or options in play — only a minority of “done” feats have been confirmed to do the second.",
+  "spell": "A spell is fully usable when casting it actually applies its effect in play. Right now the game mostly has the spell’s stat block filed away, not its effect wired up — that’s a much bigger gap than the raw numbers below suggest.",
+  "equipment": "Equipment counts as done here in two different senses this dashboard does not blur together: showing correctly on your sheet with the right name, price and weight (the great majority of what’s “done” today), and separately, mechanically changing your character the way the book says — a +1 longsword behaving differently than a +2 longsword — which only a minority of “done” equipment has been confirmed to do.",
+  "equipment_modifier": "A weapon or armor upgrade counts as done here in two different senses this dashboard does not blur together: its name and bonus rendering correctly (the great majority of what’s “done” today), and separately, actually changing what the base item does — which only a minority of “done” upgrades has been confirmed to do.",
+  "class_feature": "A class feature is fully usable when picking it visibly changes your character sheet — a bonus, a new ability, an unlocked action — not just when its text is stored.",
+  "race_trait": "A race trait is fully usable when it does something to your character — a bonus, a special ability — not just when its text is on file.",
+  "monster": "A monster is fully usable when it can be dropped into a fight with fully working stats and abilities, not just a name and a description.",
+  "monster_ability": "A monster ability is fully usable when it actually does something in play when triggered, not just when it’s written down.",
+  "companion": "A companion (an animal companion, a familiar, etc.) is fully usable when it comes with working stats and abilities, not just a name.",
+};
+
+/* Plain rewrite of the raw status vocabulary (STATUS_ORDER below), used only
+   where a per-record status has to be shown to a reader — the deep unit
+   search table. Keeps the technical word available in a tooltip/disclosure
+   rather than as the only label, same rule as everything above.
+
+   Root-cause fix, round 4 (SD-29 QA finding F25, 2026-08-12): `status` and
+   `doneness` are two DIFFERENT axes (see the doneness section below), and
+   every round of QA so far has found a new place where a number built from
+   this raw STATUS axis alone got shown with a label that sounds like a
+   DONENESS claim -- round 1 summed `held` into "coverage", round 2 promoted
+   `ambiguous` straight to "done", round 3 (this dict, previously) mapped
+   both `grounded` and `text-complete` to "confirmed working" and used that
+   on the landing page itself. The same status word does NOT mean the same
+   doneness verdict under a different wiring_class (see donenessOf() below --
+   `grounded` on a `static`/`derived` unit is `held`, not `done`), so no
+   label built from `status` alone may ever claim "confirmed", "working",
+   "usable", "done", or "complete". These labels describe what the STATUS
+   OBSERVATION itself is -- an evidence/data-entry state -- never a usability
+   claim. Anywhere this dashboard needs an actual usability claim, it must
+   read `by_doneness`/`by_doneness_kind` (the wiring_class × status join),
+   never `STATUS_LABEL` or a raw status-array sum alone. */
+const STATUS_LABEL = {
+  "grounded": "engine observed this in play",
+  "text-complete": "written up in full",
+  "ingested-magnitude": "recorded, not yet double-checked",
+  "not-ingested": "not started",
+  "not-started": "not started",
+  "deferred-with-reason": "skipped on purpose",
+  "unknown": "can’t be measured yet",
+};
+
+/* ...but `proven` is a FLOOR, not a completion figure, and showing it alone
+   badly understates delivered work. Two structural reasons:
+
+   1. `grounded` requires an OBSERVED consumer delta, and the inventory only
+      probes a subset of kinds. STALE AS OF SD30-E0-F2 (2026-08-14): this used
+      to name `companion` and `spell` as having no probe at all; re-checked
+      against the live payload this cycle and found FALSE for both --
+      `computed`-wiring-class `companion` reads 416 `grounded` of 793 and
+      `computed`-wiring-class `spell` reads 46 `grounded` of 210. Both kinds'
+      `NO_GROUNDING_PROBE` listing was removed in the same change (see that
+      constant's declaration below). No kind is known to have zero probe
+      coverage as of this cycle; if one is found, name it here with the
+      re-derivation that found it, not a carried-forward guess.
+   2. ~3,000 class features land at `unknown` because they are shared option
+      pools (Domain Powers, Rage Powers, Discoveries) with no derivable
+      per-class explanation id -- an instrument limit, not a gap.
+
+   So report three tiers and let the reader pick the one they mean. (Round 9,
+   SD-29 QA: the HELD_STATUSES array that used to encode this was dead code --
+   confirmed by grep, only its own definition and comments referenced it --
+   removed for the same reason as PROVEN_STATUSES above.) */
+/* Kinds the inventory has no consumer-delta probe for; `grounded` is
+   unreachable for them by construction. Round 2 fix (SD-29 QA finding #6,
+   2026-08-12): round 1 listed `equipment` and `equipment_modifier` here from
+   an assumption that turned out false -- the live payload has 133 `grounded`
+   equipment records and 40 `grounded` equipment_modifier records (excl.
+   beginner_box). Re-derived from `docs/work-inventory.json` directly rather
+   than reused from the earlier draft; re-check this list against live data
+   if the corpus or the probe's coverage changes. */
+let NO_GROUNDING_PROBE = ["companion", "spell"];
+/* This default is only a fallback for a payload from before the producer
+   started shipping `no_grounding_probe_kinds` (round 8, SD-29 QA finding,
+   2026-08-12) -- i.e. a cache old enough to predate this field entirely, for
+   which `["companion", "spell"]` really was the producer's live value at the
+   time. loadData() below overwrites it from
+   `DATA.work_inventory.no_grounding_probe_kinds` whenever the payload HAS the
+   field at all (`Array.isArray`, checked without a truthiness/`.length` gate
+   since SD30-E0-F2, 2026-08-14 -- an intentionally empty shipped list must
+   override this default too, not be treated as "field absent"), so the
+   producer's `NO_GROUNDING_PROBE` stays the single source of truth instead of
+   this array silently drifting out of sync with it again. Current live value
+   (SD30-E0-F2): empty -- both kinds this default names now have a landed
+   probe reaching a nonzero `grounded` count under `computed`. */
+
+function sumStatuses(byStatus, keys) {
+  return keys.reduce((a, s) => a + ((byStatus || {})[s] || 0), 0);
+}
+
+/* The curated book list and the work-inventory use different ids for the first
+   Bestiary ("bestiary_1" vs "bestiary"). Without this the book's 1,027 units
+   render as "no inventory data" while sitting right there in the payload. */
+const INVENTORY_ID_ALIASES = { "bestiary_1": "bestiary" };
+
+const esc = (s) => String(s == null ? "" : s)
+  .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+  .replace(/"/g, "&quot;");
+const el = (id) => document.getElementById(id);
+const num = (n) => (n == null ? "–" : Number(n).toLocaleString());
+const pct = (a, b) => (!b ? 0 : (a / b) * 100);
+const fmtPct = (p) => (p >= 10 ? p.toFixed(0) : p.toFixed(1));
+
+/* n/a vs 0% (round 11, operator UI-first reframe, 2026-08-12): `pct`/`fmtPct`
+   above collapse "denominator is 0" and "numerator is 0 of a real
+   denominator" into the same rendered "0.0%" -- a genuine measured zero
+   (we checked, nothing's there) and "we never checked this" must never
+   look the same. `pctCell` is the one place that decision gets made, so
+   every render site routes through it instead of re-deciding by hand.
+   A `b <= 0` (zero, null, undefined, NaN) means no measurement attempt
+   exists behind this figure -- there is nothing to divide by, so there is
+   no percentage to report, literal token `n/a`. `b > 0` is a real,
+   measured denominator; `a === 0` against it is a real, measured `0%`
+   finding about the content, not an absence of one. NEVER summed or
+   averaged elsewhere -- see the `.na` CSS rule for the distinct styling
+   and every caller's "excluded" note for where an n/a cell is dropped out
+   of a stated total. */
+function pctCell(a, b) {
+  if (!b || b < 0) return `<span class="na" title="not measured — no denominator to divide by">n/a</span>`;
+  return `${fmtPct(pct(a, b))}%`;
+}
+const titleCase = (s) => String(s || "").replace(/[_-]/g, " ")
+  .replace(/\b\w/g, (c) => c.toUpperCase());
+
+// F6 fix (round 5, SD-29 QA finding #6, 2026-08-12): provenOf() (a raw
+// PROVEN_STATUSES sum) was defined here and never called anywhere in this
+// file -- confirmed by grep before deleting. Leaving a dead raw-axis helper
+// in the file is exactly what kept making it easy to accidentally re-surface
+// a raw-status number under doneness-shaped language; removed rather than
+// left as an invitation for a 5th relocation.
+function totalOf(byStatus) {
+  return Object.values(byStatus || {}).reduce((a, b) => a + b, 0);
+}
+
+/* ======================= data loading ======================= */
+
+async function fetchJSON(url) {
+  const resp = await fetch(url, { cache: "no-store" });
+  if (!resp.ok) throw new Error(`${url}: HTTP ${resp.status} ${resp.statusText}`);
+  return resp.json();
+}
+
+/* Retry rather than dying on the first failure. The producer republishes this
+   file every 5 minutes; a fetch landing mid-publish used to leave a permanently
+   stuck error box until the operator reloaded by hand. */
+async function loadData(attempt = 0) {
+  try {
+    DATA = await fetchJSON(JSON_URL);
+    // Keep NO_GROUNDING_PROBE single-sourced from the producer (round 8,
+    // SD-29 QA finding, 2026-08-12) -- see its declaration above.
+    //
+    // SD30-E0-F2 (2026-08-14) fix: this used to read
+    // `if (Array.isArray(ngp) && ngp.length)`, which can only ever ADD kinds
+    // to the client's hardcoded `["companion", "spell"]` default, never
+    // shrink it -- an explicitly-EMPTIED payload list (falsy `.length`)
+    // silently left the stale default in place instead of overriding it,
+    // exactly the two-copies-of-the-same-fact hazard this single-sourcing
+    // was built to prevent, just for the empty case rather than a new-kind
+    // case. The producer emptied `NO_GROUNDING_PROBE` this cycle (`spell`
+    // and `companion` both now land nonzero `grounded` under `computed`),
+    // so an empty array is a real, intentional payload value now, not an
+    // absent-field placeholder -- checked with `Array.isArray` alone, so it
+    // is honored.
+    const ngp = DATA && DATA.work_inventory && DATA.work_inventory.no_grounding_probe_kinds;
+    if (Array.isArray(ngp)) NO_GROUNDING_PROBE = ngp;
+    setBanner("");
+    return true;
+  } catch (e) {
+    if (attempt < 3) {
+      await new Promise((r) => setTimeout(r, 400 * Math.pow(2, attempt)));
+      return loadData(attempt + 1);
+    }
+    // Keep whatever we last rendered on screen; a stale dashboard beats a blank one.
+    setBanner(DATA
+      ? `Refresh failed (${esc(e.message)}) — showing the last good data. Retrying.`
+      : `Failed to load dashboard data: ${esc(e.message)}`, DATA ? "warn" : "err");
+    return false;
+  }
+}
+
+async function loadShard(kind) {
+  if (SHARDS.has(kind)) return SHARDS.get(kind);
+  const idx = (DATA.unit_index || {});
+  const meta = ((idx.kinds || {})[kind]) || null;
+  if (!meta) throw new Error(`no shard published for "${kind}"`);
+  const shard = await fetchJSON((idx.shard_base || "units/") + meta.shard);
+  const cols = {};
+  (shard.fields || []).forEach((f, i) => { cols[f] = i; });
+  const parsed = { kind, fields: shard.fields, rows: shard.rows || [], cols };
+  SHARDS.set(kind, parsed);
+  return parsed;
+}
+
+/* ======================= chrome ======================= */
+
+function setBanner(html, kind) {
+  el("banner").innerHTML = html ? `<div class="banner ${kind || "err"}">${html}</div>` : "";
+}
+
+function renderUsage() {
+  const u = DATA && DATA.usage;
+  if (!u || !Object.keys(u).length) { el("usage").innerHTML = ""; return; }
+  const g = (label, val, reset) => `
+    <div class="gauge">
+      <div class="label">${esc(label)}</div>
+      <div class="value">${esc(val == null ? "?" : val)}%</div>
+      <div class="label" title="${esc(reset || "")}">${esc((reset || "").replace(/^resets /, ""))}</div>
+    </div>`;
+  el("usage").innerHTML =
+    g("Session", u.session_used_pct, u.session_reset) +
+    g("Week", u.week_all_models_used_pct, u.week_all_models_reset) +
+    g("Fable", u.fable_used_pct, u.fable_reset);
+}
+
+/* ======================= provenance & readiness =======================
+
+   This payload carries THREE different definitions of "done", from three
+   different sources. Showing them undifferentiated is what made the numbers
+   untrustworthy:
+
+     1. Engine reachability   -- derived, `v06_class_state_dump`. A class counts
+        only when every level 1-20 reaches HeadlessReceiptStatus::Computed.
+        This is the real answer to "is v0.6 done".
+     2. Manifest task state   -- HAND-MAINTAINED by the lead/orchestrator. Goes
+        stale silently, and currently contradicts the engine.
+     3. Corpus unit grounding -- derived, `v06_work_inventory`. How much of the
+        44k-unit corpus is proven, across ALL books including future-state
+        ones. Not a v0.6 completion measure at all.
+
+   Every figure below states which of the three it is.                      */
+
+function channelReadiness() {
+  const mx = DATA.matrix || {};
+  const out = {};
+  const add = (ch, bucket, done) => {
+    if (!ch) return;
+    out[ch] = out[ch] || { classes: [0, 0], races: [0, 0] };
+    out[ch][bucket][1] += 1;
+    if (done) out[ch][bucket][0] += 1;
+  };
+  (mx.classes || []).forEach((c) => add(c.channel, "classes", c.state === "full"));
+  (mx.races || []).forEach((r) => add(r.channel, "races", r.state === "full"));
+  return out;
+}
+
+/* Contradictions and fixture data get reported, not silently rendered. */
+function dataQualityIssues() {
+  const issues = [];
+  const cls = (DATA.matrix || {}).classes || [];
+  const engineFull = cls.filter((c) => c.state === "full").length;
+  const man = (DATA.manifests || {})["v0.6_class_breadth"] || {};
+  const st = man.stats || {};
+  const openItems = (st.pending || 0) + (st.in_progress || 0);
+  if (cls.length && openItems && engineFull === cls.length) {
+    issues.push({
+      summary: `A separate tracking document hasn't caught up with the engine's own count of finished classes.`,
+      detail: `The engine reports all <strong>${engineFull}</strong> v0.6 classes playable ` +
+        `at every level 1&ndash;20 with 0 blocked, but the hand-maintained <code>v0.6_class_breadth</code> ` +
+        `manifest still lists <strong>${openItems}</strong> as pending/in-progress. ` +
+        `The manifest is stale &mdash; the engine figure is the one to trust.`
+    });
+  }
+  const fixtures = [];
+  Object.keys(DATA.manifests || {}).forEach((mid) => {
+    ((DATA.manifests[mid] || {}).items || []).forEach((i) => {
+      const blob = `${i.id || ""} ${i.scope || ""} ${i.claimed_by || ""}`.toLowerCase();
+      if (/\btest\b/.test(blob)) fixtures.push(`${mid} → ${i.id}`);
+    });
+  });
+  if (fixtures.length) {
+    issues.push({
+      summary: `A few internal test entries are mixed into the production counts, so some numbers may be slightly inflated.`,
+      detail: `Test fixture rows are sitting in production manifests and inflating their counts: ` +
+        `<code>${fixtures.map(esc).join("</code>, <code>")}</code>.`
+    });
+  }
+
+  /* The summary panel is regenerated live by `v06_work_inventory --summary`,
+     but the unit shards are built from the COMMITTED docs/work-inventory.json.
+     Those two drift: the committed artifact only refreshes when someone
+     regenerates and commits it, and on a shared checkout another agent's git
+     operation can restore the stale version underneath you. When they
+     disagree, the search layer is showing older truth than the headline. */
+  const idx = DATA.unit_index || {};
+  const wi2 = DATA.work_inventory || {};
+  // Compare the numbers themselves, not their timestamps. A stale artifact can
+  // be only minutes old and still describe a different world, which is exactly
+  // what happened when the committed doc was restored to a pre-fix generation.
+  if (idx.available && wi2.available &&
+      typeof idx.proven_units === "number" && typeof wi2.proven_units === "number" &&
+      idx.proven_units !== wi2.proven_units) {
+    issues.push({
+      summary: `Some numbers on this page may be out of date — the underlying data sources don't currently agree.`,
+      detail: `<strong>Search data disagrees with the summary.</strong> The headline figures come ` +
+        `from a live <code>v06_work_inventory --summary</code> run ` +
+        `(<strong>${num(wi2.proven_units)}</strong> proven), but the searchable shards are built from ` +
+        `the committed <code>docs/work-inventory.json</code> ` +
+        `(<strong>${num(idx.proven_units)}</strong> proven, generated ${esc(idx.generated_at || "?")}). ` +
+        `Per-unit statuses in the drill-downs are stale until that artifact is regenerated and ` +
+        `committed — on a shared checkout another agent's git operation can restore the old one.`
+    });
+  }
+
+  return issues;
+}
+
+/* In-scope units only. The whole-corpus figure includes future-state books
+   (Ultimate Psionics, the Inner Sea line, Bestiary 2-6…) nobody has been asked
+   to do yet, so it understates delivered work by roughly 3x. */
+function inScopeUnits() {
+  const wi = DATA.work_inventory || {};
+  const books = (wi.books || []).filter((b) => b.scope === "in_scope");
+  const agg = {};
+  books.forEach((b) => {
+    Object.keys(b.by_status || {}).forEach((s) => {
+      agg[s] = (agg[s] || 0) + b.by_status[s];
+    });
+  });
+  // F6 fix (round 5, SD-29 QA finding #6, 2026-08-12): this used to also
+  // return raw-axis `proven`/`held` sums that nothing read (grepped every
+  // call site: only `.books`, `.byStatus`, `.units`, `.byDoneness` are ever
+  // accessed) -- dead raw-axis numbers sitting on a doneness-named object
+  // are exactly the shape that keeps re-surfacing under doneness language.
+  // `.gaps`/`.unknown` stay: also unread today, but they describe the
+  // status axis honestly by name and aren't the pattern QA flagged.
+  return {
+    books,
+    byStatus: agg,
+    units: books.reduce((a, b) => a + (b.units || 0), 0),
+    gaps: agg["not-ingested"] || 0,
+    unknown: agg["unknown"] || 0,
+    byDoneness: aggDoneness(books),
+  };
+}
+
+/* Sum the per-book doneness ladders the producer now ships. Summed from the
+   book rows rather than read off the corpus-wide `by_doneness` so the figure is
+   scoped to in-scope books, the same way byStatus above is -- the corpus-wide
+   key includes future-state books nobody has been asked to start. Zero-filled
+   so an empty rung renders as a visible 0. */
+function aggDoneness(books) {
+  const agg = {};
+  DONENESS_ORDER.forEach((v) => { agg[v] = 0; });
+  (books || []).forEach((b) => {
+    Object.keys(b.by_doneness || {}).forEach((v) => {
+      agg[v] = (agg[v] || 0) + b.by_doneness[v];
+    });
+  });
+  return agg;
+}
+
+function renderCompletion() {
+  const wi = (DATA && DATA.work_inventory) || {};
+  const node = el("completion");
+  if (!wi.available) {
+    node.innerHTML = `<div class="pct-caption">${esc(wi.note ||
+      "Work inventory unavailable — completion is not known, which is not the same as zero.")}</div>`;
+    return;
+  }
+  const total = wi.total_units || 0;
+  const proven = wi.proven_units || 0;
+  const by = wi.by_status || {};
+  // Raw evidence bar/legend — kept, but only inside the engineer disclosure
+  // below (renderEngineerDisclosure). Not shown by default: this is the axis
+  // that made the dashboard unreadable, per the operator.
+  const rawSegs = STATUS_ORDER.filter((s) => by[s])
+    .map((s) => `<span title="${esc(s)}: ${num(by[s])}" style="width:${(by[s] / total) * 100}%;background:${STATUS_COLOR[s]}"></span>`)
+    .join("");
+  const rawLegend = STATUS_ORDER.filter((s) => by[s]).map((s) =>
+    `<span class="chip"><span class="sw" style="background:${STATUS_COLOR[s]}"></span>${esc(s)} ${num(by[s])}</span>`).join("");
+
+  const gen = wi.generated_at ? new Date(wi.generated_at) : null;
+  const ageMin = gen ? Math.round((Date.now() - gen.getTime()) / 60000) : null;
+
+  const ready = channelReadiness();
+  const v6 = ready["v0.6"];
+  const inScope = inScopeUnits();
+
+  // Round 4 fix (SD-29 QA finding F27, 2026-08-12): `.pct-big` (1.9em) used
+  // to be spent on the classes/races counts here, while the actual "one
+  // figure that matters" — the in-scope doneness percentage, THE headline
+  // per the surrounding prose everywhere else on this page — rendered two
+  // sections down inside a 0.76em muted `.pct-caption` paragraph, smaller
+  // than every card metric on the page. Prominence now matches the framing:
+  // the doneness percentage gets `.headline-num` (bigger than `.pct-big` ever
+  // was), and classes/races are demoted to `.pct-small`, a secondary
+  // "quick status" line below it, not the dominant visual.
+  //
+  // This also removes a second, previously undetected instance of the exact
+  // recurring bug class this round exists to root out: the OLD fallback
+  // headline (when no "v0.6" channel data exists) rendered `wi.proven_units`
+  // — a straight PROVEN_STATUSES sum, i.e. the raw status axis — as a giant
+  // `.pct-big` "%" figure directly under a caption reading "Classes/races a
+  // player can actually use right now". A raw-status-axis number with a
+  // doneness-shaped caption sitting on it is exactly finding F25's pattern;
+  // it had just never been named because nobody happened to test the
+  // no-v0.6-channel path. The one headline number is now always the actual
+  // in-scope doneness percentage, v6-channel-availability doesn't change
+  // what "the headline" means.
+  const by2 = inScope.byDoneness || {};
+  const doneHeadline = by2["done"] || 0;
+  const headlineDenom = usableDenom(by2, inScope.units || 0);
+  const headlineNum = headlineDenom
+    ? `<div class="headline-num">${fmtPct(pct(doneHeadline, headlineDenom))}<span class="unit">%</span></div>`
+    : `<div class="headline-num na" style="font-size:0.5em;font-style:normal">n/a<span class="unit"> — nothing in scope could be measured</span></div>`;
+
+  // F1-fallout note (round 5, SD-29 QA finding #1, 2026-08-12): this
+  // "N/N classes|races" count and the headline doneness % above it are TWO
+  // DIFFERENT, INDEPENDENTLY-RUN checks that are not required to agree, and
+  // after round 5's fix they visibly don't for races: this figure (the
+  // v0.6 channel-readiness gate, `DATA.matrix.races`) can show "7/7 races
+  // playable at every level 1-20" while the by-lane doneness page shows a
+  // much lower "races fully usable" count, because a race's `wiring_class`
+  // is `ambiguous` in the corpus today and the doneness ladder now (rightly)
+  // caps an unresolved classification at what the `static`/`derived`
+  // fidelity bar would allow, so it can only cost credit, never gain it.
+  // Two real measurements, two different bars, not a contradiction — but
+  // unexplained side by side they read as one, so this says so in place.
+  const subhead = v6
+    ? `<div class="completion" style="margin-top:0.2em">
+         <div class="pct-small">${v6.classes[0]}<span class="unit">/${v6.classes[1]} classes</span></div>
+         <div class="pct-small">${v6.races[0]}<span class="unit">/${v6.races[1]} races</span></div>
+         <div class="pct-caption" style="max-width:24em">
+           <strong>Classes/races a player can actually use right now</strong> — a class only
+           counts once the game can work out every one of its numbers correctly at every
+           level, 1 through 20, checked automatically rather than taken on anyone's word.
+         </div>
+         <div class="pct-caption" style="max-width:24em">
+           This is a <strong>different check</strong> than the "fully usable" doneness figures
+           elsewhere on this page (including for races, in "How usable is each kind of content?"
+           below) — the two are independently run and don't always agree yet. This one
+           asks "does the game correctly compute this at every level, 1-20?"; the doneness
+           figures ask "has our checker actually confirmed this specific record's evidence
+           against the bar its own kind of content needs?" A race can pass the first and still
+           be short of the second if our checker hasn't yet been able to tell what kind of
+           evidence that particular race's traits need — a gap in the checker, not a claim the
+           traits don't work. (Technical detail in the collapsed engineering disclosures below.)
+         </div>
+       </div>`
+    : "";
+
+  // Round 27 QA finding (operator report, 2026-08-13): the sticky `.header`
+  // used to hold the ENTIRE completion section -- headline, ladder, legend,
+  // cross-tab disclosure, wiring-class block, and the full 11-card lane grid
+  // (renderByLane) -- which made the sticky header plausibly fill (or
+  // exceed) the viewport. #view (where route() renders level-2/level-3
+  // content on a lane-card click) sits below that in the document with no
+  // scroll handling anywhere in the file, so a click that correctly routed
+  // and rendered still looked like "nothing happened": the new content was
+  // real, just off-screen below a full-height sticky header.
+  //
+  // Fix, split in two: (1) route() now scrolls the reader to the newly
+  // rendered content on real navigation (see maybeScrollToContent(), wired
+  // to the hashchange listener only, not the refresh tick) and (2) the
+  // sticky header itself shrinks to just what must persist across every
+  // page -- the headline figure and a compact one-line-per-lane strip
+  // (renderLaneStrip, below) so the lane list stays reachable at every
+  // level per the earlier round's finding, without the full card grid's
+  // ladders/legends/capability sentences eating the whole header. Those
+  // stay real, full-detail content -- they move into the Overview view
+  // (`#/`, viewLanding()) instead of persistent chrome. This function keeps
+  // computing everything it always did (nothing about the DATA shape or the
+  // doneness math changed); it just writes less of it into the sticky
+  // header and stashes the rest in OVERVIEW_COMPLETION_HTML for viewLanding()
+  // to place as ordinary page content. renderCompletion() always runs
+  // before route() in both main() and the refresh tick (see boot section),
+  // so this module-level string is guaranteed fresh by the time viewLanding()
+  // reads it.
+  node.innerHTML = `
+    <div class="completion">
+      ${headlineNum}
+      <div class="pct-caption" style="max-width:26em">
+        <strong>In-scope content that's fully usable right now</strong> — ${num(doneHeadline)}
+        of the ${num(headlineDenom)} in-scope records that can actually be checked clear their
+        own bar with no caveats. This is THE headline number on this page; everything below is
+        detail on how it's built.
+      </div>
+    </div>
+    ${renderLaneStrip(wi)}`;
+
+  OVERVIEW_COMPLETION_HTML = `
+    ${subhead}
+    ${renderDonenessBlock(wi, inScope)}
+    ${renderByLane(wi)}
+    ${renderEngineerDisclosure(wi, total, proven, rawSegs, rawLegend, ageMin)}`;
+}
+
+// Set by renderCompletion() every time it runs (boot + successful refresh
+// ticks); read by viewLanding() to place the full doneness ladder, full lane
+// card grid, and engineering disclosures as Overview page CONTENT rather
+// than persistent sticky chrome. See the round-27 comment in
+// renderCompletion() above for why this split exists.
+let OVERVIEW_COMPLETION_HTML = "";
+
+/* Compact, always-sticky version of renderByLane()'s card grid: one short
+   chip per lane (label + doneness %), no ladder/legend/capability sentence.
+   Keeps the earlier round's "the lane list must be reachable at every level"
+   finding true without the full card grid's height living in the sticky
+   header. Deliberately reuses `.card` + `data-kind` so updateLaneSelection()
+   (which queries `#completion .card[data-kind]`) keeps highlighting the
+   active lane here exactly as it did on the old full-size cards. */
+function renderLaneStrip(wi) {
+  const byKind = wi.by_doneness_kind || {};
+  const kinds = Object.keys(byKind);
+  if (!kinds.length) return "";
+  const order = LANE_ORDER.filter((k) => kinds.includes(k))
+    .concat(kinds.filter((k) => !LANE_ORDER.includes(k)));
+  const chips = order.map((kind) => {
+    const by = byKind[kind] || {};
+    const denom = Object.values(by).reduce((a, b) => a + b, 0);
+    const done = by["done"] || 0;
+    const covDenom = usableDenom(by, denom);
+    const label = LANE_LABEL[kind] || titleCase(kind);
+    return `<div class="card flat lane-chip" data-kind="${esc(kind)}"
+      onclick="location.hash='#/lane/${esc(kind)}'" title="${esc(label)} — see the full breakdown on Overview or #/lane/${esc(kind)}">
+      <span class="lane-chip-label">${esc(label)}</span>
+      <span class="lane-chip-pct">${pctCell(done, covDenom)}</span>
+    </div>`;
+  }).join("");
+  return `<div class="lane-strip">${chips}</div>`;
+}
+
+/* Raw instrument vocabulary, collapsed by default. Everything the dashboard
+   used to show up front — status words (grounded/text-complete/…), the
+   wiring_class lattice, and the joint cross-tab — still ships, for a reader
+   who wants to audit a plain-English number back to the determinator's own
+   terms. It just isn't the first thing on screen anymore. */
+function renderEngineerDisclosure(wi, total, proven, rawSegs, rawLegend, ageMin) {
+  return `
+    <details style="margin-top:0.8em">
+      <summary style="cursor:pointer;color:var(--muted);font-size:0.82em">For engineers — raw status/wiring_class vocabulary and the cross-tab</summary>
+      <div class="completion" style="margin-top:0.5em">
+        <div class="bar">${rawSegs}</div>
+      </div>
+      <div class="pct-caption" style="margin-top:0.4em">
+        <strong>Evidence held</strong> — the raw status vocabulary the ladder above is
+        built from. Whole corpus incl. future-state: ${num(proven)}/${num(total)}
+        (${pctCell(proven, total)}) strictly proven. Bar shows all books.
+        ${ageMin != null ? ` · inventory ${ageMin} min old` : ""}
+      </div>
+      <div class="legend">${rawLegend}</div>
+      ${renderWiringClassBlock(wi, total)}
+      ${renderCrossTab(wi)}
+    </details>`;
+}
+
+/* ======================= doneness =======================
+   The panel the operator actually asked for (2026-08-12). `by_status` and
+   `by_wiring_class` are the two MARGINS of one table; how-done-is-this lives in
+   its cells and cannot be recovered from either margin, which is why this
+   dashboard could show both bars and still not answer the question. The
+   producer now crosses them per unit (`doneness_verdict()`) and ships the
+   ladder plus the joint `cross_tab`.
+
+   Two rules this block must not break, both from SD-29 `decisions.md §46.4`:
+   `held` is never summed with `done` into one headline figure, and
+   `unmeasurable` counts toward neither coverage nor gap. */
+/* Shared bar/legend renderers for any doneness ladder ({done, held,
+   in-progress, not-started, unmeasurable, deferred} -> count) against a
+   denominator — used for the in-scope overview (slice 1), the per-lane
+   breakdown (slice 3, renderByLane) and the per-book mini bars (slice 2,
+   viewBooks). Plain labels only; no wiring_class/status vocabulary.
+
+   The two functions below split the "every rung visible, including zero"
+   guarantee between them, not both to the same job (fixed stale comment
+   here, SD-29 QA finding #14, round 2, 2026-08-12): donenessBarHtml is a
+   proportional bar, so a rung at 0 has zero width and is filtered out --
+   there is nothing to render, and a hidden 0-width segment costs nothing.
+   donenessLegendHtml is the one that actually renders every rung
+   unconditionally, including a literal "0" chip, which is what makes an
+   empty "can't be measured yet" bucket read as "none of that" rather than
+   "no run happened". Always render both together; the bar alone would drop
+   that guarantee. */
+function donenessBarHtml(by, denom) {
+  if (!denom) return "";
+  return `<div class="bar">${DONENESS_ORDER.filter((v) => by[v]).map((v) =>
+    `<span title="${esc(PLAIN_DONENESS_LABEL[v])}: ${num(by[v])}" ` +
+    `style="width:${(by[v] / denom) * 100}%;background:${DONENESS_COLOR[v]}"></span>`).join("")}</div>`;
+}
+function donenessLegendHtml(by) {
+  return `<div class="legend">${DONENESS_ORDER.map((v) =>
+    `<span class="chip" title="${esc(PLAIN_DONENESS_BLURB[v] || "")}">` +
+    `<span class="sw" style="background:${DONENESS_COLOR[v]}"></span>` +
+    `${esc(PLAIN_DONENESS_LABEL[v])} ${num(by[v] || 0)}</span>`).join("")}</div>`;
+}
+/* Ladder-sums-to-denominator check, run at render time rather than trusted.
+   Logs to console (visible to anyone who opens devtools) instead of failing
+   silently — a slice whose rungs don't add up is exactly the kind of bug
+   this rebuild exists to catch, not paper over. */
+function assertLadderSums(label, by, denom) {
+  const sum = DONENESS_ORDER.reduce((a, v) => a + (by[v] || 0), 0);
+  if (sum !== denom) {
+    console.error(`doneness ladder mismatch: ${label} sums to ${sum}, denominator is ${denom}`);
+  }
+  return sum === denom;
+}
+
+/* Coverage/usability percentages must never carry `unmeasurable` OR
+   `deferred` in their denominator (SD-29 decisions.md §46.4, QA finding #2
+   round 2 / #21 round 3, 2026-08-12): `unmeasurable` counts toward neither
+   coverage nor gap because the instrument failed, and `deferred` counts
+   toward neither because it was ruled out of scope with a recorded reason --
+   `DONENESS_MEANING["deferred"]` on the producer says plainly "not pending
+   work", the same off-the-ladder status as `unmeasurable`. The ladder BAR
+   still shows both as their own rungs against the full total (unchanged, and
+   correct — see donenessBarHtml above); only percentage math routes through
+   this. */
+function usableDenom(by, total) {
+  return Math.max(0, (total || 0) - (by["unmeasurable"] || 0) - (by["deferred"] || 0));
+}
+
+/* Round 13 fix (finding #2): the excluded-count clause attached to a
+   fully-usable percentage was collapsing `unmeasurable` ("no instrument
+   exists, can't be measured") and `deferred` ("intentionally left out, a
+   recorded ruling") into one "excluded, can't be measured" phrase --
+   accurate only for the unmeasurable portion. `deferred` is deliberate scope
+   exclusion, not a tooling gap, per DONENESS_MEANING["deferred"]. Split them
+   into their own clauses so each is labeled for what it actually is, and
+   omit either clause when that count is zero so a row with only one kind of
+   exclusion still reads cleanly. Shared by renderBookKindCross's denomNote
+   and viewBook's book-card note so both use one accurate convention. */
+function excludedClause(unmeasurable, deferred) {
+  const parts = [];
+  if (unmeasurable) parts.push(`${num(unmeasurable)} can't be measured`);
+  if (deferred) parts.push(`${num(deferred)} intentionally left out`);
+  return parts.length ? ` (${parts.join(", ")})` : "";
+}
+
+/* Round 14 fix (QA: same probeless-caveat bug reappeared on a 3rd/4th
+   surface after round 13 fixed it in renderBookKindCross): the "gap in the
+   checking tool" caveat is only true when there's real evidence on file
+   (done/held/in-progress > 0) that the missing probe is preventing from
+   reaching `done` -- on a kind that's 100% not-started (e.g. companion:
+   {not-started: 1696}, zero everything else) there's nothing for a probe to
+   excuse, and the caveat would contradict the adjacent legend's own
+   "nothing done yet" count. Centralized here so renderByLane and viewCorpus
+   (both of which use this exact wording) share one place to fix; the
+   book×kind panel's differently-worded caveat applied its own inline copy of
+   this same gate through round 15 (left untouched per round-14 scope) --
+   round 16 (finding #3) merged it into a call to this helper too, so this is
+   now the ONLY implementation of the gate+wording in the file. The kind
+   detail page (viewUnits/renderKindHeader) also calls this helper, and as of
+   round 16 feeds it a book-scoped `by` ladder when a book filter is active,
+   not just the corpus-wide one. */
+function probelessCaveat(kind, by, margin) {
+  const hasEvidence = (by["done"] || 0) + (by["held"] || 0) + (by["in-progress"] || 0) > 0;
+  if (!NO_GROUNDING_PROBE.includes(kind) || !hasEvidence) return "";
+  return `<div class="pct-caption" style="margin:${margin || "0.3em 0 0"}">Can’t currently be confirmed by an
+     automated check — our checking tools have no consumer-delta probe for this content
+     type yet, which is a gap in the checking tool, not a claim these records are
+     unfinished.</div>`;
+}
+
+function renderDonenessBlock(wi, inScope) {
+  if (!wi.doneness_available) {
+    return `<div class="pct-caption">${esc(wi.doneness_note ||
+      "Completion isn't known right now — that's different from zero, we just can't measure it this moment.")}</div>`;
+  }
+  const by = inScope.byDoneness || {};
+  const units = inScope.units || 0;
+  const done = by["done"] || 0;
+  const unmeasurable = by["unmeasurable"] || 0;
+  const covDenom = usableDenom(by, units);
+  assertLadderSums("in-scope overview", by, units);
+
+  const unmapped = wi.doneness_unmapped || {};
+  const unmappedKeys = Object.keys(unmapped);
+  const unmappedNote = unmappedKeys.length
+    ? `<div class="pct-caption" style="color:var(--wc-ambiguous)">
+         <strong>${num(unmappedKeys.length)} record group(s)</strong> didn’t fit any rung above,
+         so this ladder is short of the full count until that’s fixed.
+       </div>`
+    : "";
+
+  return `
+    <div class="section-title" style="margin-top:1.1em">How usable is the content right now?</div>
+    <div class="pct-caption">
+      This is the ladder behind the headline figure above: of the ${num(covDenom)} in-scope
+      records that can actually be checked, ${num(done)} are
+      <strong>${esc(PLAIN_DONENESS_LABEL["done"])}</strong> — a player can rely on them without
+      caveats. ${num(unmeasurable)} more records are excluded from that percentage entirely
+      (neither counted as usable nor as a gap) because our instruments can't measure them yet —
+      see the “${esc(PLAIN_DONENESS_LABEL["unmeasurable"])}” rung below. The rest of the ladder is real, tracked progress
+      toward done, not failure: most of it is content that's recorded in the engine but hasn't
+      cleared our own double-check yet, which is a very different thing from not having been
+      touched at all.
+    </div>
+    ${donenessBarHtml(by, units)}
+    ${donenessLegendHtml(by)}
+    <div class="pct-caption" style="margin-top:0.3em">
+      Each record is judged against what its <em>own kind</em> of content needs to be usable —
+      see “How usable is each kind of content?” below for what that means lane by lane. A record
+      that only needs to show text counts as done once it renders; a record that needs to change
+      your character's numbers counts as done only once that's been confirmed to actually happen.
+      “${esc(PLAIN_DONENESS_LABEL["held"])}” is never added into the “${esc(PLAIN_DONENESS_LABEL["done"])}” figure above —
+      those are two different claims, and only one of them has been verified.
+    </div>
+    ${unmappedNote}`;
+}
+
+/* ======================= per-lane breakdown (slice 3) =======================
+   Corpus-wide, not in-scope-only. Slice 2 (books) and slice 3 (lanes) each
+   stand on their own rather than being crossed here, and this block says so
+   on screen rather than silently mixing a whole-corpus figure into an
+   in-scope one. The book x kind cross this comment used to say the producer
+   couldn't compute now exists (round 11, `by_doneness_book_kind`) — it lives
+   per-book on the book page (renderBookKindCross), not here, since "how
+   usable is Ultimate Equipment's equipment" is a book-scoped question a
+   reader asks from that book's own page, not from this corpus-wide slice. */
+/* The "done" figure is dominated by `display`+`text-complete`/`grounded` for
+   most lanes -- proof the record renders, not that it changes anything in
+   play. The one tier that proves the second, stronger claim is `computed`
+   wiring_class crossed with `grounded` status (SD-29 QA finding #17, round 3,
+   2026-08-12). Round 2 only hedged this in prose below the headline while the
+   unqualified "fully usable" label stayed right next to the raw done count --
+   QA's finding was that a hedge nobody's eye lands on doesn't fix a
+   misleading number. This puts the sub-count ON the number itself, in every
+   place a "done" figure is shown per kind, so the headline and its true
+   meaning can never be read apart from each other. */
+/* Round 4 fixes (SD-29 QA findings F30/F32, 2026-08-12):
+   F30 — "correctly filed" used to describe both this suffix's non-mechanical
+   remainder AND `held`'s own blurb, the same phrase on two different rungs
+   either side of the done/not-done line — and "correctly" overclaimed on its
+   own: presence in the engine was confirmed, correctness was not. Reworded
+   to "present in the engine", distinct from held's blurb (worded again round
+   5, see PLAIN_DONENESS_LABEL/PLAIN_DONENESS_BLURB above) and honest about
+   what was actually verified.
+   F32 — the producer now zero-fills `mechanically_confirmed_by_kind` for
+   every kind seen, so a kind can genuinely read 0 rather than being absent.
+   The `mc >= done` case used to suppress the suffix entirely, rendering
+   `class` (27/27 mechanically confirmed, the best result in the corpus)
+   identically to a kind this sub-count doesn't apply to at all. That case
+   now reads as an explicit positive statement instead of nothing. */
+/* Round 5 re-verification (SD-29 QA finding #2, 2026-08-12): the specific
+   worry was a "done" record whose own `status` is `grounded` (i.e. really
+   was observed in play) getting swept into this suffix's "not yet observed"
+   remainder. `mechanically_confirmed_by_kind` only counts `computed`+
+   `grounded`. At that point `DONENESS_DONE` was reachable two ways:
+   `computed`+`grounded` (counted in `mc`) and `display`+(`text-complete`|
+   `grounded`) (never counted in `mc`) -- and round 5 argued a `display`+
+   `grounded` record landing in "the rest" was still fine, since a `display`
+   unit can't change character state by construction.
+   Round 6 (SD-29 QA, 2026-08-12) found that argument was itself the
+   over-favorable read QA was hunting for: a `grounded` status on a
+   `display` unit isn't neutral evidence, it's proof the `display`
+   classification is probably wrong (see the `display` branch of
+   `doneness_verdict()` in the producer), and crediting it as `done` at all
+   was the bug. `display`+`grounded` no longer reaches `done` -- `done` is
+   now reachable exactly one way for a non-`computed` kind: `display`+
+   `text-complete`, which is never counted in `mc`. So every non-`computed`
+   "done" record now lands in "the rest" by construction, and "not yet
+   observed changing anything in play" is true for all of them (their status
+   is `text-complete`, not `grounded` -- no consumer delta was ever observed
+   for a `done`, non-mechanically-confirmed record post-fix). Machine-checked
+   in structural.js against real shard data, not just this reasoning. */
+function mechConfirmedSuffix(kind, done, wi) {
+  if (!done) return "";
+  const mc = (wi.mechanically_confirmed_by_kind || {})[kind] || 0;
+  if (mc >= done) {
+    return ` (all ${num(mc)} mechanically confirmed — the strongest evidence tier, an observed effect in play)`;
+  }
+  return mc > 0
+    ? ` (${num(mc)} mechanically confirmed; the rest is present in the engine but not yet observed changing anything in play)`
+    : ` (0 mechanically confirmed — present in the engine, none yet observed changing anything in play)`;
+}
+
+function renderByLane(wi) {
+  const byKind = wi.by_doneness_kind || {};
+  const kinds = Object.keys(byKind);
+  if (!kinds.length) {
+    return `<div class="pct-caption">Per-content-type breakdown isn’t available in this payload right now.</div>`;
+  }
+  // Any kind the payload has that isn't in our known order still renders,
+  // appended at the end with a title-cased fallback label rather than being
+  // dropped — a kind silently missing would read as "0 of that", not "we
+  // forgot to add a row for it".
+  const order = LANE_ORDER.filter((k) => kinds.includes(k))
+    .concat(kinds.filter((k) => !LANE_ORDER.includes(k)));
+
+  // Independent source of truth: the by-kind margin from the payload, NOT the
+  // sum of the very ladder being checked. Round 1's check summed `by` and
+  // compared it to itself (sum === sum, always true, could never catch a real
+  // mismatch) — this is what let finding #8's unit_index drift go undetected
+  // (SD-29 QA finding #10, round 2, 2026-08-12).
+  const byKindTotals = wi.by_kind || {};
+  const cards = order.map((kind) => {
+    const by = byKind[kind] || {};
+    const denom = Object.values(by).reduce((a, b) => a + b, 0);
+    if (typeof byKindTotals[kind] === "number") {
+      assertLadderSums(`lane: ${kind}`, by, byKindTotals[kind]);
+    }
+    const done = by["done"] || 0;
+    const covDenom = usableDenom(by, denom);
+    const unmeasurable = by["unmeasurable"] || 0;
+    const deferred = by["deferred"] || 0;
+    const label = LANE_LABEL[kind] || titleCase(kind);
+    const capability = LANE_CAPABILITY[kind] ||
+      `We don't yet have a written definition of "fully usable" for this content type.`;
+    // Round 4 fix (SD-29 QA finding F31, 2026-08-12): this per-kind card
+    // lives in the persistent header, rendered on every page — the
+    // highest-traffic surface on the site — but was missing the same
+    // probeless caveat viewCorpus/renderUnitsShell already carry. A reader
+    // landing on companion/spell here saw a low "fully usable" % with no
+    // explanation that the checking tool simply has no probe for that kind,
+    // same gap finding #18 (round 3) already fixed on the other two pages.
+    // Round 14 fix (finding #2): the caveat was still ungated here even
+    // after round 13 added the hasEvidence gate to the book×kind panel --
+    // now routed through the shared probelessCaveat() helper so this and
+    // viewCorpus can't drift from that gate again.
+    const probelessNote = probelessCaveat(kind, by);
+    // Round 20 (three-level drilldown): this card is level 1. Clicking it
+    // now drops to level 2 -- one panel per book for this same lane -- via
+    // #/lane/<kind>, rather than being a dead end. #/kind/<kind> (the
+    // corpus-wide, unfiltered record search) is still reachable one click
+    // further in, from any book panel on that page.
+    return `<div class="card flat" data-kind="${esc(kind)}" onclick="location.hash='#/lane/${esc(kind)}'" style="cursor:pointer">
+      <h3>${esc(label)}</h3>
+      <div class="sub">${esc(capability)}</div>
+      <div class="metric"><span class="n">${pctCell(done, covDenom)}</span>
+        <span class="of">${num(done)} / ${num(covDenom)} fully usable${mechConfirmedSuffix(kind, done, wi)}${excludedClause(unmeasurable, deferred)}</span></div>
+      ${donenessBarHtml(by, denom)}
+      ${donenessLegendHtml(by)}
+      ${probelessNote}
+      <div class="pct-caption" style="margin-top:0.5em">See the per-book breakdown &rarr;</div>
+    </div>`;
+  }).join("");
+
+  return `
+    <div class="section-title" style="margin-top:1.4em">How usable is each kind of content?</div>
+    <div class="pct-caption">
+      Whole corpus, every book we have (not just the ${num((wi.books || [])
+        .filter((b) => b.scope === "in_scope").length)} in active scope) — this answers a
+      different question from the ladder above (“how usable is what we've committed to right
+      now”) and the two numbers are not meant to match. What counts as “fully usable” is
+      different for every row; read the sentence under each name before comparing percentages
+      across rows.
+    </div>
+    <div class="grid">${cards}</div>`;
+}
+
+/* ======================= level 2: one lane, every book ======================= */
+/* Round 20 (three-level drilldown). Mirror of renderBookKindCross() in the
+   OTHER direction: that function is "this book, every content type";
+   viewLane() is "this content type, every book". No new producer rollup —
+   `by_doneness_book_kind` (book -> kind -> doneness ladder) already has
+   every number this needs, built round 11 for exactly this axis. Each book
+   panel here links on to #/kind/<kind>?book=<id>, the existing level-3 page
+   (built rounds 12/15/16/17/18), so this view's only new job is grouping
+   that existing page's entry points by lane instead of leaving them
+   reachable only from inside a book's own page. */
+function bookTitleFor(inventoryBookId) {
+  const found = (DATA.books || []).find(
+    (x) => (INVENTORY_ID_ALIASES[x.id] || x.id) === inventoryBookId);
+  return (found && found.title) || titleCase(inventoryBookId);
+}
+
+// Round 22 QA finding 4: `bookTitleFor()` above ALWAYS returns something
+// displayable (falls back to a title-cased version of whatever id it's
+// given), which is correct for its own job but means it cannot tell a
+// caller "this id isn't a real book" -- callers that need to draw that
+// distinction (the breadcrumb, below) need this instead.
+//
+// Round 23 QA finding 1: this used to validate against `DATA.books` alone --
+// the 24-book CURATED list -- while the level-3 page's own <select>/table
+// validate the SAME book id against the shard's own real book ids for this
+// kind (37 real books corpus-wide, gathered from `by_doneness_book_kind`,
+// same set viewLane()'s per-book cards above are built from). 13 real books
+// have shard data and doneness ladders but aren't in the smaller curated
+// list (inner_sea_races, book_of_the_damned_volume_1, ultimate_psionics,
+// ...), so isKnownBookId() wrongly said "not a real book" for any of them --
+// the breadcrumb fell back to "All books" while the select/table correctly
+// showed the specific book, a 3-vs-1 surface disagreement reachable via
+// ordinary navigation (69 of 233 book x kind cards, 30%). Fixed by
+// validating against the SAME source of truth as the select/table:
+// `by_doneness_book_kind[bookId][kind]`'s presence, the exact same
+// condition viewLane() uses to decide whether a book gets its own card for
+// this kind. `kind` is optional so old callers that truly mean "is this id
+// a real book at all, for ANY kind" still work, but the breadcrumb (the one
+// caller today) always passes it.
+function isKnownBookId(inventoryBookId, kind) {
+  const bookKind = ((DATA.work_inventory || {}).by_doneness_book_kind) || {};
+  const byBook = bookKind[inventoryBookId];
+  if (!byBook) return false;
+  if (!kind) return true;
+  const byKind = byBook[kind];
+  return !!(byKind && Object.values(byKind).reduce((a, v) => a + v, 0) > 0);
+}
+
+/* Shared by the level-2 lane page (lane-wide, all books) and the level-3
+   record list (book-scoped, computed client-side from the already-loaded
+   shard — see renderCategoryChips()/categoryBreakdownForBook() below). Takes
+   a {category: {label, done, held, ...}} map straight off the payload/shard
+   and renders it with the SAME ladder/percentage pattern as every other
+   doneness surface on this page — sums are a partition of `by category`, so
+   they reconcile with the lane/book total by construction, not by a
+   separately-maintained total. */
+// Round 21 QA finding 4: rendering every raw category as its own row
+// stopped being a "sub-category breakdown" once a lane had hundreds of
+// them (class_feature: 582 groups, 87 of them singletons; race_trait:
+// 365 groups) -- that's the corpus's raw type_facet vocabulary leaking
+// through as if it were a considered category system, not a genuinely
+// useful axis (checked first: there is no coarser dotted-path level or
+// other axis in this data that collapses class_feature/race_trait to
+// something materially smaller than "book", which the per-book cards
+// above this section already show). Past this threshold, show the top
+// groups by volume plus an honest statement, and collapse the full raw
+// list behind an explicit disclosure instead of dumping it by default.
+const CATEGORY_TABLE_COLLAPSE_THRESHOLD = 100;
+const CATEGORY_TABLE_TOP_N = 15;
+// Round 22 QA finding 5: a raw-group-count threshold alone missed
+// `equipment_modifier` -- 80 groups, 53 of them singletons (66%), 40%
+// uncategorised, the SAME shape of problem as class_feature/race_trait
+// above just at a smaller absolute scale, so it kept rendering as a flat
+// 80-row dump with no "too fine-grained" caveat. A lane where most groups
+// are singletons is exactly the "one row per naming convention, not a
+// considered category system" case this section exists to call out,
+// regardless of whether the raw count alone clears 100 -- so trigger on
+// EITHER condition, not just the raw count. 0.5 was picked to catch
+// equipment_modifier (0.66) without newly catching any other lane checked
+// at the time (companion 0.27, equipment 0.33, feat 0.25, race 0.33, monster
+// 0.07 -- monster's problem is a large uncategorised bucket, not many
+// singletons, so it correctly stays out of this condition and keeps its own
+// separate majority-uncategorised note instead).
+const CATEGORY_SINGLETON_RATIO_THRESHOLD = 0.5;
+
+function categoryRowHtml(cat, c) {
+  const catTotal = DONENESS_ORDER.reduce((s, v) => s + (c[v] || 0), 0);
+  const done = c["done"] || 0;
+  const covDenom = usableDenom(c, catTotal);
+  const isUncat = cat === "none" || cat === "n/a";
+  return `<tr>
+    <td>${esc(c.label || titleCase(cat))}${isUncat ? ` <span class="pill" style="opacity:.7">uncategorised</span>` : ""}</td>
+    <td class="num">${num(catTotal)}</td>
+    <td class="num">${pctCell(done, covDenom)}</td>
+    <td>${bookDonenessCell(c, catTotal)}</td>
+  </tr>`;
+}
+
+function categoryTableHtml(axisLabel, rowsHtml) {
+  return `<div class="table-wrap"><table>
+      <thead><tr><th>${esc(axisLabel)}</th><th class="num">Records</th><th class="num">Fully usable</th>
+        <th>How usable — full breakdown</th></tr></thead>
+      <tbody>${rowsHtml}</tbody>
+    </table></div>`;
+}
+
+function categoryBreakdownHtml(kind, categories, axisLabel) {
+  const keys = Object.keys(categories || {});
+  if (!keys.length) {
+    return `<div class="pct-caption">No sub-category data available for ${esc(titleCase(kind))} —
+      see "For engineers" below for exactly why, if this lane's categories were left n/a.</div>`;
+  }
+  const total = keys.reduce((a, k) => a + DONENESS_ORDER.reduce((s, v) => s + (categories[k][v] || 0), 0), 0);
+  const uncatKey = keys.find((k) => k === "none" || k === "n/a");
+  const uncatTotal = uncatKey
+    ? DONENESS_ORDER.reduce((s, v) => s + (categories[uncatKey][v] || 0), 0) : 0;
+  const majority = total > 0 && uncatTotal > total / 2;
+  const majorityNote = majority ? `<strong>Most ${esc(titleCase(kind))} in this corpus aren’t sorted into a
+        category yet</strong> — the uncategorised row below is the majority of this lane, not a
+        rounding error; treat every percentage above it with that in mind.` : "";
+
+  // Round 22 QA finding 5: also trigger the "too fine-grained" honest-
+  // framing treatment on a high singleton ratio, not just a high raw group
+  // count — see CATEGORY_SINGLETON_RATIO_THRESHOLD above.
+  const singletonCount = keys.filter((k) =>
+    DONENESS_ORDER.reduce((s, v) => s + (categories[k][v] || 0), 0) === 1).length;
+  const singletonRatio = keys.length ? singletonCount / keys.length : 0;
+  if (keys.length > CATEGORY_TABLE_COLLAPSE_THRESHOLD || singletonRatio >= CATEGORY_SINGLETON_RATIO_THRESHOLD) {
+    const sortedKeys = [...keys].sort((a, b) =>
+      DONENESS_ORDER.reduce((s, v) => s + (categories[b][v] || 0), 0) -
+      DONENESS_ORDER.reduce((s, v) => s + (categories[a][v] || 0), 0));
+    const topKeys = sortedKeys.slice(0, CATEGORY_TABLE_TOP_N);
+    const topRows = topKeys.map((cat) => categoryRowHtml(cat, categories[cat])).join("");
+    const allRows = sortedKeys.map((cat) => categoryRowHtml(cat, categories[cat])).join("");
+    return `
+      <div class="pct-caption">${esc(axisLabel)} — ${num(total)} records across ${num(keys.length)} raw
+        source categories. <strong>That's too fine-grained to be a useful breakdown on its own</strong> —
+        most of it is one row per class/archetype/subrace naming convention in the source data, not a
+        considered category system; browse individual records at the book level above instead.
+        ${majorityNote}</div>
+      <div class="pct-caption" style="margin-top:0.4em">Top ${num(topKeys.length)} groups by record count, for context:</div>
+      ${categoryTableHtml(axisLabel, topRows)}
+      <details style="margin-top:0.6em">
+        <summary class="pct-caption" style="cursor:pointer">Show all ${num(keys.length)} raw categories (for engineers / the curious)</summary>
+        ${categoryTableHtml(axisLabel, allRows)}
+      </details>`;
+  }
+
+  const rows = keys.map((cat) => categoryRowHtml(cat, categories[cat])).join("");
+  return `
+    <div class="pct-caption">${esc(axisLabel)} — ${num(total)} records across ${num(keys.length)} groups.
+      ${majorityNote}</div>
+    ${categoryTableHtml(axisLabel, rows)}`;
+}
+
+function viewLane(m) {
+  const kind = m[1];
+  const wi = DATA.work_inventory || {};
+  const bookKind = wi.by_doneness_book_kind || {};
+  const label = LANE_LABEL[kind] || titleCase(kind);
+  const capability = LANE_CAPABILITY[kind] ||
+    `We don't yet have a written definition of "fully usable" for this content type.`;
+
+  const bookIds = Object.keys(bookKind).filter((b) => (bookKind[b][kind] || null) &&
+    Object.values(bookKind[b][kind]).reduce((a, v) => a + v, 0) > 0);
+  bookIds.sort((a, b) => bookTitleFor(a).localeCompare(bookTitleFor(b)));
+
+  const lvl1 = (wi.by_doneness_kind || {})[kind] || {};
+  const lvl1Total = Object.values(lvl1).reduce((a, v) => a + v, 0);
+
+  const cards = bookIds.map((bid) => {
+    const by = bookKind[bid][kind] || {};
+    const units = Object.values(by).reduce((a, v) => a + v, 0);
+    const done = by["done"] || 0;
+    const covDenom = usableDenom(by, units);
+    const probelessNote = probelessCaveat(kind, by);
+    return `<div class="card flat" onclick="location.hash='#/kind/${esc(kind)}?book=${esc(bid)}'" style="cursor:pointer">
+      <h3>${esc(bookTitleFor(bid))}</h3>
+      <div class="sub">${num(units)} records</div>
+      <div class="metric"><span class="n">${pctCell(done, covDenom)}</span>
+        <span class="of">${num(done)} / ${num(covDenom)} fully usable${excludedClause(by["unmeasurable"] || 0, by["deferred"] || 0)}</span></div>
+      ${donenessBarHtml(by, units)}
+      ${donenessLegendHtml(by)}
+      ${probelessNote}
+      <div class="pct-caption" style="margin-top:0.5em">See individual ${esc(titleCase(kind))} records &rarr;</div>
+    </div>`;
+  }).join("");
+
+  // Reconciliation, computed and asserted live (not just claimed in the
+  // report) rather than trusted: the per-book cards above must sum to
+  // exactly the level-1 lane total this same kind shows on the landing page,
+  // since by_doneness_book_kind and by_doneness_kind are two independently
+  // maintained margins of the same underlying units.
+  const bookSum = bookIds.reduce((a, bid) =>
+    a + Object.values(bookKind[bid][kind] || {}).reduce((s, v) => s + v, 0), 0);
+  if (lvl1Total && bookSum !== lvl1Total) {
+    console.error(`level2/level1 mismatch: lane ${kind} books sum to ${bookSum}, lane total is ${lvl1Total}`);
+  }
+
+  const idx = DATA.unit_index || {};
+  const kindMeta = (idx.kinds || {})[kind] || {};
+  const axisLabel = kindMeta.category_axis_label || "Category";
+  const categorySection = kindMeta.categories
+    ? categoryBreakdownHtml(kind, kindMeta.categories, axisLabel)
+    : `<div class="pct-caption">Per-record search data isn't loaded for this lane, so a
+        lane-wide category breakdown isn't available here — see the individual book
+        pages for record-level category filtering instead.</div>`;
+  const schoolSection = kind === "spell"
+    ? (() => {
+        const sj = kindMeta.school_join || {};
+        const cov = sj.coverage_pct != null ? `${sj.coverage_pct}%` : "n/a";
+        const laneSpellCount = Object.values(kindMeta.categories || {})
+          .reduce((a, c) => a + DONENESS_ORDER.reduce((s, v) => s + (c[v] || 0), 0), 0);
+        // Round 23 QA finding 2: the School section's own record-count
+        // caption (rendered by categoryBreakdownHtml below, from
+        // school_categories' bucket totals) reads MORE than the lane's true
+        // spell count above -- arithmetically correct (round 22's fix
+        // credits a multi-school spell toward every school it names, per
+        // `multi_school_extra_credits`), but shown with no explanation it
+        // looks like the lane gained spells just by switching axes. Spell
+        // out the honest reason inline, right where a reader would notice
+        // the mismatch.
+        const extraCredits = sj.multi_school_extra_credits || 0;
+        const schoolTotal = laneSpellCount + extraCredits;
+        // Round 24 QA finding 5: the previous wording ("3 more than the
+        // lane's 2,843 spells above...") never stated the actual total
+        // (2,846) the reader is looking at below, forcing an inference, and
+        // "3 more" had no explicit subject. State the total explicitly.
+        const multiNote = extraCredits > 0
+          ? ` The school totals below add up to <strong>${num(schoolTotal)}</strong> —
+              ${num(extraCredits)} more than the lane's ${num(laneSpellCount)}
+              spells above — because ${num(sj.multi_school_spell_count || extraCredits)} spell${(sj.multi_school_spell_count || extraCredits) === 1 ? "" : "s"}
+              belong${(sj.multi_school_spell_count || extraCredits) === 1 ? "s" : ""} to more than one school and
+              ${(sj.multi_school_spell_count || extraCredits) === 1 ? "is" : "are"} counted once per school below —
+              nothing was added to the corpus.`
+          : "";
+        return `<div class="section-title" style="margin-top:1.2em">Spell school (separate from tradition above)</div>
+          <div class="pct-caption">“Tradition” above (Arcane/Divine/Psychic) is who casts a spell.
+            “School” here (Necromancy, Evocation, …) is what KIND of magic it is — a different axis,
+            never merged with tradition. Extracted from the spell's own <code>SCHOOL:</code> field in
+            the source corpus — coverage ${esc(cov)}
+            (${sj.stats ? num(sj.stats.ok) : "0"} of ${num(laneSpellCount)} spells joined cleanly;
+            the rest report school as literal <code>n/a</code>, never guessed).${multiNote}</div>
+          ${categoryBreakdownHtml(kind, kindMeta.school_categories, "School")}`;
+      })()
+    : "";
+
+  el("view").innerHTML = `
+    <div class="section-title">${esc(label)} — by book</div>
+    <div class="pct-caption">${esc(capability)} Click a book to see its individual
+      ${esc(titleCase(kind))} records.</div>
+    <div class="grid">${cards || `<div class="empty">No books have any ${esc(titleCase(kind))} records in this payload.</div>`}</div>
+    <div class="section-title" style="margin-top:1.4em">${esc(axisLabel)} — whole lane, every book</div>
+    ${categorySection}
+    ${schoolSection}`;
+}
+
+/* The joint table itself, collapsed by default. This is the artifact that makes
+   the ladder auditable: a reader who distrusts a rung can see exactly which
+   (wiring_class, status) cells fed it. Rendered from `cross_tab`, whose keys are
+   "<wiring_class>|<status>" -- corpus-wide across every kind, not split by kind.
+   `donenessOf()` is therefore called here with no `kind` argument on purpose: a
+   `display|ingested-magnitude` or `computed|ingested-magnitude` cell mixes
+   probeless-kind (`spell`/`companion`) records, which the ladder now reports as
+   `held`, with other kinds' records that are genuinely `in-progress` -- one
+   colour cannot be exactly right for a mixed cell, so this table keeps the
+   coarser, kind-agnostic verdict rather than guessing which sub-population
+   dominates. `by_doneness_kind` (rendered per-kind in renderByLane() and the
+   per-record rows in renderUnitRows(), both of which DO pass `kind`) is the
+   accurate source for any kind-specific question. */
+function renderCrossTab(wi) {
+  const ct = wi.cross_tab || {};
+  if (!Object.keys(ct).length) return "";
+  const cells = {};
+  let grand = 0;
+  Object.keys(ct).forEach((k) => {
+    const [wc, st] = k.split("|");
+    cells[wc] = cells[wc] || {};
+    cells[wc][st] = ct[k];
+    grand += ct[k];
+  });
+  // Same guard renderByLane() applies to `kind`: a status or wiring_class the
+  // payload has that isn't in our known order arrays still renders, appended
+  // at the end, rather than being silently dropped from the table (round 9,
+  // SD-29 QA, latent-not-live per QA's own check — all 5 wiring classes and 7
+  // statuses are present in both order arrays today).
+  const presentStatuses = new Set();
+  const presentWiring = new Set();
+  Object.keys(cells).forEach((wc) => {
+    presentWiring.add(wc);
+    Object.keys(cells[wc] || {}).forEach((st) => presentStatuses.add(st));
+  });
+  const statuses = STATUS_ORDER.filter((st) => presentStatuses.has(st))
+    .concat([...presentStatuses].filter((st) => !STATUS_ORDER.includes(st)));
+  const wiringClasses = WIRING_CLASS_ORDER.filter((wc) => presentWiring.has(wc))
+    .concat([...presentWiring].filter((wc) => !WIRING_CLASS_ORDER.includes(wc)));
+  const head = `<tr><th></th>${statuses.map((st) =>
+    `<th style="text-align:right;font-weight:normal;color:var(--muted)">${esc(st)}</th>`).join("")}</tr>`;
+  const rows = wiringClasses.filter((wc) => cells[wc]).map((wc) => {
+    const tds = statuses.map((st) => {
+      const n = (cells[wc] || {})[st];
+      if (!n) return `<td style="text-align:right;color:var(--muted)">·</td>`;
+      const v = donenessOf(wc, st);
+      return `<td style="text-align:right" title="${esc(wc)} + ${esc(st)} → ${esc(DONENESS_LABEL[v] || "?")}">` +
+             `<span style="border-bottom:2px solid ${DONENESS_COLOR[v] || "transparent"}">${num(n)}</span></td>`;
+    }).join("");
+    return `<tr><th style="text-align:left;font-weight:normal">${esc(WIRING_CLASS_LABEL[wc] || wc)}` +
+           ` <code style="color:var(--muted)">${esc(wc)}</code></th>${tds}</tr>`;
+  }).join("");
+  return `
+    <details style="margin-top:0.5em">
+      <summary style="cursor:pointer;color:var(--muted)">
+        status × wiring_class — the ${num(grand)}-unit table both bars are margins of
+      </summary>
+      <div style="overflow-x:auto">
+        <table class="mono" style="border-collapse:collapse;font-size:0.85em;margin-top:0.4em">
+          ${head}${rows}
+        </table>
+      </div>
+      <div class="pct-caption">
+        Cell colours here are <strong>kind-agnostic</strong> — computed from wiring class
+        &times; status alone, without knowing which kind's probe-availability applies to a
+        given cell. A cell can mix several kinds, so no single colour could be correct
+        per-kind.${wi.spell_kind_capped_count ? `
+        For the ${num(wi.spell_kind_capped_count)} <code>spell</code> records in the
+        <code>computed</code>&#43;<code>ingested-magnitude</code>,
+        <code>computed</code>&#43;<code>text-complete</code>, and
+        <code>display</code>&#43;<code>ingested-magnitude</code> cells, that means the
+        colour shown is <strong>in-progress</strong> here but those records actually
+        resolve to <strong>held</strong> once kind is taken into account — see the
+        per-lane cards above for the kind-accurate ladder. (<code>display</code>&#43;<code>text-complete</code>
+        is unaffected: that is <code>display</code>'s own completion bar, not the
+        kind-capping logic.)` : `
+        No kind currently disagrees between this cell-level colour and its own
+        kind-capped verdict (<code>NO_GROUNDING_PROBE</code> is empty as of
+        SD30-E0-F2, 2026-08-14 — see the per-lane cards above if that changes).`}
+        Whole corpus, every book — the ladder above is in-scope
+        books only, so these do not sum to it either way. (Count shipped by the producer
+        from <code>cross_tab_by_kind</code>, not hand-typed — see
+        <code>spell_kind_capped_count</code> in <code>work_inventory</code>.)
+      </div>
+    </details>`;
+}
+
+/* Mirrors the producer's doneness_verdict() so a cell can be coloured client
+   side. Deliberately duplicated rather than shipped per cell: if the two ever
+   disagree, the producer's rollup is authoritative and this table is what looks
+   wrong, which is the failure direction that gets noticed. Returns "" for a pair
+   neither side has a rule for, and colours nothing. */
+function donenessOf(wc, st, kind) {
+  const verdict = donenessOfUncapped(wc, st);
+  // Round 8 fix (SD-29 QA finding, 2026-08-12): "in-progress" claims the bar
+  // is "reachable with an instrument that exists" -- false for any `kind`
+  // with no consumer-delta probe at all (see NO_GROUNDING_PROBE above).
+  // Mirrors doneness_verdict()'s kind-capping in the producer; `kind` is
+  // optional so every existing caller that has no kind in hand (e.g. the
+  // corpus-wide cross-tab, which mixes kinds per cell) keeps its old,
+  // uncapped behaviour rather than being silently miscoloured by a kind it
+  // never had.
+  if (verdict === "in-progress" && kind != null && NO_GROUNDING_PROBE.includes(kind)) {
+    return "held";
+  }
+  return verdict;
+}
+
+function donenessOfUncapped(wc, st) {
+  if (st === "deferred-with-reason") return "deferred";
+  if (st === "not-ingested" || st === "not-started") return "not-started";
+  if (st === "unknown") return "unmeasurable";
+  // Mirrors doneness_verdict() in the producer (round 5 fix, SD-29 QA finding
+  // #1, 2026-08-12): a `grounded`/`text-complete`/`ingested-magnitude` status
+  // under an `ambiguous` wiring_class is real evidence -- it does not become
+  // false because the wiring classifier separately failed, so it is never
+  // discarded into "unmeasurable". But it also cannot be credited with MORE
+  // confidence than an unresolved classification can guarantee: an
+  // `ambiguous` record could resolve to `static`/`derived`, which caps at
+  // `held` even for `grounded` (see that branch below). Round 4 routed
+  // `ambiguous`+`grounded` to "done" on the theory that `grounded` clears
+  // every bar -- refuted by this file's own `static`/`derived` branch, which
+  // proves it doesn't. Round 5 applies the lower-bound rule used everywhere
+  // else in this function (unknown never beats the worst case it could be):
+  // every evidence-bearing status under `ambiguous` lands in "held".
+  if (wc === "ambiguous") {
+    return (st === "grounded" || st === "text-complete" || st === "ingested-magnitude") ? "held" : "";
+  }
+  // `display` (round 7 fix, SD-29 QA, 2026-08-12): `text-complete` is
+  // display's actual bar. `grounded` and `ingested-magnitude` are both
+  // disagreement signals, but not the SAME one. `ingested-magnitude` means
+  // the consumer-delta probe has not been run yet -- an instrument that
+  // exists and is reachable, so it is genuinely "in-progress". `grounded`
+  // means the probe WAS run and produced evidence that contradicts the
+  // `display` classification -- the same "needs a working classifier before
+  // the bar is even known" situation `ambiguous` is in (see above), so it
+  // gets the same verdict: "held", not "in-progress" (round 6 put both here,
+  // which broke the `ambiguous` floor below) and not "done" (round 5).
+  if (wc === "display") {
+    return st === "text-complete" ? "done" : st === "grounded" ? "held" : "in-progress";
+  }
+  if (wc === "static" || wc === "derived") {
+    return (st === "ingested-magnitude" || st === "grounded" || st === "text-complete") ? "held" : "";
+  }
+  if (wc === "computed") return st === "grounded" ? "done" : "in-progress";
+  return "";
+}
+
+/* wiring_class is orthogonal to status: it says WHAT KIND of evidence a unit
+   needs (display/static/derived/computed), with `ambiguous` for units the
+   determinator could not classify. It never feeds `proven` above -- a unit's
+   wiring_class does not move it between the bars in the status legend.
+   `ambiguous` never reaches `done` (round 5 fix, SD-29 QA finding #1,
+   2026-08-12): an unresolved classification is capped at what the
+   `static`/`derived` fidelity bar would allow for the same status, so it
+   can only cost credit, never gain it -- `static`/`derived`, a resolution
+   `ambiguous` cannot rule out, caps even `grounded` evidence at `held`. So
+   every evidence-bearing status under `ambiguous`
+   (`grounded`/`text-complete`/`ingested-magnitude`) lands in `held` --
+   visible on the ladder and counted in the usable denominator, but never in
+   the "done" numerator -- rather than being discarded into `unmeasurable`.
+   Per GE-09 it must render even when a book/corpus has zero of it, not be
+   dropped silently. */
+function renderWiringClassBlock(wi, total) {
+  if (!wi.wiring_class_available) {
+    return `<div class="pct-caption">${esc(wi.wiring_class_note ||
+      "wiring_class summary unavailable — not the same as zero.")}</div>`;
+  }
+  const byWiring = wi.by_wiring_class || {};
+  return `
+    <div class="completion" style="margin-top:0.5em">
+      ${wiringMiniBar(byWiring, total)}
+    </div>
+    <div class="pct-caption">
+      <strong>Proof each unit needs</strong> — what finishing it would take, which is a
+      different question from how far along it is. Crossed with the evidence bar above,
+      this is what produces a kind-agnostic approximation of the doneness ladder — the
+      real, kind-aware ladder lives in the per-lane cards above.
+      <code>ambiguous</code> means
+      determination itself failed: an undone work item, never folded into a "done"
+      bucket or into <code>unknown</code>.
+    </div>
+    <div class="legend">${wiringLegend(byWiring)}</div>`;
+}
+
+function renderFreshness() {
+  const t = DATA && DATA.generated_at;
+  if (!t) return "";
+  const age = Math.round((Date.now() - new Date(t).getTime()) / 60000);
+  const stale = age > 20;
+  return `<span class="freshness ${stale ? "stale" : ""}" title="${esc(t)}">payload ${age} min old${stale ? " — producer may be wedged" : ""}</span>`;
+}
+
+/* ======================= routing ======================= */
+
+const ROUTES = [
+  { re: /^\/?$/,                 view: viewLanding,   crumb: () => [] },
+  { re: /^\/corpus$/,            view: viewCorpus,    crumb: () => [["Corpus", "#/corpus"]] },
+  // Round 20: level 2 (one lane, every book). "Corpus" stays the level-1
+  // parent crumb — #/lane/<kind> is one click below the lane cards on
+  // #/corpus and renderByLane, same as before, just with a named stop now
+  // that a page exists there instead of jumping straight to level 3.
+  { re: /^\/lane\/([\w-]+)$/,    view: viewLane,      crumb: (m) => [["Corpus", "#/corpus"], [LANE_LABEL[m[1]] || titleCase(m[1]), null]] },
+  // Round 20: #/kind/<kind>?book=<id> is level 3, reached either directly
+  // (unfiltered, corpus-wide search — crumb stops at the lane) or via a
+  // book click from #/lane/<kind> or a book's own page (crumb adds the book
+  // as its own link, back to #/lane/<kind> in between — Corpus > Lane > Book,
+  // per the brief's required breadcrumb shape). DATA may not be loaded yet
+  // on the very first paint, so bookTitleFor's DATA.books lookup falls back
+  // to a title-cased id, same as everywhere else this file guards that race.
+  //
+  // Round 21 fixed the <select>/table for an unrecognized `?book=` id
+  // (viewUnits() clears unitState.book when the id isn't one of the
+  // shard's own book values). Round 22 QA finding 4: the breadcrumb was a
+  // SEPARATE code path that built straight off the raw, unvalidated `m[2]`
+  // route-match via bookTitleFor() — which always returns SOMETHING
+  // (falling back to a title-cased version of the bogus id), so a typo'd
+  // book id produced a confident-looking FAKE book name in the crumb even
+  // while the select/table correctly showed the unfiltered, all-books view.
+  // Now routes through isKnownBookId() first, same "unrecognized == no
+  // filter" rule the select/table already apply, so all three surfaces
+  // agree.
+  //
+  // Round 23 QA finding 1: round 22's isKnownBookId() fix validated against
+  // the wrong SET (the curated DATA.books list, not the shard's real book
+  // ids), which just moved the disagreement rather than closing it -- see
+  // isKnownBookId() above for the actual fix. `m[1]` (the kind) is passed
+  // through here so the check is scoped to books that are real for THIS
+  // kind specifically, matching viewLane()'s per-book cards exactly.
+  { re: /^\/kind\/([\w-]+)(?:\?book=([\w-]+))?$/, view: viewUnits, crumb: (m) => (m[2] && isKnownBookId(m[2], m[1]))
+      ? [["Corpus", "#/corpus"], [LANE_LABEL[m[1]] || titleCase(m[1]), `#/lane/${m[1]}`],
+         [bookTitleFor(m[2]), null]]
+      : [["Corpus", "#/corpus"], [LANE_LABEL[m[1]] || titleCase(m[1]), `#/lane/${m[1]}`], ["All books", null]] },
+  { re: /^\/books$/,             view: viewBooks,     crumb: () => [["Books", "#/books"]] },
+  { re: /^\/book\/([\w-]+)$/,    view: viewBook,      crumb: (m) => [["Books", "#/books"], [bookTitleFor(m[1]), null]] },
+  { re: /^\/classes$/,           view: viewClasses,   crumb: () => [["Classes", "#/classes"]] },
+  { re: /^\/races$/,             view: viewRaces,     crumb: () => [["Races", "#/races"]] },
+  { re: /^\/decisions$/,         view: viewDecisions, crumb: () => [["Decisions", "#/decisions"]] },
+];
+
+function currentRoute() {
+  const h = (location.hash || "#/").slice(1);
+  for (const r of ROUTES) {
+    const m = h.match(r.re);
+    if (m) return { r, m };
+  }
+  // Round 22 QA finding 6 (documentation only, no behavior change): an
+  // empty/malformed `#/lane/` hash (no kind segment, so it fails every
+  // ROUTES regex above) falls through to here and lands on Overview
+  // (ROUTES[0]) rather than a dedicated "bad lane" error page. Judged sound
+  // by QA: content and chrome agree (both genuinely show Overview), only
+  // the URL bar itself still reads "#/lane/" -- and that URL shape is not
+  // reachable via any in-page click, only by hand-editing/truncating the
+  // hash. Left as-is on purpose; this comment exists so a future round
+  // doesn't rediscover and re-litigate the same non-decision.
+  return { r: ROUTES[0], m: [] };
+}
+
+function renderCrumbs(route) {
+  const parts = route.r.crumb(route.m);
+  const bits = [`<a href="#/">Overview</a>`];
+  parts.forEach(([label, href], i) => {
+    bits.push(`<span class="sep">/</span>`);
+    bits.push(href && i < parts.length - 1
+      ? `<a href="${href}">${esc(label)}</a>`
+      : `<span class="here">${esc(label)}</span>`);
+  });
+  el("crumbs").innerHTML = bits.join(" ") + `<span style="margin-left:auto">${renderFreshness()}</span>`;
+}
+
+// Round 21 QA finding 6: the level-1 lane grid (renderByLane, inside the
+// persistent "completion" header) is on screen at every level but never
+// got a "this one is selected" treatment when a reader is inside that
+// lane's level-2/level-3 pages -- it only ran once at boot and on payload
+// refresh, never from route(). A full renderCompletion() re-render on
+// every hash change would also blow away the "N/N" completion header
+// unnecessarily, so this is the lighter pass the finding allows: just
+// toggle a class on whichever lane card (if any) matches the current
+// route's kind. `data-kind` is stamped on each card by renderByLane().
+function updateLaneSelection(activeKind) {
+  const node = el("completion");
+  if (!node) return;
+  node.querySelectorAll(".card[data-kind]").forEach((card) => {
+    card.classList.toggle("selected-lane", !!activeKind && card.dataset.kind === activeKind);
+  });
+}
+
+function route() {
+  if (!DATA) return;
+  const cur = currentRoute();
+  renderCrumbs(cur);
+  const hashPath = (location.hash || "#/").slice(1);
+  const laneOrKindMatch = hashPath.match(/^\/(?:lane|kind)\/([\w-]+)/);
+  updateLaneSelection(laneOrKindMatch ? laneOrKindMatch[1] : null);
+  try {
+    cur.r.view(cur.m);
+  } catch (e) {
+    el("view").innerHTML = `<div class="banner err">View failed to render: ${esc(e.message)}</div>`;
+    console.error(e);
+  }
+  return cur;
+}
+
+// Round 27 fix (operator report: "when I click a panel, nothing happens").
+// route() always rendered the right content into #view -- confirmed by a
+// stubbed-DOM click-path simulation across every route before this round --
+// the operator just never SAW it: #view sits below the sticky .header in the
+// document, and nothing anywhere in this file ever moved the viewport, so a
+// click into a lane/book/kind card correctly re-rendered #view while the
+// still-full-height header kept it entirely below the fold.
+//
+// This wrapper is the fix for that: on a genuine navigation (a hash change,
+// which covers both a card's onclick="location.hash=...' and back/forward/
+// typed-URL navigation) it scrolls the crumbs bar -- and #view right below
+// it -- to the top of the viewport, so newly routed content is where the
+// reader is actually looking. It must NOT run on the ~60s refresh tick's
+// call to route() (see main(), below): that call exists to keep an
+// operator's current page up to date with fresh data, not to move their
+// scroll position out from under them mid-read. So this wrapper is wired
+// ONLY to the "hashchange" listener; main()'s boot call and the refresh
+// tick's conditional call both invoke the bare route() above directly and
+// never reach this function.
+//
+// Target element: #crumbs, not #view. Once the header shrinks (see
+// renderCompletion()/OVERVIEW_COMPLETION_HTML above), #crumbs is the first
+// thing below the sticky header showing where navigation landed (the
+// breadcrumb trail), with #view's content immediately below it in normal
+// flow -- scrolling #crumbs to the viewport top brings both the "where am I"
+// context and the new content into view together, rather than #view alone
+// (which would show new content with no breadcrumb visible above it).
+function routeAndScroll() {
+  const isLanding = (location.hash || "#/").replace(/^#/, "") === "" ||
+    (location.hash || "#/").replace(/^#/, "") === "/";
+  route();
+  if (isLanding) return; // landing/overview: nothing to scroll to, already at the top
+  const target = el("crumbs");
+  if (target && typeof target.scrollIntoView === "function") {
+    target.scrollIntoView({ block: "start", behavior: "smooth" });
+  }
+}
+
+/* ======================= views ======================= */
+
+function card(href, title, sub, bodyHtml) {
+  return `<div class="card" onclick="location.hash='${href}'">
+    <h3>${esc(title)}</h3><div class="sub">${esc(sub)}</div>${bodyHtml || ""}</div>`;
+}
+
+/* Raw status mini-bar. Tooltip leads with the plain-English label
+   (STATUS_LABEL) and keeps the technical word alongside it in parentheses,
+   rather than as the only text. As of round 2 (SD-29 QA finding #11,
+   2026-08-12) this is used ONLY inside "For engineers" disclosures, where the
+   raw word is the point -- #/corpus and #/kind/* were reachable from ordinary
+   navigation and are no longer a vocabulary carve-out (see viewCorpus and
+   renderUnitsShell), so they use donenessBarHtml/plain labels like every
+   other slice now. */
+function miniBar(byStatus, total) {
+  if (!total) return "";
+  const segs = STATUS_ORDER.filter((s) => byStatus[s])
+    .map((s) => `<span title="${esc(STATUS_LABEL[s] || s)} (${esc(s)}): ${num(byStatus[s])}" style="width:${(byStatus[s] / total) * 100}%;background:${STATUS_COLOR[s]}"></span>`)
+    .join("");
+  return `<div class="bar" style="height:7px">${segs}</div>`;
+}
+
+// `scope` is required-in-practice, not optional: SD-29 QA finding #12 (round
+// 2, 2026-08-12) flagged four unlabeled, differently-scoped "how done" figures
+// crowding the landing page with no way to tell they weren't the same claim.
+// Every card built off this helper now states its own scope inline so it
+// reads as "this card's own narrower thing", not a competitor to the ONE
+// headline figure at the very top of every page (the in-scope doneness
+// percentage in the persistent header, built by renderDonenessBlock).
+//
+// `noun` replaces the old hardcoded "proven" (round 3, SD-29 QA finding #20,
+// 2026-08-12): `metric()` had no idea what its caller was actually counting,
+// and two of its three call sites (Classes, Races) are not `proven`/status
+// data at all -- they're `DATA.matrix.*.state === "full"` counts, a
+// completely different measure that "proven" was silently mislabeling.
+// Callers now say what they're counting in plain words.
+function metric(n, of, noun, scope) {
+  return `<div class="metric"><span class="n">${pctCell(n, of)}</span>
+          <span class="of">${num(n)} / ${num(of)} ${esc(noun)}${scope ? ` — ${esc(scope)}` : ""}</span></div>`;
+}
+
+/* wiring_class mini bar (GE-09). Same shape as miniBar() above but keyed off
+   WIRING_CLASS_ORDER/COLOR, and it always renders the "ambiguous" segment
+   even at width 0-and-present (i.e. the key exists with value 0) so an
+   emptied-out ambiguous bucket is still visible in the legend, not just the
+   bar -- see wiringLegend(). */
+function wiringMiniBar(byWiring, total) {
+  if (!total) return "";
+  const segs = WIRING_CLASS_ORDER.filter((c) => byWiring[c])
+    .map((c) => `<span title="${esc(c)}: ${num(byWiring[c])}" style="width:${(byWiring[c] / total) * 100}%;background:${WIRING_CLASS_COLOR[c]}"></span>`)
+    .join("");
+  return `<div class="bar" style="height:7px">${segs}</div>`;
+}
+
+function wiringLegend(byWiring) {
+  /* Plain phrasing first, the determinator's own word after it in code style --
+     the technical name stays on screen so a bar can be tied back to
+     wiring-class-determination.md, it just stops being the only thing there. */
+  return WIRING_CLASS_ORDER.map((c) =>
+    `<span class="chip" title="${esc(c)}: ${num(byWiring[c] || 0)}">` +
+    `<span class="sw" style="background:${WIRING_CLASS_COLOR[c]}"></span>` +
+    `${esc(WIRING_CLASS_LABEL[c] || c)} <code>${esc(c)}</code> ${num(byWiring[c] || 0)}</span>`).join("");
+}
+
+function viewLanding() {
+  const wi = DATA.work_inventory || {};
+  const idx = DATA.unit_index || {};
+  const cards = [];
+
+  if (wi.available) {
+    const kinds = Object.keys(idx.kinds || {}).length;
+    // No percentage on this card (round 3, SD-29 QA finding #19, 2026-08-12):
+    // round 2 put a corpus-wide "fully usable" % here that coincidentally
+    // rounded to the same 8.5% as the Books card below while measuring a
+    // genuinely different thing — two numbers landing on the same digits by
+    // chance is actively confusing, not just cluttered. The ONE headline
+    // "how usable is this corpus" number lives in the persistent header at
+    // the top of every page (in-scope, unmeasurable-and-deferred-excluded);
+    // this card is pure navigation into the searchable record browser, where
+    // each content type shows its own scoped, capability-sentence-qualified
+    // percentage (see viewCorpus / LANE_CAPABILITY).
+    cards.push(card("#/corpus", "Search everything",
+      `${num(wi.total_units)} records across ${kinds || Object.keys(wi.by_kind || {}).length} content types — every book, searchable by name`,
+      ""));
+  }
+
+  // Round 4 fix (SD-29 QA finding F25, 2026-08-12): this card used to show
+  // `bProven` — a straight PROVEN_STATUSES sum, i.e. the raw status axis —
+  // under the label "confirmed working", which is a doneness-shaped claim
+  // built from a number that carries no doneness information at all (it read
+  // 565 higher than the corpus's real `done` count). Route through the real
+  // doneness ladder instead, same as every other "fully usable" figure on
+  // this page.
+  const books = DATA.books || [];
+  const invBooks = (wi.books || []);
+  const bTotal = invBooks.reduce((a, b) => a + (b.units || 0), 0);
+  const bDoneness = aggDoneness(invBooks);
+  const bDone = bDoneness["done"] || 0;
+  const bDenom = usableDenom(bDoneness, bTotal);
+  cards.push(card("#/books", "Books",
+    `${books.length} curated · ${invBooks.length} in inventory`,
+    bTotal ? metric(bDone, bDenom, "fully usable", "by book, whole-corpus record count") : `<span class="na">n/a</span>`));
+
+  // Label the channel split. "7 of 37 races" reads as 19% done when in fact
+  // every race in the active channel is complete and the other 30 belong to a
+  // channel nobody has started.
+  const chanSplit = (rows) => {
+    const byCh = {};
+    rows.forEach((r) => { byCh[r.channel || "(none)"] = (byCh[r.channel || "(none)"] || 0) + 1; });
+    return Object.keys(byCh).sort().map((c) => `${c} ${byCh[c]}`).join(" · ");
+  };
+
+  const cls = (DATA.matrix && DATA.matrix.classes) || [];
+  const clsFull = cls.filter((c) => c.state === "full").length;
+  cards.push(card("#/classes", "Classes",
+    chanSplit(cls), metric(clsFull, cls.length, "playable at every level", "this class roster")));
+
+  const races = (DATA.matrix && DATA.matrix.races) || [];
+  const rFull = races.filter((r) => r.state === "full").length;
+  cards.push(card("#/races", "Races",
+    chanSplit(races), metric(rFull, races.length, "playable at every level", "this race roster")));
+
+  const dec = ((DATA.channels || {})["v0.6"] || {}).decisions || {};
+  const open = (dec.open || []).length;
+  cards.push(card("#/decisions", "Decisions",
+    `${open} open · ${(dec.resolved || []).length} resolved`,
+    `<div class="metric"><span class="n">${open}</span><span class="of">awaiting a call</span></div>`));
+
+  let html = "";
+
+  // Disagreements between sources go at the top. Rendering a stale manifest
+  // beside the engine's answer without comment is how this dashboard lost
+  // the operator's trust.
+  const issues = dataQualityIssues();
+  if (issues.length) {
+    // Round 25 QA finding 5: this banner is the primary, always-visible
+    // top-of-page surface (not tucked behind any disclosure), so it must not
+    // leak raw engineering vocabulary (CLI invocations, repo file paths,
+    // "proven"/"unit" jargon) into its always-shown text -- every other
+    // place in this file that shows content like this puts the plain-
+    // language version up front and the raw detail behind a "For engineers"
+    // <details> disclosure (see e.g. viewBook()'s status/wiring_class mix
+    // above). Two layers here too: a jargon-free summary in the banner
+    // itself, and the exact figures/sources behind the same convention.
+    html += `<div class="banner warn"><strong>Some numbers here may be out of date</strong>` +
+      `<ul style="margin:0.4em 0 0 1.1em;padding:0">` +
+      issues.map((i) => `<li style="margin-bottom:0.3em">${esc(i.summary)}</li>`).join("") +
+      `</ul>
+      <details style="margin-top:0.6em">
+        <summary style="cursor:pointer;color:var(--muted);font-size:0.82em">For engineers — exact figures and sources</summary>
+        <ul style="margin:0.4em 0 0 1.1em;padding:0">` +
+        issues.map((i) => `<li style="margin-bottom:0.3em">${i.detail}</li>`).join("") +
+        `</ul>
+      </details>
+    </div>`;
+  }
+
+  // Round 27 fix: this is the doneness ladder, full per-lane card grid, and
+  // "for engineers" disclosures that used to live inside the sticky
+  // `.header` (see the comment on renderCompletion()/OVERVIEW_COMPLETION_HTML
+  // above) -- real page CONTENT, not persistent chrome, so it belongs on the
+  // one view a reader lands on to get the whole picture, not stuck to every
+  // page's top. The sticky header keeps only the headline % and a compact
+  // one-line-per-lane strip; this is where the full detail behind both now
+  // lives.
+  html += OVERVIEW_COMPLETION_HTML;
+
+  /* Delivered content — a SIZE, not a completion claim (round 3, SD-29 QA
+     finding #19, 2026-08-12). Round 2 called this "the primary 'how usable
+     is this' figure", which put two different things on screen calling
+     themselves primary: this table (no denominator, so it cannot even BE a
+     percentage) and the header's doneness ladder above the fold on every
+     page (an actual in-scope percentage, unmeasurable-and-deferred
+     excluded). Only one figure gets to be the headline; that's the header.
+     This table answers a different, narrower question -- "how much of the
+     corpus has the engine loaded in and carried end-to-end to a character
+     sheet" -- and says so plainly rather than competing for the same claim.
+     Counted off the engine's own compiled tables by v06_content_state_dump. */
+  const cs = DATA.content_state || {};
+  if (cs.available && (cs.books || []).length) {
+    const totalRecs = cs.books.reduce(
+      (a, b) => a + Object.values(b.kinds || {}).reduce((x, y) => x + y, 0), 0);
+    html += `<div class="section-title">Delivered content — ${num(totalRecs)} records
+      across ${cs.books.length} books, engine-verified</div>
+      <div class="result-note">This is a corpus-size count, not a completion percentage —
+      it has no denominator because every one of these ${num(totalRecs)} records is
+      already loaded into the engine and carried through to a player-facing character
+      sheet, verified by actually building the character end to end rather than trusting
+      a row count. Counted off the engine's compiled tables
+      (<code>${esc(cs.generated_by || "v06_content_state_dump")}</code>). For "how usable
+      is this corpus" as a percentage, see the figure at the very top of this page —
+      that is the one headline number; everything below answers its own narrower,
+      differently-scoped question (see each section's own label).</div>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Book</th><th class="num">Records</th><th>Breakdown</th></tr></thead><tbody>` +
+      cs.books.map((b) => {
+        const kinds = b.kinds || {};
+        const n = Object.values(kinds).reduce((x, y) => x + y, 0);
+        const detail = Object.keys(kinds).filter((k) => kinds[k])
+          .map((k) => `${esc(k)} <strong>${num(kinds[k])}</strong>`).join(" · ");
+        return `<tr><td>${esc(titleCase(b.id))}</td>
+          <td class="num"><strong>${num(n)}</strong></td>
+          <td style="color:var(--muted)">${detail || "—"}</td></tr>`;
+      }).join("") + `</tbody></table></div>`;
+  }
+
+  html += `<div class="section-title">Readiness by channel — checked automatically by the engine</div>`;
+  const ready = channelReadiness();
+  const wcMeta = {};
+  (DATA.workchannels || []).forEach((c) => { wcMeta[c.id] = c; });
+  const rCards = Object.keys(ready).sort().map((ch) => {
+    const r = ready[ch];
+    const done = r.classes[0] + r.races[0];
+    const of = r.classes[1] + r.races[1];
+    const meta = wcMeta[ch] || {};
+    const complete = of > 0 && done === of;
+    return `<div class="card flat">
+      <h3>${esc(meta.label || ch)} ${complete ? '<span style="color:var(--full)">✓</span>' : ""}</h3>
+      <div class="sub">${esc(meta.kind || "")}</div>
+      <div class="metric"><span class="n" style="color:${complete ? "var(--full)" : "var(--fg)"}">${done}/${of}</span>
+        <span class="of">playable at every level 1&ndash;20</span></div>
+      <div class="sub" style="margin:0">
+        ${r.classes[1] ? `classes ${r.classes[0]}/${r.classes[1]}` : ""}
+        ${r.races[1] ? ` · races ${r.races[0]}/${r.races[1]}` : ""}
+      </div></div>`;
+  });
+  html += `<div class="grid">${rCards.join("")}</div>`;
+
+  html += `<div class="section-title">Where the work stands</div><div class="grid">${cards.join("")}</div>`;
+
+  // Manifests are hand-maintained; say so on the tin.
+  const mans = DATA.manifests || {};
+  const mIds = Object.keys(mans).filter((k) => (mans[k].items || []).length);
+  if (mIds.length) {
+    html += `<div class="section-title">Manifests — hand-maintained, may lag the engine</div>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Manifest</th><th>Scope</th><th class="num">Complete</th>
+        <th class="num">Open</th><th>Managed by</th></tr></thead><tbody>` +
+      mIds.map((k) => {
+        const m = mans[k], s = m.stats || {};
+        const open = (s.pending || 0) + (s.in_progress || 0);
+        return `<tr>
+          <td class="mono">${esc(k)}</td>
+          <td style="max-width:34em;color:var(--muted);font-size:0.92em">${esc(m.scope || "")}</td>
+          <td class="num">${s.complete || 0}</td>
+          <td class="num" style="color:${open ? "var(--warn)" : "var(--muted)"}">${open}</td>
+          <td>${esc(m.managed_by || "")}</td></tr>`;
+      }).join("") + `</tbody></table></div>`;
+  }
+  el("view").innerHTML = html;
+}
+
+/* Round 2 (SD-29 QA finding #11, 2026-08-12): this page and #/kind/* are NOT
+   an auditor-only carve-out — #/corpus is the first card on the ordinary
+   landing page, reachable by normal navigation, and QA's other findings
+   (#3 held-as-coverage, #6 the stale no-probe list, #9 duplicate chips) all
+   lived on these pages. Decision: bring them up to the same plain-language
+   standard as the three main slices rather than gating them behind a
+   disclosure — a search tool a reader can reach with one click needs to be
+   readable without one, the same as everything else on the page. */
+function viewCorpus() {
+  const idx = DATA.unit_index || {};
+  const wi = DATA.work_inventory || {};
+  if (!idx.available) {
+    el("view").innerHTML = `<div class="banner warn">${esc(idx.note ||
+      "Per-record search isn't available right now, so this page can't list content types.")}</div>` +
+      corpusFallbackTable(wi);
+    return;
+  }
+  const kinds = idx.kinds || {};
+  const byKind = wi.by_doneness_kind || {};
+  // Round 3 (SD-29 QA finding #18, 2026-08-12): this page had neither the
+  // per-kind capability sentence (LANE_CAPABILITY, otherwise only shown in
+  // renderByLane) nor the probeless caveat (NO_GROUNDING_PROBE, otherwise
+  // only shown in renderUnitsShell) -- so a reader landing here saw e.g.
+  // spell at 0.1% with no explanation, and equipment/feat's inflated-looking
+  // percentages with no hedge, even though both explanations already existed
+  // elsewhere on the site. Bring both treatments here too, same as every
+  // other place a per-kind "done" figure is shown.
+  const cards = Object.keys(kinds).sort((a, b) => kinds[b].units - kinds[a].units).map((k) => {
+    const m = kinds[k];
+    const by = byKind[k] || {};
+    // Round 4 fix (SD-29 QA finding F33, 2026-08-12): the numerator here
+    // comes from `wi.by_doneness_kind[k]` and the denominator from
+    // `DATA.unit_index.kinds[k]` — two different sources this page never
+    // checked against each other. Same pattern renderByLane already guards
+    // with `wi.by_kind` as the independent margin; `m.units` (the unit_index
+    // shard's own record count) is this page's equivalent independent
+    // source, so cross-check the ladder against it the same way.
+    if (typeof m.units === "number") {
+      assertLadderSums(`corpus card: ${k}`, by, m.units);
+    }
+    const done = by["done"] || 0;
+    const unmeasurable = by["unmeasurable"] || 0;
+    const deferred = by["deferred"] || 0;
+    const covDenom = usableDenom(by, m.units);
+    const capability = LANE_CAPABILITY[k] ||
+      `We don't yet have a written definition of "fully usable" for this content type.`;
+    // Round 14 fix (finding #2, same bug on a 3rd surface): this caveat was
+    // ungated here too, using the exact same wording/data as renderByLane's
+    // pre-round-14 bug -- companion would have shown the "gap in the
+    // checking tool" caveat here despite being 100% not-started with zero
+    // evidence. Now shares probelessCaveat() with renderByLane so the two
+    // can't drift apart again.
+    const probelessNote = probelessCaveat(k, by);
+    // Round 14 fix (finding #3): this card stated the checkable denominator
+    // (covDenom) but never showed the excluded count/reason bridging it to
+    // `m.units`, unlike the other three "fully usable" surfaces. Wired
+    // through the same excludedClause() helper for consistency.
+    // Round 21 QA finding 7: this used to link straight to `#/kind/${k}`
+    // (level 3, corpus-wide/unfiltered search), bypassing the level-2
+    // `#/lane/${k}` per-book breakdown entirely -- so a reader starting
+    // from viewCorpus never saw the per-book drilldown that renderByLane's
+    // cards on the landing page always route through. Both level-1
+    // surfaces now share the same entry point; `#/kind/<kind>` is still
+    // reachable one click further in, from any book panel on the lane page.
+    return card(`#/lane/${k}`, titleCase(k), capability,
+      `<div class="sub" style="margin-top:-0.3em">${num(m.units)} records — click to search</div>
+       <div class="metric"><span class="n">${pctCell(done, covDenom)}</span>
+       <span class="of">${num(done)} / ${num(covDenom)} fully usable${mechConfirmedSuffix(k, done, wi)}${excludedClause(unmeasurable, deferred)}</span></div>` +
+      donenessBarHtml(by, m.units) + probelessNote);
+  });
+  el("view").innerHTML =
+    `<div class="section-title">Search everything, by content type</div>
+     <div class="pct-caption">Same "fully usable" measure as the rest of this page, scored
+       against each content type's own definition below — click a content type to search
+       its individual records by name.</div>
+     <div class="grid">${cards.join("")}</div>`;
+}
+
+function corpusFallbackTable(wi) {
+  const byKind = wi.by_kind || {};
+  if (!Object.keys(byKind).length) return `<div class="empty">No content-type data in this payload.</div>`;
+  return `<div class="table-wrap"><table><thead><tr><th>Content type</th><th class="num">Records</th></tr></thead><tbody>` +
+    Object.keys(byKind).sort((a, b) => byKind[b] - byKind[a])
+      .map((k) => `<tr><td>${esc(titleCase(k))}</td><td class="num">${num(byKind[k])}</td></tr>`).join("") +
+    `</tbody></table></div>`;
+}
+
+/* ---- the searchable unit layer ---- */
+
+const UNIT_PAGE = 250;
+let unitState = null;
+
+function viewUnits(m) {
+  const kind = m[1];
+  // Round 12 fix (finding #3): a click from the per-book "how usable is each
+  // content type" panel (renderBookKindCross) now carries the clicked book
+  // through as `#/kind/<kind>?book=<id>` instead of always landing on the
+  // corpus-wide figure with no explanation of the scope change. The book id
+  // in that hash is the same id the producer uses in `by_doneness_book_kind`
+  // and in every shard row's book column, so it can be applied directly as
+  // the existing bookSel filter with no translation.
+  const bookFilter = m[2] || "";
+  el("view").innerHTML = `<div class="spinner">Loading ${esc(titleCase(kind))} records…</div>`;
+  loadShard(kind).then((shard) => {
+    // Round 21 QA finding 8: an unrecognized `?book=<id>` (typo, stale link,
+    // hand-edited hash) used to be kept verbatim in unitState.book, which
+    // produced self-contradicting chrome -- the book <select> shows no
+    // selection (falls back to reading "All books" since the bogus id isn't
+    // one of its <option>s), the table shows 0 rows, and the breadcrumb
+    // title-cased the bogus id into a confident-looking fake book name. Fix:
+    // validate against the book ids this shard's own rows actually carry
+    // (the same set renderUnitsShell's <select> is built from) and treat an
+    // unrecognized id as no filter at all, rather than keeping a broken
+    // partial state — internally consistent chrome beats a technically-more-
+    // literal URL echo.
+    const realBooks = new Set(shard.rows.map((r) => r[shard.cols.book]));
+    const validBookFilter = bookFilter && realBooks.has(bookFilter) ? bookFilter : "";
+    // `category` (round 20): selected raw type_facet-first-segment ("" = all,
+    // "none" = the uncategorised group). `categoryAxis` only matters for
+    // spell, which is the one kind with two independent category axes
+    // (tradition via type_facet, school via the SCHOOL: join) — every other
+    // kind ignores it and always reads the shard's `type_facet` column.
+    unitState = { kind, shard, q: "", statuses: new Set(), category: "", categoryAxis: "type_facet", book: validBookFilter, limit: UNIT_PAGE };
+    renderUnitsShell();
+    renderUnitRows();
+  }).catch((e) => {
+    el("view").innerHTML = `<div class="banner err">Could not load "${esc(kind)}" units: ${esc(e.message)}</div>`;
+  });
+}
+
+// Round 16: pulled out of renderUnitsShell so it can be re-run standalone
+// whenever unitState.book changes (initial load via ?book= on the URL, or a
+// later in-page dropdown change) without tearing down/rebuilding the whole
+// shard table, search box, and chip state underneath it.
+function renderKindHeader() {
+  const { kind, shard } = unitState;
+  const meta = ((DATA.unit_index || {}).kinds || {})[kind] || {};
+
+  // Doneness ladder for this kind, corpus-wide (same source and same
+  // beginner_box exclusion as the "How usable is each kind of content?"
+  // cards) rather than summing HELD_STATUSES into its own headline figure --
+  // per SD-29 decisions.md §46.4, `held` must never be presented as THE
+  // coverage number (QA finding #3, round 2, 2026-08-12: round 1's banner
+  // literally told readers to "read held as the coverage figure here").
+  // Round 16 fix (QA: round 15's shared-helper fix only worked on the
+  // UNFILTERED page -- when a book filter is active, via #/kind/<kind>?book=
+  // <id> (or the in-page book dropdown below), this ladder must be the
+  // BOOK-SCOPED one, or the caveat/percentage both keep evaluating
+  // corpus-wide evidence a reader never asked about. The book×kind panel
+  // (renderBookKindCross) already reads this exact structure per-row; this
+  // is the same lookup, just carried across the click-through. Falls back to
+  // the corpus-wide ladder only when no book filter is set, matching round
+  // 15's verified unfiltered behavior.
+  const bookByKind = unitState.book
+    ? (((DATA.work_inventory || {}).by_doneness_book_kind || {})[unitState.book] || {})
+    : null;
+  const doneBy = bookByKind
+    ? (bookByKind[kind] || {})
+    : (((DATA.work_inventory || {}).by_doneness_kind || {})[kind] || {});
+  const done = doneBy["done"] || 0;
+  // Round 17 fix (finding 2/3): the excluded-count clause (unmeasurable +
+  // deferred) was shown everywhere else on the page (renderByLane, viewCorpus,
+  // the book×kind panel, the book card) via excludedClause() but never here —
+  // this header could show a bare percentage with no reconcilable denominator
+  // (e.g. "2.3% fully usable" of 959 records when the true figure is 11/476).
+  // `doneBy` is already book-scoped when a filter is active, so these reuse
+  // the same source as `done` above with no new lookup.
+  const unmeasurable = doneBy["unmeasurable"] || 0;
+  const deferred = doneBy["deferred"] || 0;
+  // When book-scoped, the denominator is this book+kind's own record count
+  // (the ladder's own sum), not the corpus-wide `meta.units` -- summing
+  // by_doneness_book_kind's rungs for one book+kind gives exactly that count,
+  // the same total the book×kind panel and resultNote below independently
+  // arrive at by filtering rows.
+  const covDenom = bookByKind
+    ? usableDenom(doneBy, DONENESS_ORDER.reduce((a, v) => a + (doneBy[v] || 0), 0))
+    : usableDenom(doneBy, meta.units);
+  // Round 15 fix (round 14 flagged but deliberately left this surface
+  // unfixed pending scope confirmation): this page is reached by ordinary
+  // click-through from renderByLane/viewCorpus, both fixed in round 14 --
+  // now routed through the same shared probelessCaveat() helper so the
+  // hasEvidence gate (and wording) can't drift between the surfaces again.
+  // Round 16: now fed the book-scoped ladder above when a filter is active,
+  // so it can't contradict the book×kind panel row the reader just clicked.
+  const probelessNote = probelessCaveat(kind, doneBy);
+
+  // Round 16: `mechanically_confirmed_by_kind` has no book-scoped
+  // counterpart in the payload today (unlike by_doneness_book_kind), so this
+  // suffix can only ever be corpus-wide. Showing a corpus-wide "N mechanically
+  // confirmed" count stapled to a now-book-scoped percentage would itself be
+  // the same book/corpus mismatch this round exists to remove (it could even
+  // read as more than the book-scoped `done` total) -- suppressed under a
+  // book filter until the producer ships a book-scoped version.
+  // Round 17 fix (finding 3): suppressing the WHOLE pct-caption line under a
+  // book filter (because the mechanically-confirmed sub-count has no
+  // book-scoped counterpart) also silently dropped the plain "N fully usable"
+  // statement that DOES have a book-scoped value, making a deliberate scope
+  // narrowing read as a rendering glitch. Keep the line; swap only the
+  // mechanically-confirmed parenthetical for a short note explaining why it's
+  // absent under a book filter.
+  // Round 18 fix (finding 5): nothing to explain when the book-scoped done
+  // count is 0 -- there is no mechanically-confirmed detail to caveat, same
+  // suppression rule the unfiltered path (mechConfirmedSuffix) already
+  // applies at done === 0.
+  const mechSuffix = bookByKind
+    ? (done === 0 ? "" : " (mechanical-confirmation detail is corpus-wide only)")
+    : mechConfirmedSuffix(kind, done, DATA.work_inventory || {});
+  // F4 fix (round 5, SD-29 QA finding #4, 2026-08-12): a shard that has no
+  // `wiring_class` COLUMN at all (an older/incompatible shard shape, not
+  // just a row with a blank value) makes wcOf() silently default every row
+  // to "ambiguous". Under the round-5 lower-bound rule that's no longer a
+  // favorable misread (ambiguous+grounded is `held`, not `done`), but it is
+  // still silent -- a reader has no way to know the "How usable" column is
+  // running on a degraded, all-ambiguous classification for this whole
+  // shard. Surface it instead of letting it pass unnoticed.
+  const shardHasWiringClass = shard.cols.wiring_class != null;
+  // Round 16: the "N records" count in this same sentence is the other half
+  // of the header's claim -- leaving it corpus-wide while the percentage
+  // next to it is now book-scoped would just relocate the finding-2
+  // contradiction one clause to the left ("2,275 records, 85% fully usable"
+  // reads as 85% of 2,275, not of the 144 this book actually has).
+  const headerUnits = bookByKind
+    ? DONENESS_ORDER.reduce((a, v) => a + (doneBy[v] || 0), 0)
+    : meta.units;
+  // Round 17 fix (finding 4): titleCase(unitState.book) produces "Feat in
+  // Advanced Players Guide" while viewBook shows the real title "Advanced
+  // Player's Guide" from DATA.books -- two different names for the same book
+  // across an ordinary click-through. Fall back to the title-cased id only if
+  // the book somehow isn't in DATA.books.
+  // Round 18 fix (finding 2): direct id match misses books reached only via
+  // INVENTORY_ID_ALIASES (bestiary_1 -> bestiary is the one real case) --
+  // every other book-scoping surface (inventoryFor, viewBooks,
+  // renderBookKindCross) already applies the alias, but this lookup goes the
+  // OTHER direction (shard-side id -> curated book), so it needs to search
+  // for the curated book whose id, once aliased, matches unitState.book.
+  const bookTitle = bookByKind
+    ? (((DATA.books || []).find((x) => (INVENTORY_ID_ALIASES[x.id] || x.id) === unitState.book) || {}).title || titleCase(unitState.book))
+    : "";
+  el("kindHeader").innerHTML = `
+    <div class="section-title">${esc(titleCase(kind))}${bookByKind ? ` in ${esc(bookTitle)}` : ""} — ${num(headerUnits)} records,
+      ${pctCell(done, covDenom)} fully usable</div>
+    <div class="pct-caption" style="margin-top:-0.3em">${num(done)} fully usable${mechSuffix}${excludedClause(unmeasurable, deferred)}</div>
+    ${!shardHasWiringClass ? `<div class="banner warn">
+      <strong>This shard has no <code>wiring_class</code> field.</strong> Every record below
+      is being treated as unclassified ("could not be classified") for the "How usable"
+      column, which — under this dashboard's conservative rule — never shows better than
+      "filed, but unconfirmed" even for records with the strongest evidence. This is a data
+      shape gap, not a claim that these records are unfinished.</div>` : ""}
+    ${probelessNote}`;
+}
+
+// Round 17 fix (finding 1): the status-filter chips used to be built once,
+// inline in renderUnitsShell, from `meta.by_status` -- always corpus-wide,
+// even after round 16 made the header above them book-scoped. That left the
+// chips visibly contradicting their own header (e.g. occult_adventures/spell:
+// header "473 records" atop chips summing to 2,843, the corpus-wide total),
+// and clicking a chip whose count only exists corpus-wide could filter the
+// book-scoped table to zero rows. Pulled out into its own function, keyed off
+// unitState.book, so it can be rebuilt (like renderKindHeader() already is)
+// whenever the book scope changes -- initial load with ?book= on the URL, or
+// the in-page dropdown -- and stays in sync with the header and table.
+function chipStatusCounts() {
+  const { kind, shard, book } = unitState;
+  if (!book) {
+    const meta = ((DATA.unit_index || {}).kinds || {})[kind] || {};
+    return meta.by_status || {};
+  }
+  // Book-scoped: count this book's own rows by raw status, ignoring the
+  // current search text / status-chip selection (same convention as the
+  // corpus-wide meta.by_status this replaces -- it was never affected by
+  // those either, since chips need to show what's AVAILABLE to filter by,
+  // not what's already been filtered down to).
+  const ci = shard.cols;
+  const by = {};
+  shard.rows.forEach((r) => {
+    if (r[ci.book] !== book) return;
+    const st = r[ci.status] || "unknown";
+    by[st] = (by[st] || 0) + 1;
+  });
+  return by;
+}
+
+function renderFilterChips() {
+  const by = chipStatusCounts();
+  // Merge chips that share a plain label rather than emitting one per raw
+  // status word (SD-29 QA finding #9, round 2, 2026-08-12): STATUS_LABEL maps
+  // both `not-ingested`/`not-started` to "not started", and round 1 still
+  // emitted one chip per raw status regardless — two indistinguishable chips
+  // with different counts and no way to tell them apart. Each merged chip's
+  // filter toggles every raw status it represents together. Round 4 (SD-29 QA
+  // finding F25, 2026-08-12): `grounded` and `text-complete` no longer share
+  // a label — they were merged under "confirmed working" before, which is
+  // exactly the bug this round exists to remove; they are different evidence
+  // tiers (an observed effect vs. a complete written record) and now render
+  // as two distinct, honestly-labeled chips.
+  const groups = [];
+  const groupByLabel = {};
+  STATUS_ORDER.filter((s) => by[s]).forEach((s) => {
+    const label = STATUS_LABEL[s] || s;
+    if (!groupByLabel[label]) {
+      groupByLabel[label] = { label, statuses: [], count: 0, color: STATUS_COLOR[s] };
+      groups.push(groupByLabel[label]);
+    }
+    groupByLabel[label].statuses.push(s);
+    groupByLabel[label].count += by[s];
+  });
+  el("filterChips").innerHTML = groups.map((g) => {
+    const on = g.statuses.some((s) => unitState.statuses.has(s));
+    return `<button class="fchip${on ? " on" : ""}" data-statuses="${esc(g.statuses.join(","))}">
+       <span class="sw" style="background:${g.color}"></span>${esc(g.label)} ${num(g.count)}</button>`;
+  }).join("");
+  document.querySelectorAll(".fchip").forEach((b) => {
+    b.addEventListener("click", () => {
+      const group = b.dataset.statuses.split(",");
+      const allOn = group.every((s) => unitState.statuses.has(s));
+      if (allOn) { group.forEach((s) => unitState.statuses.delete(s)); b.classList.remove("on"); }
+      else { group.forEach((s) => unitState.statuses.add(s)); b.classList.add("on"); }
+      unitState.limit = UNIT_PAGE;
+      renderUnitRows();
+    });
+  });
+}
+
+/* ---- level 3 sub-category filter/breakdown (round 20) ----
+   Computed client-side from the already-loaded shard, not a new payload
+   field: this page already holds the full per-kind shard in memory (lazy-
+   loaded once via loadShard(), same shard level 2's lane-wide numbers come
+   from on the producer side), so filtering/grouping it by `type_facet` (or,
+   for spell, `school`) costs nothing extra to fetch and reconciles with the
+   lane-wide numbers by construction — same partition of the same units, just
+   summed client-side instead of server-side. */
+// Round 22 QA finding 2 verification turned up an adjacent, previously-
+// unnoticed gap: a leading `WORD:` field-token prefix (e.g.
+// `TYPE:SummonerClassFeatures`) is stripped by the PRODUCER's category_of()
+// (round 21 finding 1's `TYPE:Goods` fix), but this client-side function
+// never mirrored that strip -- so a raw segment carrying the prefix used to
+// silently mismatch the producer's key (falling back to an untranslated
+// "Type Summoner Class Features" chip via humanizeCategoryFallback, its own
+// small raw-vocabulary leak) instead of landing in the same
+// "Summoner Class Features" bucket the producer already puts it in. Same
+// `_FIELD_TOKEN_PREFIX_RE` pattern as the producer, applied here too.
+const FIELD_TOKEN_PREFIX_RE = /^[A-Za-z][A-Za-z0-9]*:/;
+
+function categoryOfRaw(tf) {
+  if (!tf) return "none";
+  const s = String(tf);
+  const dot = s.indexOf(".");
+  const seg = (dot === -1 ? s : s.slice(0, dot)).replace(FIELD_TOKEN_PREFIX_RE, "");
+  return seg || "none";
+}
+
+// Round 22 QA finding 2: the raw `type_facet` data contains BOTH a
+// CamelCase spelling and an already-space-separated spelling of the same
+// category (e.g. `RangerClassFeatures` vs `Ranger Class Features`) --
+// `categoryOfRaw()` alone returns these as two different strings, which
+// used to become two chips/filter-groups with the SAME rendered label (via
+// categoryLabelFor's humanizer) and different counts. This mirrors the
+// producer's `category_group_key()` EXACTLY (same normalization, same
+// algorithm) so the two spellings collapse into one grouping key here too
+// -- the key this function returns is what gets matched against the
+// producer's `meta.categories` map keys, so the two sides must stay in
+// lockstep (SHARD_SCHEMA bumped 4 -> 5 the same round this landed).
+// A full post-fix sweep (round 22 QA finding 2 verification) found one
+// duplicate-label pair character-normalization alone doesn't catch:
+// `SpecialQuality`/`SpecialQuaility` (the latter a verbatim typo, both
+// resolving to the same "Special Qualities" label) differ by an actual
+// letter, not just case/spacing. Small explicit alias table, mirrors the
+// producer's `_CATEGORY_GROUP_KEY_ALIASES` exactly -- must stay in
+// lockstep with it.
+const CATEGORY_GROUP_KEY_ALIASES = {
+  specialquaility: "specialquality",
+  // Round 23 QA finding 3: mirrors the producer's `_CATEGORY_GROUP_KEY_
+  // ALIASES` additions exactly -- must stay in lockstep with it. Only
+  // matters for the client-side "raw fallback" path (humanizeCategoryFallback)
+  // when a group has no server-shipped label, but kept in lockstep anyway
+  // per this table's stated policy.
+  genaral: "general",
+  metasionic: "metapsionic",
+  specialattck: "specialattack",
+  specialatack: "specialattack",
+  // Round 26: the 37 singular/plural category merges (per-pair evidence
+  // and record-count math documented in the producer's
+  // `_CATEGORY_GROUP_KEY_ALIASES` -- mirrored here verbatim, key-for-key,
+  // to stay in lockstep with it, same convention as every entry above).
+  classfeature: "classfeatures",
+  alchemistclassfeature: "alchemistclassfeatures",
+  antipaladinclassfeature: "antipaladinclassfeatures",
+  arcanistclassfeature: "arcanistclassfeatures",
+  barbarianclassfeature: "barbarianclassfeatures",
+  bardclassfeature: "bardclassfeatures",
+  brawlerclassfeature: "brawlerclassfeatures",
+  cavalierclassfeature: "cavalierclassfeatures",
+  clericclassfeature: "clericclassfeatures",
+  druidclassfeature: "druidclassfeatures",
+  fighterclassfeature: "fighterclassfeatures",
+  gunslingerclassfeature: "gunslingerclassfeatures",
+  hunterclassfeature: "hunterclassfeatures",
+  inquisitorclassfeature: "inquisitorclassfeatures",
+  investigatorclassfeature: "investigatorclassfeatures",
+  kineticistclassfeature: "kineticistclassfeatures",
+  magusclassfeature: "magusclassfeatures",
+  mediumclassfeature: "mediumclassfeatures",
+  mesmeristclassfeature: "mesmeristclassfeatures",
+  monkclassfeature: "monkclassfeatures",
+  occultistclassfeature: "occultistclassfeatures",
+  paladinclassfeature: "paladinclassfeatures",
+  rangerclassfeature: "rangerclassfeatures",
+  rogueclassfeature: "rogueclassfeatures",
+  shamanclassfeature: "shamanclassfeatures",
+  shifterclassfeature: "shifterclassfeatures",
+  skaldclassfeature: "skaldclassfeatures",
+  slayerclassfeature: "slayerclassfeatures",
+  spiritualistclassfeature: "spiritualistclassfeatures",
+  summonerclassfeature: "summonerclassfeatures",
+  swashbucklerclassfeature: "swashbucklerclassfeatures",
+  vigilanteclassfeature: "vigilanteclassfeatures",
+  warpriestclassfeature: "warpriestclassfeatures",
+  witchclassfeature: "witchclassfeatures",
+  wizardclassfeature: "wizardclassfeatures",
+  racialtrait: "racialtraits",
+};
+
+function categoryGroupKey(raw) {
+  const key = String(raw).toLowerCase().replace(/[^a-z0-9]/g, "") || "none";
+  return CATEGORY_GROUP_KEY_ALIASES[key] || key;
+}
+
+// Mirrors the producer's category_label() fallback path (_humanize()) for
+// the rare case a category exists in the shard but not in the shipped
+// `categories`/`school_categories` label map (e.g. an older cached shard).
+// The server-side label always wins when present; this only covers a gap.
+function humanizeCategoryFallback(raw) {
+  if (raw === "none") return "Uncategorised";
+  let s = String(raw).replace(/_/g, " ").replace(/-/g, " ");
+  s = s.replace(/([a-z0-9])(?=[A-Z])/g, "$1 ").replace(/([A-Z])(?=[A-Z][a-z])/g, "$1 ");
+  s = s.replace(/\s+/g, " ").trim();
+  return s ? s.replace(/\b\w/g, (c) => c.toUpperCase()) : raw;
+}
+
+// `raw` is the LOOKUP key (a `categoryGroupKey()` output for the type_facet
+// axis, or a single school name for the school axis) -- it is what's used
+// to find the server-shipped label in `meta.categories`/`school_categories`.
+// `rawFallback`, added round 22 (finding 2), is the original UN-normalized
+// segment (e.g. "RangerClassFeatures") to hand to humanizeCategoryFallback()
+// when no server label is found -- `raw` itself is unusable there once it's
+// a normalized group key (all lowercase, no word boundaries left to split).
+function categoryLabelFor(kind, raw, axis, rawFallback) {
+  const meta = ((DATA.unit_index || {}).kinds || {})[kind] || {};
+  const map = axis === "school" ? (meta.school_categories || {}) : (meta.categories || {});
+  return (map[raw] && map[raw].label) || humanizeCategoryFallback(rawFallback != null ? rawFallback : raw);
+}
+
+function categoryAxisColumn() {
+  return unitState.categoryAxis === "school" ? "school" : "type_facet";
+}
+
+// Returns { by, rawByKey }: `by` is {groupKey: count}, `rawByKey` is
+// {groupKey: oneRepresentativeRawSegment} (for humanizeCategoryFallback()
+// when a group key has no server-shipped label -- see categoryLabelFor()).
+//
+// Round 22 QA finding 1: the `school` axis used to take the raw shard
+// value directly with NO normalization -- every other axis went through
+// categoryOfRaw(), but school bypassed it entirely, so a multi-school
+// spell's raw pipe-delimited SCHOOL: token (e.g.
+// "Abjuration|Necromancy|Transmutation") rendered as its OWN untranslated
+// single-record chip instead of crediting the spell to each school it
+// names. Now splits on "|" here too, same convention the producer's
+// school_categories rollup already uses (round 21 finding 5) -- so level-2
+// and level-3 numbers agree again for every school.
+//
+// Round 22 QA finding 2: the type_facet axis now runs categoryOfRaw()'s
+// result through categoryGroupKey() so a CamelCase/space-separated
+// duplicate pair merges into one chip instead of two identically-labelled
+// ones (see categoryGroupKey() above).
+function categoryChipCounts() {
+  const { shard, book } = unitState;
+  const col = categoryAxisColumn();
+  const idx = shard.cols[col];
+  if (idx == null) return null; // this shard has no such column at all
+  const by = {};
+  const rawByKey = {};
+  shard.rows.forEach((r) => {
+    if (book && r[shard.cols.book] !== book) return;
+    const raw = r[idx];
+    if (col === "school") {
+      const schoolsHere = raw ? String(raw).split("|") : ["n/a"];
+      schoolsHere.forEach((sch) => {
+        by[sch] = (by[sch] || 0) + 1;
+        if (rawByKey[sch] === undefined) rawByKey[sch] = sch;
+      });
+    } else {
+      const rawSeg = categoryOfRaw(raw);
+      const gkey = categoryGroupKey(rawSeg);
+      by[gkey] = (by[gkey] || 0) + 1;
+      if (rawByKey[gkey] === undefined) rawByKey[gkey] = rawSeg;
+    }
+  });
+  return { by, rawByKey };
+}
+
+function renderCategoryFilters() {
+  const { kind, shard } = unitState;
+  const el2 = el("categoryChips");
+  if (!el2) return;
+  const isSpell = kind === "spell";
+  const hasSchool = isSpell && shard.cols.school != null;
+  const axisToggle = hasSchool ? `
+    <span class="mono" style="color:var(--muted);margin-right:0.5em">Group by:</span>
+    <button class="fchip${unitState.categoryAxis !== "school" ? " on" : ""}" id="axisTradition">Tradition</button>
+    <button class="fchip${unitState.categoryAxis === "school" ? " on" : ""}" id="axisSchool">School</button>
+    <span style="display:inline-block;width:1em"></span>` : "";
+  const counts = categoryChipCounts();
+  if (!counts) { el2.innerHTML = axisToggle; return; }
+  const { by, rawByKey } = counts;
+  const cats = Object.keys(by).sort((a, b) => by[b] - by[a]);
+  const chips = cats.map((cat) => {
+    const on = unitState.category === cat;
+    const label = categoryLabelFor(kind, cat, unitState.categoryAxis, rawByKey[cat]);
+    const isUncat = cat === "none" || cat === "n/a";
+    return `<button class="fchip${on ? " on" : ""}${isUncat ? " uncategorised" : ""}" data-cat="${esc(cat)}">
+      ${esc(label)} ${num(by[cat])}</button>`;
+  }).join("");
+  el2.innerHTML = axisToggle + chips;
+  const at = el("axisTradition"), as = el("axisSchool");
+  if (at) at.addEventListener("click", () => {
+    unitState.categoryAxis = "type_facet"; unitState.category = ""; unitState.limit = UNIT_PAGE;
+    renderCategoryFilters(); renderUnitRows();
+  });
+  if (as) as.addEventListener("click", () => {
+    unitState.categoryAxis = "school"; unitState.category = ""; unitState.limit = UNIT_PAGE;
+    renderCategoryFilters(); renderUnitRows();
+  });
+  document.querySelectorAll("#categoryChips .fchip[data-cat]").forEach((b) => {
+    b.addEventListener("click", () => {
+      const cat = b.dataset.cat;
+      unitState.category = unitState.category === cat ? "" : cat;
+      unitState.limit = UNIT_PAGE;
+      renderCategoryFilters();
+      renderUnitRows();
+    });
+  });
+}
+
+function renderUnitsShell() {
+  const { kind, shard } = unitState;
+  const books = [...new Set(shard.rows.map((r) => r[shard.cols.book]))].filter(Boolean).sort();
+
+  el("view").innerHTML = `
+    <div id="kindHeader"></div>
+    <div class="searchbar">
+      <input type="search" id="q" placeholder="Search ${esc(titleCase(kind))} by name or book…" autocomplete="off">
+      <select id="bookSel">
+        <option value="">All books (${books.length})</option>
+        ${/* Round 24 QA finding 3: use the SAME title-resolution function the
+             breadcrumb uses (bookTitleFor(), which prefers the curated title
+             and disambiguates e.g. "Bestiary 1" from "Bestiary 2-6") instead
+             of a separate titleCase(id) call here -- the two surfaces
+             previously disagreed on display name for 3 books (bestiary,
+             advanced_players_guide, adventurers_guide). */ ""}
+        ${books.map((b) => `<option value="${esc(b)}"${b === unitState.book ? " selected" : ""}>${esc(bookTitleFor(b))}</option>`).join("")}
+      </select>
+    </div>
+    <div class="filters" id="filterChips"></div>
+    <div class="filters" id="categoryChips" style="margin-top:0.3em"></div>
+    <div class="result-note" id="resultNote"></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Name</th><th>Book</th><th>How usable</th><th>Source</th></tr></thead>
+      <tbody id="unitRows"></tbody>
+    </table></div>
+    <div id="moreWrap"></div>`;
+  renderKindHeader();
+  renderFilterChips();
+  renderCategoryFilters();
+
+  const q = el("q");
+  let t = null;
+  q.addEventListener("input", () => {
+    clearTimeout(t);
+    t = setTimeout(() => { unitState.q = q.value.trim().toLowerCase(); unitState.limit = UNIT_PAGE; renderUnitRows(); }, 120);
+  });
+  el("bookSel").addEventListener("change", (e) => {
+    // Round 16: switching books via this in-page dropdown (as opposed to
+    // arriving with ?book= already on the URL) used to leave the header/
+    // caveat frozen on whatever scope the page first loaded with, even
+    // though resultNote below correctly recomputed live -- the exact same
+    // corpus-vs-book contradiction as finding 1/2, just reachable one click
+    // later. renderKindHeader() re-derives from unitState.book every time,
+    // same as the initial render, so both stay in sync. Round 17: the chips
+    // (finding 1) are the same shape of bug one surface over -- rebuild them
+    // here too so header, chips, and table all move together.
+    unitState.book = e.target.value; unitState.limit = UNIT_PAGE;
+    unitState.category = "";
+    renderKindHeader();
+    renderFilterChips();
+    renderCategoryFilters();
+    renderUnitRows();
+    // Round 17 fix (finding 5): keep the address bar in sync with what's on
+    // screen so reload/back/share reproduce this exact view. Uses
+    // replaceState rather than location.hash= so it does NOT fire the
+    // window "hashchange" listener (which calls the full route() and would
+    // tear down/rebuild this whole shard table, search box, and chip state
+    // that round 16 and this round both went out of their way to update in
+    // place instead).
+    const url = unitState.book ? `#/kind/${kind}?book=${unitState.book}` : `#/kind/${kind}`;
+    if (location.hash !== url) history.replaceState(null, "", url);
+  });
+  q.focus();
+}
+
+function filteredUnits() {
+  const { shard, q, statuses, book, category } = unitState;
+  const ci = shard.cols;
+  const catCol = ci[categoryAxisColumn()];
+  return shard.rows.filter((r) => {
+    if (book && r[ci.book] !== book) return false;
+    if (statuses.size && !statuses.has(r[ci.status])) return false;
+    if (category && catCol != null) {
+      const raw = r[catCol];
+      // Round 22 QA finding 1: a multi-school spell's raw SCHOOL: token can
+      // name more than one school ("Abjuration|Necromancy") -- membership
+      // is "the selected school is ANY of the ones this record names", same
+      // credit-every-school convention as categoryChipCounts() and the
+      // producer's school_categories rollup, not a literal string match
+      // against the raw pipe-delimited value.
+      if (unitState.categoryAxis === "school") {
+        const schoolsHere = raw ? String(raw).split("|") : ["n/a"];
+        if (!schoolsHere.includes(category)) return false;
+      } else {
+        // Round 22 QA finding 2: match on the normalized group key so a
+        // CamelCase/space-separated duplicate pair filters together.
+        if (categoryGroupKey(categoryOfRaw(raw)) !== category) return false;
+      }
+    }
+    if (q) {
+      const name = String(r[ci.name] || "").toLowerCase();
+      const bk = String(r[ci.book] || "").toLowerCase();
+      if (!name.includes(q) && !bk.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+function renderUnitRows() {
+  const { shard, limit } = unitState;
+  const ci = shard.cols;
+  const rows = filteredUnits();
+  const shown = rows.slice(0, limit);
+
+  // Root-cause fix, round 4 (SD-29 QA finding F25, 2026-08-12): this column
+  // used to show the raw `status` word only (via STATUS_LABEL), which is not
+  // a doneness claim at all -- the same status word resolves to a different
+  // doneness verdict depending on wiring_class (see donenessOf() above:
+  // `grounded` on `static`/`derived` is `held`, not `done`). The producer now
+  // ships `wiring_class` alongside `status` on every shard row so this "How
+  // usable" column can show the real, per-record doneness verdict instead of
+  // a raw status word under a "How usable" header that never matched what it
+  // showed.
+  const wcOf = (r) => (ci.wiring_class != null ? r[ci.wiring_class] : null) || "ambiguous";
+  el("unitRows").innerHTML = shown.length ? shown.map((r) => {
+    const st = r[ci.status] || "unknown";
+    const verdict = donenessOf(wcOf(r), st, shard.kind) || "unmeasurable";
+    const label = PLAIN_DONENESS_LABEL[verdict] || verdict;
+    const color = DONENESS_COLOR[verdict] || "var(--muted)";
+    // Plain-language only: the technical status/wiring_class words stay out
+    // of this tooltip (they leak into `title=`, a real reader can hover it)
+    // the same rule as everywhere else on this page -- raw vocabulary is
+    // confined to the "For engineers" disclosure, never to a hover on the
+    // main table.
+    const detail = `${STATUS_LABEL[st] || st}, ${WIRING_CLASS_LABEL[wcOf(r)] || wcOf(r)}`;
+    return `<tr>
+      <td>${esc(r[ci.name])}</td>
+      <td class="mono" style="color:var(--muted)">${esc(r[ci.book])}</td>
+      <td><span class="pill st" style="background:${color}" title="${esc(detail)}">${esc(label)}</span></td>
+      <td class="mono" style="color:var(--muted);font-size:0.9em">${esc(r[ci.source_file])}</td>
+    </tr>`;
+  }).join("") : `<tr><td colspan="4" class="empty">No records match these filters.</td></tr>`;
+
+  // Never silently truncate: say exactly how many are hidden. Round 4 fix
+  // (SD-29 QA finding F25/F28, 2026-08-12): this used to be a raw-status
+  // PROVEN_STATUSES sum labeled "confirmed working" -- the same over-claim
+  // bug as the landing Books card, on a different surface. Computed the same
+  // way every other "fully usable" figure on the page now is: cross status
+  // with wiring_class per row into a real doneness verdict, then route the
+  // percentage through the unmeasurable/deferred-excluding denominator
+  // (usableDenom), not the raw row count.
+  const rowDoneness = {};
+  rows.forEach((r) => {
+    const v = donenessOf(wcOf(r), r[ci.status] || "unknown", shard.kind) || "unmeasurable";
+    rowDoneness[v] = (rowDoneness[v] || 0) + 1;
+  });
+  const doneShown = rowDoneness["done"] || 0;
+  const denomShown = usableDenom(rowDoneness, rows.length);
+  // Round 18 fix (finding 3): under a book filter, the numerator is
+  // book-scoped but this denominator is always corpus-wide (shard.rows.length
+  // spans every book) -- label it so "N matching of TOTAL" doesn't read as a
+  // claim about the current book.
+  el("resultNote").innerHTML =
+    `<strong>${num(rows.length)}</strong> matching of ${num(shard.rows.length)}` +
+    (unitState.book ? " across all books" : "") + " " +
+    `· ${num(doneShown)} fully usable (${pctCell(doneShown, denomShown)})` +
+    (rows.length > shown.length ? ` · showing first <strong>${num(shown.length)}</strong>` : "");
+
+  el("moreWrap").innerHTML = rows.length > shown.length
+    ? `<button class="more" id="moreBtn">Show ${num(Math.min(UNIT_PAGE, rows.length - shown.length))} more</button>` : "";
+  const mb = el("moreBtn");
+  if (mb) mb.addEventListener("click", () => { unitState.limit += UNIT_PAGE; renderUnitRows(); });
+}
+
+/* ---- books ---- */
+
+function inventoryFor(bookId) {
+  const wi = DATA.work_inventory || {};
+  const target = INVENTORY_ID_ALIASES[bookId] || bookId;
+  return (wi.books || []).find((b) => b.id === target) || null;
+}
+
+/* Per-book doneness mini-bar (slice 2). Same ladder/labels as the overview
+   and per-lane blocks, just scaled down; the book's own by_doneness ladder
+   is already what the producer ships, no re-derivation needed here. */
+function bookDonenessCell(byDoneness, units) {
+  const by = byDoneness || {};
+  if (!units || !Object.keys(by).length) return `<span class="na">n/a</span>`;
+  assertLadderSums("book mini-bar", by, units);
+  // Round 12 fix (finding #4): the bar alone drops the "every rung visible,
+  // including zero" guarantee the file's own doctrine comment above
+  // donenessBarHtml/donenessLegendHtml requires the two to always ship
+  // together -- this was the only place on the page calling the bar without
+  // its legend, and it's now the only place the excluded/unmeasurable count
+  // for a row is visible at all (compounds finding #2), so pairing them here
+  // fixes both the book-x-kind panel and viewBooks, which shares this cell.
+  return `<div style="min-width:140px">${donenessBarHtml(by, units)}${donenessLegendHtml(by)}</div>`;
+}
+
+function viewBooks() {
+  const wi = DATA.work_inventory || {};
+  const curated = DATA.books || [];
+  const curatedInv = new Set(curated.map((b) => INVENTORY_ID_ALIASES[b.id] || b.id));
+
+  const rowsCurated = curated.map((b) => {
+    const inv = inventoryFor(b.id);
+    const units = inv ? inv.units : null;
+    const by = inv ? (inv.by_doneness || {}) : {};
+    const done = inv ? (by["done"] || 0) : null;
+    const covDenom = inv ? usableDenom(by, units) : null;
+    return `<tr onclick="location.hash='#/book/${esc(b.id)}'" style="cursor:pointer">
+      <td>${esc(b.title || b.id)}</td>
+      <td class="mono" style="color:var(--muted)">${b.channel ? esc(b.channel) : `<span class="na">n/a</span>`}</td>
+      <td>${esc(b.status || "")}</td>
+      <td class="num">${units == null ? `<span class="na">n/a</span>` : num(units)}</td>
+      <td class="num">${inv ? pctCell(done, covDenom) : `<span class="na">n/a</span>`}</td>
+      <td>${inv ? bookDonenessCell(inv.by_doneness, units) : `<span class="na">n/a</span>`}</td>
+    </tr>`;
+  }).join("");
+
+  /* Books the inventory knows about that the curated list never shows. These
+     were previously invisible on this dashboard entirely -- including
+     `bestiary`, which is in_scope and carries over a thousand units. */
+  const extras = (wi.books || []).filter((b) => !curatedInv.has(b.id));
+  const rowsExtra = extras.sort((a, b) => (b.units || 0) - (a.units || 0)).map((b) => {
+    const bBy = b.by_doneness || {};
+    const done = bBy["done"] || 0;
+    const covDenom = usableDenom(bBy, b.units);
+    return `
+    <tr>
+      <td>${esc(titleCase(b.id))}</td>
+      <td class="mono" style="color:var(--muted)">${esc(b.scope || "")}</td>
+      <td><span class="na">n/a</span></td>
+      <td class="num">${num(b.units)}</td>
+      <td class="num">${pctCell(done, covDenom)}</td>
+      <td>${bookDonenessCell(b.by_doneness, b.units)}</td>
+    </tr>`;
+  }).join("");
+
+  const head = `<thead><tr><th>Book</th><th>Channel / scope</th><th>Stage</th>
+    <th class="num">Records</th><th class="num">Fully usable</th><th>How usable — full breakdown</th></tr></thead>`;
+
+  el("view").innerHTML =
+    `<div class="section-title">Curated books (${curated.length})</div>
+     <div class="pct-caption">“Fully usable” = a player can rely on the record without caveats
+       (see the overview page for what that means). The bar in the last column always shows
+       every stage, including zero, so a thin sliver at the left and a long grey tail is
+       “recorded but not yet checked”, not “broken”.</div>
+     <div class="table-wrap"><table>${head}<tbody>${rowsCurated}</tbody></table></div>` +
+    (extras.length ? `<div class="section-title">Also in the work inventory (${extras.length})</div>
+     <div class="result-note">Present in the corpus inventory but not on the curated board.</div>
+     <div class="table-wrap"><table>${head}<tbody>${rowsExtra}</tbody></table></div>` : "");
+}
+
+/* Book x kind cross (round 11, operator UI-first reframe, 2026-08-12): the
+   gap the very first brief flagged and round 1-10 correctly left alone
+   ("adding it would mean crossing status, wiring_class AND book AND kind in
+   one structure, which the producer does not compute today" -- renderByLane's
+   comment above; that comment is now stale, corrected there too). Answers
+   "how usable is THIS book's equipment specifically", not "equipment
+   corpus-wide" (renderByLane) or "this book overall" (the card above).
+   Placed per-book rather than as one 37-book x 11-kind mega-table: a reader
+   who wants Ultimate Equipment's equipment already navigated to Ultimate
+   Equipment's own page, and a table scoped to one book's actual kinds reads
+   in one glance where a 400-cell matrix would not. A kind this book has ZERO
+   records of is left OFF the table entirely, not shown as `0` or `n/a` --
+   there is nothing missing to report; the content type simply doesn't exist
+   in this book (e.g. Ultimate Equipment has no `class` records), which is a
+   different fact from "we didn't check". */
+function renderBookKindCross(bookId) {
+  const wi = DATA.work_inventory || {};
+  const target = INVENTORY_ID_ALIASES[bookId] || bookId;
+  const byKind = (wi.by_doneness_book_kind || {})[target];
+  if (!byKind || !Object.keys(byKind).length) {
+    return `<div class="pct-caption" style="margin-top:0.6em">No per-content-type breakdown
+      available for this book in the current payload.</div>`;
+  }
+  const kinds = Object.keys(byKind);
+  const order = LANE_ORDER.filter((k) => kinds.includes(k))
+    .concat(kinds.filter((k) => !LANE_ORDER.includes(k)));
+  const rows = order.map((kind) => {
+    const by = byKind[kind] || {};
+    const units = Object.values(by).reduce((a, v) => a + v, 0);
+    if (!units) return "";
+    const done = by["done"] || 0;
+    const covDenom = usableDenom(by, units);
+    // Round 12 fix (finding #2): "Records" (raw unit count) and "Fully
+    // usable %" (done / covDenom) use different denominators whenever any
+    // records were excluded as unmeasurable/deferred -- same gap the card
+    // above this panel, renderByLane, and viewCorpus all already close by
+    // stating the checkable denominator inline. Mirror that pattern here:
+    // show the excluded count next to the percentage whenever units and
+    // covDenom diverge, so a reader can't multiply Records x % and get a
+    // number nobody meant.
+    const denomNote = units !== covDenom
+      ? `<div class="pct-caption" style="margin:0.15em 0 0">${num(done)} / ${num(covDenom)} checkable${
+         excludedClause(by["unmeasurable"] || 0, by["deferred"] || 0)}</div>`
+      : "";
+    // Round 12 fix (finding #1): spell/companion have no automated
+    // confirming check at all (NO_GROUNDING_PROBE) so their `done` count is
+    // structurally 0 regardless of how much real, held data is on file --
+    // exactly the "disguised zero" the new charter forbids showing without a
+    // caveat. renderByLane, viewCorpus, and the kind page all already attach
+    // this note per-kind; this panel was the one surface missing it. Kept
+    // per-row (not a single top-of-table footnote) so it stays attached to
+    // the specific row it explains, matching how thin a table this is.
+    // Round 13 fix (finding #1): the caveat is only true when there's real
+    // evidence on file (done/held/in-progress > 0) that the missing probe is
+    // preventing from reaching `done`. On a row that's 100% `not-started`
+    // (e.g. Core Rulebook companion: {not-started: 170}, zero everything
+    // else), there's nothing for a probe to excuse -- the plain 0.0% reading
+    // is simply correct, and the "gap in the checking tool" framing would
+    // contradict the adjacent legend's own "nothing done yet" count. Gate on
+    // there being something to excuse.
+    // Round 16 fix (finding #3): this row used to carry its own inline copy
+    // of the exact same gate+wording as probelessCaveat() (round 14's report
+    // flagged it but left it untouched pending scope) -- two copies of one
+    // gate is precisely the shape that let rounds 13-14 land a fix in one
+    // spot and not the other. Now calls the shared helper directly, with the
+    // per-row book-scoped `by` ladder it already has on hand and a margin
+    // matching this table's own inline spacing.
+    const probelessNote = probelessCaveat(kind, by, "0.15em 0 0");
+    // Round 12 fix (finding #3): clicking used to always land on the
+    // corpus-wide `#/kind/<kind>` figure with no indication the scope just
+    // changed from "this book" to "every book". The book id used to look up
+    // `byKind` above (`target`) is the same id the shard rows and
+    // `by_doneness_book_kind` both key on, so it can be carried straight
+    // through the hash and applied as the existing bookSel filter -- no new
+    // plumbing needed, viewUnits/renderUnitsShell already accept it.
+    return `<tr onclick="location.hash='#/kind/${esc(kind)}?book=${esc(target)}'" style="cursor:pointer">
+      <td>${esc(titleCase(kind))}</td>
+      <td class="num">${num(units)}</td>
+      <td class="num">${pctCell(done, covDenom)}${denomNote}${probelessNote}</td>
+      <td>${bookDonenessCell(by, units)}</td>
+    </tr>`;
+  }).join("");
+  if (!rows) {
+    return `<div class="pct-caption" style="margin-top:0.6em">This book has no records of any
+      content type our checker currently tracks.</div>`;
+  }
+  return `
+    <div class="section-title" style="margin-top:1em">How usable is each content type in this book?</div>
+    <div class="pct-caption">Same "fully usable" measure as elsewhere on this page, scored
+      per content type against that type's own bar. A content type this book has no records of
+      at all is left off this table — nothing to measure, not a gap. Clicking a row opens that
+      content type's full record list pre-filtered to this book.</div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Content type</th><th class="num">Records</th><th class="num">Fully usable</th>
+        <th>How usable — full breakdown</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>`;
+}
+
+function viewBook(m) {
+  const b = (DATA.books || []).find((x) => x.id === m[1]);
+  if (!b) { el("view").innerHTML = `<div class="banner err">Unknown book "${esc(m[1])}".</div>`; return; }
+  const inv = inventoryFor(b.id);
+  let html = `<div class="section-title">${esc(b.title || b.id)}</div>`;
+
+  if (inv) {
+    const by = inv.by_doneness || {};
+    const done = by["done"] || 0;
+    const unmeasurable = by["unmeasurable"] || 0;
+    const deferred = by["deferred"] || 0;
+    const covDenom = usableDenom(by, inv.units);
+    // Round 13 fix (finding #2, book-card arithmetic): this note used to
+    // show `unmeasurable` alone as the excluded count, silently dropping
+    // `deferred` from both the number and the label -- units minus covDenom
+    // (which correctly subtracts both) didn't reconcile with the displayed
+    // figure whenever a book had any deferred records (e.g. Core Rulebook:
+    // unmeasurable-only said "517 excluded" but units - covDenom = 524, the
+    // missing 7 being exactly Core Rulebook's deferred count). Use the same
+    // split-clause helper as denomNote so the number always reconciles and
+    // deferred is labeled as intentional exclusion, not a tooling gap.
+    html += `<div class="grid"><div class="card flat">
+      <h3>How usable is this book?</h3><div class="sub">${esc(inv.scope || "")} · ${num(inv.units)} records</div>
+      <div class="metric"><span class="n">${pctCell(done, covDenom)}</span>
+        <span class="of">${num(done)} / ${num(covDenom)} fully usable${excludedClause(unmeasurable, deferred)}</span></div>
+      ${donenessBarHtml(by, inv.units)}${donenessLegendHtml(by)}</div></div>`;
+    html += renderBookKindCross(b.id);
+    html += `
+      <details style="margin-top:0.8em">
+        <summary style="cursor:pointer;color:var(--muted);font-size:0.82em">For engineers — raw status/wiring_class mix</summary>
+        <div class="pct-caption" style="margin-top:0.4em">status</div>
+        ${miniBar(inv.by_status || {}, inv.units)}
+        <div class="pct-caption" style="margin-top:0.6em">wiring_class — what kind of evidence each unit needs, orthogonal to status above. <code>ambiguous</code> never resolves to "done": an unresolved classification is capped at what the <code>static</code>/<code>derived</code> fidelity bar would allow, so it can only cost credit, never gain it — any real evidence status (<code>grounded</code>/<code>text-complete</code>/<code>ingested-magnitude</code>) under <code>ambiguous</code> lands in "held".</div>
+        ${wiringMiniBar(inv.by_wiring_class || {}, inv.units)}
+        <div class="legend">${wiringLegend(inv.by_wiring_class || {})}</div>
+      </details>`;
+  } else {
+    html += `<div class="banner warn">No work-inventory record joins to this book id
+      (<code>${esc(b.id)}</code>), so unit counts are unknown rather than zero.</div>`;
+  }
+
+  const mx = b.matrix || {};
+  if (Object.keys(mx).length) {
+    html += `<div class="section-title">Coverage</div><div class="table-wrap"><table>
+      <thead><tr><th>Area</th><th>State</th><th>Open question</th></tr></thead><tbody>` +
+      Object.keys(mx).map((k) => `<tr>
+        <td>${esc(titleCase(k))}</td>
+        <td>${mx[k] === "✓" ? '<span style="color:var(--full)">✓</span>' : `<span style="color:var(--err)">${esc(mx[k])}</span>`}</td>
+        <td class="note-body">${esc((b.open_questions || {})[k] || "")}</td>
+      </tr>`).join("") + `</tbody></table></div>`;
+  }
+  el("view").innerHTML = html;
+}
+
+/* ---- classes / races ---- */
+
+function matrixTable(rows, label) {
+  if (!rows.length) return `<div class="empty">No ${esc(label)} in this payload.</div>`;
+  const full = rows.filter((r) => r.state === "full").length;
+  return `<div class="section-title">${esc(label)} — ${full} of ${rows.length} complete</div>
+    <div class="table-wrap"><table>
+    <thead><tr><th>Name</th><th>Book</th><th>Channel</th><th>State</th><th>Open question</th></tr></thead>
+    <tbody>` + rows.map((r) => `<tr>
+      <td>${esc(r.name || titleCase(r.id))}</td>
+      <td class="mono" style="color:var(--muted)">${esc(r.book || "")}</td>
+      <td class="mono" style="color:var(--muted)">${esc(r.channel || "")}</td>
+      <td><span class="pill" style="color:${r.state === "full" ? "var(--full)" : r.state === "partial" ? "var(--partial)" : "var(--muted)"}">
+        ${esc(r.marker || "")} ${esc(r.state || "")}</span></td>
+      <td class="note-body">${esc(r.open_question || "")}</td>
+    </tr>`).join("") + `</tbody></table></div>`;
+}
+
+/* Prestige-class records are a different shape: no `state`, just a
+   `todo_template` of queued tasks. Feeding them to matrixTable() renders a
+   column of blanks that reads as "failed" when the truth is "not started, and
+   not yet in an active channel". */
+function prestigeTable(rows) {
+  const stateOf = (r) => {
+    const tasks = r.todo_template || [];
+    if (!tasks.length) return ["unknown", 0, 0];
+    const done = tasks.filter((t) => t.status === "complete" || t.status === "done").length;
+    return [done === tasks.length ? "full" : done ? "partial" : "queued", done, tasks.length];
+  };
+  const byChannel = {};
+  rows.forEach((r) => { (byChannel[r.channel || "(none)"] ||= []).push(r); });
+  const started = rows.filter((r) => stateOf(r)[1] > 0).length;
+
+  return `<div class="section-title">Prestige / unchained classes — ${rows.length} queued,
+      ${started} started</div>
+    <div class="result-note">Scheduled into future workchannels; these carry a task template
+      rather than an engine state, so they are <strong>not started</strong>, not failing.</div>
+    <div class="table-wrap"><table>
+    <thead><tr><th>Name</th><th>Book</th><th>Channel</th><th class="num">Tasks done</th><th>Pre-wire</th></tr></thead>
+    <tbody>` + Object.keys(byChannel).sort().flatMap((ch) =>
+      byChannel[ch].map((r) => {
+        const [state, done, tot] = stateOf(r);
+        return `<tr>
+          <td>${esc(r.name || titleCase(r.id))}</td>
+          <td class="mono" style="color:var(--muted)">${esc(r.book || "")}</td>
+          <td class="mono" style="color:var(--muted)">${esc(ch)}</td>
+          <td class="num" style="color:${state === "full" ? "var(--full)" : state === "partial" ? "var(--partial)" : "var(--muted)"}">${done}/${tot}</td>
+          <td>${r.pre_wire_required ? '<span style="color:var(--warn)">required</span>' : "—"}</td>
+        </tr>`;
+      })).join("") + `</tbody></table></div>`;
+}
+
+function viewClasses() {
+  const mx = DATA.matrix || {};
+  el("view").innerHTML = matrixTable(mx.classes || [], "Classes") +
+    ((mx.prestige_classes || []).length ? prestigeTable(mx.prestige_classes) : "");
+}
+function viewRaces() {
+  const mx = DATA.matrix || {};
+  const note = mx.races_note;
+  el("view").innerHTML = matrixTable(mx.races || [], "Races") +
+    (note ? `<div class="banner info" style="margin-top:1em">
+      <strong>${esc(titleCase(note.book))} — ${note.declared_races} declared races
+      (${esc(note.ruling)}).</strong><div class="note-body">${esc(note.note)}</div></div>` : "");
+}
+
+/* ---- decisions ---- */
+
+function viewDecisions() {
+  const dec = ((DATA.channels || {})["v0.6"] || {}).decisions || {};
+  const group = (title, items) => !items || !items.length ? "" :
+    `<div class="section-title">${esc(title)} (${items.length})</div>` +
+    items.map((d) => `<div class="card flat" style="margin-bottom:0.6em">
+      <h3>${esc(d.title || d.item_id)}</h3>
+      <div class="sub">${esc(d.section || "")} · ${esc(d.status_label || "")} · ${esc(d.category || "")}</div>
+      <div class="note-body">${esc(d.call_text || d.body || "")}</div>
+    </div>`).join("");
+  const html = group("Open — awaiting a call", dec.open) +
+               group("Autonomous", dec.autonomous) +
+               group("Resolved", dec.resolved);
+  el("view").innerHTML = html || `<div class="empty">No decisions in this payload.</div>`;
+}
+
+/* ======================= boot ======================= */
+
+// Round 28 fix (supervisor CSS-defect finding, 2026-08-13): the single
+// runtime source of truth for "how tall is the sticky header right now",
+// consumed by both `.crumbs { top: ... }` and `.crumbs { scroll-margin-top:
+// ... }` in the stylesheet via the `--header-height` custom property (see
+// comments there). Measured, not hardcoded, because the header's height is
+// content-dependent (usage gauges, completion summary, and the round-27
+// lane-strip chips can each wrap depending on viewport width) and would
+// silently go stale otherwise. A ResizeObserver on #header re-runs this
+// automatically whenever the header's rendered size changes for ANY reason
+// -- window resize, data refresh changing the chip strip's content/count,
+// font loading, etc. -- so this one function is the only place that ever
+// needs to know the header's height.
+function syncHeaderHeight() {
+  const header = el("header");
+  if (!header) return;
+  document.documentElement.style.setProperty("--header-height", header.offsetHeight + "px");
+}
+if (typeof ResizeObserver !== "undefined") {
+  const headerEl = el("header");
+  if (headerEl) new ResizeObserver(syncHeaderHeight).observe(headerEl);
+} else {
+  // Fallback for an environment without ResizeObserver: at least track
+  // viewport resizes, which is the most common trigger for lane-strip
+  // rewrapping. Won't catch a same-size-viewport content change, but that's
+  // strictly better than the old hardcoded-nothing behavior.
+  window.addEventListener("resize", syncHeaderHeight);
+}
+
+window.addEventListener("hashchange", routeAndScroll);
+
+async function main() {
+  const ok = await loadData();
+  if (!ok && !DATA) { el("view").innerHTML = ""; return; }
+  renderUsage();
+  renderCompletion();
+  syncHeaderHeight(); // synchronous measurement -- don't wait on the
+  // ResizeObserver's next tick before the first route()/routeAndScroll()
+  // can run against an up-to-date --header-height.
+  route();
+
+  setInterval(async () => {
+    const before = DATA && DATA.generated_at;
+    if (await loadData()) {
+      renderUsage();
+      renderCompletion();
+      syncHeaderHeight(); // header content (lane chips) can change on a
+      // refresh tick even without a full route(); keep --header-height
+      // synchronous with it rather than waiting on the ResizeObserver.
+      // Round 22 QA finding 3: renderCompletion() above rewrites the lane
+      // cards' HTML on EVERY tick, regardless of whether the payload
+      // actually changed -- which wipes any `selected-lane` class route()
+      // had applied earlier. route() only re-runs (and only THAT re-
+      // applies the highlight, via updateLaneSelection()) when the payload's
+      // generated_at changed AND the current page isn't `#/kind/*` -- so on
+      // a `#/kind/*` page the highlight was gone for good after the first
+      // tick, and on a `#/lane/*` page it was gone on most ticks (payload
+      // regenerates every ~5min, this poll runs every ~1min). Re-apply it
+      // here, every tick THAT SUCCESSFULLY LOADS (i.e. every time this
+      // `if (await loadData())` branch is entered — not literally
+      // unconditionally, a failed fetch skips this whole block and leaves
+      // the previous highlight in place until the next successful tick),
+      // the same way route() derives the active lane/kind from the hash —
+      // independent of whether a full route() re-run happens below. In
+      // practice this is paired with renderCompletion() two lines up, which
+      // is in the same branch and is the actual reason the highlight needs
+      // reapplying, so the two have never been observed to disagree.
+      const hashPath = (location.hash || "#/").slice(1);
+      const laneOrKindMatch = hashPath.match(/^\/(?:lane|kind)\/([\w-]+)/);
+      updateLaneSelection(laneOrKindMatch ? laneOrKindMatch[1] : null);
+      // Only re-render the body when the payload actually changed, so an
+      // operator mid-search does not have their filters yanked out from under
+      // them every minute.
+      if (DATA.generated_at !== before && !location.hash.startsWith("#/kind/")) route();
+      else renderCrumbs(currentRoute());
+    }
+  }, REFRESH_MS);
+}
+
+main();
+</script>
+</body>
+</html>
