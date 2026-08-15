@@ -141,6 +141,10 @@ const SIZE_TRUTH: &[(&str, &str, SizeCategory, SizeCategory)] = &[
     ("race:oread", "Oread", SizeCategory::Medium, SizeCategory::Medium),
     ("race:sylph", "Sylph", SizeCategory::Medium, SizeCategory::Medium),
     ("race:undine", "Undine", SizeCategory::Medium, SizeCategory::Medium),
+    // Bestiary 5's 1, the Skinwalker follow-on batch (2026-08-15). Same
+    // chassis/trait disagreement shape as Aasimar/Tiefling: chassis
+    // `FACT:BaseSize|S`, `~ Size` row `TEMPLATE:SIZE_M`.
+    ("race:skinwalker", "Skinwalker", SizeCategory::Small, SizeCategory::Medium),
 ];
 
 fn all_books() -> RaceCorpus {
@@ -153,6 +157,8 @@ fn all_books() -> RaceCorpus {
         },
         // Bestiary 2, SD-31 Epic 1-F2 (2026-08-15).
         BookCorpusRoot { book_id: "bestiary_2", dir: Path::new("data/corpus/bestiary_2") },
+        // Bestiary 5, the Skinwalker follow-on batch (2026-08-15).
+        BookCorpusRoot { book_id: "bestiary_5", dir: Path::new("data/corpus/bestiary_5") },
     ];
     let corpus = load_race_corpus(&roots);
     assert!(corpus.diagnostics().is_empty(), "clean load expected: {:?}", corpus.diagnostics());
@@ -168,10 +174,11 @@ fn the_expected_table_covers_all_eighteen_races_and_matches_the_on_disk_chassis_
     let corpus = all_books();
     assert_eq!(
         SIZE_TRUTH.len(),
-        24,
-        "24 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 (SD-31 Epic 1-F2)"
+        25,
+        "25 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 (SD-31 Epic 1-F2) + \
+         Bestiary 5's 1 (Skinwalker follow-on batch)"
     );
-    assert_eq!(corpus.race_keys().len(), 24, "and the corpus must carry all 24");
+    assert_eq!(corpus.race_keys().len(), 25, "and the corpus must carry all 25");
 
     for (_, key, chassis_size, _) in SIZE_TRUTH {
         let chassis = corpus.chassis(key).unwrap_or_else(|| panic!("{key} must have a chassis"));

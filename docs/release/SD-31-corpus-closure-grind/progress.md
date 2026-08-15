@@ -2923,3 +2923,320 @@ real, direct-evidence figure, even where that figure is 0/N.
 - `docs/release/SD-31-corpus-closure-grind/kanban.md` (`epic-3-measurement` row)
 - `docs/release/SD-31-corpus-closure-grind/progress.md` (this entry)
 - `docs/retro/events/sd31-e3-measure.jsonl` (new, 2 events)
+
+---
+
+## 2026-08-15 — SD31-E6-F4-001: Skinwalker chassis follow-on batch + `race`-kind root cause (Epic 1 follow-on + Epic 6-F3/F4)
+
+**Cycle:** `SD31-E6-F4-001`, actor `sd31-race-lane`, own worktree
+`/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_e4e73f9a-9af-2`, own branch
+`sd31/race-lane-SD31-E6-F4-001`. **Started from** `origin/tranche/11` tip `6f857525bcd7917035f07be680d72559010dd0bc`
+(`docs(sd31): wave-3 disk budget + measured post-wave-2 board`) — package directory was absent
+on first look, tree was clean, recovered per protocol (`git fetch && git reset --hard origin/tranche/11`),
+recorded here as instructed. **Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`), confirmed via `./scripts/verify.sh --only preflight-oracle`
+(`PASS oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6`) before any other command.
+
+### 0. Pre-cycle screens
+
+`scripts/classify_race_trait_rows.py apg_abilities_race.lst` → `in-scope rows 50 | default 0 | alternate 50
+| flag_granted 0 | unclassified 0 => 50 of 50 rows need no new mechanism` (investigated then reverted, §3
+below). `scripts/screen_pcc_load_gates.py race_trait` → 7 units excluded corpus-wide by a PCC load gate,
+none in `advanced_players_guide` or Skinwalker's rows — clean.
+
+### 1. Re-derived state before touching anything
+
+`race_trait`: `python3 -c "..."` over `docs/work-inventory.json` (dashboard producer's own
+`doneness_verdict()`) → `{'not-started': 2821, 'done': 478, 'held': 148}` of 3,447 total (matches the
+board-wide `race_trait` `done` figure carried forward from `SD31-W2-INTEGRATE-001`).
+`race`: `{'not-started': 96, 'held': 7}` of 103 total, **0 `done`** — confirmed exactly as the card names it.
+
+**Traced one `race` unit's real path to `done` before ingesting anything, per the card's own instruction.**
+`core_essentials:race:dwarf` (and the other 6 CRB races): `wiring_class=static`, `status=grounded`,
+`evidence="race_modelled_by_RaceId_ALL_and_reachable_in_a_real_receipt"` — genuinely reachable, one rung
+short of `done` (`static`+`grounded` → `held`; needs `literal-verified`). Root cause, traced to the exact
+line: `src/bin/corpus_literal_sweep.rs`'s `--json-out` writer derives each verified triple's `"book"` as
+`source_path.parent().file_name()` — the file's immediate parent directory — not the 4-segment
+`book_dir_of()` grouping the rest of the binary uses. A race row's real PCGen path is
+`.../core_essentials/races/<race>/<race>_races.lst`, one level deeper than a flat book layout, so the
+emitted `"book"` is the race name (`"dwarf"`), never `"core_essentials"`. `v06_work_inventory.rs`'s
+`apply_done_rung_stamps` joins on `(item.unit.book, file, line)`, so the join key never matches for ANY
+race chassis/trait row — regardless of how many races get a real chassis. Corroborated two ways:
+(a) `python3 -c` over the sweep's own `--json-out`: 0 of 3,644 verified triples carry `book=="core_essentials"`;
+(b) contrastive — the 4 `race_trait` units that DID reach `literal-verified` (`world_walker_skilled`,
+`deep_jungle_halfling_poison_use`, `junk_tinker_skilled`, `oversized_goblin_ability_scores`) are ALL filed
+FLAT, one level under their book; the shape, not the content, gates. **Corpus-wide, 330 of 3,644 verified
+triples (9.1%) carry this same mis-attribution** (25 distinct wrong `book` values, all race directory
+names) — `python3 -c` counting entries whose `book` is not a real `data/corpus/` top-level directory.
+`corpus_literal_sweep.rs` is NOT in this card's file territory — logged, not fixed: `OPEN-ISSUES.md` row 22.
+**This is the finding the card explicitly said was "worth more than a partial ingest," and it is: `race`
+kind cannot reach `done` through ANY amount of further chassis work until this bug is fixed elsewhere.**
+
+### 2. Skinwalker chassis batch — landed
+
+**Re-derived the chassis-blind ranking myself** rather than trusting the brief's "~84" figure:
+`python3 -c` over `docs/work-inventory.json`, `evidence=="race_trait_race_not_modelled"` filtered to
+`skinwalker` in `id`/`source_file` → **86**, not 84 (`retro.py correction` emitted, `--verified-by` the
+exact command). Split by source file: `skinwalker_abilities_race.lst` 18 (standard tier), 
+`skinwalker_abilities_race_subrace.lst` 65 (heritage tier), `isr_abilities_race.lst` 3 (ISR alternates
+naming Skinwalker, chassis-gated). Confirmed Skinwalker is still the single largest per-race gap.
+
+**Landed the chassis + standard tier only, same rigor as every existing entry — no placeholder values, no
+stub trait list, every value from the real corpus row:**
+
+- `IN_SCOPE_RACES` widened 24 → 25 in both `ingest_races.rs` (book: `bestiary_5`) and
+  `race_resolver.rs`'s `RACE_SIZES` table (Skinwalker: `Medium`, from its own `~ Size` row's
+  `TEMPLATE:SIZE_M`, over a chassis `FACT:BaseSize|S` — the identical Aasimar/Tiefling shape).
+- `cargo run --locked --bin ingest_races` → 1 new chassis + 9 new standard racial-trait records
+  (Ability Scores, Type, Size, Speed, Vision, Animal-Minded, Change Shape, Spell-Like Ability,
+  Languages), zero errors, zero PI-blacklist hits. Verified by hand: Skinwalker's `~ Ability Scores`
+  row states `+2 WIS, -2 INT, +2 to one physical ability while shapechanged` (`raw_bonus_chains`),
+  matching the real Pathfinder Skinwalker.
+- **Deliberately did NOT ingest the 65 heritage-tier rows or the 3 ISR alternates.**
+  `ingest_race_traits.rs`'s existing `subrace_grants()` mechanism (built for Aasimar/Tiefling, reads a
+  `<race>_abilities_globalvar_subrace.lst` file naming each heritage's replace-flags) cannot be reused
+  as-is: Skinwalker's `_subrace.pcc` carries NO globalvar-subrace file at all — each heritage alternate
+  (e.g. `Skinwalker ~ Werebat-Kin`) instead sets its `Skinwalker_Replace*` FACT flags directly on its own
+  constituent trait rows via a `PREMULT:1,[PREABILITY:...],[!PREFACT:...]` gate on the selector row.
+  Genuinely new mechanism work, not a config widening (confirmed by inspecting both real `.lst` files
+  side by side: `skinwalker_abilities_race_subrace.lst` vs `aasimar_abilities_globalvar_subrace.lst`).
+  Deferred, not stubbed — `retro.py deferral` emitted with the exact blocker.
+- Two production-code fixes this batch's own corpus growth exposed, not just count-pinning: `ingest_races.rs`'s
+  `IN_SCOPE_RACES` stale-clear loop (`for book in ["core_rulebook","beastiary","bestiary_2"]`, used both
+  to clear stale content before regen AND in a pinned-schema test) never named `bestiary_5` — caught by
+  the pinned-schema test's `races` count landing at 24 instead of 25, not by inspection. Fixed both call
+  sites (production loop + test), with a doc comment naming the exact failure mode for the next race book.
+- Wired the new book through every consumer surface: `race_catalog.rs` (`RACE_CORPUS_BOOKS`,
+  `RACE_CATALOG_BOOKS`, `BOOK_B5`/`book_code`), `corpus_ingest_diagnostic.rs` (`diagnostic_book_id("B5")`),
+  `reach_gate.rs` (`("bestiary_5","races")` and `("bestiary_5","race_traits")` claims, using the same
+  `races_reach`/`race_traits_reach` helpers CRB/B1/B2 already use — no new mechanism).
+
+**Measured delta, guarded regen, local only per the wave rule** (not committed;
+`git checkout -- docs/work-inventory.json` run immediately after measuring):
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-race-lane.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-race-lane.json
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-race-lane.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-race-lane.json \
+  cargo run --locked --bin v06_work_inventory
+```
+Sweep: `3645 records examined of 9457 read ... 0 findings — CLEAN`. Fixture check: `49 of 94 covered units
+cleared; 1 failed (pre-existing, unrelated — `advanced_players_guide:equipment:spindle_of_perfect_knowledge`,
+confirmed untouched by this cycle); 44 not ingested`.
+
+| figure | before | after | Δ | source |
+|---|---:|---:|---:|---|
+| `race` `done` | 0/103 | 0/103 | **0** | blocked by §1's finding, not a chassis gap |
+| `race_trait` `done` | 478/3,447 | 484/3,447 | **+6** | `skinwalker_ability_scores/animal_minded/change_shape/speed/spell_like_ability/vision` reach `computed`+`grounded`; `skinwalker_languages/size/type` stay `display`+`grounded` (held, not done) |
+| board-wide `done` | 6,076/38,521 | 6,082/38,521 (15.79%) | **+6** | dashboard producer's own `doneness_verdict()` over the regen |
+| reachable ceiling | 98.94% | 98.94% | unchanged | `reachability-audit` stage, this batch does not touch Epic 2's `ambiguous` population |
+
+### 3. Investigated `advanced_players_guide` — landed, then reverted
+
+Screened clean (§0), added an `advanced_players_guide` `BookSource` to `ingest_race_traits.rs`, ran it: 50
+records emitted, 0 skipped. `race_resolver`'s own test suite (which builds ONE global `RaceCorpus` keyed by
+trait KEY, not book+key) failed immediately: `panicked ... Dwarf: duplicate resolved trait Dwarf ~ Ancient
+Enmity` plus `the_whole_corpus_classifies_into_the_four_roles_with_no_leftovers` regressing 379→330 (the
+exact -49). Root cause: a corpus-wide `data.key` join found **49 of APG's 50 in-scope rows already
+ingested, byte-mechanically-identical (same `sets_replace_flags`, cosmetic wording only), under
+`advanced_race_guide`** — Paizo's later compilation book reprints APG's alternate-race-trait system almost
+verbatim. **This is already-established program knowledge, independently re-confirmed, not a new
+finding**: `src/bin/ingest_apg_race_traits.rs` (SD28-E16, 2026-08-08) already exists and already filters
+every APG row colliding with ARG's on-disk key set, shipping only the one genuinely-new record (`Half-Orc
+~ Plagueborn`, already `done` before this cycle touched anything). `docs/work-inventory.json`'s raw
+per-book enumeration has no way to know two books' rows are the same real trait, so its 49-unit
+"race_trait_absent_from_race_traits" figure for APG will read as an open gap forever even though it is
+fully, correctly closed. **Reverted the `BookSource` addition and its pinned-count test edits** (2 edits in
+`ingest_race_traits.rs`: the `BOOK_SOURCES` array entry, the `expected` map + total in
+`no_committed_trait_description_leaks_pcgen_syntax_in_any_declared_book`) rather than ship duplicate/
+crashing content; left the doc comment carrying the full worked derivation so a future cycle does not
+re-attempt the same investigation from scratch. `retro.py near-miss` emitted (verification caught it before
+merge). Full write-up: `OPEN-ISSUES.md` row 23.
+
+### 4. Downstream fallout — all fixed, none skipped/weakened
+
+Both the Skinwalker batch and (transiently, before reverting) the APG investigation moved real corpus
+content; located every hand-pinned count by running the real test suites and fixing forward — no
+assertion loosened or removed:
+
+- Root: `race_resolver.rs` — `RACE_SIZES.len()` 24→25 (+Skinwalker Medium), 2 corpus-wide census pins
+  (`TraitRole::Default` 230→239, whole-corpus trait count 628→637), `all_twenty_four_..._races` renamed
+  `all_twenty_five_..._races` with a Skinwalker chassis assertion added.
+- Root: `ingest_races.rs` — pinned schema test 24/232 → 25/241; production stale-clear loop + test both
+  gained `"bestiary_5"` (the defect named in §2).
+- Desktop crate (`apps/desktop/src-tauri`, a separate cargo workspace — swept explicitly, not skipped):
+  `character_hub.rs` (roster list gained `"race:skinwalker"`), `corpus_ingest_diagnostic.rs` (24→25),
+  `race_catalog.rs` (2 tests: per-race counts + book-code census, 230→239, `b5` row added), 
+  `race_trait_picker.rs` (2 tests: race count 24→25, `(standard, alternates)` (230,330)→(239,330), total
+  560→569), `reach_gate.rs` (2 new claim arms, no test edit needed once the claims existed — the gate's
+  own `every_ingested_family_is_accounted_for`/`unsurfaced_families_are_exactly_the_recorded_findings`
+  went from FAILED naming `bestiary_5/race_traits, bestiary_5/races` to green).
+- Data: 6 `data/corpus/**/*.json` `wiring_class_signals` corrections surfaced as a **side effect** of
+  re-running `ingest_races.rs`/`ingest_race_traits.rs` against the merged, D3/D4-wiringfix-fixed tip
+  (e.g. `core_rulebook:race_trait:dwarf_ability_scores`'s stale `derived:bonus` signal dropped) — kept
+  these (genuine content corrections, in-territory) and reverted ~579 pure `ingested_at`-timestamp-only
+  churn files across every OTHER book this cycle's binaries also touch on a full run (identified
+  programmatically: `git diff --numstat` filtered to `1 1` add/remove pairs, `git checkout
+  --pathspec-from-file`), so the diff carries only genuine content, not noise.
+
+`cargo test --locked --lib` (root): **1795 passed, 0 failed, 3 ignored.**
+`cargo test --locked` (`apps/desktop/src-tauri`): **445 passed, 0 failed.**
+
+**`root-full`'s integration suite (`tests/*.rs`) was not covered by the two runs above** and its own
+fallout only surfaced once the first full gate run reached it (§5): 4 test files, 5 individual tests,
+all real, all fixed — none skipped or loosened:
+- `tests/duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs` — a second hardcoded copy of
+  the race-corpus book list (`the_loaded_books_are_the_ones_the_app_loads`), gained `"bestiary_5"`.
+- `tests/sd27_aasimar_globalvar_gate_closes_the_dead_affordance.rs` — `!PREFACT`-gated-row census
+  223→232 (Skinwalker's 9 standard rows all declare their own `!PREFACT`, matching `ingest_races`' own
+  run output: "rows where the trait's own !PREFACT and the globalvar PREVAREQ agree: 232").
+- `tests/sd27_alternate_racial_trait_reachability.rs` — the SAME whole-corpus-trait-count pin
+  (628→637) `race_resolver.rs`'s own test module carries, duplicated in this integration test; both
+  updated together.
+- `tests/sd27_book_license_record_counts.rs` — `data/corpus/bestiary_5/LICENSE.json`'s
+  `records_processed` restated 55→65 (companion: 55, race: 1, race_trait: 9), `screening_method_note`
+  appended with an `UPDATE` clause, same convention as the other two `LICENSE.json` restatements.
+- `tests/sd27_race_size_resolution.rs` — found by inspection (grep for other `"bestiary_2"` book-list
+  copies) before the second gate run rather than by a second failure: gained a `bestiary_5`
+  `BookCorpusRoot` and a Skinwalker row (`Small` chassis / `Medium` trait, the Aasimar/Tiefling shape).
+  **A second, separate pinned assertion in the SAME file (`SIZE_TRUTH.len()`/`race_keys().len()`
+  24→25) was missed by that inspection pass and only caught by the SECOND full gate run** — grep
+  had found the book-list copy but not this independent count in the same file; fixed and re-verified
+  (`cargo test --locked --test sd27_race_size_resolution`, 10/10 green) before the third gate run.
+
+### 5. Gate
+
+Launched early, in the background, while this receipt was written:
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F4-001-verify.log
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-race-lane RETRO_ACTOR=sd31-race-lane \
+  ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**Run A: killed mid-flight, not trusted.** `root-full` printed `FAIL` (5 tests across 4 files, all in
+this card's own edited surface, §4 above) partway through the stage sequence; the run itself kept
+going into `desktop` while I was still fixing the 4 files, and once the fixes were ready I killed it
+by PID (`kill <pid>`, confirmed by `CARGO_TARGET_DIR` in `/proc/<pid>/environ` before killing — never
+`pkill`) rather than let the remaining stages run against stale pre-fix code and auto-emit a
+verification event no one should trust. Its own end-of-run auto-emit therefore never fired — the
+`docs/retro/events/sd31-race-lane.jsonl` verification trail starts at Run B. **Run B, fresh from a
+clean process table: `FAIL`** — 1 further `root-full` test
+(`tests/sd27_race_size_resolution.rs`'s SECOND, separate pinned count, `SIZE_TRUTH.len()` 24→25,
+missed by the grep sweep that had already fixed that same file's first pin). Fixed, re-verified in
+isolation (`cargo test --locked --test sd27_race_size_resolution`, 10/10 green). **Run C, fully
+green:**
+```
+SUMMARY
+  passed:  22  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+                reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep
+                audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib
+                root-full desktop reach corpus-sweep frontend-install frontend-test
+                frontend-typecheck clippy class-dump
+RESULT: PASS
+VERIFY_EXIT=0
+```
+22/22 stages, `reachability-audit` unchanged at **98.94%** (no ceiling regression), `root-lib`
+**1795 passed**, `root-full` **6430 passed across 549 suites, all 528 `tests/*.rs` suites executed**
+(up from 6423/549 pre-cycle baseline), `desktop` **445 passed**, `reach` **27 passed**, `corpus-sweep`
+**0 findings**, `frontend-test` **99/99**, `clippy` **0 errors** (46 root / 7 desktop warnings, at the
+existing ceiling), `class-dump` **31/31 computing**. Corroborated by the log's own `SUMMARY` block, not
+inferred from a harness wrapper status. Full log: `artifacts/SD31-E6-F4-001-verify.log`.
+
+**Baseline movement, in its own commit** (`scripts/verify-baselines.env`), carrying the green run's own
+`BASELINE NOTES` output verbatim: `BASELINE_ROOT_LIB_TESTS` 1789→1795, `BASELINE_ROOT_FULL_TESTS`
+6423→6430, `BASELINE_CORPUS_LITERAL_RECORDS` 3516→3645 (this cycle's own 10 new corpus records plus
+corpus-wide records this cycle's ingest re-run also re-verified against the merged D3/D4 wiringfix, per
+this program's stale-corrected-count `corpus_literal_sweep` convention). `BASELINE_ROOT_TEST_BINARIES`
+unchanged at 549 (no new test file, only new `#[test]`s in existing files).
+
+### 6. DoD-8 on-screen verification — driven, not simulated
+
+`RUN_DESKTOP_AGENT=sd31-race-lane` exported before every `driver.sh` call (own display `:65`, own
+state/log files — no collision with the 3 sibling desktop agents observed running concurrently on
+this box during this cycle). `npm ci` run first (node_modules was absent in this fresh worktree).
+Launched the real desktop app (`driver.sh launch`, ~11 min cold `cargo build` for
+`apps/desktop/src-tauri`'s own default `target/debug`, separate from this cycle's
+`CARGO_TARGET_DIR`), then:
+
+1. **Race Traits catalog**, filtered to Skinwalker (`dod8-02-skinwalker-traits.png`): header states
+   "Every real corpus-grounded racial trait the engine knows about — **239 trait rows across 25
+   races**" — matching this cycle's own pinned-test figures exactly. "Skinwalker (9)" chip selected;
+   9 real rows render: "+2 Wisdom, -2 Intelligence, +2 to One Physical Ability Score While in Bestial
+   Form", "Animal-Minded", "Change Shape" (full real prose, no PCGen escapes, no `%1`/`|` leaks),
+   "Languages", "Low-Light Vision", "Medium", "Normal Speed" (+30), "Shapechanger" — the real
+   Pathfinder Skinwalker, field-for-field.
+2. **Character creation form**, race set to Skinwalker (`dod8-06-race-selected-clean.png`): Race field
+   reads "Skinwalker (B5)" (the real book code this cycle wired). Size field reads "Medium". Vision
+   field reads "Low-light vision". The ability-score panel states "Skinwalker racial modifiers: -2
+   INT, +2 WIS" and the **CALCULATED** column shows the modifiers actually applied to the base raw
+   scores — not text-only, the numbers moved: INT 10→**8**, WIS 12→**14**, every other score
+   unchanged. "Alternate Racial Traits: No ingested book declares an alternate racial trait for
+   Skinwalker" — honest, correctly reflects that this batch did NOT ingest the heritage tier (§2).
+3. **Created the character** ("SD31 E6F4 Skinwalker Test", `dod8-07-created.png`): "Your character was
+   computed and saved," with real combat totals — AC 16, Melee +5, BAB +1, Fort +4, Reflex +2, Will
+   +2 — the full compute pipeline ran end to end for the newly-landed race, not a static display.
+
+Screenshots committed: `artifacts/SD31-E6-F4-001/dod8-{00-hub,01-race-traits,02-skinwalker-traits,
+03-creation-form,05-race-selected,06-race-selected-clean,07-created}.png`.
+
+### 7. Process gap self-caught
+
+Same failure mode `loop-instruction-template.md §2.1` warns about, and the exact one `SD31-E1-F1-001`
+self-caught: `RETRO_ACTOR` was exported for the `--only preflight-oracle` check, but each Bash call in
+this harness is a fresh shell, so it did not persist — that one auto-emitted `verify.sh` verification
+event landed under actor `wf_e4e73f9a-9af-2` (the worktree name), in `docs/retro/events/
+wf_e4e73f9a-9af-2.jsonl`, rather than `sd31-race-lane`. Every subsequent command in this cycle
+(including the full gate launch) passed `RETRO_ACTOR=sd31-race-lane` inline in the same statement.
+Left the one mis-attributed event as-is rather than edited after the fact; this paragraph is the
+record.
+
+### 8. What I corrected, reworked, or narrowly avoided
+
+- Corrected the "84 chassis-blind" figure to the re-derived 86 (`retro.py correction`).
+- Corrected the "advanced_players_guide has a genuine 49-unit ingest gap" premise before it shipped —
+  reverted a landed, building, unit-tested `BookSource` addition after the resolver's own integration
+  test caught the duplicate-KEY hazard (`retro.py near-miss`).
+- Deferred Skinwalker's heritage tier with a concrete, worked-example blocker rather than a vague
+  "next batch" note (`retro.py deferral`).
+- Named a real, provably-scoped root cause (`corpus_literal_sweep.rs`'s `--json-out` book-attribution
+  bug) for `race` kind's 0.0% done, instead of ingesting more chassis content that could not move it —
+  the card explicitly said this shape of finding is "worth more than a partial ingest," and this is a
+  330-triple, corpus-wide blast radius, not a race-kind-only curiosity.
+- Fixed a genuine production defect (`ingest_races.rs`'s stale-clear loop missing `bestiary_5`) this
+  batch's own growth exposed, not just a count-pinning update.
+
+### Files changed
+
+- `src/bin/ingest_races.rs` (Skinwalker `RaceSpec`, `bestiary_5` in the stale-clear loop and its own
+  test, pinned counts 24/232 → 25/241)
+- `src/bin/ingest_race_traits.rs` (`BOOK_SOURCES` doc comment carrying the full APG investigation and
+  revert; no net BookSource change)
+- `src/rules_core/race_resolver.rs` (`RACE_SIZES` +Skinwalker, 3 pinned census tests updated)
+- `apps/desktop/src-tauri/src/race_catalog.rs` (`RACE_CORPUS_BOOKS`/`RACE_CATALOG_BOOKS`/`BOOK_B5`/
+  `book_code`, 2 pinned tests)
+- `apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs` (`diagnostic_book_id("B5")`, 1 pinned test)
+- `apps/desktop/src-tauri/src/reach_gate.rs` (2 new claim arms: `("bestiary_5","races")`,
+  `("bestiary_5","race_traits")`)
+- `apps/desktop/src-tauri/src/character_hub.rs` (creation-roster pinned list +`race:skinwalker`)
+- `apps/desktop/src-tauri/src/race_trait_picker.rs` (2 pinned tests)
+- `tests/duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs` (book-list copy +`bestiary_5`)
+- `tests/sd27_aasimar_globalvar_gate_closes_the_dead_affordance.rs` (`!PREFACT` census 223→232)
+- `tests/sd27_alternate_racial_trait_reachability.rs` (whole-corpus trait count 628→637, x2 assertions)
+- `tests/sd27_race_size_resolution.rs` (`bestiary_5` `BookCorpusRoot` + Skinwalker row + `SIZE_TRUTH`
+  census 24→25)
+- `data/corpus/bestiary_5/LICENSE.json` (`records_processed` 55→65)
+- `scripts/verify-baselines.env` (separate commit: `BASELINE_ROOT_LIB_TESTS` 1789→1795,
+  `BASELINE_ROOT_FULL_TESTS` 6423→6430, `BASELINE_CORPUS_LITERAL_RECORDS` 3516→3645)
+- `data/corpus/bestiary_5/race/skinwalker.json` (new), `data/corpus/bestiary_5/race_trait/skinwalker/*.json`
+  (9 new)
+- `data/corpus/{beastiary,bestiary_2,core_essentials,core_rulebook,horror_adventures,inner_sea_races,
+  monster_codex}/race_trait/**/*.json` (66 files, `wiring_class_signals` corrections surfaced as a side
+  effect of re-running this cycle's own ingest binaries against the merged, D3/D4-wiringfix-fixed tip —
+  genuine content, not noise; ~579 pure-timestamp-only files from the same runs reverted, not committed)
+- `docs/release/SD-31-corpus-closure-grind/kanban.md` (Epic 1 row, Epic 6 row, the per-batch gate
+  section)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` (rows 22, 23, 24)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F4-001-verify.log` (new)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F4-001/dod8-*.png` (new, 7 screenshots)
+- `docs/retro/events/sd31-race-lane.jsonl` (new, 3 events: 1 correction, 1 near-miss, 1 deferral)
+- `docs/release/SD-31-corpus-closure-grind/progress.md` (this entry)

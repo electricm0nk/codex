@@ -12,7 +12,7 @@
     "signed_off": false,
     "signed_off_at": null
   },
-  "records_processed": 55,
+  "records_processed": 65,
   "records_redacted": 0,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "Every field of the 55 records this run wrote (33 companion creatures + 22 companion abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 55: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "Every field of the 55 records this run wrote (33 companion creatures + 22 companion abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 55: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see. UPDATE -- SD31-E6-F4-001 (race chassis lane), 2026-08-15: `ingest_races.rs` added this book's first `race`/`race_trait` records (Skinwalker: 1 chassis + 9 standard racial-trait rows), screened by the same bounded term list and the declared-PI reader, zero PI hits. records_processed restated 55 -> 65 (companion: 55, race: 1, race_trait: 9)."
 }

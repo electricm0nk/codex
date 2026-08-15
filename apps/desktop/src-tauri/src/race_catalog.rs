@@ -92,6 +92,13 @@ pub(crate) const RACE_CORPUS_BOOKS: &[&str] = &[
     // `# B2 races` section, exactly the way core_rulebook/beastiary already
     // are.
     "bestiary_2",
+    // Bestiary 5, SD-31 Epic 1 follow-on batch (2026-08-15): Skinwalker's
+    // chassis + 9 standard-tier traits (`ingest_races::IN_SCOPE_RACES`).
+    // Skinwalker's HERITAGE rows are not ingested by this batch (see
+    // `ingest_races.rs`'s `skinwalker` entry doc comment) -- this book
+    // loads the chassis + default-tier trait set only, same shape as the
+    // other flat, non-heritage race books above.
+    "bestiary_5",
 ];
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
@@ -133,10 +140,16 @@ const BOOK_CE: &str = "CE";
 /// ISR/HA/CE it DOES contribute catalog rows (see `RACE_CATALOG_BOOKS`
 /// below).
 const BOOK_B2: &str = "B2";
+/// Bestiary 5. SD-31 Epic 1 follow-on batch (2026-08-15): Skinwalker's
+/// chassis + standard traits. Loaded like `core_rulebook`/`beastiary`/
+/// `bestiary_2` -- `ingest_races` files Skinwalker's chassis and 9
+/// standard-tier traits here, so it DOES contribute catalog rows (see
+/// `RACE_CATALOG_BOOKS` below).
+const BOOK_B5: &str = "B5";
 
 /// Every book code this catalog can emit. ARG is a *loadable* book here but
 /// contributes no rows — see this module's doc comment.
-pub const RACE_CATALOG_BOOKS: &[&str] = &[BOOK_CRB, BOOK_B1, BOOK_B2];
+pub const RACE_CATALOG_BOOKS: &[&str] = &[BOOK_CRB, BOOK_B1, BOOK_B2, BOOK_B5];
 
 /// Maps a corpus book directory name to its wire code. An unrecognized book
 /// id passes through verbatim rather than being silently relabelled, so a
@@ -158,6 +171,7 @@ pub(crate) fn book_code(book_id: &str) -> String {
         "horror_adventures" => BOOK_HA.to_string(),
         "core_essentials" => BOOK_CE.to_string(),
         "bestiary_2" => BOOK_B2.to_string(),
+        "bestiary_5" => BOOK_B5.to_string(),
         other => other.to_string(),
     }
 }
@@ -516,13 +530,17 @@ mod tests {
         assert_eq!(count_for(&response, "Oread"), 9);
         assert_eq!(count_for(&response, "Sylph"), 9);
         assert_eq!(count_for(&response, "Undine"), 9);
+        // Skinwalker, the follow-on batch (2026-08-15): 9 standard-tier
+        // records, chassis + default tier only (heritage rows excluded --
+        // see `ingest_races.rs`'s `skinwalker` doc comment).
+        assert_eq!(count_for(&response, "Skinwalker"), 9);
 
         // Pinned as a total as well as per race so a race silently dropping
-        // out cannot be masked by another race growing. 173 + 57 = 230.
-        assert_eq!(response.entries.len(), 230);
+        // out cannot be masked by another race growing. 173 + 57 + 9 = 239.
+        assert_eq!(response.entries.len(), 239);
 
         let races: BTreeSet<&str> = response.entries.iter().map(|e| e.race_id.as_str()).collect();
-        assert_eq!(races.len(), 24, "24 in-scope races: {races:?}");
+        assert_eq!(races.len(), 25, "25 in-scope races: {races:?}");
     }
 
     /// The regression guard for the identity change: `reach_gate::races_reach`
@@ -577,14 +595,17 @@ mod tests {
         );
 
         // Derived, not assumed: 67 CRB rows + 106 Bestiary 1 rows + 57
-        // Bestiary 2 rows (SD-31 Epic 1-F2, 2026-08-15) = 230.
+        // Bestiary 2 rows (SD-31 Epic 1-F2, 2026-08-15) + 9 Bestiary 5 rows
+        // (Skinwalker follow-on batch, 2026-08-15) = 239.
         let crb = response.entries.iter().filter(|e| e.book == BOOK_CRB).count();
         let b1 = response.entries.iter().filter(|e| e.book == BOOK_B1).count();
         let b2 = response.entries.iter().filter(|e| e.book == BOOK_B2).count();
+        let b5 = response.entries.iter().filter(|e| e.book == BOOK_B5).count();
         assert_eq!(crb, 67);
         assert_eq!(b1, 106);
         assert_eq!(b2, 57);
-        assert_eq!(crb + b1 + b2, response.entries.len());
+        assert_eq!(b5, 9);
+        assert_eq!(crb + b1 + b2 + b5, response.entries.len());
     }
 
     /// ARG declares zero races and zero racial defaults (`decisions.md §25`),

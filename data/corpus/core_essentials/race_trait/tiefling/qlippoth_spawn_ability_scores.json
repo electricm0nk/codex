@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T19:20:15Z",
+  "ingested_at": "2026-08-15T21:52:14Z",
   "data": {
     "key": "Qlippoth-Spawn ~ Ability Scores",
     "name": "+2 Strength, +2 Wisdom, -2 Intelligence",
@@ -77,8 +77,8 @@
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "wiring_class": "ambiguous",
+  "wiring_class": "computed",
   "wiring_class_signals": [
-    "no_corpus_line"
+    "computed:pre_guard"
   ]
 }

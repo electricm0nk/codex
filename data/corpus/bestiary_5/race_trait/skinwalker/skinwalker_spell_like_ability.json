@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-15T21:57:38Z",
+  "data": {
+    "key": "Skinwalker ~ Spell-Like Ability",
+    "name": "Spell-Like Ability",
+    "race_key": "Skinwalker",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Skinwalker Racial Trait",
+      "Skinwalker Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Skinwalker_ReplaceSpellLikeAbility",
+    "sets_replace_flags": [],
+    "description": "A skinwalker with a Wisdom score of 11 or higher can use speak with animals once per day as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skinwalker ~ Spell-Like Ability"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Skinwalker Racial Trait.Skinwalker Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Skinwalker_ReplaceSpellLikeAbility=True"
+      },
+      {
+        "key": "DESC",
+        "value": "A skinwalker with a Wisdom score of 11 or higher can use speak with animals once per day as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Speak with Animals|PRESTAT:1,WIS=11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "RacialSLA_SpeakWithAnimals_DCMod",
+          "WIS-CHA",
+          "TYPE=Base"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race.lst",
+    "sha256": "85db848be3900cc747ef7038cb2e8d480f209cc9b9683399fce207d5407516ee",
+    "line": 21,
+    "record_key": "Skinwalker ~ Spell-Like Ability"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -143,6 +143,42 @@ const BOOK_SOURCES: &[BookSource] = &[
         subrace_globalvar_relatives: &[],
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/advanced_race_guide",
     },
+    // Advanced Player's Guide -- INVESTIGATED and deliberately NOT added as a
+    // `BookSource`, SD-31 Epic 6-F4 (2026-08-15). `docs/work-inventory.json`
+    // carried 49 of its rows as `evidence ==
+    // "race_trait_absent_from_race_traits"`, which reads as a genuine
+    // not-yet-ingested gap. It is not: `advanced_race_guide` is Paizo's own
+    // compilation reprint of APG's alternate-racial-trait system, and a
+    // corpus-wide KEY scan (`python3 -c` joining every committed
+    // `race_trait` record's `data.key` across books) found **49 of APG's 50
+    // in-scope rows already ingested, byte-mechanically-identical (same
+    // `sets_replace_flags`, cosmetic wording only), under
+    // `advanced_race_guide`** -- e.g. `Dwarf ~ Ancient Enmity`
+    // (`arg_abilities_race.lst:33` reprints `apg_abilities_race.lst:16`
+    // near-verbatim). The 50th, `Half-Orc ~ Plagueborn`, is APG-exclusive
+    // and was ALREADY ingested outside this binary (`SD29-E7-F2-010`,
+    // `data/corpus/advanced_players_guide/race_trait/half_orc/
+    // half_orc_plagueborn.json`) -- already `computed`/`grounded` before
+    // this cycle touched anything. So APG's true, non-duplicate,
+    // not-yet-ingested contribution is **zero**: adding this `BookSource`
+    // was tried and reverted after `race_resolver`'s own test suite proved
+    // the hazard directly -- `RaceCorpus` builds ONE global map keyed by
+    // trait KEY across every book (not book+key), so ingesting APG's 49
+    // reprints alongside ARG's already-committed originals produced
+    // `panicked ... Dwarf: duplicate resolved trait Dwarf ~ Ancient Enmity`
+    // and a picker-population count regression (`the_whole_corpus_
+    // classifies_into_the_four_roles_with_no_leftovers`, 379 -> 330, the
+    // -49 exactly accounting for the duplicates). This is a MEASUREMENT
+    // finding, not a missing-mechanism one: the raw-corpus enumeration
+    // counts each book's row independently, so two books reprinting the
+    // SAME real trait are counted as two distinct not-done units when at
+    // most one can ever ground. Logged to `OPEN-ISSUES.md` for an operator
+    // ruling on how the denominator should treat this shape (a
+    // resolver-side de-dup layer, or a Structural Exclusion Register entry
+    // for the 49 phantom duplicates) rather than silently ingesting a
+    // record set that would either crash the resolver or add zero real
+    // coverage.
+
     BookSource {
         corpus_book: "monster_codex",
         lst_relatives: &["pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst"],
@@ -1763,11 +1799,15 @@ mod tests {
             395,
             "201 ARG + 5 Monster Codex + 82 Inner Sea Races + 43 Horror Adventures + 64 Core \
              Essentials heritage records (ARG/ISR moved from 156/71 by SD-31 Epic 1-F2, \
-             2026-08-15). This total sits alongside the per-book map above and must move \
-             with it; round 3 moved the map first and this pin caught the omission, round 4 \
-             did the same, the companion lane hit it a third time in one cycle, and this \
-             batch is the fourth -- fixing one assertion reveals the next one below it, \
-             which is the whole reason the test states both"
+             2026-08-15). Advanced Player's Guide was investigated (SD-31 Epic 6-F4,
+             2026-08-15) and deliberately NOT added as a `BookSource` -- see this file's \
+             `BOOK_SOURCES` doc comment: 49 of its 50 in-scope rows are already ingested, \
+             byte-mechanically-identical, via `advanced_race_guide`'s own reprint of them. \
+             This total sits alongside the per-book map above and must move with it; round \
+             3 moved the map first and this pin caught the omission, round 4 did the same, \
+             the companion lane hit it a third time in one cycle, and this batch is the \
+             fourth -- fixing one assertion reveals the next one below it, which is the \
+             whole reason the test states both"
         );
     }
 

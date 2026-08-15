@@ -1032,6 +1032,14 @@ fn reach_of(family: &Family) -> Option<Reach> {
             "B2",
             crate::race_catalog::ingested_race_ids_for_book("bestiary_2"),
         )),
+        // SD-31 Epic 1 follow-on batch (2026-08-15). Skinwalker's chassis:
+        // same mechanism as CRB/B1/B2 above, once `race_catalog::
+        // RACE_CORPUS_BOOKS` and `RACE_CATALOG_BOOKS` both carry
+        // `"bestiary_5"`/`B5`.
+        ("bestiary_5", "races") => Some(races_reach(
+            "B5",
+            crate::race_catalog::ingested_race_ids_for_book("bestiary_5"),
+        )),
 
         // Racial traits: `list_alternate_racial_traits` serves every race's
         // standard rows and every ARG alternate, and
@@ -1060,6 +1068,13 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // `race_traits_reach` filters by the record's own `book_id`, which
         // for an alternate is the book it was actually read from.)
         ("bestiary_2", "race_traits") => Some(race_traits_reach("B2", "bestiary_2")),
+        // SD-31 Epic 1 follow-on batch (2026-08-15). Skinwalker's 9
+        // standard-tier racial-trait records, filed under `bestiary_5` by
+        // `ingest_races` -- same claim shape as `bestiary_2` above. This
+        // batch does NOT ingest Skinwalker's heritage-shaped alternates
+        // (see `ingest_races.rs`'s `skinwalker` doc comment), so there is
+        // no separate alternate-trait claim to add here yet.
+        ("bestiary_5", "race_traits") => Some(race_traits_reach("B5", "bestiary_5")),
         ("advanced_race_guide", "race_traits") => {
             Some(race_traits_reach("ARG", "advanced_race_guide"))
         }
