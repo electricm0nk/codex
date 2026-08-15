@@ -995,3 +995,118 @@ warnings, 0 errors, no new errors), `class-dump` (31/31 computing). `verify.sh` 
 
 **Status: COMPLETE.** `HEAD` `1980d6b95` -> `0b557ac43` (+ this receipt's own commit). Epic 10 flipped
 to `COMPLETE` in `kanban.md` on this gate result.
+
+---
+
+## Cycle SD31-W1-PREFLIGHT-001 (sd31-w1-preflight, 2026-08-15)
+
+**Wave-admission cycle. No production code touched — markdown only, so no full gate run for this
+cycle** (stated per instruction; the substantive full-gate figures below are re-derived from the live
+board and box state, not from a fresh `verify.sh` run).
+
+**Checkout state.** Started at `HEAD 3f756b4b9` (`git log -1`: "docs(sd31): unattended-mode
+open-issues log + orchestrator dispatch log with re-derived baseline"), branch `tranche/11`. Package
+dir present; no recovery needed. `git status --porcelain` showed only `docs/retro/events/codex.jsonl`
+modified (another agent's retro append, left untouched).
+
+**Oracle pin.** `./scripts/verify.sh --only preflight-oracle` -> `PASS (oracle at pin
+7f818006e371188e5717fd18d74d18a420747fc6)`. `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`).
+
+### 1. Box measurement
+
+```
+nproc                        # 24
+free -h                      # 167Gi total / 6.9Gi used / 154Gi free / 161Gi available
+df -B1G /                    # 968 total / 151 used / 818 avail / 16%
+du -sh /home/ubuntu/cargo-targets/* target 2>/dev/null
+#   (cargo-targets/ is empty — no prior agent left a target dir there)
+#   83G  target               (primary checkout's accumulated tree)
+```
+
+### 2. `reclaim.sh`
+
+`./scripts/reclaim.sh` (dry run) then `./scripts/reclaim.sh --apply`: **0.0 B reclaimed**. All 25
+candidates correctly skipped — 23 `verify-logs` under `/tmp/codex-verify-*` too young (<6h), 2
+branches not merged into `origin/develop`/upstream present, and one stray non-cargo-target dir
+(`/home/ubuntu/workspace/codex-target-wiring-classifier`, skipped "not a cargo target dir"). Zero
+findable stale garbage on this box right now, not an unclean box.
+
+**Known hardening gap, confirmed not fixed here:** `scripts/reclaim.sh`'s `cargo-target` category
+scans only two roots — `SCRATCHPAD_ROOT="${RECLAIM_SCRATCHPAD_ROOT:-/tmp/claude-1000}"` and
+`CACHE_ROOT="${RECLAIM_CACHE_ROOT:-$HOME/.cache}"` (`scripts/reclaim.sh:122-123`, `roots=("$SCRATCHPAD_ROOT"
+"$CACHE_ROOT")` at line 515). **`/home/ubuntu/cargo-targets/` — the directory this package's own
+loop-instruction mandates every agent's `CARGO_TARGET_DIR` live under — is never in that scan.** The
+dry-run output confirms this empirically: it enumerated nothing under `cargo-targets/` even to skip
+it. Any orphaned per-agent target dir left there (SD-30's `sd29-e2-prelaunch`-style leak) would sit
+forever unreclaimed by this tool. Per instruction, not fixed in this cycle — noted for a future
+hardening card.
+
+### 3. Wave disk budget (this wave: 2 concurrent full-gate agents)
+
+Following SD-30 `loop-instruction.md` "Concurrency and resource budget" arithmetic exactly, re-measured
+today:
+
+| quantity | value | how |
+|---|---:|---|
+| cores | 24 | `nproc` |
+| RAM | 167 Gi total, 154 Gi free | `free -h` |
+| filesystem | 968 G | `df -B1G /` |
+| currently used | 151 G (16 %) | `df -B1G /`, this cycle |
+| `preflight-disk` refuses at | 90 % used or < 20 G free | `verify.sh:243-244` (`PREFLIGHT_DISK_MIN_FREE_GB=20`, `PREFLIGHT_DISK_MAX_PERCENT=90`) |
+| headroom to the 90 % floor | **720.2 G** | `0.90 × 968 − 151` |
+| headroom to the 20 G-free floor | 798 G | `818 − 20` |
+| **binding headroom** | **720.2 G** (90 % floor binds) | `min(720.2, 798)` |
+| a full-gate `CARGO_TARGET_DIR`, measured | 83 G | `du -sh target` above (primary checkout's accumulated footprint; `cargo-targets/` empty right now, no fresh-footprint sample available this cycle) |
+| **concurrent full-gate agents (disk)** | **8** | `720.2 ÷ 83 = 8.68` -> floor 8 |
+| **concurrent full-gate agents (CPU)** | **12** | `24 ÷ 2 (default -j per agent) = 12`; not binding |
+| RAM headroom at 8 agents × -j 2 | ample | ~16 concurrent rustc jobs × ~2-4G each ≈ 32-64G against 154 Gi free; not binding |
+| **binding constraint** | disk | 8 < 12 |
+| **CAP: concurrent full-gate agents today** | **8** | smaller of the disk/CPU/RAM bounds |
+
+**This wave dispatches 2 concurrent full-gate agents. 2 ≤ 8 — the budget admits 2**, with substantial
+headroom to spare (would admit up to 8 before the disk floor binds).
+
+### 4. Board baseline re-derive
+
+Re-derived by replaying the dashboard producer's own `doneness_verdict()` over the live
+`docs/work-inventory.json`, not transcribed from any prior receipt or from `ORCHESTRATOR-LOG.md`:
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(d.get('generated_at'), len(U), dict(c), round(100*c['done']/len(U),2))
+"
+```
+
+Result: `generated_at 2026-08-15T01:34:18Z`, denominator **38,521**, `done` **5,837** = **15.15 %**.
+`not-started` 20,895 · `held` 6,916 · `unmeasurable` 3,989 · `in-progress` 848 · `deferred` 36.
+
+Per-kind (same command, grouped by `kind`):
+
+| kind | total | done | done % | held | not-started | other |
+|---|---:|---:|---:|---:|---:|---|
+| class_feature | 15,472 | 25 | 0.16 % | 88 | 11,703 | unmeasurable 3,622; deferred 34 |
+| equipment | 6,208 | 2,626 | 42.30 % | 2,327 | 962 | in-progress 293 |
+| race_trait | 3,447 | 266 | 7.72 % | 247 | 2,934 | — |
+| monster_ability | 3,107 | 334 | 10.75 % | 1,295 | 1,478 | — |
+| spell | 2,843 | 47 | 1.65 % | 1,103 | 1,561 | in-progress 132 |
+| feat | 2,610 | 1,178 | 45.13 % | 89 | 973 | unmeasurable 367; deferred 2; in-progress 1 |
+| companion | 1,696 | 416 | 24.53 % | 506 | 774 | — |
+| equipment_modifier | 1,580 | 911 | 57.66 % | 19 | 228 | in-progress 422 |
+| monster | 1,270 | 7 | 0.55 % | 1,235 | 28 | — |
+| class | 185 | 27 | 14.59 % | 0 | 158 | — |
+| race | 103 | 0 | 0.00 % | 7 | 96 | — |
+
+**Cross-check against `docs/release/SD-31-corpus-closure-grind/artifacts/ORCHESTRATOR-LOG.md`'s
+"Baseline at orchestration start" table: exact match on every figure** — denominator 38,521, `done`
+5,837/15.15 %, the `not-started`/`held`/`unmeasurable`/`in-progress`/`deferred` breakdown, and all 11
+per-kind rows. **No hard stop.** Both re-derivations resolve to the identical `docs/work-inventory.json`
+snapshot (`generated_at 2026-08-15T01:34:18Z`), unchanged since the orchestrator's own baseline capture
+earlier the same day — no board mutation occurred between the two reads.
+
+**Status: COMPLETE.** No code change; docs-only commit. `HEAD 3f756b4b9` -> (this receipt's commit).

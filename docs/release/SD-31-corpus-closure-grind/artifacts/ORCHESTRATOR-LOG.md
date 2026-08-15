@@ -52,3 +52,51 @@ footprint = 8.8; CPU bound is 12; disk binds).
 
 | # | Launched | Workflow / runId | Scope | Outcome |
 |---|----------|------------------|-------|---------|
+
+## Wave budgets
+
+### Wave 1 (cycle `SD31-W1-PREFLIGHT-001`, sd31-w1-preflight, 2026-08-15)
+
+Dispatches 2 concurrent full-gate agents. Re-measured box and budget arithmetic per SD-30
+`loop-instruction.md` "Concurrency and resource budget" methodology:
+
+```
+nproc                        # 24
+free -h                      # 167Gi total / 6.9Gi used / 154Gi free / 161Gi available
+df -B1G /                    # 968 total / 151 used / 818 avail / 16%
+du -sh /home/ubuntu/cargo-targets/* target 2>/dev/null
+#   cargo-targets/ empty — no prior agent target dir present
+#   83G  target               (primary checkout's accumulated tree)
+```
+
+| quantity | value | how |
+|---|---:|---|
+| cores | 24 | `nproc` |
+| RAM | 167 Gi total, 154 Gi free | `free -h` |
+| filesystem | 968 G | `df -B1G /` |
+| currently used | 151 G (16 %) | `df -B1G /` |
+| `preflight-disk` refuses at | 90 % used or < 20 G free | `verify.sh:243-244` |
+| headroom to 90 % floor | **720.2 G** | `0.90 × 968 − 151` |
+| headroom to 20 G-free floor | 798 G | `818 − 20` |
+| binding headroom | **720.2 G** (90 % floor) | `min(720.2, 798)` |
+| full-gate `CARGO_TARGET_DIR` footprint | 83 G | `du -sh target` (accumulated primary; no fresh-agent sample available — `cargo-targets/` empty this cycle) |
+| concurrent full-gate agents (disk) | **8** | `720.2 ÷ 83 = 8.68` -> floor 8 |
+| concurrent full-gate agents (CPU) | 12 | `24 ÷ 2` default `-j`; not binding |
+| RAM headroom | ample | not binding |
+| binding constraint | disk | 8 < 12 |
+| **CAP** | **8** | smaller of the bounds |
+
+**This wave dispatches 2. 2 ≤ 8 — budget admits 2**, with headroom to spare up to the cap of 8.
+
+**`reclaim.sh` this cycle:** dry run then `--apply`, **0.0 B reclaimed** (25 candidates, all correctly
+skipped — too-young verify-logs, unmerged branches, one non-cargo-target stray dir). Confirmed
+`reclaim.sh`'s `cargo-target` category scans only `SCRATCHPAD_ROOT` (`/tmp/claude-1000`) and
+`CACHE_ROOT` (`$HOME/.cache`) — never `/home/ubuntu/cargo-targets/`, the directory this package
+mandates every agent's `CARGO_TARGET_DIR` live under. Known gap, not fixed this cycle (out of this
+cycle's scope; noted for a future hardening card).
+
+**Board baseline re-derive (same cycle):** replayed `doneness_verdict()` over live
+`docs/work-inventory.json` (`generated_at 2026-08-15T01:34:18Z`) — denominator 38,521, `done` 5,837
+(15.15 %), matching this file's "Baseline at orchestration start" table exactly on every figure
+(overall breakdown and all 11 per-kind rows). No hard stop; both reads resolve to the same unchanged
+snapshot. Full detail and per-command re-derivation: `progress.md` cycle `SD31-W1-PREFLIGHT-001`.
