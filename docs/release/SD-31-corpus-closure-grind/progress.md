@@ -344,3 +344,68 @@ budget ran out. **Remaining:** let the backgrounded full run finish
 if it is not 0, diagnose and fix before this step is truly closed — do not treat the strong partial
 evidence above (root-lib 1777/1777, all 8 selftest/preflight stages green, corpus-sweep independently
 CLEAN at the exact expected count) as a substitute for the real full-gate exit code.
+
+---
+
+**2026-08-15 (same day, resumption) — proof (5) closed, S3-oracle done.** Actor `sd31-ready-s3`
+resumed at HEAD `acee7f092` (this step's own commit A, already pushed — tree clean at start, `git
+status --porcelain` empty). Verified everything the prior turn landed BY CONTENT before proceeding
+(file listing, `--list` output, doc-touchpoint greps against §1e, `fetch-pcgen-oracle.sh`'s full
+`do_check`/`do_fetch_to_pin`/`do_fresh_clone`/`main()` logic read end to end against design §1b,
+`preflight_oracle`'s stage function read against design §1c, plan Step-3 text cross-checked against
+every deliverable) — no discrepancies found beyond the already-logged `PCGEN_REPO_DIR` correction.
+
+**Housekeeping found and fixed before re-running the gate:** a `ps -ef` check turned up a SECOND,
+orphaned `./scripts/verify.sh` process tree (pid 1252000, `PPID=1`, started 10:26:01 — the prior
+turn's own backgrounded full run, `verify-s3-full.log`, apparently never killed when that turn ended)
+still alive and building against the SAME `$CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-ready-s3`
+as a freshly-launched run started this turn (pid 1290529, `verify-s3-full-2.log`). Two concurrent
+`cargo test` invocations sharing one target dir is wasteful (cargo's own target-dir lock would have
+serialized them, not corrupted anything, but doubled wall-clock and confused which log was
+authoritative). Killed the orphaned tree (`kill -TERM` on 1264220/1252002/1252000, confirmed dead)
+and let the single remaining, actively-monitored run (`verify-s3-full-2.log`) proceed alone.
+
+**Proof (5), completed this cycle:**
+```
+RETRO_ACTOR=sd31-ready-s3 CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-ready-s3 ./scripts/verify.sh
+  -> RESULT: PASS
+  -> VERIFY_EXIT=0
+  -> passed: 18  preflight-disk preflight-oracle oracle-pin-selftest pi-sweep audit-selftest
+     reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach
+     corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump
+```
+Full stage-by-stage detail (log: `/tmp/claude-1000/.../scratchpad/verify-s3-full-2.log`,
+`duration_seconds: 1169`, auto-emitted retro event
+`docs/retro/events/sd31-ready-s3.jsonl` id `1786805423520-sd31-ready-s3-67e124`, `head: acee7f092`):
+`preflight-disk` PASS; `preflight-oracle` PASS (`oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6`);
+`oracle-pin-selftest` PASS (11/0); `pi-sweep` PASS (10 hits/10 baseline rows); `audit-selftest` PASS
+(28/0); `reclaim-selftest` PASS (13/0); `driver-selftest` PASS (7/0); `corpus-sweep-selftest` PASS
+(15/0); `root-lib` PASS (1777 passed); `root-full` PASS (**6410 passed across 548 suites, all 527
+`tests/*.rs` suites executed**); `desktop` PASS (445 passed); `reach` PASS (27 passed); `corpus-sweep`
+PASS (**3516 records examined of 9328 read, 36105 tokens compared (9 synthesized), 8903 digests
+checked, 0 findings**) — this is the third independent confirmation of the identical 3516/36105/8903
+figures (scratch fetch in proof 4, real-oracle re-run in proof 4, and now the full-gate run itself,
+all matching); `frontend-install` PASS; `frontend-test` PASS (99/99 files); `frontend-typecheck` PASS
+(clean); `clippy` PASS (root:46 desktop:7 warnings, 0 errors — pre-existing warning counts, this
+step's diff introduces no new clippy findings, since `fetch-pcgen-oracle.sh`/the test script are
+bash, not Rust); `class-dump` PASS (31/31 computing).
+
+**Pre-existing baseline drift observed, NOT this step's diff, NOT fixed here (out of S3-oracle's
+write scope — flagging for whichever cycle owns `verify-baselines.env` maintenance next):**
+`scripts/verify.sh`'s own SUMMARY block printed three "not failures — update deliberately" notes:
+`BASELINE_ROOT_LIB_TESTS` stale (1776 recorded, 1777 measured), `BASELINE_ROOT_FULL_TESTS` stale
+(6398 recorded, 6410 measured), `BASELINE_ROOT_TEST_BINARIES` stale (547 recorded, 548 measured).
+These three counts moved between whenever `verify-baselines.env` was last hand-updated and this
+commit, from work unrelated to S3-oracle (this step added zero Rust tests). Left as-is per "stay
+inside the granted write scope" — not a correction to a figure this step stated, just an honest
+observation for the next baseline-maintenance pass.
+
+**Status: COMPLETE.** All five PROOFS from the dispatch are now closed: (1) selftest 11/0 green,
+mutation-proven; (2) `--only preflight-oracle`/`oracle-pin-selftest` PASS at the tip; (3) RED proofs
+for absent oracle and one-commit-off-pin, naming both SHAs (via `PCGEN_REPO_DIR`, logged correction
+above); (4) real network fetch into the scratchpad, OK token, 108M, `corpus_literal_sweep` CLEAN with
+the identical record count, scratch clone deleted, operator's real clone reconfirmed unchanged; (5)
+**FULL `./scripts/verify.sh` at the tip: PASS, `VERIFY_EXIT=0`, all 18 stages green.** Commit A
+(`acee7f092`) already pushed to `origin/tranche/10` from the prior cycle; no code change was needed
+this cycle, only completing the verification this step's own protocol requires before calling it
+done. `scripts/reclaim.sh --apply` re-run this cycle (see below).
