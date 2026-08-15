@@ -338,6 +338,17 @@ fn contains_word(haystack: &str, needle: &str) -> bool {
     false
 }
 
+/// Is `s` a bare (optionally signed) integer literal, with nothing else —
+/// `"10"`, `"+2"`, `"-4"` are; `"Cold Iron"`, `"EidolonDR"`,
+/// `"MutagenStatBonus"`, `""`, `"-"` are not. Used to distinguish a
+/// genuinely flat `MAGNITUDE_TOKENS` amount from a named PCGen variable
+/// wearing the same slash/selector shape (`SD31-W2-INTEGRATE-001`,
+/// Finding 1's D4 repair).
+fn is_integer_literal(s: &str) -> bool {
+    let digits = s.strip_prefix(['+', '-']).unwrap_or(s);
+    !digits.is_empty() && digits.bytes().all(|b| b.is_ascii_digit())
+}
+
 /// `SCALARS.search(value)` — is `value` a function of a character/item
 /// scalar, at all (used alone by the `derived:prose_expr` rule, which does
 /// NOT also accept bare arithmetic).
@@ -369,8 +380,23 @@ fn has_arith(value: &str) -> bool {
 /// `1/4`, `1/6`, `1/8`); a genuinely dynamic DR still signals via its own
 /// `*` (`DR:1*ArmoredDefenseMult/-`) or a `min(`/`max(` call, so scoping
 /// the `/` exclusion to these two tokens cannot hide a real DR/CR formula.
+///
+/// **D4 repair (`SD31-W2-INTEGRATE-001`, Finding 1).** The `/`-as-division
+/// exclusion applies ONLY when the segment before the first `/` is itself
+/// a bare integer literal (`10/Cold Iron`, `1/3`) — never when it names a
+/// variable (`DR:EidolonDR/evil`, `DR:DamageReductionLVL/-`). The original
+/// D3 fix disabled the whole slash-as-division arm for `CR:`/`DR:`
+/// unconditionally, which over-shot: a `DR:`/`CR:` amount that is itself a
+/// named, PCGen-`DEFINE:`d variable is not a literal magnitude at all, and
+/// must keep signalling `derived` rather than falling to
+/// `literal_magnitudes_only`, which the record would contradict.
 fn has_arith_scoped(value: &str, allow_slash: bool) -> bool {
-    if value.contains('*') || (allow_slash && value.contains('/')) {
+    if value.contains('*') {
+        return true;
+    }
+    if let Some(idx) = value.find('/')
+        && (allow_slash || !is_integer_literal(&value[..idx]))
+    {
         return true;
     }
     if value.to_ascii_lowercase().contains("min(") || value.to_ascii_lowercase().contains("max(")
@@ -454,10 +480,28 @@ fn strip_stat_selector(value: &str) -> std::borrow::Cow<'_, str> {
 /// scanning (`has_prose_formula_segment`) keeps calling the unscoped
 /// [`has_scalar_or_arith`] because CR/DR bypass notation never appears in
 /// a prose field.
+///
+/// **D4 repair (`SD31-W2-INTEGRATE-001`, Finding 1).** Stripping the
+/// `STAT` selector segment can leave behind a magnitude that is itself a
+/// named PCGen variable rather than a literal integer
+/// (`BONUS:STAT|STR|MutagenStatBonus`) — the selector was never the only
+/// possible false-positive source; a non-literal magnitude left behind by
+/// the strip must not be allowed to fall through to
+/// `literal_magnitudes_only` just because it fails the (deliberately
+/// narrow) `SCALARS`/`ARITH` word lists.
 fn has_scalar_or_arith_for_token(token: &str, value: &str) -> bool {
     let scan_value = strip_stat_selector(value);
     let allow_slash = token != "CR" && token != "DR";
-    has_scalar(&scan_value) || has_arith_scoped(&scan_value, allow_slash)
+    if has_scalar(&scan_value) || has_arith_scoped(&scan_value, allow_slash) {
+        return true;
+    }
+    if value.starts_with("STAT|") {
+        let magnitude = scan_value.split('|').next().unwrap_or("");
+        if !is_integer_literal(magnitude) {
+            return true;
+        }
+    }
+    false
 }
 
 /// `(^|\|)!?PRE(?!RULE)[A-Z]+:` — a conditional guard, excluding
@@ -1221,6 +1265,61 @@ mod tests {
         let (class, reason) = cls("Armored Defense\tDR:1*ArmoredDefenseMult/-\tMOVE:Walk,30");
         assert_eq!(class, WiringClass::Derived);
         assert_eq!(reason, "dr");
+    }
+
+    // D4 (SD31-W2-INTEGRATE-001, Finding 1, over-shoot repair) — the D3 fix
+    // above must not go so far that a NAMED-VARIABLE `DR:` amount is
+    // silently swept into `literal_magnitudes_only`. Real row,
+    // `pathfinder_unchained/pu_abilities_race.lst:101`, "Eidolon
+    // Progession Lv.12" (`Agathion ~ Unchained Eidolon LVL12`):
+    // `DR:EidolonDR/evil` where `EidolonDR` is a `DEFINE:`d/`BONUS:VAR`-set
+    // variable, not a literal amount — the segment before the `/` is not a
+    // bare integer, so the `/`-as-division exclusion must not apply and
+    // this must still signal `derived`.
+    #[test]
+    fn d4_dr_variable_amount_slash_is_derived_not_static() {
+        let (class, reason) = cls(
+            "Eidolon Progession Lv.12\tDEFINE:EidolonDR|0\tBONUS:VAR|EidolonDR|5\tDR:EidolonDR/evil",
+        );
+        assert_eq!(class, WiringClass::Derived);
+        assert_eq!(reason, "dr");
+    }
+
+    // Regression guard alongside D4: `DR:10/Cold Iron` (bare-integer
+    // amount) must still resolve `static`, proving the fix is scoped to
+    // non-numeric amounts and does not regress the D3 fix it repairs.
+    #[test]
+    fn d4_dr_literal_amount_slash_still_static() {
+        let (class, reason) = cls("Iron Hide\tDR:10/Cold Iron\tMOVE:Walk,30");
+        assert_eq!(class, WiringClass::Static);
+        assert_eq!(reason, "literal_magnitudes_only");
+    }
+
+    // D4 — the `BONUS:STAT` selector-strip fix (D3, row 2(a)) must not go
+    // so far that a NAMED-VARIABLE magnitude is silently swept into
+    // `literal_magnitudes_only` either. Real row,
+    // `advanced_class_guide/acg_abilities_class.lst:2876`, "Mutagen
+    // Strength/Primary" (`Mutagenic Mauler Brawler ~ Mutagen Strength
+    // (First)`): `BONUS:STAT|STR|MutagenicMaulerMutagenStatBonus|TYPE=Alchemical`
+    // — the magnitude segment after the STR selector is the variable
+    // `MutagenicMaulerMutagenStatBonus`, not a literal integer, so the
+    // strip must not blind the scan to it.
+    #[test]
+    fn d4_bonus_stat_variable_magnitude_is_derived_not_static() {
+        let (class, reason) = cls(
+            "Mutagen Strength/Primary\tBONUS:STAT|STR|MutagenicMaulerMutagenStatBonus|TYPE=Alchemical",
+        );
+        assert_eq!(class, WiringClass::Derived);
+        assert_eq!(reason, "bonus");
+    }
+
+    // Regression guard alongside D4: a bare-integer `BONUS:STAT` magnitude
+    // (the D3 fix's own worked example) must still resolve `static`.
+    #[test]
+    fn d4_bonus_stat_literal_magnitude_still_static() {
+        let (class, reason) = cls("+2 Dexterity\tBONUS:STAT|DEX|2|TYPE=Racial");
+        assert_eq!(class, WiringClass::Static);
+        assert_eq!(reason, "literal_magnitudes_only");
     }
 
     // Full real row, both false positives compounded in one record:
