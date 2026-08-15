@@ -3145,3 +3145,241 @@ $ git status --porcelain docs/release/SD-30-class-feature-archetype-bundle/ docs
 ### 12. Reclaim
 
 `scripts/reclaim.sh` (dry run) then `--apply` — recorded below in the retro/commit section once run.
+
+## Cycle `SD30-E7-F1-001` (re-dispatch) — 2026-08-14 — `epic-7-version` closed for real
+
+**Actor:** `sd30-e7-version`. **Starting HEAD:** `2f2de762` (verified: `git rev-parse HEAD`, tree
+clean per `git status --porcelain` before any edit — the only pre-existing dirt was the two files
+`state-goals-and-lessons.md` names as belonging to another session's site-deploy work, `.gitignore`'s
+`.wrangler/` entry and untracked `.github/workflows/deploy-site.yml`, both left exactly as found).
+`46002447`/`cca272e8` (the prior agent's version-bump + lockfile fix) confirmed ancestors of this HEAD
+via `git merge-base --is-ancestor`, not trusted on say-so.
+
+### 1. Re-derived diagnosis (the retry log's summary was second-hand and, for one of the two files, wrong)
+
+Ran the frontend tests directly rather than trusting the retry log/state-goals summary:
+`cd apps/desktop && node scripts/run-tests.mjs`. Real result: **98/99 files passed after nothing had
+been touched**, not the "97/99" the retry log and `state-goals-and-lessons.md §3.4` reported — one of
+the two named failures had a different actual cause than either doc claimed. Reading the real
+assertion output:
+
+- **`apps/desktop/src/releaseChecks/buildLabelFixtureFreshness.test.ts`** — diagnosis as reported:
+  correct. `src/testSupport/makeSurface.ts`'s hand-maintained `buildLabel: 'Codex 0.9.0-test'` was
+  never bumped alongside the version triple.
+- **`apps/desktop/src/release/buildVersionTriple.test.ts`** — diagnosis as reported in the dispatch
+  brief and `state-goals-and-lessons.md §3.4` (both said "the same build-label fixture cause"): **WRONG**.
+  Real assertion output: `workflow stamp "0.9.${GITHUB_RUN_NUMBER}" must reuse package.json's
+  major.tranche (0.10) and take its build position from GITHUB_RUN_NUMBER: expected
+  0.10.${GITHUB_RUN_NUMBER}, got 0.9.${GITHUB_RUN_NUMBER}`. This test has nothing to do with the
+  build-label string fixture — it checks `.github/workflows/publish-tester-release.yml`'s
+  `VERSION="0.9.${GITHUB_RUN_NUMBER}"` stamp against the repo version files, and that stamp was never
+  bumped in `46002447`. A genuine, separate, second defect the prior cycle's own version-bump commit
+  left behind. `retro.py correction` event `1786756080009-sd30-e7-version-b2c24a`
+  (`docs/retro/events/sd30-e7-version.jsonl`) records this against the dispatch brief and the living
+  hazards doc, per the "correcting the docs is expected, not insubordination" press-on rule.
+
+### 2. Fix 1 — the build-label fixture surface is wider than `buildLabelFixtureFreshness.test.ts`'s own list
+
+`buildLabelFixtureFreshness.test.ts`'s `FIXTURE_FILES` named 3 files. Grepping the whole tree for the
+literal (`grep -rln "0.9.0-test" apps/desktop/src`) found **7**: the 3 named plus
+`composeEnhancementRequest.test.ts`, `composeBugReport.test.ts`, `captureFeedbackEvidence.test.ts`,
+`buildOperatorTriageDraft.test.ts` — each asserts `makeSurface()`'s `buildLabel` output as a hardcoded
+literal, downstream of the fixture the freshness check was supposed to be guarding, but outside its own
+list. Updating only the named 3 would have bumped `makeSurface.ts` to `0.10.0-test` and **broken these
+4 previously-passing files silently** — the near-miss this cycle caught before committing
+(`retro.py near-miss` event `1786756095122-sd30-e7-version-24ccef`).
+
+**Fix, root cause not symptom:** updated all 7 files' `'Codex 0.9.0-test'` literal to
+`'Codex 0.10.0-test'` (`sed` over the explicit file list, verified after with
+`grep -rn "0.9.0-test" apps/desktop/src` → empty). Widened `buildLabelFixtureFreshness.test.ts`'s
+`FIXTURE_FILES` to all 7 so a future bump cannot repeat this silently, and moved `STALE_LABEL` forward
+one bump (`0.8.0-test` → `0.9.0-test`, matching the file's own "kept one bump behind" convention).
+`makeSurface.ts`'s sibling `version: '0.9.0-test'` field (not covered by the freshness check, but the
+same object) updated to `'0.10.0-test'` too, for internal consistency — no test asserted a literal
+value for it, so this could not have caused a hidden break either direction.
+
+### 3. Fix 2 — the publish workflow's version stamp, never bumped
+
+`.github/workflows/publish-tester-release.yml:97` still read `VERSION="0.9.${GITHUB_RUN_NUMBER}"`.
+Bumped to `VERSION="0.10.${GITHUB_RUN_NUMBER}"`, following the file's own dated-comment convention
+(a new comment block naming this cycle, mirroring the tranche/7/8/9 entries already there). This file
+is `.github/workflows/publish-tester-release.yml` — confirmed distinct from the untracked
+`.github/workflows/deploy-site.yml` this checkout must not touch (`git status --porcelain .github/`
+before editing: `publish-tester-release.yml` tracked/modified, `deploy-site.yml` still `??`).
+
+### 4. Verification before committing
+
+```
+$ cd apps/desktop && node scripts/run-tests.mjs 2>&1 | tail -3
+99/99 test files passed.
+$ npx tsc --noEmit; echo $?
+0
+```
+
+Four-check wired-integration audit (`docs/governance/no-stub-mvp-doctrine.md` Per-cycle audit),
+against `origin/develop...HEAD`:
+
+```
+1. STUB/MOCK/placeholder/todo/fixme/hack tokens: OK_NO_TOKENS
+2. noop onClick handlers:                        OK_NO_NOOP_HANDLERS
+3. mock leaks outside test files:                 OK_NO_MOCK_LEAKS
+4. "Would ..." strings:                           OK_NO_WOULD_STRINGS
+```
+
+### 5. Commit and push
+
+Staged explicit paths only (never `git add -A`) — `.gitignore` and `docs/retro/events/codex.jsonl`
+left untouched (other sessions' state), `.github/workflows/deploy-site.yml` left untracked. Committed
+`4630fec2` ("fix(sd30): SD30-E7-F1-001 — complete the 0.10.0 fixture surface and CI stamp"), pushed to
+`origin/tranche/10` **before** launching the full gate, per "commit and push as you go."
+
+### 6. Full gate, launched early, polled inline (not backgrounded-and-yielded)
+
+```
+export RETRO_ACTOR=sd30-e7-version
+export CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd30-e7-version   # fresh, role-named, not /tmp
+./scripts/verify.sh > .../artifacts/sd30-e7-f1-verify-2.log 2>&1; echo "VERIFY_EXIT=$?" >> ...log
+```
+
+Launched at HEAD `4630fec2`, ~21:08. Polled inline in this same cycle/turn (no dispatch-and-abandon)
+until completion, ~6 minutes wall time on a cold `CARGO_TARGET_DIR` (24-core / 667G-free box, `nproc`
+re-confirmed 24, `df -B1G /` 32% used both before and after — no `preflight-disk` pressure at any
+point).
+
+```
+SUMMARY
+  passed:  16  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest
+                corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep
+                frontend-install frontend-test frontend-typecheck clippy class-dump
+
+  root-lib             PASS  1776 passed
+  root-full             PASS  6405 passed across 548 suites, all 527 tests/*.rs suites executed
+  desktop               PASS  445 passed
+  reach                 PASS  27 passed
+  corpus-sweep           PASS  3516 records examined of 9328 read, 0 findings
+  frontend-test          PASS  99/99 files      <-- the stage that was RED before this cycle
+  frontend-typecheck    PASS  tsc --noEmit clean
+  clippy                 PASS  root:46 desktop:7 warnings, 0 errors
+  class-dump             PASS  31/31 computing
+
+BASELINE NOTES (not failures — update deliberately):
+  - BASELINE_ROOT_FULL_TESTS baseline is stale: 6398 recorded, 6405 measured.
+  - BASELINE_ROOT_TEST_BINARIES baseline is stale: 547 recorded, 548 measured.
+
+RESULT: PASS
+VERIFY_EXIT=0
+```
+
+`VERIFY_EXIT=0` captured directly (`echo "VERIFY_EXIT=$?" >> "$LOG"` in the same shell statement, never
+through a pipe), read from the log's own append — not inferred, not a wrapper/harness status. Full log:
+`docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e7-f1-verify-2.log`. `HEAD` unchanged
+across the whole gate run (`git rev-parse HEAD` before and after both `4630fec2`) — no concurrent
+writer touched this checkout.
+
+**This is the first confirmed-green full gate at any tip carrying `0.10.0`.** The last confirmed-green
+gate before this was `SD30-E3-F4-001`'s at `b472aec2`, which predates every `0.10.0` commit
+(`state-goals-and-lessons.md §3.4`).
+
+### 7. Baselines (DoD item 7) — left untouched, deliberately
+
+Same drift the retry gate reported (`BASELINE_ROOT_FULL_TESTS` 6398 recorded / 6405 measured,
+`BASELINE_ROOT_TEST_BINARIES` 547 / 548) still shows, advisory-only (`RESULT: PASS` despite it — these
+are floors, `check_floor` only fails going *below* one, `scripts/verify.sh` framework). This drift
+predates this cycle's diff (this cycle added/removed zero Rust test functions or test binaries — its
+whole diff is TS test-literal edits + one CI YAML line) and per this card's own explicit instruction
+("never a bump made to get green") is **not bumped in this commit**. Left as a named, still-open
+housekeeping item for whichever cycle next touches `scripts/verify-baselines.env` with its own
+`--show-actuals` reviewable commit.
+
+### 8. `v06_corpus_trap_report -- --audit` (DoD item 3)
+
+```
+$ cargo run --locked --bin v06_corpus_trap_report -- --audit
+EXIT=2
+```
+
+178 `wiring-class-mismatch` findings, **0 `class_feature`** — all `companion` kind, all pre-existing
+`ultimate_wilderness` corpus drift unrelated to this cycle's diff (this cycle touched zero corpus
+files). Same shape every prior F-card in this package has reported (`SD30-E3-F4-001 §14`: "Exit 2, 177
+pre-existing... confirmed unrelated to this cycle's diff" — the count moved 177→178 from ordinary
+corpus-state drift between cycles, not from anything this cycle wrote).
+
+### 9. Original acceptance, still owed to Epic 9 — stated here so it does not need re-deriving
+
+**Concrete value, re-derived from the real build counter, not chosen:**
+
+```
+$ gh run list --workflow=publish-tester-release.yml --limit 1 --json number,conclusion,createdAt
+[{"conclusion":"success","createdAt":"2026-08-14T14:19:28Z","number":123}]
+```
+
+The publish workflow's last completed run is `#123` (`GITHUB_RUN_NUMBER=123`, success,
+2026-08-14T14:19:28Z). `GITHUB_RUN_NUMBER` is monotonic per-workflow and never reused, so **the next
+invocation of `publish-tester-release.yml` will stamp `0.10.124`** — the concrete `0.10.<build>` value
+this bundle's first publish would carry if triggered right now. The repo's committed version files
+(`package.json`/`tauri.conf.json`/`Cargo.toml`) correctly stay at the branch-cut baseline `0.10.0`;
+`0.10.124` is what the *workflow* would produce, not a value written to the repo.
+
+**Closing-PR increment rule (`decisions.md §15`, the 2026-07-17 build-version amendment), verbatim for
+Epic 9 to apply without re-deriving:**
+
+> Tranche-promotion increments only on `tranche/10 → develop` PR. The closure Epic (last in order)
+> value is `0.10.<last_build>`.
+>
+> - major = 0 (no main-publish yet).
+> - tranche-base = 10 (the base digit of `tranche/10`, already cut — **does not move again** on this
+>   bundle's own closure).
+> - build = monotonic counter (`GITHUB_RUN_NUMBER`), never resets.
+
+Epic 9's closing tranche-promotion PR should read `GITHUB_RUN_NUMBER` at the point the PR is opened (via
+the same `gh run list --workflow=publish-tester-release.yml --limit 1` command, re-derived fresh — the
+`123`/`124` above is a snapshot, not a constant) and state `0.10.<that_build>` as the closure value; it
+does not bump the tranche digit.
+
+### 10. Final Definition of Done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **PASS.** `VERIFY_EXIT=0`, 16/16 stages, captured directly (§6). First confirmed green at any `0.10.0` tip. |
+| 2 | Reach stage claim | **PASS** — 27 matched tests (nonzero), unaffected by this cycle's diff (§6). |
+| 3 | `v06_corpus_trap_report -- --audit` | **Exit 2, 178 pre-existing `wiring-class-mismatch`, 0 `class_feature`** — unrelated to this cycle's diff (§8). |
+| 4 | Guarded work-inventory regen | **N/A** — no corpus content or `docs/work-inventory.json` changed this cycle. |
+| 5 | Four-check wired-integration audit | **PASS**, all 4 checks clean against `origin/develop...HEAD` (§4). |
+| 6 | `OPEN_FINDINGS` | **N/A** — no family surfaced or left unsurfaced. |
+| 7 | Baseline movements own commit | **N/A for this cycle — deliberately not bumped** (§7); pre-existing drift, not this cycle's obligation. |
+| 8 | On-screen verification | **N/A** — no new player-visible surface: the build-label text a tester sees is already wired to the live `package.json` version at runtime (unchanged production code path); this cycle only corrected test-fixture literals and one CI YAML stamp, neither of which the running desktop app reads. |
+
+### 11. Retrospective events
+
+- `correction` `1786756080009-sd30-e7-version-b2c24a` — dispatch brief's "both failures share one
+  cause" claim, corrected (§1).
+- `near-miss` `1786756095122-sd30-e7-version-24ccef` — 4 downstream fixture-consumer tests would have
+  broken silently on a narrower fix (§2).
+- Both in `docs/retro/events/sd30-e7-version.jsonl`.
+
+### 12. Card and epic disposition (final)
+
+**`epic-7-version`: COMPLETE, for real this time.** Green full gate (§6) at `4630fec2`, a tip carrying
+`0.10.0` throughout every config file and the publish workflow's own stamp. `kanban.md`'s
+`epic-7-version` row's `COMPLETE` mark — premature at `2026-08-14T20:18:00Z` per `epic-9-closure`'s own
+finding — is now genuinely earned. `Claimed-by sd30-e7-version`, `Claimed-at` this cycle's timestamp,
+`Cycle-id SD30-E7-F1-001`.
+
+**`epic-9-closure`'s Blocker 2** (`state-goals-and-lessons.md §3.4`, `progress.md`'s prior
+`SD30-E9-F1-001` entry) **is resolved as of this cycle** — the next `epic-9-closure` cycle can drop it
+and re-check Closure-F1 with only Blocker 1 (`epic-8-code-review` unstarted) remaining. Not this
+card's row to flip; recorded here as a fact for that card's next cycle to pick up.
+
+### 13. Reclaim
+
+```
+$ ./scripts/reclaim.sh          # dry run
+would reclaim: 0 item(s), 0.0B total
+$ ./scripts/reclaim.sh --apply
+reclaimed: 0 item(s), 0.0B total
+```
+
+Every candidate correctly refused (verify-logs too young, worktrees/branches live/unmerged) — per
+`state-goals-and-lessons.md`'s hazard doctrine this means the box is structurally full of live work,
+not that it is clean; not a signal to act on here, since no disk pressure was hit this cycle
+(`preflight-disk` passed cleanly at both ends of the gate, §6).
