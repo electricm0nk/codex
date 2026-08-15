@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 25.0,
+    "description": "The target's square and each square adjacent to it are covered in shards that function like caltrops for 5 rounds",
+    "key": "Shard Gel (Flask)",
+    "name": "Shard Gel (Flask)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Splash Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemical.Consumable.Weapon.Ranged.Thrown.Piercing.Splash"
+      },
+      {
+        "key": "COST",
+        "value": "25"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d4"
+      },
+      {
+        "key": "RANGE",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      },
+      {
+        "key": "SPROP",
+        "value": "The target's square and each square adjacent to it are covered in shards that function like caltrops for 5 rounds"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 692,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Shard Gel (Flask)",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

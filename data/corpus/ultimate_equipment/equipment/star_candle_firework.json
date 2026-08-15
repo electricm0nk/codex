@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 5.0,
+    "description": "Launches every round for 4 rounds after being lit. Deals 1 point of nonlethal damage and 1 point of fire damage; on a critical hit, the target is also blinded for 1 round.",
+    "key": "Star Candle (Firework)",
+    "name": "Star Candle (Firework)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Star Candle Firework"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemical.Consumable.Weapon.Ranged.Thrown.Fire"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "-"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Nonlethal"
+      },
+      {
+        "key": "RANGE",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      },
+      {
+        "key": "SPROP",
+        "value": "Launches every round for 4 rounds after being lit. Deals 1 point of nonlethal damage and 1 point of fire damage; on a critical hit, the target is also blinded for 1 round."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 695,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Star Candle (Firework)",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

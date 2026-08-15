@@ -1,0 +1,80 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 1415.0,
+    "description": null,
+    "key": "Otyugh Hide",
+    "name": "Otyugh Hide",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "4",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Hide"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Magic.ArmorProfMedium.Medium.Suit.Specific.NonMetal.GreaterMinor"
+      },
+      {
+        "key": "COST",
+        "value": "1415"
+      },
+      {
+        "key": "WT",
+        "value": "25"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-3"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Armor"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "20"
+      }
+    ],
+    "weight_lbs": 25.0
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 66,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Otyugh Hide",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

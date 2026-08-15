@@ -1,0 +1,76 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 9030.0,
+    "description": null,
+    "key": "Force Tower",
+    "name": "Force Tower",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "4",
+          "TYPE=Shield",
+          "PREVAREQ:DisableShieldBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "SHIELD|Tower Shield"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield.Magic.Specific.GreaterMajor.Tower"
+      },
+      {
+        "key": "COST",
+        "value": "9030"
+      },
+      {
+        "key": "WT",
+        "value": "22"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-10"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Arrow Deflection ~ Shield.Special Ability ~ Ghost Touch ~ Armor.Material ~ Mithril ~ Shield.Special Ability ~ +1 ~ Shield"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "50"
+      }
+    ],
+    "weight_lbs": 22.0
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 130,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Force Tower",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

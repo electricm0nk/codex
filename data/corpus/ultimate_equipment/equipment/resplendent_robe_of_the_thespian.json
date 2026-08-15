@@ -1,0 +1,68 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 75000.0,
+    "description": "Disguises the presence of armor as normal clothing.; +2 to overcome spell resistance",
+    "key": "Resplendent Robe of the Thespian",
+    "name": "Resplendent Robe of the Thespian",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SAVE",
+          "ALL",
+          "4",
+          "TYPE=Resistance",
+          "PRECLASS:1,Bard=1"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.GreaterMajor.Robe"
+      },
+      {
+        "key": "COST",
+        "value": "75000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      },
+      {
+        "key": "SR",
+        "value": "18"
+      },
+      {
+        "key": "SPROP",
+        "value": "Disguises the presence of armor as normal clothing."
+      },
+      {
+        "key": "SPROP",
+        "value": "+2 to overcome spell resistance|PRECLASS:1,Bard=1"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 506,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Resplendent Robe of the Thespian",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

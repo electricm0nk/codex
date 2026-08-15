@@ -1,0 +1,74 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 14000.0,
+    "description": null,
+    "key": "Belt of Mighty Hurling (Lesser)",
+    "name": "Belt of Mighty Hurling (Lesser)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "TOHIT.Thrown",
+          "((max(STR,DEX)-DEX))",
+          "TYPE=Ranged"
+        ]
+      },
+      {
+        "qualifiers": [
+          "RANGEADD",
+          "THROWN",
+          "10"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "STR",
+          "2",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Belt of Mighty Hurling, Lesser"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Belt.LesserMedium"
+      },
+      {
+        "key": "COST",
+        "value": "14000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 450,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Belt of Mighty Hurling (Lesser)",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

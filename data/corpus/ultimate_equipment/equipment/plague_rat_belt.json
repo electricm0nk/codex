@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 5200.0,
+    "description": "As an immediate action three times per day, the wearer can call upon the belt to reroll a saving throw made to resist a disease or poison.",
+    "key": "Plague Rat Belt",
+    "name": "Plague Rat Belt",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "CON",
+          "2",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Belt.GreaterMinor"
+      },
+      {
+        "key": "COST",
+        "value": "5200"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "SPROP",
+        "value": "As an immediate action three times per day, the wearer can call upon the belt to reroll a saving throw made to resist a disease or poison."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 481,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Plague Rat Belt",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

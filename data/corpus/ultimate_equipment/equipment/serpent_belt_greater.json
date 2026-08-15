@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 20000.0,
+    "description": "+4 bonus to all poisons; Once per day the belt can be animated as a venomous snake or constrictor snake. Speak second command to grant template to snake.",
+    "key": "Serpent Belt (Greater)",
+    "name": "Serpent Belt (Greater)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Escape Artist",
+          "2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "STR,DEX",
+          "2",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Serpent Belt, Greater"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Belt.GreaterMedium"
+      },
+      {
+        "key": "COST",
+        "value": "20000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "SPROP",
+        "value": "+4 bonus to all poisons"
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day the belt can be animated as a venomous snake or constrictor snake. Speak second command to grant template to snake."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 486,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Serpent Belt (Greater)",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

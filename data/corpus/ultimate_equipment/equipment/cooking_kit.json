@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 3.0,
+    "description": "This kit contains an iron pot, an iron skillet, a ladle, a skewer, a wooden cutting board, a cutting knife, an iron tripod for the pot, a packet of tinder, and a small selection of local or otherwise easy to find seasonings. You can attach the skewer to the tripod for roasting small game animals. All the component pieces (except the skillet) fit within the pot for easy storage and transport.",
+    "key": "Cooking Kit",
+    "name": "Cooking Kit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Kit"
+      },
+      {
+        "key": "COST",
+        "value": "3"
+      },
+      {
+        "key": "WT",
+        "value": "16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      },
+      {
+        "key": "SPROP",
+        "value": "This kit contains an iron pot, an iron skillet, a ladle, a skewer, a wooden cutting board, a cutting knife, an iron tripod for the pot, a packet of tinder, and a small selection of local or otherwise easy to find seasonings. You can attach the skewer to the tripod for roasting small game animals. All the component pieces (except the skillet) fit within the pot for easy storage and transport."
+      }
+    ],
+    "weight_lbs": 16.0
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 584,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Cooking Kit",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

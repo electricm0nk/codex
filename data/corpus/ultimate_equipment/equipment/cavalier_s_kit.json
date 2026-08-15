@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 23.0,
+    "description": "This includes animal feed (5 days), a backpack, a bedroll, a belt pouch, a bit and bridle, a flint and steel, an iron pot, a mess kit, a riding saddle, rope, saddlebags, soap, torches (10), trail rations (5 days), and a waterskin.",
+    "key": "Cavalier's Kit",
+    "name": "Cavalier's Kit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Kit"
+      },
+      {
+        "key": "COST",
+        "value": "23"
+      },
+      {
+        "key": "WT",
+        "value": "112"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "SPROP",
+        "value": "This includes animal feed (5 days), a backpack, a bedroll, a belt pouch, a bit and bridle, a flint and steel, an iron pot, a mess kit, a riding saddle, rope, saddlebags, soap, torches (10), trail rations (5 days), and a waterskin."
+      }
+    ],
+    "weight_lbs": 112.0
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 581,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Cavalier's Kit",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 0.0,
+    "description": null,
+    "key": "Robe of Powerlessness",
+    "name": "Robe of Powerlessness",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "STR",
+          "-10"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "WIS",
+          "-10",
+          "PRECLASS:1,Cleric=1,Druid=1,Inquisitor=1,Paladin=1,Ranger=1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "CHA",
+          "-10",
+          "PRECLASS:1,Bard=1,Oracle=1,Summoner=1,Sorceror=1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "INT",
+          "-10",
+          "PRECLASS:1,Alchemist=1,Barbarian=1,Cavalier=1,Fighter=1,Monk=1,Magus=1,Rogue=1,Wizard=1,Witch=1"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Cursed.Robe"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.350"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 41,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Robe of Powerlessness",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

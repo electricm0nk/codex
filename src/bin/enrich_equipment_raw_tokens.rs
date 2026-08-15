@@ -136,6 +136,16 @@ fn main() {
         "beastiary",
         "advanced_race_guide",
         "pathfinder_unchained",
+        // SD-31 SD31-E6-F5-001: Ultimate Equipment's cache
+        // (`data/corpus/ultimate_equipment/equipment/*.json`,
+        // `gen_cache_ultimate_equipment`) is real `lst_token` records now
+        // and needs the same `raw_tokens`/`raw_bonus_chains` enrichment
+        // every other equipment book gets -- omitting it here would
+        // silently leave every new UE record at its thin
+        // KEY:-token-only fallback (`corpus_loader.rs`'s
+        // `equipment_record_from_json`), never wiring a single
+        // `BONUS:STAT` effect despite the cache existing on disk.
+        "ultimate_equipment",
     ];
 
     let mut total_enriched = 0u32;

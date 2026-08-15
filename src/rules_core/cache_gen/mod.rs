@@ -11,6 +11,7 @@
 pub mod acg;
 pub mod apg;
 pub mod beastiary1;
+pub mod ultimate_equipment;
 
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};

@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 14010.0,
+    "description": "takes only half normal damage from falling.",
+    "key": "Catskin Leather",
+    "name": "Catskin Leather",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "2",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "Acrobatics",
+          "5",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Leather"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Magic.ArmorProfLight.Light.Suit.Specific.NonMetal.LesserMajor"
+      },
+      {
+        "key": "COST",
+        "value": "14010"
+      },
+      {
+        "key": "WT",
+        "value": "15"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Leather.Special Ability ~ +1 ~ Armor.Special Ability ~ Shadow ~ Armor"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "99"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "10"
+      },
+      {
+        "key": "SPROP",
+        "value": "takes only half normal damage from falling."
+      }
+    ],
+    "weight_lbs": 15.0
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 59,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Catskin Leather",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

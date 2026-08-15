@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 23000.0,
+    "description": "Ignore difficult terrain while charging or making an overrun, bull rush, or trample attempt.; Once per day on command, its wearer can spew a 60-foot cone of poisonous green gas as a breath weapon. Any creature caught in the area of the gas can attempt a DC 18 saving throw or be paralyzed for 1d4 rounds. At the end of its turn, a creature petrified by this breath weapon can attempt a new save to end the paralysis effect.",
+    "key": "Gorgon Belt",
+    "name": "Gorgon Belt",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "STR",
+          "4",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Belt.GreaterMedium"
+      },
+      {
+        "key": "COST",
+        "value": "23000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      },
+      {
+        "key": "SPROP",
+        "value": "Ignore difficult terrain while charging or making an overrun, bull rush, or trample attempt."
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day on command, its wearer can spew a 60-foot cone of poisonous green gas as a breath weapon. Any creature caught in the area of the gas can attempt a DC 18 saving throw or be paralyzed for 1d4 rounds. At the end of its turn, a creature petrified by this breath weapon can attempt a new save to end the paralysis effect."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 474,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Gorgon Belt",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "An igniting weapon functions as a flaming weapon that also causes the target to catch fire upon striking it with a successful critical hit.",
+    "key": "Special Ability ~ Igniting ~ Weapon",
+    "name": "Igniting",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Igniting ~ Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Weapon.Melee.Ranged"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,WeaponEnhancement,AmmoEnhancement"
+      },
+      {
+        "key": "SPROP",
+        "value": "An igniting weapon functions as a flaming weapon that also causes the target to catch fire upon striking it with a successful critical hit."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 200,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "record_key": "Special Ability ~ Igniting ~ Weapon",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

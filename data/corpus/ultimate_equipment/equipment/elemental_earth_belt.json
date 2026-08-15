@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 24000.0,
+    "description": "The wearer is immune to effects that would push, pull, or forcefully move the wearer.; once per day on command, the wearer can take the form of a Large earth elemental, and though subject to the elemental body III spell.",
+    "key": "Elemental Earth Belt",
+    "name": "Elemental Earth Belt",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "CON",
+          "4",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Belt.GreaterMedium"
+      },
+      {
+        "key": "COST",
+        "value": "24000"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      },
+      {
+        "key": "SPROP",
+        "value": "The wearer is immune to effects that would push, pull, or forcefully move the wearer."
+      },
+      {
+        "key": "SPROP",
+        "value": "once per day on command, the wearer can take the form of a Large earth elemental, and though subject to the elemental body III spell."
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 472,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Elemental Earth Belt",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

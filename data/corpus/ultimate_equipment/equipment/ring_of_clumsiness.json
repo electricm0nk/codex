@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 0.0,
+    "description": "Acts as Ring of Featherfall",
+    "key": "Ring of Clumsiness",
+    "name": "Ring of Clumsiness",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "MISC",
+          "SPELLFAILURE",
+          "20"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "DEX",
+          "-4"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring.Cursed"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.349"
+      },
+      {
+        "key": "SPROP",
+        "value": "Acts as Ring of Featherfall"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-15T21:51:53Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 36,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Ring of Clumsiness",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}
