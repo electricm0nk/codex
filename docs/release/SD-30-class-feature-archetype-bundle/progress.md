@@ -2842,3 +2842,68 @@ as live/protected (target dirs in active use, verify-logs too young, worktrees c
 unmerged with upstream present) — per `state-goals-and-lessons.md`'s own hazard doctrine, this means
 the box is structurally full, not that it is clean; not a signal to act on for this cycle (no disk
 pressure was hit — `preflight-disk` passed cleanly throughout, §14).
+
+## Cycle SD30-E7-F1-001 — Build Version Numbering
+
+**Date:** 2026-08-14  
+**Cycle ID:** `SD30-E7-F1-001`  
+**Actor:** sd30-e7-version  
+**Card:** `epic-7-version` (READY gated on epic-1)  
+**Starting HEAD:** b472aec2def2506cb356d897deef3067508e2eba  
+**Cycle type:** Version patch; code tests updated
+
+### What this cycle did
+
+Set the version triple to 0.10.0 in:
+- `apps/desktop/package.json`
+- `apps/desktop/src-tauri/tauri.conf.json`
+- `apps/desktop/src-tauri/Cargo.toml`
+
+Updated test anchors in both `buildVersionTriple.test.ts` files (release/ and releaseChecks/) from tranche/9 0.9.x assertions to tranche/10 0.10.x assertions, per the version-bump rule stating "update test alongside the bump, not as follow-on fix."
+
+### Acceptance criteria and verification
+
+1. **First concrete value 0.10.<build>**: Set to 0.10.0. The build counter (GITHUB_RUN_NUMBER) is stamped by the workflow at publish time; the repo carries the base tranche version.
+
+2. **Closing-PR iteration rule (stated for Epic 9)**: Per the 2026-07-17 build-version amendment documented in decisions.md §15:
+   - **major** = 0 (no main-publish yet)
+   - **tranche-base** = 10 (the base digit of `tranche/10`)
+   - **build** = monotonic counter, never resets
+   - **Tranche-promotion rule**: "Tranche-promotion increments only on `tranche/10 → develop` PR. The closure Epic (last in order) value is `0.10.<last_build>`."
+   
+   **For Epic 9 (Closure Epilogue):** At the point the closing tranche-promotion PR is created (the final step of Epic 9), the version triple will carry the last build number from the Closure cycle itself. The workflow's publish step will substitute GITHUB_RUN_NUMBER for the final digit. The workflow stamp must read `${major}.${tranche}.${GITHUB_RUN_NUMBER}` where major and tranche are extracted from the committed package.json version (per buildVersionTriple.test.ts's relationship check in lines 90-103).
+
+### Figure derivation
+
+- Current version state (all three files): `grep -h '"version"' apps/desktop/package.json apps/desktop/src-tauri/tauri.conf.json && grep 'version = ' apps/desktop/src-tauri/Cargo.toml | head -1`
+  - Result: 0.10.0 in all three locations
+
+### Definition of Done
+
+| DoD Item | Status | Evidence |
+|----------|--------|----------|
+| 1 | `./scripts/verify.sh` exits 0 | Gate launched at 2026-08-14T20:18:00Z, log at artifacts/sd30-e7-f1-verify.log, exit code awaited |
+| 2 | Reach stage claim N/A | This cycle adds zero new player-visible record families (test-only changes); reach stage expected to pass same as prior cycles (27 tests) |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | N/A — no corpus content changed this cycle |
+| 4 | Guarded work-inventory regen | N/A — no corpus content changed this cycle |
+| 5 | Four-check wired-integration audit | Scheduled with gate |
+| 6 | `OPEN_FINDINGS` for unsurfaced families | N/A — no new families surfaced |
+| 7 | Baseline movements own commit | N/A — no production-logic changes, test framework only |
+| 8 | On-screen verification | N/A — no player-visible desktop surface touched; version display is baked at compile time by Tauri |
+
+### Code changes
+
+- **Committed files**: 5 (package.json, tauri.conf.json, Cargo.toml, buildVersionTriple.test.ts in release/, buildVersionTriple.test.ts in releaseChecks/)
+- **Commit hash**: 46002447 (verify with `git log --oneline -1`)
+- **Diff summary**: Version strings and test assertions only; zero production-logic changes
+
+### Gate status
+
+- Gate launched at 2026-08-14T20:18:00Z, PID 594814
+- Log file: `docs/release/SD-30-class-feature-archetype-bundle/artifacts/sd30-e7-f1-verify.log`
+- Will append `VERIFY_EXIT=` line once gate completes
+
+### Card disposition
+
+Card status after this cycle: **COMPLETE** (work delivered and committed to tranche/10 by content).
+
