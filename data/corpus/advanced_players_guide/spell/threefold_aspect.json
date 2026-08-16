@@ -7,8 +7,52 @@
     "level": 4,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Witch=4|Druid=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "S, F"
+      },
+      {
+        "key": "DESC",
+        "value": "Appear older or younger.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "Threefold aspect allows you to shift your appearance between your natural age and three idealized age categories: young adult (youth/maiden), adulthood (father/mother), or elderly (elder/crone). In each case, your appearance is your own at the appropriate age, rather than that of a new individual.  You may change between these three aspects or your actual age as a standard action. As the young adult, you gain a +2 enhancement bonus to Dexterity and Constitution, but suffer a -2 penalty to Wisdom. In the adult aspect, you gain a +2 enhancement bonus to Wisdom and Intelligence, but take a -2 penalty to Dexterity. As the elderly aspect, you gain a +4 enhancement bonus to Wisdom and Intelligence, but take a -2 penalty to Strength and Dexterity. As enhancement bonuses, these stack with any bonuses or penalties you may have from your actual age (which are untyped bonuses)-the bonuses granted by this spell represent your idealized form in this threefold aspect rather than simply duplicating your ability scores at any one particular age.  True seeing reveals your natural appearance overlaid with that your aspect, recognizing both as part of your true self.  Individuals who study you closely and have interacted with you at another apparent age recognize a resemblance (as though family) with a successful DC 20 Perception check.  Threefold aspect does not alter your clothing or equipment, and does not heal any deformity or injury unrelated to age.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "24 hours (D)"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(silver crescent worth 5 gp)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/threefoldAspect.html#_threefold-aspect"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.249"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
       }
     ],
     "school": "Transmutation"
@@ -20,7 +64,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 2087,
+    "line": 241,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Threefold Aspect",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

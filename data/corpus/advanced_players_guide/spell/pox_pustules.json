@@ -7,8 +7,64 @@
     "level": 2,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Witch=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Subject is sickened and has -4 Dex.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "You inflict a painful, itching rash on the target creature. The target is sickened and takes a -4 penalty to Dexterity (this penalty cannot lower Dexterity below 0). The target can spend a move action scratching furiously at the rash to remove the sickened condition (but not the Dexterity penalty) until the start of its next turn.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(leaves from a toxic plant)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/poxPustules.html#_pox-pustules"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature"
       }
     ],
     "school": "Necromancy"
@@ -20,7 +76,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 2026,
+    "line": 184,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Pox Pustules",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

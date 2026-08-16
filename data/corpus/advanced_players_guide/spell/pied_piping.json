@@ -7,8 +7,68 @@
     "level": 6,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V or F"
+      },
+      {
+        "key": "DESC",
+        "value": "Compel similar creatures to follow you.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "You call forth a melody so compelling and attractive that creatures belonging to a group with a specific, identifiable physical trait (such as type, subtype, age, gender, or hair color) find it almost impossible not to approach and follow you. You choose the nature of the creatures you seek to attract when you cast the spell and, once you make this choice, cannot alter it. You can only use physical traits to determine your audience. You can never use social and other more voluntary criteria (such as alignment, religion, nationality, or class) to select targets for this spell.  Eligible creatures must make a saving throw each round spent within the area of the spell and, once they fail, approach you at their normal movement speed and stand as close to you as possible without actually entering an occupied square.  If you move, they do their best to maintain their proximity to you and follow. Affected creatures can take no actions other than listening to your music and following you if you move.  Those entering the area while the spell is in effect must also successfully save or be compelled to come to you.  The attractive power of the spell does not cause affected creatures to put themselves in jeopardy and they have enough presence of mind to avoid or negotiate around obstacles and other perilous hazards. If unable to approach or follow you without endangering themselves, they simply wait, swaying to the music, until you pass out of range, at which point they regain their senses after 1 round/caster level. If circumstances change once you move out of range, making it possible for affected creatures to resume their attempts to get near you they do so, and, if they manage to return to within the area of the spell before it wears off, the spell continues as normal.  If attacked, affected creatures can take defensive measures, even going so far as to avoid existing threats by moving out of the area of the spell, but cannot make attacks themselves or take any other actions until the effects of the spell wear off. The effects of the spell persist for 1 round/caster level even after you stop concentrating. Once the spell ceases, the affected creatures continue to stay near you until the effects of the spell wear off.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting|Sonic"
+      },
+      {
+        "key": "DURATION",
+        "value": "concentration + (CASTERLEVEL) rounds"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(musical instrument)"
+      },
+      {
+        "key": "RANGE",
+        "value": "90 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will partial; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/piedPiping.html#_pied-piping-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "90-ft.-radius emanation, centered on you"
       }
     ],
     "school": "Enchantment"
@@ -20,7 +80,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 2022,
+    "line": 180,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Pied Piping",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

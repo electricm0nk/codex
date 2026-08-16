@@ -7,12 +7,64 @@
     "level": 4,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Touch attack slows target, 1d4 Dex damage.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "Your touch progressively transmutes the substance of creatures you touch into stone. Once per round, you may deliver a touch attack that inflicts 1d4 points of Dexterity damage and slows the target (as the spell) for 1 round. A successful Fortitude save negates the slow effect but not the ability damage. A target reduced to 0 Dexterity is petrified permanently. Break enchantment, restoration, or stone to flesh can reverse the effects of calcific touch.|PRERULE:1,DisplayFullSpell"
       },
       {
+        "key": "DESCRIPTOR",
+        "value": "Earth"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude partial"
+      },
+      {
         "key": "SCHOOL",
         "value": "EarthSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/calcificTouch.html#_calcific-touch"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.208"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "up to (CASTERLEVEL) creatures touched"
       }
     ],
     "school": "Transmutation"
@@ -24,7 +76,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1886,
+    "line": 56,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Calcific Touch",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

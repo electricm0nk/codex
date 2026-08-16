@@ -6,8 +6,52 @@
     "level": 5,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "You contact your deity--or agents thereof--and ask questions that can be answered by a simple yes or no.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "You contact your deity-or agents thereof-and ask questions that can be answered by a simple yes or no. [A cleric of no particular deity contacts a philosophically allied deity.] You are allowed one such question per caster level. The answers given are correct within the limits of the entity's knowledge. \"Unclear\" is a legitimate answer, because powerful beings of the Outer Planes are not necessarily omniscient. In cases where a one-word answer would be misleading or contrary to the deity's interests, a short phrase [five words or less] may be given as an answer instead. The spell, at best, provides information to aid character decisions. The entities contacted structure their answers to further their own purposes. If you lag, discuss the answers, or go off to do anything else, the spell ends.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/commune.html#_commune"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.257"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
       }
     ],
     "school": "Divination"
@@ -19,9 +63,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 863,
+    "line": 101,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Commune.MOD",
+    "record_key": "Commune",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",

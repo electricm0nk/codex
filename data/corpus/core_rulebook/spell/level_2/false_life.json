@@ -6,8 +6,52 @@
     "level": 2,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
         "key": "DESC",
         "value": "You harness the power of unlife to grant yourself a limited ability to avoid death. While this spell is in effect, you gain temporary hit points equal to 1d10 + 1 per caster level [maximum +10].|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You harness the power of unlife to grant yourself a limited ability to avoid death.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours or until discharged; see text"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/falseLife.html#_false-life"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.280"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
       },
       {
         "key": "TEMPBONUS",
@@ -20,6 +64,10 @@
       {
         "key": "TEMPVALUE",
         "value": "MIN=2|MAX=20|TITLE=Choose spell caster level (maximum 10) + 1d10"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
       }
     ],
     "school": "Necromancy"
@@ -31,9 +79,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 980,
+    "line": 221,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "False Life.MOD",
+    "record_key": "False Life",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",

@@ -4967,3 +4967,569 @@ This closes DoD item 1 (`VERIFY_EXIT=0`, captured directly) and confirms DoD ite
 with a real, non-zero claim) for this integration cycle. DoD item 3 (`v06_corpus_trap_report --audit`)
 remains a documented, pre-existing shortfall (§6.3 above, exit 2, `OPEN-ISSUES.md` row 41) — the full
 gate does not run that check as a stage, so this PASS does not speak to it either way.
+
+---
+
+## Cycle `SD31-E6-F2-002` (`RETRO_ACTOR=sd31-spell-reach`, own worktree
+`wf_1d83a743-99e-6`, own branch `sd31/spell-reach-e6-f2-002`)
+
+**Card:** `epic-6-ingest-lanes` F2 — spell reachability and the 101-unit citation repair.
+
+**HEAD at start:** the worktree's initial checkout was silently pointed at `061b623eee3f3a4c4a375032202746d620646e0c`
+(`origin/main`'s PR-#362 Cloudflare-Pages-deploy merge tip) — the package directory did not exist,
+`git status --porcelain` was empty. Recovered per the mandatory branch-state check: `git fetch origin &&
+git reset --hard origin/tranche/11` → **`89846f5c982ade12458595d0e7d885f4a5d91f80`**
+(`docs(sd31): wave-4 budget + the cache-gen lever wave 3 proved`) — this cycle's real starting point.
+Recorded here per the standing rule that a silent recovery is under-counted if not stated. Branch
+`sd31/spell-reach-e6-f2-002` cut from that tip.
+
+**Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`), confirmed `./scripts/verify.sh --only preflight-oracle` → PASS
+(`oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6`) before any other command.
+
+### 0. Read discipline
+
+Read `AGENTS.md`, `SD-31-corpus-closure-grind/loop-instruction.md`, `SD-30-class-feature-archetype-bundle/loop-instruction.md`
+(cycle shape), `kanban.md`'s `epic-6-ingest-lanes` row (found `SD31-E6-F2-001` already landed on this
+same card — see below), `OPEN-ISSUES.md` rows 22/32/33/34 (the spell lane's own prior findings),
+`decisions.md §2`/`§3` (deferral struck, Structural Exclusion Register). Read
+`src/rules_core/cache_gen/ultimate_equipment.rs`'s doc comment and the PI-screening warning in the
+dispatch — **did not copy its call site**: this cycle's own `ingest_ultimate_magic_spells.rs` screens
+the record's **name** with both SD-30 contracts (`pi_screening::classify_field("name", ...)` +
+`pi_screening::declared_product_identity` read off the row's own raw tokens), not only the description,
+and drops (never redacts) a name-PI hit — see §3 below.
+
+**Prior cycle on this exact card, verified by content before depending on it (per SD-30
+loop-instruction.md's "merged-ness verified by content" rule):** `SD31-E6-F2-001`
+(`RETRO_ACTOR=sd31-e6-spell-mab`, merged onto `tranche/11` by `SD31-W3-INTEGRATE-001`) already:
+traced the grounding path end to end and found the engine's spell catalog chains only 5 books
+(CRB/APG/ACG/ARG/UI); found 1,548 of `spell`'s 1,561 `not-started` units structurally unreachable
+until a 6th book is wired (`OPEN-ISSUES.md` row 32); built `enrich_spell_raw_tokens.rs` and moved
+`spell` `done` 47→56 (+9); root-caused the 101-unit `.MOD`-row citation defect without fixing it
+(`OPEN-ISSUES.md` row 33); investigated the 13 `.CLEARALL` units and did not ingest them. **This
+cycle's job is the two follow-ons that cycle explicitly left open**, plus building the missing
+`SPELL_LIST` capability that cycle scoped as out-of-turn-budget.
+
+### 1. Re-derive the card's own headline figures
+
+```
+python3 -c "
+import json, collections
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('kind')=='spell']
+print(len(U), collections.Counter(u['status'] for u in U))
+"
+```
+→ **2,843 total**. Board figure re-derived rather than trusted: at cycle start (checked-out HEAD,
+before any change) `spell` carried 47+9=56 `done`-adjacent stamps per the wave-3 receipt; re-confirmed
+against the live checked-out `docs/work-inventory.json` before touching anything.
+
+### 2. The 101-unit citation repair
+
+**Root cause, re-derived one record deep (`advanced_players_guide:spell:accelerate_poison`,
+`apg_spells.lst:17` base row vs. `:1842` the shipped JSON actually cites):** the base declaration row
+(`CLASSES:`/`SCHOOL:`/short `DESC:`) and the `.MOD` row (`DESC:`-only, the record's real rich text,
+cited because the record is `full_text: true`) are two different lines. The shipped JSON's
+`source.line` legitimately cites the `.MOD` row (that IS where the rich description came from) — but
+`v06_work_inventory::apply_done_rung_stamps` joins `corpus_literal_sweep`'s verified set on the
+**unit's own** `(book, file, line)`, independently derived from the raw `.lst` scan, which always finds
+the base declaration. The two never match, so a byte-clean, fully-verified record's stamp never lands.
+
+**Fix: re-point the citation to the row that actually declares the record, not the fields.** Built
+`src/bin/repair_spell_citations.rs` (TDD, 6 tests) — finds the exact-field-0-match declaration row
+(never a `.MOD`/`.COPY=` variant, guarded by requiring a `SCHOOL:`/`CLASSES:` token on the matched row)
+and regenerates `raw_tokens` via `corpus_literal_sweep::token_closure` from THAT row — which still
+recovers the `.MOD` row's rich `DESC:` token via `token_closure`'s own identity-based `.MOD` lookup, so
+no content is lost, only the citation's authority moves from a bookkeeping patch to the real
+declaration.
+
+```
+cargo test --locked --bin repair_spell_citations   # 6 passed, 0 failed
+PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data cargo run --locked --bin repair_spell_citations
+```
+→ **881 repaired** (broader than the 101-unit target population — every mis-cited spell record across
+the 5 modeled books, not only the `static`-held candidates), 256 already-correct, 12 not-applicable, 36
+misses (KEY:-identified Summoner `Summon Monster I-IX` records and `.COPY=` variants — a different
+citation shape, `find_by_key_field`/`.COPY=` in `gen_book_cache.rs`'s own precedent, out of this
+narrow tool's scope; **confirmed zero overlap** with the 101-unit target set, checked by name).
+
+Re-derived the target population directly against the corpus (not the wave-3 headline number, which
+was already stale by the time this cycle started per the 47→56 delta):
+```
+python3 -c "
+import json, os
+d = json.load(open('docs/work-inventory.json'))
+FIVE={'core_rulebook','advanced_players_guide','advanced_class_guide','advanced_race_guide'}
+u=[x for x in d['units'] if x.get('kind')=='spell' and x.get('book') in FIVE and x.get('wiring_class')=='static' and x.get('status') in ('grounded','ingested-magnitude','text-complete')]
+match=mismatch=missing=0
+for x in u:
+    found=None
+    for root,_,files in os.walk('data/corpus/%s/spell' % x['book']):
+        for f in files:
+            if not f.endswith('.json'): continue
+            p=os.path.join(root,f)
+            try: j=json.load(open(p))
+            except Exception: continue
+            if j.get('data',{}).get('key')==x['name']: found=j; break
+        if found: break
+    if not found: missing+=1; continue
+    (match, mismatch)[found['source']['line'] != x['source_line']] += 1
+print('total',len(u),'match',match,'mismatch',mismatch,'missing',missing)
+"
+```
+Before the repair: `total 101 match 0 mismatch 101 missing 0` (exactly the wave-3 figure, confirmed
+unchanged). **After the repair: `total 101 match 101 mismatch 0 missing 0`.**
+
+```
+PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data cargo run --locked --bin corpus_literal_sweep -- --max-report 60
+```
+→ `corpus-literal-sweep: 6331 records examined of 11006 read, 63448 tokens compared (9 synthesized),
+10581 digests checked, 0 findings` / `CLEAN` (records examined up from 4808 pre-cycle — the delta
+includes both this cycle's 881 repaired citations AND `SD31-E6-F5-001`'s equipment lever, already on
+the merged tip before this cycle started).
+
+### 3. The missing capability: a sixth spell-catalog book, `ultimate_magic`
+
+**Re-derived wave 3's own finding first, rather than trusted:** `spell_resolver::spell_catalog_rows()`
+chained exactly 5 books; `classify()`'s `Kind::Spell` arm returns `not_ingested` for any book absent
+from that chain regardless of how much ingest work runs against it — 1,548 of `spell`'s 1,561
+`not-started` units held there. **Deferral is struck this package (`decisions.md §2` item 5); built the
+missing capability rather than re-confirming the analysis.**
+
+**Design.** Rather than hand-transcribing ~270 Rust struct literals (error-prone at this volume, and a
+generator this program has already needed twice — `ingest_class_spell_levels_arg.rs`'s own `--emit`
+precedent), built `src/bin/ingest_ultimate_magic_spells.rs`: parses `um_spells.lst` via the EXISTING,
+tested, general-purpose `pcgen_import::lst_parser::spell::parse_lst_spell_file` (its own doc comment
+already names `um_spells.lst` as a supported shape — not reimplemented), excludes `.MOD`/`.COPY=` rows
+(the same convention every other book's `spell_list.rs` states), derives `level` as the minimum across
+the record's `CLASSES:` **and** `DOMAINS:` tokens (the `rules_tables::acg::spell_list` precedent — `DOMAINS:`
+is not one of the shared parser's known tags, so read directly off the raw row), screens every record
+with **both** SD-30 PI contracts against **both** name and description (§0 above — the safety-critical
+warning this dispatch named), then emits the Rust `SpellListEntry` module source directly.
+
+**Book choice, and why:** `ultimate_magic` already has a `data/corpus/ultimate_magic/` directory
+(companion records, `LICENSE.json` from `SD29-E7-F2-010`) and an existing `RuleSetId::Um` /
+`rules_tables::ultimate_magic` module (feats, equipment, archetypes from SD-28 Epic 28) — the book is
+already onboarded and PI-screened at package level (`kanban.md` "Cross-SD gate discipline": SD-30
+`epic-3-pi-gate` `COMPLETE` for all 23 `class_feature`-roster books, `ultimate_magic` among them,
+`decisions.md §33`), so this cycle adds a spell-kind slice to an already-known book rather than a
+whole new book onboarding. It is also the largest book with an *existing* casting-class-relevant
+`CLASSES:`/`DOMAINS:` shape among the roster's untouched books (`occult_adventures`, 473 units, was
+considered and rejected for THIS cycle: its spells are entirely Occultist/Kineticist/etc.-scoped and
+`SD31-E3-F1-001` already found the entire OA class family has zero base-chassis wiring, so a spell
+ingest there would still land the same real, honest `held` state UM's own does — not a worse choice,
+but not a faster proof either, and UM's re-derivable record count made it the safer first widening).
+
+TDD: 12 unit tests (`.MOD`/`.COPY=` exclusion, `CLASSES:`/`DOMAINS:` level parsing alone and combined,
+`DOMAINS:` raw-row extraction, both PI-screen outcomes — name-drop and description-redact — a clean
+pass-through, and the 9-school recognizer), run RED then GREEN before the real run.
+
+```
+cargo test --locked --bin ingest_ultimate_magic_spells   # 12 passed, 0 failed
+PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data cargo run --locked --bin ingest_ultimate_magic_spells
+```
+→ (FIRST run) `269 base declarations, 0 PI-dropped, 25 no-level (real gap, not fabricated), 15
+school-unrecognized`.
+
+**A real bug in this first run, caught by `reach_gate.rs`'s own gate, not by inspection — see
+"Corrections mid-cycle" below.** 15 of the 25 "no-level" records (the `Masterpiece` bard-performance
+family) actually carry a real `CLASSES:Bard=N` level; `levels_in_field`'s naive `rsplit_once('=')`
+matched an `=` embedded inside a bracketed `[PRESKILL:...]` sub-condition instead of the class's own
+level, silently discarding it. Fixed (TDD, 2 new tests), re-ran:
+```
+cargo test --locked --bin ingest_ultimate_magic_spells   # 14 passed, 0 failed (12 + 2 new)
+PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data cargo run --locked --bin ingest_ultimate_magic_spells
+```
+→ (CORRECTED, final) `269 base declarations, 0 PI-dropped, 10 no-level (real gap, not fabricated), 15
+school-unrecognized`. **Real corpus gaps, named and NOT fabricated over** (no-stub-mvp-doctrine):
+`Restore Eidolon` and 9 siblings carry neither `CLASSES:` nor `DOMAINS:` (eidolon-only/plane-shift/
+creation sub-forms) — shipped `level: None`; the 15 `Masterpiece` records carry a real level but
+`SCHOOL:Masterpiece`, a value this engine's 9-school `Pf1SchoolId` enum does not recognize — shipped
+`school: None`. Both land the record at a real, non-fabricated status. Wrote
+`src/rules_core/rules_tables/ultimate_magic/spell_list.rs` (269 entries, final).
+
+**Wired into the catalog** (TDD: 2 failing tests written first in `spell_resolver.rs`, confirmed RED —
+`SPELL_BOOK_UM` did not exist — then implemented): added `SPELL_BOOK_UM = "UM"`, a 6th `um_rows` chain
+arm in `spell_catalog_rows()`, and `"UM" => "ultimate_magic"` in `v06_work_inventory.rs`'s
+`spell_book_slug_for` (a hard `panic!` guard — an unmapped code fails loudly rather than silently
+dropping the book, exactly the SD-29-era defect this function's own doc comment exists to prevent).
+```
+cargo test --locked --lib spell_catalog_rows_tests
+```
+→ 2 passed (`ultimate_magic_is_chained_into_the_catalog`, `a_um_record_with_no_classes_or_domains_token_carries_no_level`).
+```
+cargo test --locked --bin v06_work_inventory spell_book_slug_for
+```
+→ 1 passed (`spell_book_slug_for_covers_every_catalog_book`, which iterates every book code the
+registry actually carries — UM covered automatically, no separate test needed).
+
+**Reached the player-facing surface with no separate frontend wiring needed for the DATA path**
+(`apps/desktop/src-tauri/src/spell_catalog.rs::build_spell_catalog` already reads
+`spell_resolver::spell_catalog_rows()` directly, confirmed by reading it before assuming) — but the
+**filter chips did not**, because `SpellCatalogScreen.tsx`'s `BOOK_ORDER`/`BOOK_LABELS` are a
+deliberate hand-copy (their own doc comment names the exact defect this would reproduce: UI joined the
+Rust chain once and the frontend silently did not, leaving 101 spells reachable only under "All
+books"). **Ran the sweep this program's own doctrine requires for a count change** — grepped every
+`1286`/`BOOK_ORDER`/five-book hardcode across `apps/desktop` and `tests/`, found and fixed 4 files:
+
+- `apps/desktop/src-tauri/src/spell_catalog.rs`: added `ultimate_magic` import, `BOOK_UM`, `map_um_entry`
+  (mirrors APG's optional-field shape), widened `mapping_helpers_agree_with_the_registry`'s chain and
+  `the_catalog_serves_every_ingested_book_not_only_crb`'s pinned count (1286→**1555**, plus explicit
+  `BOOK_UI`/`BOOK_UM` per-book assertions), widened `every_entry_has_a_non_empty_key_and_a_known_book`'s
+  known-book list.
+- `apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx`: `BOOK_ORDER` and `BOOK_LABELS` gained `UM`/
+  `'Ultimate Magic'`, in the SAME edit as the Rust widening (the module doc comment's own instruction).
+- `apps/desktop/src/spellCatalog/SpellCatalogScreen.test.ts`: `CHAINED_BOOK_CODES` (the file's own
+  independent oracle, deliberately not derived from `BOOK_ORDER` — its own header explains why) gained
+  `UM`; added `testUmIsLabelledWithItsRealBookName`; updated the "every served book" prose assertion.
+- `tests/sd27_known_spells_must_be_on_the_class_spell_list.rs`: `full_desktop_spell_catalog()`'s own
+  independent 5-book chain gained `ultimate_magic`; re-derived (not guessed) `catalog.len()` **1555**
+  and `off_list.len()` **913** by running the test RED first and reading its own failure output, not by
+  computing by hand.
+
+```
+cd apps/desktop/src-tauri && CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-spell-reach-tauri cargo test --locked spell_catalog::
+```
+→ **19 passed, 0 failed** (including `the_catalog_serves_every_ingested_book_not_only_crb` and
+`mapping_helpers_agree_with_the_registry` at the new counts).
+```
+cargo test --locked --test sd27_known_spells_must_be_on_the_class_spell_list every_catalog_row_off_the_wizard_list_is_refused
+```
+→ 1 passed at the re-derived **1555 / 913**.
+
+**Named, not hidden: `off_list` (913) now includes every one of UM's 269 spells**, because
+`class_spell_levels.rs` — a SEPARATE per-class-membership table this cycle did not extend — has no
+`ultimate_magic` entries at all, so `class_spell_level("class:wizard", <any UM key>)` returns `None`
+even for a UM record whose own `CLASSES:` token genuinely names Wizard. The assertion is still
+technically true (no UM spell is PROVEN on the wizard list by this specific instrument) but the
+instrument's coverage did not widen with the catalog — logged as `OPEN-ISSUES.md` row 48's own note,
+same shape as `ingest_class_spell_levels_arg.rs`'s own doc comment describing the identical gap for ARG
+before that cycle closed it.
+
+Frontend TS test (`apps/desktop/src/spellCatalog/SpellCatalogScreen.test.ts`) exercised via
+`./scripts/verify.sh`'s own `frontend-install`/`frontend-test` stages (this worktree had no
+`node_modules` at cycle start — confirmed `node_modules/.bin/tsx` absent — `npm ci` is the gate's own
+job, not duplicated here to avoid a second multi-minute install racing the gate's).
+
+#### 3b. Corrections mid-cycle, all caught by a REAL gate before commit, not by inspection
+
+The first full-gate run (`SD31-E6-F2-002-verify.log`, first pass) FAILED three stages — `desktop`,
+`reach`, and `clippy` (root: 47 warnings, ceiling 46). Each was a real defect in this cycle's own
+diff, not an environmental flake. Fixed all three, confirmed green with targeted `cargo test`/`cargo
+clippy` runs (own `CARGO_TARGET_DIR`, `sd31-spell-reach-tauri`, to avoid contending with the
+re-launched full gate's own lock), then re-launched the full gate from a clean state.
+
+1. **`apps/desktop/src-tauri/src/reach_gate.rs`: `ultimate_magic/spells` had no reach claim.**
+   `every_ingested_family_is_accounted_for` and `unsurfaced_families_are_exactly_the_recorded_findings`
+   FAILED: *"ingested content with no declared consumer and no recorded finding:
+   ultimate_magic/spells"*. This gate exists precisely to catch what this cycle's own dispatch named
+   the risk of — ingesting a book without proving the records reach a player. Fixed for real, not by
+   suppression: added `("ultimate_magic", "spells") => Some(spells_reach("UM", ...))` to `reach_of`,
+   mirroring the ARG/UI pattern exactly (`build_spell_catalog` already serves UM; this only registers
+   the existing reach, it does not build a new one).
+2. **`apps/desktop/src-tauri/src/class_spell_levels.rs`: a pinned test's own hardcoded gap count went
+   stale — in the CORRECT direction.** `every_served_key_joins_to_a_catalog_record_outside_the_two_documented_gaps`
+   FAILED: `left: [("class:bloodrager", 20)]` vs. `right: [("class:bloodrager", 50), ("class:shaman",
+   15)]`. This is the test's own documented mechanism working exactly as designed (its doc comment:
+   *"Re-derive rather than relax these when another book lands"*): 30 of Bloodrager's 50 `.MOD`-graft
+   keys and all 15 of Shaman's now join a real catalog record, because their base declarations live in
+   Ultimate Magic and UM just joined the catalog. Updated the pinned assertion to `[("class:bloodrager",
+   20)]` (the Ultimate Combat remainder, un-ingested by any book chained into the catalog as of this
+   cycle) and rewrote the doc comment's own narrative to record the new state, per the file's own
+   standing instruction. Renamed the test to `..._outside_the_one_documented_gap` (Shaman's own gap is
+   now zero).
+3. **`apps/desktop/src-tauri/src/reach_gate.rs`: `bare_records_are_exactly_the_recorded_findings`
+   FAILED — 15 `Masterpiece` records reaching the player with NO payload at all** (no school, no level,
+   no description). This led straight to a REAL bug in `ingest_ultimate_magic_spells.rs`'s level
+   parser (§3's "Corrections mid-cycle" cross-reference, and its own `OPEN-ISSUES.md` row 47 update):
+   `levels_in_field`'s `rsplit_once('=')` matched the wrong `=` inside a bracketed `[PRESKILL:...]`
+   clause, silently discarding a real level. Fixed at the source (TDD, 2 new tests in
+   `ingest_ultimate_magic_spells.rs`), regenerated `ultimate_magic/spell_list.rs`, and the 15 records
+   now carry a real `level` (still `school: None` — a genuinely different, real gap, `SCHOOL:Masterpiece`
+   is not a recognized school). `has_payload` (school OR level OR description) is now satisfied by
+   `level` alone for all 15; the gate passes without adding an `OPEN_FINDINGS` entry.
+4. **`src/rules_core/spell_resolver.rs`: clippy `items after a test module` (+1 over the 46 ceiling).**
+   My `#[cfg(test)] mod spell_catalog_rows_tests` sat before `spell_id_resolve`, a real function.
+   Standard Rust convention (and this repo's own clippy lint) puts test modules at file end. Moved it
+   after `spell_id_resolve`; re-measured clippy's own counting method
+   (`grep '^warning:' log | grep -v 'generated [0-9]* warning' | wc -l`) → **46**, exactly the recorded
+   ceiling, no baseline bump needed.
+
+All four confirmed fixed by direct, targeted commands before relaunching the full gate:
+```
+apps/desktop/src-tauri: CARGO_TARGET_DIR=.../sd31-spell-reach-tauri cargo test --locked -j 2
+# -> 445 passed, 0 failed (was 442 passed, 3 failed)
+CARGO_TARGET_DIR=.../sd31-spell-reach cargo clippy --locked --tests -j 2 \
+  | grep '^warning:' | grep -v 'generated [0-9]* warning' | wc -l
+# -> 46 (was 47)
+```
+
+### 4. The 13 `.CLEARALL` units — verified, proposed as a Structural Exclusion Register entry
+
+Re-derived (not trusted from wave 3): 13 `not-ingested` spell units remain within the 5 modeled books
+(12 `core_rulebook`, 1 `advanced_race_guide`). Read all 13 raw `.lst` rows directly — every one is a
+`.COPY=` variant carrying `CLASSES:.CLEARALL` and no `SCHOOL:`/`CLASSES:`/`DOMAINS:` token of its own
+(worked examples: `cr_spells.lst:1467-1478`, `arg_spells.lst:230`). `crb::spell_list::SpellListEntry.level`
+is `pub level: u8` (non-optional); even this cycle's own precedent of widening to `Option<u8>` for a
+new book would still be dishonest here, because `.CLEARALL` is PCGen's own explicit statement that no
+class casts the variant — there is no fact to ingest, not merely an expensive one. **Proposed** (not
+signed) a Structural Exclusion Register entry with all four `decisions.md §3` items —
+`OPEN-ISSUES.md` row 46, `RULING-NEEDED`. Did not ingest a fabricated level.
+
+### 5. The guarded regen (measured locally, NOT committed — wave rule)
+
+**CAVEAT, stated plainly rather than hidden: this regen was measured BEFORE §3b's level-parsing
+fix.** The figures below (spell `done` 56→172, `ultimate_magic` `done`=15 via the 15 `Masterpiece`
+records' `display`+`text-complete` bar) reflect the corpus state where those 15 records carried
+`level: None`. After the fix they carry a real `level`, which may change their `wiring_class`
+(computed independently by `wiring_class::classify()` from the raw `.lst` row — a real numeric
+`CLASSES:Bard=N` magnitude token is exactly the shape `wiring_class` classifies as `static`, not
+`display`), and therefore their doneness bar (`static`+`ingested-magnitude` is `held`, not `done`,
+until `corpus_literal_sweep` verifies it — a bar these 15 UM records cannot clear this cycle, since no
+`data/corpus/ultimate_magic/spell/*.json` exists at all; see §3's "Reached the player-facing surface"
+paragraph). **This cycle's own turn budget closed before a second guarded regen could be run against
+the corrected code to re-measure this specific 15-record bucket** — the corpus-wide and `spell`-wide
+totals below (+116 `done`) are very likely still directionally accurate (at most a 15-unit downward
+correction, out of 38,521), but the EXACT per-book/per-status breakdown for `ultimate_magic`
+specifically is stale as of the level-parsing fix and must be re-measured, not trusted, before this
+card closes. Flagged here rather than silently re-asserted; the integration cycle's own sanctioned
+regen is the authoritative re-measurement.
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-spell-reach.json
+# -> 6331 records examined of 11006 read, 63448 tokens compared (9 synthesized), 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-spell-reach.json
+# -> 100 of 101 covered units cleared; 1 FAILED (advanced_players_guide:equipment:
+#    spindle_of_perfect_knowledge -- pre-existing, unrelated to this cycle, same failure prior
+#    receipts already recorded); 0 not ingested
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-spell-reach.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-spell-reach.json \
+  cargo run --locked --bin v06_work_inventory
+```
+No stamp-loss guard message on stdout/stderr and exit 0 (confirmed via background-task completion
+notification) → **zero stamp loss**.
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))
+"
+```
+→ `38521 {'done': 7471, 'not-started': 20277, 'unmeasurable': 4223, 'deferred': 36, 'held': 5742,
+'in-progress': 772} 19.3946` — **board `done` 7,355 → 7,471 (+116)**, 19.09% → 19.39%.
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+u = [x for x in d['units'] if x.get('kind')=='spell']
+c = collections.Counter(P.doneness_verdict(x.get('wiring_class'), x.get('status'), 'spell') for x in u)
+print('spell', len(u), dict(c))
+um = [x for x in u if x['book']=='ultimate_magic']
+print('ultimate_magic spell', len(um), collections.Counter(P.doneness_verdict(x.get('wiring_class'), x.get('status'), 'spell') for x in um))
+"
+```
+→ `spell 2843 {'held': 1240, 'in-progress': 139, 'done': 172, 'not-started': 1292}` — **spell `done`
+56 → 172 (+116)**, exactly accounting for the board-wide delta (this cycle touched nothing outside
+`spell`). `ultimate_magic spell 291 {'held': 247, 'in-progress': 7, 'not-started': 22, 'done': 15}` —
+the 15 UM `done` units are the `Masterpiece` records (§3): `wiring_class=display`, `status=text-complete`,
+display's own genuine done bar (no numeric magnitude, real description shown to the player — the
+"text-only features are complete" ruling this program already made, not a new exception invented
+here). **The other 101 `done` units are the citation-repaired records (§2)**, confirmed by
+`literal-verified` count: corpus-wide `spell` `literal-verified` moved **9 → 110** (+101, exactly the
+repair's target population).
+
+`docs/work-inventory.json` restored per the wave rule: `git checkout -- docs/work-inventory.json`
+before every commit this cycle.
+
+### 6. Gate — two runs, real failures found and fixed in between
+
+Launched EARLY in the background, log path fixed before writing this receipt:
+```
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-spell-reach PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data RETRO_ACTOR=sd31-spell-reach \
+  ./scripts/verify.sh > docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-002-verify.log 2>&1
+echo "VERIFY_EXIT=$?" >> docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-002-verify.log
+```
+
+**FIRST RUN — real failures, not flakes.** `preflight-disk` through `root-full` (**1818**/**6485**
+passed) all PASS, then:
+- `desktop` FAILED: `class_spell_levels::tests::every_served_key_joins_to_a_catalog_record_outside_the_two_documented_gaps`
+  (a pinned test's own hardcoded gap count went stale — in the CORRECT direction, per its own
+  documented "re-derive when another book lands" instruction).
+- `reach` FAILED: `reach_gate::tests::every_ingested_family_is_accounted_for` /
+  `unsurfaced_families_are_exactly_the_recorded_findings` — `ultimate_magic/spells` had no reach claim
+  registered at all, exactly the gate DoD-2 names.
+- `clippy` FAILED: root 47 warnings vs. ceiling 46 (`items after a test module` — my own test module
+  sat before real code in `spell_resolver.rs`).
+- `corpus-sweep`/`frontend-install`/`frontend-test` (**99/99**)/`frontend-typecheck` all PASSED before
+  the run was deliberately killed (own PID, confirmed via `/proc/<pid>/environ`) once the three real
+  defects were identified — no value in letting a run against known-stale code continue.
+  `VERIFY_EXIT=143` (SIGTERM from the kill, not a hang — corroborated, this is an intentional stop).
+
+**All three fixed for real** (§3b above has the full account): `reach_gate.rs` gained a real
+`("ultimate_magic", "spells")` reach claim; `class_spell_levels.rs`'s pinned assertion and doc comment
+were re-derived to the new, smaller, genuinely-better gap; the test module was moved to file end.
+Fixing the second also surfaced (via `reach_gate.rs`'s `bare_records_are_exactly_the_recorded_findings`)
+a REAL bug in `ingest_ultimate_magic_spells.rs`'s own level parser, fixed at the source (§3's own
+"CORRECTED" account). Confirmed all four fixes green with targeted, non-gate `cargo test`/`cargo
+clippy` runs on a SEPARATE `CARGO_TARGET_DIR` (`sd31-spell-reach-tauri`) to avoid contending with the
+relaunch: desktop **445/445 passed** (was 442 passed/3 failed), root clippy **46** (was 47, matches
+`BASELINE_CLIPPY_WARNINGS_ROOT`), desktop clippy **7** (matches `BASELINE_CLIPPY_WARNINGS_DESKTOP`,
+unaffected the whole time).
+
+**SECOND RUN, relaunched from a clean state** after all fixes landed. At the end of this cycle's own
+turn budget: `preflight-disk` through `root-full` (**1818**/**6485** passed, matching the first run
+exactly — confirms the fixes did not regress anything already-green) all PASS; `root-full`'s own
+`build ~490 test binaries` stage was live-building past that point (corroborated repeatedly, not
+assumed frozen: `find /home/ubuntu/cargo-targets/sd31-spell-reach/debug/deps -newer "$LOG"` returned a
+growing count across multiple checks — 887, then 1,151 files newer than the log's own last write —
+and `pgrep -c rustc` returned 2 live compiler processes at the last check). **`VERIFY_EXIT` for this
+second run was not obtained by the end of this cycle's own turn budget** — explicitly sanctioned by
+the stop-vs-press-on rule ("ran out of budget" is not "blocked"). Given the desktop/reach/clippy
+stages this run exists to re-verify were ALL independently confirmed green by the targeted runs above
+(on the exact same code this second gate run is testing), and the stages already-completed in this
+second run reproduce the first run's own passing figures exactly, this cycle's own confidence in the
+diff is high — but `$LOG`
+(`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-002-verify.log`) carries the
+authoritative terminal result whenever the process completes, and the integration cycle reads it
+before this card closes rather than trusting this receipt's own targeted-run substitute.
+
+**Separately confirmed BEFORE and alongside the full gate, by direct `cargo test` runs** (not the
+gate's own stages, but real, targeted verification of this cycle's own diff, each with its own exit
+code obtained directly):
+- `cargo test --locked --bin repair_spell_citations` → 6/6 passed.
+- `cargo test --locked --bin ingest_ultimate_magic_spells` → 12/12 passed.
+- `cargo test --locked --lib spell_catalog_rows_tests` → 2/2 passed.
+- `cargo test --locked --bin v06_work_inventory spell_book_slug_for` → 1/1 passed.
+- `apps/desktop/src-tauri`: `cargo test --locked spell_catalog::` → **19/19 passed** (own `CARGO_TARGET_DIR`,
+  `sd31-spell-reach-tauri`, per the concurrency rule — a separate crate needs a separate target dir
+  even for the same agent).
+- `cargo test --locked --test sd27_known_spells_must_be_on_the_class_spell_list every_catalog_row_off_the_wizard_list_is_refused`
+  → 1/1 passed at the re-derived 1555/913.
+
+**Four-check wired-integration audit** (`docs/governance/no-stub-mvp-doctrine.md` §"Per-cycle audit"),
+run against this cycle's own diff (`89846f5c9...HEAD`):
+```
+git diff --unified=0 89846f5c9 -- 'apps/desktop/**/*.ts*' 'apps/desktop/src-tauri/**/*.rs' 'src/**/*.rs' ':!**/__tests__/**' ':!**/*.test.ts' ':!**/*.test.rs' | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b'   # exit 1 -> OK_NO_TOKENS
+git diff --unified=0 89846f5c9 -- 'apps/desktop/**/*.tsx' 'apps/desktop/**/*.jsx' | grep -nE 'onClick=\{\s*\(\)\s*=>\s*\{\s*\}\s*\}|onClick=\{undefined'   # exit 1 -> OK_NO_NOOP_HANDLERS
+git diff --unified=0 89846f5c9 -- 'apps/desktop/**/*.{ts,tsx,jsx,rs}' ':!**/__tests__/**' ':!**/*.test.*' | grep -nE 'mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__'   # exit 1 -> OK_NO_MOCK_LEAKS
+git diff --unified=0 89846f5c9 -- 'apps/desktop/**/*.{ts,tsx}' 'src/**/*.rs' | grep -nE '"Would [^"]*"'   # exit 1 -> OK_NO_WOULD_STRINGS
+```
+→ `OK_NO_TOKENS / OK_NO_NOOP_HANDLERS / OK_NO_MOCK_LEAKS / OK_NO_WOULD_STRINGS` — all four clean.
+
+**DoD item 3 (`v06_corpus_trap_report -- --audit`).** NOT re-run this cycle: an ad-hoc invocation was
+started, then killed (own PID, confirmed via `/proc/<pid>/environ` before killing — never a shared-tool
+`pkill`) after it sat blocked on this cycle's own `CARGO_TARGET_DIR` cargo lock behind the full gate's
+`desktop` stage compile, with no value in duplicating that wait. Citing the already-established,
+still-current state instead: `OPEN-ISSUES.md` rows 27/41 record this check as pre-existing RED (exit 2,
+1,040 `wiring-class-mismatch` findings, root-caused as stale cached `wiring_class` stamps predating the
+D3/D4 classifier fix, confirmed unrelated to any lane's own diff by grepping each lane's own unit ids
+against the finding set). This cycle's diff touches no `data/corpus/**/*.json` record's `wiring_class`
+field at all (the citation repair touches only `source.line`/`source.record_key`/`data.raw_tokens`; the
+new `ultimate_magic` records this cycle wrote have no `wiring_class` field stamped by this cycle's own
+tool at all, since `ingest_ultimate_magic_spells.rs` writes only the Rust `SPELL_LIST` table, not
+`data/corpus/` JSON — see §3), so this cycle cannot have worsened the finding set. Not independently
+re-confirmed by a fresh run this cycle; the claim rests on the diff-scope argument above, not a fresh
+audit exit code.
+
+### 7. DoD-8 — on-screen verification
+
+**Not completed at receipt-writing time.** `run-desktop/SKILL.md`'s own Gotchas section states
+explicitly: *"Do not run `driver.sh launch` and `scripts/verify.sh` at the same time — serialize
+them"* (memory, not disk, is the binding constraint for launch, and this cycle's own full gate was
+still building `root-full` at receipt-writing time, alongside several sibling agents' own concurrent
+gates on the same shared box). Deferred to after this cycle's own gate completes, or to the
+integration cycle if this cycle returns first — logged here per the DoD-8 protocol rather than faked
+or silently dropped. The player-visible surface this screenshot would confirm: the Spell Catalog
+screen's book filter row showing a real "Ultimate Magic (269)" chip and a real UM spell's description
+rendering (e.g. `Acidic Spray`), proving `spell_catalog_rows()`'s widening reaches the actual desktop
+UI, not only its Rust adapter's own unit tests.
+
+### 8. Retrospective events
+
+`docs/retro/events/sd31-spell-reach.jsonl`:
+- `correction` — this cycle's own OPEN-ISSUES.md row 48 draft ("1,279 spell units outside the six
+  catalog-modeled books") corrected to the re-derived **1,257**, `--verified-by` the exact python
+  command.
+- `verification` — auto-emitted by `./scripts/verify.sh` itself.
+
+### What I corrected, reworked, or narrowly avoided this cycle
+
+- Caught, before it shipped, a tautological test edit: a first draft of the
+  `every_catalog_row_off_the_wizard_list_is_refused` fix replaced the hardcoded `644` with a
+  self-referential `catalog_off_list_count()` call that would have compared the computed value to
+  itself, hiding any future regression. Reverted to a real re-derived pinned number (913, obtained by
+  running the test RED and reading its own failure message) before it was committed.
+- Corrected my own draft OPEN-ISSUES figure (1,279 → 1,257) via the SAME re-derivation discipline this
+  package's doctrine requires of every figure, including its own drafts — logged as a `retro.py
+  correction`, not silently fixed in place.
+- Investigated whether `occult_adventures` (473 units, the single largest non-modeled-book spell
+  bucket) should be this cycle's book widening instead of `ultimate_magic` — checked `SD31-E3-F1-001`'s
+  own finding first (the entire Occult Adventures class family has zero base-chassis wiring) and
+  confirmed via `spell_catalog_rows()`'s own mechanics that class-chassis wiring is NOT a precondition
+  for a spell to reach `text-complete`/`ingested-magnitude` (level derivation is class-agnostic) —
+  concluded either book was a valid choice on that axis, and picked `ultimate_magic` for the concrete
+  reason of already-existing book onboarding/PI-screening infrastructure, not because OA was unsafe.
+  Recorded the reasoning rather than silently picking one.
+- Ran the full "count change needs a sweep" grep across `apps/desktop` and `tests/` for every hardcoded
+  five-book spell reference BEFORE considering the capability build done, per this program's own
+  rank-1-adjacent standing finding — found and fixed 4 files (§3), not only the Rust source the new
+  book's own compile would have forced.
+- Did not fabricate a level for the 13 `.CLEARALL` records under pressure to close the reachability
+  finding completely; proposed the Structural Exclusion Register entry instead, with all four required
+  items, and left the units counted.
+- Did not extend `class_spell_levels.rs` for `ultimate_magic` under time pressure to make
+  `every_catalog_row_off_the_wizard_list_is_refused`'s off-list population "look complete" — named the
+  gap plainly (`OPEN-ISSUES.md` row 48) instead of silently leaving it unmentioned.
+
+### Board delta (headline)
+
+| figure | before | after | delta | command |
+|---|---:|---:|---:|---|
+| corpus-wide `done` | 7,355 | 7,471 | **+116** | §5's `pf1e_dashboard_producer.doneness_verdict` replay |
+| corpus-wide `done`% | 19.09% | 19.3946% | +0.30pp | same |
+| `spell` `done` | 56 | 172 | **+116** | same, filtered `kind=='spell'` |
+| `spell` `literal-verified` | 9 | 110 | +101 | same (citation repair, §2) |
+| `spell` records `corpus_literal_sweep` examines | 4,808 | 6,331 | +1,523 (881 this cycle + a sibling lane's equipment lever already on the merged tip) | `corpus_literal_sweep` stdout |
+| `ultimate_magic` `spell` `not-ingested` | 291 | 22 | -269 | §5, filtered `book=='ultimate_magic'` |
+| `ultimate_magic` `spell` `done` | 0 | 15 | +15 | same |
+| reachable ceiling | 98.95% | 98.95% | unchanged | `scripts/reachability_audit.py` |
+| `spell_catalog_rows()` books served | 5 | 6 | +1 (`ultimate_magic`) | `spell_resolver.rs` |
+| desktop spell catalog entries | 1,286 | 1,555 | +269 | `spell_catalog.rs::the_catalog_serves_every_ingested_book_not_only_crb` |
+
+### Files changed (branch `sd31/spell-reach-e6-f2-002`, not yet committed at receipt-writing time)
+
+- `src/bin/repair_spell_citations.rs` (new — the citation-repair tool, 6 tests)
+- `src/bin/ingest_ultimate_magic_spells.rs` (new — the UM spell ingest tool, 12 tests)
+- `src/rules_core/rules_tables/ultimate_magic/spell_list.rs` (new, generated — 269 entries)
+- `src/rules_core/rules_tables/ultimate_magic/mod.rs` (added `pub mod spell_list;`)
+- `src/rules_core/spell_resolver.rs` (`SPELL_BOOK_UM`, 6th `spell_catalog_rows()` chain arm, 2 new tests)
+- `src/bin/v06_work_inventory.rs` (`spell_book_slug_for`'s `"UM" => "ultimate_magic"` arm)
+- `apps/desktop/src-tauri/src/spell_catalog.rs` (`BOOK_UM`, `map_um_entry`, widened 3 pinned tests)
+- `apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx` (`BOOK_ORDER`/`BOOK_LABELS` gained `UM`)
+- `apps/desktop/src/spellCatalog/SpellCatalogScreen.test.ts` (`CHAINED_BOOK_CODES` gained `UM`, new test,
+  updated prose assertion)
+- `tests/sd27_known_spells_must_be_on_the_class_spell_list.rs` (`full_desktop_spell_catalog()` gained
+  `ultimate_magic`, re-derived pinned counts 1555/913)
+- `data/corpus/{core_rulebook,advanced_players_guide}/spell/*.json` (881 files — `source.line`/
+  `source.record_key`/`data.raw_tokens` repointed to the base declaration; no content field touched)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` (rows 46-48 appended)
+- `docs/release/SD-31-corpus-closure-grind/kanban.md` (F2 card note, appended after this receipt)
+- `docs/release/SD-31-corpus-closure-grind/progress.md` (this entry)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-002-verify.log` (gate log, in progress)
+- `docs/retro/events/sd31-spell-reach.jsonl` (new, 1 correction + `verify.sh`'s own auto-emissions)
+- **`docs/work-inventory.json` — NOT committed**, per the wave rule. Regenerated locally to measure §5's
+  delta, then `git checkout -- docs/work-inventory.json` before every commit this cycle.
+- `run_verify_sd31_spell_reach.sh` (scratch launcher for the backgrounded gate — NOT committed, deleted
+  before the final commit).
+
+### Reclaim
+
+Deferred to end-of-cycle, after the gate's final `VERIFY_EXIT` (so a live build's own target dir is
+never a reclaim candidate mid-run) — run and recorded once the gate completes, or in a follow-up note
+if this cycle returns first.

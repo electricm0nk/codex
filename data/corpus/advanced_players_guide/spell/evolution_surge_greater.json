@@ -7,8 +7,60 @@
     "level": null,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Grants eidolon any two evolutions whose total cost does not exceed 6 evolution points.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "This spell functions as lesser evolution surge, except that you can grant any two evolutions whose total cost does not exceed 6 evolution points.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a chameleon scale)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Evolution Surge, Greater"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/evolutionSurge.html#_evolution-surge,-greater"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.220"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Your eidolon"
       },
       {
         "key": "TEMPBONUS",
@@ -28,7 +80,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1936,
+    "line": 103,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Evolution Surge (Greater)",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

@@ -6,8 +6,68 @@
     "level": 3,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Druid=3|Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
         "key": "DESC",
         "value": "You can form an existing piece of stone into any shape that suits your purpose. While it's possible to make crude coffers, doors, and so forth with stone shape, fine detail isn't possible. There is a 30%% chance that any shape including moving parts simply doesn't work.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You can form an existing piece of stone into any shape that suits your purpose.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Earth"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Artifice,Earth=3"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/stoneShape.html#_stone-shape"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.349"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Stone or stone object touched, up to (10+CASTERLEVEL) cu. ft."
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
       }
     ],
     "school": "Transmutation"
@@ -19,9 +79,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1327,
+    "line": 577,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Stone Shape.MOD",
+    "record_key": "Stone Shape",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

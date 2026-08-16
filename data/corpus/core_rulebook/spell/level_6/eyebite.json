@@ -6,8 +6,60 @@
     "level": 6,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Sorcerer,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
         "key": "DESC",
         "value": "Each round, you can target a single living creature, striking it with waves of power. Depending on the target's HD, this attack has as many as three effects. &nl;HD &pipe; Effect &nl;10 or more &pipe; Sickened &nl;5-9 &pipe; Panicked, sickened &nl;4 or less &pipe; Comatose, panicked, sickened &nl;The effects are cumulative and concurrent. Sickened: Sudden pain and fever sweeps over the subject's body. A creature affected by this spell remains sickened for 10 minutes per caster level. The effects cannot be negated by a remove disease or heal spell, but a remove curse is effective. Panicked: The subject becomes panicked for 1d4 rounds. Even after the panic ends, the creature remains shaken for 10 minutes per caster level, and it automatically becomes panicked again if it comes within sight of you during that time. This is a fear effect. Comatose: The subject falls into a catatonic coma for 10 minutes per caster level. During this time, it cannot be awakened by any means short of dispelling the effect. This is not a sleep effect, and thus elves are not immune to it. You must spend a swift action each round after the first to target a foe.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Each round, you can target a single living creature, striking it with waves of power.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/eyebite.html#_eyebite"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.280"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One living creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
       }
     ],
     "school": "Necromancy"
@@ -19,9 +71,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 975,
+    "line": 215,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Eyebite.MOD",
+    "record_key": "Eyebite",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",

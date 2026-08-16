@@ -7,12 +7,64 @@
     "level": 4,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Creates wind that causes nonlethal damage and can knock down or push creatures.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "Summoning up the power of the tempest, you direct a current of forceful winds where you please. This spell creates a 5-foot-diameter line of wind-the direction of the wind is away from your location when you cast the spell, and remains constant in that direction for the spell duration. Creatures caught in a river of wind take 4d6 nonlethal damage and are knocked prone. A successful Fortitude save halves the damage and prevents being knocked prone.  A creature that begins its turn wholly or partially within a river of wind must make a Fortitude save or be pushed 20 feet in the wind's direction of flow, take 2d6 nonlethal damage, and be knocked prone-a successful Fortitude save means the creature merely takes 1d6 nonlethal damage. Creatures under the effect of freedom of movement and creatures with the air subtype are unaffected by a river of wind.|PRERULE:1,DisplayFullSpell"
       },
       {
+        "key": "DESCRIPTOR",
+        "value": "Air"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "120 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude partial"
+      },
+      {
         "key": "SCHOOL",
         "value": "AirSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/riverOfWind.html#_river-of-wind"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.240"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "120-ft. line"
       }
     ],
     "school": "Evocation"
@@ -24,7 +76,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 2045,
+    "line": 203,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "River of Wind",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

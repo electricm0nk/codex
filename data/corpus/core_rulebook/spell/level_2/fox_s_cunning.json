@@ -6,8 +6,60 @@
     "level": 2,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "The target becomes smarter granting a +4 enhancement bonus to Intelligence.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "The target becomes smarter. The spell grants a +4 enhancement bonus to Intelligence, adding the usual benefits to Intelligence-based skill checks and other uses of the Intelligence modifier. Wizards [and other spellcasters who rely on Intelligence] affected by this spell do not gain any additional bonus spells for the increased Intelligence, but the save DCs for spells they cast while under this spell's effect do increase. This spell doesn't grant extra skill ranks.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/foxSCunning.html#_fox-s-cunning"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.286"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Creature touched"
       },
       {
         "key": "TEMPBONUS",
@@ -16,6 +68,10 @@
       {
         "key": "TEMPDESC",
         "value": "Grants +4 enhancement bonus to Intelligence"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
       }
     ],
     "school": "Transmutation"
@@ -27,9 +83,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1009,
+    "line": 250,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Fox's Cunning.MOD",
+    "record_key": "Fox's Cunning",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

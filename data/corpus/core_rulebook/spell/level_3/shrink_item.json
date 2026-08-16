@@ -6,8 +6,60 @@
     "level": 3,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
         "key": "DESC",
         "value": "You are able to shrink one nonmagical item [if it is within the size limit] to 1/16 of its normal size in each dimension [to about 1/4,000 the original volume and mass]. This change effectively reduces the object's size by four categories. Optionally, you can also change its now shrunken composition to a clothlike one. Objects changed by a shrink item spell can be returned to normal composition and size merely by tossing them onto any solid surface or by a word of command from the original caster. Even a burning fire and its fuel can be shrunk by this spell. Restoring the shrunken object to its normal size and composition ends the spell. Shrink item can be made permanent with a permanency spell, in which case the affected object can be shrunk and expanded an indefinite number of times, but only by the original caster.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You are able to shrink one nonmagical item to 1/16 of its normal size in each dimension.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/shrinkItem.html#_shrink-item"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.342"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One touched object of up to (CASTERLEVEL*2) cu. ft."
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
       }
     ],
     "school": "Transmutation"
@@ -19,9 +71,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1296,
+    "line": 543,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Shrink Item.MOD",
+    "record_key": "Shrink Item",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

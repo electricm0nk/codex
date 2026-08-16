@@ -7,8 +7,52 @@
     "level": 1,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor,Ranger=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Ignore fatigue while hustling.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "You harden your body against the stresses of long travel. You halve the damage caused by hustling and forced marching (see Pathfinder RPG Core Rulebook 171). In addition, for the duration of the spell you ignore any fatigue caused by such travel. Once the spell ends, if you still have any nonlethal damage caused by the hustling or forced march, you become fatigued, or exhausted if already fatigued.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours (D)"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a hard biscuit)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/tirelessPursuit.html#_tireless-pursuit"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.249"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
       }
     ],
     "school": "Transmutation"
@@ -20,7 +64,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 2091,
+    "line": 245,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Tireless Pursuit",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

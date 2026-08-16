@@ -6,8 +6,68 @@
     "level": 3,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Cleric,Paladin=3|Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
         "key": "DESC",
         "value": "Remove curse can remove all curses on an object or a creature. If the target is a creature, you must make a caster level check [1d20 + caster level] against the DC of each curse affecting the target. Success means that the curse is removed. Remove curse does not remove the curse from a cursed shield, weapon, or suit of armor, although a successful caster level check enables the creature afflicted with any such cursed item to remove and get rid of it. Remove curse counters and dispels bestow curse.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Remove curse can remove all curses on an object or a creature.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Liberation=3"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/removeCurse.html#_remove-curse"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.332"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Creature or object touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
       }
     ],
     "school": "Abjuration"
@@ -19,9 +79,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1241,
+    "line": 490,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Remove Curse.MOD",
+    "record_key": "Remove Curse",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

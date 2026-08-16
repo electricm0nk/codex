@@ -6,8 +6,52 @@
     "level": 6,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
         "key": "DESC",
         "value": "You instantly prepare any one spell of 5th level or lower that you have used during the past 24 hours. The spell must have been actually cast during that period. The chosen spell is stored in your mind as through prepared in the normal fashion. If the recalled spell requires material components, you must provide them. The recovered spell is not usable until the material components are available.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You instantly prepare any one spell of 5th level or lower that you have used during the past 24 hours.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/mageSLucubration.html#_mage-s-lucubration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.306"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
       }
     ],
     "school": "Transmutation"
@@ -19,9 +63,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1122,
+    "line": 368,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Mage's Lucubration.MOD",
+    "record_key": "Mage's Lucubration",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

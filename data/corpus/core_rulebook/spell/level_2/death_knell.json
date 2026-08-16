@@ -6,8 +6,72 @@
     "level": 2,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
         "key": "DESC",
         "value": "You draw forth the ebbing life force of a creature and use it to fuel your own power. Upon casting this spell, you touch a living creature that has -1 or fewer hit points. If the subject fails its saving throw, it dies, and you gain 1d8 temporary hit points and a +2 enhancement bonus to Strength. Additionally, your effective caster level goes up by +1, improving spell effects dependent on caster level. This increase in effective caster level does not grant you access to more spells. These effects last for 10 minutes per HD of the subject creature.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You draw forth the ebbing life force of a creature and use it to fuel your own power.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Death|Evil"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Death=2"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous/10 minutes per HD of subject; see text"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/deathKnell.html#_death-knell"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Living creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
       }
     ],
     "school": "Necromancy"
@@ -19,9 +83,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 903,
+    "line": 142,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Death Knell.MOD",
+    "record_key": "Death Knell",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",

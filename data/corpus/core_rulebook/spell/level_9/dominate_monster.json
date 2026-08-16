@@ -6,8 +6,72 @@
     "level": 9,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=9"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like dominate person, except that the spell is not restricted by creature type.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "This spell functions like dominate person, except that the spell is not restricted by creature type.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Charm=9"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/dominateMonster.html#_dominate-monster"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.274"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
       }
     ],
     "school": "Enchantment"
@@ -19,9 +83,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 948,
+    "line": 187,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Dominate Monster.MOD",
+    "record_key": "Dominate Monster",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

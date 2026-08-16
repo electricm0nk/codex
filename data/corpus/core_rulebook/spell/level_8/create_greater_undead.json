@@ -6,8 +6,68 @@
     "level": 8,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 hour"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Sorcerer,Wizard=8"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like create undead, except that you can create more powerful and intelligent sorts of undead.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "This spell functions like create undead, except that you can create more powerful and intelligent sorts of undead: shadows, wraiths, spectres, and devourers. The type or types of undead created is based on caster level, as shown below. &nl;Caster Level &pipe; Undead Created &nl;15th or lower &pipe; Shadow &nl;16th-17th &pipe; Wraith &nl;18th-19th &pipe; Spectre &nl;20th or higher &pipe; Devourer|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Evil"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Death=8"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/createGreaterUndead.html#_create-greater-undead"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.261"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One corpse"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
       }
     ],
     "school": "Necromancy"
@@ -19,9 +79,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 880,
+    "line": 118,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Create Greater Undead.MOD",
+    "record_key": "Create Greater Undead",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

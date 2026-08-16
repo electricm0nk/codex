@@ -7,12 +7,60 @@
     "level": 4,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist=4|Sorcerer,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain DR 10/slashing, increases reach 10 ft., and breathe water.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "When you cast this spell, your body takes on a slick, oily appearance. For the duration of this spell, your form can stretch and shift with ease and becomes slightly transparent, as if you were composed of liquid. This transparency is not enough to grant concealment. You gain DR 10/slashing and your reach increases by 10 feet. In addition, you can pass through small holes or narrow openings, even mere cracks, with anything you were carrying at the time the spell was cast (except other creatures). Finally, you can move through water with a swim speed of 60 feet and can breathe both water and air for the duration of this effect. You are treated as if you had the water subtype while this spell is in effect.|PRERULE:1,DisplayFullSpell"
       },
       {
+        "key": "DESCRIPTOR",
+        "value": "Water"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a mixture of oil and water)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
         "key": "SCHOOL",
         "value": "WaterSchool"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/fluidForm.html#_fluid-form"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.223"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
       }
     ],
     "school": "Transmutation"
@@ -24,7 +72,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1955,
+    "line": 122,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Fluid Form",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

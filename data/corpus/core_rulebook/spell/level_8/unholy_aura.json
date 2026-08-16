@@ -6,8 +6,64 @@
     "level": 8,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=8"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, F"
+      },
+      {
         "key": "DESC",
         "value": "A malevolent darkness surrounds the subjects, protecting them from attacks, granting them resistance to spells cast by good creatures, and weakening good creatures when they strike the subjects. This abjuration has four effects. First, each warded creature gains a +4 deflection bonus to AC and a +4 resistance bonus on saves. Unlike the effect of protection from good, this benefit applies against all attacks, not just against attacks by good creatures. Second, a warded creature gains SR 25 against good spells and spells cast by good creatures. Third, the abjuration protects the subjects from possession and mental influence, just as protection from good does. Finally, if a good creature succeeds on a melee attack against a warded creature, the offending attacker takes 1d6 points of Strength damage [Fortitude negates].|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "A malevolent darkness surrounds the subjects, protecting them from attacks, granting them resistance to spells cast by good creatures, and weakening good creatures when they strike the subjects.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Evil"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Evil=8"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "20 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "See text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/unholyAura.html#_unholy-aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.364"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL) creatures in a 20-ft.-radius burst centered on you"
       },
       {
         "key": "TEMPBONUS",
@@ -20,6 +76,10 @@
       {
         "key": "TEMPDESC",
         "value": "Grants a +4 deflection bonus to AC and a +4 resistance bonus on saves"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
       }
     ],
     "school": "Abjuration"
@@ -31,9 +91,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1395,
+    "line": 646,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Unholy Aura.MOD",
+    "record_key": "Unholy Aura",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

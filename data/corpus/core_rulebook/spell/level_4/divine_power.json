@@ -6,8 +6,52 @@
     "level": 4,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
         "key": "DESC",
         "value": "Calling upon the divine power of your patron, you imbue yourself with strength and skill in combat. You gain a +1 luck bonus on attack rolls, weapon damage rolls, Strength checks, and Strength-based skill checks for every three caster levels you have [maximum +6]. You also gain 1 temporary hit point per caster level. Whenever you make a full-attack action, you can make an additional attack at your full base attack bonus, plus any appropriate modifiers. This additional attack is not cumulative with similar effects, such as haste or weapons with the speed special ability.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You imbue yourself with strength and skill in combat and gain a +(max(1,min(6,floor(CASTERLEVEL/3)))) luck bonus on attack rolls, weapon damage rolls, Strength checks, and Strength-based skill checks.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "War=4"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/divinePower.html#_divine-power"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.273"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
       },
       {
         "key": "TEMPBONUS",
@@ -32,6 +76,10 @@
       {
         "key": "TEMPVALUE",
         "value": "MIN=1|MAX=20|TITLE=Choose spell caster level"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
       }
     ],
     "school": "Evocation"
@@ -43,9 +91,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 946,
+    "line": 185,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Divine Power.MOD",
+    "record_key": "Divine Power",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",

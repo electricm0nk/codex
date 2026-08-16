@@ -6,8 +6,64 @@
     "level": 8,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=8"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M, F"
+      },
+      {
         "key": "DESC",
         "value": "The subject gains a +8 resistance bonus on saving throws against spells and spell-like abilities [but not against supernatural and extraordinary abilities].|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "The subject gains a +8 resistance bonus on saving throws against spells and spell-like abilities.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Magic=8"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/protectionFromSpells.html#_protection-from-spells"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.328"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Up to one creature touched per four levels"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
       }
     ],
     "school": "Abjuration"
@@ -19,9 +75,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1219,
+    "line": 469,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Protection from Spells.MOD",
+    "record_key": "Protection from Spells",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

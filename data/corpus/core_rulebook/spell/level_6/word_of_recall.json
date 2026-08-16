@@ -6,8 +6,64 @@
     "level": 6,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=6|Druid=8"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
         "key": "DESC",
         "value": "Word of recall teleports you instantly back to your sanctuary when the word is uttered. You must designate the sanctuary when you prepare the spell, and it must be a very familiar place. The actual point of arrival is a designated area no larger than 10 feet by 10 feet. You can be transported any distance within a plane but cannot travel between planes. You can transport, in addition to yourself, any objects you carry, as long as their weight doesn't exceed your maximum load. You may also bring one additional willing Medium or smaller creature [carrying gear or objects up to its maximum load] or its equivalent per three caster levels. A Large creature counts as two Medium creatures, a Huge creature counts as two Large creatures, and so forth. All creatures to be transported must be in contact with one another, and at least one of those creatures must be in contact with you. Exceeding this limit causes the spell to fail. An unwilling creature can't be teleported by word of recall. Likewise, a creature's Will save [or spell resistance] prevents items in its possession from being teleported. Unattended, nonmagical objects receive no saving throw.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Word of recall teleports you instantly back to your sanctuary when the word is uttered.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Unlimited"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None or Will negates (harmless, object); Spell"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/wordOfRecall.html#_word-of-recall"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.371"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No or yes (harmless, object)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Teleportation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You and touched objects or other willing creatures"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
       }
     ],
     "school": "Conjuration"
@@ -19,9 +75,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1426,
+    "line": 677,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Word of Recall.MOD",
+    "record_key": "Word of Recall",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

@@ -6,8 +6,68 @@
     "level": 9,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid=9"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
         "key": "DESC",
         "value": "The shambler spell creates 1d4+2 shambling mounds with the advanced template. The creatures willingly aid you in combat or battle, perform a specific mission, or serve as bodyguards. The creatures remain with you for 7 days unless you dismiss them. If the shamblers are created only for guard duty, however, the duration of the spell is 7 months. In this case, the shamblers can only be ordered to guard a specific site or location. Shamblers summoned to guard duty cannot move outside the spell's range, which is measured from the point where each first appeared. You can only have one shambler spell in effect at one time. If you cast this spell while another casting is still in effect, the previous casting is dispelled. The shamblers have resistance to fire as normal shambling mounds do only if the terrain where they are summoned is rainy, marshy, or damp.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "The shambler spell creates 1d4+2 shambling mounds with the advanced template.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Plant=9"
+      },
+      {
+        "key": "DURATION",
+        "value": "7 days or 7 months [D]; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/shambler.html#_shambler"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.341"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Three or more shambling mounds, no two of which can be more than 30 ft. apart; see text"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
       }
     ],
     "school": "Conjuration"
@@ -19,9 +79,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1285,
+    "line": 535,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Shambler.MOD",
+    "record_key": "Shambler",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

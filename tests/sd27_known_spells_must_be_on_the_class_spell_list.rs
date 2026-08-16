@@ -53,7 +53,9 @@ use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
 use codex::rules_core::rules_tables::class_spell_levels;
-use codex::rules_core::rules_tables::{acg, advanced_race_guide, apg, crb, ultimate_intrigue};
+use codex::rules_core::rules_tables::{
+    acg, advanced_race_guide, apg, crb, ultimate_intrigue, ultimate_magic,
+};
 
 const WIZARD_LEVEL_3_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_wizard_level3_sd13_deterministic_input.txt");
@@ -119,6 +121,7 @@ fn full_desktop_spell_catalog() -> Vec<&'static str> {
                 .map(|e| e.key),
         )
         .chain(ultimate_intrigue::spell_list::SPELL_LIST.iter().map(|e| e.key))
+        .chain(ultimate_magic::spell_list::SPELL_LIST.iter().map(|e| e.key))
         .collect()
 }
 
@@ -166,12 +169,12 @@ fn every_catalog_row_off_the_wizard_list_is_refused() {
 
     assert_eq!(
         catalog.len(),
-        1286,
+        1555,
         "the desktop Add Spell picker serves this many records"
     );
     assert_eq!(
         off_list.len(),
-        644,
+        913,
         "this many of them are on no wizard list in any ingested book"
     );
 

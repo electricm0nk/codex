@@ -1135,6 +1135,7 @@ fn spell_book_slug_for(short_code: &str) -> &'static str {
         "ACG" => "advanced_class_guide",
         "ARG" => "advanced_race_guide",
         "UI" => "ultimate_intrigue",
+        "UM" => "ultimate_magic",
         other => panic!(
             "spell_resolver::spell_catalog_rows() now carries an unmapped book code {other:?} \
              -- add it to spell_book_slug_for so the spell classifier does not silently drop \

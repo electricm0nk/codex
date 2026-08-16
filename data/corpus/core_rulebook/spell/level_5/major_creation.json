@@ -6,8 +6,68 @@
     "level": 5,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
         "key": "DESC",
         "value": "This spell functions like minor creation, except that you can also create an object of mineral nature: stone, crystal, metal, or the like. The duration of the created item varies with its relative hardness and rarity, as indicated on the following table. &nl;Hardness and Rarity &pipe; Examples Duration &nl;Vegetable matter &pipe; 2 hr./level &nl;Stone, crystal, base metals &pipe; 1 hr./level &nl;Precious metals &pipe; 20 min./level &nl;Gems &pipe; 10 min./level &nl;Rare metal* &pipe; 1 round/level &nl;* Includes adamantine, alchemical silver, and mithral. You can't use major creation to create a cold iron item.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like minor creation, except that you can also create an object of mineral nature: stone, crystal, metal, or the like.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Artifice=6"
+      },
+      {
+        "key": "DURATION",
+        "value": "See text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/majorCreation.html#_major-creation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.311"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Unattended, nonmagical object of nonliving plant matter, up to (CASTERLEVEL) cu. ft."
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
       }
     ],
     "school": "Conjuration"
@@ -19,9 +79,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1140,
+    "line": 386,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Major Creation.MOD",
+    "record_key": "Major Creation",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

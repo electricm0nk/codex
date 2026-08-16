@@ -6,8 +6,64 @@
     "level": 1,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 immediate action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
         "key": "DESC",
         "value": "The affected creatures or objects fall slowly. Feather fall instantly changes the rate at which the targets fall to a mere 60 feet per round [equivalent to the end of a fall from a few feet], and the subjects take no damage upon landing while the spell is in effect. When the spell duration expires, a normal rate of falling resumes. The spell affects one or more Medium or smaller creatures [including gear and carried objects up to each creature's maximum load] or objects, or the equivalent in larger creatures: a Large creature or object counts as two Medium creatures or objects, a Huge creature or object counts as four Medium creatures or objects, and so forth. This spell has no special effect on ranged weapons unless they are falling quite a distance. If the spell is cast on a falling item, the object does half normal damage based on its weight, with no bonus for the height of the drop. Feather fall works only upon free-falling objects. It does not affect a sword blow or a charging or flying creature.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "The affected creatures or objects fall slowly.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Until landing or (CASTERLEVEL) rounds"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless) or Will negates (object);"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/featherFall.html#_feather-fall"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL) Medium or smaller free-falling objects or creatures, no two of which may be more than 20 ft. apart"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
       }
     ],
     "school": "Transmutation"
@@ -19,9 +75,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 983,
+    "line": 224,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Feather Fall.MOD",
+    "record_key": "Feather Fall",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

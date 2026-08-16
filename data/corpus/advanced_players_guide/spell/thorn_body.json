@@ -7,8 +7,48 @@
     "level": 3,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist=3|Druid=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
         "key": "DESC",
         "value": "This spell causes spines to grow from your exposed skin, damaging creatures that strike you. Any creature striking you with a melee weapon, an unarmed strike, or a natural weapon takes 1d6 points of piercing damage +1 point per caster level (maximum +15). Creatures using melee weapons with reach are unaffected by this spell. Creatures that successfully grapple you take 2d6 points of piercing damage +1 point per caster level (maximum +15). In addition, your natural attacks and unarmed strikes deal an additional 1d6 points of piercing damage.  Thorns created by this spell persist through any new physical shape or form you assume, such as via wildshape or any polymorph effect.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Your attackers take 1d6+(CASTERLEVEL) damage.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/thornBody.html#_thorn-body"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.248"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
       }
     ],
     "school": "Transmutation"
@@ -20,7 +60,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 2086,
+    "line": 240,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Thorn Body",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

@@ -6,8 +6,68 @@
     "level": 4,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
         "key": "DESC",
         "value": "You channel lawful power to smite enemies. The power takes the form of a three-dimensional grid of energy. Only chaotic and neutral [not lawful] creatures are harmed by the spell. The spell deals 1d8 points of damage per two caster levels [maximum 5d8] to chaotic creatures [or 1d6 points of damage per caster level, maximum 10d6, to chaotic outsiders] and causes them to be dazed for 1 round. A successful Will save reduces the damage to half and negates the daze effect. The spell deals only half damage to creatures who are neither chaotic nor lawful, and they are not dazed. They can reduce the damage in half again [down to one-quarter of the roll] with a successful Will save.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You channel lawful power to smite enemies.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Lawful"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Law=4"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous (1 round); see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will partial; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/orderSWrath.html#_order-s-wrath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.317"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Nonlawful creatures within a burst that fills a 30-ft. cube"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
       }
     ],
     "school": "Evocation"
@@ -19,9 +79,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1171,
+    "line": 418,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Order's Wrath.MOD",
+    "record_key": "Order's Wrath",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",

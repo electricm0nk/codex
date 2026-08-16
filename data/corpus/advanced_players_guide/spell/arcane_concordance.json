@@ -7,8 +7,60 @@
     "level": 3,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
         "key": "DESC",
         "value": "A shimmering, blue and gold radiance surrounds you, enhancing arcane spells cast by your allies within its area. Any arcane spell cast by a creature within the area gains a +1 enhancement bonus to the DC of any saving throws against the spell, and can be cast as if one of the following metamagic feats was applied to it (without increasing the spell level or casting time): Enlarge Spell, Extend Spell, Silent Spell, or Still Spell (you choose the metamagic feat when you cast arcane concordance).|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Grants metamagic to arcane spells.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a spent wand)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/arcaneConcordance.html#_arcane-concordance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "10-ft.-radius emanation centered on you"
       }
     ],
     "school": "Evocation"
@@ -20,7 +72,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1850,
+    "line": 25,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Arcane Concordance",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

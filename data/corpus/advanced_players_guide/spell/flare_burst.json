@@ -7,8 +7,60 @@
     "level": 1,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Druid,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as flare, except it affects all creatures in a 10-foot-radius burst from the target point.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "This spell functions as flare, except it affects all creatures in a 10-foot-radius burst from the target point.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/flareBurst.html#_flare-burst"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.223"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Light"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "10-ft.-radius burst of light"
       }
     ],
     "school": "Evocation"
@@ -20,7 +72,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1954,
+    "line": 121,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Flare Burst",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

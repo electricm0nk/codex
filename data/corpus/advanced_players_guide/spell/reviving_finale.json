@@ -7,8 +7,60 @@
     "level": 3,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 swift action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Allies cured 2d6 damage.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "You must have a bardic performance in effect to cast this spell.  With a flourish, you immediately end your bardic performance, and allies within the area of the spell regain 2d6 hit points. This spell has no effect on undead creatures.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "20 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will half (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/revivingFinale.html#_reviving-finale"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.239"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Healing"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "a 20-ft.-radius burst centered on you"
       }
     ],
     "school": "Conjuration"
@@ -20,7 +72,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 2043,
+    "line": 201,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Reviving Finale",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

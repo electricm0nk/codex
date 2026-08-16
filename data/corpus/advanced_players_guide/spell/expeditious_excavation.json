@@ -7,12 +7,68 @@
     "level": 1,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Moves 5-ft. cubes of earth.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "You can excavate and move earth, dust, and sand up to the size of a 5-foot cube. If you are buried, you may open a 5-foot cube around yourself, but the spell cannot be used for tunneling.  Besides its mundane applications, you can open a 5-foot-deep pit at a creature's feet. A Medium or smaller creature falls prone in the pit unless it succeeds on a Reflex save. With a successful save, it can choose to land harmlessly on its feet in the pit or hop to an adjacent square; this movement does not provoke attacks of opportunity. A creature can escape a 5-foot-deep pit with a DC 5 Climb check. Larger creatures may ignore pits smaller than their size.  The earth excavated by this spell is ordinarily distributed harmlessly across the spell's range, but you may choose to throw up a burst of grit and debris when you dig a pit. This cloud of debris provides concealment to any creatures in the square affected and all adjacent squares for 1 round. Expeditious excavation has no effect on solid rock or earth creatures.|PRERULE:1,DisplayFullSpell"
       },
       {
+        "key": "DESCRIPTOR",
+        "value": "Earth"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(tiny shovel)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "see text"
+      },
+      {
         "key": "SCHOOL",
         "value": "EarthSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/expeditiousExcavation.html#_expeditious-excavation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.220"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "dirt in a 5-ft. cube"
       }
     ],
     "school": "Transmutation"
@@ -24,7 +80,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1938,
+    "line": 105,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Expeditious Excavation",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

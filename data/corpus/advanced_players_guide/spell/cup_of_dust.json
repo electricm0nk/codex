@@ -7,8 +7,64 @@
     "level": 3,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Witch=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Causes a creature to become dehydrated.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "You curse the target with a thirst no drink can quench. On a failed saving throw, the target begins to dehydrate (see page 444 of the Core Rulebook for starvation and thirst). The effects of this spell cannot inflict more nonlethal damage than the target has hit points. No amount of drinking can counter this effect, although the target still experiences the other normal effects of any liquid imbibed (such as poisons or potions). Cup of dust can be removed with a break enchantment, limited wish, miracle, remove curse, or wish spell, but effects suffered as a result of dehydration must be healed by normal means.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days (D)"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a pinch of dust)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/cupOfDust.html#_cup-of-dust"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature"
       }
     ],
     "school": "Transmutation"
@@ -20,7 +76,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1908,
+    "line": 78,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Cup of Dust",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

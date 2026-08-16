@@ -7,8 +7,52 @@
     "level": 2,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 minute"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Ranger=2|Cleric,Witch=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Know approximate distance from where you cast this spell.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "You form a bond with your surroundings when you cast this spell. For the remaining duration of the spell you can always, as a standard action, determine your approximate distance from that area as well as the direction you must travel in order to reach it. You cannot determine the location of the area if you are on a different plane. The area counts as \"very familiar\" for the purposes of teleport or similar spells. You can only attune yourself to one location at a time. If you cast the spell at another spot you lose the ability to locate your original area.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days (D)"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a spool of thread or string)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/guidingStar.html#_guiding-star-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.226"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
       }
     ],
     "school": "Divination"
@@ -20,7 +64,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1973,
+    "line": 138,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Guiding Star",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

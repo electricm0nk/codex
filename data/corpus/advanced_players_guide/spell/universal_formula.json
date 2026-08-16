@@ -7,8 +7,52 @@
     "level": 4,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Acts as any extract 3rd level or lower.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "As you ingest this extract, it transforms into the appropriate extract for any formula you know of 3rd level or lower and takes effect immediately. If the chosen formula has an expensive material component, it must be provided along with the component for this formula. You may not create an infused extract with this formula.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(quicksilver and powdered platinum worth 100 gp)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/universalFormula.html#_universal-formula"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.253"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
       }
     ],
     "school": "Transmutation"
@@ -20,7 +64,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 2101,
+    "line": 256,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Universal Formula",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

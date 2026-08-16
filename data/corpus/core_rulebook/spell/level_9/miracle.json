@@ -6,8 +6,64 @@
     "level": 9,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=9"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S; see text"
+      },
+      {
         "key": "DESC",
         "value": "You don't so much cast a miracle as request one. You state what you would like to have happen and request that your deity [or the power you pray to for spells] intercede. A miracle can do any of the following things. . Duplicate any cleric spell of 8th level or lower. . Duplicate any other spell of 7th level or lower. . Undo the harmful effects of certain spells, such as feeblemind or insanity. . Have any effect whose power level is in line with the above effects. Alternatively, a cleric can make a very powerful request. Casting such a miracle costs the cleric 25,000 gp in powdered diamond because of the powerful divine energies involved. Examples of especially powerful miracles of this sort could include the following: . Swinging the tide of a battle in your favor by raising fallen allies to continue fighting. . Moving you and your allies, with all your and their gear, from one plane to a specific locale through planar barriers with no chance of error. . Protecting a city from an earthquake, volcanic eruption, flood, or other major natural disaster. In any event, a request that is out of line with the deity's [or alignment's] nature is refused. A duplicated spell allows saving throws and spell resistance as normal, but the save DCs are as for a 9th-level spell. When a miracle spell duplicates a spell with a material component that costs more than 100 gp, you must provide that component.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You don't so much cast a miracle as request one.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Community,Luck=9"
+      },
+      {
+        "key": "DURATION",
+        "value": "See text"
+      },
+      {
+        "key": "RANGE",
+        "value": "See text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "See text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/miracle.html#_miracle"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.314"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "See text"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
       }
     ],
     "school": "Evocation"
@@ -19,9 +75,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1153,
+    "line": 399,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Miracle.MOD",
+    "record_key": "Miracle",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

@@ -7,8 +7,48 @@
     "level": 2,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "S"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain potion's benefits without consuming it.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "This extract causes a pale aura to emanate from your mouth.  If you consume a potion or elixir on the round following the consumption of this extract, you can spit it back into its container as a free action. You gain all the benefits of the potion or elixir, but it is not consumed. You can only gain the benefits of one potion or elixir in this way per use of this extract.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 round"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/alchemicalAllocation.html#_alchemical-allocation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.201"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
       }
     ],
     "school": "Transmutation"
@@ -20,7 +60,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1844,
+    "line": 19,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Alchemical Allocation",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

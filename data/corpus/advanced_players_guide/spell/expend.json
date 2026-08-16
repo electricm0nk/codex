@@ -7,8 +7,60 @@
     "level": 7,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Wastes creatures' limited use magical ability|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "You cause all creatures in the affected area to use up one or more of their limited-use magical abilities without any actual effect. A limited-use magical ability is any supernatural or spelllike ability which a creature can only activate a certain number of times during a set interval (3/day, 1/hour, etc.). The spell does not affect abilities which the creature can use at will or which are constant. It also does not apply to magical items or anything else external to a creature. A creature in the spell's area must make a Will saving throw or expend a single use of one of its abilities. Abilities with the greatest number of uses per day are affected first; if more than one ability has the same number of uses, randomly determine which one is affected first. Creatures must continue making Will saves, expending an additional use of an ability for each failed save, until they succeed, at which point the spell has no further effect.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(miniature broken hourglass)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/expend.html#_expend-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.220"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "20-ft.-radius burst"
       }
     ],
     "school": "Abjuration"
@@ -20,7 +72,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1939,
+    "line": 106,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Expend",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

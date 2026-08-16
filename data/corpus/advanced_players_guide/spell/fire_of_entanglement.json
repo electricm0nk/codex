@@ -7,8 +7,60 @@
     "level": 2,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 swift action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Paladin=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
         "key": "DESC",
         "value": "The next creature you attack using your smite evil class ability is wreathed in flames that impede its movement.  Until the end of the spell's duration, the target is entangled.  If the target starts its turn in a square adjacent to you, it is considered to be entangled to an immobile object (you) and cannot move. A target that saves against this spell is affected for only 1 round.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Your ability to smite evil also entangles your foe.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "special; see text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex partial"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/fireOfEntanglement.html#_fire-of-entanglement"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.221"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature"
       }
     ],
     "school": "Evocation"
@@ -20,7 +72,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1947,
+    "line": 114,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Fire of Entanglement",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

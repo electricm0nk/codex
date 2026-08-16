@@ -1,7 +1,16 @@
 //! Spell catalog browser — Tauri command adapter over every ingested PF1
 //! spell table: `crb::spell_list` (652 records), `apg::spell_list` (297),
-//! `acg::spell_list` (144), `advanced_race_guide::spell_list` (92) and
-//! `ultimate_intrigue::spell_list` (101), 1286 in total.
+//! `acg::spell_list` (144), `advanced_race_guide::spell_list` (92),
+//! `ultimate_intrigue::spell_list` (101) and, since SD31-E6-F2-002,
+//! `ultimate_magic::spell_list` (269) — 1555 in total. This adapter never
+//! chains a book by hand; it reads `spell_resolver::spell_catalog_rows()`
+//! (see `build_spell_catalog` below), so a book widening that registry
+//! reaches this DTO automatically. The per-book count is still worth
+//! stating here because it is the sweep target: `SpellCatalogScreen.tsx`'s
+//! `BOOK_ORDER`/`BOOK_LABELS` and its own test's `CHAINED_BOOK_CODES` are
+//! hand-copies by design (their own doc comments explain why an
+//! independent oracle beats a derived one) and do NOT update themselves
+//! when this list grows.
 //!
 //! Pathfinder Unchained is deliberately absent, and that absence is real
 //! rather than an oversight: `pu_spells.lst` is 224 lines and every single
@@ -50,7 +59,9 @@
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
-use codex::rules_core::rules_tables::{acg, advanced_race_guide, apg, crb, ultimate_intrigue};
+use codex::rules_core::rules_tables::{
+    acg, advanced_race_guide, apg, crb, ultimate_intrigue, ultimate_magic,
+};
 use codex::rules_core::spell_resolver;
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
@@ -60,6 +71,7 @@ const BOOK_APG: &str = "APG";
 const BOOK_ACG: &str = "ACG";
 const BOOK_ARG: &str = "ARG";
 const BOOK_UI: &str = "UI";
+const BOOK_UM: &str = "UM";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -153,6 +165,21 @@ fn map_arg_entry(entry: &advanced_race_guide::spell_list::SpellListEntry) -> Spe
 /// wrapping in `Some` -- every UI record genuinely carries all three
 /// (every `ui_spells.lst` base record carries `SCHOOL:`, `CLASSES:` and
 /// `DESC:`; see `ultimate_intrigue::spell_list`'s own doc comment).
+/// UM's table types `school`, `level` and `description` optionally, like
+/// APG's -- the real corpus gap this cycle's own ingest found and named
+/// (`Restore Eidolon` and 24 siblings carry neither `CLASSES:` nor
+/// `DOMAINS:`; 15 `Masterpiece` records carry a `SCHOOL:` value ("Masterpiece")
+/// this engine's 9-school enum does not recognize), never fabricated.
+fn map_um_entry(entry: &ultimate_magic::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_UM.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+    }
+}
+
 fn map_ui_entry(entry: &ultimate_intrigue::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
     SpellCatalogEntryDto {
         key: entry.key.to_string(),
@@ -285,6 +312,7 @@ mod tests {
             .chain(acg::spell_list::SPELL_LIST.iter().map(map_acg_entry))
             .chain(advanced_race_guide::spell_list::SPELL_LIST.iter().map(map_arg_entry))
             .chain(ultimate_intrigue::spell_list::SPELL_LIST.iter().map(map_ui_entry))
+            .chain(ultimate_magic::spell_list::SPELL_LIST.iter().map(map_um_entry))
             .collect();
         let actual = build_spell_catalog().entries;
         assert_eq!(actual.len(), expected.len());
@@ -300,11 +328,13 @@ mod tests {
     #[test]
     fn the_catalog_serves_every_ingested_book_not_only_crb() {
         let response = build_spell_catalog();
-        assert_eq!(response.entries.len(), 1286);
+        assert_eq!(response.entries.len(), 1555);
         assert_eq!(book_entries(BOOK_CRB).len(), 652);
         assert_eq!(book_entries(BOOK_APG).len(), 297);
         assert_eq!(book_entries(BOOK_ACG).len(), 144);
         assert_eq!(book_entries(BOOK_ARG).len(), 92);
+        assert_eq!(book_entries(BOOK_UI).len(), 101);
+        assert_eq!(book_entries(BOOK_UM).len(), 269);
     }
 
     #[test]
@@ -330,7 +360,10 @@ mod tests {
     fn every_entry_has_a_non_empty_key_and_a_known_book() {
         for entry in &build_spell_catalog().entries {
             assert!(!entry.key.is_empty());
-            assert!([BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG, BOOK_UI].contains(&entry.book.as_str()));
+            assert!(
+                [BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG, BOOK_UI, BOOK_UM]
+                    .contains(&entry.book.as_str())
+            );
         }
     }
 
