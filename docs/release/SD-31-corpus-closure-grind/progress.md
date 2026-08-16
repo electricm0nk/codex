@@ -9116,3 +9116,270 @@ this wave's finished lanes performed after checking every live PID's `CARGO_TARG
    `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh`.
 
 
+
+## Cycle `SD31-E4-F1-002` (`RETRO_ACTOR=sd31-e4-classwire2`) — 2026-08-16, "Gunslinger base chassis + supersession wiring"
+
+**Role:** `sd31-e4-classwire2`, own worktree `wf_c2092bd6-95a-2`, own branch `sd31/e4-classwire2` cut
+from `tranche/11` tip. **HEAD at claim:** `5d0cd1595` ("docs(sd31): correct Decision 7's sizing, record
+its structural blocker and its first catch") — package dir absent at claim, tree clean, so
+`git fetch origin && git reset --hard origin/tranche/11` per protocol. **Oracle pin:**
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`./scripts/verify.sh --only
+preflight-oracle` → PASS). `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-e4-classwire2`.
+
+### Card
+
+`epic-4-mechanism` F1 — per-class chassis and supersession wiring. `class_feature` is 15,472 units
+(40% of the board), 39 done (0.3%), re-derived below. Take the highest-record-count cleared classes
+from `SD31-E3-F1-001`'s clearance table; wire real supersession, one mechanism at a time, per SD31-E4-F1's
+acceptance (`if let`/`else` branch, reachability proven via `build_pilot_headless_receipt`). Do not
+chase board movement or touch the doneness path.
+
+### Class chosen: Gunslinger (Ultimate Combat)
+
+Re-derived the clearance table's ranking before picking (`SD31-E3-F1-001-clearance-table.json`): all 24
+`newly_measured_classes` show `wired_able: 0` except Slayer (already 7/7 per wave 5). Gunslinger
+(`ultimate_combat`, `named_raw: 17`) was chosen because — unlike the occult/psionics classes on the same
+list — Ultimate Combat already had a `rules_tables/ultimate_combat/archetype_tables.rs` module in this
+card's own territory, and Gunslinger's real corpus row states its BAB/save progression as plain PCGen
+formulas (`classlevel`, `classlevel/2+2`, `classlevel/3`) rather than needing a hand-transcribed 20-row
+table, the same formula-computed shape `acg::class_slayer` already established.
+
+### What landed
+
+1. **`src/rules_core/rules_tables/ultimate_combat/class_gunslinger.rs`** (new) — BAB/save chassis
+   table, formula-derived from `CLASS:Gunslinger`'s real corpus record
+   (`ultimate_combat/uc_classes.lst:10`), 2 unit tests.
+2. **`src/rules_core/rules_tables/ultimate_combat/mod.rs`** — `ClassTableRow`, `UcClassId` (Gunslinger
+   only; Ninja/Samurai measured `named_raw: 0` and are named, not silently claimed),
+   `class_chassis_resolve`, 2 unit tests.
+3. **`src/rules_core/rules_tables/ultimate_combat/archetype_tables.rs`** — 2 of Gunslinger's 4 real
+   archetypes added verbatim from the corpus (Pistolero, Mysterious Stranger — chosen because each
+   supersedes a slot this cycle wires; Gun Tank/Musket Master named, not added). Catalog 65 → 67
+   records; updated the file's own exact-count tests (`total_replaces` 282→291, `total_grants`
+   354→364, `resolved` 294→304, `equal_count_records` 14→15) — re-derived by hand-counting each new
+   entry's own `replaces`/`grants` arrays, not guessed.
+4. **`src/rules_core/pilot_compute.rs`** — `compute_uc_class_chassis` (dispatch branch +
+   BAB/save grounding, mirrors `compute_acg_class_chassis`/`compute_pu_class_chassis` exactly) and
+   `ground_or_block_gunslinger_class_features`: Grit (points + limit, WIS-driven), Nimble (dodge bonus,
+   `(level+2)/4`), Gun Training (count, `(level-1)/4`), Gunslinger Initiative (flat +2 from 3rd level).
+   Grit/Nimble/Gun Training each check `archetype_resolver::archetype_claiming_slot_entry` first — a
+   real `if let`/`else` supersession branch, not a table edit — and quote the superseding archetype's
+   OWN real corpus text when claimed (Mysterious Stranger for Grit+Nimble, Pistolero for Gun Training).
+   11 new tests, all headless-pilot-receipt-shaped (`build_pilot_headless_receipt`, not unit tests on
+   the resolver alone, per SD31-E4-F1's acceptance), covering base case + both supersession cases +
+   level-gating + the flat-vs-scaled distinction.
+5. **`apps/desktop/src-tauri/src/reach_gate.rs`** — one-line count correction in the pre-existing
+   `("ultimate_combat", "archetypes")` `OPEN_FINDINGS` entry (65→67, additive-list exception this
+   card's territory names explicitly), no other change to that shared file.
+
+### wired_able / named — Gunslinger only, not blended
+
+```
+grep -c 'GunslingerGrit"\|GunslingerNimble"\|GunslingerGunTraining"' src/rules_core/pilot_compute.rs
+-> 3
+grep -oE 'Gunslinger_Archetype_[A-Za-z0-9]+' \
+  $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst \
+  | sort -u | wc -l
+-> 17
+```
+
+**3/17**, up from 0/17 measured at `SD31-E3-F1-001`. Not claimed for Ninja/Samurai (`named_raw: 0`
+each — no archetype content to supersede, out of scope, not silently claimed complete).
+
+### Board delta — measured, not assumed, and re-checked-out per the wave rule
+
+```
+export CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-e4-classwire2
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-e4-classwire2.json
+-> corpus-literal-sweep: 21716 records examined of 24736 read, 181276 tokens compared (9 synthesized),
+   24311 digests checked, 0 findings -- CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-e4-classwire2.json
+-> 100 of 101 covered units cleared; 1 failed (advanced_players_guide:equipment:spindle_of_perfect_knowledge,
+   pre-existing, unrelated to this cycle — confirmed against 3 prior receipts naming the same failure)
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-e4-classwire2.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-e4-classwire2.json \
+  cargo run --locked --bin v06_work_inventory
+-> REGEN_EXIT=0, zero stamp loss
+python3 -c "... P.doneness_verdict ..." (exact command in the mandate prompt, re-run against the
+  regenerated docs/work-inventory.json)
+-> 38521 {'done': 7340, 'not-started': 20061, 'unmeasurable': 5381, 'deferred': 36, 'held': 4936,
+   'in-progress': 767} 19.05
+```
+
+**Board unchanged: 7,340/38,521 (19.05%), zero movement — exactly as predicted, not a surprise.**
+`git checkout -- docs/work-inventory.json` immediately after measuring, per the wave rule; the file is
+NOT part of this commit.
+
+### BLOCKER found and reported, not fixed (out of file territory) — `OPEN-ISSUES.md` row 94
+
+Traced the zero-movement result one record deep rather than accepting it. All 32 of Gunslinger's real
+corpus `class_feature` records (including the 4 I grounded) read `status: not-ingested`,
+`doneness: not-started` in the regenerated inventory. Root cause, confirmed by direct read of
+`src/bin/v06_work_inventory.rs`'s `modelled_class_books()` (line ~4604): it hardcodes only
+`ClassId::ALL` (CRB), `ApgClassId::ALL` (APG), `AcgClassId::ALL` (ACG) — no Pathfinder Unchained, no
+Ultimate Combat, no book this program has onboarded since. `Kind::ClassFeature`'s classifier calls
+`class_feature_owner(&unit.key, facts.class_books.keys())` FIRST; for Gunslinger this returns `None`
+regardless of `pilot_compute.rs`'s wiring quality, so the record never even reaches the `explanation_id`
+`.ends_with()` check row 78 already found broken — a THIRD, structurally distinct blocker stacked on
+`class_feature`, alongside row 78's id-suffix mismatch and Decision 7's `display`+`grounded`->`held`
+verdict-table cell. `v06_work_inventory.rs` is lane 1's file territory, not this card's
+(`pilot_compute.rs`/`archetype_resolver.rs`/class compute modules only) — logged precisely
+(`OPEN-ISSUES.md` row 94) rather than edited across the boundary, per this card's own explicit
+instruction not to touch the doneness path.
+
+### Gate
+
+Launched early, kept alive throughout. **Two full runs, both against the exact command:**
+
+    LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E4-F1-002-verify.log
+    ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+
+**Run 1** (`SD31-E4-F1-002-verify-run1-clippyfail.log`, kept as evidence, not discarded):
+`root-lib` PASS (1879 tests, including all 11 new Gunslinger tests and all 19
+`rules_tables::ultimate_combat::*` tests), `root-full` PASS (6615 passed, 560 suites, all 529
+`tests/*.rs` files executed), `desktop` PASS (447), `reach` PASS (27 — my families' claim, see
+below), `corpus-sweep` PASS (0 findings), `frontend-test` PASS (99/99), `frontend-typecheck` PASS,
+then **`clippy` FAILED: root 48 warnings vs. recorded ceiling 47**
+(`docs/release/.../artifacts/OPEN-ISSUES.md` is not the culprit — a real new lint, `useless_format`,
+on the `ground_or_block_gunslinger_class_features` deferred-features diagnostic: `format!("...")` with
+zero interpolation placeholders). `VERIFY_EXIT=1`.
+
+**Rework, mid-cycle:** replaced the useless `format!(...)` with a plain string literal + `.to_owned()`.
+Independently re-verified in an isolated target dir BEFORE relaunching the full gate:
+
+    cargo clippy --locked --tests -j 2   # in a clean CARGO_TARGET_DIR
+    grep '^warning:' <log> | grep -v 'generated [0-9]* warning' | wc -l
+    -> 47   (matches the recorded ceiling exactly; the Gunslinger warning is gone, confirmed
+       by grep -c "gunslinger" <log> -> 0)
+
+**Run 2** (the run whose log is committed as `SD31-E4-F1-002-verify.log`): every stage PASS
+(23/23 — preflight-disk, preflight-oracle, oracle-pin-selftest, producer-selftest,
+reachability-audit-selftest, reachability-audit, groundtruth-guard-selftest, pi-sweep,
+declared-pi-audit, audit-selftest, reclaim-selftest, driver-selftest, corpus-sweep-selftest,
+root-lib, root-full, desktop, reach, corpus-sweep, frontend-install, frontend-test,
+frontend-typecheck, clippy [root:47 desktop:7, exactly at ceiling], class-dump [31/31 computing]).
+`VERIFY_EXIT=0`.
+
+Both runs' `reach` stage independently confirmed 27 tests passing, including
+`every_declared_claim_actually_carries_the_records` — this cycle's 2 new archetype records
+(`Gunslinger Archetype ~ Pistolero`/`~ Mysterious Stranger`) were pinned into `reach_gate.rs`'s
+`UNREACHED_RECORD_FINDINGS` for `("ultimate_combat", "archetypes")` (an additive-list territory
+exception) BEFORE run 1's own `desktop`/`reach` stages evaluated them — confirmed via a standalone
+isolated re-run of that one test (`cargo test --locked ... every_declared_claim_actually_carries_the_records`
+-> `1 passed`) in case a file-edit-during-build race had produced a false PASS. **This is the "reach
+passes with a claim for your families" requirement — a real claim, not zero matched tests.**
+
+Four-check wired-integration audit, against `5d0cd1595`:
+
+```
+git diff --unified=0 5d0cd1595...HEAD -- 'src/**/*.rs' | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS
+-> OK_NO_TOKENS
+git diff --unified=0 5d0cd1595...HEAD -- 'apps/desktop/**/*.tsx' 'apps/desktop/**/*.jsx' | grep -nE 'onClick=\{\s*\(\)\s*=>\s*\{\s*\}\s*\}|onClick=\{undefined' || echo OK_NO_NOOP_HANDLERS
+-> OK_NO_NOOP_HANDLERS
+git diff --unified=0 5d0cd1595...HEAD -- 'src/**/*.rs' | grep -nE 'mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__' || echo OK_NO_MOCK_LEAKS
+-> OK_NO_MOCK_LEAKS
+git diff --unified=0 5d0cd1595...HEAD -- 'src/**/*.rs' | grep -nE '"Would [^"]*"' || echo OK_NO_WOULD_STRINGS
+-> OK_NO_WOULD_STRINGS
+```
+
+Count-change sweep (archetype catalog 65→67): grepped `tests/`, `src/`, `apps/` for the old "65"/"403"
+counts — only pre-existing, already-stale doc-comment references outside this cycle's own table
+(`archetype_resolver.rs`'s "403-record" comment, unrelated to UC specifically, not touched — out of
+scope, predates this cycle and wave 5's Slayer addition alike). No hardcoded test elsewhere asserts the
+corpus-wide `archetype_catalog_entries().len()`.
+
+PI screening: no new `data/corpus/` record written this cycle (only Rust source — compute code and
+archetype-table transcriptions of already-public corpus text). The gate's own `pi-sweep` (10 hits,
+10 baseline rows — unchanged) and `declared-pi-audit` (clean) stages, which run over
+`src/rules_core/rules_tables` and therefore cover this cycle's new files, both passed.
+
+### DoD-8 — on-screen verification
+
+Reachability of the COMPUTATION is proven per SD31-E4-F1's own named standard: 11 new
+`build_pilot_headless_receipt`-based tests exercising the production
+`compute_uc_class_chassis`/`ground_or_block_gunslinger_class_features`/
+`archetype_claiming_slot_entry` path end to end (not a unit test on the resolver alone).
+
+Full on-screen character-SHEET proof is a separate, honest gap, attempted live and documented,
+not faked and not dropped (`OPEN-ISSUES.md` row 95):
+
+    export RUN_DESKTOP_AGENT=sd31-e4-classwire2
+    apps/desktop/.claude/skills/run-desktop/driver.sh launch
+    # screenshot hub -> click "New Character" -> screenshot form (Class defaults to Fighter)
+    # click Class dropdown -> screenshot (renders black under Xvfb, a harness quirk)
+    # type "Gunslinger" into the open native <select> -> screenshot: no change
+    # close dropdown -> screenshot: Class field still reads "Fighter"
+
+Confirms live, via real interaction against the running app (not only a source read): no
+"Gunslinger" option exists in the Class picker to type-ahead-jump to, matching
+`characterHubModel.ts`'s `CLASS_OPTIONS` array (a frontend file outside this card's territory).
+5 screenshots + a `.FAILED.verify.md` report committed at
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E4-F1-002-dod8/` (named `.FAILED.` per
+this program's own `verify-on-screen.sh` convention, so it cannot be mistaken for a passing
+on-screen proof).
+
+### Retro
+
+- `note` — board-delta prediction, the `modelled_class_books()` finding, and the wired-able/named
+  figure (`1786867762199-sd31-e4-classwire2-c6b175`).
+- `near-miss` — the reach_gate.rs `UNREACHED_RECORD_FINDINGS` fix that would have failed the
+  gate's `reach` stage, caught and fixed before it did (`1786869084221-sd31-e4-classwire2-a3641d`).
+- `rework` — the `useless_format` clippy failure on run 1, root cause and fix
+  (`1786869530283-sd31-e4-classwire2-c93388`).
+
+### Mid-cycle gate incident (full detail, not just the retro one-liner)
+
+Run 1's `clippy` stage failed: root 48 warnings vs. recorded ceiling 47 — a genuine new
+`useless_format` lint on the Gunslinger deferred-features diagnostic (`format!("...")` with zero
+interpolation placeholders). Fixed (plain string literal + `.to_owned()`), independently
+re-verified 47/47 in an isolated clean `cargo clippy --locked --tests` run in a separate
+`CARGO_TARGET_DIR` BEFORE relaunching, then relaunched the full gate fresh rather than trusting
+the stale FAIL. Run 1's log kept as evidence at
+`SD31-E4-F1-002-verify-run1-clippyfail.log`, not discarded. Also confirmed, mid-incident, that
+the SAME run's `desktop`/`reach` stages (which ran AFTER a second live edit — pinning the 2 new
+archetype keys into `reach_gate.rs`'s `UNREACHED_RECORD_FINDINGS`) had genuinely picked up that
+fix rather than racing a stale build: re-ran `every_declared_claim_actually_carries_the_records`
+standalone in an isolated target dir, `1 passed`.
+
+### Followups
+
+1. **`OPEN-ISSUES` row 94** — register `PuClassId::ALL`/`UcClassId::ALL` (and any future book's class
+   enum) into `v06_work_inventory.rs`'s `modelled_class_books()`, alongside row 78's id-suffix fix and
+   Decision 7's verdict-table extension, then re-measure `class_feature` in one guarded regen rather
+   than three partial ones. File: `src/bin/v06_work_inventory.rs` (lane 1).
+2. **`OPEN-ISSUES` row 95** — add Gunslinger (and every other newly-`epic-4-mechanism`-wired
+   non-CRB/APG/ACG class) to `CLASS_OPTIONS` in `apps/desktop/src/characterHub/
+   characterHubModel.ts`, mirroring the existing Unchained-classes entries' shape, so DoD-8 can
+   reach a full on-screen character sheet, not only the headless-receipt path. File territory:
+   frontend, not this card's.
+3. **Gun Tank and Musket Master** (Gunslinger's other 2 real UC archetypes) — not yet added to
+   `archetype_tables.rs`; named, not silently omitted.
+4. **Gunslinger's remaining named features** (Gunsmith, Proficiencies, the 6 un-wired Deeds, True Grit,
+   Cheat Death, Slinger's Luck, Targeting, Lightning Reload, Expert Loading, Stunning Shot, Pistol-Whip,
+   Death's Shot) — not yet transcribed; the diagnostic
+   `class_feature.uc.gunslinger.other_features_deferred.unsupported` names them explicitly,
+   non-claim-blocking.
+5. **Ninja and Samurai** (Ultimate Combat's other 2 real classes, `named_raw: 0` each) — no archetype
+   content to supersede; their own base chassis (BAB/saves + named features) is untouched, real
+   remaining `epic-4-mechanism` scope for a future cycle.
+6. **Every other clearance-table class** (Occultist, Spiritualist, Medium, Mesmerist, Kineticist,
+   Vigilante, Psychic Warrior, Cryptic, Aegis, Soulknife, Shifter, Tactician, Wilder, Dread, Vitalist,
+   Marksman, Psion, Psychic, Magus) — still `wired_able: 0`; the biggest lever on the whole board
+   remains unwired, one cycle at a time.
+
+### Baseline drift noted, not touched
+
+`VERIFY_EXIT=0` run's own BASELINE NOTES flagged `BASELINE_ROOT_LIB_TESTS` (1867 recorded, 1879
+measured) and `BASELINE_ROOT_FULL_TESTS` (6603 recorded, 6615 measured) as stale — predates this
+cycle (this cycle added 11 lib tests + 0 root-full-only tests; the gap is larger than that,
+consistent with prior cycles' own drift notes in this same file). Left `scripts/verify-baselines.env`
+unedited per this program's convention (a baseline-movement commit is separate and reviewable on
+its own).
+
+### End of cycle
+
+`scripts/reclaim.sh --apply` run; bytes reclaimed recorded in this cycle's own commit/structured
+output. `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-e4-classwire2` (this cycle's own,
+deleted at cycle end per the standing rule) plus a short-lived `apps/desktop/src-tauri/target/`
+default build from `driver.sh launch` (DoD-8 attempt; not this cycle's scratch convention, left
+in place as the project's normal build cache).

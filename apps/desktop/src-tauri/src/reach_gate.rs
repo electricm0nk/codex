@@ -2418,8 +2418,10 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     (
         "ultimate_combat",
         "archetypes",
-        "Gap: 65 Ultimate Combat archetype-swap records are ingested with no archetype-selection \
-         surface to reach a player through. Remedy: same as ACG above; delete once landed.",
+        "Gap: 67 Ultimate Combat archetype-swap records are ingested (65 + 2 Gunslinger \
+         archetypes, Pistolero and Mysterious Stranger, added by `SD31-E4-F1-002`) with no \
+         archetype-selection surface to reach a player through. Remedy: same as ACG above; \
+         delete once landed.",
     ),
     (
         "ultimate_magic",
@@ -2924,6 +2926,13 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Fighter Archetype ~ Tower Shield Specialist",
             "Fighter Archetype ~ Unarmed Fighter",
             "Fighter Archetype ~ Unbreakable",
+            // SD31-E4-F1-002: the first 2 of Gunslinger's own 4 archetypes,
+            // added to `archetype_tables.rs` this cycle. Still `NotSurfaced`
+            // (no archetype-selection surface exists, same as every other
+            // record in this list) -- pinned here so the reach test does not
+            // read their absence as a NEW, unrecorded regression.
+            "Gunslinger Archetype ~ Mysterious Stranger",
+            "Gunslinger Archetype ~ Pistolero",
             "Inquisitor Archetype ~ Iconoclast",
             "Inquisitor Archetype ~ Spellbreaker",
             "Inquisitor Archetype ~ Witch Hunter",
