@@ -9410,9 +9410,55 @@ git diff --unified=0 5d0cd1595...HEAD -- 'apps/desktop/**/*.{ts,tsx}' 'src/**/*.
 ```
 All 4 clean (this cycle touched no `apps/desktop` source at all — pure `src/rules_core`/`tests`/data).
 
-### 9. Reclaim
+### 9. Full gate — launched early, kept alive, exit code not yet obtained
 
-`scripts/reclaim.sh` then `--apply` at cycle end.
+Launched EARLY, in the background, immediately after committing and pushing, per protocol —
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-equip-repair`:
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F5-004-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**Confirmed alive and making genuine progress at every check** (`ps -o pid,etimes` on the tracked
+PID, `pgrep -fa rustc` showing live compilation, cross-checked against `/proc/<pid>/environ` for
+the right `CARGO_TARGET_DIR` — not inferred from a frozen timestamp) across every check made during
+this cycle's turn budget. The box ran **7+ concurrent `scripts/verify.sh` invocations** from sibling
+agents this cycle (`pgrep -fa verify.sh`), load average 16-23 on 24 cores — consistent with the
+loop-instruction's own re-measured 8-job full-gate cap being near saturated, not evidence of a hang.
+
+**Stages PASSED before this receipt was written:** `preflight-disk`, `preflight-oracle`,
+`oracle-pin-selftest` (11/11), `producer-selftest` (5/5), `reachability-audit-selftest` (11/11),
+`reachability-audit` (98.95%, unchanged), `groundtruth-guard-selftest` (17/17), `pi-sweep` (10
+baseline hits, unchanged), `declared-pi-audit` (CLEAN), `audit-selftest` (28/28),
+`reclaim-selftest` (13/13), `driver-selftest` (7/7), `corpus-sweep-selftest` (15/15), **`root-lib`
+— PASS, 1874 passed** (up from the pre-cycle baseline of 1867 + this cycle's own 8 net-new tests:
+2 in `equipment_gap`, 6 in `corpus_literal_sweep` — `verify-baselines.env`'s `BASELINE_ROOT_LIB_
+TESTS=1867` floor is a `>=` check, so this growth does not fail it; deliberately NOT raised this
+cycle per the established "an integration cycle raises floors" precedent). `root-full` then began
+("building ~490 test binaries; this is the slow one") and had not finished a single test run by the
+time this receipt was written, despite a genuine multi-check wait.
+
+**No `VERIFY_EXIT` is claimed for this cycle** — per protocol, "a gate that has not returned is not
+a gate that passed" and "if you never obtained an exit code, say so; do not infer one." Every
+individually-run check this receipt DOES cite (§§1-7 above: `equipment_gap`/`corpus_literal_sweep`
+unit tests, the real `corpus_literal_sweep` binary, `declared_pi_shipping_audit`,
+`v06_corpus_trap_report --audit`, the mandate's own named `sd17`/`sd19`/`sd20`/`sd27` equipment test
+suites, `pcgen_import::corpus_traps::`, clippy over the changed files) was run standalone, in
+isolation, independently of this full-gate run's own eventual result — none of that evidence depends
+on `root-full`/`desktop`/`reach`/`frontend-*`/`clippy`/`class-dump` finishing. The commit and this
+receipt land per the mandate's own "ran out of budget is not blocked" clause. **The next cycle to
+touch this branch (or the integration cycle) must re-run `./scripts/verify.sh` fresh and confirm a
+terminal exit code before treating this card's delivery as gate-confirmed-clean** — this receipt does
+not claim that confirmation happened.
+
+### 10. Reclaim
+
+`scripts/reclaim.sh` (dry run) at cycle end: **0 item(s), 0.0B reclaimable** — every candidate
+directory/branch/worktree on this box is either younger than the 6h threshold or actively in use
+(108 skipped, all "checked out in a worktree" or "not merged, upstream present"). This cycle's own
+`CARGO_TARGET_DIR` is deliberately left in place while its own gate run (§9) is still live — the
+next cycle/dispatcher clears `/home/ubuntu/cargo-targets/` between waves, per the dispatch's own note.
 
 ### Files changed
 
