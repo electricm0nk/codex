@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 15000.0,
+    "description": "Treat level as 4 higher for trance and maneuver for specific warrior's path, or can use the trance and maneuver 3/day for 1 minute if path is not known.",
+    "key": "Warrior's Bracer (Infiltrator Path)",
+    "name": "Warrior's Bracer (Infiltrator Path)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "InfiltratorPathLVL",
+          "4"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic.Wondrous.Bracer"
+      },
+      {
+        "key": "COST",
+        "value": "15000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SLOTS",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.427"
+      },
+      {
+        "key": "SPROP",
+        "value": "Treat level as 4 higher for trance and maneuver for specific warrior's path, or can use the trance and maneuver 3/day for 1 minute if path is not known."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 428,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Warrior's Bracer (Infiltrator Path)",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

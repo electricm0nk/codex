@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 1755.0,
+    "description": "Level 7 Illusionist; Protection - The entire book is warded with illusory script (Will DC 16; on failure, the suggestion is for the reader to \"Close the book and leave\").; Opposition Schools - Evocation, necromancy; Spells - 4.phantasmal killer(S), wandering star motes(S); 3.illusory script(S), invisibility sphere(S), madness(S), major image(S); 2.magic mouth(S), misdirection(S), phantom trap(S), scare(OP); 1.alarm, animate rope, color spray(S), comprehend languages, disguise self(S), hypnotism, magic aura(S), magic weapon, shield, sleep; Preparation Ritual - Glittering Eyes",
+    "key": "Grimoire of Glittering Eyes",
+    "name": "Grimoire of Glittering Eyes",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "COST",
+        "value": "1755"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Preparation Ritual ~ Glittering Eyes"
+      },
+      {
+        "key": "SPROP",
+        "value": "Level 7 Illusionist"
+      },
+      {
+        "key": "SPROP",
+        "value": "Protection - The entire book is warded with illusory script (Will DC 16; on failure, the suggestion is for the reader to \"Close the book and leave\")."
+      },
+      {
+        "key": "SPROP",
+        "value": "Opposition Schools - Evocation, necromancy"
+      },
+      {
+        "key": "SPROP",
+        "value": "Spells - 4.phantasmal killer(S), wandering star motes(S); 3.illusory script(S), invisibility sphere(S), madness(S), major image(S); 2.magic mouth(S), misdirection(S), phantom trap(S), scare(OP); 1.alarm, animate rope, color spray(S), comprehend languages, disguise self(S), hypnotism, magic aura(S), magic weapon, shield, sleep"
+      },
+      {
+        "key": "SPROP",
+        "value": "Preparation Ritual - Glittering Eyes"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "record_key": "Grimoire of Glittering Eyes",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

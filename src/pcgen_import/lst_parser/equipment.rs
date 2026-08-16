@@ -245,6 +245,44 @@ pub struct EquipmentRecord {
     pub diagnostics: Vec<EquipmentDiagnostic>,
 }
 
+impl EquipmentRecord {
+    /// Every token on this record whose OWN source line is exactly `line`
+    /// -- narrower than `self.tokens`, which can carry tokens `open_record`
+    /// merged in from a DIFFERENT physical line representing (or
+    /// appearing to represent) the same logical item.
+    ///
+    /// `open_record`'s cross-line merge is deliberate and correct for its
+    /// designed case (one logical item's `KEY:`/`TYPE:`/`BONUS:` rows
+    /// spread across several aligned-TSV lines). But nothing about "this
+    /// logical record merged rows X and Y" tells a caller which of those
+    /// rows is the SPECIFIC one a corpus citation (`source.line`) points
+    /// at -- and three real shipped records (`OPEN-ISSUES.md` row 61:
+    /// `bastard_s_sting`, `mountain_pattern_armor`, `hunter_s_stand`)
+    /// proved a caller that takes the whole merged `self.tokens` list
+    /// ships tokens the cited line never states, because a `.COPY=`
+    /// variant's base-template name collision (or a genuine same-name
+    /// restatement on a later line) pulled a DIFFERENT line's tokens into
+    /// the same logical record.
+    ///
+    /// A caller enforcing single-citation-line provenance (the same
+    /// invariant `corpus_literal_sweep` independently re-checks) must use
+    /// this accessor, not `self.tokens`, whenever it is about to attribute
+    /// tokens to one specific cited line. Every `EquipmentToken` already
+    /// carries its own `line_number` -- this is a pure filter, no parser
+    /// behavior changes, so it cannot regress any existing caller that
+    /// still wants the full merged view.
+    pub fn tokens_on_line(&self, line: usize) -> Vec<&EquipmentToken> {
+        self.tokens.iter().filter(|token| token.line_number == line).collect()
+    }
+
+    /// The `bonus_chains` analogue of [`Self::tokens_on_line`] -- same
+    /// single-citation-line provenance filter, for the flattened `BONUS:`
+    /// clause list.
+    pub fn bonus_chains_on_line(&self, line: usize) -> Vec<&BonusToken> {
+        self.bonus_chains.iter().filter(|bonus| bonus.line_number == line).collect()
+    }
+}
+
 /// Result of parsing one LST file for the equipment scope.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct EquipmentParseResult {
@@ -563,6 +601,32 @@ impl EquipmentParseState {
         // the KEY-less case this rule originally targeted). A row with an
         // explicit KEY never merges into a row without one — an explicit KEY
         // is a deliberate disambiguation signal.
+        //
+        // `OPEN-ISSUES.md` row 61, ROOT-CAUSED (`SD31-E6-F5-003`): the
+        // KEY-less name-fallback above is ALSO exactly wrong for two
+        // DIFFERENT `.COPY=` rows that happen to share the same base
+        // template on their left-hand side (`extract_record_name` strips
+        // to the template, not the distinct post-`.COPY=` identity) --
+        // `Bastard Sword (Base).COPY=Bastard's Sting` and `Bastard Sword
+        // (Base).COPY=Valor's Minion` both reduce to `name ==
+        // "Bastard Sword (Base)"` even though they declare two genuinely
+        // different items (confirmed against the real, pinned oracle:
+        // `ue_equip_arms_armor.lst:447`/`:550`; `uw_equip_general.lst:23`/
+        // `:40`/`:41`; `um_equip_general.lst:12..29`, 18 real Ultimate
+        // Magic spellbooks all declared as `Spellbook.COPY=<title>`). A
+        // `.COPY=` row is, BY THE CORPUS'S OWN NAMING CONVENTION, always a
+        // declaration of a new, distinct record (`Trap::CopyRecord`'s own
+        // `miscount_risk`: "`.COPY=` declares a *new* record") -- so it
+        // must never merge into another entry via bare name equality,
+        // only via an explicit matching `KEY:` (still handled above,
+        // unchanged) or with ANOTHER row that is not itself the head of a
+        // `.COPY=`-declared entry. `is_copy_declaration` reads the row's
+        // OWN first tab-column (no new struct field needed --
+        // `header_raw_line` already carries it for an existing entry).
+        fn is_copy_declaration(raw_line: &str) -> bool {
+            raw_line.split('\t').next().unwrap_or("").contains(".COPY=")
+        }
+        let new_is_copy = is_copy_declaration(raw_line);
         let entry_index = if let Some(index) = self.result.entries.iter().position(|entry| {
             if entry.kind != kind {
                 return false;
@@ -574,7 +638,11 @@ impl EquipmentParseState {
                 .map(|token| token.value.as_str());
             match (key_token.as_deref(), existing_key) {
                 (Some(new_key), Some(old_key)) => new_key == old_key,
-                (None, None) => entry.name == name,
+                (None, None) => {
+                    entry.name == name
+                        && !new_is_copy
+                        && !is_copy_declaration(&entry.header_raw_line)
+                }
                 _ => false,
             }
         }) {
@@ -807,5 +875,158 @@ mod tests {
             Some(EquipmentRecordKind::EquipMod)
         );
         assert_eq!(recognize_directive_prefix("CLASS:Fighter\tTYPE:PC"), None);
+    }
+
+    // -----------------------------------------------------------------
+    // `OPEN-ISSUES.md` row 61 -- `tokens_on_line`/`bonus_chains_on_line`
+    // single-citation-line provenance filter. Each fixture below is the
+    // REAL byte content of the corpus line pair that produced a confirmed
+    // shipped defect (`SD31-W4-INTEGRATE-001` receipt), read fresh from
+    // the pinned PCGen oracle this cycle -- not reconstructed from memory.
+    // -----------------------------------------------------------------
+
+    /// `ue_equip_arms_armor.lst:447` (`.COPY=` variant "Bastard's Sting",
+    /// only token `VISIBLE:YES`) and `:550` (a DIFFERENT `.COPY=` variant,
+    /// "Valor's Minion", off the SAME "Bastard Sword (Base)" template,
+    /// carrying `EQMOD:Material ~ Steel` + its own `VISIBLE:YES`) both
+    /// reduce to the SAME `extract_record_name` output
+    /// (`"Bastard Sword (Base)"`, the template side of `.COPY=`) -- before
+    /// this cycle's `open_record` fix, that shared name merged them under
+    /// the KEY-less name fallback, the confirmed root cause of the shipped
+    /// `bastard_s_sting.json` defect ("shipped an unrelated
+    /// `EQMOD:Material ~ Steel` and a duplicated `VISIBLE:YES`"). ROOT-
+    /// CAUSED (`SD31-E6-F5-003`): a `.COPY=`-declared row never merges via
+    /// bare name equality, only via an explicit matching `KEY:` -- so line
+    /// 447 and line 550 must now open TWO SEPARATE entries, each carrying
+    /// only its own line's tokens, with no filtering needed at all.
+    #[test]
+    fn a_copy_declared_row_never_merges_with_a_different_copy_variant_sharing_its_base_template() {
+        let lst = "Bastard Sword (Base).COPY=Bastard's Sting\t\t\t\t\t\t\tVISIBLE:YES\n\
+             Bastard's Sting.MOD\t\t\t\t\t\t\tSOURCEPAGE:p.150\n\
+             Bastard Sword (Base).COPY=Valor's Minion\t\t\tEQMOD:Material ~ Steel\t\t\t\t\t\t\tVISIBLE:YES\n";
+        let parsed = parse_equipment_entries("ue_equip_arms_armor.lst", lst);
+        let entries_named_template: Vec<&EquipmentRecord> =
+            parsed.entries.iter().filter(|e| e.name == "Bastard Sword (Base)").collect();
+        assert_eq!(
+            entries_named_template.len(),
+            2,
+            "line 1 and line 3 must stay two DISTINCT entries, not merge into one"
+        );
+        let line1 = entries_named_template
+            .iter()
+            .find(|e| e.header_line_number == 1)
+            .expect("line 1 opens its own entry");
+        assert_eq!(line1.tokens.len(), 1, "line 1's entry carries only its own token");
+        assert_eq!(line1.tokens[0].key, "VISIBLE");
+        assert!(
+            !line1.tokens.iter().any(|t| t.key == "EQMOD"),
+            "line 3's EQMOD must never reach line 1's entry now that the merge is fixed"
+        );
+        let line3 = entries_named_template
+            .iter()
+            .find(|e| e.header_line_number == 3)
+            .expect("line 3 opens its OWN entry rather than merging into line 1's");
+        assert!(line3.tokens.iter().any(|t| t.key == "EQMOD"));
+
+        // `tokens_on_line` still agrees, as a second, independent proof of
+        // the same invariant (defense in depth, not the only guard).
+        assert_eq!(line1.tokens_on_line(1).len(), 1);
+        assert!(line1.tokens_on_line(3).is_empty());
+    }
+
+    /// `ue_equip_arms_armor.lst:16` and `:46` restate "Mountain Pattern
+    /// Armor" on two separate lines with identical `PROFICIENCY`/`TYPE`/
+    /// `COST`/`WT` values (neither carries a `KEY:` token) -- a genuine
+    /// same-name merge under `open_record`'s restatement handling, but the
+    /// merged entry then carries EVERY token from BOTH lines, doubling
+    /// `COST`/`WT`/`BONUS` and adding line 46-only tokens
+    /// (`SOURCELONG`/`SOURCESHORT`) that are not byte-present on line 16 --
+    /// the confirmed shape of the shipped `mountain_pattern_armor.json`
+    /// defect ("every token doubled from a second, near-identical row").
+    #[test]
+    fn tokens_on_line_isolates_mountain_pattern_armor_from_its_own_restated_duplicate_line() {
+        let lst = "Mountain Pattern Armor\tPROFICIENCY:ARMOR|Mountain Pattern Armor\tCOST:250\tWT:40\n\
+             Mountain Pattern Armor\tPROFICIENCY:ARMOR|Mountain Pattern Armor\tCOST:250\tWT:40\tSOURCELONG:Ultimate Equipment\tSOURCESHORT:UE\n";
+        let parsed = parse_equipment_entries("ue_equip_arms_armor.lst", lst);
+        let merged = parsed
+            .entries
+            .iter()
+            .find(|e| e.header_line_number == 1)
+            .expect("both restated lines share the plain name and merge into one entry");
+        assert_eq!(
+            merged.tokens.iter().filter(|t| t.key == "COST").count(),
+            2,
+            "the merge must be reproduced (COST doubled) for this test to mean anything"
+        );
+
+        let isolated = merged.tokens_on_line(1);
+        assert_eq!(isolated.len(), 3, "line 1 states exactly PROFICIENCY, COST, WT");
+        assert_eq!(isolated.iter().filter(|t| t.key == "COST").count(), 1);
+        assert!(
+            !isolated.iter().any(|t| t.key == "SOURCELONG"),
+            "line 2's SOURCELONG must not leak into line 1's isolated view"
+        );
+    }
+
+    /// `uw_equip_general.lst:23` (the real base item, no `.COPY=`) plus
+    /// `:40`/`:41` (two DISTINCT `.COPY=` variants, "Camouflage Blind" and
+    /// "All-Weather Cover") all reduce to the SAME buggy
+    /// `extract_record_name` output (`"Hunter's Stand"`, the pre-`.COPY=`
+    /// side) -- before this cycle's `open_record` fix, all three merged
+    /// into one entry, the confirmed shape of the shipped
+    /// `hunter_s_stand.json` defect ("three genuinely distinct `.COPY=`
+    /// items merged into one"). ROOT-CAUSED (`SD31-E6-F5-003`): line 23
+    /// (not itself a `.COPY=` row) still merges with a later PLAIN
+    /// restatement, but a `.COPY=` row (lines 40/41) never merges via bare
+    /// name into ANY entry, including a non-`.COPY=` one -- so all three
+    /// lines here must end up as three separate entries.
+    #[test]
+    fn copy_declared_variants_never_merge_into_the_plain_base_item_sharing_their_name() {
+        let lst = "Hunter's Stand\tTYPE:Goods.General\tCOST:25\tWT:15\n\
+             Hunter's Stand.COPY=Hunter's Stand (Camouflage Blind)\tOUTPUTNAME:Hunter's Stand, Camouflage Blind\tCOST:30\n\
+             Hunter's Stand.COPY=Hunter's Stand (All-Weather Cover)\tOUTPUTNAME:Hunter's Stand, All-Weather Cover\tCOST:35\n";
+        let parsed = parse_equipment_entries("uw_equip_general.lst", lst);
+        assert_eq!(parsed.entries.len(), 3, "all three lines must open distinct entries");
+
+        let base = parsed.entries.iter().find(|e| e.header_line_number == 1).unwrap();
+        assert_eq!(base.tokens.iter().filter(|t| t.key == "COST").count(), 1);
+        let cost = base.tokens.iter().find(|t| t.key == "COST").unwrap();
+        assert_eq!(cost.value, "25", "line 1's own COST, not a variant's 30 or 35");
+        assert!(
+            !base.tokens.iter().any(|t| t.key == "OUTPUTNAME"),
+            "a `.COPY=` variant's OUTPUTNAME must never leak into the plain base item's entry"
+        );
+
+        let variant40 = parsed.entries.iter().find(|e| e.header_line_number == 2).unwrap();
+        let variant41 = parsed.entries.iter().find(|e| e.header_line_number == 3).unwrap();
+        assert_ne!(
+            variant40.tokens.iter().find(|t| t.key == "COST").map(|t| &t.value),
+            variant41.tokens.iter().find(|t| t.key == "COST").map(|t| &t.value),
+            "the two distinct .COPY= variants must keep their own distinct COST"
+        );
+    }
+
+    #[test]
+    fn tokens_on_line_returns_empty_for_a_line_the_record_never_touched() {
+        let lst = "Widget\tCOST:5\n";
+        let parsed = parse_equipment_entries("book_equip.lst", lst);
+        let entry = &parsed.entries[0];
+        assert!(entry.tokens_on_line(99).is_empty());
+    }
+
+    #[test]
+    fn bonus_chains_on_line_isolates_by_source_line() {
+        let lst = "Widget\tCOST:5\tBONUS:COMBAT|AC|1\n\
+             Widget2\tBONUS:COMBAT|AC|2\n";
+        // Force a merge: both rows carry no KEY and (post-fix expectation)
+        // distinct names -- use the SAME name deliberately so this test
+        // exercises the merge path, matching the real restatement shape.
+        let lst = lst.replace("Widget2", "Widget");
+        let parsed = parse_equipment_entries("book_equip.lst", &lst);
+        let merged = &parsed.entries[0];
+        assert_eq!(merged.bonus_chains.len(), 2, "both lines' BONUS: merged onto one entry");
+        let isolated = merged.bonus_chains_on_line(1);
+        assert_eq!(isolated.len(), 1);
+        assert_eq!(isolated[0].qualifiers, vec!["COMBAT", "AC", "1"]);
     }
 }

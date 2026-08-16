@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 7635.0,
+    "description": "Level 14 Necromancy; Protection - A series of three superior locks each augmented with arcane lock (DC 50) and a symbol of weakness (Fortitude DC 20) on the second page of each book.; Opposition Schools - Enchantment, illusion; Spells - 7.control undead(S), finger of death(S), symbol of weakness(S), temporary resurrection(S); 6.acid fog, chain lightning, circle of death(S), create undead(S), unwilling shield(S); 5.dismissal, hold monster, magic jar(S), possess object(S), wall of force, waves of fatigue(S); 4.animate dead(S), bestow curse(S), contagion(S), enervation(S), shadow projection(S), shout, wall of ice; 3.gentle repose(S), halt undead(S), lightning bolt, magic circle against good, nondetection, ray of exhaustion(S), stinking cloud, vampiric touch(S); 2.arcane lock, blindness(S), darkness, false life(S), obscure object, resist energy, scare(S), summon swarm; 1.cause fear(S), chill touch(S), floating disk, hypnotism, obsuring fog, ray of enfeeblement(S), restore corpse(S), sculpt corpse(S), shield, sleep",
+    "key": "Grandfather's Legacy",
+    "name": "Grandfather's Legacy",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "NUMPAGES",
+        "value": "200"
+      },
+      {
+        "key": "COST",
+        "value": "7635"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "SPROP",
+        "value": "Level 14 Necromancy"
+      },
+      {
+        "key": "SPROP",
+        "value": "Protection - A series of three superior locks each augmented with arcane lock (DC 50) and a symbol of weakness (Fortitude DC 20) on the second page of each book."
+      },
+      {
+        "key": "SPROP",
+        "value": "Opposition Schools - Enchantment, illusion"
+      },
+      {
+        "key": "SPROP",
+        "value": "Spells - 7.control undead(S), finger of death(S), symbol of weakness(S), temporary resurrection(S); 6.acid fog, chain lightning, circle of death(S), create undead(S), unwilling shield(S); 5.dismissal, hold monster, magic jar(S), possess object(S), wall of force, waves of fatigue(S); 4.animate dead(S), bestow curse(S), contagion(S), enervation(S), shadow projection(S), shout, wall of ice; 3.gentle repose(S), halt undead(S), lightning bolt, magic circle against good, nondetection, ray of exhaustion(S), stinking cloud, vampiric touch(S); 2.arcane lock, blindness(S), darkness, false life(S), obscure object, resist energy, scare(S), summon swarm; 1.cause fear(S), chill touch(S), floating disk, hypnotism, obsuring fog, ray of enfeeblement(S), restore corpse(S), sculpt corpse(S), shield, sleep"
+      }
+    ],
+    "weight_lbs": 6.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 27,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "record_key": "Grandfather's Legacy",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

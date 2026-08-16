@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 206.0,
+    "description": "Featherweight dart that user can recall as a swift action after use.",
+    "key": "Dart of Recovery",
+    "name": "Dart of Recovery",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Magic.Resizable.Specific.Dart.Individual.LesserMinor"
+      },
+      {
+        "key": "COST",
+        "value": "206"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Ammunition.Material ~ Steel"
+      },
+      {
+        "key": "MODS",
+        "value": "NO"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.240"
+      },
+      {
+        "key": "SPROP",
+        "value": "Featherweight dart that user can recall as a swift action after use."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 36,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equip_arms_armor.lst",
+    "record_key": "Dart of Recovery",
+    "sha256": "e26d0cc65210cee59a2976677c7385a467248278cd2c1951351f9b0a0941f74b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

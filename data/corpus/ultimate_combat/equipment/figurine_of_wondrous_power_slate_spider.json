@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 10000.0,
+    "description": "This figure of wondrous power uses the same general rules for all magic items of this type (Core Rulebook 513). This statuette of a spider with stubby legs can be used once per day for 1 minute. When activated, the figurine spouts longer, segmented legs, and scampers about the activator, picking lint off robes, chiseling grime from armor, or otherwise grooming its activator. If commanded to do so as a free action, it perches on the muzzle of a one-handed or two-handed firearm barrel and, after the firearm is fired, travels down the barrel and cleans out the firearm. Each time the slate spider cleans a firearm, the next shot the firearm fires has no chance of misfiring. When animated, a slate spider has 1 hit point and is considered an attended object. An animated slate spider will never willingly leave space of its animator.",
+    "key": "Figurine of Wondrous Power (Slate Spider)",
+    "name": "Figurine of Wondrous Power (Slate Spider)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Wondrous.Magic"
+      },
+      {
+        "key": "COST",
+        "value": "10000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "SPROP",
+        "value": "This figure of wondrous power uses the same general rules for all magic items of this type (Core Rulebook 513). This statuette of a spider with stubby legs can be used once per day for 1 minute. When activated, the figurine spouts longer, segmented legs, and scampers about the activator, picking lint off robes, chiseling grime from armor, or otherwise grooming its activator. If commanded to do so as a free action, it perches on the muzzle of a one-handed or two-handed firearm barrel and, after the firearm is fired, travels down the barrel and cleans out the firearm. Each time the slate spider cleans a firearm, the next shot the firearm fires has no chance of misfiring. When animated, a slate spider has 1 hit point and is considered an attended object. An animated slate spider will never willingly leave space of its animator."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_magic_items.lst",
+    "record_key": "Figurine of Wondrous Power (Slate Spider)",
+    "sha256": "de278ea567b57b26ae80f87f6706d033555192a3c5a9eecfca7829e8860fd2ef"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

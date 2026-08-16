@@ -2116,6 +2116,19 @@ const OBSERVABLE_BOOK_DIRS: &[&str] = &[
     // unit stayed `ingested-magnitude`/`held` regardless of the real
     // catalog's `BONUS:STAT` content.
     "ultimate_equipment",
+    // `SD31-E6-F5-003`: `gen_cache_equipment_gap` (wave 4) and
+    // `gen_cache_hand_authored_equipment` (this cycle) both landed real
+    // `data/corpus/<book>/equipment/*.json` content for these five books
+    // -- none were ever added here, so `probe_equipment_effect_wiring`
+    // has never observed any of them despite hundreds of real, cited
+    // records now on disk (the identical `OPEN-ISSUES.md` row 12 shape
+    // the `ultimate_equipment` entry above already names, found five
+    // books later). Append-only per this wave's shared-file discipline.
+    "ultimate_combat",
+    "ultimate_intrigue",
+    "ultimate_psionics",
+    "ultimate_wilderness",
+    "ultimate_magic",
 ];
 
 fn book_corpus_roots(repo_root: &Path) -> Vec<PathBuf> {

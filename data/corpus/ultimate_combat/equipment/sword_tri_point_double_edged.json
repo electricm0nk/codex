@@ -1,0 +1,38 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 12.0,
+    "description": null,
+    "key": "Sword (Tri-Point Double-Edged)",
+    "name": "Sword (Tri-Point Double-Edged)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sword (Tri-Point Double-Edged)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Eastern.Melee.Martial.TwoHanded.Reach.Tengu.Sword"
+      }
+    ],
+    "weight_lbs": 14.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 65,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_profs_weapon.lst",
+    "record_key": "Sword (Tri-Point Double-Edged)",
+    "sha256": "7b6c476a643e80578b0e493fbfcc7928619628bbb57ad56be0e6d3e3fc50493c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

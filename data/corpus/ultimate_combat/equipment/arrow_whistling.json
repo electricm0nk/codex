@@ -1,0 +1,46 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 0.1,
+    "description": null,
+    "key": "Arrow (Whistling)",
+    "name": "Arrow (Whistling)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Resizable.Arrow"
+      },
+      {
+        "key": "COST",
+        "value": "0.10"
+      },
+      {
+        "key": "WT",
+        "value": "0.15"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel.Material ~ Wood"
+      }
+    ],
+    "weight_lbs": 0.15
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_arms_armor.lst",
+    "record_key": "Arrow (Whistling)",
+    "sha256": "adc5e058994bfae7f14ff0a41a408e0e6bf74ed0f4e656d50533bc66874b67fc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

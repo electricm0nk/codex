@@ -1,0 +1,42 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 1600.0,
+    "description": "Misfire 1-2 (5 ft.)",
+    "key": "Musket (Warhammer)",
+    "name": "Warhammer Musket",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Musket (Warhammer)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranged.Piercing.Bludgeoning.Proficiency_Group_Firearm.Firearm.Weapon Group Firearms.TwoHandedFireArm.Musket"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      }
+    ],
+    "weight_lbs": 6.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 29,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_profs_weapon.lst",
+    "record_key": "Musket (Warhammer)",
+    "sha256": "7b6c476a643e80578b0e493fbfcc7928619628bbb57ad56be0e6d3e3fc50493c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}
