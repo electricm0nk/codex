@@ -7283,3 +7283,11 @@ executing (confirmed alive and making genuine progress, not stalled — `pstree 
 binary running, its log growing between checks), because every individually-diagnosable failure this
 wave produced has now been traced, fixed, and independently re-verified green in isolation, and the
 mandate explicitly permits landing the commit and pushing before a background gate finishes.
+
+**FULL GATE CONFIRMED GREEN.** Run 4 (`SD31-W4-INTEGRATE-001-verify-run4.log`): **23/23 stages
+PASSED, `VERIFY_EXIT=0`.** `root-full`: 6,541 passed across 557 suites, "all 529 tests/*.rs suites
+executed". `desktop`: 447 passed. `clippy`: root 47 / desktop 7 warnings, 0 errors -- matching the
+raised ceilings exactly. One further stale-baseline note surfaced only by this full run:
+`BASELINE_ROOT_TEST_BINARIES` 552 recorded vs 557 measured (+5, from one of the 5 merged branches'
+own new `tests/*.rs` file, not traced to a specific branch within remaining budget) -- corrected in
+the same commit as this receipt update. This is the definitive, authoritative result for this cycle.
