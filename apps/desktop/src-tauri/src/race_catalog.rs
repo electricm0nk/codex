@@ -147,9 +147,13 @@ const BOOK_B2: &str = "B2";
 /// `RACE_CATALOG_BOOKS` below).
 const BOOK_B5: &str = "B5";
 
-/// Every book code this catalog can emit. ARG is a *loadable* book here but
-/// contributes no rows — see this module's doc comment.
-pub const RACE_CATALOG_BOOKS: &[&str] = &[BOOK_CRB, BOOK_B1, BOOK_B2, BOOK_B5];
+/// Every book code this catalog can emit. As of SD-31-E6-F4-002
+/// (2026-08-16) ARG DOES contribute catalog rows: `ingest_races` filed 6
+/// new races' (Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang) chassis and
+/// standard traits under `advanced_race_guide`, the first race-catalog
+/// content this book has ever declared. See `BOOK_ARG`'s call site below
+/// and this module's doc comment for why ARG previously contributed none.
+pub const RACE_CATALOG_BOOKS: &[&str] = &[BOOK_CRB, BOOK_B1, BOOK_B2, BOOK_B5, BOOK_ARG];
 
 /// Maps a corpus book directory name to its wire code. An unrecognized book
 /// id passes through verbatim rather than being silently relabelled, so a
@@ -535,12 +539,26 @@ mod tests {
         // see `ingest_races.rs`'s `skinwalker` doc comment).
         assert_eq!(count_for(&response, "Skinwalker"), 9);
 
+        // Advanced Race Guide's own 6-race batch, SD-31-E6-F4-002
+        // (2026-08-16): Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang --
+        // the same flat chassis+standard-trait shape as Bestiary 2/5 above,
+        // no heritage content. Re-derived, not transcribed:
+        // `find data/corpus/advanced_race_guide/race_trait/{catfolk,kitsune,
+        // ratfolk,strix,suli,wayang} -name '*.json' | wc -l` per race.
+        assert_eq!(count_for(&response, "Catfolk"), 9);
+        assert_eq!(count_for(&response, "Kitsune"), 10);
+        assert_eq!(count_for(&response, "Ratfolk"), 9);
+        assert_eq!(count_for(&response, "Strix"), 11);
+        assert_eq!(count_for(&response, "Suli"), 9);
+        assert_eq!(count_for(&response, "Wayang"), 10);
+
         // Pinned as a total as well as per race so a race silently dropping
-        // out cannot be masked by another race growing. 173 + 57 + 9 = 239.
-        assert_eq!(response.entries.len(), 239);
+        // out cannot be masked by another race growing.
+        // 173 + 57 + 9 + 58 (9+10+9+11+9+10) = 297.
+        assert_eq!(response.entries.len(), 297);
 
         let races: BTreeSet<&str> = response.entries.iter().map(|e| e.race_id.as_str()).collect();
-        assert_eq!(races.len(), 25, "25 in-scope races: {races:?}");
+        assert_eq!(races.len(), 31, "31 in-scope races: {races:?}");
     }
 
     /// The regression guard for the identity change: `reach_gate::races_reach`
@@ -596,27 +614,40 @@ mod tests {
 
         // Derived, not assumed: 67 CRB rows + 106 Bestiary 1 rows + 57
         // Bestiary 2 rows (SD-31 Epic 1-F2, 2026-08-15) + 9 Bestiary 5 rows
-        // (Skinwalker follow-on batch, 2026-08-15) = 239.
+        // (Skinwalker follow-on batch, 2026-08-15) + ARG's 6-race batch
+        // (SD-31-E6-F4-002, 2026-08-16: Catfolk, Kitsune, Ratfolk, Strix,
+        // Suli, Wayang).
         let crb = response.entries.iter().filter(|e| e.book == BOOK_CRB).count();
         let b1 = response.entries.iter().filter(|e| e.book == BOOK_B1).count();
         let b2 = response.entries.iter().filter(|e| e.book == BOOK_B2).count();
         let b5 = response.entries.iter().filter(|e| e.book == BOOK_B5).count();
+        let arg = response.entries.iter().filter(|e| e.book == BOOK_ARG).count();
         assert_eq!(crb, 67);
         assert_eq!(b1, 106);
         assert_eq!(b2, 57);
         assert_eq!(b5, 9);
-        assert_eq!(crb + b1 + b2 + b5, response.entries.len());
+        assert_eq!(arg, 58);
+        assert_eq!(crb + b1 + b2 + b5 + arg, response.entries.len());
     }
 
-    /// ARG declares zero races and zero racial defaults (`decisions.md §25`),
-    /// so it contributes zero rows even though its corpus directory is loaded.
-    /// The alternate traits it *does* declare are not catalog rows — see this
-    /// module's doc comment — and are counted here so that gap stays measured
-    /// rather than forgotten. 158, derived: ARG's 156 corpus records are 153
-    /// `Alternate` plus 3 the resolver classifies otherwise (its
-    /// `FlagGranted`/`Unclassified` rows), Monster Codex's 5 are 4
-    /// `Alternate` plus `Oversized Goblin` (`Unclassified`), and APG's 1 is
-    /// an `Alternate`.
+    /// APG, Monster Codex, ISR and HA declare zero races and zero racial
+    /// defaults, so each contributes zero rows even though its corpus
+    /// directory is loaded. **ARG is no longer in this loop** — as of
+    /// SD-31-E6-F4-002 (2026-08-16) it declares 6 races' worth of racial
+    /// defaults (Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang) and its
+    /// row count is asserted at 87 in
+    /// `every_book_code_is_a_declared_one_and_every_declared_code_is_present`
+    /// instead. The alternate traits these books *do* declare are not
+    /// catalog rows — see this module's doc comment — and are counted here
+    /// so that gap stays measured rather than forgotten. 330, derived:
+    /// ARG's 156 corpus records are 153 `Alternate` plus 3 the resolver
+    /// classifies otherwise (its `FlagGranted`/`Unclassified` rows),
+    /// Monster Codex's 5 are 4 `Alternate` plus `Oversized Goblin`
+    /// (`Unclassified`), and APG's 1 is an `Alternate`. Unchanged by this
+    /// cycle's ARG race-chassis batch: none of its 6 new races have any
+    /// alternate-trait content ingested yet (`ingest_race_traits.rs`'s own
+    /// `IN_SCOPE_RACES` does not carry them — a named follow-on, not this
+    /// cycle's scope).
     ///
     /// **APG's `Half-Orc ~ Plagueborn` is no longer deferred.** SD-27
     /// `decisions.md §39` held it back because `race_resolver.rs`'s
@@ -629,12 +660,12 @@ mod tests {
     #[test]
     fn alternate_only_books_contribute_no_catalog_rows_but_are_loaded_and_counted() {
         let response = build_race_catalog();
-        // ISR and HA belong in this loop for the same reason ARG/APG/MC do:
+        // ISR and HA belong in this loop for the same reason APG/MC do:
         // each is loaded and each declares no racial DEFAULT trait. Round 2
         // added ISR's records without adding it here, so the loop was one book
         // narrower than the list it is a statement about; round 3 adds both
         // rather than leaving a gap it can see (`decisions.md §44.5`).
-        for book in [BOOK_ARG, BOOK_APG, BOOK_MC, BOOK_ISR, BOOK_HA] {
+        for book in [BOOK_APG, BOOK_MC, BOOK_ISR, BOOK_HA] {
             assert_eq!(
                 response.entries.iter().filter(|e| e.book == book).count(),
                 0,

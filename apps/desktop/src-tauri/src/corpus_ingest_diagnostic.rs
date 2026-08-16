@@ -1102,9 +1102,9 @@ mod tests {
         // reader has to infer from an absence.
         assert!(
             !arg_book.content_kind_counts.contains_key("race_traits"),
-            "ARG's 201 racial-trait records (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15) are \
-             corpus-JSON-only; see the module doc for why they are accounted for in \
-             LICENSE.json rather than here"
+            "ARG's 259 racial-trait records (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15; \
+             201 -> 259 by SD-31-E6-F4-002, 2026-08-16) are corpus-JSON-only; see the module \
+             doc for why they are accounted for in LICENSE.json rather than here"
         );
     }
 
@@ -1171,7 +1171,15 @@ mod tests {
             // book (no rules_tables module carries class_feature data, so
             // this is not double-counted -- see that cycle's module doc
             // comment and `artifacts/SD31-E5-F1-001-lever-measurement.md`).
-            ("advanced_race_guide", "advanced_race_guide", 859u32),
+            // 859 -> 917 by SD-31-E6-F4-002 (2026-08-16): `ingest_races.rs`'s
+            // own 6-race chassis batch adds 58 corpus-JSON-only race_trait
+            // records here (no rules_tables module backs race_trait data
+            // either); its 6 `race` chassis records are NOT added here --
+            // they ARE counted in `reported`, via the SAME `races` map
+            // `race_counts_by_diagnostic_book()` already merges into every
+            // book's `content_kind_counts` (ARG's `races` row moved
+            // `None` -> `Some(6)` this cycle, see the dedicated test above).
+            ("advanced_race_guide", "advanced_race_guide", 917u32),
             ("pathfinder_unchained", "pathfinder_unchained", 0),
         ] {
             let response = build_corpus_ingest_diagnostic();
@@ -1270,10 +1278,11 @@ mod tests {
         );
         assert_eq!(
             races("advanced_race_guide"),
-            None,
-            "ARG declares zero races of its own (`decisions.md §25.2`), and this panel's \
-             convention is that a content-kind row means real records — so the honest \
-             rendering of zero here is no row, not `races: 0`"
+            Some(6),
+            "ARG's own 6-race batch (Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang; \
+             SD-31-E6-F4-002, 2026-08-16) -- ARG no longer declares zero races of its own \
+             (superseding `decisions.md §25.2`'s premise), so this panel now reports a real row \
+             instead of omitting one"
         );
         assert_eq!(
             races("bestiary_2"),
@@ -1305,10 +1314,11 @@ mod tests {
             "the panel's per-book race counts must sum to exactly the races the catalog serves"
         );
         assert_eq!(
-            panel_total, 25,
-            "25 in-scope races today: CRB's 7 plus Bestiary 1's 11 plus Bestiary 2's 6 \
+            panel_total, 31,
+            "31 in-scope races today: CRB's 7 plus Bestiary 1's 11 plus Bestiary 2's 6 \
              (SD-31 Epic 1-F2, 2026-08-15) plus Bestiary 5's 1 (Skinwalker follow-on batch, \
-             2026-08-15)"
+             2026-08-15) plus Advanced Race Guide's 6 (SD-31-E6-F4-002, 2026-08-16: Catfolk, \
+             Kitsune, Ratfolk, Strix, Suli, Wayang)"
         );
     }
 

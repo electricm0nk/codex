@@ -274,13 +274,21 @@ function corpusVision(defaults: TraitRecord[]): string {
  */
 function verifiesTheCorpusIsReallyOnDiskAndCarriesEighteenRaces() {
   const chassis = loadChassis();
-  assertEqual(chassis.length, 18, 'race chassis records on disk');
+  assertEqual(
+    chassis.length,
+    24,
+    'race chassis records on disk (18 -> 24: ARG contributed 0 chassis of its own until ' +
+      'SD-31-E6-F4-002, 2026-08-16, which added 6 -- Catfolk, Kitsune, Ratfolk, Strix, Suli, ' +
+      'Wayang -- this test only loads CRB/B1/ARG, so Bestiary 2/5\'s chassis stay out of its ' +
+      'scope, but ARG\'s own is now real)',
+  );
   assertEqual(
     loadTraits().length,
-    376,
-    'race trait records across all three books (CRB 67 + B1 108 + ARG 201; ARG 156 -> 201 by ' +
-      'SD-31 Epic 1-F2, 2026-08-15 -- this test only loads CRB/B1/ARG, so Bestiary 2\'s new ' +
-      'chassis is out of its scope, but ARG\'s own growth still moves this total)',
+    434,
+    'race trait records across all three books (CRB 67 + B1 108 + ARG 259; ARG 156 -> 201 by ' +
+      'SD-31 Epic 1-F2, 2026-08-15, 201 -> 259 by SD-31-E6-F4-002\'s own 6-race chassis batch, ' +
+      '2026-08-16 -- this test only loads CRB/B1/ARG, so Bestiary 2/5\'s new chassis is out of ' +
+      'its scope, but ARG\'s own growth still moves this total)',
   );
   const standard = loadStandardTraits();
   assertEqual(standard.length, 175, 'standard racial trait records (CRB 67 + B1 108)');
@@ -302,7 +310,16 @@ function verifiesTheCorpusIsReallyOnDiskAndCarriesEighteenRaces() {
   const argDefaults = readJsonRecords<TraitRecord>(
     join(CORPUS_ROOT, 'advanced_race_guide', 'race_trait')
   ).filter((t) => t.is_racial_default);
-  assertEqual(argDefaults.length, 0, 'ARG declares zero racial defaults, so it changes no default build');
+  // 0 -> 58 by SD-31-E6-F4-002 (2026-08-16): ARG previously declared no
+  // races of its own, so it changed no default build. It now does --
+  // Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang -- each with its own
+  // real racial defaults, correctly outside `standard`/`defaults` above
+  // (which stay CRB/B1-only by design).
+  assertEqual(
+    argDefaults.length,
+    58,
+    "ARG's own 6-race batch (SD-31-E6-F4-002) contributes 58 racial defaults, its own default builds",
+  );
 }
 
 /**
@@ -319,7 +336,10 @@ function verifiesTheCorpusIsReallyOnDiskAndCarriesEighteenRaces() {
  * drifted `race_tables.rs` from the corpus on four races.
  */
 function verifiesTheAbilityDerivationCreditsEveryAbilityAMultiStatChainNames() {
-  const traits = loadStandardTraits();
+  // `loadTraits()`, not `loadStandardTraits()`, so the floating-pool scan
+  // below (which iterates ALL of `loadChassis()`, now including ARG's own
+  // 6 races) resolves their real defaults instead of silently seeing none.
+  const traits = loadTraits();
   // Corpus-verified expectations, each read off the named record's own
   // `raw_bonus_chains` (`data/corpus/<book>/race_trait/<race>/*_ability_scores.json`).
   const expected: Record<string, Partial<Record<AbilityKey, number>>> = {
@@ -357,9 +377,21 @@ function verifiesTheAbilityDerivationCreditsEveryAbilityAMultiStatChainNames() {
  * except `body`.** Each of the four rules-bearing fields resolves to a real
  * value for every one of the 18, so the widening is not blocked on missing
  * race data.
+ *
+ * **`loadTraits()`, not `loadStandardTraits()`, as of SD-31-E6-F4-002
+ * (2026-08-16).** `defaultTraitsFor` filters to `is_racial_default` itself,
+ * so passing the full RACE_BOOKS trait set (CRB/B1/ARG) is safe -- it still
+ * resolves each race's own defaults only, never someone else's alternate.
+ * Needed because `loadChassis()` (used for `chassis` below) now includes
+ * ARG's own 6 races (Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang), whose
+ * defaults live only in ARG's own `race_trait/` records --
+ * `loadStandardTraits()`'s CRB/B1-only scope would report zero defaults for
+ * every one of them and throw on the very next assertion, not because
+ * their creation data is missing but because this function was looking in
+ * the wrong two books.
  */
 function verifiesTheCorpusSuppliesEveryRulesBearingFieldForAllEighteenRaces() {
-  const traits = loadStandardTraits();
+  const traits = loadTraits();
   const chassis = loadChassis();
   let withFullCreationData = 0;
 
@@ -382,7 +414,12 @@ function verifiesTheCorpusSuppliesEveryRulesBearingFieldForAllEighteenRaces() {
 
     withFullCreationData += 1;
   }
-  assertEqual(withFullCreationData, 18, 'races carrying a complete creation chassis');
+  assertEqual(
+    withFullCreationData,
+    24,
+    'races carrying a complete creation chassis (18 -> 24: ARG\'s own 6-race batch, ' +
+      'SD-31-E6-F4-002, 2026-08-16)',
+  );
 }
 
 /**
@@ -398,7 +435,10 @@ function verifiesTheCorpusSuppliesEveryRulesBearingFieldForAllEighteenRaces() {
  * disagreement rather than letting it be discovered by a player.
  */
 function verifiesTheChassisBaseSizeTokenIsNotTheEffectiveSizeForEveryRace() {
-  const traits = loadStandardTraits();
+  // `loadTraits()`, not `loadStandardTraits()` -- same reason as the
+  // function above: `chassis` now includes ARG's own 6 races, whose
+  // defaults live only in ARG's own race_trait records.
+  const traits = loadTraits();
   const chassis = loadChassis();
   const disagreeing: string[] = [];
   for (const race of chassis) {
@@ -428,7 +468,10 @@ function verifiesTheChassisBaseSizeTokenIsNotTheEffectiveSizeForEveryRace() {
  */
 function verifiesTheCorpusCarriesNoHeightOrWeightProfileForAnyRace() {
   const chassis = loadChassis();
-  const traits = loadStandardTraits();
+  // `loadTraits()`, not `loadStandardTraits()`, so this "prove the
+  // negative" scan also covers ARG's own 58 new standard-tier trait
+  // records (SD-31-E6-F4-002, 2026-08-16), not only CRB/B1's.
+  const traits = loadTraits();
   const bioTokenKeys = ['BASEHT', 'HTDIEROLL', 'BASEWT', 'WTDIEROLL', 'TOTALWT'];
   const carriers: string[] = [];
   for (const record of [

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T19:53:32Z",
+  "data": {
+    "key": "Ratfolk ~ Type",
+    "name": "Ratfolk",
+    "race_key": "Ratfolk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Ratfolk Racial Trait",
+      "Ratfolk Racial Default",
+      "SpecialQuality",
+      "Racial Type"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Ratfolk_ReplaceType",
+    "sets_replace_flags": [],
+    "description": "Ratfolk are humanoids with the ratfolk subtype.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ratfolk ~ Type"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ratfolk Racial Trait.Ratfolk Racial Default.SpecialQuality.Racial Type"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Ratfolk_ReplaceType=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Ratfolk are humanoids with the ratfolk subtype."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Humanoid|Ratfolk"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ratfolk/ratfolk_abilities_race.lst",
+    "sha256": "7f0453b27d69754ce333cf8cdd0f68df62a37c205f79fa22d06d617dc45bc5a3",
+    "line": 15,
+    "record_key": "Ratfolk ~ Type"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

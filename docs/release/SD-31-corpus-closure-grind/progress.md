@@ -13436,3 +13436,342 @@ Manually removed (per the mandate's named list, all confirmed no live PID buildi
 
 `da9bed2dd` before this receipt's own commit; final tip after landing this receipt and pushing is
 recorded in the handoff below.
+
+## Cycle `SD31-E6-F4-002` (`RETRO_ACTOR=sd31-racetrait`) — 2026-08-16, `epic-6-ingest-lanes` F4 (`race_trait`), Advanced Race Guide chassis batch
+
+**Starting HEAD:** `17ba8be53` (`docs(sd31): SD31-W7-INTEGRATE-001 receipt + ORCHESTRATOR-LOG wave-7 entry`),
+recovered via the mandatory clean-tree reset (package dir was absent, tree was clean,
+`git fetch origin && git reset --hard origin/tranche/11`). **Oracle:**
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/verify.sh --only preflight-oracle`
+PASS). **Own worktree/branch:** `sd31/racetrait/SD31-E6-F4-002`, pushed.
+
+### §0 — Re-derivation before any work
+
+Board headline, re-derived fresh at start-of-cycle HEAD:
+
+```
+python3 -c "... P.doneness_verdict(...) ..."
+-> 38521 {'done': 9780, 'not-started': 19900, 'unmeasurable': 5127, 'deferred': 36,
+          'held': 2912, 'in-progress': 766} 25.3887
+race_trait: 3603 units: not-started 2968, done 630, held 5
+```
+
+Matches the mandate's cited 9,780/38,521 (25.39%) exactly — no correction needed there.
+
+**Chassis-blind population corrected**: dispatch cited "2,894 → 2,689 → 2,576" (three prior
+corrections). Re-derived fresh (`evidence=='race_trait_race_not_modelled'`): **2,785**, not 2,576 —
+the cited figure was already stale before this cycle started. `retro.py correction` filed
+(`OPEN-ISSUES.md` row 130).
+
+### §1 — Required pre-cycle screens
+
+- `scripts/classify_race_trait_rows.py` — used to classify ARG's `arg_abilities_race.lst` rows for
+  the 6 candidate races before committing (all in-scope, `TraitRole::Alternate`/standard shape,
+  matching the Bestiary 2/5 precedent).
+- `scripts/screen_pcc_load_gates.py` — run corpus-wide: 261 remaining units excluded by a PCC load
+  gate, ALL `ultimate_combat:class_feature:monk_bonus_feat_*` — unrelated to `race_trait`/
+  `advanced_race_guide`, does not block this batch.
+
+### §2 — The batch: Advanced Race Guide's own 6 races
+
+Re-derived which races Epic 1's chassis has NOT yet covered, filtered to the highest-value
+candidates by not-started `race_trait` row count: Catfolk (16), Kitsune (13), Ratfolk (20),
+Strix (17), Suli (15), Wayang (12) — all confirmed present in `advanced_race_guide/arg_races.lst`
+as `<Race>.MOD ... TYPE:Featured|Uncommon SOURCEPAGE:p.<n>` rows (Catfolk p.91, Ratfolk p.151,
+Kitsune p.192, Strix p.200, Suli p.202, Wayang p.274) — the book's own real page citation for a
+race it presents as playable, the same signal Decision 9's `core_essentials` re-attribution used.
+Attributed to `advanced_race_guide` per Decision 10's own Catfolk worked example (newest printing
+wins), not a fabricated book label.
+
+Each race's actual chassis+standard-trait content lives in
+`core_essentials/races/<dir>/{<dir>_races.lst,<dir>_abilities_race.lst,<dir>_abilities_globalvar.lst}`
+— confirmed byte-identical shape to the Bestiary 2/5 batches already landed (no `_subrace.lst` file
+in any of the 6 directories) — no new mechanism needed.
+
+PI screen (both SD-30 contracts, citing SD-30's per-book receipt — ARG's
+`epic-3-pi-gate` closed `COMPLETE` 2026-08-14): `declared_product_identity_of()`
+(`pi_screening::declared_product_identity`, §53.5) and `pi_hits()` (the `PI_BLACKLIST_TERMS`
+scan, §52.3) both already wired into `ingest_races.rs`'s production write path, called on every
+record before it is written. Re-verified fresh across all 6 race directories: 0
+`NAMEISPI:YES`/`DESCISPI:YES` declarations, 0 blacklist-term hits (`grep -rn` cross-check).
+`data/corpus/advanced_race_guide/LICENSE.json` updated in place (append-only, following the
+book's own established "RECONCILED" multi-lane convention): `records_processed` 1352 → 1416,
+new screening note appended citing this cycle's own PASS.
+
+`IN_SCOPE_RACES` widened `25 → 31` in `ingest_races.rs`. Ran `ingest_races` for real:
+
+```
+advanced_race_guide race=6 race_trait=58
+ALL            race=31 race_trait=299   (was 25/241)
+```
+
+Per-race standard-trait counts (raw rows 13-17 per race, filtered by the existing
+`is_standard_racial_trait` gate down to the real count): Catfolk 9, Kitsune 10, Ratfolk 9,
+Strix 11, Suli 9, Wayang 10 = 58.
+
+### §3 — The cross-binary hazard this batch's first shared book exposed, and the fix
+
+`advanced_race_guide` was previously exclusively owned by `ingest_race_traits.rs` (its 24-race
+alternate-trait content). This batch is the first time `ingest_races.rs` also writes into that
+same book's `race_trait/` directory. Both binaries used a coarse **whole-directory**
+`remove_dir_all`/record-count self-check, safe only under exclusive ownership — sharing the book
+made that assumption false: running either binary would delete or miscount the other's files.
+
+Confirmed live, not theoretical: running `ingest_race_traits.rs -- advanced_race_guide` after
+`ingest_races.rs` first hit its own `assertion left == right failed: records written to disk must
+match records emitted (left: 259, right: 201)` self-check — the exact defect shape, caught by the
+tool's own existing guard, not silently shipped.
+
+**Fixed both, surgically, before landing anything:**
+- `ingest_races.rs`: the whole-book clear stays scoped to the 4 books it exclusively owns
+  (`core_rulebook`/`beastiary`/`bestiary_2`/`bestiary_5`, unchanged); for `advanced_race_guide`
+  specifically, clears only the one race-slug subdirectory about to be (re)written, per race, in
+  the main ingest loop.
+- `ingest_race_traits.rs`: its own `remove_dir_all(&out_root)` (whole `race_trait/` dir) replaced
+  with a scoped clear over exactly its own `IN_SCOPE_RACES` slugs; its `count_json` self-check
+  scoped the same way (skips a race slug's subdir entirely if this book's rows never touch it,
+  rather than reading the whole tree).
+
+Re-verified live: `data/corpus/advanced_race_guide/race_trait/catfolk/` (9 files) and
+`.../dwarf/` (10 pre-existing ARG alternates) both survive a full re-run of BOTH binaries in
+either order.
+
+### §4 — Wired through every consumer surface (not left as an unreachable chassis)
+
+- `apps/desktop/src-tauri/src/race_catalog.rs`: `RACE_CATALOG_BOOKS` widened to include `BOOK_ARG`
+  (previously ARG contributed 0 catalog rows by design; now 58).
+- `apps/desktop/src-tauri/src/reach_gate.rs`: new `("advanced_race_guide", "races")` claim
+  (`races_reach("ARG", ...)`) — ARG previously had no `races` family claim at all (0 races).
+  `("advanced_race_guide", "race_traits")` was already registered (for the pre-existing 201
+  alternate records) and automatically now also covers this batch's 58 new records, since
+  `race_traits_reach` reads whatever is on disk.
+- `apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs`: no code change needed — already
+  book-agnostic (`diagnostic_book_id("ARG") -> "advanced_race_guide"` pre-existing); only its
+  pinned test counts moved.
+- `race_creation_chassis`/`build_race_creation_roster` (`character_hub.rs`): fully generic, driven
+  by `corpus.race_keys()` — the 6 new races became selectable at character creation with zero
+  code change; only the pinned roster-order test moved.
+- `race_trait_picker.rs`'s `build_menu`: fully generic, driven by `corpus.race_keys()` — same,
+  zero code change needed, only pinned counts moved.
+- `src/rules_core/race_resolver.rs`'s `RACE_SIZES`: extended with the 6 new races' real sizes
+  (Catfolk/Kitsune/Strix/Suli Medium, Ratfolk/Wayang Small — read off each race's own `~ Size`
+  trait row's `TEMPLATE:SIZE_<code>`, cross-verified by the existing pinned test that re-derives
+  every entry from the on-disk corpus). Without this, the 6 new races' AC/attack/CMB/CMD/Stealth
+  size modifiers (already wired for every OTHER race via SD-27's `size.rs`, called from
+  `pilot_compute.rs`) would silently return `None` and skip the bonus for a real, playable race.
+
+### §5 — Count-change sweep (mandate's "a count change needs a sweep" rule)
+
+Found and fixed every pinned count downstream of `IN_SCOPE_RACES` 25→31 across the whole tree —
+NOT just the file that changed: `src/rules_core/race_resolver.rs` (3 separate pinned assertions:
+race count, trait-role census, ARG-chassis-exclusion assertion which had to INVERT, not just
+bump), `apps/desktop/src-tauri/src/race_catalog.rs` (2), `apps/desktop/src-tauri/src/
+corpus_ingest_diagnostic.rs` (2, including the LICENSE.json reconciliation total), `apps/desktop/
+src-tauri/src/reach_gate.rs` (1), `apps/desktop/src-tauri/src/race_trait_picker.rs` (2), `apps/
+desktop/src-tauri/src/character_hub.rs` (1, roster order), `tests/sd27_race_size_resolution.rs`
+(3, including a Small-race-set membership list), `tests/sd27_alternate_racial_trait_reachability.rs`
+(2). Grep sweep for the raw numbers (`637`, `695`, `201`, `259`, `239`, `297`, `25`, `31`, `859`,
+`917`) run across `apps/`, `src/`, `tests/` before considering this done.
+
+### §6 — §7 REFINED (universal vs. conditional) applied to row 87's 11-unit population
+
+Re-derived one record deep against the WHOLE corpus row (not the dispatch's abridged quote,
+which said "5 must compute" — the corpus-verified true split is **6 compute / 5 stay text**, a
+correction filed in `OPEN-ISSUES.md` row 129 with `retro.py correction`):
+
+- **Universal, must compute (6):** `gnome_size`, `goblin_size`, `grippli_size`, `halfling_size`,
+  `kobold_size`, `svirfneblin_size` — flat, always-on Size bonus (AC/attack/CMB/CMD/Stealth), no
+  gating condition.
+- **Conditional, correctly stays text (5):** `duergar_stability` (manoeuvre-type: bull rush/trip
+  only), `dwarf_hatred` + `svirfneblin_hatred` (target-subtype — `dwarf_hatred` is the operator's
+  own named worked example), `fetchling_shadow_blending` (environmental-state: dim light only),
+  `half_orc_stoic` (effect-type: emotion/fear saves only).
+
+Of the 6 universal units, 5/6 sheet effects (AC/attack/CMB/CMD) are **already wired to a real
+production compute path** (`size.rs`'s `armor_class_size_modifier`/`special_size_modifier`,
+called from `pilot_compute.rs`, driven by `RACE_SIZES` which is cross-verified against the corpus
+by a pinned test) — genuinely computed and reachable today, just misclassified `wiring_class:
+display` by a classifier that cannot see the size.rs/pilot_compute.rs cross-reference (out of this
+cycle's file territory to fix). **A genuine gap found and precisely named**:
+`SizeCategory::stealth_size_modifier()` is defined and unit-tested but has zero production callers
+anywhere — the Stealth quarter of the Size bonus is a real Decision-8-shaped "code path nothing
+ships" for every Small race. Did NOT edit `wiring_class.rs` (sibling's file) or `pilot_compute.rs`
+(lane 2's file) to force these through; did NOT route them through the prose done-bar either (the
+refined ruling is explicit that a universal modifier must compute, not merely print — that would
+be the anti-gaming violation Decision 7's own "structural blocker" section forbids). Full evidence,
+worked examples and the two precise, bounded follow-ons: `OPEN-ISSUES.md` row 129.
+
+### §5b — The full count-change sweep, re-derived not guessed (3 rounds of `cargo test --no-fail-fast` before landing)
+
+First `cargo test --no-fail-fast` after the batch found 3 real Rust failures beyond the files
+already swept in §5 — every one a whole-directory scan over `advanced_race_guide/`'s now-shared
+`race_trait/` tree that this cycle's own count-change hadn't reached yet:
+
+1. `tests/v06_work_inventory.rs::arg_race_file_carries_favored_class_bonus_and_choice_suboption_rows_not_traits`
+   — pinned `checked == 201` (every `advanced_race_guide/race_trait/` record's `category` field);
+   201 → 259.
+2. `src/bin/ingest_apg_race_traits.rs::already_ingested_keys_reads_real_keys_off_disk_not_a_hand_list`
+   — the APG-duplicate discriminator's own regression guard (`decisions.md §39`), pinned
+   `keys.len() == 201`; 201 → 259 (none of the 58 new keys collide with APG's 7 CRB-race rows).
+3. `tests/sd27_aasimar_globalvar_gate_closes_the_dead_affordance.rs::the_two_gate_sources_agree_wherever_both_speak`
+   — pinned `from_row == 232` (rows whose own `!PREFACT` declares the gate, across ALL races);
+   232 → 290 (this batch's 58 rows are all self-gated, same shape as every prior batch).
+
+Then the **frontend** TS suite found a 4th, more serious defect (a crash, not a wrong number):
+`apps/desktop/src/characterHub/raceCreationCoverage.test.ts` used `loadStandardTraits()` (a
+CRB/B1-only book scope, pre-dating ARG ever having chassis content) inside THREE per-race
+completeness loops driven by `loadChassis()` (now 24, all 3 books). For each of this batch's 6
+races the lookup returned zero defaults — one loop `assert()`-crashed the whole test file outright
+rather than failing an assertion, and a second would have wrongly reported all 6 as
+"chassis/trait size mismatches" once past the crash. Fixed by widening those 3 loops (and the
+height/weight negative-proof scan) to `loadTraits()` (all 3 books) — safe, because
+`defaultTraitsFor` already filters to `race_key === X && is_racial_default`, so a wider input set
+never leaks another race's data. Two further pinned counts moved for the same underlying reason:
+chassis-completeness 18 → 24, and "ARG declares zero racial defaults" 0 → 58 (the exact premise
+this batch overturns). Verified: `npx tsx raceCreationCoverage.test.ts` alone, then the full
+`npm test` — 99/99 files.
+
+**Re-derived, not guessed, at every step**: every new pinned number above came from running the
+actual fixed code and reading its own reported value, the same discipline this package's own prior
+receipts document repeatedly needing.
+
+### §6b — Corpus regen hygiene: reverted the incidental timestamp churn
+
+Verifying §3's scoped-clear fix required running BOTH `ingest_races` and `ingest_race_traits`
+end-to-end more than once. Both binaries stamp `ingested_at` at wall-clock `now()` absent
+`CODEX_INGESTED_AT`, so every previously-committed record in every book either binary touches
+(`core_rulebook`, `beastiary`, `bestiary_2`, `bestiary_5`, and ARG's pre-existing 24-race
+alternate content) picked up a fresh timestamp with **zero content change** — confirmed by diff on
+a sample (`dwarf_ancient_enmity.json`: only the `ingested_at` line differs). `git checkout --`
+every one of those pre-existing files before committing, keeping this cycle's diff to exactly its
+own new/changed content: the 6 source files, the LICENSE.json update, and the 64 genuinely new
+corpus records (6 `race` + 58 `race_trait`). No stamp loss — every reverted file's content is
+byte-identical to what was already committed; this cycle's own new writes are untouched by the
+revert (different, previously-nonexistent paths).
+
+### §7 — Guarded regen (measured, `docs/work-inventory.json` restored, not committed)
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-racetrait.json
+-> 24583 records examined of 25460 read, 238241 tokens compared (9 synthesized), 25035 digests
+   checked, 0 findings. CLEAN.
+
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-racetrait.json
+-> 100 of 101 covered units cleared; 1 failed (pre-existing, unrelated:
+   advanced_players_guide:equipment:spindle_of_perfect_knowledge, a BONUS:STAT equipment defect,
+   `race_trait` untouched).
+
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+
+python3 -c "... P.doneness_verdict(...) ..."
+-> board: 38521 {'done': 9838, ...} 25.5393  (9,780 -> 9,838, +58, 25.3887% -> 25.5393%, +0.1506pp)
+-> race_trait: 3603 {'not-started': 2910, 'done': 688, 'held': 5}  (630 -> 688, +58)
+-> race: 103 {'not-started': 96, 'done': 7}  (unchanged — chassis alone does not move the `race`
+   kind, matching the Skinwalker precedent exactly: "race done unchanged at 0/103")
+```
+
++58 is exactly this cycle's 58 new standard-tier `race_trait` records, all reaching
+`computed`+`grounded`=`done` through the real wiring in §4 (not the prose done-bar — these are
+genuinely computed size/ability/vision/speed mechanics, verified on-screen in §8).
+`docs/work-inventory.json` restored (`git checkout --`) after measuring, per the wave rule; not
+committed.
+
+**A second, real finding surfaced by this measurement, not something to silently absorb**:
+`v06_work_inventory.rs`'s own independent book re-derivation (the `core_essentials`-shaped
+`SOURCELONG` lookup Decision 9/`SD31-E6-F3-002` built) reports all 58 new records under each
+race's ORIGINAL first-print book — Catfolk/Ratfolk/Suli → `bestiary_3`, Kitsune/Wayang →
+`bestiary_4`, Strix → `inner_sea_world_guide` — not `advanced_race_guide`, the book this cycle
+attributed to per Decision 10's own Catfolk worked example ("newest publish wins"). Traced one
+record deep: no `bestiary_3` directory exists anywhere on disk; the relabelling is entirely
+internal to `v06_work_inventory.rs`'s re-derivation, which reads a bare `SOURCELONG` and does not
+yet know a later book's own `.MOD ... TYPE:Featured` republication marker can outrank it. The
+DONENESS COUNT is unaffected (none of the three re-derived books are `EXCLUDED_BOOKS`, so nothing
+is silently dropped) — only the reported book label is wrong. Did not touch `v06_work_inventory.rs`
+(lane 1's file). Full finding: `OPEN-ISSUES.md` row 131.
+
+### §8 — On-screen verification (DoD item 8 / §7 condition 3)
+
+`RUN_DESKTOP_AGENT=sd31-racetrait ./.claude/skills/run-desktop/driver.sh launch` (from
+`apps/desktop`, run only after the full gate freed `driver.sh` — cannot run concurrently with
+`verify.sh` per the skill's own constraint).
+
+Four screenshots, `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F4-002/`:
+1. `dod8-01-catfolk-creation-form.png` — the real character-creation form, Race dropdown showing
+   **"Catfolk (ARG)"** selected (the app-facing consumer correctly shows this cycle's own
+   Decision-10 attribution, unaffected by §7's `v06_work_inventory.rs` finding), Size "Medium",
+   Vision "Low-light vision", and the ability-score panel **live-computing** "Catfolk racial
+   modifiers: +2 DEX, -2 WIS, +2 CHA" — DEX 14→16, WIS 12→10, CHA 8→10, matching real PF1 Catfolk
+   exactly. "No ingested book declares an alternate racial trait for Catfolk" — an honest, correct
+   statement (this cycle deliberately did not ingest ARG's Catfolk alternates).
+2. `dod8-02-catfolk-character-computed.png` — "Test Catfolk is ready. Your character was computed
+   and saved." with real derived combat stats (AC 17, Melee +5, BAB +1, Fort +4, Reflex +3,
+   Will +0) — the character genuinely creates and computes end to end on this new race.
+3. `dod8-03-race-catalog-297-rows-31-races.png` — the Race Traits browse screen: **"297 trait rows
+   across 31 races"** and per-race filter chips reading Catfolk (9), Kitsune (10), Ratfolk (9),
+   Strix (11), Suli (9), Wayang (10) — byte-for-byte matching every number in §2/§5 above, derived
+   independently by the real running app, not asserted.
+4. `dod8-04-catfolk-9-traits-real-text.png` — all 9 of Catfolk's real trait rows rendering their
+   actual corpus `DESC:` text on screen: "Cat's Luck" ("Once per day when a catfolk attempts a
+   Reflex saving throw, he can roll the saving throw twice and take the better result..."),
+   "Natural Hunter" (+2 Perception/Stealth/Survival), "Low-Light Vision", etc. — real prose,
+   byte-matching the pinned oracle, not a blank or placeholder.
+
+### Definition of Done — checked against every item
+
+1. `verify.sh` exits 0, captured directly: **yes** — `RESULT: PASS`, `VERIFY_EXIT=0` appended
+   directly from the script's own deterministic control flow (the ONLY code path that prints
+   `RESULT: PASS` falls straight through to `exit 0`, no other path prints that string), log at
+   `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F4-002-verify.log`. All 25 stages
+   PASS: root-lib 1909, root-full 6741 across 564 suites, desktop 455, reach 27, corpus-sweep 0
+   findings, supersession-gate clean, frontend-test 99/99, frontend-typecheck clean, clippy 0
+   errors, class-dump 31/31. This is the THIRD full run this cycle — the first two correctly
+   caught real defects this cycle's own diff introduced (§5b), not gate flakiness; every failure
+   was root-caused, fixed with a matching test, and re-verified before the next launch. ✅
+2. `reach` passes with a claim for `race`/`race_traits`, both new and existing families: **yes** —
+   `reach_gate::tests::args_alternate_racial_traits_are_visible_only_because_the_corpus_is_scanned`
+   (259, up from 201), `unreached_records_are_exactly_the_recorded_findings` and
+   `unsurfaced_families_are_exactly_the_recorded_findings` both green with the new
+   `("advanced_race_guide","races")` claim registered — no new unclaimed family. ✅
+3. `v06_corpus_trap_report -- --audit`: **TRAP_EXIT=2**, unchanged baseline — `1 mod-record` /
+   `1191 wiring-class-mismatch`, byte-identical to the mandate's cited baseline; grepped the full
+   findings list for any of the 6 new race names — zero hits, confirmed not worsened. ✅
+4. Guarded regen: zero stamp loss — `corpus_literal_sweep` CLEAN (0 findings) at the fixed tip,
+   board `done` moved by exactly this cycle's own +58 real records, `docs/work-inventory.json`
+   restored, not committed. One re-attribution finding traced one record deep and logged, not
+   silently absorbed (§7). ✅
+5. Four-check wired-integration audit: **clean** — `bash scripts/wired-integration-audit.sh
+   origin/tranche/11`: all four checks (forbidden tokens, no-op handlers, mock leaks, "Would…"
+   strings) `OK`, `AUDIT PASSED`. ✅
+6. No unsurfaced family without an `OPEN_FINDINGS` entry: confirmed by DoD item 2's own passing
+   tests — this cycle introduced no unclaimed family. ✅
+7. Baseline moves are a SEPARATE commit with `--show-actuals`: **not applicable** — this cycle's
+   own `verify.sh` run recorded no BASELINE_* drift beyond the pre-existing
+   `BASELINE_CORPUS_LITERAL_RECORDS` bump (24519→24583), which is corpus-sweep's own count of
+   every record examined, moving because this cycle added 64 real records — not a test-count
+   baseline this package tracks separately, and not something this cycle's own commit needs to
+   carry as a second commit (no `verify-baselines.env` edit was needed or made).
+8. On-screen verification, proven condition 3, not paperwork: **yes** (§8) — four real screenshots,
+   the app's own live-computed ability-score panel, a genuinely created and computed character, and
+   the Race Traits browser rendering all 9 of Catfolk's real corpus trait texts. ✅
+
+### Blockers
+
+None that stopped the batch itself. Named, precise follow-ons (not blockers), both filed in
+`OPEN-ISSUES.md` and both explicitly out of this card's file territory:
+- Row 129 — wire `SizeCategory::stealth_size_modifier()` into production (`pilot_compute.rs`,
+  lane 2) and extend `wiring_class.rs`'s classifier to recognize the `TEMPLATE:SIZE_<code>` +
+  `RACE_SIZES` cross-reference for the 6 universal Size-trait race_trait records.
+- Row 130 — widen `ingest_race_traits.rs`'s own `IN_SCOPE_RACES` to pick up these 6 races' real,
+  already-registered ARG/other-book alternate-trait content (a config widening, no new mechanism).
+- Row 131 — `v06_work_inventory.rs`'s book re-derivation needs to check for a later book's
+  `.MOD ... TYPE:Featured` republication marker before falling back to a bare `SOURCELONG`, so a
+  Decision-10-attributed reprint reports under the book this package's own denominator credits it
+  to, not its original first print.
+
+### Reclaim
+
+`scripts/reclaim.sh --apply`: [run before finishing — see closing summary for reclaimed bytes]
+
+### Branch tip
+
+`sd31/racetrait/SD31-E6-F4-002`, pushed — see closing summary for the exact commit SHA.

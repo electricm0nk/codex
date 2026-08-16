@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T19:53:32Z",
+  "data": {
+    "key": "Kitsune ~ Size",
+    "name": "Medium",
+    "race_key": "Kitsune",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Kitsune Racial Trait",
+      "Kitsune Racial Default",
+      "SpecialQuality",
+      "Racial Size"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Kitsune_ReplaceSize",
+    "sets_replace_flags": [],
+    "description": "Kitsune are Medium creatures and have no bonuses or penalties due to their size.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kitsune ~ Size"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Kitsune Racial Trait.Kitsune Racial Default.SpecialQuality.Racial Size"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Kitsune_ReplaceSize=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Kitsune are Medium creatures and have no bonuses or penalties due to their size."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "SIZE_M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kitsune/kitsune_abilities_race.lst",
+    "sha256": "3c89f35ce0239148b8cf62e2ff79cc7060b6192f237a54f89122d40aa011d3eb",
+    "line": 16,
+    "record_key": "Kitsune ~ Size"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

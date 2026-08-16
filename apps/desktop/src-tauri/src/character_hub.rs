@@ -4252,6 +4252,13 @@ mod tests {
                 "race:undine",
                 // Bestiary 5's 1, the Skinwalker follow-on batch (2026-08-15).
                 "race:skinwalker",
+                // Advanced Race Guide's 6, SD-31-E6-F4-002 (2026-08-16).
+                "race:catfolk",
+                "race:kitsune",
+                "race:ratfolk",
+                "race:strix",
+                "race:suli",
+                "race:wayang",
             ]
         );
     }

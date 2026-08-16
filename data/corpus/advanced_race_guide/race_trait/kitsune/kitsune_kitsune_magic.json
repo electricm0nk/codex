@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T19:53:32Z",
+  "data": {
+    "key": "Kitsune ~ Kitsune Magic",
+    "name": "Kitsune Magic",
+    "race_key": "Kitsune",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Kitsune Racial Trait",
+      "Kitsune Racial Default",
+      "SpecialQuality",
+      "Special Quality",
+      "Extraordinary",
+      "SpellLike"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Kitsune_ReplaceKitsuneMagic",
+    "sets_replace_flags": [],
+    "description": "Kitsune add 1 to the DCs of any saving throws to resist enchantment spells that they cast. Kitsune with a Charisma score of 11 or higher gain the following spell-like ability: 3/day--dancing lights.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kitsune ~ Kitsune Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Kitsune Racial Trait.Kitsune Racial Default.SpecialQuality.Special Quality.Extraordinary.SpellLike"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Kitsune_ReplaceKitsuneMagic=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Kitsune add 1 to the DCs of any saving throws to resist enchantment spells that they cast. Kitsune with a Charisma score of 11 or higher gain the following spell-like ability: 3/day--dancing lights."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Dancing Lights|PRESTAT:1,CHA=11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "DC",
+          "SCHOOL.Enchantment",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "RacialSLA_DancingLights_Times",
+          "3",
+          "TYPE=Base",
+          "PRESTAT:1,CHA=11"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kitsune/kitsune_abilities_race.lst",
+    "sha256": "3c89f35ce0239148b8cf62e2ff79cc7060b6192f237a54f89122d40aa011d3eb",
+    "line": 21,
+    "record_key": "Kitsune ~ Kitsune Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1131,6 +1131,18 @@ fn reach_of(family: &Family) -> Option<Reach> {
             "B5",
             crate::race_catalog::ingested_race_ids_for_book("bestiary_5"),
         )),
+        // SD-31-E6-F4-002 (2026-08-16). Advanced Race Guide's own 6-race
+        // chassis batch (Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang) --
+        // same mechanism as CRB/B1/B2/B5 above, once `race_catalog::
+        // RACE_CORPUS_BOOKS` and `RACE_CATALOG_BOOKS` both carry
+        // `"advanced_race_guide"`/`ARG`. Before this batch ARG declared zero
+        // races (`decisions.md §25`, `alternate_only_books_contribute_no_
+        // catalog_rows_but_are_loaded_and_counted`), so this is a new claim,
+        // not a widening of an existing one.
+        ("advanced_race_guide", "races") => Some(races_reach(
+            "ARG",
+            crate::race_catalog::ingested_race_ids_for_book("advanced_race_guide"),
+        )),
 
         // Racial traits: `list_alternate_racial_traits` serves every race's
         // standard rows and every ARG alternate, and
@@ -3257,12 +3269,15 @@ mod tests {
         let ingested = corpus_record_keys("advanced_race_guide", "race_trait");
         assert_eq!(
             ingested.len(),
-            201,
-            "ARG's 201 ingested race-trait records, counted on disk (156 -> 201 by SD-31 Epic \
-             1-F2, 2026-08-15, Bestiary 2's 6-race batch)"
+            259,
+            "ARG's 259 ingested race-trait records, counted on disk (156 -> 201 by SD-31 Epic \
+             1-F2, 2026-08-15, Bestiary 2's 6-race batch; 201 -> 259 by SD-31-E6-F4-002, \
+             2026-08-16, ingest_races.rs's own 6-race batch of 58 standard-tier records for \
+             Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, sharing this book directory with this \
+             binary's alternate-trait output for the first time)"
         );
         match reach_of(&arg_traits).expect("ARG race traits have a declared claim") {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 201),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 259),
             other => panic!("every ARG race-trait record must reach a player, got {other:?}"),
         }
     }
