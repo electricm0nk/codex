@@ -453,3 +453,29 @@ integrated tip: `VERIFY_EXIT=0`, 22/22 stages.
 `class_feature` has not moved in three waves. It is now the entire remaining problem, and wave 4
 puts two lanes on it.
 
+| 8 | 2026-08-16 | wave `sd31-w8-grind` (agents: `sd31/classwire4-e4f1-004`, `sd31/racetrait/SD31-E6-F4-002`, `sd31/equipmod-e6f6-001`, `sd31/spell-held-SD31-E6-F2-006`, `sd31/attrib-evidence-003` on their own branches/worktrees, three Opus adversarial reviewers, integration `sd31-w8-integrate`) | Five lanes: `SD31-E4-F1-004` (Samurai base chassis + Challenge/Resolve/Bonus-Feat wiring, third and final UC class); `SD31-E6-F4-002` (Advanced Race Guide 6-race chassis batch — Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang); `SD31-E6-F6-001` (equipment_modifier `.COPY=` inheritance recovery, 338 raw credit); `SD31-E6-F2-006` (spell caster-level-linear DURATION seam, 898 fixture-verified promotions); `SD31-ATTRIB-003` (per-race citation evidence table + site-dashboard `--check` gate). Three Opus adversarial reviews returned **one GAMED verdict** (`SD31-E6-F6-001`, confined to the `.COPY=`-vs-`wiring_class.rs` gap) and **one FAIL PI verdict** (`SD31-ATTRIB-003`, the `site/dashboard/units/*.json` shard exposure) across 15 CONFIRMED findings; this integration cycle fixed the GAMED gap and the confirmed FAIL at the source, fixed 3 more CONFIRMED findings (the equipment universal-modifier gate, the %-hole leak at both the detector and render path), corrected 2 receipts, and DISCOVERED one further, PRE-EXISTING PI exposure of its own (the public dashboard's manifest/roadmap content) while performing the mandated site-dashboard publish step | All 5 branches merged onto `tranche/11` in the dispatched order, content proven by grep not status (`progress.md` `SD31-W8-INTEGRATE-001` §1). `OPEN-ISSUES.md` row-number collisions renumbered 130-140 across all five merges, checked for duplicates BY NUMBER after every single merge. **PI fixed first**: `site/dashboard/units/` (261 NAMEISPI:YES names) not committed at all (commit `89b4dbba6`); two confirmed `--check`-gate bugs fixed TDD/mutation-proven in the same commit. **GAMED fixed second, at the source**: `wiring_class::build_copy_base_index` added and threaded through every `token_closure_rows` call site (commit `4fc65df96`) — mutation-proven; its scope, being corpus-wide rather than `equipment_modifier`-scoped, ALSO corrected an independent pre-existing gaming shape on plain `equipment` (−141 net, no merged lane's credit) and 2 `spell` `.COPY=` records, fully traced by exact trap-report set-diff (34 new mismatches, 0 unexplained, `OPEN-ISSUES.md` row 148). Two more confirmed findings fixed (commits `5613a53d9`/`2851dd335`/`5dd42c5b3`): the bare-`%` leak, at BOTH the detector and (found only by re-running the equipment catalog's own tests after the detector-only fix) the render path; the universal-vs-conditional gate's missing `Kind::Equipment` arm. Guarded regen committed (`70da6356b`): board `done` **9,780 → 10,759 (+979)**, 25.39% → **27.93%**, denominator unchanged at 38,521, zero stamp loss, second run byte-identical modulo `generated_at`. Standing audit: reachable ceiling unchanged at **98.95%** (38,115/38,521), same 9 dead-end cells, all Epic-2-owned. Trap report: `TRAP_EXIT=2` (unchanged sign), wiring-class-mismatch **1,191 → 1,225 (+34, fully traced, see above)**. Public feed republished (`4d1770933`) — `site/dashboard/units/` again deliberately not committed; a SECOND, pre-existing PI exposure in the top-level feed's own manifest content discovered and logged (`OPEN-ISSUES.md` row 149, RULING-NEEDED, PRECEDENCE-1 — now the single most urgent open item in the package). Full gate: see `progress.md` cycle `SD31-W8-INTEGRATE-001` for `VERIFY_EXIT` and stage summary. `kanban.md`: wave-8 status section appended, naming `UNIVERSAL_MODIFIER_CUES`' recall gap as the next largest lever — no epic promoted to `COMPLETE` this wave. |
+
+## Board after wave 8 (`SD31-W8-INTEGRATE-001`, 2026-08-16)
+
+Re-derived live with the producer's own `doneness_verdict()` over the committed `docs/work-inventory.json`
+(the same command as the baseline table above), not transcribed from any lane's own receipt:
+
+| kind | total | done (wave 7) | done (wave 8) | delta |
+|---|---:|---:|---:|---:|
+| class | 185 | 27 (14.6%) | 27 (14.6%) | +0 |
+| class_feature | 15,472 | 69 (0.4%) | 82 (0.5%) | +13 |
+| companion | 1,696 | 680 (40.1%) | 680 (40.1%) | +0 |
+| equipment | 6,208 | 4,513 (72.7%) | 4,372 (70.4%) | **−141** |
+| equipment_modifier | 1,580 | 228 (14.4%) | 380 (24.1%) | +152 |
+| feat | 2,610 | 1,169 (44.8%) | 1,176 (45.1%) | +7 |
+| monster | 1,270 | 840 (66.1%) | 840 (66.1%) | +0 |
+| monster_ability | 2,951 | 1,365 (46.3%) | 1,366 (46.3%) | +1 |
+| race | 103 | 7 (6.8%) | 7 (6.8%) | +0 |
+| race_trait | 3,603 | 630 (17.5%) | 680 (18.9%) | +50 |
+| spell | 2,843 | 252 (8.9%) | 1,149 (40.4%) | +897 |
+| **TOTAL** | **38,521** | **9,780 (25.39%)** | **10,759 (27.93%)** | **+979** |
+
+Denominator unchanged all package (38,521). Reachable ceiling unchanged (98.95%, 38,115/38,521).
+`equipment`'s −141 is a demotion this cycle's own `.COPY=` gaming fix caused (§2 above) — it belongs
+to no merged lane's credit and predates the whole package; see `progress.md`'s `SD31-W8-INTEGRATE-001`
+receipt §3 for the movement separated by cause, not blurred.
