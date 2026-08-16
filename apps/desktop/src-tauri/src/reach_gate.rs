@@ -2434,10 +2434,10 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     (
         "ultimate_combat",
         "archetypes",
-        "Gap: 67 Ultimate Combat archetype-swap records are ingested (65 + 2 Gunslinger \
-         archetypes, Pistolero and Mysterious Stranger, added by `SD31-E4-F1-002`) with no \
-         archetype-selection surface to reach a player through. Remedy: same as ACG above; \
-         delete once landed.",
+        "Gap: 68 Ultimate Combat archetype-swap records are ingested (65 + 2 Gunslinger \
+         archetypes, Pistolero and Mysterious Stranger, added by `SD31-E4-F1-002`, + 1 Ninja \
+         archetype, Scout, added by `SD31-E4-F1-003`) with no archetype-selection surface to \
+         reach a player through. Remedy: same as ACG above; delete once landed.",
     ),
     (
         "ultimate_magic",
@@ -2498,7 +2498,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     ("ultimate_wilderness", "class_features", "Gap: 753 Ultimate Wilderness class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
     ("occult_adventures", "class_features", "Gap: 979 Occult Adventures class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind); every one of OA's 6 base classes (Occultist, Spiritualist, Medium, Mesmerist, Kineticist, Psychic) measures 0/N wired-able per epic-3-measurement's own SD31-E3-F1-001 clearance table, so no reach claim can exist until real class-chassis wiring lands. Remedy: same as ACG above."),
     ("adventurers_guide", "class_features", "Gap: 651 Adventurer's Guide class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind); this book carries no compiled rule set at all today (`evidence: no_compiled_rule_set_for_book` on every sampled unit), so no reach claim can exist until the book itself is onboarded to the engine, not only its class_feature kind. Remedy: onboard the book's class chassis, then wire per-class mechanisms as ACG above."),
-    ("ultimate_combat", "class_features", "Gap: 991 Ultimate Combat class_feature records are ingested corpus-wide (first data/corpus/ultimate_combat/ directory this book has ever had -- its existing feats/equipment/archetypes reach claims are sourced directly from the compiled rules_tables module, never from data/corpus/). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("ultimate_combat", "class_features", "Gap: 991 Ultimate Combat class_feature records are ingested corpus-wide (first data/corpus/ultimate_combat/ directory this book has ever had -- its existing feats/equipment/archetypes reach claims are sourced directly from the compiled rules_tables module, never from data/corpus/). Gunslinger (SD31-E4-F1-002) and Ninja (SD31-E4-F1-003) now have real pilot_compute.rs chassis wiring, but zero of either class's records can reach `done` or `held` on the board: `v06_work_inventory.rs`'s `modelled_class_books()` names only CRB/APG/ACG, so no Ultimate Combat class_feature record is even classified against the wiring that exists (OPEN-ISSUES.md row 96, lane 1's file, not this card's). Samurai remains genuinely unwired (named_raw: 0, no archetype content; base chassis untouched). Remedy: register UcClassId::ALL into modelled_class_books() (row 96), then wire Samurai's own base chassis."),
     ("ultimate_intrigue", "class_features", "Gap: 651 Ultimate Intrigue class_feature records are ingested corpus-wide (first data/corpus/ultimate_intrigue/ directory this book has ever had, same shape as Ultimate Combat above). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
     ("inner_sea_magic", "class_features", "Gap: 198 Inner Sea Magic class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
     ("inner_sea_taverns", "class_features", "Gap: 11 Inner Sea Taverns class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
@@ -2952,6 +2952,12 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Inquisitor Archetype ~ Iconoclast",
             "Inquisitor Archetype ~ Spellbreaker",
             "Inquisitor Archetype ~ Witch Hunter",
+            // SD31-E4-F1-003: Ninja's one real archetype, added to
+            // `archetype_tables.rs` this cycle. Still `NotSurfaced` (no
+            // archetype-selection surface exists, same as every other
+            // record in this list) -- pinned here so the reach test does
+            // not read its absence as a NEW, unrecorded regression.
+            "Ninja Archetype ~ Scout",
             "Paladin Archetype ~ Divine Hunter",
             "Paladin Archetype ~ Empyreal Knight",
             "Paladin Archetype ~ Holy Gun",

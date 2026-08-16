@@ -13,9 +13,23 @@
 //! own corpus rows name for them), so `UcClassId` names Gunslinger only
 //! this cycle -- Ninja/Samurai are not silently claimed, only not yet
 //! reached.
+//!
+//! `SD31-E4-F1-003` adds the second: Ninja. **The clearance table's own
+//! `named_raw: 0` for Ninja is corrected, not inherited** -- Ninja has
+//! exactly one real archetype in the 23-book scope, `Ninja Archetype ~
+//! Scout`, missed by the clearance table's grep because the record lives
+//! in a nested subdirectory (`ultimate_combat/support/
+//! uc_abilities_class_apg.lst`) the clearance evidence method's
+//! single-file grep never reached (the same nested-directory gap
+//! `OPEN-ISSUES.md` row 1 already names). See `class_ninja.rs`'s own doc
+//! comment for the full citation trail. Samurai remains `named_raw: 0`
+//! (not re-checked this cycle beyond a targeted nested-directory sweep
+//! for "Samurai Archetype" -- see this cycle's own receipt) and is not
+//! yet named here.
 
 pub mod archetype_tables;
 pub mod class_gunslinger;
+pub mod class_ninja;
 pub mod equipment_tables;
 pub mod feat_tables;
 pub mod spell_list;
@@ -35,15 +49,16 @@ pub struct ClassTableRow {
 }
 
 /// Identifies which UC class a chassis-table query targets. Gunslinger
-/// only, this cycle -- see this module's own doc comment for why Ninja
-/// and Samurai are not yet named here.
+/// and Ninja, as of `SD31-E4-F1-003` -- see this module's own doc comment
+/// for why Samurai is not yet named here.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum UcClassId {
     Gunslinger,
+    Ninja,
 }
 
 impl UcClassId {
-    pub const ALL: [UcClassId; 1] = [UcClassId::Gunslinger];
+    pub const ALL: [UcClassId; 2] = [UcClassId::Gunslinger, UcClassId::Ninja];
 
     /// Lowercase class name, matching the `class_id` string convention
     /// `pilot_compute.rs`'s per-class constants use (`"class:<name>"`).
@@ -51,6 +66,7 @@ impl UcClassId {
     pub const fn name(self) -> &'static str {
         match self {
             UcClassId::Gunslinger => "gunslinger",
+            UcClassId::Ninja => "ninja",
         }
     }
 
@@ -77,6 +93,9 @@ pub fn class_chassis_resolve(
         UcClassId::Gunslinger => {
             class_gunslinger::class_table().into_iter().find(|row| row.level == level)
         }
+        UcClassId::Ninja => {
+            class_ninja::class_table().into_iter().find(|row| row.level == level)
+        }
     }
 }
 
@@ -85,9 +104,9 @@ mod tests {
     use super::*;
 
     #[test]
-    fn from_class_id_str_round_trips_gunslinger() {
+    fn from_class_id_str_round_trips_gunslinger_and_ninja() {
         assert_eq!(UcClassId::from_class_id_str("class:gunslinger"), Some(UcClassId::Gunslinger));
-        assert_eq!(UcClassId::from_class_id_str("class:ninja"), None);
+        assert_eq!(UcClassId::from_class_id_str("class:ninja"), Some(UcClassId::Ninja));
         assert_eq!(UcClassId::from_class_id_str("class:samurai"), None);
     }
 

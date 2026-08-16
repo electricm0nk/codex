@@ -68,14 +68,44 @@
 //! sub-feature rows use uppercase `KEY:PISTOLERO ~ ...`/
 //! `KEY:MYSTERIOUS STRANGER ~ ...`, confirmed by direct grep, not
 //! assumed from the master row's own mixed-case archetype name).
+//!
+//! **`SD31-E4-F1-003` addendum, 2026-08-16: 1 Ninja archetype added, 67
+//! -> 68 records.** `Ninja Archetype ~ Scout`
+//! (`ultimate_combat/support/uc_abilities_class_apg.lst:5`) -- the ONLY
+//! real Ninja archetype in the 23-book scope (Samurai remains genuinely
+//! `named_raw: 0`, re-checked this cycle). **This record's own `TYPE:`
+//! facet does NOT name a slot list** (`TYPE:Archetype.NinjaArchetype`
+//! only) -- Ninja's archetype-suppression mechanism is structurally
+//! different from every other book's own TYPE-facet convention this
+//! table's sibling tables document: each base feature is individually
+//! `PREVAREQ`-gated on a `Ninja_CF_<Feature>,0` variable
+//! (`uc_abilities_globalvar.lst`'s `CATEGORY=Class|Ninja.MOD` block),
+//! and Scout's own row instead carries two `FACT:Ninja_Archetype_
+//! UncannyDodge|true`/`FACT:Ninja_Archetype_ImprovedUncannyDodge|true`
+//! tokens that feed `BONUS:VAR|Ninja_CF_UncannyDodge|1|...|PREFACT:1,
+//! ABILITIES,Ninja_Archetype_UncannyDodge=True`-shaped rows
+//! (`:217-218`), setting the suppression variable to 1 and disabling the
+//! base grant. `replaces` below is therefore derived from the `FACT:`
+//! evidence, not a `TYPE:` slot list -- named `NinjaUncannyDodge`/
+//! `NinjaImprovedUncannyDodge` to match the `Ninja_CF_*` variable names
+//! verbatim, the same "field-level evidence, stated" discipline this
+//! program's supersession work requires elsewhere. Both grants (Scout's
+//! Charge at 4th, Skirmisher at 8th) resolved to real `DESC:` text from
+//! their own base rows in Advanced Player's Guide
+//! (`apg_abilities_class.lst:2978-2979`, `KEY:Scout ~ Scout's Charge`/
+//! `KEY:Scout ~ Skirmisher`) -- Scout is upstream a Rogue archetype UC
+//! extends to Ninja via a `.MOD` retag, so its sub-feature rows are not
+//! declared in UC's own files. `pilot_compute.rs` integration DOES land
+//! this cycle (a real `if let`/`else` supersession branch), the same
+//! Decision-1(a)-safe shape `SD31-E4-F1-002`'s Gunslinger pair used.
 
 use super::super::archetype_swap::{ArchetypeGrant, ArchetypeSwapEntry};
 
-/// Full UC archetype-swap catalog: 67 real, distinct master records (65
-/// from the original SD28-E30 tier-1 extraction plus 2 Gunslinger
-/// archetypes added by `SD31-E4-F1-002` -- see this module's own doc
-/// comment), in source order. Built once and cached for the process
-/// lifetime.
+/// Full UC archetype-swap catalog: 68 real, distinct master records (65
+/// from the original SD28-E30 tier-1 extraction, 2 Gunslinger archetypes
+/// added by `SD31-E4-F1-002`, and 1 Ninja archetype added by
+/// `SD31-E4-F1-003` -- see this module's own doc comment), in source
+/// order. Built once and cached for the process lifetime.
 pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
     static TABLE: std::sync::OnceLock<Vec<ArchetypeSwapEntry>> = std::sync::OnceLock::new();
     TABLE.get_or_init(|| {
@@ -1255,6 +1285,23 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "MYSTERIOUS STRANGER ~ Stranger's Fortune", at_level: 5, description: Some("Starting at 5th level, a mysterious stranger can ignore a firearm misfire a number of times per day equal to her Charisma bonus. She can use this ability as a free action. This ability replaces gun training 1."), benefit: None },
             ],
         },
+        // SD31-E4-F1-003: Ninja's one real archetype -- see this
+        // module's own doc comment for why `replaces` is derived from
+        // `FACT:` evidence rather than a `TYPE:` slot list here.
+        // Ninja Archetype ~ Scout -- ultimate_combat/support/uc_abilities_class_apg.lst:5
+        ArchetypeSwapEntry {
+            key: "Ninja Archetype ~ Scout",
+            subject: "Ninja",
+            archetype_name: "Scout",
+            description: Some("Not all rogues live in the city. Scouts frequently roam the wilderness, often banding together as bandits, but sometimes serving as guides, as trailblazers, or as companions to a ranger or barbarian warrior. More comfortable with sneaking and hiding outdoors, the scout is still effective in the city and the dungeon."),
+            source_page: Some("p.134"),
+            prerequisites: Some(&["PRECLASS:1,Ninja=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ninja Archetype ~ Scout],[!PREFACT:1,ABILITIES,Ninja_Archetype_UncannyDodge=True,Ninja_Archetype_ImprovedUncannyDodge=True]"]),
+            replaces: Some(&["NinjaUncannyDodge", "NinjaImprovedUncannyDodge"]),
+            grants: &[
+                ArchetypeGrant { grants_feature_key: "Scout ~ Scout's Charge", at_level: 4, description: Some("Whenever you make a charge, your attack deals sneak attack damage as if the target were flat-footed. Foes with uncanny dodge are immune to this ability."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Scout ~ Skirmisher", at_level: 8, description: Some("Whenever you move more than 10 feet in a round and make an attack action, the attack deals sneak attack damage as if the target was flat-footed. If you make more than one attack this turn, this ability only applies to the first attack."), benefit: None },
+            ],
+        },
         ]
     })
 }
@@ -1264,11 +1311,12 @@ mod tests {
     use super::*;
 
     #[test]
-    fn catalog_has_67_records() {
+    fn catalog_has_68_records() {
         // 65 from the original SD28-E30 tier-1 extraction + 2 Gunslinger
         // archetypes (Pistolero, Mysterious Stranger) added by
-        // `SD31-E4-F1-002` -- see this module's own doc comment.
-        assert_eq!(archetype_swap_tables().len(), 67);
+        // `SD31-E4-F1-002` + 1 Ninja archetype (Scout) added by
+        // `SD31-E4-F1-003` -- see this module's own doc comment.
+        assert_eq!(archetype_swap_tables().len(), 68);
     }
 
     #[test]
@@ -1290,24 +1338,26 @@ mod tests {
     /// convergence across five books; the durable claim is that
     /// TYPE:/ABILITY: disagree in most records at a book-dependent
     /// rate, not any specific percentage. `SD31-E4-F1-002`'s 2 added
-    /// Gunslinger records shift the raw totals (291/364, 15/67 =
-    /// 22.4%) without changing that claim -- Pistolero disagrees
-    /// (4 replaces vs. 5 grants), Mysterious Stranger happens to agree
-    /// (5 vs. 5).
+    /// Gunslinger records and `SD31-E4-F1-003`'s 1 added Ninja record
+    /// shift the raw totals (293/366, 16/68 = 23.5%) without changing
+    /// that claim -- Pistolero disagrees (4 replaces vs. 5 grants),
+    /// Mysterious Stranger happens to agree (5 vs. 5), and Scout also
+    /// agrees (2 vs. 2, though `replaces` is `FACT:`-derived here, not
+    /// `TYPE:`-derived -- see this module's own doc comment).
     #[test]
     fn the_type_and_ability_lists_genuinely_disagree() {
         let total_replaces: usize =
             archetype_swap_tables().iter().map(|e| e.replaces.map_or(0, |r| r.len())).sum();
         let total_grants: usize = archetype_swap_tables().iter().map(|e| e.grants.len()).sum();
-        assert_eq!(total_replaces, 291, "total TYPE: replaced-slot count across all 67 records");
-        assert_eq!(total_grants, 364, "total ABILITY: granted-feature count across all 67 records, after the category ruling");
+        assert_eq!(total_replaces, 293, "total TYPE:/FACT:-derived replaced-slot count across all 68 records");
+        assert_eq!(total_grants, 366, "total ABILITY: granted-feature count across all 68 records, after the category ruling");
         assert_ne!(total_replaces, total_grants);
 
         let equal_count_records = archetype_swap_tables()
             .iter()
             .filter(|e| e.replaces.map_or(0, |r| r.len()) == e.grants.len())
             .count();
-        assert_eq!(equal_count_records, 15, "of 67 -- UC's own rate, original 14 plus Mysterious Stranger's 5-vs-5 match");
+        assert_eq!(equal_count_records, 16, "of 68 -- UC's own rate, original 14 plus Mysterious Stranger's 5-vs-5 match plus Scout's 2-vs-2 match");
     }
 
     #[test]
@@ -1336,6 +1386,6 @@ mod tests {
             .flat_map(|e| e.grants.iter())
             .filter(|g| g.description.is_some() || g.benefit.is_some())
             .count();
-        assert_eq!(resolved, 304, "304 of 364 grants carry real DESC:/BENEFIT: text: the original 294 of 354, plus all 10 of the 2 Gunslinger archetypes' own grants -- see this module's own doc comment for the original 60 that did not");
+        assert_eq!(resolved, 306, "306 of 366 grants carry real DESC:/BENEFIT: text: the original 294 of 354, plus all 10 of the 2 Gunslinger archetypes' own grants, plus both of Scout's own grants -- see this module's own doc comment for the original 60 that did not");
     }
 }
