@@ -53,6 +53,8 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 use codex::rules_core::corpus_literal_sweep::token_closure;
+use codex::rules_core::pi_screening::{self, declared_product_identity};
+use codex::rules_core::shape_b_v1::{License, REDACTED_PI_MARKER};
 use codex::rules_core::wiring_class::build_mod_index;
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};
@@ -142,6 +144,13 @@ enum Outcome {
     NoLstCitation,
     AlreadyEnriched,
     CitationMiss(String),
+    /// SD-30 §53.5 hard-stop: the corpus row itself declares
+    /// `NAMEISPI:YES`. A record's name cannot be redacted (it is half of
+    /// its key), so this tool refuses to publish `raw_tokens` for it at
+    /// all -- mirroring `cache_gen::spell_lane_dump`'s own name-PI drop,
+    /// applied here to the enrichment write path rather than the initial
+    /// generation path.
+    NameIsProductIdentity,
 }
 
 /// Split one closure field (`"COST:150"`, `"DESC:some text: with colons"`)
@@ -216,7 +225,7 @@ fn enrich_one(
         ));
     }
 
-    let mut raw_tokens: Vec<Value> = Vec::with_capacity(closure.len());
+    let mut fields: Vec<(&str, &str)> = Vec::with_capacity(closure.len());
     for field in &closure {
         let Some((key, value)) = split_token_field(field) else {
             return Outcome::CitationMiss(format!(
@@ -224,7 +233,33 @@ fn enrich_one(
                  decomposed into a {{key,value}} pair that round-trips"
             ));
         };
-        raw_tokens.push(json!({ "key": key, "value": value }));
+        fields.push((key, value));
+    }
+
+    // SD-30 PI screen, both invocation contracts, unioned -- applied to
+    // `raw_tokens` specifically (the gap named against this generator: the
+    // only other spell write path, `cache_gen::spell_lane_dump`, screens
+    // NAME and DESCRIPTION but never the raw closure this tool writes).
+    // Contract 53.5: the row's own `NAMEISPI:YES`/`DESCISPI:YES` declaration,
+    // read off the SAME closure fields being written, not re-fetched.
+    // Contract 52.3: the shared blacklist term scan, run per-field so a hit
+    // in one field (e.g. `DESC`) does not force blocking the whole record.
+    let declared = declared_product_identity(fields.iter().copied());
+    if declared.name {
+        // A name-PI record's identity itself cannot be redacted -- refuse
+        // to publish `raw_tokens` for it at all, hard stop before write.
+        return Outcome::NameIsProductIdentity;
+    }
+
+    let mut raw_tokens: Vec<Value> = Vec::with_capacity(fields.len());
+    for (key, value) in &fields {
+        let key_upper = key.to_ascii_uppercase();
+        let is_desc_field = key_upper == "DESC" || key_upper == "BENEFIT" || key_upper == "SPECIAL";
+        let (blacklist_license, ..) = pi_screening::classify_field(key, value);
+        let blacklisted = blacklist_license != License::Ogl;
+        let redact = blacklisted || (declared.description && is_desc_field);
+        let stored_value = if redact { REDACTED_PI_MARKER } else { *value };
+        raw_tokens.push(json!({ "key": key, "value": stored_value }));
     }
 
     let data_obj = root.get_mut("data").and_then(Value::as_object_mut).expect("checked above");
@@ -242,6 +277,7 @@ fn main() {
     let mut total_enriched = 0u32;
     let mut total_no_citation = 0u32;
     let mut total_already = 0u32;
+    let mut total_name_pi_blocked = 0u32;
     let mut misses: Vec<String> = Vec::new();
     let mut mod_index_cache: BTreeMap<String, BTreeMap<String, Vec<String>>> = BTreeMap::new();
 
@@ -260,6 +296,7 @@ fn main() {
                 }
                 Outcome::NoLstCitation => total_no_citation += 1,
                 Outcome::AlreadyEnriched => total_already += 1,
+                Outcome::NameIsProductIdentity => total_name_pi_blocked += 1,
                 Outcome::CitationMiss(msg) => misses.push(format!("{}: {}", file.display(), msg)),
             }
         }
@@ -267,7 +304,7 @@ fn main() {
     }
 
     eprintln!(
-        "\nenrich_spell_raw_tokens: {total_enriched} enriched, {total_no_citation} no-LST-citation (untouched), {total_already} already-enriched, {} citation misses",
+        "\nenrich_spell_raw_tokens: {total_enriched} enriched, {total_no_citation} no-LST-citation (untouched), {total_already} already-enriched, {total_name_pi_blocked} name-PI-blocked, {} citation misses",
         misses.len()
     );
     if !misses.is_empty() {
@@ -496,6 +533,79 @@ mod tests {
             let after: Value = serde_json::from_str(&fs::read_to_string(&json_path).unwrap()).unwrap();
             after["data"].get("raw_tokens").is_none()
         });
+    }
+
+    // ----- PI screen on raw_tokens: the SD-30 hard-stop, both contracts -----
+
+    #[test]
+    fn enrich_one_hard_stops_when_the_row_declares_nameispi_yes() {
+        let scratch = Scratch::new("name_pi");
+        scratch.write_lst("Secret Rite\tNAMEISPI:YES\tSCHOOL:Transmutation\tDESC:A rite.\n");
+        let json_path = scratch.write_json(
+            "secret_rite.json",
+            r#"{"data":{"key":"Secret Rite"},"source":{"kind":"lst_token","path":"pathfinder/paizo/roleplaying_game/x_book/x_spells.lst","line":1}}"#,
+        );
+        let mut cache = BTreeMap::new();
+        let outcome = enrich_one(&json_path, &scratch.data_root, &mut cache);
+        assert!(matches!(outcome, Outcome::NameIsProductIdentity));
+        let after: Value = serde_json::from_str(&fs::read_to_string(&json_path).unwrap()).unwrap();
+        assert!(
+            after["data"].get("raw_tokens").is_none(),
+            "a NAMEISPI:YES row must never get raw_tokens written"
+        );
+    }
+
+    #[test]
+    fn enrich_one_redacts_a_raw_token_whose_value_hits_the_blacklist() {
+        let scratch = Scratch::new("blacklist_hit");
+        scratch.write_lst(
+            "Iomedae's Blessing\tSCHOOL:Evocation\tDESC:A blessing granted by Iomedae herself.\n",
+        );
+        let json_path = scratch.write_json(
+            "iomedaes_blessing.json",
+            r#"{"data":{"key":"Iomedae's Blessing"},"source":{"kind":"lst_token","path":"pathfinder/paizo/roleplaying_game/x_book/x_spells.lst","line":1}}"#,
+        );
+        let mut cache = BTreeMap::new();
+        let outcome = enrich_one(&json_path, &scratch.data_root, &mut cache);
+        assert!(matches!(outcome, Outcome::Enriched));
+        let after: Value = serde_json::from_str(&fs::read_to_string(&json_path).unwrap()).unwrap();
+        let tokens = after["data"]["raw_tokens"].as_array().unwrap();
+        let desc_value = tokens
+            .iter()
+            .find(|t| t["key"].as_str() == Some("DESC"))
+            .and_then(|t| t["value"].as_str())
+            .unwrap();
+        assert_eq!(
+            desc_value, "[redacted PI]",
+            "a raw_tokens value carrying a blacklisted term must be redacted, not shipped verbatim"
+        );
+        let school_value = tokens
+            .iter()
+            .find(|t| t["key"].as_str() == Some("SCHOOL"))
+            .and_then(|t| t["value"].as_str())
+            .unwrap();
+        assert_eq!(school_value, "Evocation", "a clean field must ship unredacted");
+    }
+
+    #[test]
+    fn enrich_one_redacts_a_desc_field_when_the_row_declares_descispi_yes() {
+        let scratch = Scratch::new("desc_pi");
+        scratch.write_lst("Hidden Ward\tDESCISPI:YES\tSCHOOL:Abjuration\tDESC:A ward of great secrecy.\n");
+        let json_path = scratch.write_json(
+            "hidden_ward.json",
+            r#"{"data":{"key":"Hidden Ward"},"source":{"kind":"lst_token","path":"pathfinder/paizo/roleplaying_game/x_book/x_spells.lst","line":1}}"#,
+        );
+        let mut cache = BTreeMap::new();
+        let outcome = enrich_one(&json_path, &scratch.data_root, &mut cache);
+        assert!(matches!(outcome, Outcome::Enriched));
+        let after: Value = serde_json::from_str(&fs::read_to_string(&json_path).unwrap()).unwrap();
+        let tokens = after["data"]["raw_tokens"].as_array().unwrap();
+        let desc_value = tokens
+            .iter()
+            .find(|t| t["key"].as_str() == Some("DESC"))
+            .and_then(|t| t["value"].as_str())
+            .unwrap();
+        assert_eq!(desc_value, "[redacted PI]", "a DESCISPI:YES-declared row's DESC token must be redacted");
     }
 
     #[test]

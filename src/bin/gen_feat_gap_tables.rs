@@ -47,9 +47,11 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Write as _;
 use std::path::{Path, PathBuf};
 
+use codex::rules_core::pi_screening::{self, declared_product_identity};
 use codex::rules_core::pi_table_sweep::screen_generated_table;
 use codex::rules_core::rules_tables::feats_all::hand_authored_feat_tables;
 use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::shape_b_v1::{License, REDACTED_PI_MARKER};
 
 /// Where the generated table lands, relative to the crate root.
 const OUTPUT_RELATIVE_PATH: &str = "src/rules_core/rules_tables/feat_gap_tables.rs";
@@ -156,6 +158,11 @@ struct ParsedRecord {
     category: String,
     description: Option<String>,
     prerequisites: Vec<String>,
+    /// SD-30 contract 53.5, read off this row's own `NAMEISPI:YES` token. A
+    /// record whose NAME is declared Product Identity cannot be published
+    /// at all -- its identity cannot be redacted -- so a caller must drop
+    /// the whole record rather than emit it.
+    name_is_pi: bool,
 }
 
 fn tab_fields(line: &str) -> Vec<&str> {
@@ -233,12 +240,33 @@ fn parse_lst(text: &str) -> Vec<ParsedRecord> {
 
         let desc = token_value(&fields, "DESC:").map(str::trim).filter(|d| !d.is_empty());
         let benefit = token_value(&fields, "BENEFIT:").map(str::trim).filter(|d| !d.is_empty());
-        let description = match (desc, benefit) {
+        let mut description = match (desc, benefit) {
             (Some(d), Some(b)) if d != b => Some(format!("{d} {b}")),
             (Some(d), _) => Some(d.to_string()),
             (None, Some(b)) => Some(b.to_string()),
             (None, None) => None,
         };
+
+        // SD-30 PI screen, both invocation contracts, unioned -- this
+        // generator previously ran ONLY contract 52.3 (the blacklist scan,
+        // over the whole generated file, below in `main`) and never
+        // contract 53.5 (the row's own `NAMEISPI:YES`/`DESCISPI:YES`
+        // declaration). Read it here, off the same `fields` already parsed,
+        // so a caller can drop a name-PI record before it ever reaches the
+        // generated table.
+        let token_pairs: Vec<(&str, &str)> = fields
+            .iter()
+            .filter_map(|f| f.trim().split_once(':'))
+            .collect();
+        let declared = declared_product_identity(token_pairs);
+        let name_is_pi = declared.name;
+        if let Some(d) = &description {
+            let (blacklist_license, ..) = pi_screening::classify_field("description", d);
+            let blacklisted = blacklist_license != License::Ogl;
+            if declared.description || blacklisted {
+                description = Some(REDACTED_PI_MARKER.to_string());
+            }
+        }
 
         // Every top-level `PRE`-family token, verbatim and in source order,
         // including the negated `!PRE...` form — the same set
@@ -250,7 +278,7 @@ fn parse_lst(text: &str) -> Vec<ParsedRecord> {
             .map(|f| f.to_string())
             .collect();
 
-        out.push(ParsedRecord { key, name, category, description, prerequisites });
+        out.push(ParsedRecord { key, name, category, description, prerequisites, name_is_pi });
     }
     out
 }
@@ -316,6 +344,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut body = String::new();
     let mut totals: Vec<(&str, usize)> = Vec::new();
+    let mut name_pi_dropped: usize = 0;
 
     for input in BOOK_INPUTS {
         let mut rows: Vec<ParsedRecord> = Vec::new();
@@ -337,6 +366,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     continue;
                 }
                 if !seen.insert(record.key.clone()) {
+                    continue;
+                }
+                // SD-30 contract 53.5 hard stop: a NAMEISPI:YES record's
+                // identity cannot be redacted, so it is never emitted.
+                if record.name_is_pi {
+                    name_pi_dropped += 1;
                     continue;
                 }
                 rows.push(record);
@@ -378,6 +413,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     let total: usize = totals.iter().map(|(_, n)| *n).sum();
+    if name_pi_dropped > 0 {
+        eprintln!("gen_feat_gap_tables: {name_pi_dropped} record(s) dropped -- NAMEISPI:YES declared");
+    }
     let mut header = String::new();
     writeln!(
         header,
@@ -445,4 +483,49 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     println!("pi-screening: CLEAN (0 hits over the generated text)");
     Ok(())
+}
+
+#[cfg(test)]
+mod pi_screen_tests {
+    use super::*;
+
+    /// SD-30 contract 53.5, mutation-proven live against `parse_lst`: a row
+    /// declaring `NAMEISPI:YES` must be flagged `name_is_pi` so the caller
+    /// can drop it, never silently emitted.
+    #[test]
+    fn parse_lst_flags_a_nameispi_declared_row() {
+        let text = "Secret Trick\tTYPE:General\tNAMEISPI:YES\tDESC:A trick.\n";
+        let records = parse_lst(text);
+        assert_eq!(records.len(), 1);
+        assert!(records[0].name_is_pi, "a NAMEISPI:YES row must be flagged for the caller to drop");
+    }
+
+    #[test]
+    fn parse_lst_does_not_flag_an_undeclared_row() {
+        let text = "Ordinary Trick\tTYPE:General\tDESC:Nothing special.\n";
+        let records = parse_lst(text);
+        assert_eq!(records.len(), 1);
+        assert!(!records[0].name_is_pi);
+    }
+
+    /// Contract 53.5's other half: `DESCISPI:YES` redacts the description in
+    /// place rather than shipping the declared-PI prose verbatim.
+    #[test]
+    fn parse_lst_redacts_a_descispi_declared_description() {
+        let text = "Hidden Trick\tTYPE:General\tDESCISPI:YES\tDESC:A trick of great secrecy.\n";
+        let records = parse_lst(text);
+        assert_eq!(records.len(), 1);
+        assert_eq!(records[0].description.as_deref(), Some(REDACTED_PI_MARKER));
+    }
+
+    /// Contract 52.3, applied per-record rather than only over the whole
+    /// generated file: a description that hits the shared blacklist term
+    /// list is redacted even with no `NAMEISPI`/`DESCISPI` declaration.
+    #[test]
+    fn parse_lst_redacts_a_description_that_hits_the_blacklist() {
+        let text = "Blessed Trick\tTYPE:General\tDESC:Granted by Iomedae herself.\n";
+        let records = parse_lst(text);
+        assert_eq!(records.len(), 1);
+        assert_eq!(records[0].description.as_deref(), Some(REDACTED_PI_MARKER));
+    }
 }
