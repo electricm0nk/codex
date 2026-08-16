@@ -22,6 +22,22 @@ column.
 
 ## Needs an operator ruling
 
+**MOST URGENT, PRECEDENCE-1, PI — rows 141/149, 2026-08-16, `SD31-W8-INTEGRATE-001`.** Two public-feed
+exposures on `site/dashboard/`, the ONE surface `deploy-site.yml` deploys to Cloudflare Pages on every
+push to `main`. **Row 141** (`site/dashboard/units/*.json`, from `sd31/attrib-evidence-003`): 261
+units' names published verbatim where the unit's own cited row declares `NAMEISPI:YES`. FIXED for THIS
+wave — the shard directory was not committed at all — but the producer itself (`scripts/observer/
+pf1e_dashboard_producer.py`'s `build_unit_shards`) still has no oracle cross-reference, so the next
+cycle that runs the real (non-`--check`) publish and `git add`s `site/dashboard/units/` reintroduces
+the same exposure; needs a build decision on the redaction rule (drop `name`, or exclude the record
+entirely, matching `data/corpus/`'s own treatment). **Row 149** (`site/dashboard/PF1e-dashboard.json`
+itself, its `manifests`/roadmap content): a DIFFERENT, PRE-EXISTING exposure this wave's integration
+cycle discovered while performing the mandated dashboard publish — 56 candidate declared-PI names
+(class/prestige-class/feat/spellbook identities) ship as a public "what's coming next" list, confirmed
+present in `HEAD` before this cycle touched anything, so it predates this whole package's dashboard
+feature. NOT fixed — needs an operator ruling on what a public roadmap should show for a PI-declared
+record before any field gets removed.
+
 **Rows 69/87/95/107 — ANSWERED 2026-08-16, `decisions.md` §7 REFINED (`SD31-D7-PROSE-004`).** The
 flat-vs-scaling question this section used to lead with was the WRONG axis; the operator's actual
 ruling is UNIVERSAL vs CONDITIONAL: *"+1 size bonus to AC means you need to give a +1 on the AC -
@@ -75,7 +91,8 @@ the other 5 and is demoted alongside them; `retro.py correction` emitted, verifi
   **~824 units total, all currently `done`**, riding on which reading of "nothing to compute" wins.
   Not promoted, excluded, or generalized differently because of this count; sized only, per Decision 8's
   "no reduction in scope" precedent.
-- **Row 129 — genuinely open, `SD31-ATTRIB-003`, new this cycle.** Does a citation-only compendium
+- **Row 140 (renumbered from the branch's own 129 during wave-8 integration) — genuinely open,
+  `SD31-ATTRIB-003`.** Does a citation-only compendium
   book (Inner Sea Races, 2015-09 — newer than ARG, zero base `RACE:` declarations of its own, only
   `.MOD` citations) count as a "printing" under Decision 10's "newest publish wins," the same way
   `core_essentials`'s own citation-only root files are excluded under Decision 9? Full per-race

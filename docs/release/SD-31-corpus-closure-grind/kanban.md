@@ -290,3 +290,53 @@ Per-epic landing, named honestly rather than declared closed:
 
 Full command-level detail, every figure's derivation, and the complete finding-by-finding fix record
 are in `progress.md`'s `SD31-W7-INTEGRATE-001` receipt.
+
+## Wave 8 integration status (`SD31-W8-INTEGRATE-001`, 2026-08-16)
+
+Five worktree branches merged onto `tranche/11` in the dispatched order (class wiring, race_trait,
+equipment, spell, attribution+feed), all confirmed content-present by direct symbol grep, not by merge
+status alone. Board re-derived at the merged, fixed tip: **9,780 → 10,759 `done` / 38,521 (25.39% →
+27.93%)**, denominator unchanged all package, reachable ceiling **98.95% (38,115/38,521), unchanged**.
+
+**PRECEDENCE-1 PI work, not scope-creep**: fixed the exposure the review confirmed in the
+attribution+feed merge (`site/dashboard/units/*.json` publishing 261 declared-PI names) by not
+committing that directory at all, plus its two confirmed `--check`-gate bugs (TDD, mutation-proven).
+Separately DISCOVERED, while performing the mandated dashboard publish, that the TOP-LEVEL public feed
+`site/dashboard/PF1e-dashboard.json` ALSO ships declared-PI names in its manifests/roadmap content —
+confirmed pre-existing (unchanged in `HEAD` before this cycle touched anything), sized (56 candidate
+names), and logged as `OPEN-ISSUES.md` row 149, **RULING-NEEDED at PRECEDENCE-1**, the most urgent open
+item in the whole package right now.
+
+**GAMED verdict, fixed at the source, not merged around**: wave-8 adversarial review returned GAMED on
+the equipment merge (`.COPY=` inheritance taught to every direction that lets a unit pass, never to
+`wiring_class.rs`, the one place resolving it would raise the bar). Fixed by adding `wiring_class::
+build_copy_base_index` and threading it through `token_closure_rows`'s every call site — TDD,
+mutation-proven. The fix's scope is corpus-wide, not `equipment_modifier`-scoped: it also corrected an
+**independent, pre-existing** identical gaming shape on plain `equipment` (−141 net this wave, a
+demotion of records no merged lane ever claimed credit for) and on 2 `spell` `.COPY=` records — see
+`progress.md`'s `SD31-W8-INTEGRATE-001` receipt §3 for the full, separated movement accounting.
+
+Per-epic landing, named honestly:
+
+- **`epic-4-mechanism`** — Samurai's real base chassis + Challenge/Resolve/Bonus-Feat wiring landed
+  (`sd31/classwire4-e4f1-004`). **Board credit still 0/0**, unchanged: `modelled_class_books()`
+  (`OPEN-ISSUES.md` row 96, lane 1's file) still blocks all three UC classes. Fixed a wave-7-carried
+  doc-accuracy defect at the source: the module comment's "exactly two hits, both structural"
+  full-oracle-grep claim did not reproduce (17 hits, 5 real archetype records, all out-of-scope
+  `player_companion` books) — corrected with the real count and a forward-scope note.
+- **`epic-6-ingest-lanes`** — Advanced Race Guide 6-race chassis batch landed (Catfolk, Kitsune,
+  Ratfolk, Strix, Suli, Wayang; `sd31/racetrait/SD31-E6-F4-002`), `race_trait` net +50. Equipment
+  `.COPY=` inheritance recovery landed (`sd31/equipmod-e6f6-001`) — GAMED, fixed this cycle as above,
+  `equipment_modifier` net +152. Spell caster-level-linear DURATION seam landed
+  (`sd31/spell-held-SD31-E6-F2-006`), `spell` +897, the largest single-lane movement of the whole
+  package to date.
+- **Decision 9/10** — untouched this wave; no register or `core_essentials` mechanism changes in any
+  of the five merged branches. The attribution+feed lane's per-race citation evidence table
+  (`SD31-ATTRIB-003-race-evidence.md`) is the live evidence artifact for `OPEN-ISSUES.md` row 140's
+  open Inner Sea Races attribution question — still open, ruling still needed.
+- **`epic-9-closure`** — not reached. Reachable ceiling still 98.95%, not 100%; same 9
+  `ambiguous|*` dead-end cells, all Epic-2-owned. `UNIVERSAL_MODIFIER_CUES`' recall gap
+  (`OPEN-ISSUES.md` row 143) is now the single largest lever named but not yet turned.
+
+Full command-level detail, every figure's derivation, and the complete finding-by-finding fix record
+are in `progress.md`'s `SD31-W8-INTEGRATE-001` receipt.
