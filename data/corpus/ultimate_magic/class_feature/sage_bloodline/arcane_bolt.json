@@ -1,0 +1,128 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sage Bloodline ~ Arcane Bolt",
+    "name": "Arcane Bolt",
+    "class": "Sage Bloodline",
+    "description": "You can unleash a ray of magic force as a standard action, targeting any foe within 30 feet as a ranged touch attack. This ray deals 1d4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sage Bloodline ~ Arcane Bolt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Sage Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wildblooded ~ Sage"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Arcane_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_SageArcaneBolt_DamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_SageArcaneBolt_SpellLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a ray of magic force as a standard action, targeting any foe within 30 feet as a ranged touch attack. This ray deals 1d4"
+      },
+      {
+        "key": "DESC",
+        "value": "+ %1|Sorcerer_SageArcaneBolt_DamageBonus|PREVARGTEQ:Sorcerer_SageArcaneBolt_DamageBonus,1"
+      },
+      {
+        "key": "DESC",
+        "value": "points of damage. This damage is treated as a spell of"
+      },
+      {
+        "key": "DESC",
+        "value": "1st|PREVAREQ:Sorcerer_SageArcaneBolt_SpellLVL,1"
+      },
+      {
+        "key": "DESC",
+        "value": "2nd|PREVAREQ:Sorcerer_SageArcaneBolt_SpellLVL,2"
+      },
+      {
+        "key": "DESC",
+        "value": "3rd|PREVAREQ:Sorcerer_SageArcaneBolt_SpellLVL,3"
+      },
+      {
+        "key": "DESC",
+        "value": "%1th|Sorcerer_SageArcaneBolt_SpellLVL|PREVARGTEQ:Sorcerer_SageArcaneBolt_SpellLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "level, and is a force effect. You can use this ability %1 times per day. This bloodline power replaces arcane bond.|Sorcerer_Arcane_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_SageArcaneBolt_DamageBonus|Sorcerer_Arcane_BloodlinePower1LVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_SageArcaneBolt_SpellLVL|Sorcerer_Arcane_BloodlinePower1LVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (1d4 force)|Sorcerer_Arcane_BloodlinePower1Times|PREVARLT:Sorcerer_SageArcaneBolt_DamageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d4+%1 force)|Sorcerer_SageArcaneBolt_DamageBonus|Sorcerer_Arcane_BloodlinePower1Times|PREVARGTEQ:Sorcerer_SageArcaneBolt_DamageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Arcane_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ArcaneBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1753,
+    "record_key": "Sage Bloodline ~ Arcane Bolt"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

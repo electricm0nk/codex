@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Martial Artist ~ Quivering Palm",
+    "name": "Quivering Palm",
+    "class": "Martial Artist",
+    "description": "A martial artist may use this ability one additional time per day per level above 15th, but may not have more than one in effect at a time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Martial Artist ~ Quivering Palm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A martial artist may use this ability one additional time per day per level above 15th, but may not have more than one in effect at a time."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1087,
+    "record_key": "Martial Artist ~ Quivering Palm"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

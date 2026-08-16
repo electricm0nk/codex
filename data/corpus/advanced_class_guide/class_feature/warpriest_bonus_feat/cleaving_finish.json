@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Cleaving Finish",
+    "name": "Cleaving Finish",
+    "class": "Warpriest Bonus Feat",
+    "description": "When you strike down an opponent, you can continue your swing into another target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Cleaving Finish"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Cleave,Power Attack"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,STR=13"
+      },
+      {
+        "key": "DESC",
+        "value": "When you strike down an opponent, you can continue your swing into another target."
+      },
+      {
+        "key": "DESC",
+        "value": " If you make a melee attack, and your target drops to 0 or fewer hit points as a result of your attack, you can make another melee attack using your highest base attack bonus against another opponent within reach. You can make only one extra attack per round with this feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Cleaving Finish"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4410,
+    "record_key": "Warpriest Bonus Feat ~ Cleaving Finish"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

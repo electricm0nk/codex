@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Talent ~ Esoteric Scholar",
+    "name": "Esoteric Scholar",
+    "class": "Rogue Talent",
+    "description": "Once a day, a rogue with this talent may attempt a Knowledge check, even when she is not trained in that Knowledge skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Esoteric Scholar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RogueTalent"
+      },
+      {
+        "key": "DESC",
+        "value": "Once a day, a rogue with this talent may attempt a Knowledge check, even when she is not trained in that Knowledge skill."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1600,
+    "record_key": "Rogue Talent ~ Esoteric Scholar"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

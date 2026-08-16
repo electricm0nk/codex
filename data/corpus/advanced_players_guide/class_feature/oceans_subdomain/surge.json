@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oceans Subdomain ~ Surge",
+    "name": "Surge",
+    "class": "Oceans Subdomain",
+    "description": "As a standard action, you can cause a mighty wave to appear that pushes or pulls a single creature. Make a combat maneuver check against the target, using %1 as your CMB. If successful, you may pull or push the creature as if using the bull rush or drag combat maneuver. You can use this ability %2 times per day.|DomainWaterLVL+WIS|DomainWaterTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oceans Subdomain ~ Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can cause a mighty wave to appear that pushes or pulls a single creature. Make a combat maneuver check against the target, using %1 as your CMB. If successful, you may pull or push the creature as if using the bull rush or drag combat maneuver. You can use this ability %2 times per day.|DomainWaterLVL+WIS|DomainWaterTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1790,
+    "record_key": "Oceans Subdomain ~ Surge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

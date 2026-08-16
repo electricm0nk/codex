@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Empathy",
+    "name": "Wild Empathy",
+    "class": null,
+    "description": "You can improve the attitude of an animal. This ability functions just like Diplomacy check made to improve the attitude of a person. You roll 1d20+%1 to determine the Wild Empathy check result. The typical domestic animal has a starting attitude of indifferent, while wild animals are usually unfriendly. To use Wild Empathy, you and the animal must be within 30 feet of one another under normal circumstances. Generally, influencing an animal in this way takes 1 minute, but as with influencing people, it might take more or less time. You can use this ability to influence a magical beast with an Intelligence score of 1 or 2, but you take a -4 penalty on the check.|WildEmpathy",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.DruidClassFeatures.RangerClassFeatures"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WildEmpathy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WildEmpathyLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can improve the attitude of an animal. This ability functions just like Diplomacy check made to improve the attitude of a person. You roll 1d20+%1 to determine the Wild Empathy check result. The typical domestic animal has a starting attitude of indifferent, while wild animals are usually unfriendly. To use Wild Empathy, you and the animal must be within 30 feet of one another under normal circumstances. Generally, influencing an animal in this way takes 1 minute, but as with influencing people, it might take more or less time. You can use this ability to influence a magical beast with an Intelligence score of 1 or 2, but you take a -4 penalty on the check.|WildEmpathy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildEmpathy|WildEmpathyLVL+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50/64"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|WildEmpathy"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2864,
+    "record_key": "Wild Empathy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gingerbread Witch ~ Tricky Treats Hex",
+    "name": "Tricky Treats Hex",
+    "class": "Gingerbread Witch",
+    "description": "A gingerbread witch learns a unique hex that lets her create a piece of candy or a similar sweet as a full-round action. If eaten by the witch or a single creature she designates when she creates it, the sweet functions as goodberry or a polypurpose panacea (UM) (as determined at creation). Anyone else that eats the sweet becomes nauseated (Fortitude negates); a creature nauseated by the sweet can attempt a new saving throw each round at the end of its turn to end this effect. A creature that fails its initial save is also affected as per the scar (UM) hex for %1 days, except that at extended range, the witch can use only harmful hexes on the creature. She can create %2 sweets each day. These sweets retain their potency for 24 hours and then turn to crumbs.|WitchLVL|WitchLVL+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gingerbread Witch ~ Tricky Treats Hex"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.GingerbreadWitchClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_TrickyTreats|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "DESC",
+        "value": "A gingerbread witch learns a unique hex that lets her create a piece of candy or a similar sweet as a full-round action. If eaten by the witch or a single creature she designates when she creates it, the sweet functions as goodberry or a polypurpose panacea (UM) (as determined at creation). Anyone else that eats the sweet becomes nauseated (Fortitude negates); a creature nauseated by the sweet can attempt a new saving throw each round at the end of its turn to end this effect. A creature that fails its initial save is also affected as per the scar (UM) hex for %1 days, except that at extended range, the witch can use only harmful hexes on the creature. She can create %2 sweets each day. These sweets retain their potency for 24 hours and then turn to crumbs.|WitchLVL|WitchLVL+INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_TrickyTreats|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_TrickyTreats|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Tricky Treats)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 272,
+    "record_key": "Gingerbread Witch ~ Tricky Treats Hex"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

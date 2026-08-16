@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arrow Champion ~ Archer's Feint",
+    "name": "Archer's Feint",
+    "class": "Arrow Champion",
+    "description": "When the arrow champion hits a foe within 30 feet with a bow attack, she can forgo the damage and instead attempt a Bluff check to feint against that foe as a swift action. If successful, in addition to the normal benefits of feinting, she doubles the extra damage from precise aim on her next melee attack before the end of her next turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arrow Champion ~ Archer's Feint"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL07"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SwashbucklerDeedsLVL7.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When the arrow champion hits a foe within 30 feet with a bow attack, she can forgo the damage and instead attempt a Bluff check to feint against that foe as a swift action. If successful, in addition to the normal benefits of feinting, she doubles the extra damage from precise aim on her next melee attack before the end of her next turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1203,
+    "record_key": "Arrow Champion ~ Archer's Feint"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

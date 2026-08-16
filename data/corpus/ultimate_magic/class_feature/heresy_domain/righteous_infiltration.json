@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Heresy Domain ~ Righteous Infiltration",
+    "name": "Righteous Infiltration",
+    "class": "Heresy Domain",
+    "description": "You use your Wisdom modifier instead of your Charisma modifier when making Bluff and Intimidate checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heresy Domain ~ Righteous Infiltration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You use your Wisdom modifier instead of your Charisma modifier when making Bluff and Intimidate checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Intimidate|WIS-CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 363,
+    "record_key": "Heresy Domain ~ Righteous Infiltration"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

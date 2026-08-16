@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arrow Champion ~ Arrow Champion's Panache",
+    "name": "Arrow Champion's Panache",
+    "class": "Arrow Champion",
+    "description": "An arrow champion regains panache when she makes a killing blow with a light or one-handed piercing melee weapon or a bow (a longbow, shortbow, composite longbow, or composite shortbow). This alters panache.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arrow Champion ~ Arrow Champion's Panache"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Features.ArrowChampionClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An arrow champion regains panache when she makes a killing blow with a light or one-handed piercing melee weapon or a bow (a longbow, shortbow, composite longbow, or composite shortbow). This alters panache."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1199,
+    "record_key": "Arrow Champion ~ Arrow Champion's Panache"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

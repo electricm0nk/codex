@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fiendflesh Shifter ~ Chimeric Fiend",
+    "name": "Chimeric Fiend",
+    "class": "Fiendflesh Shifter",
+    "description": "When a fiendflesh shifter uses her fiendish aspect ability, she can gain an additional ability from the list below. The fiendflesh shifter can change which ability she gains each time she uses fiendish aspect. [Daemon] Acid resistance 10 and a +4 profane bonus on saves against disease. [Demon] The shifter's electricity resistance doubles. [Devil] The shifter's fire resistance doubles.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fiendflesh Shifter ~ Chimeric Fiend"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.FiendfleshShifterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When a fiendflesh shifter uses her fiendish aspect ability, she can gain an additional ability from the list below. The fiendflesh shifter can change which ability she gains each time she uses fiendish aspect. [Daemon] Acid resistance 10 and a +4 profane bonus on saves against disease. [Demon] The shifter's electricity resistance doubles. [Devil] The shifter's fire resistance doubles."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1066,
+    "record_key": "Fiendflesh Shifter ~ Chimeric Fiend"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

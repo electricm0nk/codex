@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "False Medium ~ Dim the Lights",
+    "name": "Dim the Lights",
+    "class": "False Medium",
+    "description": "At 1st level, while in dim light or darkness, a false medium adds 1/2 his rogue level as a bonus on Bluff, Disguise, and Sleight of Hand checks, and creatures without low-light vision or darkvision take an equal penalty on skill checks to oppose the false medium's Bluff, Disguise, and Sleight of Hand checks. This ability replaces trapfinding.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "False Medium ~ Dim the Lights"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "False Medium Class Feature.Rogue Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, while in dim light or darkness, a false medium adds 1/2 his rogue level as a bonus on Bluff, Disguise, and Sleight of Hand checks, and creatures without low-light vision or darkvision take an equal penalty on skill checks to oppose the false medium's Bluff, Disguise, and Sleight of Hand checks. This ability replaces trapfinding."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1904,
+    "record_key": "False Medium ~ Dim the Lights"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Silent Kill",
+    "name": "Silent Kill",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are quite adept at killing your prey without making noise or alerting others.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Silent Kill"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Slayer Talent ~ Assassinate,Ninja Trick ~ Assassinate"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Stealth=12"
+      },
+      {
+        "key": "DESC",
+        "value": "You are quite adept at killing your prey without making noise or alerting others."
+      },
+      {
+        "key": "DESC",
+        "value": " When you kill a creature during a surprise round, you can attempt a Stealth check, opposed by the Perception checks of potential observers, to prevent them from noticing your action and subsequently identifying you as the assailant."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Silent Kill"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4184,
+    "record_key": "Warpriest Bonus Feat ~ Silent Kill"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Animist ~ Dominate Spirit",
+    "name": "Dominate Spirit",
+    "class": "Animist",
+    "description": "The animist can attempt to possess creatures or objects as magic jar or possess object. When the animist is attempting to possess the creature, his familiar acts as the jar and must be within 10 feet when the animist attempts to possess a creature. The animist's soul can perceive his surroundings through the familiar's senses, clearly evaluate potential targets for possession, and communicate with his familiar telepathically. The familiar retains its autonomy while acting as the jar, and is not harmed by being used as a vessel for the animist's soul. The animist can use this ability %1 times per day.|floor((ShamanLVL-6)/4)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animist ~ Dominate Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Animist Class Feature.Shaman Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "The animist can attempt to possess creatures or objects as magic jar or possess object. When the animist is attempting to possess the creature, his familiar acts as the jar and must be within 10 feet when the animist attempts to possess a creature. The animist's soul can perceive his surroundings through the familiar's senses, clearly evaluate potential targets for possession, and communicate with his familiar telepathically. The familiar retains its autonomy while acting as the jar, and is not harmed by being used as a vessel for the animist's soul. The animist can use this ability %1 times per day.|floor((ShamanLVL-6)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3599,
+    "record_key": "Animist ~ Dominate Spirit"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

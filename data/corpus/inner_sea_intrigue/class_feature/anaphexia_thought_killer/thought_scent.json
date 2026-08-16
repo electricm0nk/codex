@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Anaphexia Thought-Killer ~ Thought-Scent",
+    "name": "Thought-Scent",
+    "class": "Anaphexia Thought-Killer",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Anaphexia Thought-Killer ~ Thought-Scent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.AnaphexiaThoughtKillerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "An Anaphexia thought-killer can smell a significant thought. As a standard action, she can choose one fact or idea she already knows, such as a secret she wishes to keep hidden, and can locate any creature within 30 feet who knows it as with the scent ability. The range increases to 60 feet if the creature is upwind and drops to 15 feet if the creature is downwind. She can discern the direction to the creature until she is adjacent, at which point she can pinpoint the creature's square. This is a mind-affecting divination effect. The Anaphexia thought-killer can use this ability for up to %1 minutes. These minutes need not be consecutive but must be used in 1-minute intervals.|VigilanteLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 305,
+    "record_key": "Anaphexia Thought-Killer ~ Thought-Scent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

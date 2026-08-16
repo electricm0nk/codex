@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk Archetype ~ Wildcat",
+    "name": "Wildcat",
+    "class": "Monk Archetype",
+    "description": "A wildcat is a student of the school of hard knocks, who dedicates himself to learning how to take down foes by any means necessary. A wildcat isn't afraid to smash a tankard over a foe's head, stomp an opponent's foot, gouge an eye, or generally create mayhem to gain any possible advantage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Wildcat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkStillMind.MonkKiPool.MonkHighJump.MonkSlowFall.MonkImprovedEvasion.MonkAbundantStep.MonkDiamondSoul.MonkEmptyBody"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Wildcat],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStillMind,TYPE.MonkKiPool,TYPE.MonkHighJump,TYPE.MonkSlowFall,TYPE.MonkImprovedEvasion,TYPE.MonkAbundantStep,TYPE.MonkDiamondSoul,TYPE.MonkEmptyBody]"
+      },
+      {
+        "key": "DESC",
+        "value": "A wildcat is a student of the school of hard knocks, who dedicates himself to learning how to take down foes by any means necessary. A wildcat isn't afraid to smash a tankard over a foe's head, stomp an opponent's foot, gouge an eye, or generally create mayhem to gain any possible advantage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Wildcat ~ Ready for Anything|PRECLASS:1,Monk=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Wildcat ~ Brawler Maneuver Training|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Wildcat ~ Improvised Weapon Mastery|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Wildcat ~ Bonus Feat|PRECLASS:1,Monk=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Wildcat ~ Knockout|PRECLASS:1,Monk=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Wildcat ~ Turn the Tables|PRECLASS:1,Monk=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Wildcat ~ Dirty Blow|PRECLASS:1,Monk=19"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3437,
+    "record_key": "Monk Archetype ~ Wildcat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

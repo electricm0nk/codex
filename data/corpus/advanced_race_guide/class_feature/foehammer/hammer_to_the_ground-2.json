@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Foehammer ~ Hammer to the Ground 2",
+    "name": "Hammer to the Ground",
+    "class": "Foehammer",
+    "description": "Any creature a foehammer successfully bull rushes is automatically knocked prone at the end of the bull rush.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Foehammer ~ Hammer to the Ground 2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature a foehammer successfully bull rushes is automatically knocked prone at the end of the bull rush."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 51,
+    "record_key": "Foehammer ~ Hammer to the Ground 2"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

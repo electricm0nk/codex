@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gunslinger ~ Bleeding Wound",
+    "name": "Bleeding Wound",
+    "class": "Gunslinger",
+    "description": "At 11th level, when the gunslinger hits a living creature with a firearm attack, she can spend 1 grit point as a free action to have that attack deal extra bleed damage. The amount of bleed damage is equal to the gunslinger's Dexterity modifier. Alternatively, the gunslinger can spend 2 grit points to deal 1 point of Strength, Dexterity, or Constitution bleed damage (gunslinger's choice) instead. Creatures that are immune to sneak attacks are also immune to these types of bleed damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Bleeding Wound"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_Deed_LVL11"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeedsLVL11.DeedHasCost.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, when the gunslinger hits a living creature with a firearm attack, she can spend 1 grit point as a free action to have that attack deal extra bleed damage. The amount of bleed damage is equal to the gunslinger's Dexterity modifier. Alternatively, the gunslinger can spend 2 grit points to deal 1 point of Strength, Dexterity, or Constitution bleed damage (gunslinger's choice) instead. Creatures that are immune to sneak attacks are also immune to these types of bleed damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 69,
+    "record_key": "Gunslinger ~ Bleeding Wound"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

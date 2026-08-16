@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Diabolist ~ Channel Hellfire",
+    "name": "Channel Hellfire",
+    "class": "Diabolist",
+    "description": "You can alter spells that deal energy damage to instead deal hellfire damage. You can do this as a free action %1 times per day. Spells altered to use hellfire gain the lawful and evil descriptors.|DiabolistChannelHellfireTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Diabolist ~ Channel Hellfire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DiabolistChannelHellfireTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can alter spells that deal energy damage to instead deal hellfire damage. You can do this as a free action %1 times per day. Spells altered to use hellfire gain the lawful and evil descriptors.|DiabolistChannelHellfireTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DiabolistChannelHellfireTimes|max(1,CHA)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DiabolistChannelHellfireTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_class.lst",
+    "sha256": "a5a8d7ac42951ac0052504a8eda6087015e8f6147164243afe9515e7cac2f588",
+    "line": 10,
+    "record_key": "Diabolist ~ Channel Hellfire"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

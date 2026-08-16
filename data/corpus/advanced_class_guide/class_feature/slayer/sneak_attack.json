@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Slayer ~ Sneak Attack",
+    "name": "Sneak Attack",
+    "class": "Slayer",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer ~ Sneak Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal.Slayer Class Feature.Sneak Attack"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlayerSneakAttackLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sneak Attack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerSneakAttackLVL|SlayerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|SlayerSneakAttackLVL/3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1795,
+    "record_key": "Slayer ~ Sneak Attack"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

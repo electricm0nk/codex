@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kineticist ~ Composite Specialization",
+    "name": "Composite Specialization",
+    "class": "Kineticist",
+    "description": "At 16th level, a kineticist becomes more adept at creating composite blasts. She reduces the burn cost of all composite blasts by 1 point. This can't reduce the cost of a composite blast below 0 points.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist ~ Composite Specialization"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 16th level, a kineticist becomes more adept at creating composite blasts. She reduces the burn cost of all composite blasts by 1 point. This can't reduce the cost of a composite blast below 0 points."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 553,
+    "record_key": "Kineticist ~ Composite Specialization"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

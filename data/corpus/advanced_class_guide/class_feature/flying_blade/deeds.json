@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Flying Blade ~ Deeds",
+    "name": "Deeds",
+    "class": "Flying Blade",
+    "description": "A flying blade gains the following deeds, each of which replaces an existing deed. Subtle Throw, Disrupting Counter, Precise Throw, Targeted Throw, Bleeding Wound, and Perfect Throw.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flying Blade ~ Deeds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Flying Blade Class Feature.Swashbuckler Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A flying blade gains the following deeds, each of which replaces an existing deed. Subtle Throw, Disrupting Counter, Precise Throw, Targeted Throw, Bleeding Wound, and Perfect Throw."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Deed ~ Subtle Throw|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Deed ~ Disrupting Counter|PRECLASS:1,Swashbuckler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Deed ~ Precise Throw|PRECLASS:1,Swashbuckler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Deed ~ Targeted Throw|PRECLASS:1,Swashbuckler=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Deed ~ Bleeding Wound|PRECLASS:1,Swashbuckler=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Deed ~ Perfect Throw|PRECLASS:1,Swashbuckler=15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3877,
+    "record_key": "Flying Blade ~ Deeds"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

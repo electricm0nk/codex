@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bard Archetype ~ Celebrity",
+    "name": "Celebrity",
+    "class": "Bard Archetype",
+    "description": "Known for being known, a celebrity bard is a master of  performance  who  captures  the  imagination  and attention of his audience. He trades on his charisma, his wit, and his exploits to build his renown - and that of his companions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Celebrity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype.BardInspireCourage.BardLoreMaster.BardDirgeOfDoom"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Celebrity],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCourage,TYPE.BardLoreMaster,TYPE.BardDirgeOfDoom]"
+      },
+      {
+        "key": "DESC",
+        "value": "Known for being known, a celebrity bard is a master of  performance  who  captures  the  imagination  and attention of his audience. He trades on his charisma, his wit, and his exploits to build his renown - and that of his companions."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Celebrity ~ Famous|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Celebrity ~ Gather Crowd|PRECLASS:1,Bard=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Celebrity ~ Shining Star|PRECLASS:1,Bard=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 933,
+    "record_key": "Bard Archetype ~ Celebrity"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

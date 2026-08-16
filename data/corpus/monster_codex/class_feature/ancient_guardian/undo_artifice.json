@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ancient Guardian ~ Undo Artifice",
+    "name": "Undo Artifice",
+    "class": "Ancient Guardian",
+    "description": "An ancient guardian gains the ability to reduce a nonliving item to its component raw materials. This acts as the spell polymorph any object, but works on magical or nonmagical nonliving objects. The duration is always permanent. Unlike polymorph any object, this ability can't be used to mimic the effects of other spells. Items subject to this effect receive a Fortitude saving throw to negate the effect (DC %1). Magic items receive a circumstance bonus on this save equal to +1 for every 5,000 gp of the item's value. An ancient guardian can use undo artifice %2 times per day.|10+DruidLVL/2+WIS|3+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancient Guardian ~ Undo Artifice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.AncientGuardianClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "An ancient guardian gains the ability to reduce a nonliving item to its component raw materials. This acts as the spell polymorph any object, but works on magical or nonmagical nonliving objects. The duration is always permanent. Unlike polymorph any object, this ability can't be used to mimic the effects of other spells. Items subject to this effect receive a Fortitude saving throw to negate the effect (DC %1). Magic items receive a circumstance bonus on this save equal to +1 for every 5,000 gp of the item's value. An ancient guardian can use undo artifice %2 times per day.|10+DruidLVL/2+WIS|3+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 77,
+    "record_key": "Ancient Guardian ~ Undo Artifice"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

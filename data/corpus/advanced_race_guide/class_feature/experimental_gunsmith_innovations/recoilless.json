@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Experimental Gunsmith Innovations ~ Recoilless",
+    "name": "Recoilless",
+    "class": "Experimental Gunsmith Innovations",
+    "description": "The Experimental Gunsmith's firearm includes a series of gears, springs, and pistons designed to reduce its recoil and thus improve accuracy. The range increment of the weapon increases by 10 feet. However, the system is fragile, and easily damaged. Anytime the weapon misfires, this system becomes broken and does not function until the Experimental Gunsmith spends 1 hour repairing it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Experimental Gunsmith Innovations ~ Recoilless"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ExperimentalGunsmithInnovation"
+      },
+      {
+        "key": "DESC",
+        "value": "The Experimental Gunsmith's firearm includes a series of gears, springs, and pistons designed to reduce its recoil and thus improve accuracy. The range increment of the weapon increases by 10 feet. However, the system is fragile, and easily damaged. Anytime the weapon misfires, this system becomes broken and does not function until the Experimental Gunsmith spends 1 hour repairing it."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 165,
+    "record_key": "Experimental Gunsmith Innovations ~ Recoilless"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Green Knight ~ Beast Tongue",
+    "name": "Beast Tongue",
+    "class": "Green Knight",
+    "description": "A green knight can use Diplomacy to improve an animal's attitude. Beast tongue otherwise functions like the druid's wild empathy ability, using the green knight's Diplomacy modifier and using her cavalier level as her effective druid level, and it counts as that ability for the purpose of other effects (such as feat prerequisites or effects that alter or improve wild empathy).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Knight ~ Beast Tongue"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.GreenKnightClassFeatures.SpecialQuality.Extraordinary.WildEmpathy"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Druid ~ Wild Empathy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WildEmpathy|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A green knight can use Diplomacy to improve an animal's attitude. Beast tongue otherwise functions like the druid's wild empathy ability, using the green knight's Diplomacy modifier and using her cavalier level as her effective druid level, and it counts as that ability for the purpose of other effects (such as feat prerequisites or effects that alter or improve wild empathy)."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildEmpathy|CavalierLVL+skillinfo(\"TOTAL\", \"Diplomacy\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|WildEmpathy"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 422,
+    "record_key": "Green Knight ~ Beast Tongue"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

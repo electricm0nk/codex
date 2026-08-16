@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Phantom Thief Talent ~ Minor Magic",
+    "name": "Minor Magic",
+    "class": "Phantom Thief Talent",
+    "description": "You can cast %1. This spell can be cast three times a day as a spell-like ability. The caster level for this ability is %2. The save DC for this spell is %3.|%CHOICE|RogueCasterLevel|10+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantom Thief Talent ~ Minor Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialQuality.SpellLike.RogueTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,Rogue Talent ~ Minor MagicPhantom Thief ~ Broad Education"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,INT=10"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RogueCasterLevel|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast %1. This spell can be cast three times a day as a spell-like ability. The caster level for this ability is %2. The save DC for this spell is %3.|%CHOICE|RogueCasterLevel|10+INT"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SPELLS|CLASSLIST=Wizard[LEVELMAX=0;LEVELMIN=0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RogueCasterLevel|RogueTalentLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 865,
+    "record_key": "Phantom Thief Talent ~ Minor Magic"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

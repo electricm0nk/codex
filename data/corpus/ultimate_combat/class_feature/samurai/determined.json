@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Samurai ~ Determined",
+    "name": "Determined",
+    "class": "Samurai",
+    "description": "As a standard action, the samurai can spend one use of his resolve to remove the fatigued, shaken, or sickened condition.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samurai ~ Determined"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Resolve"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SamuraiResolve"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the samurai can spend one use of his resolve to remove the fatigued, shaken, or sickened condition."
+      },
+      {
+        "key": "DESC",
+        "value": "He can alternatively remove the exhausted, frightened, nauseated, or staggered condition.|PREVARGTEQ:SamuralLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "If the condition has a duration longer than 1 hour or is permanent, this ability removes the condition for 1 hour, at which time the condition returns."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 193,
+    "record_key": "Samurai ~ Determined"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Earth Glide",
+    "name": "Earth Glide",
+    "class": "Wild Talent",
+    "description": "Element earth; Type utility (Su); Level 5; Burn 0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Earth Glide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Earth"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ earth climb"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite earth climb"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Earth,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Element earth; Type utility (Su); Level 5; Burn 0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;You can glide through earth, as an earth elemental's earth glide ability, with a burrow speed equal to your base land speed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 742,
+    "record_key": "Wild Talent ~ Earth Glide"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

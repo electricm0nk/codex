@@ -1,0 +1,159 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Occultist Archetype ~ Curator",
+    "name": "Curator",
+    "class": "Occultist Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist Archetype ~ Curator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.OccultistArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "DESC",
+        "value": "While all agents of the Aspis Consortium are expected to catalog and file their discoveries, in practice many of them keep prizes for their personal use, and the curator has elevated this practice almost to an art form. When confronted by superiors with accusations of failing to hand over rare treasures or mysterious items, the curator is swift to point out that such objects do the group no good sitting on a dusty shelf. Instead, the curator lives up to his name, and seeks to access the ancient powers hidden in such objects so that he can use them in the best interest of the Aspis Consortium. Over time, the Consortium has been forced to admit the wisdom in this way of thinking."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Occultist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Occultist Archetype ~ Curator],[!PREFACT:1,ABILITIES,Occultist_Archetype_Implements=True,Occultist_Archetype_Implement6=True,Occultist_Archetype_Implement14=True,Occultist_Archetype_MentalFocus=True,Occultist_Archetype_FocusPowers3=True,Occultist_Archetype_ShiftFocus=True,Occultist_Archetype_OutsideContact=True,Occultist_Archetype_MagicCircles=True,Occultist_Archetype_BindingCircles=True,Occultist_Archetype_FastCircles=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Curator ~ Extensive Collection|PRECLASS:1,Occultist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Curator ~ Split Focus|PRECLASS:1,Occultist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Curator ~ Adaptable Powers|PRECLASS:1,Occultist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Curator ~ Relic Resistance|PRECLASS:1,Occultist=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Curator ~ Complex Collection|PRECLASS:1,Occultist=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Curator ~ Mental Catalog|PRECLASS:1,Occultist=8"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_Implements|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_Implement6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_Implement14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_MentalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_FocusPowers3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_ShiftFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_OutsideContact|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_MagicCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_BindingCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_FastCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_Implement6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_Implement14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_FocusPowers3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_ShiftFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_OutsideContact|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_MagicCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_BindingCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_FastCircles|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 955,
+    "record_key": "Occultist Archetype ~ Curator"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

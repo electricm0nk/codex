@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hooded Champion ~ Combat Style",
+    "name": "Combat Style",
+    "class": "Hooded Champion",
+    "description": "The hooded champion must select the archery combat style.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hooded Champion ~ Combat Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hooded Champion Class Feature.Ranger Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The hooded champion must select the archery combat style."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ranger Combat Style ~ Archery"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Swashbuckler's Grace|PREVARGTEQ:RangerLVL,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Evasive|PREVARGTEQ:RangerLVL,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Swashbuckler's Edge|PREVARGTEQ:RangerLVL,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Cheat Death|PREVARGTEQ:RangerLVL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Combat Style|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3547,
+    "record_key": "Hooded Champion ~ Combat Style"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

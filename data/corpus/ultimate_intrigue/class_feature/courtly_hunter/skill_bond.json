@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Courtly Hunter ~ Skill Bond",
+    "name": "Skill Bond",
+    "class": "Courtly Hunter",
+    "description": "A courtly hunter's animal companion gains the courtly hunter's class skills as class skills. Her animal companion can use the courtly hunter's skill ranks in a skill in place of its own, but only to a maximum of the courtly hunter's hunter level (for instance, if a character had 3 levels in courtly hunter and 5 ranks in Diplomacy, her animal companion could either share 3 ranks with skill bond or use its own ranks, whichever would result in a higher total skill bonus).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Courtly Hunter ~ Skill Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.CourtlyHunterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A courtly hunter's animal companion gains the courtly hunter's class skills as class skills. Her animal companion can use the courtly hunter's skill ranks in a skill in place of its own, but only to a maximum of the courtly hunter's hunter level (for instance, if a character had 3 levels in courtly hunter and 5 ranks in Diplomacy, her animal companion could either share 3 ranks with skill bond or use its own ranks, whichever would result in a higher total skill bonus)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 396,
+    "record_key": "Courtly Hunter ~ Skill Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

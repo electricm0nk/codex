@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Verminous Hunter Vermin Companion Status ~ Dead",
+    "name": "Dead",
+    "class": "Verminous Hunter Vermin Companion Status",
+    "description": "Your vermin companion is dead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verminous Hunter Vermin Companion Status ~ Dead"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HunterVerminCompanionStatus"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "Your vermin companion is dead."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VerminousHunterACDead|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3256,
+    "record_key": "Verminous Hunter Vermin Companion Status ~ Dead"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

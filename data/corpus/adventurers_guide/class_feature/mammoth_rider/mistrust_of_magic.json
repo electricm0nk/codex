@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mammoth Rider ~ Mistrust of Magic",
+    "name": "Mistrust of Magic",
+    "class": "Mammoth Rider",
+    "description": "As long as a mammoth rider doesnӴ have levels in a class that grants arcane spellcasting ability, she gains a +2 morale bonus on saving throws against arcane spells. If she has no levels in classes granting divine spellcasting ability, she gains a +2 morale bonus on saving throws against divine spells. If she has no levels in classes granting psychic spellcasting ability, she gains a +2 morale bonus on saving throws against psychic spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mammoth Rider ~ Mistrust of Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mammoth Rider Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as a mammoth rider doesnӴ have levels in a class that grants arcane spellcasting ability, she gains a +2 morale bonus on saving throws against arcane spells. If she has no levels in classes granting divine spellcasting ability, she gains a +2 morale bonus on saving throws against divine spells. If she has no levels in classes granting psychic spellcasting ability, she gains a +2 morale bonus on saving throws against psychic spells."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 361,
+    "record_key": "Mammoth Rider ~ Mistrust of Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Savant Fire School ~ Fire Jet",
+    "name": "Fire Jet",
+    "class": "Savant Fire School",
+    "description": "As a standard action, you can send forth a 20-foot line of fire. Anyone in this line takes 1d6+%1 points of fire damage. A successful Reflex save DC %2 halves this damage. Creatures that fail their saving throw catch fire and take 1d6 points of fire damage on the following round. Creatures that catch fire can avoid this damage by taking a full-round action to extinguish the flames by making a DC 15 Reflex save. Rolling on the ground gives a +2 circumstance bonus on the save. Dousing the creature with water automatically extinguishes the flame. You can use this ability %3 times per day.|ArcanistSavantSchoolLVL/2|ArcanistSavantSchoolLVL/2+INT+10|INT+3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Fire School ~ Fire Jet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can send forth a 20-foot line of fire. Anyone in this line takes 1d6+%1 points of fire damage. A successful Reflex save DC %2 halves this damage. Creatures that fail their saving throw catch fire and take 1d6 points of fire damage on the following round. Creatures that catch fire can avoid this damage by taking a full-round action to extinguish the flames by making a DC 15 Reflex save. Rolling on the ground gives a +2 circumstance bonus on the save. Dousing the creature with water automatically extinguishes the flame. You can use this ability %3 times per day.|ArcanistSavantSchoolLVL/2|ArcanistSavantSchoolLVL/2+INT+10|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2617,
+    "record_key": "Savant Fire School ~ Fire Jet"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Menhir Guardian ~ Rebuking Strike",
+    "name": "Rebuking Strike",
+    "class": "Menhir Guardian",
+    "description": "A menhir guardian can channel his ki into a devastating strike that repels his enemies. A menhir guardian must declare that he is using rebuking strike before making a natural attack with his claws. On a hit, a foe damaged by the menhir guardian's claws must succeed at a Fortitude saving throw (DC %1) or be pushed back %2 feet directly away from the menhir guardian. If this movement would be blocked by a solid object, the target of rebuking strike takes 1d6 points of damage per 10 feet moved and falls prone at the end of the movement.|10+MonkLVL/2+WIS|5*((MonkLVL+3)/4)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Menhir Guardian ~ Rebuking Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Features.MenhirGuardianClassFeatures.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A menhir guardian can channel his ki into a devastating strike that repels his enemies. A menhir guardian must declare that he is using rebuking strike before making a natural attack with his claws. On a hit, a foe damaged by the menhir guardian's claws must succeed at a Fortitude saving throw (DC %1) or be pushed back %2 feet directly away from the menhir guardian. If this movement would be blocked by a solid object, the target of rebuking strike takes 1d6 points of damage per 10 feet moved and falls prone at the end of the movement.|10+MonkLVL/2+WIS|5*((MonkLVL+3)/4)"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature that fails its save against a menhir guardian's rebuking strike also has its speed reduced by half for %1 rounds.|MonkLVL|PRECLASS:1,Monk=5"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature that fails its save is also affected by aversion (OA), making it avoid the menhir guardian's current location for %1 rounds.|MonkLVL|PRECLASS:1,Monk=15"
+      },
+      {
+        "key": "DESC",
+        "value": "The menhir guardian can attempt a rebuking strike %1 times per day but only once per round.|MonkLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 814,
+    "record_key": "Menhir Guardian ~ Rebuking Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Apocalypse Mystery ~ Defy Electricity",
+    "name": "Defy Electricity",
+    "class": "Apocalypse Mystery",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Apocalypse Mystery ~ Defy Electricity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ApocalypseMysteryEnergyType"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ApocalypseElectricityResist|0"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ApocalypseElectricityResist|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|min(20,ApocalypseElectricityResist)|TYPE=Resistance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 110,
+    "record_key": "Apocalypse Mystery ~ Defy Electricity"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

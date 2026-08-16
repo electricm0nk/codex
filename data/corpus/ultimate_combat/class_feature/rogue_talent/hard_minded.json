@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Talent ~ Hard Minded",
+    "name": "Hard Minded",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent is hard to fool with illusions. She automatically receives a save to disbelieve any illusion she can see each round at the start of her turn, even if she hasn't interacted with it. If she fails a saving throw against an illusion that is not to disbelieve, she can attempt to save again 1 round later at the same DC. She gets only one extra chance to succeed at her saving throw.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Hard Minded"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent is hard to fool with illusions. She automatically receives a save to disbelieve any illusion she can see each round at the start of her turn, even if she hasn't interacted with it. If she fails a saving throw against an illusion that is not to disbelieve, she can attempt to save again 1 round later at the same DC. She gets only one extra chance to succeed at her saving throw."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1618,
+    "record_key": "Rogue Talent ~ Hard Minded"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

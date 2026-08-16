@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spirit Walker ~ Command Undead",
+    "name": "Command Undead",
+    "class": "Spirit Walker",
+    "description": "A spirit walker gains Command Undead as a bonus feat. A spirit walker can use Command Undead %1 times per day, using his mesmerist level as his cleric level.|SWCommandUndeadUses",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Walker ~ Command Undead"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SWCommandUndeadUses|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A spirit walker gains Command Undead as a bonus feat. A spirit walker can use Command Undead %1 times per day, using his mesmerist level as his cleric level.|SWCommandUndeadUses"
+      },
+      {
+        "key": "DESC",
+        "value": " The DC to resist this effect is increased by 2.|PREVARGTEQ:MesmeristLVL,10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Command Undead"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SWCommandUndeadUses|max(1+CHA,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Command Undead per day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SWCommandUndeadUses"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Spirit Walker ~ Command Undead"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1483,
+    "record_key": "Spirit Walker ~ Command Undead"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

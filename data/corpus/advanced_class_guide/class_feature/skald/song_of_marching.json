@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skald ~ Song of Marching",
+    "name": "Song of Marching",
+    "class": "Skald",
+    "description": "At 3rd level, a skald can use raging song to inspire his allies to move faster without suffering from fatigue. By expending 1 round of raging song, the skald invigorates allies within 60 feet, who may hustle (Core Rulebook 170) for the next hour; this movement counts as a walk (not a hustle) for the purpose of accruing nonlethal damage and fatigue. The skald must continue to perform the song for the remainder of the hour, otherwise its effects end, but only 1 round of raging song is expended for that hour.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald ~ Song of Marching"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SkaldSongOfMarching.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a skald can use raging song to inspire his allies to move faster without suffering from fatigue. By expending 1 round of raging song, the skald invigorates allies within 60 feet, who may hustle (Core Rulebook 170) for the next hour; this movement counts as a walk (not a hustle) for the purpose of accruing nonlethal damage and fatigue. The skald must continue to perform the song for the remainder of the hour, otherwise its effects end, but only 1 round of raging song is expended for that hour."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1740,
+    "record_key": "Skald ~ Song of Marching"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

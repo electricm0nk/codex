@@ -1,0 +1,183 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kineticist Archetype ~ Elemental Annihilator",
+    "name": "Elemental Annihilator",
+    "class": "Kineticist Archetype",
+    "description": "For some kineticists, nothing in life is as sweet as destruction and pain. Elemental annihilators pursue only uses of their powers that harm others.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Archetype ~ Elemental Annihilator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Kineticist Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Kineticist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Kineticist Archetype ~ Elemental Annihilator],[!PREFACT:1,ABILITIES,Kineticist_Archetype_BasicUtilityWildTalent=True,Kineticist_Archetype_Infusion1=True,Kineticist_Archetype_Infusion5=True,Kineticist_Archetype_Infusion9=True,Kineticist_Archetype_Infusion3=True,Kineticist_Archetype_Omnikinesis=True,Kineticist_Archetype_UtilityWildTalent2=True,Kineticist_Archetype_UtilityWildTalent4=True,Kineticist_Archetype_UtilityWildTalent6=True,Kineticist_Archetype_UtilityWildTalent12=True,Kineticist_Archetype_UtilityWildTalent16=True,Kineticist_Archetype_UtilityWildTalent20=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "For some kineticists, nothing in life is as sweet as destruction and pain. Elemental annihilators pursue only uses of their powers that harm others."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Elemental Annihilator ~ Devastating Infusion|PRECLASS:1,Kineticist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Elemental Annihilator ~ Dampened Versatility|PRECLASS:1,Kineticist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Elemental Annihilator ~ Bonus Feats|PRECLASS:1,Kineticist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Elemental Annihilator ~ Increased Range|PRECLASS:1,Kineticist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Elemental Annihilator ~ Ever-Present Threat|PRECLASS:1,Kineticist=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Elemental Annihilator ~ Blast Training|PRECLASS:1,Kineticist=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Elemental Annihilator ~ Flurry of Devastation|PRECLASS:1,Kineticist=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Elemental Annihilator ~ Omnicide|PRECLASS:1,Kineticist=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_BasicUtilityWildTalent|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_Infusion1|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_Infusion5|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_Infusion9|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_Infusion3|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_Omnikinesis|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_UtilityWildTalent2|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_UtilityWildTalent4|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_UtilityWildTalent6|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_UtilityWildTalent12|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_UtilityWildTalent16|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_UtilityWildTalent20|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_BasicUtilityWildTalent|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_Infusion1|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_Infusion5|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_Infusion9|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_Infusion3|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_Omnikinesis|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_UtilityWildTalent2|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_UtilityWildTalent4|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_UtilityWildTalent6|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_UtilityWildTalent12|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_UtilityWildTalent16|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_UtilityWildTalent20|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1311,
+    "record_key": "Kineticist Archetype ~ Elemental Annihilator"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

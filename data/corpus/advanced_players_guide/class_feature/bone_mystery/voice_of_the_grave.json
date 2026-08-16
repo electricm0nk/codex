@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bone Mystery ~ Voice of the Grave",
+    "name": "Voice of the Grave",
+    "class": "Bone Mystery",
+    "description": "You can speak with dead, as per the spell, %1 rounds per day. These rounds do not need to be consecutive.|OracleVoiceoftheGraveTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bone Mystery ~ Voice of the Grave"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.BoneRevelation.Supernatural.RoundsPerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleVoiceoftheGraveTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleVoiceoftheGraveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can speak with dead, as per the spell, %1 rounds per day. These rounds do not need to be consecutive.|OracleVoiceoftheGraveTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleVoiceoftheGraveTimes|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleVoiceoftheGraveDC|OracleRevelationDC+classlevel(\"Oracle\")/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %4;Will negates)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 587,
+    "record_key": "Bone Mystery ~ Voice of the Grave"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

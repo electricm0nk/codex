@@ -1,0 +1,127 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bard Archetype ~ Brazen Deceiver",
+    "name": "Brazen Deceiver",
+    "class": "Bard Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Brazen Deceiver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "DESC",
+        "value": "Where other thieves use stealth or intimidation to achieve their goals, the brazen deceiver depends on lies. The Council of Thieves often sends brazen deceivers to acquire blackmail materials, arrange the release of incarcerated agents, or otherwise manipulate events in the Council's favor. Brazen deceivers' techniques come from a dark source. During the reformation of the Council, Sabriune and Aspexia acquired the shattered fragments of an ancient relic called the Totemrix, which belonged to the long-deceased demon lord of shadows, Vyriavaxus.The Council leaders were able to coax remnants of power from the broken artifact. All brazen deceivers are imbued with a fragment of that power during their initiation-not enough to damn a soul or shift alignment, but just enough to give these bards access to the sinister energies they need to deceive."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Brazen Deceiver],[!PREFACT:1,ABILITIES,Bard_Archetype_CounterSong=True,Bard_Archetype_BardDistraction=True,Bard_Archetype_BardicKnowledge=True,Bard_Archetype_WellVersed=True,Bard_Archetype_VersatilePerformance=True,Bard_Archetype_LoreMaster=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brazen Deceiver ~ Deceptive Tale|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brazen Deceiver ~ Shameless Scoundrel|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brazen Deceiver ~ Blatant Subtlety|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brazen Deceiver ~ Invoke Vyriavaxus|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brazen Deceiver ~ Devil's Tongue|PRECLASS:1,Bard=5"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_CounterSong|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_BardDistraction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_CounterSong|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_BardDistraction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_LoreMaster|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 635,
+    "record_key": "Bard Archetype ~ Brazen Deceiver"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

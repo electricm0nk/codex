@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Voice of the Wild ~ Song of the Wild",
+    "name": "Song of the Wild",
+    "class": "Voice of the Wild",
+    "description": "The voice of the wild can use bardic performance to grant an animal aspect to an ally, as if using the hunter's animal focus class feature. The ally must be able to hear or see the performance. The voice of the wild uses his bard level as his hunter level for determining the effect of the animal aspect. The bard can affect a second ally with this performance at 10th level and a third at 17th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Voice of the Wild ~ Song of the Wild"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Voice of the Wild Class Feature.Bard Class Feature.Supernatural.BardicPerformance.BardInspireCompetence.BardDirgeOfDoom.BardInspireHeroics"
+      },
+      {
+        "key": "DESC",
+        "value": "The voice of the wild can use bardic performance to grant an animal aspect to an ally, as if using the hunter's animal focus class feature. The ally must be able to hear or see the performance. The voice of the wild uses his bard level as his hunter level for determining the effect of the animal aspect. The bard can affect a second ally with this performance at 10th level and a third at 17th level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2697,
+    "record_key": "Voice of the Wild ~ Song of the Wild"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fungal Ruin ~ Cyth-V'sug",
+    "name": "Fungal Ruin",
+    "class": "Fungal Ruin",
+    "description": "1/day, you may target a creature with a destruction spell. A creature slain by this effect crumbles into a mound of russet mold (Bestiary p.273) that immediately releases a cloud of spores in a 20-foot-radius burst. This ability functions as a 9th-level spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fungal Ruin ~ Cyth-V'sug"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Destruction,19+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, you may target a creature with a destruction spell. A creature slain by this effect crumbles into a mound of russet mold (Bestiary p.273) that immediately releases a cloud of spores in a 20-foot-radius burst. This ability functions as a 9th-level spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 116,
+    "record_key": "Fungal Ruin ~ Cyth-V'sug"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

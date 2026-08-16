@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Totem-Bonded ~ Primeval Companion",
+    "name": "Primeval Companion",
+    "class": "Totem-Bonded",
+    "description": "The totem-bonded adopts a powerful animal native to the region-often one suited to the cold tundra-selected.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Totem-Bonded ~ Primeval Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fighter Class Feature.ArmigerClassFeatures.SpecialQuality.Extraordinary.Animal Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      },
+      {
+        "key": "DESC",
+        "value": "The totem-bonded adopts a powerful animal native to the region-often one suited to the cold tundra-selected."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Animal Companion ~ Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalCompanionLVL|HunterLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|HunterLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Animal Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Herd Animal (Aurochs)),Companion (Badger (Wolverine)),Companion (Bear),Companion (Cat (Small (Cheetah))),Companion (Cat (Small (Leopard))),Companion (Cat (Big (Lion))),Companion (Cat (Big (Tiger))),Companion (Elk),Companion (Raven (Giant)),Companion (Elephant (Mastodon)),Companion (Rhinoceros),Companion (Wolf),Companion (Walrus),Companion (Archelon),Companion (Megafauna (Arsinoitherium)),Companion (Baluchitherium),Companion (Basilosaurus),Companion (Brontotherium),Companion (Chalicotherium),Companion (Deinotherium),Companion (Elasmotherium),Companion (Embolotherium),Companion (Megafauna (Gylptodon)),Companion (Kaprosuchus),Companion (Megalania),Companion (Megafauna (Megaloceros)),Companion (Megafauna (Megatherium)),Companion (Moa),Companion (Titanoboa),Companion (Uintatherium),Companion (Saber-Toothed Cat)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 871,
+    "record_key": "Totem-Bonded ~ Primeval Companion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

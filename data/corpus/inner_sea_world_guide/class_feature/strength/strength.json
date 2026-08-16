@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Strength ~ HK",
+    "name": "Strength",
+    "class": "Strength",
+    "description": "In strength and brawn there is truth - your faith gives you incredible might and power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strength ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Domain.HKDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainStrengthLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainStrengthDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainStrengthTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "In strength and brawn there is truth - your faith gives you incredible might and power."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Strength Surge|PREVARGTEQ:HellknightLvl,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Might of the Gods|PREVARGTEQ:HellknightLvl,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainStrengthLVL|HellknightLvl"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainStrengthDC|HKDisciplineDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainStrengthTimes|HKDiscipline"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 100,
+    "record_key": "Strength ~ HK"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

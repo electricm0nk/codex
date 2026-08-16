@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shigenjo ~ Bonus Spells",
+    "name": "Bonus Spells",
+    "class": "Shigenjo",
+    "description": "true strike (2nd), alter self (4th), divine power (8th), magic jar (12th), ki shout (14th, Ultimate Magic), moment of prescience (16th). These bonus spells replace the shigenjo's mystery bonus spells at these levels.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shigenjo ~ Bonus Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "true strike (2nd), alter self (4th), divine power (8th), magic jar (12th), ki shout (14th, Ultimate Magic), moment of prescience (16th). These bonus spells replace the shigenjo's mystery bonus spells at these levels."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=2|True Strike|Oracle=4|Alter Self|Oracle=8|Divine Power|Oracle=12|Magic Jar|Oracle=14|Ki Shout|Oracle=16|Moment of Prescience"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 752,
+    "record_key": "Shigenjo ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

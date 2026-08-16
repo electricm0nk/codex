@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pathfinder Savant ~ Symbol Master",
+    "name": "Symbol Master",
+    "class": "Pathfinder Savant",
+    "description": "You gain power over magical symbol spells (such as symbol of death). When you cast any symbol spell, the save DC to resist its effects, the Perception DC to notice the symbol, and the Disable Device DC to remove the symbol increase by 2. Once per day as an immediate action, you can double the bonus granted by your sigil master ability when you attempts a saving throw against a symbol. You can activate this ability after you roll the saving throw, but must do so before the results are revealed. You do not automatically fail a saving throw against a symbol effect on a natural 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Savant ~ Symbol Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder Savant Class Features.ClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain power over magical symbol spells (such as symbol of death). When you cast any symbol spell, the save DC to resist its effects, the Perception DC to notice the symbol, and the Disable Device DC to remove the symbol increase by 2. Once per day as an immediate action, you can double the bonus granted by your sigil master ability when you attempts a saving throw against a symbol. You can activate this ability after you roll the saving throw, but must do so before the results are revealed. You do not automatically fail a saving throw against a symbol effect on a natural 1."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 409,
+    "record_key": "Pathfinder Savant ~ Symbol Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

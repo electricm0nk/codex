@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bloody Jake ~ Favored Terrain",
+    "name": "Favored Terrain",
+    "class": "Bloody Jake",
+    "description": "A bloody jake can select a type of terrain from the favored terrain table for rangers (Pathfinder RPG Core Rulebook 65), though he is restricted to cold, desert, forest, jungle, mountains, plains, and swamp. His bonuses when in this terrain increase by 2 at 5th level and every 5 slayer levels thereafter, though he does not gain the ability to select additional favored terrains unless he takes the terrain mastery rogue talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloody Jake ~ Favored Terrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "DESC",
+        "value": "A bloody jake can select a type of terrain from the favored terrain table for rangers (Pathfinder RPG Core Rulebook 65), though he is restricted to cold, desert, forest, jungle, mountains, plains, and swamp. His bonuses when in this terrain increase by 2 at 5th level and every 5 slayer levels thereafter, though he does not gain the ability to select additional favored terrains unless he takes the terrain mastery rogue talent."
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredTerrainBaseBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainBaseBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainBaseBonus|2*(SlayerLVL/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Bloody Jake Terrain|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 210,
+    "record_key": "Bloody Jake ~ Favored Terrain"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

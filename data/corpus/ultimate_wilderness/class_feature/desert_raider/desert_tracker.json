@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Desert Raider ~ Desert Tracker",
+    "name": "Desert Tracker",
+    "class": "Desert Raider",
+    "description": "A desert raider is immune to the dazzled condition. A desert raider adds a +%1 bonus on Survival skill checks to follow or identify tracks in desert terrain.|max(1,RogueLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Desert Raider ~ Desert Tracker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.DesertRaiderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A desert raider is immune to the dazzled condition. A desert raider adds a +%1 bonus on Survival skill checks to follow or identify tracks in desert terrain.|max(1,RogueLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Survival=Follow or identify tracks/Deserts|max(1,RogueLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 971,
+    "record_key": "Desert Raider ~ Desert Tracker"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

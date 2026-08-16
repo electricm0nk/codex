@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skald Archetype ~ Bacchanal",
+    "name": "Bacchanal",
+    "class": "Skald Archetype",
+    "description": "Bacchanals are skalds who use ecstatic dancing and ribald songs to influence the primal instincts of listeners. To these skalds the passionate frenzy of a celebration or feast shares many features with the violence of combat, and several of their talents blur the line between festival and battle in dramatic ways.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald Archetype ~ Bacchanal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SkaldArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Skald=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Skald Archetype ~ Bacchanal],[!PREFACT:1,ABILITIES,Skald_Archetype_ScribeScroll=True,Skald_Archetype_VersatilePerformance=True,Skald_Archetype_SongOfMarching=True,Skald_Archetype_DirgeOfDoom=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Bacchanals are skalds who use ecstatic dancing and ribald songs to influence the primal instincts of listeners. To these skalds the passionate frenzy of a celebration or feast shares many features with the violence of combat, and several of their talents blur the line between festival and battle in dramatic ways."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bacchanal ~ Fermented Fruit|PRECLASS:1,Skald=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bacchanal ~ Drunken Dancer|PRECLASS:1,Skald=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bacchanal ~ Song of Urging|PRECLASS:1,Skald=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bacchanal ~ Maddening Dance|PRECLASS:1,Skald=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_ScribeScroll|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_SongOfMarching|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_ScribeScroll|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_SongOfMarching|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_DirgeOfDoom|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1115,
+    "record_key": "Skald Archetype ~ Bacchanal"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

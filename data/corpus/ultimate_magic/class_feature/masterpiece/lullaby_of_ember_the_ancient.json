@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Masterpiece ~ Lullaby of Ember the Ancient",
+    "name": "Lullaby of Ember the Ancient",
+    "class": "Masterpiece",
+    "description": "You can put powerful creatures to sleep with the power of your song.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterpiece ~ Lullaby of Ember the Ancient"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "The Lullaby of Ember the Ancient"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.Masterpiece"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LullabyOfEmberTheAncientDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can put powerful creatures to sleep with the power of your song."
+      },
+      {
+        "key": "DESC",
+        "value": " When you activate this soothing performance, one target within close range falls asleep as if affected by deep slumber (DC %1) as long as you maintain the performance. Unlike the spell (which affects weaker creatures first), this masterpiece targets a specific creature of your choice. Although this lullaby does have words, it is not a language-dependent effect.  Use: 1 bardic performance round per round.  Action: 1 round.|LullabyOfEmberTheAncientDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LullabyOfEmberTheAncientDC|10+(MasterpieceLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 177,
+    "record_key": "Masterpiece ~ Lullaby of Ember the Ancient"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Variant Channeling - Bravery/Valor",
+    "name": "Variant Channeling - Bravery/Valor",
+    "class": null,
+    "description": "Heal - Creatures affected by fear may attempt another saving throw and receive a +%1 channel bonus on the roll. A creature unaffected by fear gains a +%1 channel bonus to its Armor Class until the end of your next turn and on its attack roll if it makes a charge attack before your next turn. Harm - This works like a standard channel (not halved).|ChannelModifier",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VariantChanneling"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChannelModifier|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Heal - Creatures affected by fear may attempt another saving throw and receive a +%1 channel bonus on the roll. A creature unaffected by fear gains a +%1 channel bonus to its Armor Class until the end of your next turn and on its attack roll if it makes a charge attack before your next turn. Harm - This works like a standard channel (not halved).|ChannelModifier"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelModifier|min(5,1+floor(ClericChannelEnergyLVL/5))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 199,
+    "record_key": "Variant Channeling - Bravery/Valor"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

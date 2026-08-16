@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Druid Domain ~ Air",
+    "name": "Air",
+    "class": "Druid Domain",
+    "description": "You can manipulate lightning, mist, and wind, traffic with air creatures, and are resistant to electricity damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Domain ~ Air"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Domain ~ Base"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "DruidAirAllowed,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manipulate lightning, mist, and wind, traffic with air creatures, and are resistant to electricity damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Druid=1|Obscuring Mist|Druid=2|Wind Wall|Druid=3|Gaseous Form|Druid=4|Air Walk|Druid=5|Control Winds|Druid=6|Chain Lightning|Druid=7|Elemental Body IV (Air Only)|Druid=8|Whirlwind|Druid=9|Elemental Swarm (Air Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 785,
+    "record_key": "Druid Domain ~ Air"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

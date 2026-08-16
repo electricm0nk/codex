@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Augmented Form ~ Detect Thoughts",
+    "name": "Detect Thoughts",
+    "class": "Augmented Form",
+    "description": "The druid can use detect thoughts at will.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Augmented Form ~ Detect Thoughts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural.AugmentedFormSelection"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=9|Detect Thoughts"
+      },
+      {
+        "key": "DESC",
+        "value": "The druid can use detect thoughts at will."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.197"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 925,
+    "record_key": "Augmented Form ~ Detect Thoughts"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

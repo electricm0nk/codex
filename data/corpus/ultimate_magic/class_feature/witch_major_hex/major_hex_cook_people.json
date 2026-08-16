@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Major Hex ~ Cook People",
+    "name": "Major Hex - Cook People",
+    "class": "Witch Major Hex",
+    "description": "DC %1 |WitchHexDC_CookPeople",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Major Hex ~ Cook People"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.WitchHex.MajorHex"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Cauldron"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMajorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,10]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_CookPeople|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_CookPeople"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create fabulous spells by cooking an intelligent humanoid creature in your cauldron, either alive or dead. Using this hex creates one meal or serving of food of your choice, typically a delicious stew or a dough suitable for cookies, pastries, or other desserts. Cooking the victim takes 1 hour. Eating the food provides one of the following benefits for 1 hour: age resistance*, bear's endurance, bull's strength, cat's grace, eagle's splendor, fox's cunning, neutralize poison (instantaneous), owl's wisdom, remove disease (instantaneous). Alternatively, you can shape the dough into a Small, humanlike creature, animating it as a homunculus for 1 hour. Using this hex or knowingly eating its food is an evil act."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Cook People"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_CookPeople|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_CookPeople|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Cook People)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 725,
+    "record_key": "Witch Major Hex ~ Cook People"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

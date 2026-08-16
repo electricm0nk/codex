@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Phantom Thief Talent ~ Gossip Collector",
+    "name": "Gossip Collector",
+    "class": "Phantom Thief Talent",
+    "description": "The phantom thief sits at the center of a web of gossip, granting him access to the latest scuttlebutt with baffling speed. Whenever the phantom thief is presented with a topic about which he would normally need to spend 1d4 hours to gather information, he must spend only 1d2 hours instead. If he has the renown social talent and gathers the information in his area of renown, he must instead spend only 1d4 x 10 minutes, and if he beats the DC to gather a piece of information by 20 or more, he knows that piece of information without spending any time at all; he has simply already heard that gossip. This ability doesn't allow him to gather information that isn't available in the locale he is canvassing, even if that locale is his area of renown.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantom Thief Talent ~ Gossip Collector"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Phantom Thief ~ Broad Education"
+      },
+      {
+        "key": "DESC",
+        "value": "The phantom thief sits at the center of a web of gossip, granting him access to the latest scuttlebutt with baffling speed. Whenever the phantom thief is presented with a topic about which he would normally need to spend 1d4 hours to gather information, he must spend only 1d2 hours instead. If he has the renown social talent and gathers the information in his area of renown, he must instead spend only 1d4 x 10 minutes, and if he beats the DC to gather a piece of information by 20 or more, he knows that piece of information without spending any time at all; he has simply already heard that gossip. This ability doesn't allow him to gather information that isn't available in the locale he is canvassing, even if that locale is his area of renown."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 872,
+    "record_key": "Phantom Thief Talent ~ Gossip Collector"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

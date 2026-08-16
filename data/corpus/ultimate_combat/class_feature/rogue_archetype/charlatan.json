@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Archetype ~ Charlatan",
+    "name": "Charlatan",
+    "class": "Rogue Archetype",
+    "description": "A charlatan is a master of lies and deception. Whether creating simple cons or elaborately woven hoaxes capable of swaying the masses and those in positions of power, a charlatan is often a purveyor of snake-oil, forgeries, and rumormongering.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ Charlatan"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RogueArchetype.RogueTrapFinding.RogueTrapSense"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Charlatan],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTrapFinding,TYPE.RogueTrapSense]"
+      },
+      {
+        "key": "DESC",
+        "value": "A charlatan is a master of lies and deception. Whether creating simple cons or elaborately woven hoaxes capable of swaying the masses and those in positions of power, a charlatan is often a purveyor of snake-oil, forgeries, and rumormongering."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Charlatan ~ Natural Born Liar|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Charlatan ~ Grand Hoax|PRECLASS:1,Rogue=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Charlatan ~ Rogue Talents|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Charlatan ~ Advanced Talents|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Rogue"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1669,
+    "record_key": "Rogue Archetype ~ Charlatan"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

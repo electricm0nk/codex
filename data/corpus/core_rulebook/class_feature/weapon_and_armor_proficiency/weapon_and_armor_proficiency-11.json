@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Weapon and Armor Proficiency ~ Paladin",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Weapon and Armor Proficiency",
+    "description": "Paladins are proficient with all simple and martial weapons, with all types of armor (heavy, medium, and light), and with shields (except tower shields).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Weapon and Armor Proficiency ~ Paladin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "Paladins are proficient with all simple and martial weapons, with all types of armor (heavy, medium, and light), and with shields (except tower shields)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Auto"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Simple|PREVAREQ:Paladin_CF_WeaponProficiencySimple,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Martial|PREVAREQ:Paladin_CF_WeaponProficiencyMartial,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Heavy|PREVAREQ:Paladin_CF_ArmorProficiencyHeavy,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Light|PREVAREQ:Paladin_CF_ArmorProficiencyLight,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Medium|PREVAREQ:Paladin_CF_ArmorProficiencyMedium,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shield Prof|PREVAREQ:Paladin_CF_ShieldProficiency,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2818,
+    "record_key": "Weapon and Armor Proficiency ~ Paladin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

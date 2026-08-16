@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wave Warden Feat ~ Rapid Reload (Crossbow (Hand))",
+    "name": "Rapid Reload (Crossbow (Hand))",
+    "class": "Wave Warden Feat",
+    "description": "You can reload your chosen type of crossbow quickly.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wave Warden Feat ~ Rapid Reload (Crossbow (Hand))"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WaveWardenBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Ranger Archetype ~ Wave Warden"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=2"
+      },
+      {
+        "key": "DESC",
+        "value": "You can reload your chosen type of crossbow quickly."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Rapid Reload (Crossbow (Hand))|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 900,
+    "record_key": "Wave Warden Feat ~ Rapid Reload (Crossbow (Hand))"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

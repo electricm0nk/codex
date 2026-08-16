@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Crane Style",
+    "name": "Crane Style",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your unarmed fighting techniques blend poise with graceful defense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Crane Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Style"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Dodge,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:1,[PRETOTALAB:2],[PREVARGTEQ:WarpriestBonusFeatBAB,2]],[PREVARGTEQ:MonkFeatQualify,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FightingDefensivelyAttackPenalty|-2"
+      },
+      {
+        "key": "DESC",
+        "value": "Your unarmed fighting techniques blend poise with graceful defense."
+      },
+      {
+        "key": "DESC",
+        "value": " You take only a -2 penalty on attack rolls for fighting defensively. While using this style and fighting defensively or using the total defense action, you gain an additional +1 dodge bonus to your Armor Class."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FightingDefensivelyACBonus|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Crane Style"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4539,
+    "record_key": "Warpriest Bonus Feat ~ Crane Style"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

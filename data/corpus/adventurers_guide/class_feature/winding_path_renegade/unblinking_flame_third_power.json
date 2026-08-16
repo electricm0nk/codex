@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Winding Path Renegade ~ Unblinking Flame Third Power",
+    "name": "Unblinking Flame Third Power",
+    "class": "Winding Path Renegade",
+    "description": "The winding path renegade becomes as difficult to contain as a flame. Once per day as a full-round action, she can transform into liquid flame, instantly escaping all bonds as if under the effect of freedom of movement and moving up to her speed. When moving as part of this ability, she can move through creatures' squares freely and doesn't provoke attacks of opportunity. She deals 10d6 points of fire damage to any creature whose square she enters during this movement. A successful Reflex saving throw (DC %1) halves this damage.|10+BrawlerLVL/2+DEX",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Winding Path Renegade ~ Unblinking Flame Third Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.WindingPathRenegadeClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      },
+      {
+        "key": "DESC",
+        "value": "The winding path renegade becomes as difficult to contain as a flame. Once per day as a full-round action, she can transform into liquid flame, instantly escaping all bonds as if under the effect of freedom of movement and moving up to her speed. When moving as part of this ability, she can move through creatures' squares freely and doesn't provoke attacks of opportunity. She deals 10d6 points of fire damage to any creature whose square she enters during this movement. A successful Reflex saving throw (DC %1) halves this damage.|10+BrawlerLVL/2+DEX"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 737,
+    "record_key": "Winding Path Renegade ~ Unblinking Flame Third Power"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

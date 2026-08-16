@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Transporter ~ Plot Course",
+    "name": "Plot Course",
+    "class": "Transporter",
+    "description": "A transporter can spend 1d4 hours and attempt a DC 15 Knowledge (geography) check to plot a subtle course of travel between his current location and another destination. The transporter's course of travel is almost never direct, as it is optimized for smuggling. Thereafter, the transporter gains a +2 bonus on initiative, Knowledge (geography), Perception, Stealth, and Survival checks involving traveling along his plotted course.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Transporter ~ Plot Course"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.TransporterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A transporter can spend 1d4 hours and attempt a DC 15 Knowledge (geography) check to plot a subtle course of travel between his current location and another destination. The transporter's course of travel is almost never direct, as it is optimized for smuggling. Thereafter, the transporter gains a +2 bonus on initiative, Knowledge (geography), Perception, Stealth, and Survival checks involving traveling along his plotted course."
+      },
+      {
+        "key": "DESC",
+        "value": " If the transporter's Knowledge (geography) check exceeds the DC by 10, the bonuses increase to +4.|PRECLASS:1,Ranger=8"
+      },
+      {
+        "key": "DESC",
+        "value": " If this check exceeds the DC by 20, the bonuses increase to +6.|PRECLASS:1,Ranger=13"
+      },
+      {
+        "key": "DESC",
+        "value": " Finally, if the transporter's check exceeds the DC by 30, the bonuses increase to +8.|PRECLASS:1,Ranger=18"
+      },
+      {
+        "key": "DESC",
+        "value": " A transporter can gain the benefits of only a single plotted course at any given time. If the transporter ever strays from the course or attempts to plot a new course for any reason, he loses the benefits of his current course immediately. A transporter can retry his Knowledge (geography) check to plot a course as long as he spends 1d4 hours each time."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 686,
+    "record_key": "Transporter ~ Plot Course"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

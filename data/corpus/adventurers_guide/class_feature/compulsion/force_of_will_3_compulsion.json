@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Compulsion ~ HKFow3",
+    "name": "Force of Will 3 (Compulsion)",
+    "class": "Compulsion",
+    "description": "You gain a +2 bonus on Will saves against spells with the compulsion subschool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Compulsion ~ HKFow3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HKFoW3"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Compulsion ~ HKFow1,Compulsion ~ HKFoW2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +2 bonus on Will saves against spells with the compulsion subschool."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 Will vs. compulsion spells"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 239,
+    "record_key": "Compulsion ~ HKFow3"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

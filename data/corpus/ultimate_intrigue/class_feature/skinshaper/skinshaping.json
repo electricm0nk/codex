@@ -1,0 +1,105 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skinshaper ~ Skinshaping",
+    "name": "Skinshaping",
+    "class": "Skinshaper",
+    "description": "A skinshaper gains the ability to turn herself into any Small or Medium humanoid and back again. This ability functions as per alter self, except as noted here. The effect lasts for %1 hours, or until the skinshaper changes back. Changing form is a standard action and doesn't provoke an attack of opportunity. The skinshaper must be familiar with the form she has chosen.|DruidLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skinshaper ~ Skinshaping"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.SkinshaperClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SkinshapingActiveActive|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A skinshaper gains the ability to turn herself into any Small or Medium humanoid and back again. This ability functions as per alter self, except as noted here. The effect lasts for %1 hours, or until the skinshaper changes back. Changing form is a standard action and doesn't provoke an attack of opportunity. The skinshaper must be familiar with the form she has chosen.|DruidLVL"
+      },
+      {
+        "key": "DESC",
+        "value": " She can use this ability %1 times per day.|(DruidLVL-2)/2|!PRECLASS:1,Druid=20"
+      },
+      {
+        "key": "DESC",
+        "value": " She can use skinshaping at will.|PRECLASS:1,Druid=20"
+      },
+      {
+        "key": "DESC",
+        "value": " The skinshaper learns to intuitively use her body as a weapon. While skinshaping, she gains the benefit of the Improved Unarmed Strike feat, and her unarmed strike deals damage as if she were a level %1 monk.|DruidLVL-3"
+      },
+      {
+        "key": "DESC",
+        "value": " A skinshaper gains the ability to channel the versatile nature of humanoids to enhance her body and mind. Whenever she uses skinshaping to assume a humanoid shape other than her own, she gains a +2 enhancement bonus to any one ability score. The bonus persists as long as she remains in that form. At 10th, 14th, and 18th levels, she gains an additional +2 enhancement bonus to one ability score. She can distribute these bonuses as she wishes in increments of +2, but the enhancement bonus on any single ability score cannot exceed +4.|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "DESC",
+        "value": " A skinshaper can imitate humanoid creatures even more accurately. She gains any of the following abilities that the form she assumes has: darkvision 90 feet, low-light vision, scent, climb 60 feet, fly 60 feet (good maneuverability), swim 60 feet, ferocity, orc ferocity, and hold breath. If the form she assumes has the aquatic subtype, she gains the aquatic subtype and the amphibious special quality.|PRECLASS:1,Druid=8"
+      },
+      {
+        "key": "DESC",
+        "value": " A skinshaper can access the racial memory of the humanoid she is imitating. If the form she assumes has any of the following racial abilities, she gains those abilities: defensive training, hatred, poison use, sneak attack +2d6, stability, and weapon familiarity. Additionally, she can speak any racial languages of the chosen form.|PRECLASS:1,Druid=12"
+      },
+      {
+        "key": "DESC",
+        "value": " A skinshaper gains the racial skill bonuses of the imitated humanoid, to a maximum of a +4 bonus on a given skill. The skinshaper cannot benefit from any variable racial skill bonuses associated with the chosen form (such as gnomes' racial bonus on any one Craft or Profession skill).|PRECLASS:1,Druid=16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Skinshaper ~ Unarmed Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Skinshaper ~ Ability Enhancement I|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Skinshaper ~ Ability Enhancement II|PRECLASS:1,Druid=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Skinshaper ~ Ability Enhancement III|PRECLASS:1,Druid=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Skinshaper ~ Ability Enhancement IV|PRECLASS:1,Druid=18"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|SkinshapingActiveActive|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 334,
+    "record_key": "Skinshaper ~ Skinshaping"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

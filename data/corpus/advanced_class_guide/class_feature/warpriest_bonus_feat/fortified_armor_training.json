@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Fortified Armor Training",
+    "name": "Fortified Armor Training",
+    "class": "Warpriest Bonus Feat",
+    "description": "You have learned to let your armor bear the brunt of the worst attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Fortified Armor Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREPROFWITHSHIELD:1,TYPE.Tower,TYPE.Light,TYPE.Heavy],[PREPROFWITHARMOR:1,TYPE.Light,TYPE.Medium,TYPE.Heavy]"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned to let your armor bear the brunt of the worst attacks."
+      },
+      {
+        "key": "DESC",
+        "value": " If an opponent scores a critical hit against you, you can turn the critical hit into a normal hit. If you do, either your armor or your shield gains the broken condition (your choice)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Fortified Armor Training"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4452,
+    "record_key": "Warpriest Bonus Feat ~ Fortified Armor Training"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

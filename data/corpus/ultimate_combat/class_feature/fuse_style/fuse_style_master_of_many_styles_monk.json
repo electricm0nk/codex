@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fuse Style ~ Master of Many Styles Monk",
+    "name": "Fuse Style ~ Master of Many Styles Monk",
+    "class": "Fuse Style",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fuse Style ~ Master of Many Styles Monk"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=8"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Monk Archetype ~ Master Of Many Styles"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants Master of Many Styles Monks bonuses to attack based on the number of styles active"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|TOHIT|%CHOICE|TYPE=Untyped"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=5|TITLE=Choose number of styles active"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1094,
+    "record_key": "Fuse Style ~ Master of Many Styles Monk"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

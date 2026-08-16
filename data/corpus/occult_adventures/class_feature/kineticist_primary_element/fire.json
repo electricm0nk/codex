@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kineticist Primary Element ~ Fire",
+    "name": "Fire",
+    "class": "Kineticist Primary Element",
+    "description": "Kineticists who focus on the element of fire are called pyrokineticists. Pyrokineticists wield elemental fire as a potent weapon, and they possess a powerful offense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Primary Element ~ Fire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Kineticist Element.Element ~ Fire"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElementTracker_Fire|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KineticistLVL_Fire|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Kineticists who focus on the element of fire are called pyrokineticists. Pyrokineticists wield elemental fire as a potent weapon, and they possess a powerful offense."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Class Skills: A pyrokineticist adds Escape Artist and Knowledge (nature) to her list of class skills."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Wild Talents: 1st-basic pyrokinesis, burning infusion, cold adaptation, fan of flames, fire sculptor, fire's fury, heat adaptation; 2nd-searing flame; 3rd-eruption, firesight, flame jet, heat wave, smoke storm, torrent; 4th-flash infusion; 5th-flame jet (greater), flame shield, trail of flames, unraveling infusion; 6th-brilliant infusion; 7th- explosion, pure-flame infusion; 9th-from the ashes."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Kineticist Element ~ Universal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Utility Wild Talent|AUTOMATIC|Wild Talent ~ basic pyrokinesis|PREVARGTEQ:Kineticist_CFP_Level,1|PREVAREQ:Kineticist_CF_BasicUtilityWildTalent,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Blast|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElementTracker_Fire|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KineticistLVL_Fire|KineticistLVL_Base|TYPE=Base"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Escape Artist|Knowledge (nature)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 590,
+    "record_key": "Kineticist Primary Element ~ Fire"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

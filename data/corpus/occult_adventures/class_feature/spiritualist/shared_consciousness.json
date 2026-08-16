@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spiritualist ~ Shared Consciousness",
+    "name": "Shared Consciousness",
+    "class": "Spiritualist",
+    "description": "At 1st level, while a phantom is confined in a spiritualist's consciousness (but not while it's fully manifested or banished to the Ethereal Plane), it grants the spiritualist the Skill Focus feat in two skills determined by the phantom's emotional focus, unless the spiritualist already has Skill Focus in those skills. It also grants a +4 bonus on saving throws against all mind-affecting effects; at 12th level, this bonus increases to +8. Lastly, once per day, when the spiritualist fails a saving throw against a mind-affecting effect, as an immediate action she can shunt that effect into the phantom's section of her consciousness instead. When she does so, she is not affected by the mind-affecting effect, but for the normal duration of that effect, the spiritualist loses the bonuses on saving throws against mind-affecting effects and the Skill Focus effects granted by her phantom, and can't use this ability to shunt a mind-affecting effect into the phantom's consciousness or manifest her phantom in any way. When a mind-affecting effect is shunted into the phantom's consciousness, spells such as dispel magic and break enchantment can be cast on the spiritualist to end the effect's duration as if the spiritualist were affected by the mind-affecting effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Shared Consciousness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhantomEmotionalFocus_Anger|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhantomEmotionalFocus_Dedication|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhantomEmotionalFocus_Despair|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhantomEmotionalFocus_Fear|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhantomEmotionalFocus_Hatred|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhantomEmotionalFocus_Jealousy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhantomEmotionalFocus_Zeal|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, while a phantom is confined in a spiritualist's consciousness (but not while it's fully manifested or banished to the Ethereal Plane), it grants the spiritualist the Skill Focus feat in two skills determined by the phantom's emotional focus, unless the spiritualist already has Skill Focus in those skills. It also grants a +4 bonus on saving throws against all mind-affecting effects; at 12th level, this bonus increases to +8. Lastly, once per day, when the spiritualist fails a saving throw against a mind-affecting effect, as an immediate action she can shunt that effect into the phantom's section of her consciousness instead. When she does so, she is not affected by the mind-affecting effect, but for the normal duration of that effect, the spiritualist loses the bonuses on saving throws against mind-affecting effects and the Skill Focus effects granted by her phantom, and can't use this ability to shunt a mind-affecting effect into the phantom's consciousness or manifest her phantom in any way. When a mind-affecting effect is shunted into the phantom's consciousness, spells such as dispel magic and break enchantment can be cast on the spiritualist to end the effect's duration as if the spiritualist were affected by the mind-affecting effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Phantom Emotional Focus|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1276,
+    "record_key": "Spiritualist ~ Shared Consciousness"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

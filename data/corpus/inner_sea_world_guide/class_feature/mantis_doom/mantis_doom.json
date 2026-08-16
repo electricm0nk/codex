@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mantis Doom",
+    "name": "Mantis Doom",
+    "class": null,
+    "description": "You may use Creeping Doom as a spell-like ability 3/day to summon swarms of venomous praying mantises.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.SpecialAttack"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=RedMantisLvl|Creeping Doom,17+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use Creeping Doom as a spell-like ability 3/day to summon swarms of venomous praying mantises."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 164,
+    "record_key": "Mantis Doom"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

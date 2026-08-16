@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Stalker Sense",
+    "name": "Stalker Sense",
+    "class": "Vigilante Talent",
+    "description": "The vigilante has a sense for danger. He always acts on the surprise round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Stalker Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Stalker Sense"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsStalker,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante has a sense for danger. He always acts on the surprise round."
+      },
+      {
+        "key": "DESC",
+        "value": " He gains uncanny dodge|PREVARGTEQ:VigilanteTalentLVL,6|PREVARLT:VigilanteTalentLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": " He gains uncanny dodge, as well as improved uncanny dodge.|PREVARGTEQ:VigilanteTalentLVL,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Uncanny Dodge ~ Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeLVL|1|PREVARGTEQ:VigilanteTalentLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeLVL|1|PREVARGTEQ:VigilanteTalentLVL,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeFlankingLevel|CL|TYPE=EachClass.STACK"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 107,
+    "record_key": "Vigilante Talent ~ Stalker Sense"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Karmic Monk ~ Karmic Strike",
+    "name": "Karmic Strike",
+    "class": "Karmic Monk",
+    "description": "At 1st level, a karmic monk gains bonuses against creatures that attack him first. If a creature the karmic monk has not attacked within the past 24 hours makes an attack roll against the karmic monk or casts an offensive spell that affects the karmic monk, the karmic monk receives a +2 bonus on attack rolls and damage rolls against that creature. If the karmic monk hits such a target, this bonus lasts until the end of the karmic monk's turn (or until the beginning of the karmic monk's next turn, if it isn't his turn). Otherwise, the bonus against a particular creature lasts for 1 minute after the creature's last attack against the karmic monk. This ability replaces stunning fist.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Karmic Monk ~ Karmic Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Karmic Monk Class Feature.Monk Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a karmic monk gains bonuses against creatures that attack him first. If a creature the karmic monk has not attacked within the past 24 hours makes an attack roll against the karmic monk or casts an offensive spell that affects the karmic monk, the karmic monk receives a +2 bonus on attack rolls and damage rolls against that creature. If the karmic monk hits such a target, this bonus lasts until the end of the karmic monk's turn (or until the beginning of the karmic monk's next turn, if it isn't his turn). Otherwise, the bonus against a particular creature lasts for 1 minute after the creature's last attack against the karmic monk. This ability replaces stunning fist."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1797,
+    "record_key": "Karmic Monk ~ Karmic Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

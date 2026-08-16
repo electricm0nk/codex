@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Undead Bloodline ~ Grave Touch",
+    "name": "Grave Touch",
+    "class": "Undead Bloodline",
+    "description": "You can make a melee touch attack as a standard action that causes a living creature to become shaken for %1 rounds. If you touch a shaken creature with this ability, it becomes frightened for 1 round if it has fewer than %2 Hit Dice. You can use this ability %3 times per day.|Sorcerer_UndeadGraveTouch_Duration|Sorcerer_UndeadGraveTouch_AffectedHD|Sorcerer_Undead_BloodlinePower1Times",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead Bloodline ~ Grave Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Undead Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Undead"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Undead_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Undead_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Undead_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_UndeadGraveTouch_Duration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_UndeadGraveTouch_AffectedHD|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make a melee touch attack as a standard action that causes a living creature to become shaken for %1 rounds. If you touch a shaken creature with this ability, it becomes frightened for 1 round if it has fewer than %2 Hit Dice. You can use this ability %3 times per day.|Sorcerer_UndeadGraveTouch_Duration|Sorcerer_UndeadGraveTouch_AffectedHD|Sorcerer_Undead_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_UndeadGraveTouch_Duration|max(Sorcerer_Undead_BloodlinePower1LVL/2,1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_UndeadGraveTouch_AffectedHD|Sorcerer_Undead_BloodlinePower1LVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 round)|Sorcerer_UndeadGraveTouch_Duration|PREVARLTEQ:Sorcerer_UndeadGraveTouch_Duration,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds)|Sorcerer_UndeadGraveTouch_Duration|PREVARGT:Sorcerer_UndeadGraveTouch_Duration,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Undead_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|UndeadBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2553,
+    "record_key": "Undead Bloodline ~ Grave Touch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

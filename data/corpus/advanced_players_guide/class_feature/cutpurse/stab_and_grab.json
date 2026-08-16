@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cutpurse ~ Stab and Grab",
+    "name": "Stab and Grab",
+    "class": "Cutpurse",
+    "description": "At 3rd level, as a full-round action, a cutpurse can make an attack and also make a Sleight of Hand check to steal something from the target of the attack. If the attack deals sneak attack damage, the rogue can use Sleight of Hand to take an item from the creature during combat; otherwise this ability can only be used in a surprise round before the target has acted. If the attack is successful, the target takes a -5 penalty on the Perception check to notice the theft. This ability replaces trap sense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cutpurse ~ Stab and Grab"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RogueClassFeatures.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, as a full-round action, a cutpurse can make an attack and also make a Sleight of Hand check to steal something from the target of the attack. If the attack deals sneak attack damage, the rogue can use Sleight of Hand to take an item from the creature during combat; otherwise this ability can only be used in a surprise round before the target has acted. If the attack is successful, the target takes a -5 penalty on the Perception check to notice the theft. This ability replaces trap sense."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.133"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2965,
+    "record_key": "Cutpurse ~ Stab and Grab"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

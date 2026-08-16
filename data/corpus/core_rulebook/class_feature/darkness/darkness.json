@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Darkness Domain",
+    "name": "Darkness",
+    "class": null,
+    "description": "You manipulate shadows and darkness. In addition, you receive Blind-Fight as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Darkness Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDarknessLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDarknessDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDarknessTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDarknessAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You manipulate shadows and darkness. In addition, you receive Blind-Fight as a bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Blind-Fight"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Touch of Darkness|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Darkness)|PREVARGTEQ:DomainDarknessAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Eyes of Darkness|PREVARGTEQ:DomainDarknessAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDarknessLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDarknessDC|10+(DomainDarknessLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDarknessTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDarknessAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Darkness=1|Obscuring Mist|Darkness=2|Blindness/Deafness (Blindness Only)|Darkness=3|Deeper Darkness|Darkness=4|Shadow Conjuration|Darkness=5|Summon Monster V (1d3 Shadows)|Darkness=6|Shadow Walk|Darkness=7|Power Word Blind|Darkness=8|Shadow Evocation (Greater)|Darkness=9|Shades"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 657,
+    "record_key": "Darkness Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

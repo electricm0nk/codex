@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Hex of Lignification",
+    "name": "Hex of Lignification",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman causes a creature within 30 feet to turn into a twisted, treelike shape for 2 rounds. The target gains hardness 5 but is staggered. A successful Fortitude saving throw negates this effect. Whether or not the save is successful, the creature can't be the target of this hex again for 24 hours.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Hex of Lignification"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanWoodHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Hex of Lignification"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanWoodSpirit,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman causes a creature within 30 feet to turn into a twisted, treelike shape for 2 rounds. The target gains hardness 5 but is staggered. A successful Fortitude saving throw negates this effect. Whether or not the save is successful, the creature can't be the target of this hex again for 24 hours."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1012,
+    "record_key": "Shaman Spirit Hex ~ Hex of Lignification"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

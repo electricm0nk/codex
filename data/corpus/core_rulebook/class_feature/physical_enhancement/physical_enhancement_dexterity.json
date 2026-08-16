@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Physical Enhancement ~ Dexterity",
+    "name": "Physical Enhancement ~ Dexterity",
+    "class": "Physical Enhancement",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "You gain an enhancement bonus to Dexterity. You can change this bonus to a new ability score when you prepare spells."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|DEX|TransmutationPhysicalEnhancementBonus|TYPE=Enhancement"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2687,
+    "record_key": "Physical Enhancement ~ Dexterity"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

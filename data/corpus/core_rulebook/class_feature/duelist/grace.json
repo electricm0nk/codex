@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Duelist ~ Grace",
+    "name": "Grace",
+    "class": "Duelist",
+    "description": "At 4th level, a duelist gains an additional +2 competence bonus on all Reflex saving throws. This ability functions for a duelist only when she is wearing light or no armor and not using a shield.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Duelist ~ Grace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DuelistClassFeatures.SpecialQuality.Extraordinary.Defensive"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a duelist gains an additional +2 competence bonus on all Reflex saving throws. This ability functions for a duelist only when she is wearing light or no armor and not using a shield."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.383"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2990,
+    "record_key": "Duelist ~ Grace"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

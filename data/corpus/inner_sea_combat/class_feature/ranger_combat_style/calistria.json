@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Combat Style ~ Calistria",
+    "name": "Calistria",
+    "class": "Ranger Combat Style",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Combat Style ~ Calistria"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.RangerCombatStyle.ClassFeatures"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREDEITY",
+        "value": "1,Calistria"
+      },
+      {
+        "key": "DESC",
+        "value": "If a ranger selects Calistria's style, he can choose from the following list whenever he gains a combat style feat: Combat Reflexes, Exotic Weapon Proficiency (Whip), Weapon Finesse, and Whip Masteryuc. At 6th level, he adds Improved Trip and Improved Whip Mastery to the list. At 10th level, he adds Greater Trip and Greater Whip Mastery to the list."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Combat_Reflexes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Exotic_Weapon_Proficiency_Whip|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Weapon_Finesse|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Whip_Mastery|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Trip|1|PREVARGTEQ:CombatStyleLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Whip_Mastery|1|PREVARGTEQ:CombatStyleLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Greater_Trip|1|PREVARGTEQ:CombatStyleLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Greater_Whip_Mastery|1|PREVARGTEQ:CombatStyleLVL,10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 252,
+    "record_key": "Ranger Combat Style ~ Calistria"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

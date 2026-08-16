@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Swordmaster ~ Trance",
+    "name": "Trance",
+    "class": "Swordmaster",
+    "description": "A swordmaster learns to focus her martial prowess using an intense meditative trance. Under the influence of a trance, the swordmaster can perform fantastic martial feats. Entering a trance is a full-round action that provokes attacks of opportunity. The swordmaster can maintain the trance for %1 rounds per day. She can end her trance as a free action. Following a trance, the swordmaster is fatigued for a number of rounds equal to 2 x the number of rounds she spent in the trance. A swordmaster cannot enter a new trance while fatigued but can otherwise enter a trance multiple times during a single encounter or combat. If a swordmaster falls unconscious, her trance immediately ends. She can only use one type of trance at a time.|4+WIS+RogueLVL-3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swordmaster ~ Trance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A swordmaster learns to focus her martial prowess using an intense meditative trance. Under the influence of a trance, the swordmaster can perform fantastic martial feats. Entering a trance is a full-round action that provokes attacks of opportunity. The swordmaster can maintain the trance for %1 rounds per day. She can end her trance as a free action. Following a trance, the swordmaster is fatigued for a number of rounds equal to 2 x the number of rounds she spent in the trance. A swordmaster cannot enter a new trance while fatigued but can otherwise enter a trance multiple times during a single encounter or combat. If a swordmaster falls unconscious, her trance immediately ends. She can only use one type of trance at a time.|4+WIS+RogueLVL-3"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Swordmaster Trance|RogueLVL/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 764,
+    "record_key": "Swordmaster ~ Trance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

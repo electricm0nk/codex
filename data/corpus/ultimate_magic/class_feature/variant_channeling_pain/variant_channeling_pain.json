@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Variant Channeling - Pain",
+    "name": "Variant Channeling - Pain",
+    "class": null,
+    "description": "Heal - Creatures gain a +%1 channel bonus on pain effect saves for 1 minute. Harm - Creatures are sickened until the end of your next turn, plus %1 rounds. At cleric level 10, you may select one creature to be nauseated in addition to the effects of the channeled energy.|ChannelModifier",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VariantChanneling"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChannelModifier|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Heal - Creatures gain a +%1 channel bonus on pain effect saves for 1 minute. Harm - Creatures are sickened until the end of your next turn, plus %1 rounds. At cleric level 10, you may select one creature to be nauseated in addition to the effects of the channeled energy.|ChannelModifier"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelModifier|min(5,1+floor(ClericChannelEnergyLVL/5))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 224,
+    "record_key": "Variant Channeling - Pain"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

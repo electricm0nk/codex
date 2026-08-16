@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Blue Rose ~ Challenge",
+    "name": "Challenge",
+    "class": "Order of the Blue Rose",
+    "description": "Whenever an order of the blue rose cavalier issues a challenge, he receives a +1 morale bonus on attack rolls made against the target of his challenge, if the target is an intelligent creature to whom the cavalier offered the chance to surrender (by taking a standard action to offer terms). This bonus increases by +1 for every four levels the cavalier possesses (to a maximum of +5 at 17th level).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Blue Rose ~ Challenge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever an order of the blue rose cavalier issues a challenge, he receives a +1 morale bonus on attack rolls made against the target of his challenge, if the target is an intelligent creature to whom the cavalier offered the chance to surrender (by taking a standard action to offer terms). This bonus increases by +1 for every four levels the cavalier possesses (to a maximum of +5 at 17th level)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 437,
+    "record_key": "Order of the Blue Rose ~ Challenge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

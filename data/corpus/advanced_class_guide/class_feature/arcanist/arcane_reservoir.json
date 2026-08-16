@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcanist ~ Arcane Reservoir",
+    "name": "Arcane Reservoir",
+    "class": "Arcanist",
+    "description": "You have an innate pool of magical energy that you can draw upon to fuel your arcanist exploits and enhance your spells. The arcane reservoir can hold a maximum of %1 points of magical energy. Each day, when preparing spells, your arcane reservoir fills with raw magical energy, gaining a number of points equal to %2.  Any points you had from the previous day are lost. You can also regain these points through the consume spells class feature and some arcanist exploits. The arcane reservoir can never hold more points than the maximum amount noted above; points gained in excess of this total are lost.  Points from the arcane reservoir are used to fuel many of your arcanist powers. In addition, you can expend 1 point from your arcane reservoir as a free action whenever you cast an arcanist spell. If you do, you can choose to increase the caster level by 1 or increase the spell's DC by 1.  You can expend no more than 1 point from your reservoir on a given spell in this way.|MaxArcanistReservoirSize|ArcanistReservoirSize",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcanist ~ Arcane Reservoir"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Arcanist Class Feature.SpecialAttack.Special Attack.ArcanistArcaneReservoir.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistReservoirSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MaxArcanistReservoirSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have an innate pool of magical energy that you can draw upon to fuel your arcanist exploits and enhance your spells. The arcane reservoir can hold a maximum of %1 points of magical energy. Each day, when preparing spells, your arcane reservoir fills with raw magical energy, gaining a number of points equal to %2.  Any points you had from the previous day are lost. You can also regain these points through the consume spells class feature and some arcanist exploits. The arcane reservoir can never hold more points than the maximum amount noted above; points gained in excess of this total are lost.  Points from the arcane reservoir are used to fuel many of your arcanist powers. In addition, you can expend 1 point from your arcane reservoir as a free action whenever you cast an arcanist spell. If you do, you can choose to increase the caster level by 1 or increase the spell's DC by 1.  You can expend no more than 1 point from your reservoir on a given spell in this way.|MaxArcanistReservoirSize|ArcanistReservoirSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistReservoirSize|3+ArcanistLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaxArcanistReservoirSize|3+ArcanistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.9"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/%2)|ArcanistReservoirSize|MaxArcanistReservoirSize"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|MaxArcanistReservoirSize"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Points"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 66,
+    "record_key": "Arcanist ~ Arcane Reservoir"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

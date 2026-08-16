@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brawler ~ Menacing Stance",
+    "name": "Menacing Stance",
+    "class": "Brawler",
+    "description": "At 7th level, a brawler constantly harries and distracts his enemies. While adjacent to the brawler, enemies take a -1 penalty on attack rolls and a -4 penalty on concentration checks. These penalties increase by 1 for every four levels after 7th level (to a maximum of -4 on attack rolls and -7 on concentration checks at 19th level). Creatures do not take these penalties if the brawler is dazed, helpless, staggered, stunned, or unconscious. This ability replaces armor training 2, 3, and 4 and armor mastery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler ~ Menacing Stance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, a brawler constantly harries and distracts his enemies. While adjacent to the brawler, enemies take a -1 penalty on attack rolls and a -4 penalty on concentration checks. These penalties increase by 1 for every four levels after 7th level (to a maximum of -4 on attack rolls and -7 on concentration checks at 19th level). Creatures do not take these penalties if the brawler is dazed, helpless, staggered, stunned, or unconscious. This ability replaces armor training 2, 3, and 4 and armor mastery."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 697,
+    "record_key": "Brawler ~ Menacing Stance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

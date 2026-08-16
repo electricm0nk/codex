@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter Archetype ~ Leafshifter",
+    "name": "Leafshifter",
+    "class": "Shifter Archetype",
+    "description": "Rather than assume aspects taken from the traits of natural animals, a leafshifter transforms into plant-animal hybrids that resemble living topiaries. This affords the leafshifter the savage power of the animal kingdom while also granting her the strength and timelessness of plant life.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Archetype ~ Leafshifter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ShifterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shifter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shifter Archetype ~ Leafshifter],[!PREFACT:1,ABILITIES,Shifter_Archetype_ShifterClaws=True,Shifter_Archetype_ShifterAspect=True]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Ghoran"
+      },
+      {
+        "key": "DESC",
+        "value": "Rather than assume aspects taken from the traits of natural animals, a leafshifter transforms into plant-animal hybrids that resemble living topiaries. This affords the leafshifter the savage power of the animal kingdom while also granting her the strength and timelessness of plant life."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Leafshifter ~ Shifter's Slam|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Leafshifter ~ Leafshifter's Aspect|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ShifterClaws|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ShifterAspect|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1035,
+    "record_key": "Shifter Archetype ~ Leafshifter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

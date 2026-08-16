@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Watersinger ~ Watersinger Spells",
+    "name": "Watersinger Spells",
+    "class": "Watersinger",
+    "description": "A watersinger adds certain waterthemed spells to his spell list. He adds these abilities to his spell list as soon as his bard level allows him to cast spells of that spell level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Watersinger ~ Watersinger Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A watersinger adds certain waterthemed spells to his spell list. He adds these abilities to his spell list as soon as his bard level allows him to cast spells of that spell level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.177"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=0|Create Water"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=1|Hydraulic Push,Slipstream"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=2|Aqueous Orb,Hydraulic Torrent,Water Walk|PRECLASS:1,Bard=4"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=3|Fluid Form,Ride the Waves|PRECLASS:1,Bard=7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=4|Control Water,Water Walk (Communal)|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=5|Vortex|PRECLASS:1,Bard=13"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=6|Seamantle|PRECLASS:1,Bard=16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 816,
+    "record_key": "Watersinger ~ Watersinger Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Renewed Life",
+    "name": "Renewed Life",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian ignores the effect of one temporary negative level per four barbarian levels she has (maximum 5). Once per day, when a barbarian with temporary negative levels ends her rage, she can attempt saving throws to remove a number of negative levels equal to the number of levels she could ignore while raging. A barbarian must have the renewed vitality rage power and be at least 6th level before selecting this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Renewed Life"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Renewed Vitality"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian ignores the effect of one temporary negative level per four barbarian levels she has (maximum 5). Once per day, when a barbarian with temporary negative levels ends her rage, she can attempt saving throws to remove a number of negative levels equal to the number of levels she could ignore while raging. A barbarian must have the renewed vitality rage power and be at least 6th level before selecting this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 291,
+    "record_key": "Rage Power ~ Renewed Life"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

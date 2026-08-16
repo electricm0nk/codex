@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Enchantment School ~ Aura of Despair",
+    "name": "Aura of Despair",
+    "class": "Enchantment School",
+    "description": "You can emit a 30-foot aura of despair for %1 rounds per day. Enemies within this aura take a -2 penalty on ability checks, attack rolls, damage rolls, saving throws, and skill checks. These rounds do not need to be consecutive. This is a mind-affecting effect.|EnchantmentSchoolLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enchantment School ~ Aura of Despair"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural.ArcaneSchoolPower.Aura"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnchantmentAuraOfDespairRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can emit a 30-foot aura of despair for %1 rounds per day. Enemies within this aura take a -2 penalty on ability checks, attack rolls, damage rolls, saving throws, and skill checks. These rounds do not need to be consecutive. This is a mind-affecting effect.|EnchantmentSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnchantmentAuraOfDespairRounds|EnchantmentSchoolLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|EnchantmentAuraOfDespairRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2658,
+    "record_key": "Enchantment School ~ Aura of Despair"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Spirit Surge",
+    "name": "Spirit Surge",
+    "class": "Medium",
+    "description": "After failing a d20 roll that was modified by his spirit bonus, a medium can allow his spirit to gain 1 additional point of influence over him in order to add 1d%1 to the check's result without taking an action. This can cause the check to succeed instead of fail. The medium must be conscious and aware to use this ability, and he can use this ability at most once per round.|SpiritSurgeDice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Spirit Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpiritSurgeDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "After failing a d20 roll that was modified by his spirit bonus, a medium can allow his spirit to gain 1 additional point of influence over him in order to add 1d%1 to the check's result without taking an action. This can cause the check to succeed instead of fail. The medium must be conscious and aware to use this ability, and he can use this ability at most once per round.|SpiritSurgeDice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiritSurgeDice|6+2*floor(MediumLVL/10)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 814,
+    "record_key": "Medium ~ Spirit Surge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wood School ~ Splintered Spear",
+    "name": "Splintered Spear",
+    "class": "Wood School",
+    "description": "As a standard action, you can create a wooden shortspear appropriate to your size, which hurls itself as a ranged attack against one target within 100 feet (range penalties apply), using your Intelligence modifier as an attack bonus instead of your Strength or Dexterity modifier. The spear deals normal damage according to its size, plus %2, then breaks into countless splinters; the target takes %3 bleed damage each round on its turn. You can use this ability %1/day.|SplinteredSpearTimes|SplinteredSpearBonusDamage|SplinteredSpearBleedDamage|PREVARLT:WoodSchoolProgressionLVL,6",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wood School ~ Splintered Spear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SplinteredSpearBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SplinteredSpearEnhancementBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SplinteredSpearTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SplinteredSpearBleedDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can create a wooden shortspear appropriate to your size, which hurls itself as a ranged attack against one target within 100 feet (range penalties apply), using your Intelligence modifier as an attack bonus instead of your Strength or Dexterity modifier. The spear deals normal damage according to its size, plus %2, then breaks into countless splinters; the target takes %3 bleed damage each round on its turn. You can use this ability %1/day.|SplinteredSpearTimes|SplinteredSpearBonusDamage|SplinteredSpearBleedDamage|PREVARLT:WoodSchoolProgressionLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can create a +%1 wooden shortspear appropriate to your size, which hurls itself as a ranged attack against one target within 100 feet (range penalties apply), using your Intelligence modifier as an attack bonus instead of your Strength or Dexterity modifier. The spear deals normal damage according to its size, plus %3, then breaks into countless splinters; the target takes %4 bleed damage each round on its turn. You can use this ability %2/day.|SplinteredSpearEnhancementBonus|SplinteredSpearTimes|SplinteredSpearBonusDamage|SplinteredSpearBleedDamage|PREVARGTEQ:WoodSchoolProgressionLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SplinteredSpearBonusDamage|INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SplinteredSpearEnhancementBonus|floor(WoodSchoolLVL/6)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SplinteredSpearTimes|3+INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SplinteredSpearBleedDamage|1+floor(WoodSchoolLVL/6)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 800,
+    "record_key": "Wood School ~ Splintered Spear"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

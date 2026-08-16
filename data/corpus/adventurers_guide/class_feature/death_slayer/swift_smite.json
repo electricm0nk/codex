@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Death Slayer ~ Swift Smite",
+    "name": "Swift Smite",
+    "class": "Death Slayer",
+    "description": "A death slayer can use her Channel Smite feat an additional %1 times per day without expending a use of her total channel energy uses per day. She cannot use these additional uses of Channel Smite to use channel energy in the regular way. Whenever she uses Channel Smite, she can activate the ability as an immediate action after she rolls for a melee attack but before the result is revealed.|DeathSlayerLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Death Slayer ~ Swift Smite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Death Slayer Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "DESC",
+        "value": "A death slayer can use her Channel Smite feat an additional %1 times per day without expending a use of her total channel energy uses per day. She cannot use these additional uses of Channel Smite to use channel energy in the regular way. Whenever she uses Channel Smite, she can activate the ability as an immediate action after she rolls for a melee attack but before the result is revealed.|DeathSlayerLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 131,
+    "record_key": "Death Slayer ~ Swift Smite"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Phrenologist ~ Phrenological Knowledge",
+    "name": "Phrenological Knowledge",
+    "class": "Phrenologist",
+    "description": "A phrenologist is an expert at reading creatures' skulls. He gains Psychic Sensitivity* as a bonus feat, and he can use the phrenology skill unlock even if he is untrained in Knowledge (arcana). He adds half his class level (minimum 1) on all Knowledge (arcana) checks for the phrenology occult skill unlock. This ability replaces bardic knowledge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phrenologist ~ Phrenological Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenologist Class Feature.Bard Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A phrenologist is an expert at reading creatures' skulls. He gains Psychic Sensitivity* as a bonus feat, and he can use the phrenology skill unlock even if he is untrained in Knowledge (arcana). He adds half his class level (minimum 1) on all Knowledge (arcana) checks for the phrenology occult skill unlock. This ability replaces bardic knowledge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.114"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1680,
+    "record_key": "Phrenologist ~ Phrenological Knowledge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Urban Barbarian ~ Crowd Control",
+    "name": "Crowd Control",
+    "class": "Urban Barbarian",
+    "description": "At 1st level, an urban barbarian gains a +1 bonus on attack rolls and a +1 dodge bonus to AC when adjacent to two or more enemies. In addition, her movement is not impeded by crowds, and she gains a bonus equal to 1/2 her barbarian level on Intimidate checks to influence crowds (Core Rulebook 436). This ability replaces fast movement",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Urban Barbarian ~ Crowd Control"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CrowdControlLevel|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, an urban barbarian gains a +1 bonus on attack rolls and a +1 dodge bonus to AC when adjacent to two or more enemies. In addition, her movement is not impeded by crowds, and she gains a bonus equal to 1/2 her barbarian level on Intimidate checks to influence crowds (Core Rulebook 436). This ability replaces fast movement"
+      },
+      {
+        "key": "DESC",
+        "value": "(current level bonus is +%1)|CrowdControlLevel|PREVARGTEQ:CrowdControlLevel,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrowdControlLevel|classlevel(\"Barbarian\")/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 357,
+    "record_key": "Urban Barbarian ~ Crowd Control"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

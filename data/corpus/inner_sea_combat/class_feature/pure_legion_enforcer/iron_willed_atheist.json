@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pure Legion Enforcer ~ Iron-Willed Atheist",
+    "name": "Iron-Willed Atheist",
+    "class": "Pure Legion Enforcer",
+    "description": "At 10th level, a Pure Legion enforcer gains spell resistance equal to 11 + his character level against divine spellcasting and spell-like abilities granted by a divine spellcasting class. A Pure Legion enforcer cannot voluntarily lower his spell resistance. Additionally, his damage bonus against creatures affected by his voice of law ability increases to +6.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pure Legion Enforcer ~ Iron-Willed Atheist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pure Legion Enforcer Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, a Pure Legion enforcer gains spell resistance equal to 11 + his character level against divine spellcasting and spell-like abilities granted by a divine spellcasting class. A Pure Legion enforcer cannot voluntarily lower his spell resistance. Additionally, his damage bonus against creatures affected by his voice of law ability increases to +6."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 547,
+    "record_key": "Pure Legion Enforcer ~ Iron-Willed Atheist"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

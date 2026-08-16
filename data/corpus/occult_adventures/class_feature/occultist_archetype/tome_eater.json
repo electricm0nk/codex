@@ -1,0 +1,139 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Occultist Archetype ~ Tome Eater",
+    "name": "Tome Eater",
+    "class": "Occultist Archetype",
+    "description": "Tome eaters have learned how to tap into the latent psychic energy of the written word by physically devouring books and scrolls to create magical effects and gain mystical insights. They use their bonded tomes to gain access to all sorts of magic, and as they grow in power, they gain an innate sense of the books and writings around them.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist Archetype ~ Tome Eater"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Occultist Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Occultist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Occultist Archetype ~ Tome Eater],[!PREFACT:1,ABILITIES,Occultist_Archetype_Implements=true,Occultist_Archetype_MentalFocus=true,Occultist_Archetype_Spellcasting=true,Occultist_Archetype_ImplementMastery=true,Occultist_Archetype_ShiftFocus=true,Occultist_Archetype_Implement6=true,Occultist_Archetype_MagicCircles=true,Occultist_Archetype_OutsideContact=true,Occultist_Archetype_BindingCircles=true,Occultist_Archetype_FastCircles=true,Occultist_Archetype_AuraSight=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Tome eaters have learned how to tap into the latent psychic energy of the written word by physically devouring books and scrolls to create magical effects and gain mystical insights. They use their bonded tomes to gain access to all sorts of magic, and as they grow in power, they gain an innate sense of the books and writings around them."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Tome Eater ~ Bonded Tome|PRECLASS:1,Occultist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Tome Eater ~ Devour Books and Scrolls|PRECLASS:1,Occultist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Tome Eater ~ Word Sense|PRECLASS:1,Occultist=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_Implements|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_MentalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_Spellcasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_ImplementMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_ShiftFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_Implement6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_MagicCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_OutsideContact|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_BindingCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_FastCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_AuraSight|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_ShiftFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_Implement6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_MagicCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_OutsideContact|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_BindingCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_FastCircles|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_AuraSight|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1521,
+    "record_key": "Occultist Archetype ~ Tome Eater"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

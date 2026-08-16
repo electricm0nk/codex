@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus Arcana ~ Hasted Assault",
+    "name": "Hasted Assault",
+    "class": "Magus Arcana",
+    "description": "You can expend 1 point from your arcane pool as a swift action to move more quickly. This functions as Haste, but it only targets you and lasts for %1 rounds.|HastedAssaultDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Hasted Assault"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.MagusArcana"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ArcanaQualifyLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HastedAssaultDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend 1 point from your arcane pool as a swift action to move more quickly. This functions as Haste, but it only targets you and lasts for %1 rounds.|HastedAssaultDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HastedAssaultDuration|INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 89,
+    "record_key": "Magus Arcana ~ Hasted Assault"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

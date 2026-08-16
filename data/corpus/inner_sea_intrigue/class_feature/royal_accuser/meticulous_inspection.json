@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Royal Accuser ~ Meticulous Inspection",
+    "name": "Meticulous Inspection",
+    "class": "Royal Accuser",
+    "description": "A royal accuser gains a +%1 morale bonus on all Perception checks.|max(1,InquisitorLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Royal Accuser ~ Meticulous Inspection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.RoyalAccuserClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A royal accuser gains a +%1 morale bonus on all Perception checks.|max(1,InquisitorLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|max(1,InquisitorLVL/2)|TYPE=Morale"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 107,
+    "record_key": "Royal Accuser ~ Meticulous Inspection"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

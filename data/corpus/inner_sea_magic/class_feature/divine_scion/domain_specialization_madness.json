@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Divine Scion ~ Madness Specialization",
+    "name": "Domain Specialization (Madness)",
+    "class": "Divine Scion",
+    "description": "You gain fumbletongue 3/day as a spell-like ability (which functions at caster level %1) and a permanent +4|TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Scion ~ Madness Specialization"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization"
+      },
+      {
+        "key": "PREDEITYDOMAIN",
+        "value": "1,Madness"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=TL|Fumbletongue,11+max(WIS,CHA)"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain fumbletongue 3/day as a spell-like ability (which functions at caster level %1) and a permanent +4|TL"
+      },
+      {
+        "key": "DESC",
+        "value": "sacred|PREALIGN:LG,NG,CG,LN,TN,CN"
+      },
+      {
+        "key": "DESC",
+        "value": "profane|PREALIGN:LE,NE,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "bonus on Bluff checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff|4|TYPE=Sacred|PREALIGN:LG,NG,CG,LN,TN,CN"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff|4|TYPE=Profane|PREALIGN:LE,NE,CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 68,
+    "record_key": "Divine Scion ~ Madness Specialization"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

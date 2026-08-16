@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Child Brawler ~ Hunter's Tricks",
+    "name": "Hunter's Tricks",
+    "class": "Wild Child Brawler",
+    "description": "A wild child can expend a use of martial flexibility to use a trick from the ranger skirmisher archetype. Each time he activates this ability, the wild child can use a different hunter trick. He cannot choose any tricks that rely on ranged attacks. Activating this ability is not an action, but using the trick might require the wild child to use an action of a different type.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Child Brawler ~ Hunter's Tricks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Wild Child Class Feature.SpecialQuality.BrawlerCloseWeaponMastery"
+      },
+      {
+        "key": "DESC",
+        "value": "A wild child can expend a use of martial flexibility to use a trick from the ranger skirmisher archetype. Each time he activates this ability, the wild child can use a different hunter trick. He cannot choose any tricks that rely on ranged attacks. Activating this ability is not an action, but using the trick might require the wild child to use an action of a different type."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2931,
+    "record_key": "Wild Child Brawler ~ Hunter's Tricks"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

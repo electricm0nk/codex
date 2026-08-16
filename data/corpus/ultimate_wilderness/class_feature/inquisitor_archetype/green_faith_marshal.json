@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Green Faith Marshal",
+    "name": "Green Faith Marshal",
+    "class": "Inquisitor Archetype",
+    "description": "The Green Faith marshal serves as a literal force of nature, hunting down and punishing those who have committed sins against nature through enslavement and mistreatment of animals or destruction of wild places.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Green Faith Marshal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Green Faith Marshal],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_Domains=True,Inquisitor_Archetype_SternGaze=True,Inquisitor_Archetype_MonsterLore=True,Inquisitor_Archetype_DiscernLies=True,Inquisitor_Archetype_Stalwart=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The Green Faith marshal serves as a literal force of nature, hunting down and punishing those who have committed sins against nature through enslavement and mistreatment of animals or destruction of wild places."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Faith Marshal ~ Power of Nature|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Faith Marshal ~ Wild Lore|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Faith Marshal ~ Nature's Ally|PRECLASS:1,Inquisitor=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Faith Marshal ~ Wild Step|PRECLASS:1,Inquisitor=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_DiscernLies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Stalwart|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_DiscernLies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Stalwart|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 767,
+    "record_key": "Inquisitor Archetype ~ Green Faith Marshal"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

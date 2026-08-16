@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mastermind ~ A Quiet Word",
+    "name": "A Quiet Word",
+    "class": "Mastermind",
+    "description": "A mastermind's reputation precedes him. At 1st level, once per day a mastermind can spend 10 minutes preparing an ally to make a single Diplomacy or Intimidate check (mastermind's choice when preparing the ally) within the next 24-hour period at the mastermind's behest. This skill check uses the mastermind's skill ranks instead of the ally's. The mastermind's affected ally still uses its own ability bonus for the check. Furthermore, when a mastermind uses this ability, he can expend one use of inspiration to give the ally use of the inspiration die when making the check. At 3rd level, a mastermind can use this ability an additional time each day, and the number of times he can use this ability per day increases by 1 for every third level thereafter. Multiple uses of this ability on the same ally grant that ally the benefit on additional Diplomacy or Intimidate checks. At 12th level, a mastermind can use this ability to bestow on his ally the use of his skill ranks, similar to the 1stlevel effects of this ability but with a wider range of skills to choose from. The mastermind can only bestow this for a skill check that he can use inspiration on without expending uses of inspiration. For instance, a mastermind with the underworld inspiration talent can bolster his ally's Bluff, Disable Device, Disguise, or Sleight of Hand skill checks, selecting a single skill for each use of the ability. This ability replaces trapfinding and trap sense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mastermind ~ A Quiet Word"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mastermind Class Feature.Investigator Class Feature.SpecialQuality.Extraordinary.InvestigatorTrapfinding.InvestigatorTrapSense"
+      },
+      {
+        "key": "DESC",
+        "value": "A mastermind's reputation precedes him. At 1st level, once per day a mastermind can spend 10 minutes preparing an ally to make a single Diplomacy or Intimidate check (mastermind's choice when preparing the ally) within the next 24-hour period at the mastermind's behest. This skill check uses the mastermind's skill ranks instead of the ally's. The mastermind's affected ally still uses its own ability bonus for the check. Furthermore, when a mastermind uses this ability, he can expend one use of inspiration to give the ally use of the inspiration die when making the check. At 3rd level, a mastermind can use this ability an additional time each day, and the number of times he can use this ability per day increases by 1 for every third level thereafter. Multiple uses of this ability on the same ally grant that ally the benefit on additional Diplomacy or Intimidate checks. At 12th level, a mastermind can use this ability to bestow on his ally the use of his skill ranks, similar to the 1stlevel effects of this ability but with a wider range of skills to choose from. The mastermind can only bestow this for a skill check that he can use inspiration on without expending uses of inspiration. For instance, a mastermind with the underworld inspiration talent can bolster his ally's Bluff, Disable Device, Disguise, or Sleight of Hand skill checks, selecting a single skill for each use of the ability. This ability replaces trapfinding and trap sense."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.101"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3324,
+    "record_key": "Mastermind ~ A Quiet Word"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

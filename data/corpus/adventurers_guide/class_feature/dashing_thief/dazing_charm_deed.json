@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dashing Thief ~ Dazing Charm Deed",
+    "name": "Dazing Charm Deed",
+    "class": "Dashing Thief",
+    "description": "A dashing thief takes foes aback with her forwardness, shocking them into submission long enough to rush past or stage a getaway. As a free action when she successfully feints against a foe, she can spend 1 panache point to pull the enemy into a quick kiss (or similar gesture). The target is dazed for 1 round unless it succeeds at a Will save (DC %1). A creature dazed this way is immune to that dashing thief's dazing charm deed for 24 hours. Whether or not a creature could potentially be affected by a dazing charm deed is ultimately subject to GM adjudication. As a general rule, however, it works on creatures of the dashing thief's creature type, or on those of a different type but who share significant thematic similarities (for example, a human dashing thief could use her dazing charm deed on any humanoid, but also potentially on creatures as diverse as dryads, tieflings, or even centaurs or sphinxes).|10+SwashbucklerLVL/2+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dashing Thief ~ Dazing Charm Deed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Feature.RostlandBravoClassFeatures.SpecialQuality.SwashbucklerDeedsLVL3.Extraordinary"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL03"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "DESC",
+        "value": "A dashing thief takes foes aback with her forwardness, shocking them into submission long enough to rush past or stage a getaway. As a free action when she successfully feints against a foe, she can spend 1 panache point to pull the enemy into a quick kiss (or similar gesture). The target is dazed for 1 round unless it succeeds at a Will save (DC %1). A creature dazed this way is immune to that dashing thief's dazing charm deed for 24 hours. Whether or not a creature could potentially be affected by a dazing charm deed is ultimately subject to GM adjudication. As a general rule, however, it works on creatures of the dashing thief's creature type, or on those of a different type but who share significant thematic similarities (for example, a human dashing thief could use her dazing charm deed on any humanoid, but also potentially on creatures as diverse as dryads, tieflings, or even centaurs or sphinxes).|10+SwashbucklerLVL/2+CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1082,
+    "record_key": "Dashing Thief ~ Dazing Charm Deed"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Demoniac ~ Energumen",
+    "name": "Energumen",
+    "class": "Demoniac",
+    "description": "1/day, you can open your soul to a demonic spirit as a free action. This spirit possesses you for %1 rounds, granting a +%2 bonus to an ability score of your choice. When the energumen ends, you become confused for %1 rounds as the demonic spirit has its way with your mind. At the start of each round of confusion, you can make a DC 25 Will save to end the confusion effect immediately. Energumen is a possession effect and is negated by protection from evil or protection from chaos. Being affected by such a spell prevents both the benefits and the confusion.|DemoniacLVL|DemoniacEnergumen*2|PREVARLT:DemoniacEnergumen,2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Demoniac ~ Energumen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DemoniacEnergumen|0"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, you can open your soul to a demonic spirit as a free action. This spirit possesses you for %1 rounds, granting a +%2 bonus to an ability score of your choice. When the energumen ends, you become confused for %1 rounds as the demonic spirit has its way with your mind. At the start of each round of confusion, you can make a DC 25 Will save to end the confusion effect immediately. Energumen is a possession effect and is negated by protection from evil or protection from chaos. Being affected by such a spell prevents both the benefits and the confusion.|DemoniacLVL|DemoniacEnergumen*2|PREVARLT:DemoniacEnergumen,2"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, you can open your soul to a demonic spirit as a free action. This spirit possesses you for %1 rounds, granting a +%2 bonus to an ability score of your choice, electricity resistance 10, and a +4 bonus on all saving throws against poison. When the energumen ends, you become confused for %1 rounds as the demonic spirit has its way with your mind. At the start of each round of confusion, you can make a DC 25 Will save to end the confusion effect immediately. Energumen is a possession effect and is negated by protection from evil or protection from chaos. Being affected by such a spell prevents both the benefits and the confusion.|DemoniacLVL|DemoniacEnergumen*2|PREVARGTEQ:DemoniacEnergumen,2|PREVARLT:DemoniacEnergumen,3"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, you can open your soul to a demonic spirit as a free action. This spirit possesses you for %1 rounds, granting a +%2 bonus to an ability score of your choice and immunity to electricity and poison. When the energumen ends, you become confused for %1 rounds as the demonic spirit has its way with your mind. At the start of each round of confusion, you can make a DC 25 Will save to end the confusion effect immediately. Energumen is a possession effect and is negated by protection from evil or protection from chaos. Being affected by such a spell prevents both the benefits and the confusion.|DemoniacLVL|DemoniacEnergumen*2|PREVARGTEQ:DemoniacEnergumen,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Energumen (Cha)|Energumen (Con)|Energumen (Dex)|Energumen (Int)|Energumen (Str)|Energumen (Wis)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 13,
+    "record_key": "Demoniac ~ Energumen"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fighter ~ Weapon Mastery",
+    "name": "Weapon Mastery",
+    "class": "Fighter",
+    "description": "Any attacks made a %1 automatically confirm all critical threats and have their damage multiplier increased by 1 (x2 becomes x3, for example). In addition, you cannot be disarmed while wielding a weapon of this type.|%CHOICE",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter ~ Weapon Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.SpecialQuality.Extraordinary.WeaponMastery"
+      },
+      {
+        "key": "DESC",
+        "value": "Any attacks made a %1 automatically confirm all critical threats and have their damage multiplier increased by 1 (x2 becomes x3, for example). In addition, you cannot be disarmed while wielding a weapon of this type.|%CHOICE"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "WEAPONPROFICIENCY|PC"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=%LIST|CRITMULTADD|1|TYPE=NonStackingCrit"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 892,
+    "record_key": "Fighter ~ Weapon Mastery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

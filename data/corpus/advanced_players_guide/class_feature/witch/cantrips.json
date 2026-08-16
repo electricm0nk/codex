@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch ~ Cantrips",
+    "name": "Cantrips",
+    "class": "Witch",
+    "description": "You can prepare a number of cantrips, or 0-level spells, each day. These spells are cast like any other spell, but they are not expended when cast and may be used again.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch ~ Cantrips"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You can prepare a number of cantrips, or 0-level spells, each day. These spells are cast like any other spell, but they are not expended when cast and may be used again."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 849,
+    "record_key": "Witch ~ Cantrips"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

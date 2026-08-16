@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Domain Power ~ Dimensional Hop",
+    "name": "Dimensional Hop",
+    "class": "Domain Power",
+    "description": "You can teleport up to %1 feet per day as a move action. This teleportation must be used in 5-foot increments and such movement does not provoke attacks of opportunity. You must have line of sight to your destination to use this ability. You can bring other willing creatures with you, but you must expend an equal amount of distance for each creature brought.|TravelDimensionalHop",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Dimensional Hop"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.SpellLike.DomainPower.ModifyMovement.Travel Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TravelDimensionalHop|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can teleport up to %1 feet per day as a move action. This teleportation must be used in 5-foot increments and such movement does not provoke attacks of opportunity. You must have line of sight to your destination to use this ability. You can bring other willing creatures with you, but you must expend an equal amount of distance for each creature brought.|TravelDimensionalHop"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TravelDimensionalHop|DomainTravelLVL*10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 5-ft. increments)|TravelDimensionalHop/5"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|TravelDimensionalHop/5"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|5-ft. increments"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 744,
+    "record_key": "Domain Power ~ Dimensional Hop"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

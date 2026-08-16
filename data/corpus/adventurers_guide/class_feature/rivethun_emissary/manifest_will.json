@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rivethun Emissary ~ Manifest Will",
+    "name": "Manifest Will",
+    "class": "Rivethun Emissary",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rivethun Emissary ~ Manifest Will"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Rivethun Emissary Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      },
+      {
+        "key": "DESC",
+        "value": "Spiritual energy flows both into and out of the Rivethun emissary, allowing her to overcome the limitations of her physical body by sheer force of will. The Rivethun emissary selects either Strength, Dexterity, or Constitution. As an immediate action, she can substitute her Wisdom modifier for her selected ability's modifier on a single ability check, attack roll, saving throw, or skill check. She can use this ability %1 times per day. At 6th level and again at 9th level, she can select one more physical ability score she can affect with this ability.|CHA+RivethunEmissaryLVL/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 443,
+    "record_key": "Rivethun Emissary ~ Manifest Will"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

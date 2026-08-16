@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ancestor Mystery ~ Blood of Heroes",
+    "name": "Blood of Heroes",
+    "class": "Ancestor Mystery",
+    "description": "As a move action, you can call upon your ancestors to grant you extra bravery in battle. You gain a +%1 morale bonus on attack rolls, damage rolls, and Will saves against fear for %2 rounds. You can use this ability %3/day.|BloodOfHeroesBonus|BloodOfHeroesDuration|BloodOfHeroesTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancestor Mystery ~ Blood of Heroes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.AncestorRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodOfHeroesDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodOfHeroesBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodOfHeroesTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, you can call upon your ancestors to grant you extra bravery in battle. You gain a +%1 morale bonus on attack rolls, damage rolls, and Will saves against fear for %2 rounds. You can use this ability %3/day.|BloodOfHeroesBonus|BloodOfHeroesDuration|BloodOfHeroesTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodOfHeroesDuration|CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodOfHeroesBonus|1+min(2,floor(classlevel(\"Oracle\")/7))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodOfHeroesTimes|1+floor(classlevel(\"Oracle\")/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|TOHIT|BloodOfHeroesBonus|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|DAMAGE.Melee,DAMAGE.Ranged|BloodOfHeroesBonus|TYPE=Morale"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 453,
+    "record_key": "Ancestor Mystery ~ Blood of Heroes"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

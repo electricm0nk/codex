@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Focused Arcane School ~ Manipulator School",
+    "name": "Manipulator School",
+    "class": "Focused Arcane School",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Focused Arcane School ~ Manipulator School"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Focused Arcane School.WizardEnchantment.WizardDazingTouch.WizardAuraofDespair"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Focused Arcane School ~ Manipulator School],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardEnchantment]"
+      },
+      {
+        "key": "PRESUBCLASS",
+        "value": "1,Enchanter"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Manipulator School ~ Beguiling Touch"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Manipulator School ~ Shape Emotions|PREVARGTEQ:EnchantmentSchoolLVL,8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_DazingTouch|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_AuraofDespair|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3322,
+    "record_key": "Focused Arcane School ~ Manipulator School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

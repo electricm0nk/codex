@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Discipline Self-Perfection ~ Physical Push",
+    "name": "Physical Push",
+    "class": "Psychic Discipline Self-Perfection",
+    "description": "By channeling your psychic energy, you can make your body capable of greater physical feats. When you attempt a Strength-, Dexterity-, or Constitution based ability check or skill check, you can gain a bonus on the check equal to your Wisdom bonus. You can use this ability a number of times per day equal to your Wisdom modifier. Using this ability is part of the action used to attempt the skill check (if any). If you succeed at the check, you regain 1 point in your phrenic pool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Self-Perfection ~ Physical Push"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "By channeling your psychic energy, you can make your body capable of greater physical feats. When you attempt a Strength-, Dexterity-, or Constitution based ability check or skill check, you can gain a bonus on the check equal to your Wisdom bonus. You can use this ability a number of times per day equal to your Wisdom modifier. Using this ability is part of the action used to attempt the skill check (if any). If you succeed at the check, you regain 1 point in your phrenic pool."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1251,
+    "record_key": "Psychic Discipline Self-Perfection ~ Physical Push"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nature Mystery ~ Undo Artifice",
+    "name": "Undo Artifice",
+    "class": "Nature Mystery",
+    "description": "You gain the ability to reduce a nonliving item to its component parts, essentially erasing the hand of artifice and rendering the item into a pile of raw natural materials. This effect acts as the spell polymorph any object, working on both magical and nonmagical nonliving objects. The duration is always permanent. Unlike polymorph any object, it cannot be used to mimic the effects of other spells. Items subject to this effect receive a Fortitude saving (DC %1) throw to negate the effect. Magic items receive a circumstance bonus on this save equal to +1 for every 5,000 gp in the itemUs value. You may use undo artifice %2 times per day.|OracleRevelationDC|OracleUndoArtificeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Mystery ~ Undo Artifice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.NatureRevelation.SpellLike.PerDayOracleRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=11"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleUndoArtificeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the ability to reduce a nonliving item to its component parts, essentially erasing the hand of artifice and rendering the item into a pile of raw natural materials. This effect acts as the spell polymorph any object, working on both magical and nonmagical nonliving objects. The duration is always permanent. Unlike polymorph any object, it cannot be used to mimic the effects of other spells. Items subject to this effect receive a Fortitude saving (DC %1) throw to negate the effect. Magic items receive a circumstance bonus on this save equal to +1 for every 5,000 gp in the itemUs value. You may use undo artifice %2 times per day.|OracleRevelationDC|OracleUndoArtificeTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleUndoArtificeTimes|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 663,
+    "record_key": "Nature Mystery ~ Undo Artifice"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

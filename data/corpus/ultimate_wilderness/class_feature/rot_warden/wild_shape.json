@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rot Warden ~ Wild Shape",
+    "name": "Wild Shape",
+    "class": "Rot Warden",
+    "description": "A rot warden gains this ability at 6th level, except his effective druid level is his druid level - 2. He cannot take the form of an elemental. At 8th level, a rot warden can assume the form of a Small or Medium vermin as if using vermin shape I. At 10th level, the rot warden can assume the shape of a Tiny or Large vermin as if using vermin shape II. At 12th level, he can take the form of a Huge vermin as if using vermin shape III. This alters wild shape.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rot Warden ~ Wild Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.SeasonSageClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoElementalShape|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A rot warden gains this ability at 6th level, except his effective druid level is his druid level - 2. He cannot take the form of an elemental. At 8th level, a rot warden can assume the form of a Small or Medium vermin as if using vermin shape I. At 10th level, the rot warden can assume the shape of a Tiny or Large vermin as if using vermin shape II. At 12th level, he can take the form of a Huge vermin as if using vermin shape III. This alters wild shape."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Druid ~ Wild Shape|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidWildShape|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoElementalShape|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 565,
+    "record_key": "Rot Warden ~ Wild Shape"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Law Domain",
+    "name": "Law",
+    "class": "Forbidden Rites Domain",
+    "description": "You follow a strict and ordered code of laws, and in so doing, achieve enlightenment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Law Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.LawDomainReplacement"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LG,LN,LE"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You follow a strict and ordered code of laws, and in so doing, achieve enlightenment."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Touch of Law|PREDOMAIN:1,Law|PREVARGTEQ:DomainLawAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Staff of Order|PREDOMAIN:1,Law|PREVARGTEQ:DomainLawAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLawLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLawDC|10+(DomainLawLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLawTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLawAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Protection from Chaos|Cleric=2|Align Weapon (Law Only)|Cleric=3|Magic Circle against Chaos|Cleric=4|Order's Wrath|Cleric=5|Dispel Chaos|Cleric=6|Hold Monster|Cleric=7|Dictum|Cleric=8|Shield of Law|Cleric=9|Summon Monster IX (Law Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1043,
+    "record_key": "Forbidden Rites Domain ~ Law Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

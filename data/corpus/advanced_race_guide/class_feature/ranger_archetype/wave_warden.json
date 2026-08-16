@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Archetype ~ Wave Warden",
+    "name": "Wave Warden",
+    "class": "Ranger Archetype",
+    "description": "The wave warden patrols beneath the sea, preserving the safety and secrets of merfolk communities. Though he fares best beneath the water, dry land is no haven to his quarry.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Wave Warden"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype.RangerTrack.RangerBonusFeat2.RangerBonusFeat6.RangerBonusFeat10.RangerBonusFeat14.RangerBonusFeat18.RangerFavoredTerrain.RangerWoodlandStride.RangerSwiftTracker.RangerCombatStyle"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Wave Warden],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerTrack,TYPE.RangerCombatStyle,TYPE.RangerBonusFeat2,TYPE.RangerBonusFeat6,TYPE.RangerBonusFeat10,TYPE.RangerBonusFeat14,TYPE.RangerBonusFeat18,TYPE.RangerFavoredTerrain,TYPE.RangerWoodlandStride,TYPE.RangerSwiftTracker]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsMerfolk=true"
+      },
+      {
+        "key": "DESC",
+        "value": "The wave warden patrols beneath the sea, preserving the safety and secrets of merfolk communities. Though he fares best beneath the water, dry land is no haven to his quarry."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wave Warden ~ Deep Sentinel|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wave Warden ~ Aquatic Prowess Feat|PRECLASS:1,Ranger=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wave Warden ~ Favored Terrain|PRECLASS:1,Ranger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wave Warden ~ Seaborn|PRECLASS:1,Ranger=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wave Warden ~ Watery Summons|PRECLASS:1,Ranger=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Ranger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 884,
+    "record_key": "Ranger Archetype ~ Wave Warden"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

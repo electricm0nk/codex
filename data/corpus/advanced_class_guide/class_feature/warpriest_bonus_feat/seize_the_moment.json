@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Seize the Moment",
+    "name": "Seize the Moment",
+    "class": "Warpriest Bonus Feat",
+    "description": "You and your allies are poised to pounce whenever one of you scores a telling blow.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Seize the Moment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Teamwork"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Combat Reflexes,Improved Critical"
+      },
+      {
+        "key": "DESC",
+        "value": "You and your allies are poised to pounce whenever one of you scores a telling blow."
+      },
+      {
+        "key": "DESC",
+        "value": " When an ally who also has this feat confirms a critical hit against an opponent that you also threaten, you can make an attack of opportunity against that opponent."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Seize the Moment"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4531,
+    "record_key": "Warpriest Bonus Feat ~ Seize the Moment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,97 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Majordomo ~ Delegate",
+    "name": "Delegate",
+    "class": "Majordomo",
+    "description": "In order to perform all the necessary tasks of her household, a majordomo quickly learns how to delegate. At 1st level and every 3 investigator levels thereafter, a majordomo gains a bonus teamwork feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Majordomo ~ Delegate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.MajordomoClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "In order to perform all the necessary tasks of her household, a majordomo quickly learns how to delegate. At 1st level and every 3 investigator levels thereafter, a majordomo gains a bonus teamwork feat."
+      },
+      {
+        "key": "DESC",
+        "value": " As a standard action,|!PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "DESC",
+        "value": " As a move action,|PRECLASS:1,Investigator=4|!PRECLASS:1,Investigator=10"
+      },
+      {
+        "key": "DESC",
+        "value": " As a swift action,|PRECLASS:1,Investigator=10"
+      },
+      {
+        "key": "DESC",
+        "value": " she can grant all allies within 30 feet who can see or hear her"
+      },
+      {
+        "key": "DESC",
+        "value": " one|!PRECLASS:1,Investigator=7"
+      },
+      {
+        "key": "DESC",
+        "value": " two|PRECLASS:1,Investigator=7|!PRECLASS:1,Investigator=13"
+      },
+      {
+        "key": "DESC",
+        "value": " three|PRECLASS:1,Investigator=13"
+      },
+      {
+        "key": "DESC",
+        "value": " one of these teamwork feats (even if they don't meet the prerequisites) for %1 rounds. She can use this ability %2/day.|3+InvestigatorLVL|(InvestigatorLVL+2)/3"
+      },
+      {
+        "key": "DESC",
+        "value": " A majordomo can use her delegate ability and designate a single noncombat task that could make use of the teamwork feat (for instance, designating the Cooperative Crafting feat and a session of crafting). As long as the allies pursue the task uninterrupted, instead of experiencing the benefits for %1 rounds, her allies retain the benefits until the task is complete, to a maximum of 8 hours.|InvestigatorLVL+3|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "DESC",
+        "value": " She can spend 1 minute and use her delegate ability to grant a single teamwork feat to all of her allies until the next time she recovers uses of her delegate ability. As usual for multiple uses of the same ability, if she later uses delegate to grant three teamwork feats, the two uses don't stack to grant four bonus teamwork feats, but the longer-duration teamwork feat returns after the three shorter-duration feats expire.|PRECLASS:1,Investigator=16"
+      },
+      {
+        "key": "DESC",
+        "value": " Additionally, a majordomo can't take the alchemist discovery investigator talent or any discovery that affects or involves alchemy."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Majordomo Teamwork Feat|(InvestigatorLVL+2)/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 522,
+    "record_key": "Majordomo ~ Delegate"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

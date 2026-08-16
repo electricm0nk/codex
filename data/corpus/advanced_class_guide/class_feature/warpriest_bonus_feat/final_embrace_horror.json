@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Final Embrace Horror",
+    "name": "Final Embrace Horror",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your constricting attack has become stronger and more lethal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Final Embrace Horror"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Final Embrace"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRERACE:1,Naga,Serpentfolk],[PREABILITY:1,CATEGORY=Special Ability,Constrict]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "2,STR=15,INT=3"
+      },
+      {
+        "key": "DESC",
+        "value": "Your constricting attack has become stronger and more lethal."
+      },
+      {
+        "key": "DESC",
+        "value": " A creature that takes damage from your constrict attack is also shaken until the start of your next turn."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Final Embrace Horror"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.101"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4449,
+    "record_key": "Warpriest Bonus Feat ~ Final Embrace Horror"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

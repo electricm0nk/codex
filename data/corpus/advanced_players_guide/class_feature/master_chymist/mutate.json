@@ -1,0 +1,108 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Master Chymist ~ Mutate",
+    "name": "Mutate",
+    "class": "Master Chymist",
+    "description": "At 1st level, as a result of repeated exposure to her mutagens, the master chymist can now assume a mutagenic form %1 times per day without imbibing her mutagen. In this form, she gains all the bonuses and penalties of her mutagen and adds together her alchemist and master chymist levels together to determine her effective alchemist level for the duration of this form. Using a mutagen also forces the chymist into this form. Taking a mutagen or using the mutate ability again while in her mutagenic form works normally (with the new mutagen's modifiers replacing the current modifiers, and the longer duration taking precedent). The chymist remains in her mutagenic form until its duration expires, her magic is interrupted (as with an antimagic field), or she expends another use of her mutate ability.&nl;A chymist may be forced to take her mutagenic form against her will by stress or damage. Anytime the character is in her normal form and has daily uses of the mutate ability available, she may be forced to switch after suffering a critical hit or failing a Fortitude save. In these situations the chymist must make a DC 25 Will save; if she fails, on her next turn she uses a standard action to change to her mutagenic form (which counts as a use of the mutate ability).|MasterChymist_Mutate_Times",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master Chymist ~ Mutate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Master Chymist Class Feature.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_Mutate_Duration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_Mutate_PersistentMutagenDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_Mutate_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, as a result of repeated exposure to her mutagens, the master chymist can now assume a mutagenic form %1 times per day without imbibing her mutagen. In this form, she gains all the bonuses and penalties of her mutagen and adds together her alchemist and master chymist levels together to determine her effective alchemist level for the duration of this form. Using a mutagen also forces the chymist into this form. Taking a mutagen or using the mutate ability again while in her mutagenic form works normally (with the new mutagen's modifiers replacing the current modifiers, and the longer duration taking precedent). The chymist remains in her mutagenic form until its duration expires, her magic is interrupted (as with an antimagic field), or she expends another use of her mutate ability.&nl;A chymist may be forced to take her mutagenic form against her will by stress or damage. Anytime the character is in her normal form and has daily uses of the mutate ability available, she may be forced to switch after suffering a critical hit or failing a Fortitude save. In these situations the chymist must make a DC 25 Will save; if she fails, on her next turn she uses a standard action to change to her mutagenic form (which counts as a use of the mutate ability).|MasterChymist_Mutate_Times"
+      },
+      {
+        "key": "DESC",
+        "value": "[%1 minutes]|MasterChymist_Mutate_Duration|!PREABILITY:1,CATEGORY=Special Ability,Alchemist ~ Persistent Mutagen"
+      },
+      {
+        "key": "DESC",
+        "value": "[%1 hours]|MasterChymist_Mutate_PersistentMutagenDuration|PREABILITY:1,CATEGORY=Special Ability,Alchemist ~ Persistent Mutagen"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterChymist_Mutate_Duration|(MasterChymistLVL+AlchemistMutagenLVL)*10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterChymist_Mutate_PersistentMutagenDuration|MasterChymistLVL+AlchemistPersistentMutagenLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterChymist_Mutate_Times|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterChymist_Mutate_Times|1|PREVARGTEQ:MasterChymistLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterChymist_Mutate_Times|1|PREVARGTEQ:MasterChymistLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterChymist_Mutate_Times|1|PREVARGTEQ:MasterChymistLVL,10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.268"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|MasterChymist_Mutate_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 minutes, %2/day)|MasterChymist_Mutate_Duration|MasterChymist_Mutate_Times|!PREABILITY:1,CATEGORY=Special Ability,Alchemist ~ Persistent Mutagen"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 hours, %2/day)|MasterChymist_Mutate_PersistentMutagenDuration|MasterChymist_Mutate_Times|PREABILITY:1,CATEGORY=Special Ability,Alchemist ~ Persistent Mutagen"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1365,
+    "record_key": "Master Chymist ~ Mutate"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

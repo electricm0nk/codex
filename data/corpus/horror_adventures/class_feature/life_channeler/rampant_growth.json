@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Life Channeler ~ Rampant Growth",
+    "name": "Rampant Growth",
+    "class": "Life Channeler",
+    "description": "A life channeler can enrich the land more than usual with her sacrifices. When ritually killing a creature with a coup de grace for the plant growth enrichment effect or casting plant growth for the enrichment effect from one of her talismans, the effect has a range of 1 mile instead of a range of half a mile.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Channeler ~ Rampant Growth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.LifeChannelerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "DESC",
+        "value": "A life channeler can enrich the land more than usual with her sacrifices. When ritually killing a creature with a coup de grace for the plant growth enrichment effect or casting plant growth for the enrichment effect from one of her talismans, the effect has a range of 1 mile instead of a range of half a mile."
+      },
+      {
+        "key": "DESC",
+        "value": "If the sacrificed creature was at least CR 8, the effect lasts for 3 years instead of 1 year.|PRECLASS:1,Druid=8"
+      },
+      {
+        "key": "DESC",
+        "value": "If the sacrificed creature was at least CR 12, the effect increases productivity to two-thirds above normal, instead of one-third above normal.|PRECLASS:1,Druid=12"
+      },
+      {
+        "key": "DESC",
+        "value": "These effects stack, assuming the creature is high enough CR.|PRECLASS:1,Druid=8"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 113,
+    "record_key": "Life Channeler ~ Rampant Growth"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Steel Falcon ~ Heroic Speech",
+    "name": "Heroic Speech",
+    "class": "Steel Falcon",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Steel Falcon ~ Heroic Speech"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Steel Falcon Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeroicSpeechLVL|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "DESC",
+        "value": "A Steel Falcon can inspire her allies with tales of greatness, heroism, and the ideals of Andoran. This functions like the inspire courage aspect of bardic performance, treating the Steel Falcon's class level as her bard level when determining the effect; if the Steel Falcon has levels in bard, her class levels stack with her bard levels when determining the effect of this ability and the effect of her inspire courage bard ability. The Steel Falcon can use this ability %1 rounds per day.|SteelFalconLVL+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireCourageBonus|HeroicSpeechLVL-InspireCourageCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HeroicSpeechLVL|min((BardicPerformanceLVL+SteelFalconLVL+7)/6,4)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Inspire Courage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 483,
+    "record_key": "Steel Falcon ~ Heroic Speech"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest ~ Spontaneous Casting",
+    "name": "Spontaneous Casting",
+    "class": "Warpriest",
+    "description": "A good warpriest (or a neutral warpriest of a good deity) can channel stored spell energy into healing spells that he did not prepare ahead of time. The warpriest can expend any prepared spell that isn't an orison to cast any cure spell of the same spell level or lower. A cure spell is any spell with \"cure\" in its name. An evil warpriest (or a neutral warpriest of an evil deity) can't convert spells to cure spells, but can convert them to inflict spells. An inflict spell is any spell with \"inflict\" in its name. A warpriest that is neither good nor evil and whose deity is neither good nor evil chooses whether he can convert spells into either cure spells or inflict spells. Once this choice is made, it cannot be changed. This choice also determines whether the warpriest channels",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest ~ Spontaneous Casting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A good warpriest (or a neutral warpriest of a good deity) can channel stored spell energy into healing spells that he did not prepare ahead of time. The warpriest can expend any prepared spell that isn't an orison to cast any cure spell of the same spell level or lower. A cure spell is any spell with \"cure\" in its name. An evil warpriest (or a neutral warpriest of an evil deity) can't convert spells to cure spells, but can convert them to inflict spells. An inflict spell is any spell with \"inflict\" in its name. A warpriest that is neither good nor evil and whose deity is neither good nor evil chooses whether he can convert spells into either cure spells or inflict spells. Once this choice is made, it cannot be changed. This choice also determines whether the warpriest channels"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2151,
+    "record_key": "Warpriest ~ Spontaneous Casting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

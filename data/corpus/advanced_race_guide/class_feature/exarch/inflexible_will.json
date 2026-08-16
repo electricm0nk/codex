@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Exarch ~ Inflexible Will",
+    "name": "Inflexible Will",
+    "class": "Exarch",
+    "description": "An exarch gains a +2 bonus on saving throws against confusion and insanity effects and effects with the chaotic descriptor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exarch ~ Inflexible Will"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An exarch gains a +2 bonus on saving throws against confusion and insanity effects and effects with the chaotic descriptor."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 39,
+    "record_key": "Exarch ~ Inflexible Will"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

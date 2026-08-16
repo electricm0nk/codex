@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Masterful Trick ~ Spatial Switch",
+    "name": "Spatial Switch",
+    "class": "Masterful Trick",
+    "description": "The mesmerist allows himself and an ally to physically swap places. The mesmerist can trigger this trick when an enemy moves adjacent to or attacks either the subject or the mesmerist, provided the subject and the mesmerist are within 100 feet of one another. The subject and the mesmerist then swap positions. If this trick was triggered by an attack, the swap happens before checking to see whether the attack hits. The mesmerist can't implant this trick on himself. This is a conjuration (teleportation) effect. (Masterful Trick)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterful Trick ~ Spatial Switch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristTrick.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mesmerist ~ Masterful Tricks"
+      },
+      {
+        "key": "DESC",
+        "value": "The mesmerist allows himself and an ally to physically swap places. The mesmerist can trigger this trick when an enemy moves adjacent to or attacks either the subject or the mesmerist, provided the subject and the mesmerist are within 100 feet of one another. The subject and the mesmerist then swap positions. If this trick was triggered by an attack, the swap happens before checking to see whether the attack hits. The mesmerist can't implant this trick on himself. This is a conjuration (teleportation) effect. (Masterful Trick)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 973,
+    "record_key": "Masterful Trick ~ Spatial Switch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

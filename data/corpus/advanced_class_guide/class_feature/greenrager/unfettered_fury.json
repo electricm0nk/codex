@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Greenrager ~ Unfettered Fury",
+    "name": "Unfettered Fury",
+    "class": "Greenrager",
+    "description": "A greenrager's fury allows him to move through undergrowth with frightening speed and grace. This functions as the druid's woodland stride class feature, but only while the greenrager is bloodraging.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Greenrager ~ Unfettered Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Greenrager Class Feature.Bloodrager Class Feature.SpecialQuality.Extraordinary.BloodragerBloodSanctuary"
+      },
+      {
+        "key": "DESC",
+        "value": "A greenrager's fury allows him to move through undergrowth with frightening speed and grace. This functions as the druid's woodland stride class feature, but only while the greenrager is bloodraging."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2766,
+    "record_key": "Greenrager ~ Unfettered Fury"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

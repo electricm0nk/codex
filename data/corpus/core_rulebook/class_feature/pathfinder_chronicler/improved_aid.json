@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pathfinder Chronicler ~ Improved Aid",
+    "name": "Improved Aid",
+    "class": "Pathfinder Chronicler",
+    "description": "Pathfinder chroniclers frequently serve as the companions of great heroes, standing by their sides and recording their deeds, but often lending a crucial helping hand. Starting at 3rd level, a Pathfinder chronicler  using the aid another action grants a +4 bonus, rather than the normal +2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Chronicler ~ Improved Aid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder ChroniclerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Pathfinder chroniclers frequently serve as the companions of great heroes, standing by their sides and recording their deeds, but often lending a crucial helping hand. Starting at 3rd level, a Pathfinder chronicler  using the aid another action grants a +4 bonus, rather than the normal +2."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.390"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3054,
+    "record_key": "Pathfinder Chronicler ~ Improved Aid"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

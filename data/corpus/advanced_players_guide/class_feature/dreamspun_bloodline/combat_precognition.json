@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dreamspun Bloodline ~ Combat Precognition",
+    "name": "Combat Precognition",
+    "class": "Dreamspun Bloodline",
+    "description": "Your insight into the future grants you an advantage in combat.You gain a +%1 insight bonus on initiative checks.|Sorcerer_DreamspunCombatPrecognition_InitiativeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dreamspun Bloodline ~ Combat Precognition"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Dreamspun Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Supernatral"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Dreamspun"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Dreamspun_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DreamspunCombatPrecognition_InitiativeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your insight into the future grants you an advantage in combat.You gain a +%1 insight bonus on initiative checks.|Sorcerer_DreamspunCombatPrecognition_InitiativeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|Sorcerer_DreamspunCombatPrecognition_InitiativeBonus|TYPE=Insight"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DreamspunCombatPrecognition_InitiativeBonus|floor((Sorcerer_Dreamspun_BloodlinePower3LVL+1)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.138"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DreamspunBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3155,
+    "record_key": "Dreamspun Bloodline ~ Combat Precognition"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

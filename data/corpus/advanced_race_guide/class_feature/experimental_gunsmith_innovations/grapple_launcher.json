@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Experimental Gunsmith Innovations ~ Grapple Launcher",
+    "name": "Grapple Launcher",
+    "class": "Experimental Gunsmith Innovations",
+    "description": "The Experimental Gunsmith's firearm includes a special set of rails that allows her to slide a grappling hook over the barrel and fire it as a full-round action. The grappling hook anchors into anything she successfully hits with an attack roll, and the DC of the Strength check required to pull the grappling hook loose is equal to her attack roll to lodge it in place. A Disable Device check can remove it with a +5 bonus on the check, and a creature struck by the hook can escape it with a combat maneuver check or Escape Artist check with a +5 bonus on the check. The firearm is powerful enough to fire a hook trailing up to 100 feet of rope, but throws off the balance of the Experimental Gunsmith's firearm, reducing its range increment by 50%%.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Experimental Gunsmith Innovations ~ Grapple Launcher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ExperimentalGunsmithInnovation"
+      },
+      {
+        "key": "DESC",
+        "value": "The Experimental Gunsmith's firearm includes a special set of rails that allows her to slide a grappling hook over the barrel and fire it as a full-round action. The grappling hook anchors into anything she successfully hits with an attack roll, and the DC of the Strength check required to pull the grappling hook loose is equal to her attack roll to lodge it in place. A Disable Device check can remove it with a +5 bonus on the check, and a creature struck by the hook can escape it with a combat maneuver check or Escape Artist check with a +5 bonus on the check. The firearm is powerful enough to fire a hook trailing up to 100 feet of rope, but throws off the balance of the Experimental Gunsmith's firearm, reducing its range increment by 50%%."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 164,
+    "record_key": "Experimental Gunsmith Innovations ~ Grapple Launcher"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

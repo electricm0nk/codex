@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Marid Bloodline ~ Frost Ray",
+    "name": "Frost Ray",
+    "class": "Marid Bloodline",
+    "description": "You can unleash an elemental ray as a standard action, targeting any foe within 30 feet as a ranged touch attack. This ray deals 1d6",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Marid Bloodline ~ Frost Ray"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Marid Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Marid"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Marid_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Marid_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Marid_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_MaridFrostRay_DamageBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash an elemental ray as a standard action, targeting any foe within 30 feet as a ranged touch attack. This ray deals 1d6"
+      },
+      {
+        "key": "DESC",
+        "value": "+ %1|Sorcerer_MaridFrostRay_DamageBonus|PREVARGTEQ:Sorcerer_MaridFrostRay_DamageBonus,1"
+      },
+      {
+        "key": "DESC",
+        "value": "points of cold damage. You can use this ability %1 times per day.|Sorcerer_Marid_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_MaridFrostRay_DamageBonus|Sorcerer_Marid_BloodlinePower1LVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6 cold)|Sorcerer_MaridFrostRay_DamageBonus|Sorcerer_Marid_BloodlinePower1Times|PREVARLT:Sorcerer_MaridFrostRay_DamageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6+%1 cold)|Sorcerer_MaridFrostRay_DamageBonus|Sorcerer_Marid_BloodlinePower1Times|PREVARGTEQ:Sorcerer_MaridFrostRay_DamageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Marid_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|MaridBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 647,
+    "record_key": "Marid Bloodline ~ Frost Ray"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Artifice Blessing ~ Crafter's Wrath",
+    "name": "Crafter's Wrath",
+    "class": "Artifice Blessing",
+    "description": "You can touch one melee weapon and grant it greater power to harm and destroy crafted objects. For 1 minute, whenever this weapon deals damage to constructs or objects, it bypasses hardness and damage reduction.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Artifice Blessing ~ Crafter's Wrath"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch one melee weapon and grant it greater power to harm and destroy crafted objects. For 1 minute, whenever this weapon deals damage to constructs or objects, it bypasses hardness and damage reduction."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2229,
+    "record_key": "Artifice Blessing ~ Crafter's Wrath"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

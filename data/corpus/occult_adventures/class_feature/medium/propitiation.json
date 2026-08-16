@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Propitiation",
+    "name": "Propitiation",
+    "class": "Medium",
+    "description": "A medium has learned hidden techniques and rites that allow him to mollify his channeled spirit once per day, reducing its influence over him by 1 point (to a minimum of 1 point of influence). The details of the propitiation ritual vary based on the individual spirit, but the process always takes around 10 minutes to perform and it never requires any additional cost (such as an offering of wealth or a live sacrifice).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Propitiation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A medium has learned hidden techniques and rites that allow him to mollify his channeled spirit once per day, reducing its influence over him by 1 point (to a minimum of 1 point of influence). The details of the propitiation ritual vary based on the individual spirit, but the process always takes around 10 minutes to perform and it never requires any additional cost (such as an offering of wealth or a live sacrifice)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 820,
+    "record_key": "Medium ~ Propitiation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

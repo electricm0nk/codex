@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Elemental Rage (Greater)",
+    "name": "Elemental Rage, Greater",
+    "class": "Rage Power",
+    "description": "While raging, all of the barbarian's critical hits made with melee weapons deal an additional 1d10 points of energy damage (2d10 if the weapon deals W3 damage on a critical hit, 3d10 if the weapon deals W4 on a critical hit). The type of this damage is the same as the type chosen for the elemental rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Elemental Rage (Greater)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Elemental Rage"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, all of the barbarian's critical hits made with melee weapons deal an additional 1d10 points of energy damage (2d10 if the weapon deals W3 damage on a critical hit, 3d10 if the weapon deals W4 on a critical hit). The type of this damage is the same as the type chosen for the elemental rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1498,
+    "record_key": "Rage Power ~ Elemental Rage (Greater)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

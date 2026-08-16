@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Hex ~ Fortune",
+    "name": "Fortune",
+    "class": "Shaman Hex",
+    "description": "The shaman grants a creature within 30 feet a bit of good luck for %1 rounds. The target can call upon this good luck once per round, allowing it to reroll any ability check, attack roll, saving throw, or skill check, taking the better result. The target creature must to decide to use this ability before the first roll is made. Once a creature has benefited from the fortune hex, it cannot benefit from it again for 24 hours.|ShamanFortuneHexDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Hex ~ Fortune"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Fortune"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanFortuneHexDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman grants a creature within 30 feet a bit of good luck for %1 rounds. The target can call upon this good luck once per round, allowing it to reroll any ability check, attack roll, saving throw, or skill check, taking the better result. The target creature must to decide to use this ability before the first roll is made. Once a creature has benefited from the fortune hex, it cannot benefit from it again for 24 hours.|ShamanFortuneHexDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanFortuneHexDuration|1+min(2,ShamanHexLVL/8)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1432,
+    "record_key": "Shaman Hex ~ Fortune"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

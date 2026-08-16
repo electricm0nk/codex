@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bushwhacker ~ Shifty Shot",
+    "name": "Shifty Shot",
+    "class": "Bushwhacker",
+    "description": "A bushwhacker with at least 1 grit point deals 1d6 points of extra damage when using her firearm to attack opponents denied their Dexterity bonus to AC (whether the target actually has a Dexterity bonus or not). Except for the requirement that she must use a firearm and must have at least 1 grit point to use it, this deed otherwise works identically to a rogue's sneak attack class feature (including the requirement that she must be within 30 feet of her target to deal this extra damage), and stacks with the sneak shot ability (see below) and sneak attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bushwhacker ~ Shifty Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A bushwhacker with at least 1 grit point deals 1d6 points of extra damage when using her firearm to attack opponents denied their Dexterity bonus to AC (whether the target actually has a Dexterity bonus or not). Except for the requirement that she must use a firearm and must have at least 1 grit point to use it, this deed otherwise works identically to a rogue's sneak attack class feature (including the requirement that she must be within 30 feet of her target to deal this extra damage), and stacks with the sneak shot ability (see below) and sneak attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 624,
+    "record_key": "Bushwhacker ~ Shifty Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

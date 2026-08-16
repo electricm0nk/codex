@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gunslinger ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Gunslinger",
+    "description": "At 4th level, and every four levels thereafter, a gunslinger gains a bonus feat in addition to those gained by normal advancement. These bonus feats must be combat or grit feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Bonus Feats"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GunslingerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_GunslingerBonusFeat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_GunslingerBonusFeatPoolChoice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, and every four levels thereafter, a gunslinger gains a bonus feat in addition to those gained by normal advancement. These bonus feats must be combat or grit feats."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_GunslingerBonusFeatPoolChoice|GunslingerLVL/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 42,
+    "record_key": "Gunslinger ~ Bonus Feats"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

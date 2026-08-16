@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Life in Blood ~ Shax",
+    "name": "Life in Blood",
+    "class": "Life in Blood",
+    "description": "You treat bleed effects as fast healing. For example, if you suffer an effect that causes bleed 5, you do not take any damage from the effect and instead gain fast healing 5. This effect ends whenever you are fully healed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life in Blood ~ Shax"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You treat bleed effects as fast healing. For example, if you suffer an effect that causes bleed 5, you do not take any damage from the effect and instead gain fast healing 5. This effect ends whenever you are fully healed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 176,
+    "record_key": "Life in Blood ~ Shax"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

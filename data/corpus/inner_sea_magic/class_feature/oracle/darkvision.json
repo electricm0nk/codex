@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oracle ~ Darkvision",
+    "name": "Darkvision",
+    "class": "Oracle",
+    "description": "A black-blooded oracle gains darkvision with a range of %1 feet.|BlackBloodDarkvision",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle ~ Darkvision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.Extraordinary.GeneralRevelation.OracleRevelation"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Oracle Archetype ~ Black-Blooded Oracle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BlackBloodDarkvision|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A black-blooded oracle gains darkvision with a range of %1 feet.|BlackBloodDarkvision"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Darkvision"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlackBloodDarkvision|60"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlackBloodDarkvision|30|PREVARGTEQ:OracleLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|BlackBloodDarkvision|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 306,
+    "record_key": "Oracle ~ Darkvision"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

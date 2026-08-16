@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Horse Master",
+    "name": "Horse Master",
+    "class": "Warpriest Bonus Feat",
+    "description": "You blend horsemanship skills from disparate traditions into a seamless mounted combat technique.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Horse Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Cavalier ~ Expert Trainer"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Ride=6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NonCavalierLevel|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You blend horsemanship skills from disparate traditions into a seamless mounted combat technique."
+      },
+      {
+        "key": "DESC",
+        "value": " Use your character level to determine your effective druid level for determining the powers and abilities of your mount. &nl; [Normal] You use your cavalier level to determine your effective druid level for determining the powers and abilities of your mount (NCL=%2) (CL=%1).|CavalierLevel|NonCavalierLevel"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Horse Master"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4462,
+    "record_key": "Warpriest Bonus Feat ~ Horse Master"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

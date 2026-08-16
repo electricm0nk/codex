@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Masterpiece ~ Quickening Pulse",
+    "name": "Quickening Pulse",
+    "class": "Masterpiece",
+    "description": "Your driving notes cause unnatural heart rates in your opponents.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterpiece ~ Quickening Pulse"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "The Quickening Pulse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.Masterpiece"
+      },
+      {
+        "key": "DEFINE",
+        "value": "QuickeningPulseDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your driving notes cause unnatural heart rates in your opponents."
+      },
+      {
+        "key": "DESC",
+        "value": " You create a musical tempo that first mirrors your enemies' heartbeats, and then quickens them to dangerous levels. When you complete the performance, all enemies within 30 feet who can hear your performance must save (DC %1) or take 1d6 points of damage as their pounding heart causes them to sweat blood. Creatures that are immune to critical hits are unaffected by this ability. Each round that you continue the performance adds another round to the bleed effect. Abilities that extend the duration of a bardic performance (such as Lingering Performance; see page 164 of the Advanced Player's Guide) affect this masterpiece.  Use: 1 bardic performance round per round of bleed.  Action: 1 standard action.|QuickeningPulseDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|QuickeningPulseDC|10+(MasterpieceLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 179,
+    "record_key": "Masterpiece ~ Quickening Pulse"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

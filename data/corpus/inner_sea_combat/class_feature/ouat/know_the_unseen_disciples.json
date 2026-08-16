@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ouat ~ Know the Unseen Disciples",
+    "name": "Know the Unseen Disciples",
+    "class": "Ouat",
+    "description": "At 7th level, an Ouat can spot hidden creatures, as if using the spell see invisibility. Using this ability is a standard action that consumes 2 points from his ki pool. His caster level for this effect is equal to his class level. This ability replaces wholeness of body.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ouat ~ Know the Unseen Disciples"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Monk Class Feature.Ouat Class Feature.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ouat_KnowTheUnseenDisciples_CL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, an Ouat can spot hidden creatures, as if using the spell see invisibility. Using this ability is a standard action that consumes 2 points from his ki pool. His caster level for this effect is equal to his class level. This ability replaces wholeness of body."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ouat_KnowTheUnseenDisciples_CL|MonkLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 162,
+    "record_key": "Ouat ~ Know the Unseen Disciples"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

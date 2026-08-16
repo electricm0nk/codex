@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elemental Ascetic ~ Elemental Flurry",
+    "name": "Elemental Flurry",
+    "class": "Elemental Ascetic",
+    "description": "At 1st level, an elemental ascetic gains Improved Unarmed Strike as a bonus feat. He gains the kinetic fist form infusion and it costs 0 points of burn instead of 1 point of burn. When using the kinetic fist form infusion with a full attack, he can make a flurry of blows as the monk class feature. He must use only his fists to make this flurry, no matter what other abilities he possesses. Like a monk, he can use this ability only when unarmored, not using a shield, and unencumbered. He can't use his kinetic blast without a form infusion, nor can he ever use his kinetic blast with the chain, extended range, extreme range, foe throw, flurry of blasts, many throw, or snake form infusions, or with any other form infusion that requires a ranged attack roll or ranged touch attack roll. This ability alters kinetic blast and replaces elemental overflow.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Ascetic ~ Elemental Flurry"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Elemental Ascetic Class Feature.Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, an elemental ascetic gains Improved Unarmed Strike as a bonus feat. He gains the kinetic fist form infusion and it costs 0 points of burn instead of 1 point of burn. When using the kinetic fist form infusion with a full attack, he can make a flurry of blows as the monk class feature. He must use only his fists to make this flurry, no matter what other abilities he possesses. Like a monk, he can use this ability only when unarmored, not using a shield, and unencumbered. He can't use his kinetic blast without a form infusion, nor can he ever use his kinetic blast with the chain, extended range, extreme range, foe throw, flurry of blasts, many throw, or snake form infusions, or with any other form infusion that requires a ranged attack roll or ranged touch attack roll. This ability alters kinetic blast and replaces elemental overflow."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Feat|AUTOMATIC|Improved Unarmed Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Talent ~ kinetic fist"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1373,
+    "record_key": "Elemental Ascetic ~ Elemental Flurry"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

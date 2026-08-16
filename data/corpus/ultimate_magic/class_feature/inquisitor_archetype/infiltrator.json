@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Infiltrator",
+    "name": "Infiltrator",
+    "class": "Inquisitor Archetype",
+    "description": "This inquisitor uses guile and deception to blend in among the enemies of the faith rather than confronting them head-on.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Infiltrator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype.InquisitorSternGaze.InquisitorMonsterLore.InquisitorTrack.InquisitorDiscernLies"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Infiltrator],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorSternGaze,TYPE.InquisitorMonsterLore,TYPE.InquisitorTrack,TYPE.InquisitorDiscernLies]"
+      },
+      {
+        "key": "DESC",
+        "value": "This inquisitor uses guile and deception to blend in among the enemies of the faith rather than confronting them head-on."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Infiltrator ~ Misdirection|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Infiltrator ~ Guileful Lore|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Infiltrator ~ Forbidden Lore|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Infiltrator ~ Necessary Lies|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Inquisitor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1249,
+    "record_key": "Inquisitor Archetype ~ Infiltrator"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

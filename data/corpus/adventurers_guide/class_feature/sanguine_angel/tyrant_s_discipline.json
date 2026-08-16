@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sanguine Angel ~ Tyrant's Discipline",
+    "name": "Tyrant's Discipline",
+    "class": "Sanguine Angel",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sanguine Angel ~ Tyrant's Discipline"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Sanguine Angel Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "DESC",
+        "value": "The Erinyes Company's initiation is deeply indoctrinating, and so sanguine angels are as loyal to the Infernal Majestrix as the Gray Maidens were to Ileosa. A sanguine angel draws upon her indoctrination, tactical training, and devotion to tyranny to develop potent talents. A sanguine angel selects a discipline at 2nd level and every 2 levels thereafter."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Sanguine Angel Discipline|SanguineAngelLVL/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 456,
+    "record_key": "Sanguine Angel ~ Tyrant's Discipline"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mutagenic Mauler Brawler Discovery ~ Feral Mutagen",
+    "name": "Feral Mutagen",
+    "class": "Mutagenic Mauler Brawler Discovery",
+    "description": "Whenever the mutagenic mauler imbibes a mutagen, he gains two claw attacks and a bite attack. These are primary attacks and are made using the mutagenic mauler's full base attack bonus. The claw attacks deal 1d6 points of damage (1d4 if the mutagenic mauler is Small) and the bite attack deals 1d8 points of damage (1d6 if the mutagenic mauler is Small). While the mutagen is in effect, the mutagenic mauler gains a +2 competence bonus on Intimidate skill checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutagenic Mauler Brawler Discovery ~ Feral Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Mutagenic Mauler Class Feature.SpecialAttack.MutagenicMaulerDiscovery"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeralMutagenNaturalAttack|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the mutagenic mauler imbibes a mutagen, he gains two claw attacks and a bite attack. These are primary attacks and are made using the mutagenic mauler's full base attack bonus. The claw attacks deal 1d6 points of damage (1d4 if the mutagenic mauler is Small) and the bite attack deals 1d8 points of damage (1d6 if the mutagenic mauler is Small). While the mutagen is in effect, the mutagenic mauler gains a +2 competence bonus on Intimidate skill checks."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Claw|PREVAREQ:FeralMutagenNaturalAttack,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGESIZE|1|PREVAREQ:FeralMutagenNaturalAttack,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Claw|DAMAGESIZE|1|PREVAREQ:FeralMutagenNaturalAttack,1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|FeralMutagenNaturalAttack|1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Intimidate|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2887,
+    "record_key": "Mutagenic Mauler Brawler Discovery ~ Feral Mutagen"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

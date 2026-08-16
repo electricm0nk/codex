@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brawler's Strike Alignment Selection ~ Lawful",
+    "name": "Lawful",
+    "class": "Brawler's Strike Alignment Selection",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler's Strike Alignment Selection ~ Lawful"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BrawlerStrikeAlignmentSelection"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,LG,LN,NE,NG,TN"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerStrikeLawful|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1056,
+    "record_key": "Brawler's Strike Alignment Selection ~ Lawful"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

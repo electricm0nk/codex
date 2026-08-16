@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger ~ Combat Style Feat",
+    "name": "Combat Style Feat",
+    "class": "Ranger",
+    "description": "At 2nd level, a ranger must select one of two combat styles to pursue: archery or two weapon combat. The ranger's expertise manifests in the form of bonus feats at 2nd, 6th, 10th, 14th, and 18th level. He can choose feats from his selected combat style, even if he does not have the normal prerequisites. If the ranger selects archery, he can choose from the following list whenever he gains a combat style feat: Far Shot, Point-Blank Shot, Precise Shot, and Rapid Shot. At 6th level, he adds Improved Precise Shot and Manyshot to the list. At 10th level, he adds Pinpoint Targeting and Shot on the Run to the list. If the ranger selects two-weapon combat, he can choose from the following list whenever he gains a combat style feat: Double Slice, Improved Shield Bash, Quick Draw, and Two-Weapon Fighting. At 6th level, he adds Improved Two-Weapon Fighting and Two-Weapon Defense to the list. At 10th level, he adds Greater Two-Weapon Fighting and Two- Weapon Rend to the list. The benefits of the ranger's chosen style feats apply only when he wears light, medium, or no armor. He loses all benefits of his combat style feats when wearing heavy armor. Once a ranger selects a combat style, it cannot be changed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger ~ Combat Style Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatStyleLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerDefaultCombatStyle|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerBonusFeatCount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleFeatCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a ranger must select one of two combat styles to pursue: archery or two weapon combat. The ranger's expertise manifests in the form of bonus feats at 2nd, 6th, 10th, 14th, and 18th level. He can choose feats from his selected combat style, even if he does not have the normal prerequisites. If the ranger selects archery, he can choose from the following list whenever he gains a combat style feat: Far Shot, Point-Blank Shot, Precise Shot, and Rapid Shot. At 6th level, he adds Improved Precise Shot and Manyshot to the list. At 10th level, he adds Pinpoint Targeting and Shot on the Run to the list. If the ranger selects two-weapon combat, he can choose from the following list whenever he gains a combat style feat: Double Slice, Improved Shield Bash, Quick Draw, and Two-Weapon Fighting. At 6th level, he adds Improved Two-Weapon Fighting and Two-Weapon Defense to the list. At 10th level, he adds Greater Two-Weapon Fighting and Two- Weapon Rend to the list. The benefits of the ranger's chosen style feats apply only when he wears light, medium, or no armor. He loses all benefits of his combat style feats when wearing heavy armor. Once a ranger selects a combat style, it cannot be changed."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Combat Style|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ranger Combat Style Feat|RangerCombatStyleFeatCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleFeatCount|(CombatStyleLVL+2)/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerDefaultCombatStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatStyleLVL|RangerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1432,
+    "record_key": "Ranger ~ Combat Style Feat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

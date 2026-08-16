@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Raven Master ~ Mimic Figurine",
+    "name": "Mimic Figurine",
+    "class": "Raven Master",
+    "description": "Once per day as a standard action, the raven master can transform her raven companion into a token similar to a figurine of wondrous power. Any gear worn by the raven melds into its body as part of this transformation, but held items do not. The raven can remain in this form indefinitely, or until the raven master spends a standard action to activate the statuette as though it were a figurine of wondrous power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Raven Master ~ Mimic Figurine"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.175"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a standard action, the raven master can transform her raven companion into a token similar to a figurine of wondrous power. Any gear worn by the raven melds into its body as part of this transformation, but held items do not. The raven can remain in this form indefinitely, or until the raven master spends a standard action to activate the statuette as though it were a figurine of wondrous power."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1003,
+    "record_key": "Raven Master ~ Mimic Figurine"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

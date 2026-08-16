@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunter Animal Focus ~ Eagle",
+    "name": "Eagle",
+    "class": "Hunter Animal Focus",
+    "description": "Get +%1 enhancement bonus to charisma.|HunterAnimalFocusEagleBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Animal Focus ~ Eagle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CourtlyHunterAnimalFocusAbility"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterAnimalFocusEagleBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Get +%1 enhancement bonus to charisma.|HunterAnimalFocusEagleBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|HunterAnimalFocusEagleBonus|TYPE=Enhancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusEagleBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusEagleBonus|2|PREVARGTEQ:HunterAnimalFocusLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusEagleBonus|2|PREVARGTEQ:HunterAnimalFocusLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 401,
+    "record_key": "Hunter Animal Focus ~ Eagle"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

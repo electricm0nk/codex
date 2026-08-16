@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bloodrager ~ Fast Movement",
+    "name": "Fast Movement",
+    "class": "Bloodrager",
+    "description": "A bloodrager's base speed is faster than is normal for his race by 10 feet. This benefit applies only when he is wearing no armor, light armor, or medium armor, and not carrying a heavy load. Apply this bonus before modifying the bloodrager's speed due to any armor worn or load carried. This bonus stacks with any other bonuses to the bloodrager's base speed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager ~ Fast Movement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodrageMovementBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A bloodrager's base speed is faster than is normal for his race by 10 feet. This benefit applies only when he is wearing no armor, light armor, or medium armor, and not carrying a heavy load. Apply this bonus before modifying the bloodrager's speed due to any armor worn or load carried. This bonus stacks with any other bonuses to the bloodrager's base speed."
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE=Walk|BloodrageMovementBonus|PREVARLT:ENCUMBERANCE,2,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageMovementBonus|10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 334,
+    "record_key": "Bloodrager ~ Fast Movement"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

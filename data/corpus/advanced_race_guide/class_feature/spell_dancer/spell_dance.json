@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spell Dancer ~ Spell Dance",
+    "name": "Spell Dance",
+    "class": "Spell Dancer",
+    "description": "The spell dancer gains the ability to expend 1 point from his arcane pool as a swift action to gain a +%1 enhancement bonus to his movement rate and a +%2 dodge bonus to Armor Class against attacks of opportunity provoked by moving through threatened spaces for 1 minute.|(1+(MagusLVL-1)/4)*10|(1+(MagusLVL-1)/4)*2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spell Dancer ~ Spell Dance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The spell dancer gains the ability to expend 1 point from his arcane pool as a swift action to gain a +%1 enhancement bonus to his movement rate and a +%2 dodge bonus to Armor Class against attacks of opportunity provoked by moving through threatened spaces for 1 minute.|(1+(MagusLVL-1)/4)*10|(1+(MagusLVL-1)/4)*2"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per spell dance as a swift action, the spell dancer may use one of the following on himself as a swift action: blur, fly, or haste. These abilities last for 1 round.|PRECLASS:1,Magus=5"
+      },
+      {
+        "key": "DESC",
+        "value": "The spell dancer may instead take a swift action to use dimension door as a spell-like ability once during a spelldance.|PRECLASS:1,Magus=9"
+      },
+      {
+        "key": "DESC",
+        "value": "The spell dancer may instead choose to take a swift action to gain freedom of movement for 1d4 rounds.|PRECLASS:1,Magus=13"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 122,
+    "record_key": "Spell Dancer ~ Spell Dance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

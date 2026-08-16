@@ -1,0 +1,113 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Archaeologist ~ Archaeologist's Luck",
+    "name": "Archaeologist's Luck",
+    "class": "Archaeologist",
+    "description": "Fortune favors the Archaeologist. As a swift action, an Archaeologist can call on fortune's favor, giving him a +1 luck bonus on attack rolls, saving throws, skill checks, and weapon damage rolls. He can use this ability for a number of rounds per day equal to 4 + his Charisma modifier. Maintaining this bonus is a free action, but it ends immediately if the Archaeologist is killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action to maintain it each round. Archaeologist's luck is treated as bardic performance for the purposes of feats, abilities, effects, and the like that affect bardic performance. Like bardic performance, it cannot be maintained at the same time as other performance abilities. This bonus increases to +2 at 5th level, +3 at 11th level, and +4 at 17th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Archaeologist ~ Archaeologist's Luck"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Bard ~ Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArchaeologistLuckBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BardicPerformanceDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Fortune favors the Archaeologist. As a swift action, an Archaeologist can call on fortune's favor, giving him a +1 luck bonus on attack rolls, saving throws, skill checks, and weapon damage rolls. He can use this ability for a number of rounds per day equal to 4 + his Charisma modifier. Maintaining this bonus is a free action, but it ends immediately if the Archaeologist is killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action to maintain it each round. Archaeologist's luck is treated as bardic performance for the purposes of feats, abilities, effects, and the like that affect bardic performance. Like bardic performance, it cannot be maintained at the same time as other performance abilities. This bonus increases to +2 at 5th level, +3 at 11th level, and +4 at 17th level."
+      },
+      {
+        "key": "DESC",
+        "value": "(%1 uses per day with +%2 bonus)|BardicPerformanceDuration|ArchaeologistLuckBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArchaeologistLuckBonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardicPerformanceDuration|4+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArchaeologistLuckBonus|1|PREVARGTEQ:classlevel(\"Bard\"),5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArchaeologistLuckBonus|1|PREVARGTEQ:classlevel(\"Bard\"),11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArchaeologistLuckBonus|1|PREVARGTEQ:classlevel(\"Bard\"),17"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|TOHIT|ArchaeologistLuckBonus|TYPE=Luck"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|DAMAGE.Simple|ArchaeologistLuckBonus|TYPE=Luck"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|DAMAGE.Martial|ArchaeologistLuckBonus|TYPE=Luck"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|DAMAGE.Exotic|ArchaeologistLuckBonus|TYPE=Luck"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|DAMAGE.Natural|ArchaeologistLuckBonus|TYPE=Luck"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|ALL|ArchaeologistLuckBonus|TYPE=Luck"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|ALL|ArchaeologistLuckBonus|TYPE=Luck"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 391,
+    "record_key": "Archaeologist ~ Archaeologist's Luck"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

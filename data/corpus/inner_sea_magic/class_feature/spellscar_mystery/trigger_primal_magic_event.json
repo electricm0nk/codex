@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spellscar Mystery ~ Trigger Primal Magic Event",
+    "name": "Trigger Primal Magic Event",
+    "class": "Spellscar Mystery",
+    "description": "%1 times per day, as an immediate action, you can cause a spellcaster (including yourself) within 30 feet to trigger a primal magic event as the spell is being cast.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellscar Mystery ~ Trigger Primal Magic Event"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Supernatural"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TriggerPrimalMagicEventTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times per day, as an immediate action, you can cause a spellcaster (including yourself) within 30 feet to trigger a primal magic event as the spell is being cast."
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause any creature in the act of activating a magic item to trigger a primal magic event. |PREVARGTEQ:OracleLVL,13"
+      },
+      {
+        "key": "DESC",
+        "value": "A spellcaster can make a concentration check (DC = 15 + twice the spell's level) to focus the magic and avoid triggering a primal magic effect, but non-spellcasters activating magic items have no such option."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TriggerPrimalMagicEventTimes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TriggerPrimalMagicEventTimes|1|PREVARGTEQ:OracleLVL,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|TriggerPrimalMagicEventTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 105,
+    "record_key": "Spellscar Mystery ~ Trigger Primal Magic Event"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

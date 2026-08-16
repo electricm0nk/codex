@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spiritualist ~ Etheric Tether",
+    "name": "Etheric Tether",
+    "class": "Spiritualist",
+    "description": "At 1st level, a spiritualist can force the phantom to manifest in an area around her by pushing the phantom's consciousness though the veil of ethereal essence, allowing it to fully manifest in either ectoplasmic or incorporeal form. Whenever her manifested phantom takes enough damage to send it back to the Ethereal Plane, as a reaction to the damage, the spiritualist can sacrifice any number of her hit points without using an action. Each hit point sacrificed in this way prevents 1 point of damage dealt to the phantom. This can prevent the phantom from being sent back to the Ethereal Plane. This tether is limited. When the phantom is fully manifested, it and the spiritualist must remain within 50 feet of one another for the phantom's manifestation to stay stable with little to no concentration on the part of the spiritualist. The spiritualist can stretch the limited tether, but only when the phantom is in ectoplasmic form. When a spiritualist starts her turn and her ectoplasmic phantom is more than 50 feet away from her (but closer than 100 feet), the spiritualist must concentrate on the link as a full-round action that provokes attacks of opportunity or the ectoplasmic phantom immediately returns to the Ethereal Plane and cannot be summoned from that plane for 24 hours. This concentration can be interrupted as if it were a spell. Treat this effect's spell level as equal to 1 + 1 per 10 feet farther than 50 feet that the phantom is from the spiritualist (maximum spell level 6th). If the tether is interrupted or the check fails, the phantom immediately snaps back into the consciousness of its spiritualist master. If the ectoplasmic phantom is ever more than 100 feet away from its spiritualist, or the incorporeal phantom is ever 50 feet away from the spiritualist or outside of line of effect from the spiritualist for more than 1 round per spiritualist level the spiritualist possesses, the tether is automatically broken; the phantom immediately returns to the Ethereal Plane and can't be summoned from that plane for 24 hours. See the Phantoms section starting on page 78 for more information.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Etheric Tether"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a spiritualist can force the phantom to manifest in an area around her by pushing the phantom's consciousness though the veil of ethereal essence, allowing it to fully manifest in either ectoplasmic or incorporeal form. Whenever her manifested phantom takes enough damage to send it back to the Ethereal Plane, as a reaction to the damage, the spiritualist can sacrifice any number of her hit points without using an action. Each hit point sacrificed in this way prevents 1 point of damage dealt to the phantom. This can prevent the phantom from being sent back to the Ethereal Plane. This tether is limited. When the phantom is fully manifested, it and the spiritualist must remain within 50 feet of one another for the phantom's manifestation to stay stable with little to no concentration on the part of the spiritualist. The spiritualist can stretch the limited tether, but only when the phantom is in ectoplasmic form. When a spiritualist starts her turn and her ectoplasmic phantom is more than 50 feet away from her (but closer than 100 feet), the spiritualist must concentrate on the link as a full-round action that provokes attacks of opportunity or the ectoplasmic phantom immediately returns to the Ethereal Plane and cannot be summoned from that plane for 24 hours. This concentration can be interrupted as if it were a spell. Treat this effect's spell level as equal to 1 + 1 per 10 feet farther than 50 feet that the phantom is from the spiritualist (maximum spell level 6th). If the tether is interrupted or the check fails, the phantom immediately snaps back into the consciousness of its spiritualist master. If the ectoplasmic phantom is ever more than 100 feet away from its spiritualist, or the incorporeal phantom is ever 50 feet away from the spiritualist or outside of line of effect from the spiritualist for more than 1 round per spiritualist level the spiritualist possesses, the tether is automatically broken; the phantom immediately returns to the Ethereal Plane and can't be summoned from that plane for 24 hours. See the Phantoms section starting on page 78 for more information."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1277,
+    "record_key": "Spiritualist ~ Etheric Tether"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

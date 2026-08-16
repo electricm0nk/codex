@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Duelist ~ Precise Strike",
+    "name": "Precise Strike",
+    "class": "Duelist",
+    "description": "A duelist gains the ability to strike precisely with a light or one-handed piercing weapon, adding her duelist level [%1] to her damage roll. When making a precise strike, a duelist cannot attack with a weapon in her other hand or use a shield. A duelist's precise strike only works against living creatures with discernible anatomies. Any creature that is immune to critical hits is also immune to a precise strike, and any item or ability that protects a creature from critical hits also protects a creature from a precise strike.|PreciseStrikeDamage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Duelist ~ Precise Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DuelistClassFeatures.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PreciseStrikeDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A duelist gains the ability to strike precisely with a light or one-handed piercing weapon, adding her duelist level [%1] to her damage roll. When making a precise strike, a duelist cannot attack with a weapon in her other hand or use a shield. A duelist's precise strike only works against living creatures with discernible anatomies. Any creature that is immune to critical hits is also immune to a precise strike, and any item or ability that protects a creature from critical hits also protects a creature from a precise strike.|PreciseStrikeDamage"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Precise Strike ~ 1H|Precise Strike ~ Light"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PreciseStrikeDamage|DuelistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.383"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+%1)|PreciseStrikeDamage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2991,
+    "record_key": "Duelist ~ Precise Strike"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

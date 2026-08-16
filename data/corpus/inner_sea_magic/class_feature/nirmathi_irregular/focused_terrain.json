@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nirmathi Irregular ~ Focused Terrain",
+    "name": "Focused Terrain",
+    "class": "Nirmathi Irregular",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nirmathi Irregular ~ Focused Terrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialQuality.RangerFavoredTerrain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerFavoredTerrainLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredTerrainBaseBonus|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "A Nirmathi irregular selects one favored terrain (usually \"forest\"). He does not gain additional favored terrains at higher levels. He does get to increase his favored terrain bonus by +2 at 8th, 13th, and 18th level. This otherwise acts as and replaces the standard favored terrain ability."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Common Favored Terrain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPool|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainBaseBonus|2*((2+RangerFavoredEnemyLVL)/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 329,
+    "record_key": "Nirmathi Irregular ~ Focused Terrain"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

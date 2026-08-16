@@ -1,0 +1,127 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bard Archetype ~ Phrenologist",
+    "name": "Phrenologist",
+    "class": "Bard Archetype",
+    "description": "The phrenologist is an expert at reading creatures' skulls, and he learns to use this knowledge to his benefit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Phrenologist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Phrenologist],[!PREFACT:1,ABILITIES,Bard_Archetype_Fascinate=true,Bard_Archetype_BardicKnowledge=true,Bard_Archetype_WellVersed=true,Bard_Archetype_JackOfAllTrades=true,Bard_Archetype_InspireCourage=true,Bard_Archetype_InspireCompetence=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "The phrenologist is an expert at reading creatures' skulls, and he learns to use this knowledge to his benefit."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Phrenologist ~ Phrenological Knowledge|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Phrenologist ~ Skull-Versed|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Phrenologist ~ Phrenological Savant|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Phrenologist ~ Bardic Performance|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Phrenologist ~ Skull Sonata|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Phrenologist ~ In Your Head|PRECLASS:1,Bard=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Phrenologist ~ Fingers of Fascination|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_Fascinate|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_JackOfAllTrades|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCompetence|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_JackOfAllTrades|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCompetence|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1676,
+    "record_key": "Bard Archetype ~ Phrenologist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

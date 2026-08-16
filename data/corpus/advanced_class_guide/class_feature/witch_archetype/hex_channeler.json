@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Archetype ~ Hex Channeler",
+    "name": "Hex Channeler",
+    "class": "Witch Archetype",
+    "description": "A hex channeler is a witch who devotes herself to either life-healing the wounded and destroying the undead-or death, slaying the living and aiding undead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Hex Channeler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype.WitchHex2.CF_WitchHex"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Hex Channeler],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchHex2,TYPE.CF_WitchHex]"
+      },
+      {
+        "key": "DESC",
+        "value": "A hex channeler is a witch who devotes herself to either life-healing the wounded and destroying the undead-or death, slaying the living and aiding undead."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Witch Class Feature|AUTOMATIC|Hex Channeler ~ Channel Energy|PRECLASS:1,Witch=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Witch"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4016,
+    "record_key": "Witch Archetype ~ Hex Channeler"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

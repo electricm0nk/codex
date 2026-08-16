@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Waves Mystery ~ Icy Skin",
+    "name": "Icy Skin",
+    "class": "Waves Mystery",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Waves Mystery ~ Icy Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.WavesRevelation.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleColdResistanceBonus|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Cold|!PRECLASS:1,Oracle=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Cold|PRECLASS:1,Oracle=17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|5+OracleColdResistanceBonus|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleColdResistanceBonus|5|PRECLASS:1,Oracle=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleColdResistanceBonus|10|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 689,
+    "record_key": "Waves Mystery ~ Icy Skin"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

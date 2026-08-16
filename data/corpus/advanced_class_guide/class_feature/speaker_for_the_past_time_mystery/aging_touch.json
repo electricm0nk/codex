@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Speaker for the Past Time Mystery ~ Aging Touch",
+    "name": "Aging Touch",
+    "class": "Speaker for the Past Time Mystery",
+    "description": "Your touch ages living creatures and objects. As a melee touch attack, you can deal %1 points of Strength damage to living creatures. Against objects or constructs, you can deal %2d6 points of damage. If used against an object in another creature's possession, treat this attack as a sunder combat maneuver. You can use this ability %3/day.|AgingTouchStrDamage|AgingTouchDamageDice|AgingTouchTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Speaker for the Past Time Mystery ~ Aging Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "speaker for the past revelation.SpecialAttack.Supernatural.TimeRevelation.RevelationTargetOneOnly"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AgingTouchStrDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AgingTouchDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AgingTouchTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your touch ages living creatures and objects. As a melee touch attack, you can deal %1 points of Strength damage to living creatures. Against objects or constructs, you can deal %2d6 points of damage. If used against an object in another creature's possession, treat this attack as a sunder combat maneuver. You can use this ability %3/day.|AgingTouchStrDamage|AgingTouchDamageDice|AgingTouchTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AgingTouchStrDamage|floor(classlevel(\"Shaman\")/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AgingTouchDamageDice|classlevel(\"Shaman\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AgingTouchTimes|1+floor(classlevel(\"Shaman\")/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3629,
+    "record_key": "Speaker for the Past Time Mystery ~ Aging Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

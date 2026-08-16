@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Green Faith Marshal ~ Eagle Domain",
+    "name": "Eagle",
+    "class": "Green Faith Marshal",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Faith Marshal ~ Eagle Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GreenFaithMarshalDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEagleLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEagleDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEagleTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEagleAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eagle Domain ~ Familiar|PREVARGTEQ:DomainEagleAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eagle Domain ~ Hawkeye"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eagle Domain ~ Aerial Evasion|PREVARGTEQ:DomainEagleAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEagleLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEagleDC|10+(DomainEagleLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEagleTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEagleAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Inquisitor=1|Aspect of the Falcon|Inquisitor=2|Eagle's Splendor|Inquisitor=3|Fly|Inquisitor=4|River of Wind|Inquisitor=5|Overland Flight|Inquisitor=6|Eagle Aerie"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 778,
+    "record_key": "Green Faith Marshal ~ Eagle Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

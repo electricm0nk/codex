@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Karmic Monk ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Karmic Monk",
+    "description": "The karmic monk gains Diplomacy (Cha) as a class skill instead of Intimidate. This alters the monk's class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Karmic Monk ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Karmic Monk Class Feature.Monk Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The karmic monk gains Diplomacy (Cha) as a class skill instead of Intimidate. This alters the monk's class skills."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Climb|TYPE=Craft|Escape Artist|Diplomacy|Knowledge (History)|Knowledge (Religion)|Perception|TYPE=Perform|TYPE=Profession|Ride|Sense Motive|Stealth|Swim"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1796,
+    "record_key": "Karmic Monk ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

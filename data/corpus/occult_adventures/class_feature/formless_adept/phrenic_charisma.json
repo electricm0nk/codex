@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Formless Adept ~ Phrenic Charisma",
+    "name": "Phrenic Charisma",
+    "class": "Formless Adept",
+    "description": "[not implemented]A formless adept uses his Charisma modifier to determine the number of points in his phrenic pool. This ability alters phrenic pool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Formless Adept ~ Phrenic Charisma"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Formless Adept Class Feature.Psychic Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[not implemented]A formless adept uses his Charisma modifier to determine the number of points in his phrenic pool. This ability alters phrenic pool."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1564,
+    "record_key": "Formless Adept ~ Phrenic Charisma"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

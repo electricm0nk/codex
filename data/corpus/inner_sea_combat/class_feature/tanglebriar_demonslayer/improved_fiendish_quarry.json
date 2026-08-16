@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tanglebriar Demonslayer ~ Improved Fiendish Quarry",
+    "name": "Improved Fiendish Quarry",
+    "class": "Tanglebriar Demonslayer",
+    "description": "At 19th level, when a Tanglebriar demonslayer chooses an evil outsider as his quarry, he can forgo the normal +4 attack bonus and instead treat his weapon as if it had the holy weapon special ability while attacking his quarry. This ability is otherwise identical to improved quarry and replaces that ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tanglebriar Demonslayer ~ Improved Fiendish Quarry"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 19th level, when a Tanglebriar demonslayer chooses an evil outsider as his quarry, he can forgo the normal +4 attack bonus and instead treat his weapon as if it had the holy weapon special ability while attacking his quarry. This ability is otherwise identical to improved quarry and replaces that ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 230,
+    "record_key": "Tanglebriar Demonslayer ~ Improved Fiendish Quarry"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

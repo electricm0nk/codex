@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kobold Bloodline ~ Nimble Walker",
+    "name": "Nimble Walker",
+    "class": "Kobold Bloodline",
+    "description": "You gain a +5 racial bonus on Reflex saving throws and on Acrobatics checks made to move through a creature's threatened area or through its space. You also gain the ability to breathe while passing through earth using your earth glide ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kobold Bloodline ~ Nimble Walker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Kobold Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Kobold"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Kobold_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +5 racial bonus on Reflex saving throws and on Acrobatics checks made to move through a creature's threatened area or through its space. You also gain the ability to breathe while passing through earth using your earth glide ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Reflex|5|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Acrobatics=Move Through,Acrobatics=Move through threatened squares|5|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|KoboldBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 644,
+    "record_key": "Kobold Bloodline ~ Nimble Walker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

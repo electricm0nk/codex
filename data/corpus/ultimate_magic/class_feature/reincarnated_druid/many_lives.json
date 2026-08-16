@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Reincarnated Druid ~ Many Lives",
+    "name": "Many Lives",
+    "class": "Reincarnated Druid",
+    "description": "If you are killed, you may automatically reincarnate (as the spell) 1 day later.  You appear in a safe location within 1 mile of your previous body. At will for the next 7 days, you can sense the presence of your remains as if using locate object as a spell-like ability. If you are killed during these 7 days, you remain dead and do not reincarnate. The many lives ability does not function you are slain by a death effect.  You cannot be raised from the dead orresurrected, though you can be reincarnated.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reincarnated Druid ~ Many Lives"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "If you are killed, you may automatically reincarnate (as the spell) 1 day later.  You appear in a safe location within 1 mile of your previous body. At will for the next 7 days, you can sense the presence of your remains as if using locate object as a spell-like ability. If you are killed during these 7 days, you remain dead and do not reincarnate. The many lives ability does not function you are slain by a death effect.  You cannot be raised from the dead orresurrected, though you can be reincarnated."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1180,
+    "record_key": "Reincarnated Druid ~ Many Lives"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

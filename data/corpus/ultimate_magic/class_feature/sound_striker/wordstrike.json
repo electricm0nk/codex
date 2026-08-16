@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sound Striker ~ Wordstrike",
+    "name": "Wordstrike",
+    "class": "Sound Striker",
+    "description": "You can spend 1 round of bardic performance as a standard action to direct a burst of sonically charged words at a creature or object. This performance deals 1d4+%1 points of damage to an object, or half this damage to a living creature.|WordstrikeBonusDamage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sound Striker ~ Wordstrike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialAttack.Supernatural.BardicPerformance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WordStrikeBonusDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can spend 1 round of bardic performance as a standard action to direct a burst of sonically charged words at a creature or object. This performance deals 1d4+%1 points of damage to an object, or half this damage to a living creature.|WordstrikeBonusDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WordStrikeBonusDamage|classlevel(\"Bard\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 994,
+    "record_key": "Sound Striker ~ Wordstrike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

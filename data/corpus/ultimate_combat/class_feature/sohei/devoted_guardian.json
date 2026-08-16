@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sohei ~ Devoted Guardian",
+    "name": "Devoted Guardian",
+    "class": "Sohei",
+    "description": "At 1st level, a sohei can always act in a surprise round even if he does not notice his enemies, though he remains flat-footed until he acts. In addition, a sohei gains a bonus on initiative rolls equal to 1/2 his monk level. At 20th level, a sohei's initiative roll is automatically a natural 20. This ability replaces stunning fist.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sohei ~ Devoted Guardian"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a sohei can always act in a surprise round even if he does not notice his enemies, though he remains flat-footed until he acts. In addition, a sohei gains a bonus on initiative rolls equal to 1/2 his monk level. At 20th level, a sohei's initiative roll is automatically a natural 20. This ability replaces stunning fist."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|MonkLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1353,
+    "record_key": "Sohei ~ Devoted Guardian"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

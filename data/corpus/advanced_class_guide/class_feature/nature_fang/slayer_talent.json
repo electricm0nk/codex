@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nature Fang ~ Slayer Talent",
+    "name": "Slayer Talent",
+    "class": "Nature Fang",
+    "description": "At 4th level and every 2 levels thereafter, a nature fang selects a slayer talent. Starting at 12th level, she can select an advanced slayer talent in place of a slayer talent. She uses her druid level as her slayer level to determine what talents she can select.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Fang ~ Slayer Talent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Nature Fang Class Feature.Druid Class Feature.SpecialQuality.DruidWildShape"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlayerTalentLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level and every 2 levels thereafter, a nature fang selects a slayer talent. Starting at 12th level, she can select an advanced slayer talent in place of a slayer talent. She uses her druid level as her slayer level to determine what talents she can select."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Nature Fang Talent|min(4,((SlayerTalentLVL-2)/2))|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Advanced Nature Fang Talent|(SlayerTalentLVL-10)/2|PRECLASS:1,Druid=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerTalentLVL|DruidLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3031,
+    "record_key": "Nature Fang ~ Slayer Talent"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

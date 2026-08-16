@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Archetype ~ Beast-Bonded",
+    "name": "Beast-Bonded",
+    "class": "Witch Archetype",
+    "description": "While all witches are intimately tied to their familiars, a beast-bonded witch's craft focuses specifically on her familiar bond and developing the relationship with her patron through her familiar.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Beast-Bonded"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype.WitchHex4.WitchHex8.WitchHex10"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Beast-Bonded],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchHexes,TYPE.WitchHex4,TYPE.WitchHex8,TYPE.WitchHex10,TYPE.WitchFamiliar]"
+      },
+      {
+        "key": "DESC",
+        "value": "While all witches are intimately tied to their familiars, a beast-bonded witch's craft focuses specifically on her familiar bond and developing the relationship with her patron through her familiar."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Beast-Bonded ~ Transfer Feats|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Beast-Bonded ~ Enhanced Familiar|PRECLASS:1,Witch=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Beast-Bonded ~ Familiar Form|PRECLASS:1,Witch=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Beast-Bonded ~ Twin Soul|PRECLASS:1,Witch=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Witch"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1986,
+    "record_key": "Witch Archetype ~ Beast-Bonded"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

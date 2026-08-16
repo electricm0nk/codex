@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ironskin Monk ~ Ki Pool",
+    "name": "Ki Pool",
+    "class": "Ironskin Monk",
+    "description": "An ironskin monk can spend 1 point from his ki pool to gain a damage bonus equal to %1 against objects and constructs for 1 round.|IronMonkKiPoolBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ironskin Monk ~ Ki Pool"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IronMonkKiPoolBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An ironskin monk can spend 1 point from his ki pool to gain a damage bonus equal to %1 against objects and constructs for 1 round.|IronMonkKiPoolBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IronMonkKiPoolBonus|MonkLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 583,
+    "record_key": "Ironskin Monk ~ Ki Pool"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

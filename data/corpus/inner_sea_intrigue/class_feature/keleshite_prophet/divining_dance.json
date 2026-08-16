@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Keleshite Prophet ~ Divining Dance",
+    "name": "Divining Dance",
+    "class": "Keleshite Prophet",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Keleshite Prophet ~ Divining Dance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Oracle Class Features.KeleshiteProphetClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you can perform a sacred meditative dance that gives you great clarity of mind and prepares you for what lies ahead. This dance must last for at least 1 minute, uninterrupted, and you can take no other actions during the dance. When you dance, attempt a Perform (dance) check; the results of the check determine the benefits you gain for the next 24 hours, as listed below. You can always choose the benefit from a lower result, if you wish. &nl;[Perform (Dance) Result Benefit] &nl;0-9 Increase the saving throw DC of any divination spells you cast by 1. &nl;10-19 Once in the next 24 hours, as an immediate action, you can use augury as a spell-like ability, using your oracle level as your caster level. &nl;20-29 Once in the next 24 hours, you can use divination as a spell-like ability, using your oracle level as your caster level. If you are at least 8th level, you can cast it in 1 minute instead of 10 minutes. &nl;30-39 Once in the next 24 hours, you can use commune as a spell-like ability, using your oracle level as your caster level. If you are at least 10th level, its casting time is in 1 minute instead of 10 minutes. &nl;40+ Once in the next 24 hours, you can use contact other plane as a spell-like ability, using your oracle level as your caster level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 209,
+    "record_key": "Keleshite Prophet ~ Divining Dance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

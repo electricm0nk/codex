@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Exarch ~ Aura of Repetition",
+    "name": "Aura of Repetition",
+    "class": "Exarch",
+    "description": "Once per day while using her judgment, an exarch can project an aura of repetition, as the Toil subdomain power (Advanced Player's Guide 97). If the exarch takes Artifice (Toil) as her domain, the save DC of her aura increases by 2 but its duration does not increase.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exarch ~ Aura of Repetition"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day while using her judgment, an exarch can project an aura of repetition, as the Toil subdomain power (Advanced Player's Guide 97). If the exarch takes Artifice (Toil) as her domain, the save DC of her aura increases by 2 but its duration does not increase."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 42,
+    "record_key": "Exarch ~ Aura of Repetition"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

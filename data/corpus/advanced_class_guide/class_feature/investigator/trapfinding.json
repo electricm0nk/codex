@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Trapfinding",
+    "name": "Trapfinding",
+    "class": "Investigator",
+    "description": "An investigator adds %1 to Perception skill checks made to locate traps and to Disable Device checks. An investigator can use Disable Device to disarm magical traps.|InvestigatorTrapfindingBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Trapfinding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.SpecialQuality.Trapfinding"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorTrapfindingBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An investigator adds %1 to Perception skill checks made to locate traps and to Disable Device checks. An investigator can use Disable Device to disarm magical traps.|InvestigatorTrapfindingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=Trapfinding|InvestigatorTrapfindingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disable Device|InvestigatorTrapfindingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorTrapfindingBonus|max(InvestigatorLVL/2,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1251,
+    "record_key": "Investigator ~ Trapfinding"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

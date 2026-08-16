@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Burning Infusion",
+    "name": "Burning Infusion",
+    "class": "Wild Talent",
+    "description": "Element fire; Type substance infusion; Level 1; Burn 1 Associated Blasts blue flame, fire, magma, plasma Saving Throw Reflex negates Your kinetic blast ignites your foes. Whenever an infused blast hits a foe and penetrates its spell resistance, that foe catches on fire, regardless of whether it takes damage. A foe that catches fire takes 1d6 points of fire damage each round until the fire is extinguished. Against a creature on fire from this infusion, any fire kinetic blasts gain a +2 bonus on attack rolls, to DCs, and on caster level checks to overcome spell resistance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Burning Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Fire"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Element fire; Type substance infusion; Level 1; Burn 1 Associated Blasts blue flame, fire, magma, plasma Saving Throw Reflex negates Your kinetic blast ignites your foes. Whenever an infused blast hits a foe and penetrates its spell resistance, that foe catches on fire, regardless of whether it takes damage. A foe that catches fire takes 1d6 points of fire damage each round until the fire is extinguished. Against a creature on fire from this infusion, any fire kinetic blasts gain a +2 bonus on attack rolls, to DCs, and on caster level checks to overcome spell resistance."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 681,
+    "record_key": "Wild Talent ~ Burning Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

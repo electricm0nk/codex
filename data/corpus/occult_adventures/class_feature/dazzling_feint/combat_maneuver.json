@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dazzling Feint ~ Combat Maneuver",
+    "name": "Combat Maneuver",
+    "class": "Dazzling Feint",
+    "description": "The vexing daredevil's attack patterns become more difficult to discern. The vexing daredevil chooses one combat maneuver when making this dazzling feint. For the rest of the round, she doesn't provoke an attack of opportunity when performing that combat maneuver against the target of her dazzling feint. This dazzling feint benefit applies on combat maneuvers instead of on the vexing daredevil's next attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dazzling Feint ~ Combat Maneuver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DazzlingFeint.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The vexing daredevil's attack patterns become more difficult to discern. The vexing daredevil chooses one combat maneuver when making this dazzling feint. For the rest of the round, she doesn't provoke an attack of opportunity when performing that combat maneuver against the target of her dazzling feint. This dazzling feint benefit applies on combat maneuvers instead of on the vexing daredevil's next attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1509,
+    "record_key": "Dazzling Feint ~ Combat Maneuver"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

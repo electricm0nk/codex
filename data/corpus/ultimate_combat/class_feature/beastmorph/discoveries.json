@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Beastmorph ~ Discoveries",
+    "name": "Discoveries",
+    "class": "Beastmorph",
+    "description": "The following discoveries complement the beastmorph archetype - feral mutagen, grand mutagen, greater mutagen, infuse mutagen, mummification**, spontaneous healing**, tentacle**, and wings**.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Beastmorph ~ Discoveries"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The following discoveries complement the beastmorph archetype - feral mutagen, grand mutagen, greater mutagen, infuse mutagen, mummification**, spontaneous healing**, tentacle**, and wings**."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 257,
+    "record_key": "Beastmorph ~ Discoveries"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

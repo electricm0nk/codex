@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bard Archetype ~ Cultivator",
+    "name": "Cultivator",
+    "class": "Bard Archetype",
+    "description": "Cultivators use music to promote plant growth and influence the behavior of plants both naturally and supernaturally. Most cultivators work in conjunction with local communities to maintain crops and oversee harvests, while others serve as wardens of unspoiled natural wonders.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Cultivator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Cultivator],[!PREFACT:1,ABILITIES,Bard_Archetype_ClassSkills=True,Bard_Archetype_BardicKnowledge=True,Bard_Archetype_CounterSong=True,Bard_Archetype_WellVersed=True,Bard_Archetype_LoreMaster=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Cultivators use music to promote plant growth and influence the behavior of plants both naturally and supernaturally. Most cultivators work in conjunction with local communities to maintain crops and oversee harvests, while others serve as wardens of unspoiled natural wonders."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Cultivator ~ Class Skills|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Cultivator ~ Plant Magic|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cultivator ~ Verdant Voice|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cultivator ~ Song of Growth|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cultivator ~ Resist Nature's Lure|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cultivator ~ Nature Lore|PRECLASS:1,Bard=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_CounterSong|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_CounterSong|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_WellVersed|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 244,
+    "record_key": "Bard Archetype ~ Cultivator"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

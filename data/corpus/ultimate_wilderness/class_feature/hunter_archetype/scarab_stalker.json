@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunter Archetype ~ Scarab Stalker",
+    "name": "Scarab Stalker",
+    "class": "Hunter Archetype",
+    "description": "The forgotten ruins in the desert sands have given rise to a breed of hunters who call upon the powers of the pyramids to protect and explore the ancient sites of their people. These hunters form sacred bonds with desert-dwelling denizens.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Archetype ~ Scarab Stalker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.HunterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Hunter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Scarab Stalker],[!PREFACT:1,ABILITIES,Hunter_Archetype_AnimalFocus=True,Hunter_Archetype_WoodlandStride=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The forgotten ruins in the desert sands have given rise to a breed of hunters who call upon the powers of the pyramids to protect and explore the ancient sites of their people. These hunters form sacred bonds with desert-dwelling denizens."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scarab Stalker ~ Sacred Animal Focus|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scarab Stalker ~ Desert Walker|PRECLASS:1,Hunter=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_WoodlandStride|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 645,
+    "record_key": "Hunter Archetype ~ Scarab Stalker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

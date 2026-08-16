@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wildborn ~ Live Off the Land",
+    "name": "Live Off the Land",
+    "class": "Wildborn",
+    "description": "A wildborn  can survive capably in the wilderness without any sort of manufactured equipment or gear. She adds half her barbarian level as a bonus on Survival checks to hunt or gather food and gains a +%1 bonus on Fortitude saves to resist the effects of extreme temperatures or other environmental effects.|BarbarianLVL/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildborn ~ Live Off the Land"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.WildbornClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wildborn  can survive capably in the wilderness without any sort of manufactured equipment or gear. She adds half her barbarian level as a bonus on Survival checks to hunt or gather food and gains a +%1 bonus on Fortitude saves to resist the effects of extreme temperatures or other environmental effects.|BarbarianLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Survival=Find Food|BarbarianLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 Fort saves to resist extreme temperatures or other environmental effects.|BarbarianLVL/3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 225,
+    "record_key": "Wildborn ~ Live Off the Land"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

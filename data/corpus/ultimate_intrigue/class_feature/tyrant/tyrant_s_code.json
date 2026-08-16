@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tyrant ~ Tyrant's Code",
+    "name": "Tyrant's Code",
+    "class": "Tyrant",
+    "description": "A tyrant must be of lawful evil alignment and loses all class features except proficiencies if he willingly and altruistically commits good acts. This does not mean the tyrant can't take actions someone else might qualify as good, only that such actions must always be in service of his own dark ambitions. A tyrant's code requires that he place his own sinister goals above all else, respect rightful authority even as he twists its loopholes to his own ends, impose tyranny, and punish all those who dare dissent. A tyrant can accept underlings of any alignment; he cares not who serves him, only that they are truly loyal to him. He can even work alongside good-aligned individuals, as long as he is secretly manipulating them. This alters the antipaladin's code of conduct and associated abilities, as well as the section on ex-antipaladins.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tyrant ~ Tyrant's Code"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Antipaladin Class Features.TyrantClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A tyrant must be of lawful evil alignment and loses all class features except proficiencies if he willingly and altruistically commits good acts. This does not mean the tyrant can't take actions someone else might qualify as good, only that such actions must always be in service of his own dark ambitions. A tyrant's code requires that he place his own sinister goals above all else, respect rightful authority even as he twists its loopholes to his own ends, impose tyranny, and punish all those who dare dissent. A tyrant can accept underlings of any alignment; he cares not who serves him, only that they are truly loyal to him. He can even work alongside good-aligned individuals, as long as he is secretly manipulating them. This alters the antipaladin's code of conduct and associated abilities, as well as the section on ex-antipaladins."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 213,
+    "record_key": "Tyrant ~ Tyrant's Code"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

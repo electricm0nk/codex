@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spellscar Mystery ~ Mystic Null",
+    "name": "Mystic Null",
+    "class": "Spellscar Mystery",
+    "description": "You gain a +%1 insight bonus on saves against spells and spell-like abilities.|MysticNull",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellscar Mystery ~ Mystic Null"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Extraordinary.SaveBonus"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MysticNull|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 insight bonus on saves against spells and spell-like abilities.|MysticNull"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MysticNull|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MysticNull|2|PREVARGTEQ:OracleLVL,11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 insight bonus against spells and spell-like abilities|MysticNull"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 102,
+    "record_key": "Spellscar Mystery ~ Mystic Null"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

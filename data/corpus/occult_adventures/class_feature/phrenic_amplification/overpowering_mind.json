@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Phrenic Amplification ~ Overpowering Mind",
+    "name": "Overpowering Mind",
+    "class": "Phrenic Amplification",
+    "description": "The psychic can spend 2 points from her phrenic pool to increase the Will save DC of the linked spell by 1. At 8th level, she can choose to instead spend 4 points to increase the DC by 2. At 15th level, she can choose to instead spend 6 points to increase the DC by 3. This amplification can be linked only to spells that have the mind-affecting descriptor and require a Will saving throw.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phrenic Amplification ~ Overpowering Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The psychic can spend 2 points from her phrenic pool to increase the Will save DC of the linked spell by 1. At 8th level, she can choose to instead spend 4 points to increase the DC by 2. At 15th level, she can choose to instead spend 6 points to increase the DC by 3. This amplification can be linked only to spells that have the mind-affecting descriptor and require a Will saving throw."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1173,
+    "record_key": "Phrenic Amplification ~ Overpowering Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

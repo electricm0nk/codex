@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oath against Chaos ~ Smite Chaos",
+    "name": "Smite Chaos",
+    "class": "Oath against Chaos",
+    "description": "This ability works like the standard paladin ability to smite evil, except the paladin gains bonuses against targets with chaotic alignments instead of evil. The paladin deals additional damage against outsiders with the chaotic subtype, chaotic-aligned dragons, and aberrations, instead of against evil outsiders, evil dragons, and undead. This ability replaces smite evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against Chaos ~ Smite Chaos"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability works like the standard paladin ability to smite evil, except the paladin gains bonuses against targets with chaotic alignments instead of evil. The paladin deals additional damage against outsiders with the chaotic subtype, chaotic-aligned dragons, and aberrations, instead of against evil outsiders, evil dragons, and undead. This ability replaces smite evil."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 484,
+    "record_key": "Oath against Chaos ~ Smite Chaos"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

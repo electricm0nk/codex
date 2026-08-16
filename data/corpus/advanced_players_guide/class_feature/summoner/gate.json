@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Summoner ~ Gate",
+    "name": "Gate",
+    "class": "Summoner",
+    "description": "You may cast Gate with your Summon Monster spell-like ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner ~ Gate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.SpellLike.Gate"
+      },
+      {
+        "key": "DESC",
+        "value": "You may cast Gate with your Summon Monster spell-like ability."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 808,
+    "record_key": "Summoner ~ Gate"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

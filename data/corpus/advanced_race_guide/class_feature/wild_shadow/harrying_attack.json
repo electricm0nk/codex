@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Shadow ~ Harrying Attack",
+    "name": "Harrying Attack",
+    "class": "Wild Shadow",
+    "description": "A wild shadow can use his knowledge of terrain to make shrewd attacks in combat. Such attacks can make foes fumble or cause them to become entangled within areas of the wild shadow's favored terrain. As a standard action, the wild shadow denotes one target within line of sight and within one of his favored terrains as his harried prey. Once the foe is so designated, every time the wild shadow hits this harried prey with a melee or ranged weapon attack (either manufactured or natural), that creature is entangled for 1 round. A wild shadow can have no more than one harried prey at a time and that creature must correspond to one of his favored enemy types. He can dismiss this effect at any time as a free action, be he cannot select a new harried prey for 24 hours. If the wild shadow sees proof that his harried prey is dead, he can select a new harried prey after waiting 1 hour.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Shadow ~ Harrying Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wild shadow can use his knowledge of terrain to make shrewd attacks in combat. Such attacks can make foes fumble or cause them to become entangled within areas of the wild shadow's favored terrain. As a standard action, the wild shadow denotes one target within line of sight and within one of his favored terrains as his harried prey. Once the foe is so designated, every time the wild shadow hits this harried prey with a melee or ranged weapon attack (either manufactured or natural), that creature is entangled for 1 round. A wild shadow can have no more than one harried prey at a time and that creature must correspond to one of his favored enemy types. He can dismiss this effect at any time as a free action, be he cannot select a new harried prey for 24 hours. If the wild shadow sees proof that his harried prey is dead, he can select a new harried prey after waiting 1 hour."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 239,
+    "record_key": "Wild Shadow ~ Harrying Attack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

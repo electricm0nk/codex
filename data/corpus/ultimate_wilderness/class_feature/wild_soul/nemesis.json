@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Soul ~ Nemesis",
+    "name": "Nemesis",
+    "class": "Wild Soul",
+    "description": "A wild soul gains a +2 bonus on Intimidate, Knowledge, Perception, Sense Motive, Spellcraft, and Survival checks against creatures that wield advanced technology, alchemical weapons (including an alchemist's bombs), or firearms and against those that cast arcane spells (this does not apply to creatures that use spell-like abilities). Likewise, he gains a +2 bonus on weapon attack and damage rolls against such opponents. The wild soul can attempt Craft (alchemy), Knowledge (arcana), and Spellcraft checks untrained when attempting to identify enemy magic or advanced technology.|WildSoulNemesisBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Soul ~ Nemesis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.WildSoulClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WildSoulNemesisBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A wild soul gains a +2 bonus on Intimidate, Knowledge, Perception, Sense Motive, Spellcraft, and Survival checks against creatures that wield advanced technology, alchemical weapons (including an alchemist's bombs), or firearms and against those that cast arcane spells (this does not apply to creatures that use spell-like abilities). Likewise, he gains a +2 bonus on weapon attack and damage rolls against such opponents. The wild soul can attempt Craft (alchemy), Knowledge (arcana), and Spellcraft checks untrained when attempting to identify enemy magic or advanced technology.|WildSoulNemesisBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildSoulNemesisBonus|2+min(4,RangerLVL/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+%1 on weapon attack and damage rolls vs creatures weilding technology or arcane spellcasters|WildSoulNemesisBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 953,
+    "record_key": "Wild Soul ~ Nemesis"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

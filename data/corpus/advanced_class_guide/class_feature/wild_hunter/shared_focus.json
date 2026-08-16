@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Hunter ~ Shared Focus",
+    "name": "Shared Focus",
+    "class": "Wild Hunter",
+    "description": "[NOT IMPLEMENTED] A wild hunter can share his current animal focus with one creature appropriate to his hunter's bond. If the wild hunter's bond is with an animal companion, the companion automatically gains the benefits of the wild hunter's current animal focus. If the wild hunter's bond is with his companions, as a swift action he can select one bonded ally to gain the benefits of the hunter's current animal focus; this lasts until the hunter's bond ends, the animal focus ends for the wild hunter, or the wild hunter selects a different companion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Hunter ~ Shared Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wild Hunter Class Feature.Ranger Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] A wild hunter can share his current animal focus with one creature appropriate to his hunter's bond. If the wild hunter's bond is with an animal companion, the companion automatically gains the benefits of the wild hunter's current animal focus. If the wild hunter's bond is with his companions, as a swift action he can select one bonded ally to gain the benefits of the hunter's current animal focus; this lasts until the hunter's bond ends, the animal focus ends for the wild hunter, or the wild hunter selects a different companion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3551,
+    "record_key": "Wild Hunter ~ Shared Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

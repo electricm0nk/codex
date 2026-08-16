@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Exemplar Brawler ~ Inspiring Prowess",
+    "name": "Inspiring Prowess",
+    "class": "Exemplar Brawler",
+    "description": "An exemplar gains the ability to use certain bardic performances. She can use this ability %1 rounds per day. The exemplar's effective bard level for this ability is equal to her brawler level - 2. Instead of the Perform skill, she activates this ability with impressive flourishes and displays of martial talent (this uses visual components). This ability otherwise functions as bardic performance; feats and other effects that affect bardic performance (such as the Extra Performance feat) apply to it.|BardicPerformanceDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exemplar Brawler ~ Inspiring Prowess"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Exemplar Class Feature.Brawler Class Feature.SpecialQuality.Extraordinary.BardicPerformance.Bardic Performance.BrawlerManeuverTraining.BrawlerACBonus"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BardicPerformanceDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BardicPerformanceLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An exemplar gains the ability to use certain bardic performances. She can use this ability %1 rounds per day. The exemplar's effective bard level for this ability is equal to her brawler level - 2. Instead of the Perform skill, she activates this ability with impressive flourishes and displays of martial talent (this uses visual components). This ability otherwise functions as bardic performance; feats and other effects that affect bardic performance (such as the Extra Performance feat) apply to it.|BardicPerformanceDuration"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Inspire Courage|!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCourage|PREVARGTEQ:BardicPerformanceLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Inspire Greatness|!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireGreatness|PREVARGTEQ:BardicPerformanceLVL,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Inspire Heroics|!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireHeroics|PREVARGTEQ:BardicPerformanceLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardicPerformanceDuration|2+CHA+BardicPerformanceLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardicPerformanceLVL|BrawlerLVL-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|BardicPerformanceDuration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per days"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2855,
+    "record_key": "Exemplar Brawler ~ Inspiring Prowess"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

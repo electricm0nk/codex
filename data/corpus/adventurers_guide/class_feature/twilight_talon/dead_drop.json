@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Twilight Talon ~ Dead Drop",
+    "name": "Dead Drop",
+    "class": "Twilight Talon",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Twilight Talon ~ Dead Drop"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Twilight Talon Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "DESC",
+        "value": "A Twilight Talon prepares for many contingencies and can tap her underground network for supplies, provided she pays into her dead drop fund beforehand. By spending an hour spreading around coin in any small town or larger settlement, the Twilight Talon gains the ability to access dead drops of equipment in the field. A Twilight Talon can pay any amount into her dead drop fund when she does so, but can never have more than a total of %1 in her dead drop fund. A dead drop functions as an emergency cache of gear that any Twilight Talon agent can access while in the field. Part of the process of paying into the fund includes arranging dead drop locations in areas that the Twilight Talon suspects she may visit in the future. At any point in a wilderness region, but no more often than once per day, the Twilight Talon can take 1d8 hours to seek out the closest dead drop, at which point she can purchase any item from the Pathfinder RPG Core Rulebook from the dead drop, deducting the price from the amount of gold she has paid into the fund at that date. At the GM's discretion, gear from other sourcebooks may also be available in a dead drop. In particularly remote locations, a GM may rule that no dead drops can exist, but the GM should inform the Twilight Talon of this fact when expeditions to such areas are planned. Dead drops shift locations often, so each time a Twilight Talon seeks one out, she must spend the 1d8 hours to find it.|TwilightTalonLVL*100"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, it takes a Twilight Talon only 10 minutes to pay into her dead drop fund, it takes only 30 minutes to locate a dead drop in the wild, and her maximum dead drop fund increases to 2,500 gp. (This total does not increase when she gains additional levels.)|PREVARGTEQ:TwilightTalonLVL,8"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 545,
+    "record_key": "Twilight Talon ~ Dead Drop"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

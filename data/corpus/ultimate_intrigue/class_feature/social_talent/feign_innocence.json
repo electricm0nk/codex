@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Social Talent ~ Feign Innocence",
+    "name": "Feign Innocence",
+    "class": "Social Talent",
+    "description": "The vigilante's social identity seems so innocent that it is hard to believe he was involved in wrongdoing. Within his area of renown, this provides a nonmagical effect identical to the innocence spell (Advanced Player's Guide p. 229.)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ Feign Innocence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Social Talent ~ Renown"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante's social identity seems so innocent that it is hard to believe he was involved in wrongdoing. Within his area of renown, this provides a nonmagical effect identical to the innocence spell (Advanced Player's Guide p. 229.)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 53,
+    "record_key": "Social Talent ~ Feign Innocence"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

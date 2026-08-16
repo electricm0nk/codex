@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inspired Discovery ~ Blinding Strike",
+    "name": "Blinding Strike",
+    "class": "Inspired Discovery",
+    "description": "When the investigator deals damage with studied strike, the opponent must succeed at a Fortitude saving throw (DC %1) or be permanently blinded.  A successful saving throw reduces this to dazzled for 1d4 rounds.  This talent has no effect on creatures that do not rely on eyes for sight or creatures with more than two eyes (although multiple critical hits might cause blindness, at the GM's discretion). Blindness can be cured by heal, regeneration, remove blindness, or similar abilities. * Only one of these talents can be applied to an individual attack.|InvestigatorBlindingStrikeDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inspired Discovery ~ Blinding Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InspiredInvestigatorTalent.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Alchemist Archetype ~ Inspired Chemist"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AlchemistLVL,17"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorBlindingStrikeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When the investigator deals damage with studied strike, the opponent must succeed at a Fortitude saving throw (DC %1) or be permanently blinded.  A successful saving throw reduces this to dazzled for 1d4 rounds.  This talent has no effect on creatures that do not rely on eyes for sight or creatures with more than two eyes (although multiple critical hits might cause blindness, at the GM's discretion). Blindness can be cured by heal, regeneration, remove blindness, or similar abilities. * Only one of these talents can be applied to an individual attack.|InvestigatorBlindingStrikeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorBlindingStrikeDC|AlchemistLVL/2+INT+10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2335,
+    "record_key": "Inspired Discovery ~ Blinding Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

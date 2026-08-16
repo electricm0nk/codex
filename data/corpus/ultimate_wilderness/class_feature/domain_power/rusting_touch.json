@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Domain Power ~ Rusting Touch",
+    "name": "Rusting Touch",
+    "class": "Domain Power",
+    "description": "You can cause an opponent's metal armor or weapon to become dry and brittle as it magically corrodes and rusts. You make a melee touch attack against a creature wearing metal armor or wielding a metal weapon. If you hit, choose a metal weapon, suit of metal armor, or metal shield carried or worn by that creature. The object takes 1d6+%1 hit points of damage. If the item is not magical, or if your caster level is greater than the item's caster level, this damage bypasses the item's hardness. You can use this ability %2 times per day.|DomainErosionLVL/2|DomainErosionTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Rusting Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower.Erosion Domain"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause an opponent's metal armor or weapon to become dry and brittle as it magically corrodes and rusts. You make a melee touch attack against a creature wearing metal armor or wielding a metal weapon. If you hit, choose a metal weapon, suit of metal armor, or metal shield carried or worn by that creature. The object takes 1d6+%1 hit points of damage. If the item is not magical, or if your caster level is greater than the item's caster level, this damage bypasses the item's hardness. You can use this ability %2 times per day.|DomainErosionLVL/2|DomainErosionTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 477,
+    "record_key": "Domain Power ~ Rusting Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

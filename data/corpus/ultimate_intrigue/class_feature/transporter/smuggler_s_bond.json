@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Transporter ~ Smuggler's Bond",
+    "name": "Smuggler's Bond",
+    "class": "Transporter",
+    "description": "A transporter must choose his allies as his hunter's bond, not an animal companion. Instead of granting the transporter's favored enemy bonus to his allies as a move action, he instead grants his plot course bonus to his allies constantly. This ability alters hunter's bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Transporter ~ Smuggler's Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.TransporterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A transporter must choose his allies as his hunter's bond, not an animal companion. Instead of granting the transporter's favored enemy bonus to his allies as a move action, he instead grants his plot course bonus to his allies constantly. This ability alters hunter's bond."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 687,
+    "record_key": "Transporter ~ Smuggler's Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

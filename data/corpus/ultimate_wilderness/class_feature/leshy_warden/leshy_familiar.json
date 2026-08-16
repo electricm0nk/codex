@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Leshy Warden ~ Leshy Familiar",
+    "name": "Leshy Familiar",
+    "class": "Leshy Warden",
+    "description": "A leshy warden forms an intimate bond with a nature spirit, incarnating the spirit as a leaf leshy. She gains a leaf leshy as a familiar and treats her druid level as her effective wizard level for the purpose of this ability. If the leshy dies, the leshy warden can incarnate the same spirit again by paying the normal cost to replace a familiar. So long as the leshy lives, the leshy warden gains access to the Plant domain as if through a druid's nature bond class feature, but she can't choose the Decay subdomain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leshy Warden ~ Leshy Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.LeshyWardenClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A leshy warden forms an intimate bond with a nature spirit, incarnating the spirit as a leaf leshy. She gains a leaf leshy as a familiar and treats her druid level as her effective wizard level for the purpose of this ability. If the leshy dies, the leshy warden can incarnate the same spirit again by paying the normal cost to replace a familiar. So long as the leshy lives, the leshy warden gains access to the Plant domain as if through a druid's nature bond class feature, but she can't choose the Decay subdomain."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domains"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Leshy Warden Domain Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|DruidLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidPlantAllowed,DruidGrowthSubdomainAllowed,DruidLeshySubdomainAllowed,DruidThornsSubdomainAllowed|1|TYPE=DruidDomain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLVL|DruidLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Familiar|Familiar (Leaf Leshy)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 518,
+    "record_key": "Leshy Warden ~ Leshy Familiar"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

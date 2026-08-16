@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hellknight Signifer ~ Catechesis",
+    "name": "Catechesis",
+    "class": "Hellknight Signifer",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hellknight Signifer ~ Catechesis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Hellknight Signifer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "DESC",
+        "value": "If a Hellknight signifer has the Warrior Priest feat, his class level stacks with other divine spellcasting classes for determining the effects of those classes' domain powers, inquisitions, and mysteries. This doesn't grant any new powers or abilities. In addition, a Hellknight signifer with the Warrior Priest feat gains Alignment Channel (chaos) as a bonus feat, and treats his Hellknight signifer levels as cleric levels when determining the amount of damage healed or dealt and saving throw DCs of his channeled energy."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Alignment Channel (chaos)|PREABILITY:1,CATEGORY=FEAT,Warrior Priest"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 286,
+    "record_key": "Hellknight Signifer ~ Catechesis"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

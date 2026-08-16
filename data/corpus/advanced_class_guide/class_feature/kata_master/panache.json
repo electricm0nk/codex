@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kata Master ~ Panache",
+    "name": "Panache",
+    "class": "Kata Master",
+    "description": "A kata master gains the swashbuckler's panache class ability. At the start of each day, a kata master gains %1 panache points. Her panache goes up or down throughout the day, but usually cannot go higher than %1. A kata master gains the swashbuckler's derring-do and dodging panache deeds. A kata master can use an unarmed strike or monk special weapon in place of a light or one-handed piercing melee weapon for granted swashbuckler class features and deeds.|max(1,CHA)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kata Master ~ Panache"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kata Master Class Feature.Monk Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwashbucklerDeedsLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A kata master gains the swashbuckler's panache class ability. At the start of each day, a kata master gains %1 panache points. Her panache goes up or down throughout the day, but usually cannot go higher than %1. A kata master gains the swashbuckler's derring-do and dodging panache deeds. A kata master can use an unarmed strike or monk special weapon in place of a light or one-handed piercing melee weapon for granted swashbuckler class features and deeds.|max(1,CHA)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Derring-Do"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Dodging Panache"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwashbucklerDeedsLVL|MonkLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3439,
+    "record_key": "Kata Master ~ Panache"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Holy Vindicator ~ Faith Healing",
+    "name": "Faith Healing",
+    "class": "Holy Vindicator",
+    "description": "At 3rd level, any cure wounds spells a vindicator casts on himself are automatically empowered as if by the Empower Spell feat, except they do not use higher spell level slots or an increased casting time. If the vindicator targets himself with a cure spell that affects multiple creatures, this ability only applies to himself. At 8th level, these healing spells are maximized rather than empowered.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holy Vindicator ~ Faith Healing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, any cure wounds spells a vindicator casts on himself are automatically empowered as if by the Empower Spell feat, except they do not use higher spell level slots or an increased casting time. If the vindicator targets himself with a cure spell that affects multiple creatures, this ability only applies to himself. At 8th level, these healing spells are maximized rather than empowered."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1279,
+    "record_key": "Holy Vindicator ~ Faith Healing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

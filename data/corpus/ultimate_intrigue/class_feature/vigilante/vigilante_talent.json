@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante ~ Vigilante Talent",
+    "name": "Vigilante Talent",
+    "class": "Vigilante",
+    "description": "Starting at 2nd level and every 2 levels thereafter, a vigilante gains a vigilante talent. Unless otherwise noted, a talent can be selected only once. Some talents require the vigilante to meet prerequisites before they can be chosen, such as possessing another vigilante talent, possessing a particular specialization, or attaining a minimum level. Once a talent has been selected, it can't be changed. If the vigilante uses any of these talents while in his social identity, he must succeed at a Disguise check against the Perception checks of all onlookers (without the +%1 circumstance bonus from seamless guise) or the onlookers will realize that he is more than his social identity appears to be and perhaps discover the social and vigilante identities are one and the same.|SeamlessGuiseBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante ~ Vigilante Talent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VigilanteTalentCount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VigilanteTalentDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 2nd level and every 2 levels thereafter, a vigilante gains a vigilante talent. Unless otherwise noted, a talent can be selected only once. Some talents require the vigilante to meet prerequisites before they can be chosen, such as possessing another vigilante talent, possessing a particular specialization, or attaining a minimum level. Once a talent has been selected, it can't be changed. If the vigilante uses any of these talents while in his social identity, he must succeed at a Disguise check against the Perception checks of all onlookers (without the +%1 circumstance bonus from seamless guise) or the onlookers will realize that he is more than his social identity appears to be and perhaps discover the social and vigilante identities are one and the same.|SeamlessGuiseBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Talent|VigilanteTalentCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VigilanteTalentCount|VigilanteLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VigilanteTalentDC|10+VigilanteLVL/2+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 33,
+    "record_key": "Vigilante ~ Vigilante Talent"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

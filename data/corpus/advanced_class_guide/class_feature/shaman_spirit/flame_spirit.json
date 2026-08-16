@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit ~ Flame",
+    "name": "Flame (Spirit)",
+    "class": "Shaman Spirit",
+    "description": "Spirit Magic Spells: burning hands (1st), resist energy (2nd), fireball (3rd), wall of fire (4th), summon monster V (fire elementals only, 5th), fire seeds (6th), fire storm (7th), incendiary cloud (8th), fiery body (9th)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit ~ Flame"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpirit.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanFlameSpirit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanFlameSpiritAnimal|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: burning hands (1st), resist energy (2nd), fireball (3rd), wall of fire (4th), summon monster V (fire elementals only, 5th), fire seeds (6th), fire storm (7th), incendiary cloud (8th), fiery body (9th)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flame Spirit ~ Touch of Flame"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flame Spirit ~ Fiery Soul|PREVARGTEQ:ShamanSpiritGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flame Spirit ~ Elemental Form|PREVARGTEQ:ShamanSpiritTrue,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flame Spirit ~ Manifestation|PREVARGTEQ:Shaman Manifestation,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanFlameSpirit|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanFlameSpiritAnimal|FamiliarIsSpiritAnimal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1447,
+    "record_key": "Shaman Spirit ~ Flame"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Swashbuckler Archetype ~ Noble Fencer",
+    "name": "Noble Fencer",
+    "class": "Swashbuckler Archetype",
+    "description": "The noble fencer is an aristocrat or other upper-class socialite who trained in dueling from a young age. Noble fencers fight with their own style, with distinct differences from those of alley bravos or gladiatorial duelists. They use their quick wits and panache in both physical and social confrontations, and they rely on their training and discipline to emerge victorious, rather than merely trusting to luck.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler Archetype ~ Noble Fencer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SwashbucklerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Swashbuckler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Noble Fencer],[!PREFACT:1,ABILITIES,Swashbuckler_Archetype_DodgingPanacheDeed=True,Swashbuckler_Archetype_SuperiorFeintDeed=True,Swashbuckler_Archetype_SubtleBladeDeed=True,Swashbuckler_Archetype_CharmedLife=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The noble fencer is an aristocrat or other upper-class socialite who trained in dueling from a young age. Noble fencers fight with their own style, with distinct differences from those of alley bravos or gladiatorial duelists. They use their quick wits and panache in both physical and social confrontations, and they rely on their training and discipline to emerge victorious, rather than merely trusting to luck."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Noble Fencer ~ Social Panache|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Noble Fencer ~ Incredible Aspirations|PRECLASS:1,Swashbuckler=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Noble Fencer ~ Unshakable Presence|PRECLASS:1,Swashbuckler=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Noble Fencer ~ Aristocratic Discipline|PRECLASS:1,Swashbuckler=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_DodgingPanacheDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SuperiorFeintDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SubtleBladeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_CharmedLife|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_DodgingPanacheDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SuperiorFeintDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SubtleBladeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_CharmedLife|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 943,
+    "record_key": "Swashbuckler Archetype ~ Noble Fencer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

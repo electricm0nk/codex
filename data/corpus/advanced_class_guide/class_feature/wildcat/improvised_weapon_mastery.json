@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wildcat ~ Improvised Weapon Mastery",
+    "name": "Improvised Weapon Mastery",
+    "class": "Wildcat",
+    "description": "Starting at 4th level, a wildcat's damage with improvised weapons increases. When wielding an improvised weapon, he uses the unarmed strike damage of a monk four levels lower instead of the base damage for that weapon (minimum monk level 1). For example, a 6th-level Medium wildcat wielding a broken bottle deals 1d6 points of damage instead of the weapon's normal 1d4. If the weapon normally deals more damage than this, its damage is unchanged. This increase in damage does not affect any other aspect of the weapon. The wildcat can decide to use the weapon's base damage instead of his adjusted unarmed strike damage. This must be declared before the attack roll is attempted. This ability replaces all instances of slow fall.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildcat ~ Improvised Weapon Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wildcat Class Feature.Monk Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 4th level, a wildcat's damage with improvised weapons increases. When wielding an improvised weapon, he uses the unarmed strike damage of a monk four levels lower instead of the base damage for that weapon (minimum monk level 1). For example, a 6th-level Medium wildcat wielding a broken bottle deals 1d6 points of damage instead of the weapon's normal 1d4. If the weapon normally deals more damage than this, its damage is unchanged. This increase in damage does not affect any other aspect of the weapon. The wildcat can decide to use the weapon's base damage instead of his adjusted unarmed strike damage. This must be declared before the attack roll is attempted. This ability replaces all instances of slow fall."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3448,
+    "record_key": "Wildcat ~ Improvised Weapon Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

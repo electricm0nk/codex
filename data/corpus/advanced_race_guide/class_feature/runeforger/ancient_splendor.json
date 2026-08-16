@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Runeforger ~ Ancient Splendor",
+    "name": "Ancient Splendor",
+    "class": "Runeforger",
+    "description": "The inscribed weapon, armor, or shield grants a +2 circumstance bonus on Diplomacy and Intimidate checks (+4 when interacting with dwarves).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Runeforger ~ Ancient Splendor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RuneforgerOption.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempBonus_AncientSplendor|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The inscribed weapon, armor, or shield grants a +2 circumstance bonus on Diplomacy and Intimidate checks (+4 when interacting with dwarves)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|VAR|TempBonus_AncientSplendor|1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SKILL|Diplomacy,Intimidate|2|TYPE=Circumstance"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SITUATION|Diplomacy=interacting with dwarves,Intimidate=interacting with dwarves|2|TYPE=Circumstance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 71,
+    "record_key": "Runeforger ~ Ancient Splendor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

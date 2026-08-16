@@ -1,0 +1,143 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Druid Archetype ~ Tempest Druid",
+    "name": "Tempest Druid",
+    "class": "Druid Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Tempest Druid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.183"
+      },
+      {
+        "key": "DESC",
+        "value": "Many of the druids who train under the aegis of the Storm Kindlers focus on different areas of nature than those classically paid homage to by their kind. These so-called tempest druids see the personification of nature in the fury of the storm alone and to some extent eschew the veneration of plant or animal life, and the nature of their powers shifts accordingly. They still understand the place of plants and animals in the natural order, however; they simply view such entities-and indeed, all forms of life-as subservient to the true power found in the storms that lash the world."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Tempest Druid],[!PREFACT:1,ABILITIES,Druid_Archetype_WeaponProficiencies=True,Druid_Archetype_SpontaneousCasting=True,Druid_Archetype_NatureBond=True,Druid_Archetype_NatureSense=True,Druid_Archetype_TracklessStep=True,Druid_Archetype_ResistNaturesLure=True,Druid_Archetype_VenomImmunity=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Tempest Druid ~ Armor and Weapon Proficiencies|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tempest Druid ~ Spontaneous Domain Casting|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tempest Druid ~ Nature Bond|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tempest Druid ~ Sodden Shore Sense|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tempest Druid ~ Electrical Resistance|PRECLASS:1,Druid=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tempest Druid ~ Eyes of the Storm|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tempest Druid ~ Bend Bolt|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_SpontaneousCasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_NatureBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_NatureSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_TracklessStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_VenomImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_SpontaneousCasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_NatureBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_NatureSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_TracklessStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_VenomImmunity|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 785,
+    "record_key": "Druid Archetype ~ Tempest Druid"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

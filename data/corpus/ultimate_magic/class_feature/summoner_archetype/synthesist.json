@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Summoner Archetype ~ Synthesist",
+    "name": "Synthesist",
+    "class": "Summoner Archetype",
+    "description": "Instead of two creatures, the synthesist is a fusion of the summoner and eidolon into a single being.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner Archetype ~ Synthesist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SummonerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Summoner=1"
+      },
+      {
+        "key": "DESC",
+        "value": "Instead of two creatures, the synthesist is a fusion of the summoner and eidolon into a single being."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Synthesist ~ Fused Eidolon"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Synthesist ~ Fused Link"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Synthesist ~ Evasion|PRECLASS:1,Summoner=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Synthesist ~ Shielded Meld|PRECLASS:1,Summoner=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Synthesist ~ Maker's Jump|PRECLASS:1,Summoner=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Synthesist ~ Greater Shielded Meld|PRECLASS:1,Summoner=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Synthesist ~ Split Forms|PRECLASS:1,Summoner=16"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Summoner"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1817,
+    "record_key": "Summoner Archetype ~ Synthesist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

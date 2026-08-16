@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Divination School ~ Scrying Adept",
+    "name": "Scrying Adept",
+    "class": "Divination School",
+    "description": "You are always aware when you are being observed via magic, as if you had a permanent Detect Scrying. In addition, whenever you scry on a subject, treat the subject as one step more familiar to you. Very familiar subjects get a -10 penalty on their save to avoid your scrying attempts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divination School ~ Scrying Adept"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural.ArcaneSchoolPower.Sense"
+      },
+      {
+        "key": "DESC",
+        "value": "You are always aware when you are being observed via magic, as if you had a permanent Detect Scrying. In addition, whenever you scry on a subject, treat the subject as one step more familiar to you. Very familiar subjects get a -10 penalty on their save to avoid your scrying attempts."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2652,
+    "record_key": "Divination School ~ Scrying Adept"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

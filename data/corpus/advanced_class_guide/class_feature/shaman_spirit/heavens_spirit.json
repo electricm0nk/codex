@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit ~ Heavens",
+    "name": "Heavens (Spirit)",
+    "class": "Shaman Spirit",
+    "description": "Spirit Magic Spells: color spray (1st), hypnotic pattern (2nd), daylight (3rd), rainbow pattern (4th), overland flight (5th), chain lightning (6th), prismatic spray (7th), sunburst (8th), meteor swarm (9th)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit ~ Heavens"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpirit.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHeavensSpirit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHeavensSpiritAnimal|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: color spray (1st), hypnotic pattern (2nd), daylight (3rd), rainbow pattern (4th), overland flight (5th), chain lightning (6th), prismatic spray (7th), sunburst (8th), meteor swarm (9th)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heavens Spirit ~ Stardust"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heavens Spirit ~ Void Adaptation|PREVARGTEQ:ShamanSpiritGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heavens Spirit ~ Phantasmagoric Display|PREVARGTEQ:ShamanSpiritTrue,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heavens Spirit ~ Manifestation|PREVARGTEQ:Shaman Manifestation,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHeavensSpirit|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHeavensSpiritAnimal|FamiliarIsSpiritAnimal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1448,
+    "record_key": "Shaman Spirit ~ Heavens"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

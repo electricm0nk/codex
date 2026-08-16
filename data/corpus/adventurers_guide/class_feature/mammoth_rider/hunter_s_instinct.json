@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mammoth Rider ~ Hunter's Instinct",
+    "name": "Hunter's Instinct",
+    "class": "Mammoth Rider",
+    "description": "A mammoth rider gains the quarry class feature; this functions exactly like the ranger ability of the same name. If she already has the quarry class feature from another class, she instead gains the improved quarry class feature. A mammoth rider can use these abilities on any creature, not just a favored enemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mammoth Rider ~ Hunter's Instinct"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mammoth Rider Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "DESC",
+        "value": "A mammoth rider gains the quarry class feature; this functions exactly like the ranger ability of the same name. If she already has the quarry class feature from another class, she instead gains the improved quarry class feature. A mammoth rider can use these abilities on any creature, not just a favored enemy."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 364,
+    "record_key": "Mammoth Rider ~ Hunter's Instinct"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

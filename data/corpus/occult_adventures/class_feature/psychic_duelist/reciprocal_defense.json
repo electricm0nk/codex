@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Duelist ~ Reciprocal Defense",
+    "name": "Reciprocal Defense",
+    "class": "Psychic Duelist",
+    "description": "The psychic duelist can spend 1 point from her phrenic pool when using a defensive manifestation to improve her defenses in the real world as well. Her physical body gains a +2 insight bonus to AC for the number of rounds the defensive manifestation lasts, or for 1 round if the manifestation doesn't have a duration. This bonus increases to +3 at 11th level and to +4 at 15th level. This amplification can be linked only to defensive manifestations. This ability replaces the 7th-level phrenic amplification and alters phrenic amplifications.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Duelist ~ Reciprocal Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Duelist Class Feature.Psychic Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The psychic duelist can spend 1 point from her phrenic pool when using a defensive manifestation to improve her defenses in the real world as well. Her physical body gains a +2 insight bonus to AC for the number of rounds the defensive manifestation lasts, or for 1 round if the manifestation doesn't have a duration. This bonus increases to +3 at 11th level and to +4 at 15th level. This amplification can be linked only to defensive manifestations. This ability replaces the 7th-level phrenic amplification and alters phrenic amplifications."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1606,
+    "record_key": "Psychic Duelist ~ Reciprocal Defense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

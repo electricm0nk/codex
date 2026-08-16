@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Esoteric ~ Unarmed Strike",
+    "name": "Unarmed Strike",
+    "class": "Esoteric",
+    "description": "At 1st level, an esoteric gains Improved Unarmed Strike as a bonus feat. He also treats his magus levels as monk levels when determining the amount of damage he deals with his unarmed strikes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Esoteric ~ Unarmed Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Esoteric Class Feature.Magus Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, an esoteric gains Improved Unarmed Strike as a bonus feat. He also treats his magus levels as monk levels when determining the amount of damage he deals with his unarmed strikes."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Unarmed Strike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk ~ Unarmed Damage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkUnarmedDamageLVL|MagusLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1776,
+    "record_key": "Esoteric ~ Unarmed Strike"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

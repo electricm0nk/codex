@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk Archetype ~ Monk of the Sacred Mountain",
+    "name": "Monk of the Sacred Mountain",
+    "class": "Monk Archetype",
+    "description": "The monk of the sacred mountain finds strength and power in the earth beneath his feet. Rather than spinning though the battlefield with the fluid motion of the river, he roots himself to the ground, as immovable and unshakable as the stones of the mountain. A monk of the sacred mountain has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Monk of the Sacred Mountain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkEvasion.MonkSlowFall.MonkHighJump.MonkImprovedEvasion.MonkTongueOfTheSunAndMoon"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Monk of the Sacred Mountain],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkEvasion,TYPE.MonkSlowFall,TYPE.MonkHighJump,TYPE.MonkImprovedEvasion,TYPE.MonkTongueOfTheSunAndMoon]"
+      },
+      {
+        "key": "DESC",
+        "value": "The monk of the sacred mountain finds strength and power in the earth beneath his feet. Rather than spinning though the battlefield with the fluid motion of the river, he roots himself to the ground, as immovable and unshakable as the stones of the mountain. A monk of the sacred mountain has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Sacred Mountain ~ Iron Monk|PRECLASS:1,Monk=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Sacred Mountain ~ Bastion Stance|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Sacred Mountain ~ Iron Limb Defense|PRECLASS:1,Monk=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Sacred Mountain ~ Adamantine Monk|PRECLASS:1,Monk=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Sacred Mountain ~ Vow of Silence|PRECLASS:1,Monk=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.114"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2297,
+    "record_key": "Monk Archetype ~ Monk of the Sacred Mountain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Heavens Mystery ~ Spray of Shooting Stars",
+    "name": "Spray of Shooting Stars",
+    "class": "Heavens Mystery",
+    "description": "As a standard action, you can unleash a ball of energy that explodes in a 5-foot radius burst dealing %1d4 points of fire damage. A successful Reflex save (DC %2) halves this damage. This attack has a range of 60 feet. You can fire %3 explosive ball(s) per day. You can fire more than one ball at a time, but creatures caught inside more than one simultaneous explosions only take damage once.|OracleSprayofShootingStarsDamageDice|OracleRevelationDC|OracleSprayofShootingStarsTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heavens Mystery ~ Spray of Shooting Stars"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.HeavensRevelation.Supernatural.PerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleSprayofShootingStarsDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleSprayofShootingStarsTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can unleash a ball of energy that explodes in a 5-foot radius burst dealing %1d4 points of fire damage. A successful Reflex save (DC %2) halves this damage. This attack has a range of 60 feet. You can fire %3 explosive ball(s) per day. You can fire more than one ball at a time, but creatures caught inside more than one simultaneous explosions only take damage once.|OracleSprayofShootingStarsDamageDice|OracleRevelationDC|OracleSprayofShootingStarsTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleSprayofShootingStarsDamageDice|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleSprayofShootingStarsTimes|classlevel(\"Oracle\")/5+1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 614,
+    "record_key": "Heavens Mystery ~ Spray of Shooting Stars"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

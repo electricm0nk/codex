@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Crypt Breaker ~ Trapfinding",
+    "name": "Trapfinding",
+    "class": "Crypt Breaker",
+    "description": "A crypt breaker adds %1 on Perception checks made to locate traps and to Disable Device checks. A crypt breaker can use Disable Device to disarm magic traps. When determining the ability of a crypt breaker to deal with locks or traps, treat his alchemist levels as rogue levels.|CryptTrapfindingBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crypt Breaker ~ Trapfinding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.AlchemistBrewPotion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CryptTrapfindingBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A crypt breaker adds %1 on Perception checks made to locate traps and to Disable Device checks. A crypt breaker can use Disable Device to disarm magic traps. When determining the ability of a crypt breaker to deal with locks or traps, treat his alchemist levels as rogue levels.|CryptTrapfindingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=Trapfinding|CryptTrapfindingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disable Device|CryptTrapfindingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CryptTrapfindingBonus|max(AlchemistLVL/2,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 144,
+    "record_key": "Crypt Breaker ~ Trapfinding"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

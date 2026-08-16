@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Weapon and Armor Proficiency ~ Expert",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Weapon and Armor Proficiency",
+    "description": "The expert is proficient in the use of all simple weapons and with light armor but not shields.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Weapon and Armor Proficiency ~ Expert"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "The expert is proficient in the use of all simple weapons and with light armor but not shields."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2826,
+    "record_key": "Weapon and Armor Proficiency ~ Expert"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

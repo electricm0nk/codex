@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Swashbuckler ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Swashbuckler",
+    "description": "At 4th level, and every four levels thereafter, a swashbuckler gains a bonus feat in addition to those gained by normal advancement. These bonus feats must be selected from those listed as combat feats. Swashbuckler levels are considered fighter levels for the purpose of meeting combat feat prerequisites.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler ~ Bonus Feats"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FighterWeaponQualifyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_SwashbucklerBonusFeat|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, and every four levels thereafter, a swashbuckler gains a bonus feat in addition to those gained by normal advancement. These bonus feats must be selected from those listed as combat feats. Swashbuckler levels are considered fighter levels for the purpose of meeting combat feat prerequisites."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fighter Level Advanced Feat Tracker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Weapon Specialization Qualify"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Disruptive Qualify"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Greater Shield Focus Qualify"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Greater Weapon Focus Qualify"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spellbreaker Qualify"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Greater Weapon Specialization Qualify"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Penetrating Strike Qualify"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Critical Mastery Qualify"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Greater Penetrating Strike Qualify"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FighterWeaponQualifyLVL|SwashbucklerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1958,
+    "record_key": "Swashbuckler ~ Bonus Feats"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

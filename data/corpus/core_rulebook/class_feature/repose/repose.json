@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Repose Domain",
+    "name": "Repose",
+    "class": null,
+    "description": "You see death not as something to be feared, but as a final rest and reward for a life well spent. The taint of undeath is a mockery of what you hold dear.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Repose Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainReposeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainReposeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainReposeTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainReposeAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You see death not as something to be feared, but as a final rest and reward for a life well spent. The taint of undeath is a mockery of what you hold dear."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Gentle Rest|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Repose)|PREVARGTEQ:DomainReposeAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Ward Against Death|PREVARGTEQ:DomainReposeAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainReposeLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainReposeDC|10+(DomainReposeLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainReposeTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainReposeAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Repose=1|Deathwatch|Repose=2|Gentle Repose|Repose=3|Speak with Dead|Repose=4|Death Ward|Repose=5|Slay Living|Repose=6|Undeath to Death|Repose=7|Destruction|Repose=8|Waves of Exhaustion|Repose=9|Wail of the Banshee"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 675,
+    "record_key": "Repose Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

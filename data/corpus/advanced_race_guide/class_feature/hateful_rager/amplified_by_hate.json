@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hateful Rager ~ Amplified by Hate",
+    "name": "Amplified by Hate",
+    "class": "Hateful Rager",
+    "description": "A hateful rager adds half her favored enemy bonus to the DC of any rage power she uses against a favored enemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hateful Rager ~ Amplified by Hate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A hateful rager adds half her favored enemy bonus to the DC of any rage power she uses against a favored enemy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 262,
+    "record_key": "Hateful Rager ~ Amplified by Hate"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

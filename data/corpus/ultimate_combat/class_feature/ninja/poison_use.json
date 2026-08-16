@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ninja ~ Poison Use",
+    "name": "Poison Use",
+    "class": "Ninja",
+    "description": "At 1st level, a ninja is trained in the use of poison and cannot accidentally poison herself when applying poison to a weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja ~ Poison Use"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.ClassFeatures.Poison Use"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a ninja is trained in the use of poison and cannot accidentally poison herself when applying poison to a weapon."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 114,
+    "record_key": "Ninja ~ Poison Use"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

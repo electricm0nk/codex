@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Desert Raider ~ Sun at Your Back",
+    "name": "Sun at Your Back",
+    "class": "Desert Raider",
+    "description": "A desert raider can use the reflected light of the blinding sun to conceal her presence. A desert raider in bright light can attempt Stealth checks without cover or concealment but takes a -5 penalty on her check. The desert raider cannot use this ability to hide from creatures immune to the blinded or dazzled conditions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Desert Raider ~ Sun at Your Back"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.DesertRaiderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A desert raider can use the reflected light of the blinding sun to conceal her presence. A desert raider in bright light can attempt Stealth checks without cover or concealment but takes a -5 penalty on her check. The desert raider cannot use this ability to hide from creatures immune to the blinded or dazzled conditions."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 972,
+    "record_key": "Desert Raider ~ Sun at Your Back"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

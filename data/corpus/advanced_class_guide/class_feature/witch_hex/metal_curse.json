@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Hex ~ Metal Curse",
+    "name": "Metal Curse",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_MetalCurse",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Metal Curse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Witch Archetype ~ Mountain Witch"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_MetalCurse|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MountainWitchMetalCurseDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MountainWitchMetalCursePenalty|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_MetalCurse"
+      },
+      {
+        "key": "DESC",
+        "value": "The mountain witch causes a creature within 30 feet to become slightly magnetic"
+      },
+      {
+        "key": "DESC",
+        "value": "until the end of the mountain witch's next turn.|PREVARLT:WitchLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "for %1 rounds.|MountainWitchMetalCurseDuration|PREVARGTEQ:WitchLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the creature is attacked with a melee or ranged weapon constructed primarily of metal, it takes a %1 penalty to AC. Once affected, the creature cannot be the target of this hex again for 24 hours.|MountainWitchMetalCursePenalty"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Metal Curse"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_MetalCurse|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_MetalCurse|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Metal Curse)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MountainWitchMetalCurseDuration|1+min(2,WitchLVL/8)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MountainWitchMetalCursePenalty|-2-2*min(2,WitchLVL/8)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4031,
+    "record_key": "Witch Hex ~ Metal Curse"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

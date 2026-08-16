@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Variant Channeling - Cities",
+    "name": "Variant Channeling - Cities",
+    "class": null,
+    "description": "Heal - Creatures gain a +%1 channel bonus on attack rolls when flanking and to Armor Class when flanked until the end of your next turn. Harm - All creatures' squares and threatened areas are treated as difficult terrain until the start of your next turn (these areas move with the creatures rather than being fixed in place at the time of the channeling). Until the end of your next turn, creatures gain a -%1 channel penalty on Acrobatics checks and overrun attempts to move through these squares.|ChannelModifier",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VariantChanneling"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChannelModifier|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Heal - Creatures gain a +%1 channel bonus on attack rolls when flanking and to Armor Class when flanked until the end of your next turn. Harm - All creatures' squares and threatened areas are treated as difficult terrain until the start of your next turn (these areas move with the creatures rather than being fixed in place at the time of the channeling). Until the end of your next turn, creatures gain a -%1 channel penalty on Acrobatics checks and overrun attempts to move through these squares.|ChannelModifier"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelModifier|min(5,1+floor(ClericChannelEnergyLVL/5))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 200,
+    "record_key": "Variant Channeling - Cities"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

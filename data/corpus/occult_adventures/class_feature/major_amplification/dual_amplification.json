@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Major Amplification ~ Dual Amplification",
+    "name": "Dual Amplification",
+    "class": "Major Amplification",
+    "description": "When the psychic uses this major amplification, she chooses two other amplifications or major amplifications she knows to apply to the same linked spell. She must spend 1 point from her phrenic pool to do so, plus the full cost of the two other amplifications. She can't apply the same amplification to the linked spell more than once, even if she can use that amplification for multiple different effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Major Amplification ~ Dual Amplification"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.Major Amplification.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PsychicLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "When the psychic uses this major amplification, she chooses two other amplifications or major amplifications she knows to apply to the same linked spell. She must spend 1 point from her phrenic pool to do so, plus the full cost of the two other amplifications. She can't apply the same amplification to the linked spell more than once, even if she can use that amplification for multiple different effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1179,
+    "record_key": "Major Amplification ~ Dual Amplification"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

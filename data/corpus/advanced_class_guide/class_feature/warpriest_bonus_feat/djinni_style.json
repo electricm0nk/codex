@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Djinni Style",
+    "name": "Djinni Style",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your hands sheathed in an auras of lightning, you move like the wind.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Djinni Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Style"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Elemental Fist,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:1,[PRETOTALAB:9],[PREVARGTEQ:WarpriestBonusFeatBAB,9]],[PREVARGTEQ:MonkFeatQualify,5]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "2,CON=13,WIS=15"
+      },
+      {
+        "key": "DESC",
+        "value": "Your hands sheathed in an auras of lightning, you move like the wind."
+      },
+      {
+        "key": "DESC",
+        "value": " You gain one additional Elemental Fist (Advanced Player's Guide 158) attempt per day. While you are in this style you must use Elemental Fist to deal electricity damage and you gain a bonus on electricity damage rolls equal to your Wisdom bonus (%1). Further, while you are using this style and have remaining Elemental Fist attempts, you also gain a +2 dodge bonus to Armor Class against attacks of opportunity. A condition that makes you lose your Dexterity bonus to AC also makes you lose this dodge bonus.|WIS"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Djinni Style"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4430,
+    "record_key": "Warpriest Bonus Feat ~ Djinni Style"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

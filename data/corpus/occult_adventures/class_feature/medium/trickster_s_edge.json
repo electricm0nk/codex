@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Trickster's Edge",
+    "name": "Trickster's Edge",
+    "class": "Medium",
+    "description": "(Lesser) Choose any two skills. These skills count as class skills for you, and you are treated as if you had an additional number of ranks in those skills equal to your medium level (to a maximum of your character level).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Trickster's Edge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "(Lesser) Choose any two skills. These skills count as class skills for you, and you are treated as if you had an additional number of ranks in those skills equal to your medium level (to a maximum of your character level)."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Trickster Skill Choice|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 874,
+    "record_key": "Medium ~ Trickster's Edge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

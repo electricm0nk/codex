@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Savant Air School ~ Lightning Flash",
+    "name": "Lightning Flash",
+    "class": "Savant Air School",
+    "description": "As a standard action, you can unleash a flash of electricity. This flash deals 1d6+%1 points of electricity damage to all creatures within 5 feet of you and dazzles them for 1d4 rounds. A successful Reflex save DC %2 negates the dazzled effect and halves the damage. You can use this ability %3 times per day.|ArcanistSavantSchoolLVL/2|ArcanistSavantSchoolLVL/2+10+INT|INT+3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Air School ~ Lightning Flash"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can unleash a flash of electricity. This flash deals 1d6+%1 points of electricity damage to all creatures within 5 feet of you and dazzles them for 1d4 rounds. A successful Reflex save DC %2 negates the dazzled effect and halves the damage. You can use this ability %3 times per day.|ArcanistSavantSchoolLVL/2|ArcanistSavantSchoolLVL/2+10+INT|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2611,
+    "record_key": "Savant Air School ~ Lightning Flash"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

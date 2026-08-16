@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Kinetic Form",
+    "name": "Kinetic Form",
+    "class": "Wild Talent",
+    "description": "Element universal; Type utility (Sp); Level 5; Burn 1 You are able to suspend your body in a large mass of elemental matter. Until the next time your burn is removed, you can change your size to Large or shift back to your original size as a standard action. This doesn't change your ability scores in any way. At 16th level, you can accept 1 additional point of burn to instead change your size to Huge. You cannot use kinetic form to decrease your size.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Kinetic Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Base,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Element universal; Type utility (Sp); Level 5; Burn 1 You are able to suspend your body in a large mass of elemental matter. Until the next time your burn is removed, you can change your size to Large or shift back to your original size as a standard action. This doesn't change your ability scores in any way. At 16th level, you can accept 1 additional point of burn to instead change your size to Huge. You cannot use kinetic form to decrease your size."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 763,
+    "record_key": "Wild Talent ~ Kinetic Form"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

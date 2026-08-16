@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Unsworn Shaman ~ Minor Spirit",
+    "name": "Minor Spirit",
+    "class": "Unsworn Shaman",
+    "description": "The unsworn shaman also forms a temporary bond with a minor spirit each day, granting her access to a shaman or witch hex of her choosing, but not a major hex or a grand hex. She must make this selection each day when she prepares her spells for the day. Until she changes the minor spirit, she continues to have access to the shaman or witch hex. At 2nd level, she can instead select a hex from one of her wandering spirits selected for that day. If she selects a shaman or witch hex, she treats her shaman level as her witch level, and uses her Wisdom in place of her Intelligence for the purpose of that hex. She can make temporary bonds with two minor spirits (thus gaining two hexes) at 4th level, and with one additional minor spirit (and hex) every 4 levels thereafter. This ability replaces spirit and alters hex.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unsworn Shaman ~ Minor Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unsworn Shaman Class Feature.Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Shaman ~ Hex"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexStatMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexChoices|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexAbilityLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The unsworn shaman also forms a temporary bond with a minor spirit each day, granting her access to a shaman or witch hex of her choosing, but not a major hex or a grand hex. She must make this selection each day when she prepares her spells for the day. Until she changes the minor spirit, she continues to have access to the shaman or witch hex. At 2nd level, she can instead select a hex from one of her wandering spirits selected for that day. If she selects a shaman or witch hex, she treats her shaman level as her witch level, and uses her Wisdom in place of her Intelligence for the purpose of that hex. She can make temporary bonds with two minor spirits (thus gaining two hexes) at 4th level, and with one additional minor spirit (and hex) every 4 levels thereafter. This ability replaces spirit and alters hex."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Hex|ShamanHexChoices"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexChoices|ShamanLVL/4+1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexDC|10+(ShamanLVL/2)+ShamanHexStatMod"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexStatMod|WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexAbilityLVL|ShamanLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3649,
+    "record_key": "Unsworn Shaman ~ Minor Spirit"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

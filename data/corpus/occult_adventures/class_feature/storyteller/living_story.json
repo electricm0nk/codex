@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Storyteller ~ Living Story",
+    "name": "Living Story",
+    "class": "Storyteller",
+    "description": "A storyteller gains the ability to sweep others away into a story of his own making. He must perform for 1 full round, telling a tale to set the snare for his living story and spending 1 round of his storyteller's performance. At the end of that round, he can affect up to 30 Hit Dice of listeners within range with microcosm. Unlike with a normal microcosm, this is also a sonic and language-dependent ability, and a creature with 16 or more Hit Dice that succeeds at its save is immune to the storyteller's living story ability for 24 hours.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Storyteller ~ Living Story"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A storyteller gains the ability to sweep others away into a story of his own making. He must perform for 1 full round, telling a tale to set the snare for his living story and spending 1 round of his storyteller's performance. At the end of that round, he can affect up to 30 Hit Dice of listeners within range with microcosm. Unlike with a normal microcosm, this is also a sonic and language-dependent ability, and a creature with 16 or more Hit Dice that succeeds at its save is immune to the storyteller's living story ability for 24 hours."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1447,
+    "record_key": "Storyteller ~ Living Story"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Perfect Clarity",
+    "name": "Perfect Clarity",
+    "class": "Rage Power",
+    "description": "While using her moment of clarity rage power, the barbarian can roll twice for any miss chance or Will saving throws to disbelieve illusions, taking the better result. A barbarian must have the moment of clarity rage power before selecting this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Perfect Clarity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Moment of Clarity"
+      },
+      {
+        "key": "DESC",
+        "value": "While using her moment of clarity rage power, the barbarian can roll twice for any miss chance or Will saving throws to disbelieve illusions, taking the better result. A barbarian must have the moment of clarity rage power before selecting this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 287,
+    "record_key": "Rage Power ~ Perfect Clarity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

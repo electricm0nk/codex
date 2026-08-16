@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Scion of Talmandor ~ Bonded Eagle",
+    "name": "Bonded Eagle",
+    "class": "Scion of Talmandor",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scion of Talmandor ~ Bonded Eagle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.ScionOfTalmandorClassFeatures.SpecialQuality.SpellLike.Animal Companion"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "DESC",
+        "value": "A scion of Talmandor forms a bond with an eagle using the statistics for a bird animal companion. The eagle is a loyal companion that accompanies the scion on her adventures. When the scion activates smite evil, she can expend an additional use of smite evil to grant her eagle the bonuses granted from smite evil as well. This ability functions like the druid animal companion ability, using the scion's paladin level as her effective druid level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Animal Companion ~ Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|PaladinLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Animal Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Bird (Eagle))"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 972,
+    "record_key": "Scion of Talmandor ~ Bonded Eagle"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

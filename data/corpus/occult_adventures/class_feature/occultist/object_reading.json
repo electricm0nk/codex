@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Occultist ~ Object Reading",
+    "name": "Object Reading",
+    "class": "Occultist",
+    "description": "An occultist learns how to read information from items he examines. Examining an item in this way requires him to spend 1 minute handling the item. If the item is a magic item, the occultist learns its properties and command word as if he had successfully examined the item using detect magic and succeeded at a Spellcraft check. This ability does not reveal whether the item is cursed unless the occultist's class level is equal to or greater than the caster level of the item. If the item has any historical significance, the occultist learns one piece of information about its past (as determined by the GM). Finally, if the item was last used no longer than %1 days ago, the occultist learns one piece of information about the last creature to use the item. This information might be a glimpse of the creature's appearance, a brief vision of what it saw while using the item, or perhaps its emotional state when it last used the item. The GM determines what information is gained in this way. This functions like the psychometry occult skill unlock (see page 196), but doesn't require a skill check and can be used at will.|OccultistLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist ~ Object Reading"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An occultist learns how to read information from items he examines. Examining an item in this way requires him to spend 1 minute handling the item. If the item is a magic item, the occultist learns its properties and command word as if he had successfully examined the item using detect magic and succeeded at a Spellcraft check. This ability does not reveal whether the item is cursed unless the occultist's class level is equal to or greater than the caster level of the item. If the item has any historical significance, the occultist learns one piece of information about its past (as determined by the GM). Finally, if the item was last used no longer than %1 days ago, the occultist learns one piece of information about the last creature to use the item. This information might be a glimpse of the creature's appearance, a brief vision of what it saw while using the item, or perhaps its emotional state when it last used the item. The GM determines what information is gained in this way. This functions like the psychometry occult skill unlock (see page 196), but doesn't require a skill check and can be used at will.|OccultistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 987,
+    "record_key": "Occultist ~ Object Reading"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

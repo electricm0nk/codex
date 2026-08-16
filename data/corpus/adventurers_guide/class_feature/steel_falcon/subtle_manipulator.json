@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Steel Falcon ~ Subtle Manipulator",
+    "name": "Subtle Manipulator",
+    "class": "Steel Falcon",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Steel Falcon ~ Subtle Manipulator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Steel Falcon Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "DESC",
+        "value": "If the Steel Falcon spends a full-round action studying a target, she can attempt a Sense Motive check opposed by the target's Will save. If she succeeds, she gains a +5 circumstance bonus on Diplomacy checks against that opponent for %1 days. This ability can be used on a given target once per day, and a successful use resets its duration.|WIS"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 487,
+    "record_key": "Steel Falcon ~ Subtle Manipulator"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ash Subdomain ~ Wall of Ashes",
+    "name": "Wall of Ashes",
+    "class": "Ash Subdomain",
+    "description": "At 8th level, you can create a wall of swirling ashes anywhere within 100 feet. This wall is up to %1 feet high and up to %2 feet long. The wall of ash blocks line of sight, and any creature passing through it must make a Fortitude save or be blinded for 1d4 rounds. The wall of ash reveals invisible creatures that are inside it or adjacent to it, although they become invisible again if they move away from the wall. You can use this ability for %3 minutes per day, but these minutes do not need to be consecutive.|DomainFireLVL*20|DomainFireLVL*10|DomainFireLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ash Subdomain ~ Wall of Ashes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can create a wall of swirling ashes anywhere within 100 feet. This wall is up to %1 feet high and up to %2 feet long. The wall of ash blocks line of sight, and any creature passing through it must make a Fortitude save or be blinded for 1d4 rounds. The wall of ash reveals invisible creatures that are inside it or adjacent to it, although they become invisible again if they move away from the wall. You can use this ability for %3 minutes per day, but these minutes do not need to be consecutive.|DomainFireLVL*20|DomainFireLVL*10|DomainFireLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1746,
+    "record_key": "Ash Subdomain ~ Wall of Ashes"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

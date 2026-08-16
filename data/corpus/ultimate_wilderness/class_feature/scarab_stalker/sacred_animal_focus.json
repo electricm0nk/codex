@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Scarab Stalker ~ Sacred Animal Focus",
+    "name": "Sacred Animal Focus",
+    "class": "Scarab Stalker",
+    "description": "A scarab stalker can select from the bee, bull, cat, cow, crocodile, falcon, ibis, jackal, kite, leopard, lion, ram, scarab beetle, scorpion, sha, snake, and uraeus animal foci, rather than the foci normally available to a hunter.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scarab Stalker ~ Sacred Animal Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.ScarabStalkerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A scarab stalker can select from the bee, bull, cat, cow, crocodile, falcon, ibis, jackal, kite, leopard, lion, ram, scarab beetle, scorpion, sha, snake, and uraeus animal foci, rather than the foci normally available to a hunter."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 693,
+    "record_key": "Scarab Stalker ~ Sacred Animal Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Emissary ~ In Or Out Of The Saddle",
+    "name": "In or Out of the Saddle",
+    "class": "Emissary",
+    "description": "At 1st level, an emissary gains Mounted Combat as a bonus feat. In addition, he can move at normal speed when wearing medium armor. This ability replaces tactician.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emissary ~ In Or Out Of The Saddle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, an emissary gains Mounted Combat as a bonus feat. In addition, he can move at normal speed when wearing medium armor. This ability replaces tactician."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Mounted Combat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "UNENCUMBEREDMOVE",
+        "value": "MediumArmor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 486,
+    "record_key": "Emissary ~ In Or Out Of The Saddle"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Seal ~ Edicts",
+    "name": "Edicts",
+    "class": "Order of the Seal",
+    "description": "The cavalier must guard his sworn charge with all he has - his health, his honor, and his very life. If his charge is a place, he must keep intruders out. If it is a thing, he must keep it safe from thieves-and restore the item to its rightful place if taken.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Seal ~ Edicts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The cavalier must guard his sworn charge with all he has - his health, his honor, and his very life. If his charge is a place, he must keep intruders out. If it is a thing, he must keep it safe from thieves-and restore the item to its rightful place if taken."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 447,
+    "record_key": "Order of the Seal ~ Edicts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

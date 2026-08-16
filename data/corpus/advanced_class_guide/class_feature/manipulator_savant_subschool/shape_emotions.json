@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Manipulator Savant Subschool ~ Shape Emotions",
+    "name": "Shape Emotions",
+    "class": "Manipulator Savant Subschool",
+    "description": "You can emit a 30-foot aura to either ward off or welcome emotional influence for a %1 rounds per day. If you choose to ward, you and your allies within this aura receive a +4 morale bonus on saves against mind-affecting spells and effects, and any fear effects targeting you or your allies are reduced by one step (shaken has no effect, frightened becomes shaken, and panicked becomes frightened). If you chose to enhance emotional influence, enemies within the aura receive a -2 penalty on saves against mind-affecting spells and effects. These rounds do not need to be consecutive.|ArcanistSavantSchoolLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Manipulator Savant Subschool ~ Shape Emotions"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit7"
+      },
+      {
+        "key": "DESC",
+        "value": "You can emit a 30-foot aura to either ward off or welcome emotional influence for a %1 rounds per day. If you choose to ward, you and your allies within this aura receive a +4 morale bonus on saves against mind-affecting spells and effects, and any fear effects targeting you or your allies are reduced by one step (shaken has no effect, frightened becomes shaken, and panicked becomes frightened). If you chose to enhance emotional influence, enemies within the aura receive a -2 penalty on saves against mind-affecting spells and effects. These rounds do not need to be consecutive.|ArcanistSavantSchoolLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2601,
+    "record_key": "Manipulator Savant Subschool ~ Shape Emotions"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

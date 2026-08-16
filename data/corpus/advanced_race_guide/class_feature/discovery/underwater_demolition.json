@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Underwater Demolition",
+    "name": "Underwater Demolition",
+    "class": "Discovery",
+    "description": "The alchemist gains the ability to throw bombs underwater (normally, thrown weapons cannot be used underwater), including throwing from the air into the water. If the bomb travels through water, the range increment is reduced to 5 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Underwater Demolition"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The alchemist gains the ability to throw bombs underwater (normally, thrown weapons cannot be used underwater), including throwing from the air into the water. If the bomb travels through water, the range increment is reduced to 5 feet."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.191"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 870,
+    "record_key": "Discovery ~ Underwater Demolition"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

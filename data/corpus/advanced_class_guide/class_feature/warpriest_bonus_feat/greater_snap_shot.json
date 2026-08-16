@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Greater Snap Shot",
+    "name": "Greater Snap Shot",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can prey on any gap in your foe's guard with impunity, and with even greater range.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Greater Snap Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "4,CATEGORY=FEAT,Improved Snap Shot,Point-Blank Shot,Rapid Shot,Snap Shot"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:12],[PREVARGTEQ:WarpriestBonusFeatBAB,12]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,17],[PREVARGTEQ:FeatDexRequirement,17]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can prey on any gap in your foe's guard with impunity, and with even greater range."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever you make an attack of opportunity using a ranged weapon and hit, you gain a +2 bonus on the damage roll and a +2 bonus on rolls to confirm a critical hit with that attack. These bonuses increase to +4 when you have base attack bonus of +16, and to +6 when you have base attack bonus +20."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Snap Shot"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4455,
+    "record_key": "Warpriest Bonus Feat ~ Greater Snap Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forbidden Ki Power ~ Greater Hidden Magic",
+    "name": "Greater Hidden Magic",
+    "class": "Forbidden Ki Power",
+    "description": "As long as he has at least 1 point in his ki pool, all of the black asp's items are constantly under the effects of magic aura. As an immediate action, he can spend 2 ki points to cause himself and any magic items he is carrying to appear to be nonmagical (as if he had cast greater magic aura; see page 219) for %1 hours.|MonkLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Ki Power ~ Greater Hidden Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.Forbidden Ki Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Forbidden Ki Power ~ Hidden Magic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MonkLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as he has at least 1 point in his ki pool, all of the black asp's items are constantly under the effects of magic aura. As an immediate action, he can spend 2 ki points to cause himself and any magic items he is carrying to appear to be nonmagical (as if he had cast greater magic aura; see page 219) for %1 hours.|MonkLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 550,
+    "record_key": "Forbidden Ki Power ~ Greater Hidden Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

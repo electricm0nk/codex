@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Hierophant Spirit Bonus",
+    "name": "Spirit Bonus",
+    "class": "Medium",
+    "description": "When you channel a hierophant, you gain a +%1 bonus on Wisdom checks, Wisdom-based skill checks, and Will saves.|SpiritBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Hierophant Spirit Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When you channel a hierophant, you gain a +%1 bonus on Wisdom checks, Wisdom-based skill checks, and Will saves.|SpiritBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|SpiritBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE=Wisdom|SpiritBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 858,
+    "record_key": "Medium ~ Hierophant Spirit Bonus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bardic Performance ~ Stage Combat",
+    "name": "Stage Combat",
+    "class": "Bardic Performance",
+    "description": "A masked performer gains the benefit of a combat feat she doesn't have as long as she maintains this performance. The masked performer chooses the feat when she starts this performance. The masked performer must meet all the feat's prerequisites. As usual when temporarily gaining a feat, if the feat she chooses has any limitations on uses, such as Stunning Fist's daily uses, all uses of that combat feat while maintaining stage combat count toward that feat's limit. In the case of Stunning Fist, if the masked performer gained that feat again later the same day, the expended uses would remain expended. Stage combat relies on visual components.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Stage Combat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MaskedPerformerClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DESC",
+        "value": "A masked performer gains the benefit of a combat feat she doesn't have as long as she maintains this performance. The masked performer chooses the feat when she starts this performance. The masked performer must meet all the feat's prerequisites. As usual when temporarily gaining a feat, if the feat she chooses has any limitations on uses, such as Stunning Fist's daily uses, all uses of that combat feat while maintaining stage combat count toward that feat's limit. In the case of Stunning Fist, if the masked performer gained that feat again later the same day, the expended uses would remain expended. Stage combat relies on visual components."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 240,
+    "record_key": "Bardic Performance ~ Stage Combat"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

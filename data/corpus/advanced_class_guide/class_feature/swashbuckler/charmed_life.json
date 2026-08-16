@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Swashbuckler ~ Charmed Life",
+    "name": "Charmed Life",
+    "class": "Swashbuckler",
+    "description": "The swashbuckler gains a knack for getting out of trouble. %1 times per day as an immediate action before attempting a saving throw, she can add %2 to the result of the save. She must choose to do this before the roll is made.|SwashbucklerCharmedLifeTimes|SwashbucklerCharmedLifeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler ~ Charmed Life"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_2d"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwashbucklerCharmedLifeBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwashbucklerCharmedLifeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The swashbuckler gains a knack for getting out of trouble. %1 times per day as an immediate action before attempting a saving throw, she can add %2 to the result of the save. She must choose to do this before the roll is made.|SwashbucklerCharmedLifeTimes|SwashbucklerCharmedLifeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwashbucklerCharmedLifeBonus|CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwashbucklerCharmedLifeTimes|((SwashbucklerLVL-2)/4)+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SwashbucklerCharmedLifeTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1959,
+    "record_key": "Swashbuckler ~ Charmed Life"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

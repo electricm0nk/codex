@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mesmerist ~ Consummate Liar",
+    "name": "Consummate Liar",
+    "class": "Mesmerist",
+    "description": "A mesmerist adds %1 as a bonus on all Bluff checks. In addition, the mesmerist qualifies for the Improved Feint and Greater Feint feats, even if he doesn't have Combat Expertise or an Intelligence score of at least 13. He can also ignore Combat Expertise and an Intelligence score of 13 as prerequisites for other feats that require Improved Feint or Greater Feint.|ConsummateLiarBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist ~ Consummate Liar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConsummateLiarBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A mesmerist adds %1 as a bonus on all Bluff checks. In addition, the mesmerist qualifies for the Improved Feint and Greater Feint feats, even if he doesn't have Combat Expertise or an Intelligence score of at least 13. He can also ignore Combat Expertise and an Intelligence score of 13 as prerequisites for other feats that require Improved Feint or Greater Feint.|ConsummateLiarBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff|ConsummateLiarBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConsummateLiarBonus|max(MesmeristLVL/2,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 916,
+    "record_key": "Mesmerist ~ Consummate Liar"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

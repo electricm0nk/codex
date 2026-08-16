@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gingerbread Witch ~ Gruesome Gobbler",
+    "name": "Gruesome Gobbler",
+    "class": "Gingerbread Witch",
+    "description": "A gingerbread witch gains a bite attack that deals 1d6 points of damage for a Medium witch. As a full-round action, she can make a single bite attack that deals double base damage (2d6 for a Medium witch) and functions as if she had the grab and swallow whole special attacks, allowing her to grab and swallow a creature of her size or smaller. Her stomach doesn't deal damage to swallowed creatures, but a living creature she swallows must succeed at a Fortitude save (DC %1) at the beginning of each of its turns or become nauseated for 1 round. If a gingerbread witch successfully swallows a creature, her torso distends grotesquely and she is treated as if she were carrying a heavy load if the creature is the same size and a medium load if it's one size smaller; regardless, she can swallow only one such creature at a time. Creatures two or more sizes smaller do not distend her belly, though every four creatures of a smaller size count as one creature one size category larger (she can swallow 4 Tiny, 16 Diminutive, or 64 Fine creatures). She can regurgitate a swallowed creature of her choice as a move action, leaving it prone in an adjacent open square. If she is struck with a confirmed critical hit while she has a creature swallowed, the swallowed creatures each take half as much damage as the witch does (this doesn't reduce the damage the gingerbread witch takes).|10+WitchLVL/2+CON",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gingerbread Witch ~ Gruesome Gobbler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.GingerbreadWitchClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "DESC",
+        "value": "A gingerbread witch gains a bite attack that deals 1d6 points of damage for a Medium witch. As a full-round action, she can make a single bite attack that deals double base damage (2d6 for a Medium witch) and functions as if she had the grab and swallow whole special attacks, allowing her to grab and swallow a creature of her size or smaller. Her stomach doesn't deal damage to swallowed creatures, but a living creature she swallows must succeed at a Fortitude save (DC %1) at the beginning of each of its turns or become nauseated for 1 round. If a gingerbread witch successfully swallows a creature, her torso distends grotesquely and she is treated as if she were carrying a heavy load if the creature is the same size and a medium load if it's one size smaller; regardless, she can swallow only one such creature at a time. Creatures two or more sizes smaller do not distend her belly, though every four creatures of a smaller size count as one creature one size category larger (she can swallow 4 Tiny, 16 Diminutive, or 64 Fine creatures). She can regurgitate a swallowed creature of her choice as a move action, leaving it prone in an adjacent open square. If she is struck with a confirmed critical hit while she has a creature swallowed, the swallowed creatures each take half as much damage as the witch does (this doesn't reduce the damage the gingerbread witch takes).|10+WitchLVL/2+CON"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 274,
+    "record_key": "Gingerbread Witch ~ Gruesome Gobbler"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Knowledge Blessing ~ Monster Lore",
+    "name": "Monster Lore",
+    "class": "Knowledge Blessing",
+    "description": "When you succeed at a Knowledge check against an opponent to learn about its abilities or weaknesses (or succeed at a touch attack using the lore keeper blessing, above), you can as a swift action gain a +2 insight bonus on attacks, saving throws, and ability and skill checks, as well as to your AC against that creature. This effect lasts for 1 minute.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Knowledge Blessing ~ Monster Lore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When you succeed at a Knowledge check against an opponent to learn about its abilities or weaknesses (or succeed at a touch attack using the lore keeper blessing, above), you can as a swift action gain a +2 insight bonus on attacks, saving throws, and ability and skill checks, as well as to your AC against that creature. This effect lasts for 1 minute."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2256,
+    "record_key": "Knowledge Blessing ~ Monster Lore"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

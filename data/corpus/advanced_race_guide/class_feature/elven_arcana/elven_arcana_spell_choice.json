@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elven Arcana ~ Spell Choice",
+    "name": "Elven Arcana Spell Choice",
+    "class": "Elven Arcana",
+    "description": "You gain bonus spells from the Sorceror/Wizard spell list.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elven Arcana ~ Spell Choice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ElvenArcanaSpellChoice"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain bonus spells from the Sorceror/Wizard spell list."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SPELLS|CLASSLIST=Wizard[LEVELMAX=OracleLVL/2-1;LEVELMIN=0]"
+      },
+      {
+        "key": "SELECT",
+        "value": "1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 117,
+    "record_key": "Elven Arcana ~ Spell Choice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

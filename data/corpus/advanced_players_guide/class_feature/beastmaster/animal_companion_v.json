@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Beastmaster ~ Animal Companion 5",
+    "name": "Animal Companion / V",
+    "class": "Beastmaster",
+    "description": "Total Levels Assigned to Companion %1|AnimalCompanionLVLE",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Beastmaster ~ Animal Companion 5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BeastmasterCompanionChoice"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AnimalCompanionLVLD,1"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "AnimalCompanionLVLE,RangerLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionLVLE|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Total Levels Assigned to Companion %1|AnimalCompanionLVLE"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Beastmaster Follower ~ 5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionLVLE|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2688,
+    "record_key": "Beastmaster ~ Animal Companion 5"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

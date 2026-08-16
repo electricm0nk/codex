@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Curator ~ Split Focus",
+    "name": "Split Focus",
+    "class": "Curator",
+    "description": "A curator has a number of points of mental focus equal to only his occultist level. This ability alters mental focus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Curator ~ Split Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.CuratorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "DESC",
+        "value": "A curator has a number of points of mental focus equal to only his occultist level. This ability alters mental focus."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistMentalFocus|-INT"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 958,
+    "record_key": "Curator ~ Split Focus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

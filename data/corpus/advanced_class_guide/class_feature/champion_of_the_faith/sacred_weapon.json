@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Champion of the Faith ~ Sacred Weapon",
+    "name": "Sacred Weapon",
+    "class": "Champion of the Faith",
+    "description": "Sacred weapons (including his deities favored weapon and all weapons with Weapon Focus) can do base %1d%2 damage instead of the weapons normal base damage.|WarpriestSacredWeaponBaseDice|WarpriestSacredWeaponBaseDiceSize",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Champion of the Faith ~ Sacred Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Champion of the Faith Class Feature.Warpriest Class Feature.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestSacredWeaponBaseDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestSacredWeaponBaseDiceSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestSacredWeaponLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Sacred weapons (including his deities favored weapon and all weapons with Weapon Focus) can do base %1d%2 damage instead of the weapons normal base damage.|WarpriestSacredWeaponBaseDice|WarpriestSacredWeaponBaseDiceSize"
+      },
+      {
+        "key": "DESC",
+        "value": " Weapons wielded by a champion of the faith are charged with the power of his faith. In addition to the favored weapon of his deity, the champion of the faith can designate a weapon as a sacred weapon by selecting that weapon with the Weapon Focus feat; if he has multiple Weapon Focus feats, this ability applies to all of them. Whenever the champion of the faith hits with his sacred weapon, the weapon damage is based on his level and not the weapon type. The damage for Medium warpriests is listed on Table %1D%2. The warpriest can decide to use the weapon's base damage instead of the sacred weapon damage-this must be declared before the attack roll is made. (If the weapon's base damage exceeds the sacred weapon damage, its damage is unchanged.) This increase in damage does not affect any other aspect of the weapon, and doesn't apply to alchemical items, bombs, or other weapons that only deal energy damage."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponBaseDice|1+min(1,WarpriestSacredWeaponLVL/20)|PREBASESIZELT:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponBaseDice|1+min(1,WarpriestSacredWeaponLVL/15)|PREBASESIZEEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponBaseDice|1+min(2,((WarpriestSacredWeaponLVL+5)/10))|PREBASESIZEGT:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponBaseDiceSize|if(WarpriestSacredWeaponLVL<5,4,if(WarpriestSacredWeaponLVL<10,6,if(WarpriestSacredWeaponLVL<15,8,if(WarpriestSacredWeaponLVL<20,10,6))))|PREBASESIZELT:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponBaseDiceSize|if(WarpriestSacredWeaponLVL<5,6,if(WarpriestSacredWeaponLVL<10,8,if(WarpriestSacredWeaponLVL<15,10,if(WarpriestSacredWeaponLVL<20,6,8))))|PREBASESIZEEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponBaseDiceSize|if(WarpriestSacredWeaponLVL<5,8,if(WarpriestSacredWeaponLVL<10,6,if(WarpriestSacredWeaponLVL<15,8,if(WarpriestSacredWeaponLVL<20,6,8))))|PREBASESIZEGT:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponLVL|WarpriestLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3939,
+    "record_key": "Champion of the Faith ~ Sacred Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

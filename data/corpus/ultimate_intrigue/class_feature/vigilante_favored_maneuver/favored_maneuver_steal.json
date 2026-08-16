@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Favored Maneuver ~ Steal",
+    "name": "Favored Maneuver (Steal)",
+    "class": "Vigilante Favored Maneuver",
+    "description": "You gain the Improved Steal feat. You also gains a +2 circumstance bonus on CMB checks to Steal from a foe that is unaware of you at the start of your combat maneuver.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Favored Maneuver ~ Steal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VigilanteFavoredManeuver"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Favored Maneuver ~ Steal"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the Improved Steal feat. You also gains a +2 circumstance bonus on CMB checks to Steal from a foe that is unaware of you at the start of your combat maneuver."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Steal"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 139,
+    "record_key": "Vigilante Favored Maneuver ~ Steal"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

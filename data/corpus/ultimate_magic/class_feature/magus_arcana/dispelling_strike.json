@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus Arcana ~ Dispelling Strike",
+    "name": "Dispelling Strike",
+    "class": "Magus Arcana",
+    "description": "You can spend 1 or more points from your arcane pool as a swift action to imbue your weapon with a special power.  If the weapon strikes a creature within the next minute, that creature is the subject of a targeted Dispel Magic using your level as the caster level, except that this effect cannot dispel a spell of a level higher than the number of arcane pool points expended to activate this ability (treat higher-level spells as if they do not exist and apply the dispel attempt to the remaining spells with the highest caster level). Once the strike is made, the power dissipates, even if the dispel attempt is unsuccessful.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Dispelling Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.MagusArcana"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ArcanaQualifyLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "You can spend 1 or more points from your arcane pool as a swift action to imbue your weapon with a special power.  If the weapon strikes a creature within the next minute, that creature is the subject of a targeted Dispel Magic using your level as the caster level, except that this effect cannot dispel a spell of a level higher than the number of arcane pool points expended to activate this ability (treat higher-level spells as if they do not exist and apply the dispel attempt to the remaining spells with the highest caster level). Once the strike is made, the power dissipates, even if the dispel attempt is unsuccessful."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 86,
+    "record_key": "Magus Arcana ~ Dispelling Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

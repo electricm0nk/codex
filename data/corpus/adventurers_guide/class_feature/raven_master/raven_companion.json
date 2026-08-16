@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Raven Master ~ Raven Companion",
+    "name": "Raven Companion",
+    "class": "Raven Master",
+    "description": "A raven master earns the trust and companionship of a particularly large, powerful, and intelligent raven. This ability functions like the druid animal companion ability, except that the raven master's effective druid level is equal to her ranger level - 3. The raven master must select a bird as her animal companion. The raven companion starts with an Intelligence score of 3 and can speak one language known by the raven master. In addition to the normal abilities an animal companion gains as the raven master increases in level, the raven companion gains the following abilities. This ability alters hunter's bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Raven Master ~ Raven Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.RavenMasterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.175"
+      },
+      {
+        "key": "DESC",
+        "value": "A raven master earns the trust and companionship of a particularly large, powerful, and intelligent raven. This ability functions like the druid animal companion ability, except that the raven master's effective druid level is equal to her ranger level - 3. The raven master must select a bird as her animal companion. The raven companion starts with an Intelligence score of 3 and can speak one language known by the raven master. In addition to the normal abilities an animal companion gains as the raven master increases in level, the raven companion gains the following abilities. This ability alters hunter's bond."
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterIsRavenMaster|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CompanionDisable_AnimalCompanion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CompanionMasterLVL_Ranger|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Companion ~ Animal Companion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunters_Bond_Animal_Companion|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|CompanionMasterLVL_Ranger"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CompanionMasterLVL_Ranger|RangerLVL-3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterIsRavenMaster|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Bird (Raven))"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 997,
+    "record_key": "Raven Master ~ Raven Companion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

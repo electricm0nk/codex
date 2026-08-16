@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pride (Illusion) School",
+    "name": "Pride (Illusion) School",
+    "class": null,
+    "description": "You have chosen to specialize in Pride, perfecting your own appearance and domain through trickery and illusions.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IllusionSchoolLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to specialize in Pride, perfecting your own appearance and domain through trickery and illusions."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Illusion School ~ Extended Illusion|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardExtendedIllusion|PREVARGTEQ:IllusionSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Illusion School ~ Blinding Ray|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardBlindingRay|PREVARGTEQ:IllusionSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Illusion School ~ Invisibility Field|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardInvisibilityField|PREVARGTEQ:IllusionSchoolLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IllusionSchoolLVL|ArcaneSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisallowWizardArcaneSchoolArchetype|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OppositionalSchool|-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 130,
+    "record_key": "Pride (Illusion) School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

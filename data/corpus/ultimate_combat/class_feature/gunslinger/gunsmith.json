@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gunslinger ~ Gunsmith",
+    "name": "Gunsmith",
+    "class": "Gunslinger",
+    "description": "At 1st level, a gunslinger gains one of the following firearms of her choice: blunderbuss, musket, or pistol. Her starting weapon is battered, and only she knows how to use it properly. All other creatures treat her gun as if it had the broken condition. If the weapon already has the broken condition, it does not work at all for anyone else trying to use it. This starting weapon can only be sold for scrap (it's worth 4d10 gp when sold). The gunslinger also gains Gunsmithing as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Gunsmith"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GunslingerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a gunslinger gains one of the following firearms of her choice: blunderbuss, musket, or pistol. Her starting weapon is battered, and only she knows how to use it properly. All other creatures treat her gun as if it had the broken condition. If the weapon already has the broken condition, it does not work at all for anyone else trying to use it. This starting weapon can only be sold for scrap (it's worth 4d10 gp when sold). The gunslinger also gains Gunsmithing as a bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Gunsmithing"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Gunslinger Battered Gun|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.9"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 37,
+    "record_key": "Gunslinger ~ Gunsmith"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

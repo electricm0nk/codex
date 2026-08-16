@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fiendflesh Shifter ~ Greater Chimeric Fiend",
+    "name": "Greater Chimeric Fiend",
+    "class": "Fiendflesh Shifter",
+    "description": "A fiendflesh shifter's chimeric fiend ability grants her additional bonuses as noted below. [Daemon] The shifter gains a +4 enhancement bonus to her Constitution score and immunity to disease. [Demon] The shifter gains a +4 enhancement bonus to her Strength score and increases the damage die of all natural attacks by one step. [Devil] The shifter gains a +4 enhancement bonus to her Dexterity score and see in darkness as per the universal monster rule.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fiendflesh Shifter ~ Greater Chimeric Fiend"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.FiendfleshShifterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A fiendflesh shifter's chimeric fiend ability grants her additional bonuses as noted below. [Daemon] The shifter gains a +4 enhancement bonus to her Constitution score and immunity to disease. [Demon] The shifter gains a +4 enhancement bonus to her Strength score and increases the damage die of all natural attacks by one step. [Devil] The shifter gains a +4 enhancement bonus to her Dexterity score and see in darkness as per the universal monster rule."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1067,
+    "record_key": "Fiendflesh Shifter ~ Greater Chimeric Fiend"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

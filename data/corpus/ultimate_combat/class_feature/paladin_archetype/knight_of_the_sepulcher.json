@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Paladin Archetype ~ Knight Of The Sepulcher",
+    "name": "Knight of the Sepulcher",
+    "class": "Paladin Archetype",
+    "description": "Not content with the antipaladin's mere corruption of the soul, the knight of the sepulcher sacrifices mortality along with morality. The knight of the sepulcher archetype is available only to the antipaladin alternate class.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Knight Of The Sepulcher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AntipaladinArchetype.PaladinCruelty.PaladinSmiteGoodUse10.PaladinAuraOfDespair.PaladinFiendishBoonAbility.PaladinAuraOfVengeance.PaladinAuraOfSin.PaladinUnholyChampion"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Antipaladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ KNIGHT OF THE SEPULCHER],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinCruelty,TYPE.PaladinSmiteGoodUse10,TYPE.PaladinAuraOfDespair,TYPE.PaladinFiendishBoonAbility,TYPE.PaladinAuraOfVengeance,TYPE.PaladinAuraOfSin,TYPE.PaladinUnholyChampion]"
+      },
+      {
+        "key": "DESC",
+        "value": "Not content with the antipaladin's mere corruption of the soul, the knight of the sepulcher sacrifices mortality along with morality. The knight of the sepulcher archetype is available only to the antipaladin alternate class."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Knight Of The Sepulcher ~ Touch of the Crypt|PRECLASS:1,Antipaladin=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Knight Of The Sepulcher ~ Fortitude of the Crypt|PRECLASS:1,Antipaladin=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Knight Of The Sepulcher ~ Cloak of the Crypt|PRECLASS:1,Antipaladin=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Knight Of The Sepulcher ~ Will of the Crypt|PRECLASS:1,Antipaladin=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Knight Of The Sepulcher ~ Weapons of Sin|PRECLASS:1,Antipaladin=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Knight Of The Sepulcher ~ Crypt Lord|PRECLASS:1,Antipaladin=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Knight Of The Sepulcher ~ Soul of the Crypt|PRECLASS:1,Antipaladin=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Knight Of The Sepulcher ~ Undying Champion|PRECLASS:1,Antipaladin=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Paladin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1446,
+    "record_key": "Paladin Archetype ~ Knight Of The Sepulcher"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

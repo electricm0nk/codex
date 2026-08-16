@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Speaker for the Past Ancestor Mystery ~ Blood of Heroes",
+    "name": "Blood of Heroes",
+    "class": "Speaker for the Past Ancestor Mystery",
+    "description": "As a move action, you can call upon your ancestors to grant you extra bravery in battle. You gain a +%1 morale bonus on attack rolls, damage rolls, and Will saves against fear for %2 rounds. You can use this ability %3/day.|BloodOfHeroesBonus|BloodOfHeroesDuration|BloodOfHeroesTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Speaker for the Past Ancestor Mystery ~ Blood of Heroes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.AncestorRevelation.speaker for the past revelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodOfHeroesDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodOfHeroesBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodOfHeroesTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, you can call upon your ancestors to grant you extra bravery in battle. You gain a +%1 morale bonus on attack rolls, damage rolls, and Will saves against fear for %2 rounds. You can use this ability %3/day.|BloodOfHeroesBonus|BloodOfHeroesDuration|BloodOfHeroesTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodOfHeroesDuration|CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodOfHeroesBonus|1+min(2,floor(classlevel(\"Shaman\")/7))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodOfHeroesTimes|1+floor(classlevel(\"Shaman\")/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|TOHIT|BloodOfHeroesBonus|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|DAMAGE.Melee,DAMAGE.Ranged|BloodOfHeroesBonus|TYPE=Morale"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3617,
+    "record_key": "Speaker for the Past Ancestor Mystery ~ Blood of Heroes"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

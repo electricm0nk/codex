@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Strength Domain ~ Might of the Gods",
+    "name": "Might of the Gods",
+    "class": "Strength Domain",
+    "description": "You can add a +%1 enhancement bonus to your Strength score for %1 rounds per day. That bonus only applies on Strength checks and Strength-based skill checks. These rounds do not need to be consecutive.|MightOfTheGodsRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strength Domain ~ Might of the Gods"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MightOfTheGodsRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can add a +%1 enhancement bonus to your Strength score for %1 rounds per day. That bonus only applies on Strength checks and Strength-based skill checks. These rounds do not need to be consecutive.|MightOfTheGodsRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MightOfTheGodsRounds|DomainStrengthLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds/day)|MightOfTheGodsRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|MightOfTheGodsRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3260,
+    "record_key": "Strength Domain ~ Might of the Gods"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

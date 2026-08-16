@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Alchemical Trapper",
+    "name": "Alchemical Trapper",
+    "class": "Alchemist Archetype",
+    "description": "Because kobolds rely on traps to soften up enemies, kobold alchemists learn to turn bombs into traps. When such alchemists are preparing defenses against larger creatures that might enter their tunnels and attempt to exterminate them, their skills mean the difference between life and death.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Alchemical Trapper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Alchemical Trapper],[!PREFACT:1,ABILITIES,Alchemist_Archetype_Discovery2=True,Alchemist_Archetype_Discovery4=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Because kobolds rely on traps to soften up enemies, kobold alchemists learn to turn bombs into traps. When such alchemists are preparing defenses against larger creatures that might enter their tunnels and attempt to exterminate them, their skills mean the difference between life and death."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Alchemical Trapper ~ Bomb Trap|PRECLASS:1,Alchemist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Alchemical Trapper ~ Trapfinding|PRECLASS:1,Alchemist=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Discovery2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Discovery4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Discovery2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Discovery4|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 11,
+    "record_key": "Alchemist Archetype ~ Alchemical Trapper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Rebuffing Reduction",
+    "name": "Rebuffing Reduction",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your damage reduction can turn the force of blows back on your enemies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Rebuffing Reduction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Improved Bull Rush,Power Attack"
+      },
+      {
+        "key": "PREDR",
+        "value": "1,ANY=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:1],[PREVARGTEQ:WarpriestBonusFeatBAB,1]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,STR=13"
+      },
+      {
+        "key": "DESC",
+        "value": "Your damage reduction can turn the force of blows back on your enemies."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever an opponent that is adjacent to you fails to penetrate your DR with a melee attack, you can spend an immediate action to attempt a bull rush combat maneuver against that opponent. If you succeed, you cannot move with the opponent. &nl; [Normal] A bull rush combat maneuver is a standard action."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Rebuffing Reduction"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4524,
+    "record_key": "Warpriest Bonus Feat ~ Rebuffing Reduction"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

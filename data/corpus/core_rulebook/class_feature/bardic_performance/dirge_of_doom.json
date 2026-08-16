@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bardic Performance ~ Dirge of Doom",
+    "name": "Dirge of Doom",
+    "class": "Bardic Performance",
+    "description": "You can use your performance to foster a sense of growing dread in your enemies, causing them to become shaken. To be affected, an enemy must be within 30 feet and able to see and hear your performance. The effect persists for as long as the enemy is within 30 feet and you continue your performance. This performance cannot cause a creature to become frightened or panicked, even if the targets are already shaken from another effect. Dirge of Doom is a mind-affecting fear effect, and it relies on audible and visual components.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Dirge of Doom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialAttack.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your performance to foster a sense of growing dread in your enemies, causing them to become shaken. To be affected, an enemy must be within 30 feet and able to see and hear your performance. The effect persists for as long as the enemy is within 30 feet and you continue your performance. This performance cannot cause a creature to become frightened or panicked, even if the targets are already shaken from another effect. Dirge of Doom is a mind-affecting fear effect, and it relies on audible and visual components."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 527,
+    "record_key": "Bardic Performance ~ Dirge of Doom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

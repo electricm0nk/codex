@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Stalwart Defender ~ Smash",
+    "name": "Smash",
+    "class": "Stalwart Defender",
+    "description": "While in a defensive stance, the stalwart defender may make an extra attack per round that is either a shield bash or a slam (even if he doesn't normally have a slam attack). If used as part of a full attack action, the extra attack is made at the stalwart defender's full base attack bonus -5. The smash deals 1d4 points of damage (if the stalwart defender is Medium, or 1d3 if he is Small) plus half the character's Strength modifier. The character can make this attack as part of the action to maintain or break free from a grapple; this attack is resolved before the grapple check is made. If the attack hits, any grapple checks made by the stalwart defender against the target this round are at a +2 bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stalwart Defender ~ Smash"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary.DefensiveStancePower"
+      },
+      {
+        "key": "DESC",
+        "value": "While in a defensive stance, the stalwart defender may make an extra attack per round that is either a shield bash or a slam (even if he doesn't normally have a slam attack). If used as part of a full attack action, the extra attack is made at the stalwart defender's full base attack bonus -5. The smash deals 1d4 points of damage (if the stalwart defender is Medium, or 1d3 if he is Small) plus half the character's Strength modifier. The character can make this attack as part of the action to maintain or break free from a grapple; this attack is resolved before the grapple check is made. If the attack hits, any grapple checks made by the stalwart defender against the target this round are at a +2 bonus."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1466,
+    "record_key": "Stalwart Defender ~ Smash"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

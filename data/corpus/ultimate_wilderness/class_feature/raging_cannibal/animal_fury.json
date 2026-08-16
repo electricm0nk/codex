@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Raging Cannibal ~ Animal Fury",
+    "name": "Animal Fury",
+    "class": "Raging Cannibal",
+    "description": "At 2nd level, a raging cannibal must select animal fury as her first rage power. This alters the barbarian's 2nd-level rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Raging Cannibal ~ Animal Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.RagingCannibalClassFeatures"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a raging cannibal must select animal fury as her first rage power. This alters the barbarian's 2nd-level rage power."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rage Power ~ Animal Fury"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 210,
+    "record_key": "Raging Cannibal ~ Animal Fury"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

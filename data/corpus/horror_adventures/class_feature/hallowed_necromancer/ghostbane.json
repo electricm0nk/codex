@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hallowed Necromancer ~ Ghostbane",
+    "name": "Ghostbane",
+    "class": "Hallowed Necromancer",
+    "description": "A hallowed necromancer can expend 3 uses of her positive touch as a swift action while casting a spell to affect undead as if the spell were prepared with the Ectoplasmic Spell (APG), Thanatopic Spell (APG), or Threnodic Spell (APG)feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hallowed Necromancer ~ Ghostbane"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wizard Class Feature.HallowedNecromancerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "DESC",
+        "value": "A hallowed necromancer can expend 3 uses of her positive touch as a swift action while casting a spell to affect undead as if the spell were prepared with the Ectoplasmic Spell (APG), Thanatopic Spell (APG), or Threnodic Spell (APG)feat."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 313,
+    "record_key": "Hallowed Necromancer ~ Ghostbane"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Street Performer ~ Disappearing Act",
+    "name": "Disappearing Act",
+    "class": "Street Performer",
+    "description": "A street performer can use performance to divert attention from an ally. All creatures within 30 feet that fail a Will save DC %1 (DC 10 + 1/2 the bard's level + the bard's Cha modifier) treat one creature chosen by the bard as if it were invisible. This performance affects one additional creature at 5th level and every 6 levels thereafter. If the targets take any action that would cause them to become visible, they become visible to everyone. The bard cannot use this ability on himself. This ability is a mind-affecting effect that requires visual components. This performance replaces inspire courage.|10+CHA+(BardLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Street Performer ~ Disappearing Act"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Supernatural.BardInspireCourage"
+      },
+      {
+        "key": "DESC",
+        "value": "A street performer can use performance to divert attention from an ally. All creatures within 30 feet that fail a Will save DC %1 (DC 10 + 1/2 the bard's level + the bard's Cha modifier) treat one creature chosen by the bard as if it were invisible. This performance affects one additional creature at 5th level and every 6 levels thereafter. If the targets take any action that would cause them to become visible, they become visible to everyone. The bard cannot use this ability on himself. This ability is a mind-affecting effect that requires visual components. This performance replaces inspire courage.|10+CHA+(BardLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1727,
+    "record_key": "Street Performer ~ Disappearing Act"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

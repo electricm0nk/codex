@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skulking Slayer ~ Surprise Follow-Through",
+    "name": "Surprise Follow-Through",
+    "class": "Skulking Slayer",
+    "description": "A skulking slayer can take the Surprise Follow-Through feat in place of a Rogue Talent",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skulking Slayer ~ Surprise Follow-Through"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.RogueTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Skulking Slayer ~ Bonus Feats"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Surprise Follow-Through"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=2"
+      },
+      {
+        "key": "DESC",
+        "value": "A skulking slayer can take the Surprise Follow-Through feat in place of a Rogue Talent"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Surprise Follow-Through"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 289,
+    "record_key": "Skulking Slayer ~ Surprise Follow-Through"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

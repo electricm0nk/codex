@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Trapper ~ Trap",
+    "name": "Trap",
+    "class": "Trapper",
+    "description": "You can use ranger traps %1/day, DC %2 for Perception (to notice), Disable Device (to disable), and saving throws (to avoid).|TrapTimes|TrapDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trapper ~ Trap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerTrapLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NumberOfTraps|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use ranger traps %1/day, DC %2 for Perception (to notice), Disable Device (to disable), and saving throws (to avoid).|TrapTimes|TrapDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ranger Trap ~ Snare Trap"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ranger Trap|NumberOfTraps"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerTrapLVL|RangerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NumberOfTraps|(classlevel(\"Ranger\")-3)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapTimes|WIS+(classlevel(\"Ranger\")/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapDC|10+classlevel(\"Ranger\")/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1610,
+    "record_key": "Trapper ~ Trap"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

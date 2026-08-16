@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ki Power ~ Wholeness of Body",
+    "name": "Wholeness of Body",
+    "class": "Ki Power",
+    "description": "Spend 2 ki points to use the monk ability wholeness of body.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ki Power ~ Wholeness of Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.KiPower"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=8"
+      },
+      {
+        "key": "DESC",
+        "value": "Spend 2 ki points to use the monk ability wholeness of body."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1390,
+    "record_key": "Ki Power ~ Wholeness of Body"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

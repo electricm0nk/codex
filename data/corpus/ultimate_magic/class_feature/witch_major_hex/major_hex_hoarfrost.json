@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Major Hex ~ Hoarfrost",
+    "name": "Major Hex - Hoarfrost",
+    "class": "Witch Major Hex",
+    "description": "DC %1 |WitchHexDC_Hoarfrost",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Major Hex ~ Hoarfrost"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.WitchHex.MajorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMajorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,10]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_Hoarfrost|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_Hoarfrost"
+      },
+      {
+        "key": "DESC",
+        "value": "The target is rimed with a shell of frost needles that slowly work their way into its flesh (Fortitude negates). The target turns pale and blue, and takes 1 point of Constitution damage per minute until it dies, saves (once per minute), or is cured. Break enchantment, dispel magic, remove curse, and similar spells end the effect. If the target saves, it is immune to this hex for 1 day. This is a cold effect."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Hoarfrost"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Hoarfrost|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Hoarfrost|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Hoarfrost)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 727,
+    "record_key": "Witch Major Hex ~ Hoarfrost"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

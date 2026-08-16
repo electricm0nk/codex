@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cyphermage ~ Cypher Lore",
+    "name": "Cypher Lore",
+    "class": "Cyphermage",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cyphermage ~ Cypher Lore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Cyphermage Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "DESC",
+        "value": "As a Cyphermage gains levels, he begins mastering written magic such as scrolls, glyphs, and symbols. He also begins to discover ancient Thassilonian magics that further bolster his power. These discoveries are known collectively as cypher lore. At each level except for 10th, the Cyphermage learns a new way to enhance his magic, chosen from the list of cypher lore discoveries below."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cypher Lore Choice|min(9,CyphermageLVL)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 103,
+    "record_key": "Cyphermage ~ Cypher Lore"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

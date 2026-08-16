@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Social Talent ~ Safe House",
+    "name": "Safe House",
+    "class": "Social Talent",
+    "description": "The vigilante can establish a safe house in his area of renown, and he can change it every time he changes his area of renown. If he doesn't have the renown talent, he can still select this talent and place the safe house in a single location to which he has access, but he can never move the safe house from its initial location until he gains the renown talent. This safe house must be an area no larger in volume than a cube that is %1 feet per side. The safe house can be arranged any way he likes and it can be part of a larger building, like a secret room or an underground cave. Objects within this safe house can't be located by any effect that is less powerful than a discern location spell.|VigilanteTalentLVL*10",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ Safe House"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante can establish a safe house in his area of renown, and he can change it every time he changes his area of renown. If he doesn't have the renown talent, he can still select this talent and place the safe house in a single location to which he has access, but he can never move the safe house from its initial location until he gains the renown talent. This safe house must be an area no larger in volume than a cube that is %1 feet per side. The safe house can be arranged any way he likes and it can be part of a larger building, like a secret room or an underground cave. Objects within this safe house can't be located by any effect that is less powerful than a discern location spell.|VigilanteTalentLVL*10"
+      },
+      {
+        "key": "DESC",
+        "value": " This protection from being located also applies to creatures in the safe house.|PREVARGTEQ:VigilanteTalentLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": " The entire area is protected from scrying effects (though not mundane snooping) like a mage's private sanctum.|PREVARGTEQ:VigilanteTalentLVL,13"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 65,
+    "record_key": "Social Talent ~ Safe House"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pack Rager ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class": "Pack Rager",
+    "description": "At 2nd level and every 4 levels thereafter, the pack rager can take a bonus teamwork feat. This teamwork feat must also be a combat feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pack Rager ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.PackRagerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level and every 4 levels thereafter, the pack rager can take a bonus teamwork feat. This teamwork feat must also be a combat feat."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Teamwork Feat|(BarbarianLVL+2)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 53,
+    "record_key": "Pack Rager ~ Bonus Feat"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

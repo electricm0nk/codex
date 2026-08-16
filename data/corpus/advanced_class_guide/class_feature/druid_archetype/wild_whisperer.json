@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Druid Archetype ~ Wild Whisperer",
+    "name": "Wild Whisperer",
+    "class": "Druid Archetype",
+    "description": "A wild whisperer is an expert at studying, predicting, and explaining animal behavior. She is less interested in plants, fey, and other aspects of the natural world, and uses her gifts to tame or relocate dangerous beasts and soothe the hurts of wounded and sickly creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Wild Whisperer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype.DruidWoodlandStride.DruidTracklessStep.DruidResistNaturesLure.DruidWildShape6.DruidWildShape8"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Wild Whisperer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidResistNaturesLure,TYPE.DruidWildShape]"
+      },
+      {
+        "key": "DESC",
+        "value": "A wild whisperer is an expert at studying, predicting, and explaining animal behavior. She is less interested in plants, fey, and other aspects of the natural world, and uses her gifts to tame or relocate dangerous beasts and soothe the hurts of wounded and sickly creatures."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Wild Whisperer ~ Inspiration|PRECLASS:1,Druid=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Wild Whisperer ~ Wild Shape|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Wild Whisperer ~ Natural Expertise|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Wild Whisperer ~ Investigator Talent|PRECLASS:1,Druid=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Druid"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3023,
+    "record_key": "Druid Archetype ~ Wild Whisperer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Buccaneer ~ Grit",
+    "name": "Grit",
+    "class": "Buccaneer",
+    "description": "Like the sea itself, a buccaneer is a force of nature. Instead of using her Wisdom modifier to determine the number of grit points she gains at the start of each day, she uses her Charisma modifier. This ability works in all other ways like the gunslinger's grit class feature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Buccaneer ~ Grit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Like the sea itself, a buccaneer is a force of nature. Instead of using her Wisdom modifier to determine the number of grit points she gains at the start of each day, she uses her Charisma modifier. This ability works in all other ways like the gunslinger's grit class feature."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Grit"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GunslingerGritLimit|CHA-WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GunslingerGritPoints|max(1,CHA-WIS)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 356,
+    "record_key": "Buccaneer ~ Grit"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

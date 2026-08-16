@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Flame Mystery ~ Fire Breath",
+    "name": "Fire Breath",
+    "class": "Flame Mystery",
+    "description": "As a standard action, you can unleash a 15-foot cone of flame from your mouth. This flame deals %1d4 points of fire damage. A Reflex save halves this damage. You can use this ability %2 times per day. The save DC is Charisma-based.|classlevel(\"Oracle\")|1+(classlevel(\"Oracle\")/5)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flame Mystery ~ Fire Breath"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.FlameRevelation.Supernatural.PerDayOracleRevelation"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can unleash a 15-foot cone of flame from your mouth. This flame deals %1d4 points of fire damage. A Reflex save halves this damage. You can use this ability %2 times per day. The save DC is Charisma-based.|classlevel(\"Oracle\")|1+(classlevel(\"Oracle\")/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 594,
+    "record_key": "Flame Mystery ~ Fire Breath"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

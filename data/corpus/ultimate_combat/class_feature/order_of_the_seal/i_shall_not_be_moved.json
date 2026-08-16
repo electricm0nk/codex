@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Seal ~ I Shall Not Be Moved",
+    "name": "I Shall Not Be Moved",
+    "class": "Order of the Seal",
+    "description": "At 8th level, the cavalier can draw on his dedication to overcome physical weakness. Whenever the cavalier does not move more than a 5-foot step, he receives a +2 dodge bonus to his CMD to resist bull rush, overrun, reposition, and trip combat maneuvers until his next turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Seal ~ I Shall Not Be Moved"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, the cavalier can draw on his dedication to overcome physical weakness. Whenever the cavalier does not move more than a 5-foot step, he receives a +2 dodge bonus to his CMD to resist bull rush, overrun, reposition, and trip combat maneuvers until his next turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 452,
+    "record_key": "Order of the Seal ~ I Shall Not Be Moved"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

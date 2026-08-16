@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Slayer Talent ~ Combat Style II",
+    "name": "Combat Style II",
+    "class": "Slayer Talent",
+    "description": "The slayer gains another combat style bonus feat and can add the 6th level bonus feats to the list.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Talent ~ Combat Style II"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SlayerTalent.LesserSlayerTalent.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Slayer Talent ~ Combat Style I"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SlayerTalentLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "The slayer gains another combat style bonus feat and can add the 6th level bonus feats to the list."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ranger Combat Style Feat|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatStyleLVL|5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1831,
+    "record_key": "Slayer Talent ~ Combat Style II"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

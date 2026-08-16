@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Deadly Stroke",
+    "name": "Deadly Stroke",
+    "class": "Warpriest Bonus Feat",
+    "description": "With a well-placed strike, you can bring a swift and painful end to most foes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Deadly Stroke"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "4,CATEGORY=FEAT,Dazzling Display,Greater Weapon Focus,Shatter Defenses,Weapon Focus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:11],[PREVARGTEQ:WarpriestBonusFeatBAB,11]"
+      },
+      {
+        "key": "DESC",
+        "value": "With a well-placed strike, you can bring a swift and painful end to most foes."
+      },
+      {
+        "key": "DESC",
+        "value": " As a standard action, make a single attack with the weapon for which you have Greater Weapon Focus against a stunned or flat-footed opponent. If you hit, you deal double the normal damage and the target takes 1 point of Constitution bleed (see Appendix 2). The additional damage and bleed is not multiplied on a critical hit."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Deadly Stroke"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4218,
+    "record_key": "Warpriest Bonus Feat ~ Deadly Stroke"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

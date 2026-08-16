@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Undead Blood (Lesser)",
+    "name": "Undead Blood, Lesser",
+    "class": "Rage Power",
+    "description": "While raging, when the barbarian hits a creature with a charge attack, the creature she hit becomes shaken for %1 rounds. This effect does not stack with other fear effects to cause a stronger condition.|max(floor(BarbarianLVL/2))",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Undead Blood (Lesser)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialQuality.Supernatural.BloodRageLesser"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Special Ability,TYPE.BloodRageLesser],[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ Undead Blood (Lesser)]"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, when the barbarian hits a creature with a charge attack, the creature she hit becomes shaken for %1 rounds. This effect does not stack with other fear effects to cause a stronger condition.|max(floor(BarbarianLVL/2))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2678,
+    "record_key": "Rage Power ~ Undead Blood (Lesser)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

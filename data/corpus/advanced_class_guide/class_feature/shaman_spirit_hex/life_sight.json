@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Life Sight",
+    "name": "Life Sight",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman can see the states of life, death, and general health of those around her. When she uses this ability, she can tell whether or not creatures within 30 feet of her that she can see are living, wounded, dying, or dead. She can also tell if those creatures are confused, disabled, diseased, nauseated, poisoned, sickened, or staggered.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Life Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanLifeHex.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Life Sight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanLifeSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanLifeSightRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can see the states of life, death, and general health of those around her. When she uses this ability, she can tell whether or not creatures within 30 feet of her that she can see are living, wounded, dying, or dead. She can also tell if those creatures are confused, disabled, diseased, nauseated, poisoned, sickened, or staggered."
+      },
+      {
+        "key": "DESC",
+        "value": "When using life sight she is able to sense all nearby living creatures; this functions similar to blindsight, but only for living creatures within 30 feet of her.|PREVARGTEQ:ShamanSpiritLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can use this ability %1 rounds per day, but these rounds do not need to be consecutive.|ShamanLifeSightRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanLifeSightRounds|ShamanSpiritLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1592,
+    "record_key": "Shaman Spirit Hex ~ Life Sight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

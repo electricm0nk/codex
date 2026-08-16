@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcanist ~ Cantrips",
+    "name": "Cantrips",
+    "class": "Arcanist",
+    "description": "You can prepare %1 cantrips, or 0-level spells, each day.  These spells are cast like any other spell, but they do not consume spell slots. As with her other spells, these spells are not expended when cast.|ArcanistCantripNumber",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcanist ~ Cantrips"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Arcanist Class Feature.SpecialQuality.ArcanistCantrips"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistCantripNumber|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can prepare %1 cantrips, or 0-level spells, each day.  These spells are cast like any other spell, but they do not consume spell slots. As with her other spells, these spells are not expended when cast.|ArcanistCantripNumber"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistCantripNumber|min(9,4+floor(ArcanistLvl/2))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 69,
+    "record_key": "Arcanist ~ Cantrips"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

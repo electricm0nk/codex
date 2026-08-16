@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Trap ~ Swarm Trap",
+    "name": "Swarm Trap",
+    "class": "Ranger Trap",
+    "description": "The trap releases a bat swarm, rat swarm, or spider swarm that attacks all creatures in the area. The swarm remains in the general area for no longer than %1 rounds, after which it disperses. If the trap is an extraordinary trap, you must provide the creatures of the swarm (typically in a small box, cage, or crate); these creatures may die of starvation before the trap is triggered (an extraordinary trap lasts %1 days).|SwarmTrapDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Trap ~ Swarm Trap"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Trap Swarm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialAttack.RangerTrap.Extraordinary.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwarmTrapDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The trap releases a bat swarm, rat swarm, or spider swarm that attacks all creatures in the area. The swarm remains in the general area for no longer than %1 rounds, after which it disperses. If the trap is an extraordinary trap, you must provide the creatures of the swarm (typically in a small box, cage, or crate); these creatures may die of starvation before the trap is triggered (an extraordinary trap lasts %1 days).|SwarmTrapDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwarmTrapDuration|RangerTrapLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1623,
+    "record_key": "Ranger Trap ~ Swarm Trap"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

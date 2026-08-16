@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oath against Chaos ~ Code of Conduct",
+    "name": "Code of Conduct",
+    "class": "Oath against Chaos",
+    "description": "Spread the order of law wherever you go, so long as the law is just; do not serve as a tool of tyranny. Fight vigilantly the servants of chaos.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against Chaos ~ Code of Conduct"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Spread the order of law wherever you go, so long as the law is just; do not serve as a tool of tyranny. Fight vigilantly the servants of chaos."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 486,
+    "record_key": "Oath against Chaos ~ Code of Conduct"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

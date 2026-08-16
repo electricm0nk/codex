@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Strangler Brawler ~ Strangle",
+    "name": "Strangle",
+    "class": "Strangler Brawler",
+    "description": "A strangler deals +%1d6 sneak attack damage whenever she succeeds at a grapple check to damage or pin an opponent. The strangler is always considered flanking her target for the purpose of using this ability.|SneakAttackDice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strangler Brawler ~ Strangle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Strangler Class Feature.Extraordinary.SpecialQuality.BrawlerBrawlersFlurry.BrawlerUnarmedStrike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SneakAttackDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A strangler deals +%1d6 sneak attack damage whenever she succeeds at a grapple check to damage or pin an opponent. The strangler is always considered flanking her target for the purpose of using this ability.|SneakAttackDice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|1+(BrawlerLVL>1)+(BrawlerLVL>7)+(BrawlerLVL>14)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2920,
+    "record_key": "Strangler Brawler ~ Strangle"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

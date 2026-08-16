@@ -1,0 +1,147 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter Archetype ~ Rageshaper",
+    "name": "Rageshaper",
+    "class": "Shifter Archetype",
+    "description": "Not all shifters represent the balance of nature. The rageshaper is a destructive force of nature brought to bear-a wild and uncontrollable engine of annihilation fueled by wrath. Rageshapers fly into bloodletting frenzies and rain down devastation like unstoppable natural disasters.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Archetype ~ Rageshaper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ShifterArchetype"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "NG,CG,TN,CN,NE,CE"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shifter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shifter Archetype ~ Rageshaper],[!PREFACT:1,ABILITIES,Shifter_Archetype_WildShape=True,Shifter_Archetype_ShifterAspect=True,Shifter_Archetype_ShifterClaws=True,Shifter_Archetype_DefensiveInstinct=True,Shifter_Archetype_ChimericAspect=True,Shifter_Archetype_GreaterChimericAspect=True,Shifter_Archetype_WoodlandStride=True,Shifter_Archetype_TracklessStep=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Not all shifters represent the balance of nature. The rageshaper is a destructive force of nature brought to bear-a wild and uncontrollable engine of annihilation fueled by wrath. Rageshapers fly into bloodletting frenzies and rain down devastation like unstoppable natural disasters."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rageshaper ~ Alignment|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rageshaper ~ Devastating Form|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rageshaper ~ Terrible Slam|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rageshaper ~ Invulnerable Defenses|PRECLASS:1,Shifter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rageshaper ~ Unrestrained Stride|PRECLASS:1,Shifter=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rageshaper ~ Terrible Leap|PRECLASS:1,Shifter=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ShifterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ShifterClaws|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_DefensiveInstinct|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_GreaterChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_TracklessStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_ShifterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_DefensiveInstinct|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_ChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_GreaterChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_TracklessStep|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1037,
+    "record_key": "Shifter Archetype ~ Rageshaper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

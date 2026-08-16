@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Metamorph ~ Shapechanger",
+    "name": "Shapechanger",
+    "class": "Metamorph",
+    "description": "A metamorph gains the ability to transform herself into another form. This ability functions like",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metamorph ~ Shapechanger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Feature.MetamorphClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A metamorph gains the ability to transform herself into another form. This ability functions like"
+      },
+      {
+        "key": "DESC",
+        "value": "alter self|!PRECLASS:1,Alchemist=5"
+      },
+      {
+        "key": "DESC",
+        "value": "alter self or monstrous physique I|PRECLASS:1,Alchemist=5|!PRECLASS:1,Alchemist=9"
+      },
+      {
+        "key": "DESC",
+        "value": "alter self, monstrous physique I, or monstrous physique II|PRECLASS:1,Alchemist=9|!PRECLASS:1,Alchemist=11"
+      },
+      {
+        "key": "DESC",
+        "value": "alter self, monstrous physique I, monstrous physique II, or monstrous physique III|PRECLASS:1,Alchemist=11|!PRECLASS:1,Alchemist=13"
+      },
+      {
+        "key": "DESC",
+        "value": "alter self, monstrous physique I, monstrous physique II, monstrous physique III, monstrous physique IV, or giant form I|PRECLASS:1,Alchemist=13|!PRECLASS:1,Alchemist=15"
+      },
+      {
+        "key": "DESC",
+        "value": "alter self, monstrous physique I, monstrous physique II, monstrous physique III, monstrous physique IV, giant form I, or monstrous physique II|PRECLASS:1,Alchemist=15"
+      },
+      {
+        "key": "DESC",
+        "value": ", except as noted here. The effect lasts for %1 hours or until she changes back. Changing form (to another form or back) is a standard action that doesn't provoke attacks of opportunity. The metamorph is fatigued for 1 round each time she changes shape.|AlchemistLVL"
+      },
+      {
+        "key": "DESC",
+        "value": " A metamorph can use this ability %2 times per day.|1+((AlchemistLVL-2)/2)|!PRECLASS:1,Alchemist=20"
+      },
+      {
+        "key": "DESC",
+        "value": " A metamorph can use shapechanger as a free action once per round, either before or after all her other actions, with no daily limit.|PRECLASS:1,Alchemist=20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Metamorph SpellCasting Removal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 177,
+    "record_key": "Metamorph ~ Shapechanger"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

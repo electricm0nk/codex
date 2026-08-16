@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Guildbreaker ~ Favored Organization",
+    "name": "Favored Organization",
+    "class": "Guildbreaker",
+    "description": "When a guildbreaker selects a favored enemy, he can opt to select a specific organization, such as a particular thieves' guild, in lieu of a specific creature type. The guildbreaker must select this option for his first favored enemy, but he can choose either option for his later favored enemies. The guildbreaker's bonuses from favored enemy apply against official members of this organization regardless of their creature type, but not against the organization's allies, paid mercenaries, or forced labor. This ability only applies if the guildbreaker knows that the target is a member of the organization. This ability alters favored enemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guildbreaker ~ Favored Organization"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.GuildbreakerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When a guildbreaker selects a favored enemy, he can opt to select a specific organization, such as a particular thieves' guild, in lieu of a specific creature type. The guildbreaker must select this option for his first favored enemy, but he can choose either option for his later favored enemies. The guildbreaker's bonuses from favored enemy apply against official members of this organization regardless of their creature type, but not against the organization's allies, paid mercenaries, or forced labor. This ability only applies if the guildbreaker knows that the target is a member of the organization. This ability alters favored enemy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 658,
+    "record_key": "Guildbreaker ~ Favored Organization"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

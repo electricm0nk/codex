@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Domains",
+    "name": "Domains",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domains"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal.CF_Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPowerTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPowerTimes|3+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAbilityTriggerLVL|DomainLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 568,
+    "record_key": "Domains"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

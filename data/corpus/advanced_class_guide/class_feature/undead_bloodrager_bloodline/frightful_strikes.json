@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Undead Bloodrager Bloodline ~ Frightful Strikes",
+    "name": "Frightful Strikes",
+    "class": "Undead Bloodrager Bloodline",
+    "description": "As a swift action once per bloodrage, you can empower your melee attacks with fear. For 1 round, creatures you hit with your melee attacks become shaken. Creatures who are already shaken become frightened, though this does not stack with the frightful charger ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead Bloodrager Bloodline ~ Frightful Strikes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Undead Bloodrager Bloodline ~ Power LVL 12.Bloodrager Bloodline Power.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Undead"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Undead_BloodlineProgressionLVL,12"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Undead_BloodlinePower12LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action once per bloodrage, you can empower your melee attacks with fear. For 1 round, creatures you hit with your melee attacks become shaken. Creatures who are already shaken become frightened, though this does not stack with the frightful charger ability."
+      },
+      {
+        "key": "DESC",
+        "value": " Creatures who are already frightened become panicked.|PREVARGTEQ:Bloodrager_Undead_BloodlineLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": " This is a mind- affecting fear effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|UndeadBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 880,
+    "record_key": "Undead Bloodrager Bloodline ~ Frightful Strikes"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

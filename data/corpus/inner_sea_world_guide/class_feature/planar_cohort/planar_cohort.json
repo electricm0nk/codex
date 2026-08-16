@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Planar Cohort ~ Low",
+    "name": "Planar Cohort",
+    "class": "Planar Cohort",
+    "description": "You gain a planar cohort appropriate to your actual alignment, gained as if you had taken the Leadership feat. This planar cohort appears to you and pledges loyalty to you immediately. If the cohort perishes, you must wait a week before calling upon a replacement.|!PREABILITY:1,CATEGORY=FEAT,Leadership",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Planar Cohort ~ Low"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a planar cohort appropriate to your actual alignment, gained as if you had taken the Leadership feat. This planar cohort appears to you and pledges loyalty to you immediately. If the cohort perishes, you must wait a week before calling upon a replacement.|!PREABILITY:1,CATEGORY=FEAT,Leadership"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a planar cohort appropriate to your actual alignment, gained as if you had taken the Leadership feat. This planar cohort appears to you and pledges loyalty to you immediately. If the cohort perishes, you must wait a week before calling upon a replacement. You gain a +1 bonus to your Leadership score. If you replace your cohort gained from your Leadership feat with the planar cohort, the maximum level equivalent for your planar cohort is one higher.|PREABILITY:1,CATEGORY=FEAT,Leadership"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LeadershipScore|1|PREABILITY:1,CATEGORY=FEAT,Leadership"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 138,
+    "record_key": "Planar Cohort ~ Low"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

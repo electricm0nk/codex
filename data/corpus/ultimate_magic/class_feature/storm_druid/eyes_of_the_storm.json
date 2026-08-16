@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Storm Druid ~ Eyes of the Storm",
+    "name": "Eyes of the Storm",
+    "class": "Storm Druid",
+    "description": "You can see through %1 feet of magical fog, mist, gas, wind, rain, or similar inclement weather conditions, ignoring any concealment it might grant.|EyesOfTheStormRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Storm Druid ~ Eyes of the Storm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EyesOfTheStormRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can see through %1 feet of magical fog, mist, gas, wind, rain, or similar inclement weather conditions, ignoring any concealment it might grant.|EyesOfTheStormRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EyesOfTheStormRange|5*(floor(classlevel(\"Druid\")/4)+1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1222,
+    "record_key": "Storm Druid ~ Eyes of the Storm"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

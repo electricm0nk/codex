@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Destruction Domain",
+    "name": "Destruction",
+    "class": "Forbidden Rites Domain",
+    "description": "You revel in ruin and devastation, and can deliver particularly destructive attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Destruction Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.DestructionDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDestructionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDestructionDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDestructionTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDestructionAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You revel in ruin and devastation, and can deliver particularly destructive attacks."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Destructive Smite|PREDOMAIN:1,Destruction|PREVARGTEQ:DomainDestructionAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Destructive Aura|PREDOMAIN:1,Destruction|PREVARGTEQ:DomainDestructionAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDestructionLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDestructionDC|10+(DomainDestructionLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDestructionTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDestructionAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|True Strike|Cleric=2|Shatter|Cleric=3|Rage|Cleric=4|Inflict Critical Wounds|Cleric=5|Shout|Cleric=6|Harm|Cleric=7|Disintegrate|Cleric=8|Earthquake|Cleric=9|Implosion"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1035,
+    "record_key": "Forbidden Rites Domain ~ Destruction Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

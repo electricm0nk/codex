@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vow of Chains",
+    "name": "Vow of Chains",
+    "class": null,
+    "description": "Either out of penitence or to bring attention to the suffering of the enslaved, you wear shackles on your wrists and legs. This gives you a -1 penalty on attack rolls and to AC, and reduces your movement by 10 feet. If temporarily unable to wear your chains, you may carry rocks or some other heavy burden (including medium or heavy armor) to simulate this suffering.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.MonkVow"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Monk Archetype ~ Vow Monk"
+      },
+      {
+        "key": "DESC",
+        "value": "Either out of penitence or to bring attention to the suffering of the enslaved, you wear shackles on your wrists and legs. This gives you a -1 penalty on attack rolls and to AC, and reduces your movement by 10 feet. If temporarily unable to wear your chains, you may carry rocks or some other heavy burden (including medium or heavy armor) to simulate this suffering."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoints|max(1,floor(classlevel(\"Monk\")/3))"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 430,
+    "record_key": "Vow of Chains"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Generation School ~ Wind Servant",
+    "name": "Wind Servant",
+    "class": "Generation School",
+    "description": "As a standard action, you can generate a blast of air that hurls an unattended object (or objects) or an object in your possession up to 30 feet in a straight line. If you have a free hand, you can catch an object hurled toward yourself. You can move objects weighing up to %1 pounds. Objects are not thrown with enough force to cause damage, although fragile objects like alchemical weapons shatter on contact with a creature or hard surface. To hit a creature with an object, you must succeed at a ranged touch attack. You can use this ability %2 times per day.|GenerationWindServantWT|GenerationWindServantTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Generation School ~ Wind Servant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GenerationWindServantWT|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GenerationWindServantTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can generate a blast of air that hurls an unattended object (or objects) or an object in your possession up to 30 feet in a straight line. If you have a free hand, you can catch an object hurled toward yourself. You can move objects weighing up to %1 pounds. Objects are not thrown with enough force to cause damage, although fragile objects like alchemical weapons shatter on contact with a creature or hard surface. To hit a creature with an object, you must succeed at a ranged touch attack. You can use this ability %2 times per day.|GenerationWindServantWT|GenerationWindServantTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GenerationWindServantWT|EvocationSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GenerationWindServantTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|GenerationWindServantTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3362,
+    "record_key": "Generation School ~ Wind Servant"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

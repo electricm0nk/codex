@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pathfinder Savant ~ Sigil Master",
+    "name": "Sigil Master",
+    "class": "Pathfinder Savant",
+    "description": "You receive a +%1 bonus on saving throws against writing-based magical traps, and if the save is successful you do not trigger the trap. Such a trap is not disabled, and if you leave the trap's area and then reenter it, the trap can trigger again. You also receive this bonus on saving throws against the effects of such traps triggered by others.|PaSSaveBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Savant ~ Sigil Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder Savant Class Features.ClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaSSaveBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "DESC",
+        "value": "You receive a +%1 bonus on saving throws against writing-based magical traps, and if the save is successful you do not trigger the trap. Such a trap is not disabled, and if you leave the trap's area and then reenter it, the trap can trigger again. You also receive this bonus on saving throws against the effects of such traps triggered by others.|PaSSaveBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 bonus against writing-based magical traps|PaSSaveBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 404,
+    "record_key": "Pathfinder Savant ~ Sigil Master"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

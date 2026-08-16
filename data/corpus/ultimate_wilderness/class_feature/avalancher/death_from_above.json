@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Avalancher ~ Death from Above",
+    "name": "Death from Above",
+    "class": "Avalancher",
+    "description": "An avalancher can take down his foe with a single attack. During a round, if he falls at least 10 feet (the action type depends on how he comes to be falling), he can make a single attack at his full base attack bonus as a standard action, choosing one of the following effects: kill, knock unconscious for 1d4 hours, or paralyze for 2d6 rounds. If the attack hits, the target takes damage normally and must succeed at a Fortitude save or suffer the additional effect. The save DC is equal to 20 + 1 for every 10 feet the avalancher fell before making the attack (to a maximum of DC 30 for a fall of 100 feet or more). Whether or not the target succeeds, it can't be targeted by this ability again (by any avalancher) for 24 hours.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Avalancher ~ Death from Above"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Features.AvalancherClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An avalancher can take down his foe with a single attack. During a round, if he falls at least 10 feet (the action type depends on how he comes to be falling), he can make a single attack at his full base attack bonus as a standard action, choosing one of the following effects: kill, knock unconscious for 1d4 hours, or paralyze for 2d6 rounds. If the attack hits, the target takes damage normally and must succeed at a Fortitude save or suffer the additional effect. The save DC is equal to 20 + 1 for every 10 feet the avalancher fell before making the attack (to a maximum of DC 30 for a fall of 100 feet or more). Whether or not the target succeeds, it can't be targeted by this ability again (by any avalancher) for 24 hours."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1153,
+    "record_key": "Avalancher ~ Death from Above"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

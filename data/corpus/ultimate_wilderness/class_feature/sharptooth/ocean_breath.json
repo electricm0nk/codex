@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sharptooth ~ Ocean Breath",
+    "name": "Ocean Breath",
+    "class": "Sharptooth",
+    "description": "A sharptooth counts her Constitution score as %1 higher for the purposes of holding her breath. She also gains a +%1 bonus on Constitution checks to continue holding her breath.|min(6,BarbarianLVL/3)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sharptooth ~ Ocean Breath"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.SharptoothClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A sharptooth counts her Constitution score as %1 higher for the purposes of holding her breath. She also gains a +%1 bonus on Constitution checks to continue holding her breath.|min(6,BarbarianLVL/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 219,
+    "record_key": "Sharptooth ~ Ocean Breath"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

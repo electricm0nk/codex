@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inspiring Command ~ None Shall Fall",
+    "name": "None Shall Fall*",
+    "class": "Inspiring Command",
+    "description": "A number of allies equal to the battle herald's inspiring command bonus heal 1d6 points of damage. Targeted allies who are poisoned may attempt a new poison saving throw with a bonus equal to the battle herald's inspiring command bonus; a failed save has no additional effect, but a successful save counts toward curing the poison. This healing is not positive energy and can heal undead creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inspiring Command ~ None Shall Fall"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.InspiringCommand"
+      },
+      {
+        "key": "DESC",
+        "value": "A number of allies equal to the battle herald's inspiring command bonus heal 1d6 points of damage. Targeted allies who are poisoned may attempt a new poison saving throw with a bonus equal to the battle herald's inspiring command bonus; a failed save has no additional effect, but a successful save counts toward curing the poison. This healing is not positive energy and can heal undead creatures."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1253,
+    "record_key": "Inspiring Command ~ None Shall Fall"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

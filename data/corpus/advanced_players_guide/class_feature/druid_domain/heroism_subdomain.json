@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Druid Domain ~ Heroism Subdomain",
+    "name": "Heroism Subdomain",
+    "class": "Druid Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Domain ~ Heroism Subdomain"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Domain ~ Subdomain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "DruidHeroismSubdomainAllowed,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Druid=1|Shield of Faith|Druid=2|Bless Weapon|Druid=3|Heroism|Druid=4|Holy Smite|Druid=5|Righteous Might|Druid=6|Heroism (Greater)|Druid=7|Holy Sword|Druid=8|Holy Aura|Druid=9|Gate"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1205,
+    "record_key": "Druid Domain ~ Heroism Subdomain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Plant Master ~ Plant Focus",
+    "name": "Plant Focus",
+    "class": "Plant Master",
+    "description": "A plant master can take on the aspect of a plant as a swift action. He must select one type of plant to emulate, gaining a bonus or special ability based on the type of plant emulated and his hunter level. The plant master can use this ability for %1 minutes per day. This duration does not need to be consecutive but must be spent in 1-minute increments. He can emulate only one plant at a time. The plant master can also apply one of these aspects to his plant companion. An aspect applied in this way does not count against the hunter's minutes of duration per day-it remains in effect until he changes it. The companion's aspect can be the same aspect the hunter has taken on or a different one. A plant master can select or change the plant foci on both himself and his plant companion as part of the same swift action.|PlantMasterPlantFocusMinutes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plant Master ~ Plant Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.PlantMasterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PlantMasterPlantFocusMinutes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PlantMasterPlantFocusLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PlantMasterPlantFocusPool|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A plant master can take on the aspect of a plant as a swift action. He must select one type of plant to emulate, gaining a bonus or special ability based on the type of plant emulated and his hunter level. The plant master can use this ability for %1 minutes per day. This duration does not need to be consecutive but must be spent in 1-minute increments. He can emulate only one plant at a time. The plant master can also apply one of these aspects to his plant companion. An aspect applied in this way does not count against the hunter's minutes of duration per day-it remains in effect until he changes it. The companion's aspect can be the same aspect the hunter has taken on or a different one. A plant master can select or change the plant foci on both himself and his plant companion as part of the same swift action.|PlantMasterPlantFocusMinutes"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Plant Master Plant Focus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Animal Focus|-1PRECLASS:1,Hunter=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantMasterPlantFocusMinutes|HunterLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantMasterPlantFocusLVL|HunterLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantMasterPlantFocusPool|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantMasterPlantFocusPool|1|PRECLASS:1,Hunter=8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 677,
+    "record_key": "Plant Master ~ Plant Focus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

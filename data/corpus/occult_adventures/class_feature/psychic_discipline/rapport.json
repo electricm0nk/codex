@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Discipline ~ Rapport",
+    "name": "Rapport",
+    "class": "Psychic Discipline",
+    "description": "Forging a close bond with other people brings out the best in you, making it easier for you to link your mind with theirs. Through bonding your psyche with another person, you're able to fill in your own mental gaps and develop new psychic powers. Phrenic Pool Ability: Charisma. Discipline Powers: Your powers meld several minds together, or allow you to more easily inf luence others.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline ~ Rapport"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Discipline.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Forging a close bond with other people brings out the best in you, making it easier for you to link your mind with theirs. Through bonding your psyche with another person, you're able to fill in your own mental gaps and develop new psychic powers. Phrenic Pool Ability: Charisma. Discipline Powers: Your powers meld several minds together, or allow you to more easily inf luence others."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Rapport ~ Bonus Spells|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Rapport ~ Emotional Bond|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Rapport ~ Emotional Push|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Rapport ~ Share Memory|PRECLASS:1,Psychic=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Rapport ~ Team Player|PRECLASS:1,Psychic=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Rapport ~ Shared Skill|PRECLASS:1,Psychic=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhrenicPoolAbility|CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1194,
+    "record_key": "Psychic Discipline ~ Rapport"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

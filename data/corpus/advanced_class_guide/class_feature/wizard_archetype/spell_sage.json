@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wizard Archetype ~ Spell Sage",
+    "name": "Spell Sage",
+    "class": "Wizard Archetype",
+    "description": "A spell sage has mastered spells of all types, and is able to increase the effectiveness of his own spells and eventually even cast spells from other classes' spell lists. While most wizards focus on a school, the spell sage looks at the particular aspects of individual spells and is not afraid to modify them with interesting bits of insight to gain deeper understandings of the formulae.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wizard Archetype ~ Spell Sage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WizardArchetype"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ArcaneSchool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ArcaneSchool|true"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Wizard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Spell Sage],[!PREFACT:1,ABILITIES,Wizard_Archetype_ArcaneBond=true,Wizard_Archetype_ArcaneSchool=true]"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "DisallowWizardArcaneSchoolArchetype,0"
+      },
+      {
+        "key": "DESC",
+        "value": "A spell sage has mastered spells of all types, and is able to increase the effectiveness of his own spells and eventually even cast spells from other classes' spell lists. While most wizards focus on a school, the spell sage looks at the particular aspects of individual spells and is not afraid to modify them with interesting bits of insight to gain deeper understandings of the formulae."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Spell Sage ~ Focused Spells|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Spell Sage ~ Spell Study|PRECLASS:1,Wizard=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.133"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Wizard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4047,
+    "record_key": "Wizard Archetype ~ Spell Sage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcane Bloodrager Bloodline ~ Greater Arcane Bloodrage",
+    "name": "Greater Arcane Bloodrage",
+    "class": "Arcane Bloodrager Bloodline",
+    "description": "When you enter a bloodrage, you can choose to apply the effects of either Displacement or Haste to yourself. This is in addition to Arcane Bloodrage, and otherwise works as that ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Bloodrager Bloodline ~ Greater Arcane Bloodrage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Arcane Bloodrager Bloodline ~ Power LVL 08.Bloodrager Bloodline Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Arcane"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Arcane_BloodlineProgressionLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePower8LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you enter a bloodrage, you can choose to apply the effects of either Displacement or Haste to yourself. This is in addition to Arcane Bloodrage, and otherwise works as that ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ArcaneBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 635,
+    "record_key": "Arcane Bloodrager Bloodline ~ Greater Arcane Bloodrage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

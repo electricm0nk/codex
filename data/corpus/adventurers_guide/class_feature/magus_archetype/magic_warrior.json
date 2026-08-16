@@ -1,0 +1,127 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus Archetype ~ Magic Warrior",
+    "name": "Magic Warrior",
+    "class": "Magus Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Magic Warrior"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MagusArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      },
+      {
+        "key": "DESC",
+        "value": "Trained in a tradition stretching back to Old-Mage Jatembe's Ten Magic Warriors, magic warriors renounce their identities to master magical might and serve as champions of culture and learning across the Mwangi Expanse and beyond."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Magic Warrior],[!PREFACT:1,ABILITIES,Magus_Archetype_ClassSkills=True,Magus_Archetype_Arcana3=True,Magus_Archetype_ImprovedSpellCombat=True,Magus_Archetype_GreaterSpellCombat=True,Magus_Archetype_GreaterSpellAccess=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Magic Warrior ~ Class Skills|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Magic Warrior ~ Nameless Mask|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Magic Warrior ~ Magic Warrior's Aspect|PRECLASS:1,Magus=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Magic Warrior ~ Nameless Anonymity|PRECLASS:1,Magus=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Magus ~ Improved Spell Combat|PRECLASS:1,Magus=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Magic Warrior ~ Magaambya Spell Access|PRECLASS:1,Magus=19"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Arcana3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ImprovedSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_GreaterSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_GreaterSpellAccess|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_Arcana3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ImprovedSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_GreaterSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_GreaterSpellAccess|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 881,
+    "record_key": "Magus Archetype ~ Magic Warrior"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

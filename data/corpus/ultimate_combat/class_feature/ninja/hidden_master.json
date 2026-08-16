@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ninja ~ Hidden Master",
+    "name": "Hidden Master",
+    "class": "Ninja",
+    "description": "At 20th level, a ninja becomes a true master of her art.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja ~ Hidden Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.Supernatural.SpecialQuality.ClassFeatures"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a ninja becomes a true master of her art."
+      },
+      {
+        "key": "DESC",
+        "value": " She can, as a standard action, cast greater invisibility on herself. While invisible in this way, she cannot be detected by any means, and not even invisibility purge, see invisibility, and true seeing can reveal her. She uses her ninja level as her caster level for this ability. Using this ability consumes 3 ki points from her ki pool.|PREVAREQ:Ninja_CF_HiddenMasterGreaterInvisibility,0"
+      },
+      {
+        "key": "DESC",
+        "value": " In addition, whenever the ninja deals sneak attack damage, she can sacrifice additional damage dice to apply a penalty to one ability score of the target equal to the number of dice sacrificed for 1 minute. This penalty does not stack with itself and cannot reduce an ability score below 1."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 119,
+    "record_key": "Ninja ~ Hidden Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

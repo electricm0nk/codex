@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Swift Foot",
+    "name": "Swift Foot",
+    "class": "Rage Power",
+    "description": "You gain a +%1-foot enhancement bonus to your speed. This increase is always active while you are raging.|5*SwiftFootCount",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Swift Foot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "SwiftFootCount,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwiftFootCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1-foot enhancement bonus to your speed. This increase is always active while you are raging.|5*SwiftFootCount"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE=Walk|5|TYPE=Enhancement|PREVAREQ:Raging,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwiftFootCount|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 495,
+    "record_key": "Rage Power ~ Swift Foot"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Giant Stalker",
+    "name": "Giant Stalker",
+    "class": "Barbarian Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Giant Stalker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      },
+      {
+        "key": "DESC",
+        "value": "Elders select the children of the tribe's fiercest barbarians for the honor of becoming giant stalkers. Through intense training, these children learn to spot and track giants using telltale signs along with more subtle clues (such as giants' unique scents). They learn the giants' speech and culture; they study their traditions and brutality; and most importantly, they foster their hatred of these oversized foes. When Mammoth Lord followings travel, giant stalkers scout ahead, securing safe passage through giant-infested territories. They clear giant hunting parties and ambushes, using gruesome trophies to mark the trails. Sometimes giant hunters send their own raiding parties into the mountains to capture young giants, as most followings keep giant thralls as symbols of status."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Giant Stalker],[!PREFACT:1,ABILITIES,Barbarian_Archetype_Rage=True,Barbarian_Archetype_UncannyDodge=True,Barbarian_Archetype_TrapSense=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Giant Stalker ~ Harangue Giant|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Giant Stalker ~ Smell Giants|PRECLASS:1,Barbarian=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Giant Stalker ~ Giant Baiter|PRECLASS:1,Barbarian=3"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_Rage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 611,
+    "record_key": "Barbarian Archetype ~ Giant Stalker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

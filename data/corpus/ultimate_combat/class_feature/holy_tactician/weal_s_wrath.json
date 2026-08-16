@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Holy Tactician ~ Weal's Wrath",
+    "name": "Weal's Wrath",
+    "class": "Holy Tactician",
+    "description": "At 11th level, a tactician can expend two uses of her weal's champion ability at once to enhance its effects. This functions as weal's champion, except the bonus she provides to her allies lasts until each creature she strikes is slain, her weal's champion ability expires, or the paladin herself is slain or knocked unconscious, whichever happens first. This ability replaces aura of justice.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holy Tactician ~ Weal's Wrath"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, a tactician can expend two uses of her weal's champion ability at once to enhance its effects. This functions as weal's champion, except the bonus she provides to her allies lasts until each creature she strikes is slain, her weal's champion ability expires, or the paladin herself is slain or knocked unconscious, whichever happens first. This ability replaces aura of justice."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1487,
+    "record_key": "Holy Tactician ~ Weal's Wrath"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

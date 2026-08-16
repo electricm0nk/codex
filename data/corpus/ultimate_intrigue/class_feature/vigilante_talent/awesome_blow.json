@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Awesome Blow",
+    "name": "Awesome Blow",
+    "class": "Vigilante Talent",
+    "description": "The brute has learned that his body is his most formidable weapon. He gains the Awesome Blow monster feat as a bonus feat, but only while in his vigilante identity. He can ignore the feat's prerequisites. His awesome blow combat maneuver deals an amount of damage equal to 1d6 plus his Strength modifier, or his unarmed strike damage, whichever is better.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Awesome Blow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Awesome Blow"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsBrute,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "The brute has learned that his body is his most formidable weapon. He gains the Awesome Blow monster feat as a bonus feat, but only while in his vigilante identity. He can ignore the feat's prerequisites. His awesome blow combat maneuver deals an amount of damage equal to 1d6 plus his Strength modifier, or his unarmed strike damage, whichever is better."
+      },
+      {
+        "key": "DESC",
+        "value": "The brute can use Awesome Blow against a creature of any size, and he can bull rush, drag, reposition, and trip creatures of any size.|PRECLASS:1,Vigilante=16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Awesome Blow|PREVAREQ:ActivateBruteForm,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 984,
+    "record_key": "Vigilante Talent ~ Awesome Blow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

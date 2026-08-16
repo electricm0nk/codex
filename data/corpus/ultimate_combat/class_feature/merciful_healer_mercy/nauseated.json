@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Merciful Healer Mercy ~ Nauseated",
+    "name": "Nauseated",
+    "class": "Merciful Healer Mercy",
+    "description": "Your channel energy can remove the nauseated condition from %1 targets in the area of effect.|max((MHMercyLVL/6)+1,3)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Merciful Healer Mercy ~ Nauseated"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Mercy (Nauseated)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Supernatural.Mercy.ChannelEnergy"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Merciful Healer Mercy ~ Sickened"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MHMercyLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "Your channel energy can remove the nauseated condition from %1 targets in the area of effect.|max((MHMercyLVL/6)+1,3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 606,
+    "record_key": "Merciful Healer Mercy ~ Nauseated"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

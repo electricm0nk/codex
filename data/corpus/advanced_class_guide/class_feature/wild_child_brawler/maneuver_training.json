@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Child Brawler ~ Maneuver Training",
+    "name": "Maneuver Training",
+    "class": "Wild Child Brawler",
+    "description": "Whenever the wild child chooses a new maneuver for this ability, his animal companion also learns a trick to make use of this combat maneuver. For example, if the wild child chooses maneuver training (dirty trick), his animal companion also learns a trick that allows it to use the dirty trick combat maneuver. He cannot choose any tricks that rely on ranged attacks. This bonus trick doesn't count against the animal companion's total tricks known and does not take any time or checks to train. Should the wild child gain a new animal companion (such as if the previous one dies), this new animal companion begins with the same number of bonus tricks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Child Brawler ~ Maneuver Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Wild Child Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the wild child chooses a new maneuver for this ability, his animal companion also learns a trick to make use of this combat maneuver. For example, if the wild child chooses maneuver training (dirty trick), his animal companion also learns a trick that allows it to use the dirty trick combat maneuver. He cannot choose any tricks that rely on ranged attacks. This bonus trick doesn't count against the animal companion's total tricks known and does not take any time or checks to train. Should the wild child gain a new animal companion (such as if the previous one dies), this new animal companion begins with the same number of bonus tricks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2932,
+    "record_key": "Wild Child Brawler ~ Maneuver Training"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

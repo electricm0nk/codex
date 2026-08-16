@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Greater Mutagen",
+    "name": "Greater Mutagen",
+    "class": "Discovery",
+    "description": "The alchemist's mutagen now grants a +4 natural armor bonus, a +6 alchemical bonus to one physical ability score (Strength, Dexterity, or Constitution), and a +4 alchemical bonus to a second physical ability score. The alchemist takes a -2 penalty on both associated mental ability scores as long as the mutagen persists.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Greater Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistMutagenMod"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "The alchemist's mutagen now grants a +4 natural armor bonus, a +6 alchemical bonus to one physical ability score (Strength, Dexterity, or Constitution), and a +4 alchemical bonus to a second physical ability score. The alchemist takes a -2 penalty on both associated mental ability scores as long as the mutagen persists."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenTierLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenACBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenStatBonus|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 139,
+    "record_key": "Discovery ~ Greater Mutagen"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

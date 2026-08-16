@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter Aspect ~ Wolf ~ Minor",
+    "name": "Minor Aspect of the Wolf",
+    "class": "Shifter Aspect",
+    "description": "You gain the scent ability with a range of %1 feet, or, if you have the scent ability, the range increases by %1 feet. The range doubles if the opponent is upwind and is halved if the opponent is downwind.|WolfAspectScent",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Wolf ~ Minor"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Wolf_2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WolfAspectScent|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the scent ability with a range of %1 feet, or, if you have the scent ability, the range increases by %1 feet. The range doubles if the opponent is upwind and is halved if the opponent is downwind.|WolfAspectScent"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WolfAspectScent|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WolfAspectScent|10|PREVARGTEQ:ShifterWolfAspectLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WolfAspectScent|10|PREVARGTEQ:ShifterWolfAspectLVL,15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 98,
+    "record_key": "Shifter Aspect ~ Wolf ~ Minor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Animist ~ Animist Spirit Magic",
+    "name": "Animist Spirit Magic",
+    "class": "Animist",
+    "description": "[NOT IMPLEMENTED] The animist adds the following spells to the list of spells he can cast using spirit magic: speak with animals (1st), skinsend (2nd), speak with plants (3rd), malfunction (4th), dream (5th), speak with stone (6th), control construct (7th), trap the soul (8th), soul bind (9th). This ability replaces the spirit magic spells gained from the shaman's spirit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animist ~ Animist Spirit Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Animist Class Feature.Shaman Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] The animist adds the following spells to the list of spells he can cast using spirit magic: speak with animals (1st), skinsend (2nd), speak with plants (3rd), malfunction (4th), dream (5th), speak with stone (6th), control construct (7th), trap the soul (8th), soul bind (9th). This ability replaces the spirit magic spells gained from the shaman's spirit."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3596,
+    "record_key": "Animist ~ Animist Spirit Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

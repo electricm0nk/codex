@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Archivist ~ Magic Lore",
+    "name": "Magic Lore",
+    "class": "Archivist",
+    "description": "At 2nd level, an archivist gains a bonus on Spellcraft checks to identify magic items or decipher scrolls and may take 10 on such checks. An archivist can use Disable Device to disarm magical traps as per a rogue's trapfinding ability and gains a +4 bonus on saves against magical traps, language-dependent effects, and symbols, glyphs, and magical writings of any kind. This ability replaces well-versed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Archivist ~ Magic Lore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardWellVersed"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, an archivist gains a bonus on Spellcraft checks to identify magic items or decipher scrolls and may take 10 on such checks. An archivist can use Disable Device to disarm magical traps as per a rogue's trapfinding ability and gains a +4 bonus on saves against magical traps, language-dependent effects, and symbols, glyphs, and magical writings of any kind. This ability replaces well-versed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1646,
+    "record_key": "Archivist ~ Magic Lore"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

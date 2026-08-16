@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Draconic Bloodline ~ Crossblooded",
+    "name": "Draconic Bloodline",
+    "class": "Draconic Bloodline",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Bloodline ~ Crossblooded"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Blood of Dragons Bloodline"
+      },
+      {
+        "key": "TYPE",
+        "value": "SorcererBloodlineChoice"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Sorcerer Archetype ~ Crossblooded"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Draconic Bloodline ~ Feat Tracker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sorcerer Bloodline ~ Draconic"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Crossblooded Bloodline|AUTOMATIC|Draconic Bloodline"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineCasterLVL|DragonDiscipleLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineLVL|DragonDiscipleLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineProgressionLVL|DragonDiscipleLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 2083,
+    "record_key": "Draconic Bloodline ~ Crossblooded"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

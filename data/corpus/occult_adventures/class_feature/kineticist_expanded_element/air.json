@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kineticist Expanded Element ~ Air",
+    "name": "Air",
+    "class": "Kineticist Expanded Element",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Expanded Element ~ Air"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Kineticist Expanded Element"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElementTracker_Air|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KineticistLVL_Air|0"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Utility Wild Talent|AUTOMATIC|Wild Talent ~ basic aerokinesis|PREVARGTEQ:Kineticist_CFP_Level,1|PREVAREQ:Kineticist_CF_BasicUtilityWildTalent,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Blast|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElementTracker_Air|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KineticistLVL_Air|if(ElementTracker_Air<=2,KineticistLVL_Base,KineticistLVL_Base-2)|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 597,
+    "record_key": "Kineticist Expanded Element ~ Air"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

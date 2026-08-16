@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Justice Domain ~ Chains of Justice",
+    "name": "Chains of Justice",
+    "class": "Justice Domain",
+    "description": "Once per day, you can bind an opponent within 60 feet to you with spectral chains (Will DC %1 negates). When you take damage from an enemy, the bound target takes this damage as well. Whenever the bound target takes damage from you or one of your allies, you take this damage as well. You and the target are not physically bound to each other, and either can end the connection by breaking the line of effect or exceeding the ability's range. You may dismiss the chains as a standard action.|ChainsOfJusticeDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Justice Domain ~ Chains of Justice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChainsOfJusticeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you can bind an opponent within 60 feet to you with spectral chains (Will DC %1 negates). When you take damage from an enemy, the bound target takes this damage as well. Whenever the bound target takes damage from you or one of your allies, you take this damage as well. You and the target are not physically bound to each other, and either can end the connection by breaking the line of effect or exceeding the ability's range. You may dismiss the chains as a standard action.|ChainsOfJusticeDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Chains of Justice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChainsOfJusticeDC|DomainJusticeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainJusticeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Chains of Justice)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 377,
+    "record_key": "Justice Domain ~ Chains of Justice"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

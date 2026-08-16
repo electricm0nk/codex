@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order Of The Shroud ~ Order Abilities",
+    "name": "Order Abilities",
+    "class": "Order Of The Shroud",
+    "description": "A cavalier belonging to the order of the shroud gains the following abilities as he increases in level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order Of The Shroud ~ Order Abilities"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Order Of The Shroud Class Feature.Cavalier Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A cavalier belonging to the order of the shroud gains the following abilities as he increases in level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1718,
+    "record_key": "Order Of The Shroud ~ Order Abilities"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

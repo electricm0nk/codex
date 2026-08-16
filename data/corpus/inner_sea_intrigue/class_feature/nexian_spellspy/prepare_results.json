@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nexian Spellspy ~ Prepare Results",
+    "name": "Prepare Results",
+    "class": "Nexian Spellspy",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nexian Spellspy ~ Prepare Results"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Features.NexianSpellspyClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "A Nexian spellspy's familiar can store the results of divinations for the purposes of providing false results to a rival diviner who has targeted the spellspy. As a standard action, the spellspy can store the results of one or more divinations she has cast within the past 24 hours. She can store results from any number of spells with a total spell level equal to the highest spell she can cast. The next time a rival spellcaster would receive results from any of the specific divinations whose results are stored in her familiar in this manner, the stored results are transmitted to the rival caster (and are removed from the familiar) in place of any real results. The rival spellcaster receives a Will saving throw (DC %1) to recognize that the results are falsified. Depending on the spell, the stored results from the familiar might make this falsification obvious (and thus no Will saving throw is necessary to determine the falsification).|10+WitchLVL/2+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 340,
+    "record_key": "Nexian Spellspy ~ Prepare Results"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

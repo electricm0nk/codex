@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Samurai ~ Resolve",
+    "name": "Resolve",
+    "class": "Samurai",
+    "description": "The samurai gains resolve that he can call upon to endure even the most devastating wounds and afflictions. He can use this ability %1/day. Whenever the samurai defeats the target of his challenge, he regains one daily use of his resolve, up to his maximum number of uses per day. Defeating the target of his challenge usually involves reducing the target to 0 hit points or fewer, but the GM might rule that an enemy who surrenders or flees the battle is also defeated.|SamuraiResolveTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samurai ~ Resolve"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SamuraiClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SamuraiResolveLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SamuraiResolveTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The samurai gains resolve that he can call upon to endure even the most devastating wounds and afflictions. He can use this ability %1/day. Whenever the samurai defeats the target of his challenge, he regains one daily use of his resolve, up to his maximum number of uses per day. Defeating the target of his challenge usually involves reducing the target to 0 hit points or fewer, but the GM might rule that an enemy who surrenders or flees the battle is also defeated.|SamuraiResolveTimes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=SamuraiResolve"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SamuraiResolveLVL|SamuraiLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SamuraiResolveTimes|(SamuraiResolveLVL+1)/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SamuraiResolveTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 190,
+    "record_key": "Samurai ~ Resolve"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

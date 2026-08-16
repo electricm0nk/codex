@@ -1,0 +1,135 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Paladin Archetype ~ Martyr",
+    "name": "Martyr",
+    "class": "Paladin Archetype",
+    "description": "Every paladin's code instructs him to put the welfare of others before his own, but some paladins take this farther than most, shouldering the blackest suffering of the world onto themselves in order to help others and inspiring their allies to achieve heights of valor rather than seeking the glory for themselves.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Martyr"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "DESC",
+        "value": "Every paladin's code instructs him to put the welfare of others before his own, but some paladins take this farther than most, shouldering the blackest suffering of the world onto themselves in order to help others and inspiring their allies to achieve heights of valor rather than seeking the glory for themselves."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Martyr],[!PREFACT:1,ABILITIES,Paladin_Archetype_SmiteEvil=True,Paladin_Archetype_DivineGrace=True,Paladin_Archetype_AuraOfCourage=True,Paladin_Archetype_AuraOfResolve=True,Paladin_Archetype_AuraOfRighteousness=True,Paladin_Archetype_DivineHealth=True,Paladin_Archetype_LayOnHands=True,Paladin_Archetype_Mercy=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Martyr ~ Stigmata|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Martyr ~ See No Evil Hear No Evil|PRECLASS:1,Paladin=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Martyr ~ Aura Mastery|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Martyr ~ Aura of Health|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Martyr ~ Martyr's Mercy|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_SmiteEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineGrace|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfResolve|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfRighteousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineHealth|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_LayOnHands|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_SmiteEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineGrace|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfResolve|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfRighteousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineHealth|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 177,
+    "record_key": "Paladin Archetype ~ Martyr"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

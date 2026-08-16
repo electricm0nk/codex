@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Toxic Herbalist ~ Poisonous Reaper",
+    "name": "Poisonous Reaper",
+    "class": "Toxic Herbalist",
+    "description": "A single dose of poison on a toxic herbalist's weapon remains potent for the entirety of a full attack, instead of for a single strike.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Toxic Herbalist ~ Poisonous Reaper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.ToxicHerbalistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A single dose of poison on a toxic herbalist's weapon remains potent for the entirety of a full attack, instead of for a single strike."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 941,
+    "record_key": "Toxic Herbalist ~ Poisonous Reaper"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

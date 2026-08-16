@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Destined Bloodline ~ Touch of Destiny",
+    "name": "Touch of Destiny",
+    "class": "Destined Bloodline",
+    "description": "You can touch a creature as a standard action, giving it a +%1 insight bonus on attack rolls, skill checks, ability checks, and saving throws for 1 round. You can use this ability %2 times per day.|Sorcerer_DestinedTouchOfDestiny_Bonus|Sorcerer_Destined_BloodlinePower1Times",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Destined Bloodline ~ Touch of Destiny"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Destined Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Destined"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Destined_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Destined_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Destined_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DestinedTouchOfDestiny_Bonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch a creature as a standard action, giving it a +%1 insight bonus on attack rolls, skill checks, ability checks, and saving throws for 1 round. You can use this ability %2 times per day.|Sorcerer_DestinedTouchOfDestiny_Bonus|Sorcerer_Destined_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DestinedTouchOfDestiny_Bonus|max(Sorcerer_Destined_BloodlinePower1LVL/2,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+%1)|Sorcerer_DestinedTouchOfDestiny_Bonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Destined_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DestinedBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2426,
+    "record_key": "Destined Bloodline ~ Touch of Destiny"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

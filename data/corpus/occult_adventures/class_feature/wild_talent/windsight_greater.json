@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Windsight (Greater)",
+    "name": "Windsight, Greater",
+    "class": "Wild Talent",
+    "description": "Element air; Type utility (Su); Level 5; Burn 0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Windsight (Greater)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Air"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ windsight"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite windsight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Air,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Element air; Type utility (Su); Level 5; Burn 0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;You can send a slight breeze in a path up to 480 feet long and then back to where you wait. This allows you to use your windsight wild talent to catch a quick glimpse and hear a tiny snippet from any location that could be reached by the wind traveling that distance (the wind's path can't pass through openings smaller than 1 inch in diameter). The breeze travels 100 feet per round, so what you see and hear is delayed by 1 round for every 50 feet of the path. If you spend at least 10 minutes to set up a steady flow of wind, you can concentrate for up to 1 minute per level to gain continuous visual and auditory information for as long as you concentrate, delayed by 1 round for every 100 feet the wind travels (since the steady flow of wind has to travel only one way). While there is no invisible sensor to detect with this ability, creatures along the path of the breeze may notice a light wind, though it may not seem out of the ordinary."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 803,
+    "record_key": "Wild Talent ~ Windsight (Greater)"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

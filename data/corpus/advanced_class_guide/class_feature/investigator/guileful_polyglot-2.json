@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent ~ Guileful Polyglot",
+    "name": "Guileful Polyglot",
+    "class": "Investigator",
+    "description": "An investigator with this talent who has at least one rank in Linguistics gains four additional languages. An investigator with this talent who does not have any ranks in Linguistics gains two additional languages. If the investigator later gains ranks in Linguistics, she gains two additional languages, to a total of four additional languages above those granted by the Linguistics skill itself.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent ~ Guileful Polyglot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorRogueTalent"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GuilefulPolyglotAllowedLangs|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An investigator with this talent who has at least one rank in Linguistics gains four additional languages. An investigator with this talent who does not have any ranks in Linguistics gains two additional languages. If the investigator later gains ranks in Linguistics, she gains two additional languages, to a total of four additional languages above those granted by the Linguistics skill itself."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Guileful Polyglot Additional Language|GuilefulPolyglotAllowedLangs"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GuilefulPolyglotAllowedLangs|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GuilefulPolyglotAllowedLangs|2|PRESKILL:1,Linguistics=1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1353,
+    "record_key": "Investigator ~ Rogue Talent ~ Guileful Polyglot"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

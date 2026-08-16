@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Scrollmaster ~ Scroll Blade",
+    "name": "Scroll Blade",
+    "class": "Scrollmaster",
+    "description": "You can wield any paper, parchment, or cloth scroll as if it were a melee weapon. In your hands, the scroll acts as a short sword with an enhancement bonus equal to 1/2 the level of the highest-level wizard spell on the scroll; a scroll with only a cantrip or 1st-level spell on it counts as a masterwork short sword. You are proficient in this weapon, and feats and abilities that affect short swords (such as Weapon Focus) apply to this weapon. You cannot wield two scrollblades at the same time. Activating this ability is a free action. A scroll blade only retains its abilities in your hands. The scroll blade has hardness 0 and hit points equal to the highest-level wizard spell on the scroll. Each successful hit by the scroll blade reduces its hit points by 1; this damage cannot be repaired, but does not affect casting from the scroll. When its hit points reach 0, the scroll is destroyed. If a scroll contains a spell with a metamagic feat, this ability uses the original spell level of the spell (a scroll of empowered fireball counts as a 3rd-level spell).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scrollmaster ~ Scroll Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can wield any paper, parchment, or cloth scroll as if it were a melee weapon. In your hands, the scroll acts as a short sword with an enhancement bonus equal to 1/2 the level of the highest-level wizard spell on the scroll; a scroll with only a cantrip or 1st-level spell on it counts as a masterwork short sword. You are proficient in this weapon, and feats and abilities that affect short swords (such as Weapon Focus) apply to this weapon. You cannot wield two scrollblades at the same time. Activating this ability is a free action. A scroll blade only retains its abilities in your hands. The scroll blade has hardness 0 and hit points equal to the highest-level wizard spell on the scroll. Each successful hit by the scroll blade reduces its hit points by 1; this damage cannot be repaired, but does not affect casting from the scroll. When its hit points reach 0, the scroll is destroyed. If a scroll contains a spell with a metamagic feat, this ability uses the original spell level of the spell (a scroll of empowered fireball counts as a 3rd-level spell)."
+      },
+      {
+        "key": "DESC",
+        "value": "When using a 4th-level or higher wizard scroll as a scroll blade, you can choose to reduce its enhancement bonus by 1 (minimum +1 enhancement bonus) to treat it as a reach weapon. For example, you could se a scroll of charm monster (a 4th-level wizard spell) as either a +2 short sword or a +1 short sword with reach.|PRECLASS:1,Wizard=3"
+      },
+      {
+        "key": "DESC",
+        "value": "When using a 4th-level or higher wizard scroll as a scroll blade, you can choose to reduce its enhancement bonus (to a minimum of a +1 enhancement bonus) to give any of the following weapon properties: defending, frost, icy burst, keen, ki focus, shock, shocking burst, speed. Adding any of these properties consumes an amount of enhancement bonus equal to the property's cost (see Table 15-9: Melee Weapon Special Abilities in the Core Rulebook). You must know the prerequisite spell or spells to craft the weapon property in question (for example, you must know haste to be able to give his scroll blade the speed property).|PRECLASS:1,Wizard=5"
+      },
+      {
+        "key": "AUTO",
+        "value": "EQUIP|Scroll Blade"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Scroll Blade"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scroll Blade|TOHIT|1|PREABILITY:1,CATEGORY=FEAT,Greater Weapon Focus (Sword (Short))"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scroll Blade|DAMAGE|2|PREABILITY:1,CATEGORY=FEAT,Greater Weapon Specialization (Sword (Short))"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scroll Blade|CRITRANGEDOUBLE|1|TYPE=NonStackingCrit|PREABILITY:1,CATEGORY=FEAT,Improved Critical (Sword (Short))"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scroll Blade|TOHIT|1|PREABILITY:1,CATEGORY=FEAT,Weapon Focus (Sword (Short))"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scroll Blade|DAMAGE|2|PREABILITY:1,CATEGORY=FEAT,Weapon Specialization (Sword (Short))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 2033,
+    "record_key": "Scrollmaster ~ Scroll Blade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

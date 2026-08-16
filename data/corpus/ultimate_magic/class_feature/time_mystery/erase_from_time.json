@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Time Mystery ~ Erase from Time",
+    "name": "Erase from Time",
+    "class": "Time Mystery",
+    "description": "As a melee touch attack, you can temporarily remove a creature from time altogether. The target creature must make a Fortitude save (DC %1) or vanish completely for %2 rounds. No magic or divinations can detect the creature during this time, as it exists outside of time and space-in effect, the creature ceases to exist for the duration of this ability. At the end of the duration, the creature reappears unharmed in the space it last occupied (or the nearest possible space, if the original space is now occupied). You can use this ability %3/day.|EraseFromTimeDC|EraseFromTimeDuration|EraseFromTimeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Time Mystery ~ Erase from Time"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.TimeRevelation.Supernatural.RevelationTargetOneOnly"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EraseFromTimeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EraseFromTimeDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EraseFromTimeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a melee touch attack, you can temporarily remove a creature from time altogether. The target creature must make a Fortitude save (DC %1) or vanish completely for %2 rounds. No magic or divinations can detect the creature during this time, as it exists outside of time and space-in effect, the creature ceases to exist for the duration of this ability. At the end of the duration, the creature reappears unharmed in the space it last occupied (or the nearest possible space, if the original space is now occupied). You can use this ability %3/day.|EraseFromTimeDC|EraseFromTimeDuration|EraseFromTimeTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EraseFromTimeDC|10+classlevel(\"Oracle\")/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EraseFromTimeDuration|max(1,classlevel(\"Oracle\")/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EraseFromTimeTimes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EraseFromTimeTimes|1|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 499,
+    "record_key": "Time Mystery ~ Erase from Time"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

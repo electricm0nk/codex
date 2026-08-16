@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Conjuration Savant School ~ Summoner's Charm",
+    "name": "Summoner's Charm",
+    "class": "Conjuration Savant School",
+    "description": "When casting Conjuration (summoning) spells the duration is increased by %1 rounds.|ConjurationSummonersCharmBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Conjuration Savant School ~ Summoner's Charm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConjurationSummonersCharmBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When casting Conjuration (summoning) spells the duration is increased by %1 rounds.|ConjurationSummonersCharmBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change the duration of all Summon Monster spells to permanent. You can have no more than one Summon Monster spell made permanent in this way at one time. If you designate another Summon Monster spell as permanent, the previous spell immediately ends.|PREVARGTEQ:ArcanistSavantSchoolLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConjurationSummonersCharmBonus|max(1,ArcanistSavantSchoolLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2556,
+    "record_key": "Conjuration Savant School ~ Summoner's Charm"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

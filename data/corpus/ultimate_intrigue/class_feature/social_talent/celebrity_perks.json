@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Social Talent ~ Celebrity Perks",
+    "name": "Celebrity Perks",
+    "class": "Social Talent",
+    "description": "The vigilante is a celebrity in his area of renown, and adoring fans are all too eager to shower him with the fundamental necessities. While within his area of renown, he can always receive common meals or lodging (worth up to %1 gp per meal or night) for free, and can avoid paying taxes or bribes of %1 gp or less. If he wants a particular nonmagical item worth %2 gp or less, he can spend 1d10 minutes interacting with people in his area of renown to receive the item from a fan (if he ever sells such a gift from a fan, he loses this social talent permanently).|CelebrityPerksMealsBribes|CelebrityPerksGifts",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ Celebrity Perks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Social Talent ~ Renown"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,5"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CelebrityPerksMealsBribes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CelebrityPerksGifts|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante is a celebrity in his area of renown, and adoring fans are all too eager to shower him with the fundamental necessities. While within his area of renown, he can always receive common meals or lodging (worth up to %1 gp per meal or night) for free, and can avoid paying taxes or bribes of %1 gp or less. If he wants a particular nonmagical item worth %2 gp or less, he can spend 1d10 minutes interacting with people in his area of renown to receive the item from a fan (if he ever sells such a gift from a fan, he loses this social talent permanently).|CelebrityPerksMealsBribes|CelebrityPerksGifts"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CelebrityPerksMealsBribes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CelebrityPerksGifts|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CelebrityPerksMealsBribes|9|PREABILITY:1,CATEGORY=Special Ability,Social Talent ~ Great Renown"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CelebrityPerksGifts|4|PREABILITY:1,CATEGORY=Special Ability,Social Talent ~ Great Renown"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CelebrityPerksMealsBribes|90|PREABILITY:1,CATEGORY=Special Ability,Social Talent ~ Incredible Renown"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CelebrityPerksGifts|20|PREABILITY:1,CATEGORY=Special Ability,Social Talent ~ Incredible Renown"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 50,
+    "record_key": "Social Talent ~ Celebrity Perks"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

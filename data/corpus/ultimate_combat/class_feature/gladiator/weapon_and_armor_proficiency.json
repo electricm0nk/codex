@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gladiator ~ Weapon And Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Gladiator",
+    "description": "A gladiator is not proficient with heavy armor or tower shields. Instead he gains the Performance Weapon Mastery feat (see page 112) at 1st level as a bonus feat. This bonus feat is in addition to the bonus feat a fighter gains at 1st level. Furthermore, a gladiator using piecemeal armor is considered to be wearing a suit of armor as long as he wearing two or three armor pieces, gaining the +1 to armor bonus but still taking the +5%% chance of arcane spell failure if the pieces are mixed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gladiator ~ Weapon And Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A gladiator is not proficient with heavy armor or tower shields. Instead he gains the Performance Weapon Mastery feat (see page 112) at 1st level as a bonus feat. This bonus feat is in addition to the bonus feat a fighter gains at 1st level. Furthermore, a gladiator using piecemeal armor is considered to be wearing a suit of armor as long as he wearing two or three armor pieces, gaining the +1 to armor bonus but still taking the +5%% chance of arcane spell failure if the pieces are mixed."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Performance Weapon Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 729,
+    "record_key": "Gladiator ~ Weapon And Armor Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

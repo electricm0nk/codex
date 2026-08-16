@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Formless Adept ~ Bonus Spells",
+    "name": "Bonus Spells",
+    "class": "Formless Adept",
+    "description": "The formless adept adds extra spells to his list of spells known while he's in a formless body (including when he uses the formless spell phrenic amplification). Spells with a duration last for their full duration, even if the psychic reverts to his physical form. For feats and other abilities that require these spells as prerequisites, the psychic counts as knowing the spells but can benefit from the feats and abilities only while in a formless body. The formless adept gains the following spells at the appropriate levels: chill touch and expeditious retreat (1st), levitate and stricken heartACG (4th), gaseous form and vampiric touch (6th), shadow stepUM and telekinesis (8th), dominate person and synapse overload* (10th), disintegrate and enemy hammerAPG (12th), finger of death and telekinetic sphere (14th), etherealness and power word stun (16th), and dominate monster and telekinetic storm* (18th). This ability replaces discipline spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Formless Adept ~ Bonus Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Formless Adept Class Feature.Psychic Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The formless adept adds extra spells to his list of spells known while he's in a formless body (including when he uses the formless spell phrenic amplification). Spells with a duration last for their full duration, even if the psychic reverts to his physical form. For feats and other abilities that require these spells as prerequisites, the psychic counts as knowing the spells but can benefit from the feats and abilities only while in a formless body. The formless adept gains the following spells at the appropriate levels: chill touch and expeditious retreat (1st), levitate and stricken heartACG (4th), gaseous form and vampiric touch (6th), shadow stepUM and telekinesis (8th), dominate person and synapse overload* (10th), disintegrate and enemy hammerAPG (12th), finger of death and telekinetic sphere (14th), etherealness and power word stun (16th), and dominate monster and telekinetic storm* (18th). This ability replaces discipline spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1570,
+    "record_key": "Formless Adept ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Tyrant Totem (Lesser)",
+    "name": "Tyrant Totem, Lesser",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian's bite attack deals damage as if the barbarian were one size larger than her actual size.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Tyrant Totem (Lesser)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary.TotemRagePower.BarbarianTotemRagePower"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Special Ability,TYPE=BarbarianTotemRagePower],[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ Tyrant Totem (Lesser)]"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE=TotemRagePower"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ Animal Fury],[PREMULT:2,[PREWEAPONPROF:1,Bite],[PREWEAPONPROF:1,TYPE=Natural]]"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian's bite attack deals damage as if the barbarian were one size larger than her actual size."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BiteSize|1|PREVAREQ:Raging,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 175,
+    "record_key": "Rage Power ~ Tyrant Totem (Lesser)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

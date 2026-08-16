@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gun Scavenger ~ Go By Feel",
+    "name": "Go By Feel",
+    "class": "Gun Scavenger",
+    "description": "A gun scavenger's intuitive and unique style leaves her firearms prone to misfire, whether as a result of using too much powder, using imperfectly milled parts, or any number of other minor inconsistencies. When using a firearm, a gun scavenger cannot reduce that firearm's misfire chance to 0; it can always misfire on a natural 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gun Scavenger ~ Go By Feel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Gunslinger Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A gun scavenger's intuitive and unique style leaves her firearms prone to misfire, whether as a result of using too much powder, using imperfectly milled parts, or any number of other minor inconsistencies. When using a firearm, a gun scavenger cannot reduce that firearm's misfire chance to 0; it can always misfire on a natural 1."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 72,
+    "record_key": "Gun Scavenger ~ Go By Feel"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Warrior ~ Way of the Samurai",
+    "name": "Way of the Samurai",
+    "class": "Order of the Warrior",
+    "description": "The order of the warrior samurai's sense of honor and loyalty drives him to accomplish seemingly impossible tasks. The samurai can, as a standard action, focus his mind and will. Once during the next minute, he can choose to roll an attack roll, skill check, or saving throw three times and take the best result. He must decide to use this ability before the roll is made. Using this ability expends one daily use of his resolve.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Warrior ~ Way of the Samurai"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Order of the Warrior_3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The order of the warrior samurai's sense of honor and loyalty drives him to accomplish seemingly impossible tasks. The samurai can, as a standard action, focus his mind and will. Once during the next minute, he can choose to roll an attack roll, skill check, or saving throw three times and take the best result. He must decide to use this ability before the roll is made. Using this ability expends one daily use of his resolve."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 221,
+    "record_key": "Order of the Warrior ~ Way of the Samurai"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

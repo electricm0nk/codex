@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Siege Gunner ~ Grit",
+    "name": "Grit",
+    "class": "Siege Gunner",
+    "description": "[Not Implemented] A siege gunner relies less on luck and intuition and more on cold calculation and wit. The number of grit points a siege gunner gains each day and her maximum grit are based on the siege gunner's Intelligence modifier rather than her Wisdom modifier.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Siege Gunner ~ Grit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Gunslinger Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "[Not Implemented] A siege gunner relies less on luck and intuition and more on cold calculation and wit. The number of grit points a siege gunner gains each day and her maximum grit are based on the siege gunner's Intelligence modifier rather than her Wisdom modifier."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 203,
+    "record_key": "Siege Gunner ~ Grit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

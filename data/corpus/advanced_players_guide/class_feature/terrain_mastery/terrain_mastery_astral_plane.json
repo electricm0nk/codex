@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Terrain Mastery ~ Plane (Astral)",
+    "name": "Terrain Mastery (Astral Plane)",
+    "class": "Terrain Mastery",
+    "description": "The horizon walker's fly speed increases by +30 feet on planes with no gravity or subjective gravity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terrain Mastery ~ Plane (Astral)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.TerrainMastery"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Favored Terrain ~ Plane (Astral)"
+      },
+      {
+        "key": "DESC",
+        "value": "The horizon walker's fly speed increases by +30 feet on planes with no gravity or subjective gravity."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1323,
+    "record_key": "Terrain Mastery ~ Plane (Astral)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

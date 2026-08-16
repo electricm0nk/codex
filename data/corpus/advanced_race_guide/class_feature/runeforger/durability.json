@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Runeforger ~ Durability",
+    "name": "Durability",
+    "class": "Runeforger",
+    "description": "The inscribed item's hardness increases by an amount equal to the forgemaster's Wisdom modifier [+%1], and its hit points increase by an amount equal to twice her level [+%2].|WIS|ClericLVL*2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Runeforger ~ Durability"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RuneforgerOption.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The inscribed item's hardness increases by an amount equal to the forgemaster's Wisdom modifier [+%1], and its hit points increase by an amount equal to twice her level [+%2].|WIS|ClericLVL*2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 74,
+    "record_key": "Runeforger ~ Durability"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

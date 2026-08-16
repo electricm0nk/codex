@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Rogue Talent",
+    "name": "Rogue Talent",
+    "class": "Vigilante Talent",
+    "description": "The vigilante gains a single rogue talent (not an advanced talent) of his choice. If he selects a rogue talent marked with an asterisk (*), that talent applies to his hidden strikes instead of to sneak attacks, and the talent counts as a stalker vigilante talent with an asterisk (*) for the limitation of only one applying to a given hidden strike.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Rogue Talent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Rogue Talent"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsStalker,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante gains a single rogue talent (not an advanced talent) of his choice. If he selects a rogue talent marked with an asterisk (*), that talent applies to his hidden strikes instead of to sneak attacks, and the talent counts as a stalker vigilante talent with an asterisk (*) for the limitation of only one applying to a given hidden strike."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rogue Talent|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 98,
+    "record_key": "Vigilante Talent ~ Rogue Talent"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

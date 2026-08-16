@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bard Archetype ~ Fey Courtier",
+    "name": "Fey Courtier",
+    "class": "Bard Archetype",
+    "description": "Fey who associate with courts often become bards skilled at navigating the inhuman societies of the trackless wilds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Fey Courtier"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Fey Courtier],[!PREFACT:1,ABILITIES,Bard_Archetype_DirgeOfDoom=True,Bard_Archetype_FrighteningTune=True,Bard_Archetype_InspireHeroics=True,Bard_Archetype_VersatilePerformance=True,Bard_Archetype_InspireCompetence=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Fey who associate with courts often become bards skilled at navigating the inhuman societies of the trackless wilds."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey Courtier ~ Scorn of the Wilds|PRECLASS:1,Bard=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey Courtier ~ Stone Dance|PRECLASS:1,Bard=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey Courtier ~ Fey Contacts|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey Courtier ~ Summon Fey Allies|PRECLASS:1,Bard=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_FrighteningTune|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireHeroics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCompetence|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_FrighteningTune|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireHeroics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCompetence|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 245,
+    "record_key": "Bard Archetype ~ Fey Courtier"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

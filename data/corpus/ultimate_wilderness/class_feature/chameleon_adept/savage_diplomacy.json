@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Chameleon Adept ~ Savage Diplomacy",
+    "name": "Savage Diplomacy",
+    "class": "Chameleon Adept",
+    "description": "While in humanoid form, a chameleon adept's animal companion grants its master a +%1 circumstance bonus on Diplomacy and Intimidate checks. Savage diplomacy functions only as long as the creature being influenced can see both the companion and the master.|MIN(6,2+((HunterLVL-1)/4))",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Chameleon Adept ~ Savage Diplomacy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.ChameleonAdeptClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "While in humanoid form, a chameleon adept's animal companion grants its master a +%1 circumstance bonus on Diplomacy and Intimidate checks. Savage diplomacy functions only as long as the creature being influenced can see both the companion and the master.|MIN(6,2+((HunterLVL-1)/4))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 652,
+    "record_key": "Chameleon Adept ~ Savage Diplomacy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

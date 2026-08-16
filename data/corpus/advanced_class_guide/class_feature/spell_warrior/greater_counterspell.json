@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spell Warrior ~ Greater Counterspell",
+    "name": "Greater Counterspell",
+    "class": "Spell Warrior",
+    "description": "The spell warrior gains increased versatility when attempting to counteract enemy spellcasting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spell Warrior ~ Greater Counterspell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spell Warrior Class Feature.Skald Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The spell warrior gains increased versatility when attempting to counteract enemy spellcasting."
+      },
+      {
+        "key": "DESC",
+        "value": "When counterspelling, he can expend two skald spell slots of the same level or higher than the opponent's spell, regardless of the school of that spell.|PREVARLT:SkaldLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "When counterspelling an opponent's spell, the spell warrior can expend one skald spell slot of the level of the spell being cast, regardless of the school of that spell.|PREVARGTEQ:SkaldLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "The spell warrior gains Parry Spell as a bonus feat. The skald does not have to meet the prerequisites for this feat.|PREVARGTEQ:SkaldLVL,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3695,
+    "record_key": "Spell Warrior ~ Greater Counterspell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

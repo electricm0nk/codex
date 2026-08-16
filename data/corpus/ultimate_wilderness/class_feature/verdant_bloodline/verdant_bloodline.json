@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Verdant Bloodline",
+    "name": "Verdant Bloodline",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Bloodrager Bloodline"
+      },
+      {
+        "key": "TYPE",
+        "value": "BloodragerBloodlineChoice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Verdant_BloodlineLVL|BloodragerBloodlineLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Verdant_BloodlineProgressionLVL|BloodragerBloodlineProgressionLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Verdant_BloodlineSpells1|if(Bloodrager_CF_BloodlineSpells==0,1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Verdant_BloodlinePowers|if(Bloodrager_CF_BloodlinePowers==0,1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Verdant_BloodlinePower1|if(Bloodrager_CF_BloodlinePower1==0,1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Verdant_BloodlinePower4|if((Bloodrager_CF_BloodlinePower4==0&&Bloodrager_Verdant_BloodlineProgressionLVL>=4),1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Verdant_BloodlinePower8|if((Bloodrager_CF_BloodlinePower8==0&&Bloodrager_Verdant_BloodlineProgressionLVL>=8),1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Verdant_BloodlinePower12|if((Bloodrager_CF_BloodlinePower12==0&&Bloodrager_Verdant_BloodlineProgressionLVL>=12),1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Verdant_BloodlinePower16|if((Bloodrager_CF_BloodlinePower16==0&&Bloodrager_Verdant_BloodlineProgressionLVL>=16),1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Verdant_BloodlinePower20|if((Bloodrager_CF_BloodlinePower20==0&&Bloodrager_Verdant_BloodlineProgressionLVL>=20),1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Verdant_BloodlinePower1Times|BloodragerBloodlinePowerTimes+BloodragerBloodlinePower1TimesBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Verdant Bloodrager Bloodline ~ Feat Tracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Bloodrager Bloodline Feat|BloodragerBloodlineFeatCount"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bloodrager Bloodline ~ Verdant"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 292,
+    "record_key": "Verdant Bloodline"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Trance of Three",
+    "name": "Trance of Three",
+    "class": "Medium",
+    "description": "As a swift action, a medium can allow his spirit to gain 1 point of influence over him in order to allow a portion of a legendary spirit from another legend to enter him for %1 rounds, granting him the intermediate spirit power from another legend. If that power has a limited number of uses per day, the medium must keep track of the remaining uses even after the secondary spirit is gone; if the medium calls the secondary spirit again that day, it can grant the remaining uses of that power. If the medium uses an ability that incurs influence, the medium's primary spirit gains that amount of influence over him, not the secondary spirit. The medium doesn't gain the benefits of his spirit bonus from the secondary spirit. The medium can end the trance of three early as a free action.|TraceOfThreeDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Trance of Three"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TranceOfThreeDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, a medium can allow his spirit to gain 1 point of influence over him in order to allow a portion of a legendary spirit from another legend to enter him for %1 rounds, granting him the intermediate spirit power from another legend. If that power has a limited number of uses per day, the medium must keep track of the remaining uses even after the secondary spirit is gone; if the medium calls the secondary spirit again that day, it can grant the remaining uses of that power. If the medium uses an ability that incurs influence, the medium's primary spirit gains that amount of influence over him, not the secondary spirit. The medium doesn't gain the benefits of his spirit bonus from the secondary spirit. The medium can end the trance of three early as a free action.|TraceOfThreeDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TraceOfThreeDuration|MediumLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 823,
+    "record_key": "Medium ~ Trance of Three"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

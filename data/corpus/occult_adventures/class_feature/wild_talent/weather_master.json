@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Weather Master",
+    "name": "Weather Master",
+    "class": "Wild Talent",
+    "description": "Element air; Type utility (Sp); Level 8; Burn 0 By focusing on your connection to air and seeding the air around you for 10 minutes, you can create powerful weather effects, as control weather. You can create tornadoes or hurricane-force winds, as appropriate for the season. If you have access to the fire element, you can create hot weather, a heat wave, a thaw, or an early spring. If you have access to the water element, you can create all other types of weather listed in control weather.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Weather Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Air"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Air,16"
+      },
+      {
+        "key": "DESC",
+        "value": "Element air; Type utility (Sp); Level 8; Burn 0 By focusing on your connection to air and seeding the air around you for 10 minutes, you can create powerful weather effects, as control weather. You can create tornadoes or hurricane-force winds, as appropriate for the season. If you have access to the fire element, you can create hot weather, a heat wave, a thaw, or an early spring. If you have access to the water element, you can create all other types of weather listed in control weather."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 800,
+    "record_key": "Wild Talent ~ Weather Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

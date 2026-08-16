@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit ~ Mammoth",
+    "name": "Mammoth (Spirit)",
+    "class": "Shaman Spirit",
+    "description": "Spirit Magic Spells: Enlarge person (1st), bull's strength (2nd), rage (3rd), stoneskin (4th), beast shape III (5th), tar pool (6th), summon nature's ally VII (7th), frightful aspect (8th), polar midnight (9th).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit ~ Mammoth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpirit.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanMammothSpirit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanMammothSpiritAnimal|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: Enlarge person (1st), bull's strength (2nd), rage (3rd), stoneskin (4th), beast shape III (5th), tar pool (6th), summon nature's ally VII (7th), frightful aspect (8th), polar midnight (9th)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mammoth Spirit ~ Powerful Smash"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mammoth Spirit ~ Strength of the Beast|PREVARGTEQ:ShamanSpiritGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mammoth Spirit ~ Megafauna Companion|PREVARGTEQ:ShamanSpiritTrue,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mammoth Spirit ~ Manifestation|PREVARGTEQ:Shaman Manifestation,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanMammothSpirit|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanMammothSpiritAnimal|FamiliarIsSpiritAnimal"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1201,
+    "record_key": "Shaman Spirit ~ Mammoth"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

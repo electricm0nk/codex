@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Stunning Critical",
+    "name": "Stunning Critical",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your critical hits cause opponents to become stunned.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Stunning Critical"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Critical"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Critical Focus,Staggering Critical"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:17],[PREVARGTEQ:WarpriestBonusFeatBAB,17],[PREVARGTEQ:CriticalFocusQualify,17]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your critical hits cause opponents to become stunned."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever you score a critical hit, your opponent becomes stunned for 1d4 rounds. A successful Fortitude save reduces this to staggered for 1d4 rounds. The DC of this Fortitude save is equal to %1. The effects of this feat do not stack. Additional hits instead add to the duration.|10+BAB"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Stunning Critical"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4292,
+    "record_key": "Warpriest Bonus Feat ~ Stunning Critical"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

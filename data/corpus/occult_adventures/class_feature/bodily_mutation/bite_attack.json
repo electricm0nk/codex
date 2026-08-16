@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bodily Mutation ~ Bite Attack",
+    "name": "Bite Attack",
+    "class": "Bodily Mutation",
+    "description": "The mutation mind's mouth fills with sharp teeth, allowing her to make a bite attack as part of a full-attack action at her highest base attack bonus. This attack deals 1d4 points of damage (1d3 if Small) and counts as a primary attack unless combined with manufactured weapon attacks, as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bodily Mutation ~ Bite Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mutation Mind Class Feature.Bodily Mutation.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The mutation mind's mouth fills with sharp teeth, allowing her to make a bite attack as part of a full-attack action at her highest base attack bonus. This attack deals 1d4 points of damage (1d3 if Small) and counts as a primary attack unless combined with manufactured weapon attacks, as normal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1589,
+    "record_key": "Bodily Mutation ~ Bite Attack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

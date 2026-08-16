@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vow of Fasting",
+    "name": "Vow of Fasting",
+    "class": null,
+    "description": "You eat nothing but rice (or a similar bland, staple food) and drink nothing but water. On certain days (usually once per month or on a religious holiday), you may eat a small portion of other simple, bland food to maintain proper nutrition. You cannot use tobacco, drugs, potions, alchemical items requiring eating or drinking, or any other thing that could be considered a food or beverage.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.MonkVow"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Monk Archetype ~ Vow Monk"
+      },
+      {
+        "key": "DESC",
+        "value": "You eat nothing but rice (or a similar bland, staple food) and drink nothing but water. On certain days (usually once per month or on a religious holiday), you may eat a small portion of other simple, bland food to maintain proper nutrition. You cannot use tobacco, drugs, potions, alchemical items requiring eating or drinking, or any other thing that could be considered a food or beverage."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoints|max(1,floor(classlevel(\"Monk\")/6))"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 432,
+    "record_key": "Vow of Fasting"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

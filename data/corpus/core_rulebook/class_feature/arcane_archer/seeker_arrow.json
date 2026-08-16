@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcane Archer ~ Seeker Arrow",
+    "name": "Seeker Arrow",
+    "class": "Arcane Archer",
+    "description": "At 4th level, an arcane archer can launch an arrow at a target known to him within range, and the arrow travels to the target, even around corners. Only an unavoidable obstacle or the limit of the arrow's range prevents the arrow's flight. This ability negates cover and concealment modifiers, but otherwise the attack is rolled normally. Using this ability is a standard action (and shooting the arrow is part of the action). An arcane archer can use this ability %1 per day.|SeekerArrowTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Archer ~ Seeker Arrow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SeekerArrowTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, an arcane archer can launch an arrow at a target known to him within range, and the arrow travels to the target, even around corners. Only an unavoidable obstacle or the limit of the arrow's range prevents the arrow's flight. This ability negates cover and concealment modifiers, but otherwise the attack is rolled normally. Using this ability is a standard action (and shooting the arrow is part of the action). An arcane archer can use this ability %1 per day.|SeekerArrowTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SeekerArrowTimes|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.376"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|SeekerArrowTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2925,
+    "record_key": "Arcane Archer ~ Seeker Arrow"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

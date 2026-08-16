@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcane Gun ~ Display",
+    "name": "Arcane Gun",
+    "class": "Arcane Gun",
+    "description": "The spellslinger gains the Exotic Weapon Proficiency (firearms) feat, and one or two of his firearms can be arcane guns. Arcane guns are normal one-handed or two-handed firearms in the hands of others, as they were normal firearms before the spellslinger imbued them with magic. In a spellslinger's hands, they both fire projectiles (bullets and pellets) and cast magic. At 1st level, the spellslinger decides whether he wants to have one or two arcane guns at a time. If the spellslinger chooses to have only one arcane gun at a time, spells fired Classes through the arcane gun that require an attack roll have a x3 critical hit multiplier.&nl; A spellslinger can cast any ranged touch attack, cone, line, or ray spells through his arcane gun. When he casts through the arcane gun, the gun's enhancement bonus (if any) is a bonus to the spell's attack rolls or to the spell's saving throw DCs. Yet there are dangers inherent to this method. If any of the spells' attack rolls result in a natural 1 (a misfire), or a natural 20 is rolled on any saving throw made against the spell by a target (an overload), the arcane gun gains the broken condition. If the arcane gun already has the broken condition, the gun explodes. When a gun explodes, it lets loose a blast of force, or if the spell has the acid, cold, electricity, or sonic descriptor, it deals that type of energy damage instead. In the case of spells with multiple descriptors, roll randomly among the descriptors to determine the type of damage dealt by the blast. The blast is centered on a single intersection within the spellslinger's space (spellslinger's choice) and deals 1d6 points of the appropriate energy damage or force damage per level of the spell cast. Any creature within the blast other than the spellslinger can make a Reflex saving throw to halve the damage. The Reflex save DC is calculated using the spell level of the spell being sacrificed.&nl; A spellslinger can attune his arcane guns at the start of each day. That attunement lasts until the spellslinger attunes to a new gun, even if a formally attuned gun is destroyed.&nl;Spellslinger Choice %1.&nl; This ability replaces arcane bond.|%LIST",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Gun ~ Display"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The spellslinger gains the Exotic Weapon Proficiency (firearms) feat, and one or two of his firearms can be arcane guns. Arcane guns are normal one-handed or two-handed firearms in the hands of others, as they were normal firearms before the spellslinger imbued them with magic. In a spellslinger's hands, they both fire projectiles (bullets and pellets) and cast magic. At 1st level, the spellslinger decides whether he wants to have one or two arcane guns at a time. If the spellslinger chooses to have only one arcane gun at a time, spells fired Classes through the arcane gun that require an attack roll have a x3 critical hit multiplier.&nl; A spellslinger can cast any ranged touch attack, cone, line, or ray spells through his arcane gun. When he casts through the arcane gun, the gun's enhancement bonus (if any) is a bonus to the spell's attack rolls or to the spell's saving throw DCs. Yet there are dangers inherent to this method. If any of the spells' attack rolls result in a natural 1 (a misfire), or a natural 20 is rolled on any saving throw made against the spell by a target (an overload), the arcane gun gains the broken condition. If the arcane gun already has the broken condition, the gun explodes. When a gun explodes, it lets loose a blast of force, or if the spell has the acid, cold, electricity, or sonic descriptor, it deals that type of energy damage instead. In the case of spells with multiple descriptors, roll randomly among the descriptors to determine the type of damage dealt by the blast. The blast is centered on a single intersection within the spellslinger's space (spellslinger's choice) and deals 1d6 points of the appropriate energy damage or force damage per level of the spell cast. Any creature within the blast other than the spellslinger can make a Reflex saving throw to halve the damage. The Reflex save DC is calculated using the spell level of the spell being sacrificed.&nl; A spellslinger can attune his arcane guns at the start of each day. That attunement lasts until the spellslinger attunes to a new gun, even if a formally attuned gun is destroyed.&nl;Spellslinger Choice %1.&nl; This ability replaces arcane bond.|%LIST"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|One Gun|Two Guns"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Exotic Weapon Proficiency (Firearms)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1759,
+    "record_key": "Arcane Gun ~ Display"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

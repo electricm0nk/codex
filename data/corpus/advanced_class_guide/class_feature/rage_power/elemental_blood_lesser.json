@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Elemental Blood (Lesser)",
+    "name": "Elemental Blood, Lesser",
+    "class": "Rage Power",
+    "description": "Choose an energy type: acid, cold, fire, or electricity. While raging, as a swift action up to three times a day, the barbarian can imbue her melee attacks with elemental energy, dealing an additional 1d6 points of damage of the chosen energy type for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Elemental Blood (Lesser)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialQuality.Supernatural.BloodRageLesser"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Special Ability,TYPE.BloodRageLesser],[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ Elemental Blood (Lesser)]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodRage Acid|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodRage Cold|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodRage Electricity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodRage Fire|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose an energy type: acid, cold, fire, or electricity. While raging, as a swift action up to three times a day, the barbarian can imbue her melee attacks with elemental energy, dealing an additional 1d6 points of damage of the chosen energy type for 1 round."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Acid|Cold|Electricity|Fire"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodRage %LIST|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2669,
+    "record_key": "Rage Power ~ Elemental Blood (Lesser)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

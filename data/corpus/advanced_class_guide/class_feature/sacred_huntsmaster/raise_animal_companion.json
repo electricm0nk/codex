@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sacred Huntsmaster ~ Raise Animal Companion",
+    "name": "Raise Animal Companion",
+    "class": "Sacred Huntsmaster",
+    "description": "A sacred huntsmaster gains raise animal companion as a spelllike ability (not restricted to her own animal companion). Using this ability gives the sacred huntsmaster a negative level that cannot be overcome in any way (including by restoration), but automatically ends after 24 hours. This functions as resurrection instead of raise dead, but otherwise operates as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Huntsmaster ~ Raise Animal Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.ArchetypeAbility.SpecialQuality.InquisitorThirdJudgement"
+      },
+      {
+        "key": "DESC",
+        "value": "A sacred huntsmaster gains raise animal companion as a spelllike ability (not restricted to her own animal companion). Using this ability gives the sacred huntsmaster a negative level that cannot be overcome in any way (including by restoration), but automatically ends after 24 hours. This functions as resurrection instead of raise dead, but otherwise operates as normal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3293,
+    "record_key": "Sacred Huntsmaster ~ Raise Animal Companion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

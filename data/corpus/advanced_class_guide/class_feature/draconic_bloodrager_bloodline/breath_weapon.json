@@ -1,0 +1,144 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Draconic Bloodrager Bloodline ~ Breath Weapon",
+    "name": "Breath Weapon",
+    "class": "Draconic Bloodrager Bloodline",
+    "description": "You gain the use of a 60-ft.-line|PREVARGTEQ:BloodragerDraconicBloodline_BW_Line,1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Bloodrager Bloodline ~ Breath Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Draconic Bloodrager Bloodline ~ Power LVL 08.Bloodrager Bloodline Power.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Draconic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Draconic_BloodlineProgressionLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower8LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the use of a 60-ft.-line|PREVARGTEQ:BloodragerDraconicBloodline_BW_Line,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the use of a 30-ft.-cone|PREVARGTEQ:BloodragerDraconicBloodline_BW_Cone,1"
+      },
+      {
+        "key": "DESC",
+        "value": " breath weapon %1/day that deals %2d6 points of |BreathWeaponTimes|BreathWeaponDice"
+      },
+      {
+        "key": "DESC",
+        "value": "acid damage.|PREVARGTEQ:BloodragerDraconicBloodline_Acid,1"
+      },
+      {
+        "key": "DESC",
+        "value": "electricity damage.|PREVARGTEQ:BloodragerDraconicBloodline_Electricity,1"
+      },
+      {
+        "key": "DESC",
+        "value": "cold damage.|PREVARGTEQ:BloodragerDraconicBloodline_Cold,1"
+      },
+      {
+        "key": "DESC",
+        "value": "fire damage.|PREVARGTEQ:BloodragerDraconicBloodline_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": " Those caught in the breath receive a Reflex save for half damage (DC %1).|BreathWeaponDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponTimes|1+if(Bloodrager_Draconic_BloodlineLVL>=16,1,0)+if(Bloodrager_Draconic_BloodlineLVL>=20,1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDice|Bloodrager_Draconic_BloodlineLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|10+(Bloodrager_Draconic_BloodlineLVL/2)+CON"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DraconicBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft. cone of acid, %2d6, DC %3, %1/day)|BreathWeaponTimes|BreathWeaponDice|BreathWeaponDC|PREVARGTEQ:BloodragerDraconicBloodline_Acid,1,BloodragerDraconicBloodline_BW_Cone,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60 ft. line of acid, %2d6, DC %3, %1/day)|BreathWeaponTimes|BreathWeaponDice|BreathWeaponDC|PREVARGTEQ:BloodragerDraconicBloodline_Acid,1,BloodragerDraconicBloodline_BW_Line,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft. cone of cold, %2d6, DC %3, %1/day)|BreathWeaponTimes|BreathWeaponDice|BreathWeaponDC|PREVARGTEQ:BloodragerDraconicBloodline_Cold,1,BloodragerDraconicBloodline_BW_Cone,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60 ft. line of electricity, %2d6, DC %3, %1/day)|BreathWeaponTimes|BreathWeaponDice|BreathWeaponDC|PREVARGTEQ:BloodragerDraconicBloodline_Electricity,1,BloodragerDraconicBloodline_BW_Line,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft. cone of fire, %2d6, DC %3, %1/day)|BreathWeaponTimes|BreathWeaponDice|BreathWeaponDC|PREVARGTEQ:BloodragerDraconicBloodline_Fire,1,BloodragerDraconicBloodline_BW_Cone,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60 ft. line of fire, %2d6, DC %3, %1/day)|BreathWeaponTimes|BreathWeaponDice|BreathWeaponDC|PREVARGTEQ:BloodragerDraconicBloodline_Fire,1,BloodragerDraconicBloodline_BW_Line,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 716,
+    "record_key": "Draconic Bloodrager Bloodline ~ Breath Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Moment of Clarity",
+    "name": "Moment of Clarity",
+    "class": "Rage Power",
+    "description": "You do not gain any benefits or take any of the penalties from rage for 1 round. This includes the penalty to Armor Class and the restriction on what actions can be performed. This round still counts against your total number of rounds of rage per day. This power can only be used once per rage. Activating this power is a swift action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Moment of Clarity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You do not gain any benefits or take any of the penalties from rage for 1 round. This includes the penalty to Armor Class and the restriction on what actions can be performed. This round still counts against your total number of rounds of rage per day. This power can only be used once per rage. Activating this power is a swift action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 480,
+    "record_key": "Rage Power ~ Moment of Clarity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Alchemical Sapper ~ Demolition Bomb",
+    "name": "Demolition Bomb",
+    "class": "Alchemical Sapper",
+    "description": "An alchemical sapper can create a demolition bomb. This bomb deals double his normal bomb damage, half of which is bludgeoning and piercing damage, the other half of which is fire damage. This bomb ignores a number of points of hardness up to %1. This counts as an ability that modifies the alchemical sapper's bomb, so it doesn't stack with other discoveries that modify bombs. The alchemical sapper can't use his demolition bomb with the fast bombs discovery. An alchemical sapper can only expend a use of his bomb class feature to create a demolition bomb %2/day.|max(1,AlchemistLVL/2)|(AlchemistLVL+3)/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemical Sapper ~ Demolition Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Feature.AlchemicalSapperClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An alchemical sapper can create a demolition bomb. This bomb deals double his normal bomb damage, half of which is bludgeoning and piercing damage, the other half of which is fire damage. This bomb ignores a number of points of hardness up to %1. This counts as an ability that modifies the alchemical sapper's bomb, so it doesn't stack with other discoveries that modify bombs. The alchemical sapper can't use his demolition bomb with the fast bombs discovery. An alchemical sapper can only expend a use of his bomb class feature to create a demolition bomb %2/day.|max(1,AlchemistLVL/2)|(AlchemistLVL+3)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 155,
+    "record_key": "Alchemical Sapper ~ Demolition Bomb"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

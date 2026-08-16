@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Desert Domain ~ Heat Shimmer",
+    "name": "Heat Shimmer",
+    "class": "Desert Domain",
+    "description": "As a free action, you can surround yourself with heat distortion that acts like the blur spell.  Creatures that strike you in melee while you're using this ability are dazzled for 1 round (Fortitude %2 negates).  You may use this ability for %1 rounds per day.  These rounds need not be consecutive.|DomainDesertTimes|DomainDesertDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Desert Domain ~ Heat Shimmer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower.Desert Domain"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, you can surround yourself with heat distortion that acts like the blur spell.  Creatures that strike you in melee while you're using this ability are dazzled for 1 round (Fortitude %2 negates).  You may use this ability for %1 rounds per day.  These rounds need not be consecutive.|DomainDesertTimes|DomainDesertDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainDesertTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 276,
+    "record_key": "Desert Domain ~ Heat Shimmer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

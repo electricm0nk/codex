@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent ~ Resiliency",
+    "name": "Resiliency",
+    "class": "Investigator",
+    "description": "Once per day, you can gain %1 temporary hit points. Activating this ability is an immediate action that can only be performed when you are brought to below 0 hit points. This ability can be used to prevent yourself from dying. These temporary hit points last for 1 minute. If your hit points drop below 0 due to the loss of these temporary hit points, you fall unconscious and are dying as normal.|ResiliencyHitPoints",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent ~ Resiliency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorRogueTalent.SpecialQuality.Extraordinary.Defensive"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ResiliencyHitPoints|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you can gain %1 temporary hit points. Activating this ability is an immediate action that can only be performed when you are brought to below 0 hit points. This ability can be used to prevent yourself from dying. These temporary hit points last for 1 minute. If your hit points drop below 0 due to the loss of these temporary hit points, you fall unconscious and are dying as normal.|ResiliencyHitPoints"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ResiliencyHitPoints|InvestigatorLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 hp)|ResiliencyHitPoints"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1367,
+    "record_key": "Investigator ~ Rogue Talent ~ Resiliency"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

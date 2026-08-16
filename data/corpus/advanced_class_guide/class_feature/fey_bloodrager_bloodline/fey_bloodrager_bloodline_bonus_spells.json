@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fey Bloodrager Bloodline ~ Bonus Spells",
+    "name": "Fey Bloodrager Bloodline ~ Bonus Spells",
+    "class": "Fey Bloodrager Bloodline",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=1|Entangle|PREVAREQ:Bloodrager_CF_BloodlineSpell1,0|PREVARGTEQ:Bloodrager_Fey_BloodlineSpellLvl1,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=2|Hideous Laughter|PREVAREQ:Bloodrager_CF_BloodlineSpell2,0|PREVARGTEQ:Bloodrager_Fey_BloodlineSpellLvl2,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=3|Haste|PREVAREQ:Bloodrager_CF_BloodlineSpell3,0|PREVARGTEQ:Bloodrager_Fey_BloodlineSpellLvl3,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=4|Confusion|PREVAREQ:Bloodrager_CF_BloodlineSpell4,0|PREVARGTEQ:Bloodrager_Fey_BloodlineSpellLvl4,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 822,
+    "record_key": "Fey Bloodrager Bloodline ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Tripping Twirl",
+    "name": "Tripping Twirl",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can make a trip attack with a quarterstaff on all adjacent enemies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Tripping Twirl"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "5,CATEGORY=FEAT,Combat Expertise,Improved Trip,Tripping Staff,Weapon Focus (Quarterstaff),Weapon Specialization (Quarterstaff)"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRESTAT:1,INT=13],[PREVARGTEQ:CombatFeatIntRequirement,13]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:12],[PREVARGTEQ:WarpriestBonusFeatBAB,12]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make a trip attack with a quarterstaff on all adjacent enemies."
+      },
+      {
+        "key": "DESC",
+        "value": " As a full-round action, while wielding a quarterstaff two-handed, you can attempt a trip combat maneuver against each enemy adjacent to you."
+      },
+      {
+        "key": "DESC",
+        "value": " Special - If you are a magus with the staff magus archetype, you can use spellstrike on any one trip combat maneuver you make with the staff."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Tripping Twirl"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4584,
+    "record_key": "Warpriest Bonus Feat ~ Tripping Twirl"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

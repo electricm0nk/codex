@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Infernal Bloodrager Bloodline ~ Hellfire Strike",
+    "name": "Hellfire Strike",
+    "class": "Infernal Bloodrager Bloodline",
+    "description": "As a swift action up to %1 times a day, you can infuse your attacks with hellfire.|HellfireStrikeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infernal Bloodrager Bloodline ~ Hellfire Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Infernal Bloodrager Bloodline ~ Power LVL 01.Bloodrager Bloodline Power.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Infernal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Infernal_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Infernal_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Infernal_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action up to %1 times a day, you can infuse your attacks with hellfire.|HellfireStrikeTimes"
+      },
+      {
+        "key": "DESC",
+        "value": "When you do so, all of your melee attacks gain the flaming magic weapon special ability for 1 round.|PREVARLT:Bloodrager_Infernal_BloodlineLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "When you do so, all of your melee attacks gain the flaming burst magic weapon special ability for 1 round.|PREVARGTEQ:Bloodrager_Infernal_BloodlineLVL,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Infernal_BloodlinePower1Times|3+if(Bloodrager_Infernal_BloodlineLVL>=12,2,0)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Bloodrager_Infernal_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|InfernalBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 851,
+    "record_key": "Infernal Bloodrager Bloodline ~ Hellfire Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

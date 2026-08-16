@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter Aspect ~ Monkey ~ Major",
+    "name": "Major Aspect of the Monkey",
+    "class": "Shifter Aspect",
+    "description": "Your shape changes to that of a Large monkey (as per the dire ape; Bestiary p17). While in this form, you gain a climb speed of %1 feet, low-light vision, and scent (30 feet), two claw attacks (1d6 damage), a bite attack (1d6 damage), and you can still use your hands to wield weapons, hold objects, and manipulate objects normally.|MonkeyAspectClimbSpeed",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Monkey ~ Major"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Monkey_3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkeyAspectClimbSpeed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your shape changes to that of a Large monkey (as per the dire ape; Bestiary p17). While in this form, you gain a climb speed of %1 feet, low-light vision, and scent (30 feet), two claw attacks (1d6 damage), a bite attack (1d6 damage), and you can still use your hands to wield weapons, hold objects, and manipulate objects normally.|MonkeyAspectClimbSpeed"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your tail to hold and manipulate objects as if you had a third hand, but you cannot use it to wield weapons or shields.|PREVARGTEQ:ShifterMonkeyAspectLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a rend attack that deals extra damage equal to that of your shifter claws attack plus 1-1/2 times your Strength bonus when you hit with two of your normal shifter claws attacks.|PREVARGTEQ:ShifterMonkeyAspectLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkeyAspectClimbSpeed|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkeyAspectClimbSpeed|20|PREVARGTEQ:ShifterMonkeyAspectLVL,8"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 75,
+    "record_key": "Shifter Aspect ~ Monkey ~ Major"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

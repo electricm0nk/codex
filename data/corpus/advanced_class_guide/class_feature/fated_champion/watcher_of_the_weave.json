@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fated Champion ~ Watcher of the Weave",
+    "name": "Watcher of the Weave",
+    "class": "Fated Champion",
+    "description": "A fated champion learns to see the tapestry of events moments before it is woven. He gains a +%1 insight bonus on initiative checks.|floor(SkaldLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fated Champion ~ Watcher of the Weave"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fated Champion Class Feature.Skald Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A fated champion learns to see the tapestry of events moments before it is woven. He gains a +%1 insight bonus on initiative checks.|floor(SkaldLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|floor(SkaldLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3681,
+    "record_key": "Fated Champion ~ Watcher of the Weave"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

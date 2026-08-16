@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Boaster ~ Song of Endurance",
+    "name": "Song of Endurance",
+    "class": "Boaster",
+    "description": "The boaster's raging song can inspire his allies to great feats of endurance. This raging song functions as song of marching except affected allies also gain the benefits of the Endurance feat in addition to the benefits of any of the following feats the boaster has (even if they don't meet the prerequisites): Deathless Initiate (UC), Deathless Master (UC), Deathless Zealot (UC), Diehard, Fast Healer (APG), Heroic Defiance (APG), and Heroic Recovery (APG). This raging song alters song of marching.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Boaster ~ Song of Endurance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.BoasterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The boaster's raging song can inspire his allies to great feats of endurance. This raging song functions as song of marching except affected allies also gain the benefits of the Endurance feat in addition to the benefits of any of the following feats the boaster has (even if they don't meet the prerequisites): Deathless Initiate (UC), Deathless Master (UC), Deathless Zealot (UC), Diehard, Fast Healer (APG), Heroic Defiance (APG), and Heroic Recovery (APG). This raging song alters song of marching."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1127,
+    "record_key": "Boaster ~ Song of Endurance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

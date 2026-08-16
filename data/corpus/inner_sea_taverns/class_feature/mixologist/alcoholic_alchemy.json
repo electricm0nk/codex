@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mixologist ~ Alcoholic Alchemy",
+    "name": "Alcoholic Alchemy",
+    "class": "Mixologist",
+    "description": "A mixologist can infuse potions and extracts he creates with alcohol, increasing their potency. When a mixologist brews a potion, he can spend an additional 10 gp in raw materials to increase his caster level by 1 for the purpose of the potion's effects, but the potion counts as a strong alcoholic drink (see the sidebar on page 55). When a mixologist creates his extracts, he can spend 1 extra minute doing so to increase his caster level by 1 for the purpose of that extract's effects, but the extract counts as a strong alcoholic drink. A mixologist can prepare one alcoholic extract for each level of extracts he can prepare. A mixologist can't ever gain a mutagen or discoveries that alter mutagens. This alters alchemy and brew potion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mixologist ~ Alcoholic Alchemy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Feature.MixologistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      },
+      {
+        "key": "DESC",
+        "value": "A mixologist can infuse potions and extracts he creates with alcohol, increasing their potency. When a mixologist brews a potion, he can spend an additional 10 gp in raw materials to increase his caster level by 1 for the purpose of the potion's effects, but the potion counts as a strong alcoholic drink (see the sidebar on page 55). When a mixologist creates his extracts, he can spend 1 extra minute doing so to increase his caster level by 1 for the purpose of that extract's effects, but the extract counts as a strong alcoholic drink. A mixologist can prepare one alcoholic extract for each level of extracts he can prepare. A mixologist can't ever gain a mutagen or discoveries that alter mutagens. This alters alchemy and brew potion."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_abilities_class.lst",
+    "sha256": "1344b6dcf98ada3b51a62cd2169c486eb4896dda4078eee3f7abc062a7d957fa",
+    "line": 9,
+    "record_key": "Mixologist ~ Alcoholic Alchemy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

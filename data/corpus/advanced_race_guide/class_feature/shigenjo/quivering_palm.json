@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shigenjo ~ Quivering Palm",
+    "name": "Quivering Palm",
+    "class": "Shigenjo",
+    "description": "A shigenjo may learn quivering palm as the monk ability of the same name in place of a revelation.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shigenjo ~ Quivering Palm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.OracleRevelation"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Shigenjo"
+      },
+      {
+        "key": "DESC",
+        "value": "A shigenjo may learn quivering palm as the monk ability of the same name in place of a revelation."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Monk ~ Quivering Palm"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|QuiveringPalmDC|CHA-WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|QuiveringPalmLVL|OracleLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 759,
+    "record_key": "Shigenjo ~ Quivering Palm"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

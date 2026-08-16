@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oracle ~ Ancestor Mystery",
+    "name": "Ancestor Mysteries",
+    "class": "Oracle",
+    "description": "You draw upon the divine mystery of your Ancestors to grant your spells and powers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle ~ Ancestor Mystery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.OracleMystery.OracleClassFeatures"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AncestorMysteriesQualify|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You draw upon the divine mystery of your Ancestors to grant your spells and powers."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ancestor Mystery ~ Final Revelation|PREMULT:2,[PRECLASS:1,Oracle=20],[!PREFACT:1,ABILITIES,Oracle_CF_FinalRevelation=true]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Ancestor Mysteries Class Skills|!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleMysterySkills"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ancestor Mystery Revelation|OracleMysteryLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AncestorMysteriesQualify|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=1|Unseen Servant|PREMULT:2,[PRECLASS:1,Oracle=2],[PREVAREQ:Oracle_CF_MysterySpell2,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=2|Spiritual Weapon|PREMULT:2,[PRECLASS:1,Oracle=4],[PREVAREQ:Oracle_CF_MysterySpell4,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=3|Heroism|PREMULT:2,[PRECLASS:1,Oracle=6],[PREVAREQ:Oracle_CF_MysterySpell6,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=4|Spiritual Ally|PREMULT:2,[PRECLASS:1,Oracle=8],[PREVAREQ:Oracle_CF_MysterySpell8,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=5|Telekinesis|PREMULT:2,[PRECLASS:1,Oracle=10],[PREVAREQ:Oracle_CF_MysterySpell10,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=6|Heroism (Greater)|PREMULT:2,[PRECLASS:1,Oracle=12],[PREVAREQ:Oracle_CF_MysterySpell12,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=7|Ethereal Jaunt|PREMULT:2,[PRECLASS:1,Oracle=14],[PREVAREQ:Oracle_CF_MysterySpell14,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=8|Vision|PREMULT:2,[PRECLASS:1,Oracle=16],[PREVAREQ:Oracle_CF_MysterySpell16,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=9|Astral Projection|PREMULT:2,[PRECLASS:1,Oracle=18],[PREVAREQ:Oracle_CF_MysterySpell18,0]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 440,
+    "record_key": "Oracle ~ Ancestor Mystery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

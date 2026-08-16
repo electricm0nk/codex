@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gunslinger Archetype ~ Gun Tank",
+    "name": "Gun Tank",
+    "class": "Gunslinger Archetype",
+    "description": "Gunslingers usually don't use heavy armor, but there are a few who use and modify their armor to protect themselves from both traditional weapons and gunfire. These gun tanks trundle into battle with barrels blazing, dealing out punishment with their firearms while knowing few can penetrate their hard protective shells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger Archetype ~ Gun Tank"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.GunslingerArchetype.GunslingerDodgeDeed.GunslingerEvasiveDeed.GunslingerNimble.GunslingerBonusFeat"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Gunslinger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ GUN TANK],[!PREABILITY:1,CATEGORY=Archetype,TYPE.GunslingerDodgeDeed,TYPE.GunslingerEvasiveDeed,TYPE.GunslingerNimble,TYPE.GunslingerBonusFeat]"
+      },
+      {
+        "key": "DESC",
+        "value": "Gunslingers usually don't use heavy armor, but there are a few who use and modify their armor to protect themselves from both traditional weapons and gunfire. These gun tanks trundle into battle with barrels blazing, dealing out punishment with their firearms while knowing few can penetrate their hard protective shells."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Gun Tank ~ Armor Proficiency|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Gun Tank ~ Gun Tank's Resolve|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Gun Tank ~ Gun Tank's Resilience|PRECLASS:1,Gunslinger=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Gun Tank ~ Bullet Deflection|PRECLASS:1,Gunslinger=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Gun Tank ~ Armor Training|PRECLASS:1,Gunslinger=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Gunslinger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 804,
+    "record_key": "Gunslinger Archetype ~ Gun Tank"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

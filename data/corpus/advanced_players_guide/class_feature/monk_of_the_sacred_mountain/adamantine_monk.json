@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk of the Sacred Mountain ~ Adamantine Monk",
+    "name": "Adamantine Monk",
+    "class": "Monk of the Sacred Mountain",
+    "description": "At 9th level, a monk of the sacred mountain has muscles so strong and skin so resilient that he gains DR 1/-. This DR increases by 1 for every three levels thereafter. As a swift action, the monk can spend 1 ki point to double his DR until the beginning of his next turn. This ability replaces improved evasion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk of the Sacred Mountain ~ Adamantine Monk"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.Extraordinary.MonkImprovedEvasion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkOfSacredMountainDR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a monk of the sacred mountain has muscles so strong and skin so resilient that he gains DR 1/-. This DR increases by 1 for every three levels thereafter. As a swift action, the monk can spend 1 ki point to double his DR until the beginning of his next turn. This ability replaces improved evasion."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkOfSacredMountainDR|((MonkLVL-9)/3)"
+      },
+      {
+        "key": "DR",
+        "value": "MonkOfSacredMountainDR/-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.114"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2366,
+    "record_key": "Monk of the Sacred Mountain ~ Adamantine Monk"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Domain Power ~ Erosion Aura",
+    "name": "Erosion Aura",
+    "class": "Domain Power",
+    "description": "You can project an aura of magically enhanced erosion as a standard action. Objects made primarily of metal or stone within this aura lose 10 points of hardness. Magic items retain a minimum hardness equal to twice their enhancement bonus and can attempt a Fortitude saving throw (DC %1) to negate this effect. A construct made primarily of metal or stone must succeed at a Fortitude save or lose all damage reduction and hardness for 1 round. You can use this ability %2 times per day.|DomainErosionDC|DomainErosionTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Erosion Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower.Erosion Domain"
+      },
+      {
+        "key": "DESC",
+        "value": "You can project an aura of magically enhanced erosion as a standard action. Objects made primarily of metal or stone within this aura lose 10 points of hardness. Magic items retain a minimum hardness equal to twice their enhancement bonus and can attempt a Fortitude saving throw (DC %1) to negate this effect. A construct made primarily of metal or stone must succeed at a Fortitude save or lose all damage reduction and hardness for 1 round. You can use this ability %2 times per day.|DomainErosionDC|DomainErosionTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 478,
+    "record_key": "Domain Power ~ Erosion Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

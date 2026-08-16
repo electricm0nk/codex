@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fighter Crossbowman ~ Pinpoint Targeting",
+    "name": "Pinpoint Targeting",
+    "class": "Fighter Crossbowman",
+    "description": "At 15th level, a crossbowman gains Pinpoint Targeting as a bonus feat. This ability replaces armor training 4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Crossbowman ~ Pinpoint Targeting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.FighterArmorTraining4"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, a crossbowman gains Pinpoint Targeting as a bonus feat. This ability replaces armor training 4."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Pinpoint Targeting"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2145,
+    "record_key": "Fighter Crossbowman ~ Pinpoint Targeting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

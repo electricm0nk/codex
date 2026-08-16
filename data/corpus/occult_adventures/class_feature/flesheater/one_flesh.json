@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Flesheater ~ One Flesh",
+    "name": "One Flesh",
+    "class": "Flesheater",
+    "description": "At 2nd level when entering a rage, a flesheater can spend an additional round of rage and take an additional -2 penalty to Intelligence to take on a single ability of the valid consumed creature whose flesh she ate most recently. For the purpose of this ability, a valid consumed creature is any dead animal, dragon, humanoid, or magical beast that died and was consumed by the flesheater within the past 24 hours. She can choose any ability listed under beast shape I, as long as the creature possessed that ability. At 5th level, the flesheater can take on any number of the creature's abilities that are listed under beast shape I. At 8th level, the flesheater can instead take on one of the creature's abilities listed under beast shape II. The flesheater's appearance alters to resemble the consumed creature, but she does not change shape. This is a polymorph effect. This ability replaces uncanny dodge, improved uncanny dodge, and the 2nd- and 8th-level rage powers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flesheater ~ One Flesh"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Flesheater Class Feature.Barbarian Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level when entering a rage, a flesheater can spend an additional round of rage and take an additional -2 penalty to Intelligence to take on a single ability of the valid consumed creature whose flesh she ate most recently. For the purpose of this ability, a valid consumed creature is any dead animal, dragon, humanoid, or magical beast that died and was consumed by the flesheater within the past 24 hours. She can choose any ability listed under beast shape I, as long as the creature possessed that ability. At 5th level, the flesheater can take on any number of the creature's abilities that are listed under beast shape I. At 8th level, the flesheater can instead take on one of the creature's abilities listed under beast shape II. The flesheater's appearance alters to resemble the consumed creature, but she does not change shape. This is a polymorph effect. This ability replaces uncanny dodge, improved uncanny dodge, and the 2nd- and 8th-level rage powers."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.114"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1671,
+    "record_key": "Flesheater ~ One Flesh"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Deadly Accuracy",
+    "name": "Deadly Accuracy",
+    "class": "Rage Power",
+    "description": "If the barbarian scores a critical threat when using her surprise accuracy rage power, she applies double the surprise accuracy bonus when rolling to confirm the critical. A barbarian must have the surprise accuracy rage power and be at least 4th level before selecting this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Deadly Accuracy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "If the barbarian scores a critical threat when using her surprise accuracy rage power, she applies double the surprise accuracy bonus when rolling to confirm the critical. A barbarian must have the surprise accuracy rage power and be at least 4th level before selecting this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 275,
+    "record_key": "Rage Power ~ Deadly Accuracy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

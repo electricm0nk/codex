@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Asp ~ Command the Meek",
+    "name": "Command the Meek",
+    "class": "Order of the Asp",
+    "description": "The cavalier treats all of her allies with the shaken condition as though they had the same teamwork feats as the cavalier for the purpose of determining whether the cavalier receives a bonus from her teamwork feats. Her allies do not receive any bonuses from these feats unless they actually have the feats themselves. The allies' positioning and actions must still meet the prerequisites listed in the teamwork feat for the cavalier to receive the listed bonus. When the cavalier uses tactician, greater tactician, or mighty tactician, the duration doubles for any creatures that have no more than half the cavalier's Hit Dice or that have the shaken condition when she activates the ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Asp ~ Command the Meek"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The cavalier treats all of her allies with the shaken condition as though they had the same teamwork feats as the cavalier for the purpose of determining whether the cavalier receives a bonus from her teamwork feats. Her allies do not receive any bonuses from these feats unless they actually have the feats themselves. The allies' positioning and actions must still meet the prerequisites listed in the teamwork feat for the cavalier to receive the listed bonus. When the cavalier uses tactician, greater tactician, or mighty tactician, the duration doubles for any creatures that have no more than half the cavalier's Hit Dice or that have the shaken condition when she activates the ability."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1143,
+    "record_key": "Order of the Asp ~ Command the Meek"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

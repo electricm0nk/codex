@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Savant Water School ~ Water Supremacy",
+    "name": "Water Supremacy",
+    "class": "Savant Water School",
+    "description": "You gain a +%1 enhancement bonus on Swim skill checks.  In addition, you can hold your breath for %2 rounds before you must start making checks to avoid drowning. At 10th level, you gain a swim speed equal to your base speed. At 20th level, whenever you make a Swim skill check, assume the roll resulted in a natural 20.|2+ArcanistSavantSchoolLVL/5|CONSCORE*4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Water School ~ Water Supremacy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 enhancement bonus on Swim skill checks.  In addition, you can hold your breath for %2 rounds before you must start making checks to avoid drowning. At 10th level, you gain a swim speed equal to your base speed. At 20th level, whenever you make a Swim skill check, assume the roll resulted in a natural 20.|2+ArcanistSavantSchoolLVL/5|CONSCORE*4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|2+(ArcanistSavantSchoolLVL/5)|TYPE=Enhancement"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2619,
+    "record_key": "Savant Water School ~ Water Supremacy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

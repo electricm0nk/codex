@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kineticist ~ Internal Buffer",
+    "name": "Internal Buffer",
+    "class": "Kineticist",
+    "description": "At 6th level, a kineticist's study of her body and the elemental forces that course through it allow her to form an internal buffer to store extra energy. The buffer starts empty and doesn't replenish each day, but the kineticist can accept 1 point of burn to add 1 point to the buffer as a full-round action, to a maximum of 1 point total. This maximum increases to 2 points at 11th level and to 3 points at 16th level. Once the kineticist adds points to her buffer, they remain indefinitely until she spends them. When she would otherwise accept burn, a kineticist can spend 1 point from her buffer to avoid accepting 1 point of burn. She cannot spend more than 1 point from her buffer in this way for a single wild talent. Points spent from the internal buffer don't activate elemental overflow or add to its effects. Similarly, this buffer can be used to exceed the limit on the number of points of burn the kineticist can accept in a single turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist ~ Internal Buffer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, a kineticist's study of her body and the elemental forces that course through it allow her to form an internal buffer to store extra energy. The buffer starts empty and doesn't replenish each day, but the kineticist can accept 1 point of burn to add 1 point to the buffer as a full-round action, to a maximum of 1 point total. This maximum increases to 2 points at 11th level and to 3 points at 16th level. Once the kineticist adds points to her buffer, they remain indefinitely until she spends them. When she would otherwise accept burn, a kineticist can spend 1 point from her buffer to avoid accepting 1 point of burn. She cannot spend more than 1 point from her buffer in this way for a single wild talent. Points spent from the internal buffer don't activate elemental overflow or add to its effects. Similarly, this buffer can be used to exceed the limit on the number of points of burn the kineticist can accept in a single turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 550,
+    "record_key": "Kineticist ~ Internal Buffer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

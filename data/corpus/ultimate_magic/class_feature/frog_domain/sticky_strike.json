@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Frog Domain ~ Sticky Strike",
+    "name": "Sticky Strike",
+    "class": "Frog Domain",
+    "description": "As a standard action, you can attempt a ranged touch attack with a sticky tendril against a target up to 15 feet away, then use the pull universal monster ability (see page 303 of the Pathfinder RPG Bestiary) to pull the target 5 feet toward you. You gain a +%1 bonus on the pull's combat maneuver check. If the target is larger than you, you may pull yourself 5 feet toward the target without making a check. The target can remove the tendril by making an opposed Strength check as a standard action, or by dealing enough slashing damage to the tendril (%3 hit points, Armor Class %4). You can dissolve the tendril as a free action. You can use this ability %2 times per day.|StickyStrikeBonus|DomainFrogTimes|StickyStrikeHP|StickyStrikeAC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Frog Domain ~ Sticky Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower.Frog Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StickyStrikeBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StickyStrikeHP|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StickyStrikeAC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can attempt a ranged touch attack with a sticky tendril against a target up to 15 feet away, then use the pull universal monster ability (see page 303 of the Pathfinder RPG Bestiary) to pull the target 5 feet toward you. You gain a +%1 bonus on the pull's combat maneuver check. If the target is larger than you, you may pull yourself 5 feet toward the target without making a check. The target can remove the tendril by making an opposed Strength check as a standard action, or by dealing enough slashing damage to the tendril (%3 hit points, Armor Class %4). You can dissolve the tendril as a free action. You can use this ability %2 times per day.|StickyStrikeBonus|DomainFrogTimes|StickyStrikeHP|StickyStrikeAC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StickyStrikeBonus|DomainFrogLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StickyStrikeHP|DomainFrogLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StickyStrikeAC|var(\"AC.Touch\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainFrogTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 286,
+    "record_key": "Frog Domain ~ Sticky Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

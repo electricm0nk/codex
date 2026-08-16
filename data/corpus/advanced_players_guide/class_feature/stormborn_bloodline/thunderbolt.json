@@ -1,0 +1,120 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Stormborn Bloodline ~ Thunderbolt",
+    "name": "Thunderbolt",
+    "class": "Stormborn Bloodline",
+    "description": "You can command a stroke of lightning to strike from above in a 5-foot-radius cylinder 60 feet high. The thunderbolt inflicts %1d6 points of damage; half of this damage is electricity and half is sonic. A Reflex save (DC %2) halves this damage. Creatures failing their saves are deafened for 1 round.|Sorcerer_StormbornThunderbolt_Dice|Sorcerer_StormbornThunderbolt_DC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stormborn Bloodline ~ Thunderbolt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Stormborn Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Stormborn"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Stormborn_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Stormborn_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_StormbornThunderbolt_Dice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_StormbornThunderbolt_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_StormbornThunderbolt_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can command a stroke of lightning to strike from above in a 5-foot-radius cylinder 60 feet high. The thunderbolt inflicts %1d6 points of damage; half of this damage is electricity and half is sonic. A Reflex save (DC %2) halves this damage. Creatures failing their saves are deafened for 1 round.|Sorcerer_StormbornThunderbolt_Dice|Sorcerer_StormbornThunderbolt_DC"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability once per day.|PREVAREQ:Sorcerer_StormbornThunderbolt_Times,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability twice per day.|PREVAREQ:Sorcerer_StormbornThunderbolt_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability three times per day.|PREVAREQ:Sorcerer_StormbornThunderbolt_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 times per day.|Sorcerer_StormbornThunderbolt_Times|PREVARGTEQ:Sorcerer_StormbornThunderbolt_Times,4"
+      },
+      {
+        "key": "DESC",
+        "value": "This power has a range of 120 feet."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_StormbornThunderbolt_Dice|Sorcerer_Stormborn_BloodlinePower9LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_StormbornThunderbolt_DC|10+(Sorcerer_Stormborn_BloodlinePower9LVL/2)+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_StormbornThunderbolt_Times|max(floor((Sorcerer_Stormborn_BloodlinePower9LVL-11)/3),1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%3/day (%1d6 electricity and sonic, DC %2)|Sorcerer_StormbornThunderbolt_Dice|Sorcerer_StormbornThunderbolt_DC|Sorcerer_StormbornThunderbolt_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_StormbornThunderbolt_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|StormbornBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3246,
+    "record_key": "Stormborn Bloodline ~ Thunderbolt"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Stouthearted",
+    "name": "Stouthearted",
+    "class": "Warpriest Bonus Feat",
+    "description": "While you are maintaining a raging song, if you fail a saving throw against a fear effect, you can expend a round of performing to reroll your saving throw as an immediate action. You must keep this second result, even if it lower.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Stouthearted"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE=SkaldRagingSong"
+      },
+      {
+        "key": "DESC",
+        "value": "While you are maintaining a raging song, if you fail a saving throw against a fear effect, you can expend a round of performing to reroll your saving throw as an immediate action. You must keep this second result, even if it lower."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Stouthearted"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4189,
+    "record_key": "Warpriest Bonus Feat ~ Stouthearted"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

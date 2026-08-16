@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Surprise Strike",
+    "name": "Surprise Strike",
+    "class": "Medium",
+    "description": "(Intermediate) When you attack an opponent that's denied its Dexterity bonus to AC, you deal %1d6 points of extra precision damage. Your target counts as flat-footed against the first attack you make against that target in a day, regardless of abilities like uncanny dodge. After your first attack, that target is immune to being made flat-footed by your surprise strike for 24 hours.|MediumLVL/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Surprise Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "(Intermediate) When you attack an opponent that's denied its Dexterity bonus to AC, you deal %1d6 points of extra precision damage. Your target counts as flat-footed against the first attack you make against that target in a day, regardless of abilities like uncanny dodge. After your first attack, that target is immune to being made flat-footed by your surprise strike for 24 hours.|MediumLVL/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 875,
+    "record_key": "Medium ~ Surprise Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

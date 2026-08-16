@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wildstrider ~ Adroit Step",
+    "name": "Adroit Step",
+    "class": "Wildstrider",
+    "description": "A wildstrider can use a swift action to treat a 5-foot square of difficult terrain as if it were normal terrain. If she also spends a panache point, she can treat all difficult terrain as though it were normal terrain until the end of her turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildstrider ~ Adroit Step"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL03"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SwashbucklerDeedsLVL3.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wildstrider can use a swift action to treat a 5-foot square of difficult terrain as if it were normal terrain. If she also spends a panache point, she can treat all difficult terrain as though it were normal terrain until the end of her turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1210,
+    "record_key": "Wildstrider ~ Adroit Step"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

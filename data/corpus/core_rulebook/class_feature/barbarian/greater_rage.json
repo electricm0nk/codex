@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Barbarian ~ Greater Rage",
+    "name": "Greater Rage",
+    "class": "Barbarian",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian ~ Greater Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.Internal.ClassFeatures.Rage.Greater Rage"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageStrBonus,RageConBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageSaveBonus|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 425,
+    "record_key": "Barbarian ~ Greater Rage"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

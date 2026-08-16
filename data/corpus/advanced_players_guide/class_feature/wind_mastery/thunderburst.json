@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wind Mastery ~ Thunderburst",
+    "name": "Thunderburst",
+    "class": "Wind Mastery",
+    "description": "As a standard action, you can create a blast of air accompanied by a loud peal of thunder. The blast has a range of 100 feet and has a %1-foot radius. Creatures in the area take %2d6 points of bludgeoning damage and are deafened for 1 hour, with a Fortitude save (DC %3) resulting in half damage and no deafness. You can use this ability %4 time(s) per day.|OracleThunderburstRadius|OracleThunderburstDice|OracleRevelationDC|OracleThunderburstTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wind Mastery ~ Thunderburst"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.WindRevelation.Extraordinary.PerDayOracleRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleThunderburstRadius|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleThunderburstDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleThunderburstTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can create a blast of air accompanied by a loud peal of thunder. The blast has a range of 100 feet and has a %1-foot radius. Creatures in the area take %2d6 points of bludgeoning damage and are deafened for 1 hour, with a Fortitude save (DC %3) resulting in half damage and no deafness. You can use this ability %4 time(s) per day.|OracleThunderburstRadius|OracleThunderburstDice|OracleRevelationDC|OracleThunderburstTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleThunderburstRadius|((classlevel(\"Oracle\")-7)/4)*5+20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleThunderburstDice|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleThunderburstTimes|1+(classlevel(\"Oracle\")-7)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 703,
+    "record_key": "Wind Mastery ~ Thunderburst"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

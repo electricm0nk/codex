@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Infiltrator ~ Necessary Lies",
+    "name": "Necessary Lies",
+    "class": "Infiltrator",
+    "description": "You add +%1 on saving throws against abilities that detect lies or reveal or force the truth, such as detect lies and zone of truth.|NecessaryLiesBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infiltrator ~ Necessary Lies"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecessaryLiesBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You add +%1 on saving throws against abilities that detect lies or reveal or force the truth, such as detect lies and zone of truth.|NecessaryLiesBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecessaryLiesBonus|classlevel(\"Inquisitor\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1272,
+    "record_key": "Infiltrator ~ Necessary Lies"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

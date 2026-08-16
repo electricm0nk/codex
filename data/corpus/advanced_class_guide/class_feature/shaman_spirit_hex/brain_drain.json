@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Brain Drain",
+    "name": "Brain Drain",
+    "class": "Shaman Spirit Hex",
+    "description": "As a standard action, the shaman violently probes the mind of a single intelligent enemy within 30 feet. The target can attempt a Will saving throw (DC %1) to negate the effect. If it succeeds, it immediately knows the source of the mental prying; otherwise, it's wracked with pain and takes %2d4 points of damage. On the round following her successful use of this ability, the shaman can take a full-round action to sort through the jumble of stolen thoughts and memories to attempt a single Knowledge check using the victim's bonus with that skill. The random stolen thoughts remain in the shaman's mind for %3 rounds, and she can treat the knowledge gained as if she used detect thoughts. This is a mind-affecting effect. Once she successfully affects a creature, she cannot use this hex on that creature again for 24 hours.|ShamanBrainDrainDC|ShamanBrainDrainDice|ShamanBrainDrainDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Brain Drain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanLoreHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Brain Drain"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanLoreSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanBrainDrainDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanBrainDrainDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanBrainDrainDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the shaman violently probes the mind of a single intelligent enemy within 30 feet. The target can attempt a Will saving throw (DC %1) to negate the effect. If it succeeds, it immediately knows the source of the mental prying; otherwise, it's wracked with pain and takes %2d4 points of damage. On the round following her successful use of this ability, the shaman can take a full-round action to sort through the jumble of stolen thoughts and memories to attempt a single Knowledge check using the victim's bonus with that skill. The random stolen thoughts remain in the shaman's mind for %3 rounds, and she can treat the knowledge gained as if she used detect thoughts. This is a mind-affecting effect. Once she successfully affects a creature, she cannot use this hex on that creature again for 24 hours.|ShamanBrainDrainDC|ShamanBrainDrainDice|ShamanBrainDrainDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanBrainDrainDC|ShamanHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanBrainDrainDice|ShamanSpiritLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanBrainDrainDuration|max(1,CHA)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1613,
+    "record_key": "Shaman Spirit Hex ~ Brain Drain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

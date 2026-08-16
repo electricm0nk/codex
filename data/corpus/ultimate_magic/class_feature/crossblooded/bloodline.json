@@ -1,0 +1,112 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Crossblooded ~ Crossblooded Bloodline",
+    "name": "Bloodline",
+    "class": "Crossblooded",
+    "description": "A crossblooded bloodline combines the powers of two distinct heritages. In most cases, sorcerers with this bloodline are the offspring of two sorcerers from different ancestries, but occasionally a crossblooded sorcerer arises from the conjunction of other powers.&nl;A crossblooded sorcerer selects two different bloodlines. The sorcerer may gain access to the skills, feats, and some of the powers of both bloodlines she is descended from, but at the cost of reduced mental clarity and choice.&nl;A crossblooded sorcerer has one fewer spell known at each spell level (including cantrips) than normal and always takes a -2 penalty on Will saves.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crossblooded ~ Crossblooded Bloodline"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Bloodline"
+      },
+      {
+        "key": "DESC",
+        "value": "A crossblooded bloodline combines the powers of two distinct heritages. In most cases, sorcerers with this bloodline are the offspring of two sorcerers from different ancestries, but occasionally a crossblooded sorcerer arises from the conjunction of other powers.&nl;A crossblooded sorcerer selects two different bloodlines. The sorcerer may gain access to the skills, feats, and some of the powers of both bloodlines she is descended from, but at the cost of reduced mental clarity and choice.&nl;A crossblooded sorcerer has one fewer spell known at each spell level (including cantrips) than normal and always takes a -2 penalty on Will saves."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bloodline Tracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Bloodline|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Sorcerer Bloodline Feat|BloodlineFeatCount|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Sorcerer Bloodline Power|1+(BloodlineProgressionLVL>=3)+(BloodlineProgressionLVL>=9)+(BloodlineProgressionLVL>=15)+(BloodlineProgressionLVL>=20)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Sorcerer Bloodline Bonus Spell|(BloodlineCasterLVL-1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Sorcerer;LEVEL=0|-1|PREVARGTEQ:BloodlineLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Sorcerer;LEVEL=1|-1|PREVARGTEQ:BloodlineLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Sorcerer;LEVEL=2|-1|PRECLASS:1,Sorcerer=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Sorcerer;LEVEL=3|-1|PRECLASS:1,Sorcerer=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Sorcerer;LEVEL=4|-1|PRECLASS:1,Sorcerer=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Sorcerer;LEVEL=5|-1|PRECLASS:1,Sorcerer=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Sorcerer;LEVEL=6|-1|PRECLASS:1,Sorcerer=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Sorcerer;LEVEL=7|-1|PRECLASS:1,Sorcerer=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Sorcerer;LEVEL=8|-1|PRECLASS:1,Sorcerer=16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Sorcerer;LEVEL=9|-1|PRECLASS:1,Sorcerer=18"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 2042,
+    "record_key": "Crossblooded ~ Crossblooded Bloodline"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

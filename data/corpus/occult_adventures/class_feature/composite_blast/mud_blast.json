@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Composite Blast ~ Mud Blast",
+    "name": "Mud Blast",
+    "class": "Composite Blast",
+    "description": "Elements earth and water; Type composite blast (Sp); Level -; Burn 2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Composite Blast ~ Mud Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Composite Blast"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisites earth blast, water blast"
+      },
+      {
+        "key": "DESC",
+        "value": "Elements earth and water; Type composite blast (Sp); Level -; Burn 2"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Blast Type physical; Damage bludgeoning You infuse your water into the earth to create a powerful ball of mud and slam a single foe."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 665,
+    "record_key": "Composite Blast ~ Mud Blast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

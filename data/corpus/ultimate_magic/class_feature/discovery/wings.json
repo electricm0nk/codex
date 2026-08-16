@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Wings",
+    "name": "Wings",
+    "class": "Discovery",
+    "description": "You gain batlike, birdlike, or insectlike functional wings, allowing you to fly as the Fly spell for %1 minutes per day. These minutes do not need to be consecutive, but they must be spent in 1-minute increments. You can select this discovery multiple times; each time you do so, you add your caster level to the number of minutes per day that you can fly with the wings. This flight is an extraordinary ability.|WingsDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Wings"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WingsDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain batlike, birdlike, or insectlike functional wings, allowing you to fly as the Fly spell for %1 minutes per day. These minutes do not need to be consecutive, but they must be spent in 1-minute increments. You can select this discovery multiple times; each time you do so, you add your caster level to the number of minutes per day that you can fly with the wings. This flight is an extraordinary ability.|WingsDuration"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WingsDuration|AlchemistDiscoveryLVL+charbonusto(\"PCLEVEL\",\"Alchemist\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 166,
+    "record_key": "Discovery ~ Wings"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Armiger ~ Studious Squire",
+    "name": "Studious Squire",
+    "class": "Armiger",
+    "description": "An armiger gains 2 additional skill ranks at each level. These ranks must be put into Intimidate and Knowledge (planes). In addition, the armiger treats Knowledge (local) and Knowledge (planes) as class skills. This alters the fighter's class skills and skill points per level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Armiger ~ Studious Squire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fighter Class Feature.ArmigerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "DESC",
+        "value": "An armiger gains 2 additional skill ranks at each level. These ranks must be put into Intimidate and Knowledge (planes). In addition, the armiger treats Knowledge (local) and Knowledge (planes) as class skills. This alters the fighter's class skills and skill points per level."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|Intimidate|TL"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|Knowledge (planes)|TL"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (local)|Knowledge (planes)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 847,
+    "record_key": "Armiger ~ Studious Squire"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Life Channeler ~ Stored Life",
+    "name": "Stored Life",
+    "class": "Life Channeler",
+    "description": "A life channeler gains a third option when using a coup de grace on a sentient humanoid. If the victim had a CR at least as high as the life channeler's class level, the life channeler can store the creature's life energy in her body. She can have the life energy from only 1 creature in her body at a time. While she is storing life energy, if she would take damage or die from a death effect or if she would gain negative levels or take energy drain, she can sacrifice the stored energy to negate the effect without spending an action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Channeler ~ Stored Life"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.LifeChannelerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "DESC",
+        "value": "A life channeler gains a third option when using a coup de grace on a sentient humanoid. If the victim had a CR at least as high as the life channeler's class level, the life channeler can store the creature's life energy in her body. She can have the life energy from only 1 creature in her body at a time. While she is storing life energy, if she would take damage or die from a death effect or if she would gain negative levels or take energy drain, she can sacrifice the stored energy to negate the effect without spending an action."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 114,
+    "record_key": "Life Channeler ~ Stored Life"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

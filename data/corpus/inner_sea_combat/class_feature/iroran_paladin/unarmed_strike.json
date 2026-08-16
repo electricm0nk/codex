@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Iroran Paladin ~ Unarmed Strike",
+    "name": "Unarmed Strike",
+    "class": "Iroran Paladin",
+    "description": "You gain Improved Unarmed Strike as a bonus feat. In addition, you gain the unarmed strike monk ability, treating your monk level as half your paladin level (minimum 1) for calculating your unarmed strike damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Iroran Paladin ~ Unarmed Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Improved Unarmed Strike as a bonus feat. In addition, you gain the unarmed strike monk ability, treating your monk level as half your paladin level (minimum 1) for calculating your unarmed strike damage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk ~ Unarmed Damage"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Unarmed Strike"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkUnarmedDamageLVL|PaladinLVL/2|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 123,
+    "record_key": "Iroran Paladin ~ Unarmed Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

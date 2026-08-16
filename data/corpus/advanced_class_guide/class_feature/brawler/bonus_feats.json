@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brawler ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Brawler",
+    "description": "At 2nd level and every 3 levels thereafter, a brawler gains a bonus combat feat in addition to those gained from normal advancement. These bonus feats must be ones that affect or improve her defenses or melee attacks. The brawler must meet the prerequisites of the selected bonus combat feat. Upon reaching 5th level and every 3 levels thereafter, a brawler can choose to learn a new bonus combat feat in place of a bonus combat feat she has already learned. In effect, the brawler loses the bonus combat feat in exchange for the new one. The old feat cannot be one that was used as a prerequisite for another feat, prestige class, or other ability. A brawler can only change one feat at any given level, and must choose whether or not to swap the feat at the time she gains a new bonus combat feat for the level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level and every 3 levels thereafter, a brawler gains a bonus combat feat in addition to those gained from normal advancement. These bonus feats must be ones that affect or improve her defenses or melee attacks. The brawler must meet the prerequisites of the selected bonus combat feat. Upon reaching 5th level and every 3 levels thereafter, a brawler can choose to learn a new bonus combat feat in place of a bonus combat feat she has already learned. In effect, the brawler loses the bonus combat feat in exchange for the new one. The old feat cannot be one that was used as a prerequisite for another feat, prestige class, or other ability. A brawler can only change one feat at any given level, and must choose whether or not to swap the feat at the time she gains a new bonus combat feat for the level."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Brawler Bonus Feat|(1+BrawlerLVL)/3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 903,
+    "record_key": "Brawler ~ Bonus Feats"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

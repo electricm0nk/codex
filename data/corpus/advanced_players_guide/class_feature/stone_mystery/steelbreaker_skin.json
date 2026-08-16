@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Stone Mystery ~ Steelbreaker Skin",
+    "name": "Steelbreaker Skin",
+    "class": "Stone Mystery",
+    "description": "As a standard action, you can harden your flesh so that weapons that strike you are damaged or destroyed. Anytime a melee or ranged weapon strikes you, the weapon takes %1 damage. This ability does not prevent the weapon from harming you unless the damage destroys the weapon attacking you. You can use this ability once per day, but the duration is %2 minute. At 15th level, the damage from this ability ignores up to 10 points of hardness.|OracleSteelbreakerSkinDamage|OracleSteelbreakerSkinDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stone Mystery ~ Steelbreaker Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.StoneRevelation.Supernatural.PerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleSteelbreakerSkinDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleSteelbreakerSkinDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can harden your flesh so that weapons that strike you are damaged or destroyed. Anytime a melee or ranged weapon strikes you, the weapon takes %1 damage. This ability does not prevent the weapon from harming you unless the damage destroys the weapon attacking you. You can use this ability once per day, but the duration is %2 minute. At 15th level, the damage from this ability ignores up to 10 points of hardness.|OracleSteelbreakerSkinDamage|OracleSteelbreakerSkinDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleSteelbreakerSkinDamage|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleSteelbreakerSkinDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 677,
+    "record_key": "Stone Mystery ~ Steelbreaker Skin"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator Archetype ~ Mastermind",
+    "name": "Mastermind",
+    "class": "Investigator Archetype",
+    "description": "Although some investigators use their honed senses and cunning insight for personal gain, no one excels at such endeavors like the mastermind. Typically, these investigators dwell at the centers of complex networks of lies, minions, or simply precious information, from which they dispense commands, threats, and rumors, all carefully crafted to increase the power of their peculiar empires. While masterminds often act as the heads of illicit organizations like criminal families, thieves' guilds, or corruption-riddled bureaucracies, they aren't always evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Mastermind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype.InvestigatorTrapfinding.InvestigatorTrapSense.InvestigatorySwiftAlchemy.InvestigatorTalent9"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Mastermind],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InvestigatorTrapfinding,TYPE.InvestigatorTrapSense,TYPE.InvestigatorySwiftAlchemy,TYPE.InvestigatorTalent9,TYPE.InvestigatorInspiration]"
+      },
+      {
+        "key": "DESC",
+        "value": "Although some investigators use their honed senses and cunning insight for personal gain, no one excels at such endeavors like the mastermind. Typically, these investigators dwell at the centers of complex networks of lies, minions, or simply precious information, from which they dispense commands, threats, and rumors, all carefully crafted to increase the power of their peculiar empires. While masterminds often act as the heads of illicit organizations like criminal families, thieves' guilds, or corruption-riddled bureaucracies, they aren't always evil."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Mastermind ~ Mastermind's Inspiration|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Mastermind ~ A Quiet Word|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Mastermind ~ Mastermind Defense|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Mastermind ~ Impregnable Mind|PRECLASS:1,Investigator=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Investigator Talent|-1|PRECLASS:1,Investigator=9"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.101"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Investigator"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3307,
+    "record_key": "Investigator Archetype ~ Mastermind"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

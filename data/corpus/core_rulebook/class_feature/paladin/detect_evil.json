@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Paladin ~ Detect Evil",
+    "name": "Detect Evil",
+    "class": "Paladin",
+    "description": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin ~ Detect Evil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.SpellLike.Detect Evil"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DetectEvilLVL|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Class|TIMES=ATWILL|CASTERLEVEL=DetectEvilLVL|Detect Evil,11+WIS"
+      },
+      {
+        "key": "DESC",
+        "value": "At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DetectEvilLVL|PaladinLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1356,
+    "record_key": "Paladin ~ Detect Evil"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

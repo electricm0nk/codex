@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Breaker ~ Destructive",
+    "name": "Destructive",
+    "class": "Breaker",
+    "description": "Whenever the breaker barbarian makes a melee attack that targets an unattended object or makes a sunder combat maneuver, she adds +%1 on the damage roll.|DestructiveDamage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Breaker ~ Destructive"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BarbarianClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DestructiveDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the breaker barbarian makes a melee attack that targets an unattended object or makes a sunder combat maneuver, she adds +%1 on the damage roll.|DestructiveDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DestructiveDamage|min(1,BarbarianLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1568,
+    "record_key": "Breaker ~ Destructive"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

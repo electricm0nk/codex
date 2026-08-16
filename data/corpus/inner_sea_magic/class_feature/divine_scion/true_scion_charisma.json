@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Divine Scion ~ True Scion Charisma",
+    "name": "True Scion (Charisma)",
+    "class": "Divine Scion",
+    "description": "A divine scion becomes a true scion of her deity. The amount of healing she gains from her domain specialization doubles. Her divine wrath ability now deals +2 points of damage per die against creatures of the appropriate alignment. The damage reduction granted by her deific defense increases to 5. Finally, she permanently increases her Charisma by +1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Scion ~ True Scion Charisma"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DivineScionClassFeatures.SpecialQuality.TrueScion"
+      },
+      {
+        "key": "DESC",
+        "value": "A divine scion becomes a true scion of her deity. The amount of healing she gains from her domain specialization doubles. Her divine wrath ability now deals +2 points of damage per die against creatures of the appropriate alignment. The damage reduction granted by her deific defense increases to 5. Finally, she permanently increases her Charisma by +1."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSpecBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivineWrathBonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeificDefenseBonus|3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 45,
+    "record_key": "Divine Scion ~ True Scion Charisma"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

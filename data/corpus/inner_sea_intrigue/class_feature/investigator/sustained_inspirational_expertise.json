@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Sustained Inspirational Expertise",
+    "name": "Sustained Inspirational Expertise",
+    "class": "Investigator",
+    "description": "When granting a bonus to allies via the inspirational expertise investigator talent (Advanced Class Guide 33), the investigator can spend one use of inspiration as a swift action the following round to extend the duration of the granted bonus for 1 additional round. The insight bonus granted decreases by 1 each round this ability is used.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Sustained Inspirational Expertise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.InvestigatorTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Investigator ~ Inspirational Expertise"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "InvestigatorTalentLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "When granting a bonus to allies via the inspirational expertise investigator talent (Advanced Class Guide 33), the investigator can spend one use of inspiration as a swift action the following round to extend the duration of the granted bonus for 1 additional round. The insight bonus granted decreases by 1 each round this ability is used."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 151,
+    "record_key": "Investigator ~ Sustained Inspirational Expertise"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

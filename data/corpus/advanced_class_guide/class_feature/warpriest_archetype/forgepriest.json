@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Archetype ~ Forgepriest",
+    "name": "Forgepriest",
+    "class": "Warpriest Archetype",
+    "description": "Armorers of exquisite skill, forgepriests take inspiration from their deity to produce the most perfect weapons and armor they can, the better to equip the armies of the faithful.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Archetype ~ Forgepriest"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WarpriestArchetype.CF_WarpriestBlessings.WarpriestBlessings.WarpriestBonusFeat.WarpriestBonusFeat3.WarpriestBonusFeat6.WarpriestChannelEnergy"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Warpriest=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Warpriest Archetype ~ Forgepriest],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_WarpriestBlessings,TYPE.WarpriestBlessings,TYPE.WarpriestBonusFeat,TYPE.WarpriestBonusFeat3,TYPE.WarpriestBonusFeat6,TYPE.WarpriestChannelEnergy]"
+      },
+      {
+        "key": "DESC",
+        "value": "Armorers of exquisite skill, forgepriests take inspiration from their deity to produce the most perfect weapons and armor they can, the better to equip the armies of the faithful."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Forgepriest ~ Blessings|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Forgepriest ~ Smith's Spells|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Forgepriest ~ Forge Mastery|PRECLASS:1,Warpriest=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Forgepriest ~ Bonus Feats|PRECLASS:1,Warpriest=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Forgepriest ~ Craft Magic Arms and Armor|PRECLASS:1,Warpriest=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Forgepriest ~ Creator's Bond|PRECLASS:1,Warpriest=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Forgepriest ~ Heat of the Forge|PRECLASS:1,Warpriest=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Warpriest"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3934,
+    "record_key": "Warpriest Archetype ~ Forgepriest"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

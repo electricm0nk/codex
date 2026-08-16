@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Twinned Feint",
+    "name": "Twinned Feint",
+    "class": "Warpriest Bonus Feat",
+    "description": "As a standard action, you can attempt to feint against a foe within your reach. If you succeed at the feint, you can make an additional feint attempt against a foe that is adjacent to the first one and also within reach. You can attempt only one additional feint per action with this feat. When you use this feat, you take a -2 penalty to your AC until your next turn. If you have the Improved Feint feat, you can use this feat as a move action instead.|!PREABILITY:1,CATEGORY=FEAT,Improved Feint",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Twinned Feint"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,CHA=13"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can attempt to feint against a foe within your reach. If you succeed at the feint, you can make an additional feint attempt against a foe that is adjacent to the first one and also within reach. You can attempt only one additional feint per action with this feat. When you use this feat, you take a -2 penalty to your AC until your next turn. If you have the Improved Feint feat, you can use this feat as a move action instead.|!PREABILITY:1,CATEGORY=FEAT,Improved Feint"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, you can attempt to feint against a foe within your reach. If you succeed at the feint, you can make an additional feint attempt against a foe that is adjacent to the first one and also within reach. You can attempt only one additional feint per action with this feat. When you use this feat, you take a -2 penalty to your AC until your next turn.|PREABILITY:1,CATEGORY=FEAT,Improved Feint"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Twinned Feint"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4190,
+    "record_key": "Warpriest Bonus Feat ~ Twinned Feint"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

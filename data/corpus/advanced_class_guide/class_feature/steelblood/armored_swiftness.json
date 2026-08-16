@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Steelblood ~ Armored Swiftness",
+    "name": "Armored Swiftness",
+    "class": "Steelblood",
+    "description": "A steelblood moves faster in medium and heavy armor. When wearing medium or heavy armor, a steelblood can move 5 feet faster than normal in that armor, to a maximum of his unencumbered speed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Steelblood ~ Armored Swiftness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Steelblood Class Feature.Bloodrager Class Feature.SpecialQuality.Extraordinary.BloodragerUncannyDodge"
+      },
+      {
+        "key": "DESC",
+        "value": "A steelblood moves faster in medium and heavy armor. When wearing medium or heavy armor, a steelblood can move 5 feet faster than normal in that armor, to a maximum of his unencumbered speed."
+      },
+      {
+        "key": "BONUS",
+        "value": "POSTMOVEADD|TYPE.Walk|5|PREARMORTYPE:1,TYPE.Medium,TYPE.Heavy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2830,
+    "record_key": "Steelblood ~ Armored Swiftness"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

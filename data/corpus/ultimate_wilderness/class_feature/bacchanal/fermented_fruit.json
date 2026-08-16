@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bacchanal ~ Fermented Fruit",
+    "name": "Fermented Fruit",
+    "class": "Bacchanal",
+    "description": "A bacchanal adds goodberry to his list of 1st-level skald spells known. In addition, he can cast it as a spell-like ability once per day. When he casts goodberry as a spell or spell-like ability, the targeted berries ferment; this causes each berry to act as a serving of an alcoholic beverage. A creature that eats a fermented berry does not gain a meal's nourishment, but it is cured of 1 point of damage and becomes slightly foolhardy as if tipsy, gaining a +1 bonus on saves against fear effects for 1 minute after eating the berry. The bacchanal skald's fermented fruit counts as a serving of alcohol for the purposes of other abilities that interact with alcohol.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bacchanal ~ Fermented Fruit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.BacchanalClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=SkaldLVL|Goodberry"
+      },
+      {
+        "key": "DESC",
+        "value": "A bacchanal adds goodberry to his list of 1st-level skald spells known. In addition, he can cast it as a spell-like ability once per day. When he casts goodberry as a spell or spell-like ability, the targeted berries ferment; this causes each berry to act as a serving of an alcoholic beverage. A creature that eats a fermented berry does not gain a meal's nourishment, but it is cured of 1 point of damage and becomes slightly foolhardy as if tipsy, gaining a +1 bonus on saves against fear effects for 1 minute after eating the berry. The bacchanal skald's fermented fruit counts as a serving of alcohol for the purposes of other abilities that interact with alcohol."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Skald=2|Goodberry"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1120,
+    "record_key": "Bacchanal ~ Fermented Fruit"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brazen Disciple ~ Feinting Flurry",
+    "name": "Feinting Flurry",
+    "class": "Brazen Disciple",
+    "description": "When using flurry of blows to make melee attacks, a brazen disciple can forgo his first attack to attempt a Bluff check to feint.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brazen Disciple ~ Feinting Flurry"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Feature.BrazenDiscipleClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "DESC",
+        "value": "When using flurry of blows to make melee attacks, a brazen disciple can forgo his first attack to attempt a Bluff check to feint."
+      },
+      {
+        "key": "DESC",
+        "value": "When a brazen disciple successfully feints, his opponent is denied its Dexterity bonus to AC until the end of the monk's turn.|PRECLASS:1,Monk=6"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 928,
+    "record_key": "Brazen Disciple ~ Feinting Flurry"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

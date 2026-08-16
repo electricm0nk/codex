@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Bludgeoner",
+    "name": "Bludgeoner",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can knock foes out cold with just about any blunt instrument.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Bludgeoner"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "DESC",
+        "value": "You can knock foes out cold with just about any blunt instrument."
+      },
+      {
+        "key": "DESC",
+        "value": " You take no penalty on attack rolls for using a lethal bludgeoning weapon to deal nonlethal damage. &nl; [Normal] You take a -4 penalty on attack rolls when using a lethal weapon to deal nonlethal damage. You cannot use a lethal weapon to deal nonlethal damage in a sneak attack. &nl; [Special] A rogue with this feat can use a lethal bludgeoning weapon to deal nonlethal damage with a sneak attack."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Bludgeoner"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4397,
+    "record_key": "Warpriest Bonus Feat ~ Bludgeoner"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

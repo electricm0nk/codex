@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Hex ~ Unnerve Beasts",
+    "name": "Unnerve Beasts",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_UnnerveBeasts",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Unnerve Beasts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMinorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_UnnerveBeasts|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnnerveBeastsDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_UnnerveBeasts"
+      },
+      {
+        "key": "DESC",
+        "value": "The target becomes offensive to animals (Will negates). Animals become distraught and aggressive in the victim's presence-horses buck, dogs snap and bark, bulls charge, and so on. The hex lasts for %1 hours. A creature that saves against the hex cannot be affected by the hex for 1 day. The reaction of the animals is a mind affecting charm effect, but the hex on the target is not.|UnnerveBeastsDuration"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Unnerve Beasts"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_UnnerveBeasts|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_UnnerveBeasts|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Unnerve Beasts)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnnerveBeastsDuration|INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 720,
+    "record_key": "Witch Hex ~ Unnerve Beasts"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

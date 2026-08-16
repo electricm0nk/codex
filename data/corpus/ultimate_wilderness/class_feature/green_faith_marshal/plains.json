@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Green Faith Marshal ~ Plains Domain",
+    "name": "Plains",
+    "class": "Green Faith Marshal",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Faith Marshal ~ Plains Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GreenFaithMarshalDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlainsLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlainsDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlainsTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlainsAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Plains Domain ~ Migrating Herd|PREVARGTEQ:DomainPlainsAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Plains Domain ~ Pounce|PREVARGTEQ:DomainPlainsAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPlainsLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPlainsDC|10+(DomainPlainsLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPlainsTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPlainsAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Inquisitor=1|Mount|Inquisitor=2|Chameleon Stride|Inquisitor=3|Haste|Inquisitor=4|Aspect of the Stag|Inquisitor=5|Control Winds|Inquisitor=6|Find the Path"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 784,
+    "record_key": "Green Faith Marshal ~ Plains Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

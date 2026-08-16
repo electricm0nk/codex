@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Iconoclast ~ Detect Magic",
+    "name": "Detect Magic",
+    "class": "Iconoclast",
+    "description": "At 2nd level, an iconoclast gains the ability to detect magic at will. This ability replaces detect alignment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Iconoclast ~ Detect Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpellLike.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=InquisitorLvl|Detect Magic"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, an iconoclast gains the ability to detect magic at will. This ability replaces detect alignment."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 877,
+    "record_key": "Iconoclast ~ Detect Magic"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

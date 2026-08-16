@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wilderness Warden ~ Spells",
+    "name": "Spells",
+    "class": "Wilderness Warden",
+    "description": "[NOT IMPLEMENTED] For each level of spell she can cast, a wilderness warden can prepare and cast one spell per day from the druid spell list rather than the paladin spell list. This alters the paladin's spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wilderness Warden ~ Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Features.WildernessWardenClassFeatures"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] For each level of spell she can cast, a wilderness warden can prepare and cast one spell per day from the druid spell list rather than the paladin spell list. This alters the paladin's spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 890,
+    "record_key": "Wilderness Warden ~ Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

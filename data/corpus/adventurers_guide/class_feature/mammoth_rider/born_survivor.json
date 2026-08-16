@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mammoth Rider ~ Born Survivor",
+    "name": "Born Survivor",
+    "class": "Mammoth Rider",
+    "description": "At 2nd level and again at 6th level, a mammoth rider gains a bonus feat from the following list: Great Fortitude, Improved Great Fortitude, Improved Iron Will, Improved Lightning Reflexes, Iron Will, Lightning Reflexes. She must meet the prerequisites for these feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mammoth Rider ~ Born Survivor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mammoth Rider Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BornSurvivorCount|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level and again at 6th level, a mammoth rider gains a bonus feat from the following list: Great Fortitude, Improved Great Fortitude, Improved Iron Will, Improved Lightning Reflexes, Iron Will, Lightning Reflexes. She must meet the prerequisites for these feats."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mammoth Rider Born Survivor Feat|(MammothRiderLvl+2)/4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 357,
+    "record_key": "Mammoth Rider ~ Born Survivor"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

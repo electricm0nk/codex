@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Eldritch Font ~ Font of Power",
+    "name": "Font of Power",
+    "class": "Eldritch Font",
+    "description": "An eldritch font gains one additional spell slot for each level of arcanist spell she can cast. However, the number of spells of each level that she can prepare reduces by 1. If this reduces her spells prepared for a level to 0, she still gains spell slots of that level, which can be consumed using the consume spells class feature to fuel her arcane reservoir or cast spells using metamagic feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eldritch Font ~ Font of Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Eldritch Font Class Feature.Arcanist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An eldritch font gains one additional spell slot for each level of arcanist spell she can cast. However, the number of spells of each level that she can prepare reduces by 1. If this reduces her spells prepared for a level to 0, she still gains spell slots of that level, which can be consumed using the consume spells class feature to fuel her arcane reservoir or cast spells using metamagic feats."
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=0|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=2|1|PREVARGTEQ:ArcanistLVL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=3|1|PREVARGTEQ:ArcanistLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=4|1|PREVARGTEQ:ArcanistLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=5|1|PREVARGTEQ:ArcanistLVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=6|1|PREVARGTEQ:ArcanistLVL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=7|1|PREVARGTEQ:ArcanistLVL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=8|1|PREVARGTEQ:ArcanistLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=9|1|PREVARGTEQ:ArcanistLVL,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2448,
+    "record_key": "Eldritch Font ~ Font of Power"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

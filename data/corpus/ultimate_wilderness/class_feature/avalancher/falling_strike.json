@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Avalancher ~ Falling Strike",
+    "name": "Falling Strike",
+    "class": "Avalancher",
+    "description": "An avalancher excels at dropping onto opponents from higher ground. He gains a +%1 bonus on Stealth checks and attack and damage rolls when he falls at least 10 feet before attacking an opponent. These bonuses stack with any bonuses the avalancher receives for charging or attacking from higher ground.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Avalancher ~ Falling Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Features.AvalancherClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AvalancherFallingStrikeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An avalancher excels at dropping onto opponents from higher ground. He gains a +%1 bonus on Stealth checks and attack and damage rolls when he falls at least 10 feet before attacking an opponent. These bonuses stack with any bonuses the avalancher receives for charging or attacking from higher ground."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AvalancherFallingStrikeBonus|1+min(4,SlayerLVL/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1149,
+    "record_key": "Avalancher ~ Falling Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

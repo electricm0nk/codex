@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Archetype ~ Desert Raider",
+    "name": "Desert Raider",
+    "class": "Rogue Archetype",
+    "description": "Desert raiders constantly threaten caravans that cross vast, desolate expanses. Some desert raiders are tribespeople who raid to supplement their hardscrabble existence, while others are career thieves who take to the desert to avoid the noose. To survive, a desert raider must learn the secrets of the deserts and become inured to their dangers. Though most often associated with hot deserts, desert raiders can also operate in tundra, where sunlight on snow can blind as easily as on sand.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ Desert Raider"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RogueArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Desert Raider],[!PREFACT:1,ABILITIES,Rogue_Archetype_ClassSkills=True,Rogue_Archetype_Trapfinding=True,Rogue_Archetype_RogueTalent2=True,Rogue_Archetype_TrapSense=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Desert raiders constantly threaten caravans that cross vast, desolate expanses. Some desert raiders are tribespeople who raid to supplement their hardscrabble existence, while others are career thieves who take to the desert to avoid the noose. To survive, a desert raider must learn the secrets of the deserts and become inured to their dangers. Though most often associated with hot deserts, desert raiders can also operate in tundra, where sunlight on snow can blind as easily as on sand."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Desert Raider ~ Class Skills|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Desert Raider ~ Desert Tracker|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Desert Raider ~ Sun at Your Back|PRECLASS:1,Rogue=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Desert Raider ~ Light Step|PRECLASS:1,Rogue=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 963,
+    "record_key": "Rogue Archetype ~ Desert Raider"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

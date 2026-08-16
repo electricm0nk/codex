@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator Archetype ~ Majordomo",
+    "name": "Majordomo",
+    "class": "Investigator Archetype",
+    "description": "A majordomo is a skilled individual able to keep the complex operations of a noble's holdings running on a day-to-day basis. In a world of intrigue where the loyalties of staff can be bought and sold, sometimes it takes the skills of an investigator to follow the byzantine paper trails and prevent embezzling and espionage within the estates of the elite.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Majordomo"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Majordomo],[!PREFACT:1,ABILITIES,Investigator_Archetype_Trapfinding=True,Investigator_Archetype_Alchemy=True,Investigator_Archetype_SwiftAlchemy=True,Investigator_Archetype_TrapSense=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A majordomo is a skilled individual able to keep the complex operations of a noble's holdings running on a day-to-day basis. In a world of intrigue where the loyalties of staff can be bought and sold, sometimes it takes the skills of an investigator to follow the byzantine paper trails and prevent embezzling and espionage within the estates of the elite."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Majordomo ~ Paper Trail|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Majordomo ~ Delegate|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Majordomo ~ Inspired Manager|PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Alchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Alchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_TrapSense|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 499,
+    "record_key": "Investigator Archetype ~ Majordomo"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sacred Judgment ~ Justice",
+    "name": "Judgment / Justice",
+    "class": "Sacred Judgment",
+    "description": "This judgment spurs the inquisitor to seek justice, granting a +%1 sacred bonus on all attack rolls.|1+InqJudgeJusticeLVL/5",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Judgment ~ Justice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.InquisitorJudgmentSacred.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InqJudgeJusticeLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This judgment spurs the inquisitor to seek justice, granting a +%1 sacred bonus on all attack rolls.|1+InqJudgeJusticeLVL/5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InqJudgeJusticeLVL|InquisitorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 327,
+    "record_key": "Sacred Judgment ~ Justice"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

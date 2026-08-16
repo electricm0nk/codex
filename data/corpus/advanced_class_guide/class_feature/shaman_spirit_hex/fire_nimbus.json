@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Fire Nimbus",
+    "name": "Fire Nimbus",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman causes a creature within 30 feet to gain a nimbus of fire. Though this doesn't harm the creature, it does cause the creature to emit light like a torch, preventing it from gaining any benefit from concealment or invisibility. The target also takes a -2 penalty on saving throws against spells or effects that deal fire damage. The fire nimbus lasts for %1 rounds. A successful Will saving throw (DC %2) negates this effect. Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours.|ShamanFireNimbusDuration|ShamanFireNimbusDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Fire Nimbus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanFlameHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Flame Nimbus"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanFlameSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanFireNimbusDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanFireNimbusDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman causes a creature within 30 feet to gain a nimbus of fire. Though this doesn't harm the creature, it does cause the creature to emit light like a torch, preventing it from gaining any benefit from concealment or invisibility. The target also takes a -2 penalty on saving throws against spells or effects that deal fire damage. The fire nimbus lasts for %1 rounds. A successful Will saving throw (DC %2) negates this effect. Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours.|ShamanFireNimbusDuration|ShamanFireNimbusDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanFireNimbusDuration|ShamanSpiritLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanFireNimbusDC|ShamanHexDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1548,
+    "record_key": "Shaman Spirit Hex ~ Fire Nimbus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

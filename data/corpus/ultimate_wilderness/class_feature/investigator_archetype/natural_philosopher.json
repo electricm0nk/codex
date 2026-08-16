@@ -1,0 +1,127 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator Archetype ~ Natural Philosopher",
+    "name": "Natural Philosopher",
+    "class": "Investigator Archetype",
+    "description": "Natural philosophers are scholars, explorers, and survivalists who feel at home in nature, seldom longing for the comforts of the city. They eschew the fancy tools and weaponry of gentlefolk detectives and instead employ weapons that double as tools, materials available in nature, and methods better suited for untamed wilderness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Natural Philosopher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Natural Philosopher],[!PREFACT:1,ABILITIES,Investigator_Archetype_Proficiencies=True,Investigator_Archetype_ClassSkills=True,Investigator_Archetype_Inspiration=True,Investigator_Archetype_Trapfinding=True,Investigator_Archetype_Alchemy=True,Investigator_Archetype_TrapSense=True,Investigator_Archetype_Talent3=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Natural philosophers are scholars, explorers, and survivalists who feel at home in nature, seldom longing for the comforts of the city. They eschew the fancy tools and weaponry of gentlefolk detectives and instead employ weapons that double as tools, materials available in nature, and methods better suited for untamed wilderness."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Natural Philosopher ~ Weapon Proficiency|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Natural Philosopher ~ Class Skills|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Natural Philosopher ~ Inspiration|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Natural Philosopher ~ Track|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Natural Philosopher ~ Herbalism|PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Inspiration|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Alchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent3|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 732,
+    "record_key": "Investigator Archetype ~ Natural Philosopher"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

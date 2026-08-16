@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tetori ~ Break Free",
+    "name": "Break Free",
+    "class": "Tetori",
+    "description": "At 5th level, a tetori adds his monk level on combat maneuver or Escape Artist checks made to escape a grapple. If a tetori fails a save against an effect that causes him to become entangled, paralyzed, slowed, or staggered, he may spend 1 point from his ki pool as an immediate action to attempt a new save. This ability replaces high jump.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tetori ~ Break Free"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a tetori adds his monk level on combat maneuver or Escape Artist checks made to escape a grapple. If a tetori fails a save against an effect that causes him to become entangled, paralyzed, slowed, or staggered, he may spend 1 point from his ki pool as an immediate action to attempt a new save. This ability replaces high jump."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1401,
+    "record_key": "Tetori ~ Break Free"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

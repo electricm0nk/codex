@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Community Domain ~ Unity",
+    "name": "Unity",
+    "class": "Community Domain",
+    "description": "Whenever a spell targets you and one or more allies within 30 feet, you can use this ability to allow your allies to use your saving throw against the effect instead of their own. Each ally must decide individually before the rolls are made. Using this ability is an immediate action. You can use this ability %1 times per day.|UnityTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Community Domain ~ Unity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnityTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a spell targets you and one or more allies within 30 feet, you can use this ability to allow your allies to use your saving throw against the effect instead of their own. Each ally must decide individually before the rolls are made. Using this ability is an immediate action. You can use this ability %1 times per day.|UnityTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnityTimes|(DomainCommunityLVL-4)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|UnityTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|UnityTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3197,
+    "record_key": "Community Domain ~ Unity"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

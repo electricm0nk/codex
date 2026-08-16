@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fiend Flayer ~ Bypassing Strike",
+    "name": "Bypassing Strike",
+    "class": "Fiend Flayer",
+    "description": "The fiend flayer can expend 1 point from his arcane pool as a swift action to allow one melee or spellstrike attack he makes before the end of his turn to ignore an evil outsider target's damage reduction.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fiend Flayer ~ Bypassing Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural.MagusArcana"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Fiend Flayer ~ Magus Arcana"
+      },
+      {
+        "key": "DESC",
+        "value": "The fiend flayer can expend 1 point from his arcane pool as a swift action to allow one melee or spellstrike attack he makes before the end of his turn to ignore an evil outsider target's damage reduction."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.170"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 784,
+    "record_key": "Fiend Flayer ~ Bypassing Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Maneuver Training I Selection ~ Dirty Trick",
+    "name": "Dirty Trick",
+    "class": "Maneuver Training I Selection",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maneuver Training I Selection ~ Dirty Trick"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BrawlerManeuverTrainingISelection"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "DirtyTrickManeuverTraining,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DirtyTrickManeuverTrainingBonus|BrawlerManeuverTraining"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DirtyTrickManeuverTraining|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_DirtyTrick,CMD_DirtyTrick|DirtyTrickManeuverTrainingBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1086,
+    "record_key": "Maneuver Training I Selection ~ Dirty Trick"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

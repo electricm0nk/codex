@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shadow Puppeteer ~ Shadow Servant",
+    "name": "Shadow Servant",
+    "class": "Shadow Puppeteer",
+    "description": "At 1st level, the puppeteer can create a shadow servant to perform simple tasks. The shadow servant is identical to an unseen servant (caster level %1), except it appears as a formless shadow. Shadow servant relies on visual components.|BardLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Puppeteer ~ Shadow Servant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, the puppeteer can create a shadow servant to perform simple tasks. The shadow servant is identical to an unseen servant (caster level %1), except it appears as a formless shadow. Shadow servant relies on visual components.|BardLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 1002,
+    "record_key": "Shadow Puppeteer ~ Shadow Servant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

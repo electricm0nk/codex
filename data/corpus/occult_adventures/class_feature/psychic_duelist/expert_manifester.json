@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Duelist ~ Expert Manifester",
+    "name": "Expert Manifester",
+    "class": "Psychic Duelist",
+    "description": "At 17th level, a psychic duelist doesn't have to expend as many resources to create manifestations. She gains 1 additional MP each time she creates a psychic manifestation, in addition to the MP she gains by sacrificing resources. This doesn't increase the maximum number of points she can spend per manifestation, but does allow her to create a manifestation costing 1 MP without sacrificing any resources. This ability replaces telepathy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Duelist ~ Expert Manifester"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Duelist Class Feature.Psychic Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 17th level, a psychic duelist doesn't have to expend as many resources to create manifestations. She gains 1 additional MP each time she creates a psychic manifestation, in addition to the MP she gains by sacrificing resources. This doesn't increase the maximum number of points she can spend per manifestation, but does allow her to create a manifestation costing 1 MP without sacrificing any resources. This ability replaces telepathy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1608,
+    "record_key": "Psychic Duelist ~ Expert Manifester"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

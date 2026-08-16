@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Enchanting Courtesan ~ Seducer's Leverage",
+    "name": "Seducer's Leverage",
+    "class": "Enchanting Courtesan",
+    "description": "An enchanting courtesan develops a vast network of informants, comprised of those who have succumbed to his wiles or purchased his services, or whose secrets and goals he learned in turn from other informants. The enchanting courtesan can determine the influence any one individual has with any one organization or other individual once per day by consulting the network for 1 hour. Doing so also reveals the attitudes of the two parties in question toward each other, unless their particular relationship is a well-kept secret. The enchanting courtesan also gains %1 edges that can be used in any verbal duel involving or regarding one or more of the characters or group members in question. See Chapters 3 and 4 of Pathfinder RPG Ultimate Intrigue for more information on influence and verbal duels, respectively.|EnchantingCourtesanLVL/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enchanting Courtesan ~ Seducer's Leverage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An enchanting courtesan develops a vast network of informants, comprised of those who have succumbed to his wiles or purchased his services, or whose secrets and goals he learned in turn from other informants. The enchanting courtesan can determine the influence any one individual has with any one organization or other individual once per day by consulting the network for 1 hour. Doing so also reveals the attitudes of the two parties in question toward each other, unless their particular relationship is a well-kept secret. The enchanting courtesan also gains %1 edges that can be used in any verbal duel involving or regarding one or more of the characters or group members in question. See Chapters 3 and 4 of Pathfinder RPG Ultimate Intrigue for more information on influence and verbal duels, respectively.|EnchantingCourtesanLVL/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 58,
+    "record_key": "Enchanting Courtesan ~ Seducer's Leverage"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

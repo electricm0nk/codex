@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Deathless Master",
+    "name": "Deathless Master",
+    "class": "Warpriest Bonus Feat",
+    "description": "Even if you suffer a grievous wound, you can shrug off the damage and continue your relentless assault.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Deathless Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "4,CATEGORY=FEAT,Deathless Initiate,Diehard,Endurance,Ironhide"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:9],[PREVARGTEQ:WarpriestBonusFeatBAB,9]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsOrc=true"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "2,STR=13,CON=15"
+      },
+      {
+        "key": "DESC",
+        "value": "Even if you suffer a grievous wound, you can shrug off the damage and continue your relentless assault."
+      },
+      {
+        "key": "DESC",
+        "value": " When you are at 0 or fewer hit points, you do not lose 1 hit point when you take an action."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Deathless Master"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4420,
+    "record_key": "Warpriest Bonus Feat ~ Deathless Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

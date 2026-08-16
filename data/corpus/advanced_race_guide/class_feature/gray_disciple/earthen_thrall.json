@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gray Disciple ~ Earthen Thrall",
+    "name": "Earthen Thrall",
+    "class": "Gray Disciple",
+    "description": "A gray disciple can attempt to control a creature with the earth subtype once per day. This ability is treated as dominate monster (DC %1), but is only effective against creatures with the earth subtype, and the gray disciple can keep only a single creature enthralled. If he attempts to control a second creature with this ability, the first creature is automatically released from domination whether or not the second attempt succeeds.|10+MonkLVL/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gray Disciple ~ Earthen Thrall"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A gray disciple can attempt to control a creature with the earth subtype once per day. This ability is treated as dominate monster (DC %1), but is only effective against creatures with the earth subtype, and the gray disciple can keep only a single creature enthralled. If he attempts to control a second creature with this ability, the first creature is automatically released from domination whether or not the second attempt succeeds.|10+MonkLVL/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 839,
+    "record_key": "Gray Disciple ~ Earthen Thrall"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Toxitician ~ Injections",
+    "name": "Injections",
+    "class": "Toxitician",
+    "description": "The toxitician uses his skill with alchemy and his own psychic power to create injections. The toxitician can create %1 injections per day. It takes 1 hour to create the injections. An injection is inert until the toxitician attempts to use it, taking a swift action to infuse it with his psychic power to activate it.&nl; Using an injection requires taking a standard action to attempt a melee touch attack. If the attack hits, the target of an injection takes a -%2 penalty on its Will saving throws for %3 minutes.&nl; The toxitician can simultaneously attempt a DC 20 Sleight of Hand check to inject the target surreptitiously. If the toxitician uses Sleight of Hand, the target can attempt a Perception check to detect the attempt, opposed by the Sleight of Hand check result, but detecting the attempt doesn't prevent the creature from being injected. Whenever the toxitician uses Sleight of Hand to administer one of his injections, he can implant it rather than injecting it and then trigger the injection at a later time. At any point before he regains his injections, the toxitician can trigger an implanted injection as a free action. The toxitician must be within medium range (%4 feet) of the target of the implanted injection.&nl; If either the melee touch attack or the Sleight of Hand check (if attempted) fails, the injection isn't delivered but can still be used again-once activated, it remains potent for 1 day. An injection that hasn't been administered becomes inert if it leaves the toxitician's possession, reactivating as soon as it returns to his keeping.&nl; The penalties from multiple injections don't stack, nor do the penalties from injections stack with penalties from mesmerist stares or witches' evil eye hexes. Injections are mind-affecting effects.|TInjectionsUses|TInjectionPenalty|max(MesmeristLVL/2,1)|100+10*MesmeristLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Toxitician ~ Injections"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TInjectionsUses|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TInjectionPenalty|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The toxitician uses his skill with alchemy and his own psychic power to create injections. The toxitician can create %1 injections per day. It takes 1 hour to create the injections. An injection is inert until the toxitician attempts to use it, taking a swift action to infuse it with his psychic power to activate it.&nl; Using an injection requires taking a standard action to attempt a melee touch attack. If the attack hits, the target of an injection takes a -%2 penalty on its Will saving throws for %3 minutes.&nl; The toxitician can simultaneously attempt a DC 20 Sleight of Hand check to inject the target surreptitiously. If the toxitician uses Sleight of Hand, the target can attempt a Perception check to detect the attempt, opposed by the Sleight of Hand check result, but detecting the attempt doesn't prevent the creature from being injected. Whenever the toxitician uses Sleight of Hand to administer one of his injections, he can implant it rather than injecting it and then trigger the injection at a later time. At any point before he regains his injections, the toxitician can trigger an implanted injection as a free action. The toxitician must be within medium range (%4 feet) of the target of the implanted injection.&nl; If either the melee touch attack or the Sleight of Hand check (if attempted) fails, the injection isn't delivered but can still be used again-once activated, it remains potent for 1 day. An injection that hasn't been administered becomes inert if it leaves the toxitician's possession, reactivating as soon as it returns to his keeping.&nl; The penalties from multiple injections don't stack, nor do the penalties from injections stack with penalties from mesmerist stares or witches' evil eye hexes. Injections are mind-affecting effects.|TInjectionsUses|TInjectionPenalty|max(MesmeristLVL/2,1)|100+10*MesmeristLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TInjectionsUses|MesmeristLVL+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TInjectionPenalty|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TInjectionPenalty|1|PREVARGTEQ:MesmeristLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Injections per day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|TInjectionsUses"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Toxitician ~ Injections"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1488,
+    "record_key": "Toxitician ~ Injections"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

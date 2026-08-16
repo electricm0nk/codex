@@ -1,0 +1,108 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Visionary Bloodline ~ Visions",
+    "name": "Visions",
+    "class": "Visionary Bloodline",
+    "description": "When you sleep, you can gain information through prophetic visions. Once per day when sleeping, you may gain information about actions taken in the next week as if you had cast a divination spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Visionary Bloodline ~ Visions"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Visionary Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wildblooded ~ Visionary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Dreamspun_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_VisionaryVisions_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you sleep, you can gain information through prophetic visions. Once per day when sleeping, you may gain information about actions taken in the next week as if you had cast a divination spell."
+      },
+      {
+        "key": "DESC",
+        "value": "You can gain information about a single question.|PREVAREQ:Sorcerer_VisionaryVisions_Times,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can gain information about two questions.|PREVAREQ:Sorcerer_VisionaryVisions_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You can gain information about three questions.|PREVAREQ:Sorcerer_VisionaryVisions_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can gain information about %1 questions.|Sorcerer_VisionaryVisions_Times|PREVARGTEQ:Sorcerer_VisionaryVisions_Times,4"
+      },
+      {
+        "key": "DESC",
+        "value": "This bloodline power replaces dreamshaper."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_VisionaryVisions_Times|max(floor((Sorcerer_Dreamspun_BloodlinePower9LVL-11)/3),1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 question)|Sorcerer_VisionaryVisions_Times|PREVAREQ:Sorcerer_VisionaryVisions_Times,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 questions)|Sorcerer_VisionaryVisions_Times|PREVARGTEQ:Sorcerer_VisionaryVisions_Times,2"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DreamspunBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1792,
+    "record_key": "Visionary Bloodline ~ Visions"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

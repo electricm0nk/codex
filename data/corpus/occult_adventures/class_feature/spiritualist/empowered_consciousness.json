@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spiritualist ~ Empowered Consciousness",
+    "name": "Empowered Consciousness",
+    "class": "Spiritualist",
+    "description": "At 20th level, while a spiritualist's phantom is confined in her consciousness, she is immune to mind-affecting effects and spells and effects that involve possession, such as magic jar and possession (see page 181).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Empowered Consciousness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, while a spiritualist's phantom is confined in her consciousness, she is immune to mind-affecting effects and spells and effects that involve possession, such as magic jar and possession (see page 181)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1292,
+    "record_key": "Spiritualist ~ Empowered Consciousness"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

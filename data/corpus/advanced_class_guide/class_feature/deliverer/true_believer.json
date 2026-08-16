@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Deliverer ~ True Believer",
+    "name": "True Believer",
+    "class": "Deliverer",
+    "description": "Mortal wounds cannot stop a deliverer from performing his divine duty. On any round in which he attacks an opponent whose alignment is at least two steps away from his own (see Determined Zeal, above) while benefiting from the Diehard feat, he isn't staggered from having negative hit points, nor does he automatically lose 1 hit point per round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deliverer ~ True Believer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Deliverer Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Mortal wounds cannot stop a deliverer from performing his divine duty. On any round in which he attacks an opponent whose alignment is at least two steps away from his own (see Determined Zeal, above) while benefiting from the Diehard feat, he isn't staggered from having negative hit points, nor does he automatically lose 1 hit point per round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3753,
+    "record_key": "Deliverer ~ True Believer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

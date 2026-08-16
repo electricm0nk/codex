@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tortured Crusader ~ Torment",
+    "name": "Torment",
+    "class": "Tortured Crusader",
+    "description": "A tortured crusader's great suffering in the face of inevitable horror strengthens her faith and resolve, even as it makes her introverted and far less personable than most paladins. A tortured crusader uses Wisdom instead of Charisma as her key spellcasting ability score (to determine her spell DCs, bonus spells per day, bonus on concentration checks, and so on), and to determine the effects of lay on hands. This ability alters the paladin's spellcasting, smite evil, and lay on hands.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tortured Crusader ~ Torment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.TorturedCrusaderClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "DESC",
+        "value": "A tortured crusader's great suffering in the face of inevitable horror strengthens her faith and resolve, even as it makes her introverted and far less personable than most paladins. A tortured crusader uses Wisdom instead of Charisma as her key spellcasting ability score (to determine her spell DCs, bonus spells per day, bonus on concentration checks, and so on), and to determine the effects of lay on hands. This ability alters the paladin's spellcasting, smite evil, and lay on hands."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLSTAT;Class=Paladin|WISSCORE+(((WISSCORE-10)/2)-WIS)"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLSTAT;Class=Paladin|-CHASCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLKNOWNSTAT;Class=Paladin|-CHASCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLKNOWNSTAT;Class=Paladin|WISSCORE+(((WISSCORE-10)/2)-WIS)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LayOnHandsTimes|WIS-CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 195,
+    "record_key": "Tortured Crusader ~ Torment"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

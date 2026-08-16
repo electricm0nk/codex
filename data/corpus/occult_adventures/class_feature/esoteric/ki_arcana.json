@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Esoteric ~ Ki Arcana",
+    "name": "Ki Arcana",
+    "class": "Esoteric",
+    "description": "At 4th level, an esoteric's arcane pool is also considered a ki pool for the purposes of meeting feat and ability requirements. Points from an esoteric's arcane pool can be used for abilities that normally require ki. If an esoteric gains a ki pool, he can use points from his arcane pool and ki pool interchangeably (though not special points such as drunken ki). This ability replaces spell recall.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Esoteric ~ Ki Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Esoteric Class Feature.Magus Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, an esoteric's arcane pool is also considered a ki pool for the purposes of meeting feat and ability requirements. Points from an esoteric's arcane pool can be used for abilities that normally require ki. If an esoteric gains a ki pool, he can use points from his arcane pool and ki pool interchangeably (though not special points such as drunken ki). This ability replaces spell recall."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1778,
+    "record_key": "Esoteric ~ Ki Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Counterspell School ~ Disruption",
+    "name": "Disruption",
+    "class": "Counterspell School",
+    "description": "At 1st level, you gain the ability to disrupt spellcasting with a touch. As a melee touch attack, you can place a disruptive field around the target. While the field is in place, the target must make a concentration check to cast any spell or to use a spell-like ability in addition to any other required concentration checks. The DC of this check is equal to 15 + twice the spell's level. If the check is failed, the target's spell is wasted. This field lasts for %1 rounds. You can use this ability %2 times per day.|CounterspellDisruptionRounds|CounterspellDisruptionTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Counterspell School ~ Disruption"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CounterspellDisruptionTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CounterspellDisruptionRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, you gain the ability to disrupt spellcasting with a touch. As a melee touch attack, you can place a disruptive field around the target. While the field is in place, the target must make a concentration check to cast any spell or to use a spell-like ability in addition to any other required concentration checks. The DC of this check is equal to 15 + twice the spell's level. If the check is failed, the target's spell is wasted. This field lasts for %1 rounds. You can use this ability %2 times per day.|CounterspellDisruptionRounds|CounterspellDisruptionTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CounterspellDisruptionTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CounterspellDisruptionRounds|max(AbjurationSchoolLVL/2,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|CounterspellDisruptionTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3345,
+    "record_key": "Counterspell School ~ Disruption"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

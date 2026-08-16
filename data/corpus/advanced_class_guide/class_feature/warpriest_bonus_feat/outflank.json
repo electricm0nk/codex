@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Outflank",
+    "name": "Outflank",
+    "class": "Warpriest Bonus Feat",
+    "description": "You look for every edge when flanking an enemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Outflank"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Teamwork"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:4],[PREVARGTEQ:WarpriestBonusFeatBAB,4]"
+      },
+      {
+        "key": "DESC",
+        "value": "You look for every edge when flanking an enemy."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever you and an ally who also has this feat are flanking the same creature, your flanking bonus on attack rolls increases to +4. In addition, whenever you score a critical hit against the flanked creature, it provokes an attack of opportunity from your ally."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Outflank"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.165"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4357,
+    "record_key": "Warpriest Bonus Feat ~ Outflank"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

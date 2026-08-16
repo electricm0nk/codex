@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Blighted Myrmidon ~ Aura of Decay",
+    "name": "Aura of Decay",
+    "class": "Blighted Myrmidon",
+    "description": "As a free action, a blighted myrmidon can expend two uses of her smite nature ability to generate an aura of decay with a range of 10 feet for 1 minute. Living foes of the blighted myrmidon within the aura take 3d6 points of damage unless they succeed at a Fortitude save (DC %1) for half damage. If an elemental, a fey, or a creature with levels in druid, hunter, ranger, or shifter takes damage from aura of decay, the blighted myrmidon regains a number of hit points equal to half the amount of damage the creature takes; this doesn't stack if multiple such creatures are in the aura.|AntipaladinLVL/2+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blighted Myrmidon ~ Aura of Decay"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Antipaladin Class Features.BlightedMyrmidonClassFeatures.SpecialQuality.Supernatural.Aura"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, a blighted myrmidon can expend two uses of her smite nature ability to generate an aura of decay with a range of 10 feet for 1 minute. Living foes of the blighted myrmidon within the aura take 3d6 points of damage unless they succeed at a Fortitude save (DC %1) for half damage. If an elemental, a fey, or a creature with levels in druid, hunter, ranger, or shifter takes damage from aura of decay, the blighted myrmidon regains a number of hit points equal to half the amount of damage the creature takes; this doesn't stack if multiple such creatures are in the aura.|AntipaladinLVL/2+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(10 ft., 3d6 damage, DC %1)|AntipaladinLVL/2+CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 152,
+    "record_key": "Blighted Myrmidon ~ Aura of Decay"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Undead Bloodrager Bloodline ~ One Foot in the Grave",
+    "name": "One Foot in the Grave",
+    "class": "Undead Bloodrager Bloodline",
+    "description": "You gain immunity to cold, nonlethal damage, paralysis, and sleep. Your DR increases to 8/-. Unintelligent undead don't notice you unless you attack them. You receive a +4 morale bonus on saving throws made against spells and spell-like abilities cast by undead. You have these benefits constantly, even while not bloodraging.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead Bloodrager Bloodline ~ One Foot in the Grave"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Undead Bloodrager Bloodline ~ Power LVL 20.Bloodrager Bloodline Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Undead"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Undead_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Undead_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain immunity to cold, nonlethal damage, paralysis, and sleep. Your DR increases to 8/-. Unintelligent undead don't notice you unless you attack them. You receive a +4 morale bonus on saving throws made against spells and spell-like abilities cast by undead. You have these benefits constantly, even while not bloodraging."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Cold|Immunity to Nonlethal Damage|Immunity to Paralysis|Immunity to Sleep"
+      },
+      {
+        "key": "BONUS",
+        "value": "DR|-|3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 morale against spells and spell-like abilities cast by undead"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|UndeadBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 882,
+    "record_key": "Undead Bloodrager Bloodline ~ One Foot in the Grave"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

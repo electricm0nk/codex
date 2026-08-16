@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pathfinder Savant ~ Silence Master",
+    "name": "Silence Master",
+    "class": "Pathfinder Savant",
+    "description": "You are able to activate spell trigger, spell completion, and command word items silently, substituting a magical gesture for the necessary words. You must be able to make somatic gestures, and know how to activate the item normally. 3/day, you may also cast a spell of 6th level or lower as if using a silent metamagic rod.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Savant ~ Silence Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder Savant Class Features.ClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "DESC",
+        "value": "You are able to activate spell trigger, spell completion, and command word items silently, substituting a magical gesture for the necessary words. You must be able to make somatic gestures, and know how to activate the item normally. 3/day, you may also cast a spell of 6th level or lower as if using a silent metamagic rod."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Pathfinder Savant ~ Silence Master Metamagic"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 406,
+    "record_key": "Pathfinder Savant ~ Silence Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

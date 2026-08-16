@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mouser ~ Hamstring",
+    "name": "Hamstring",
+    "class": "Mouser",
+    "description": "As long as a mouser has at least 1 panache point when she hits a foe whose size is larger than her own with a light or one-handed piercing melee weapon, she can as a swift action attempt a dirty trick combat maneuver check. Instead of the normal conditions that can be applied with dirty trick, this deed can only stagger the target if the check is successful. This deed replaces targeted strike.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mouser ~ Hamstring"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mouser Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as a mouser has at least 1 panache point when she hits a foe whose size is larger than her own with a light or one-handed piercing melee weapon, she can as a swift action attempt a dirty trick combat maneuver check. Instead of the normal conditions that can be applied with dirty trick, this deed can only stagger the target if the check is successful. This deed replaces targeted strike."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3899,
+    "record_key": "Mouser ~ Hamstring"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

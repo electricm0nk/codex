@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Metal School ~ Metal Rending",
+    "name": "Metal Rending",
+    "class": "Metal School",
+    "description": "Whenever you cast a spell that deals hit point damage, you deal extra damage to creatures made of metal or wearing medium or heavy metal armor. Affected creatures take %1 additional damage. This bonus damage is not increased by Empower Spell or similar effects. This bonus only applies once to a spell, not once per missile or ray, and cannot be split between multiple missiles or rays. The damage is of the same type as the spell.|MetalRendingBonusDamage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metal School ~ Metal Rending"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MetalRendingBonusDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a spell that deals hit point damage, you deal extra damage to creatures made of metal or wearing medium or heavy metal armor. Affected creatures take %1 additional damage. This bonus damage is not increased by Empower Spell or similar effects. This bonus only applies once to a spell, not once per missile or ray, and cannot be split between multiple missiles or rays. The damage is of the same type as the spell.|MetalRendingBonusDamage"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a spell on a creature made of metal or wearing medium or heavy armor, you can roll twice to penetrate the creature's spell resistance and take the better result.|PREVARGTEQ:MetalSchoolProgressionLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MetalRendingBonusDamage|floor(MetalSchoolLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 792,
+    "record_key": "Metal School ~ Metal Rending"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

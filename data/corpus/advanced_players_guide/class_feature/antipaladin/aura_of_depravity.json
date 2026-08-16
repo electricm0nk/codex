@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Antipaladin ~ Aura of Depravity",
+    "name": "Aura of Depravity",
+    "class": "Antipaladin",
+    "description": "You gain DR 5/good. Each enemy within 10 feet takes a -4 penalty on saving throws against compulsion effects. This ability functions only while you remain conscious, not if you are unconscious or dead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Antipaladin ~ Aura of Depravity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AntipaladinClassFeatures.SpecialQuality.Supernatural.Aura"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain DR 5/good. Each enemy within 10 feet takes a -4 penalty on saving throws against compulsion effects. This ability functions only while you remain conscious, not if you are unconscious or dead."
+      },
+      {
+        "key": "DR",
+        "value": "5/Good"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1001,
+    "record_key": "Antipaladin ~ Aura of Depravity"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

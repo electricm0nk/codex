@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wildblooded ~ Envenomed",
+    "name": "Envenomed",
+    "class": "Wildblooded",
+    "description": "The ophidian source of your bloodline has more to do with stealth and assassination than it does with leadership and alliances.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildblooded ~ Envenomed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wildblooded Bloodline"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Serpentine"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Serpentine_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The ophidian source of your bloodline has more to do with stealth and assassination than it does with leadership and alliances."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Envenomed Bloodline ~ Bloodline Arcana|Envenomed Bloodline ~ Bloodline Powers"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Envenomed Bloodline ~ Envenom|PREVARGTEQ:Sorcerer_Serpentine_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Serpentine_Description|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlinePower3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlinePower3|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1675,
+    "record_key": "Wildblooded ~ Envenomed"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

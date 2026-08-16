@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Telekinetic Maneuvers",
+    "name": "Telekinetic Maneuvers",
+    "class": "Wild Talent",
+    "description": "Element aether; Type utility (Sp); Level 4; Burn 0 Saving Throw none; Spell Resistance yes You can perform combat maneuvers as telekinesis, but you use your Constitution modifier to determine your Combat Maneuver Bonus rather than your Intelligence or Charisma modifier. If you possess the telekinetic finesse wild talent, add dirty trick and steal combat maneuvers to the list of combat maneuvers you can perform; when performing these maneuvers, determine your Combat Maneuver Bonus using your Dexterity modifier instead of your Constitution modifier.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Telekinetic Maneuvers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Aether"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Aether,8"
+      },
+      {
+        "key": "DESC",
+        "value": "Element aether; Type utility (Sp); Level 4; Burn 0 Saving Throw none; Spell Resistance yes You can perform combat maneuvers as telekinesis, but you use your Constitution modifier to determine your Combat Maneuver Bonus rather than your Intelligence or Charisma modifier. If you possess the telekinetic finesse wild talent, add dirty trick and steal combat maneuvers to the list of combat maneuvers you can perform; when performing these maneuvers, determine your Combat Maneuver Bonus using your Dexterity modifier instead of your Constitution modifier."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 787,
+    "record_key": "Wild Talent ~ Telekinetic Maneuvers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

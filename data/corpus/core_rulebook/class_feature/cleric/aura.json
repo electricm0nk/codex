@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cleric ~ Aura",
+    "name": "Aura",
+    "class": "Cleric",
+    "description": "A cleric of a chaotic, evil, good, or lawful deity has a particularly powerful aura corresponding to the deity's alignment (see the detect evil spell for details).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric ~ Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.ClassFeatures.ClericClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A cleric of a chaotic, evil, good, or lawful deity has a particularly powerful aura corresponding to the deity's alignment (see the detect evil spell for details)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|VIRTUAL|Aura of Chaos|PREDEITYALIGN:CG,CN,CE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|VIRTUAL|Aura of Evil|PREDEITYALIGN:LE,NE,CE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|VIRTUAL|Aura of Good|PREDEITYALIGN:LG,NG,CG"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|VIRTUAL|Aura of Law|PREDEITYALIGN:LG,LN,LE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlignmentAuraLVL|ClericLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 563,
+    "record_key": "Cleric ~ Aura"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

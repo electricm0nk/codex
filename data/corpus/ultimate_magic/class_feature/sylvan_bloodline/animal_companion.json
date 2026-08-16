@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sylvan Bloodline ~ Animal Companion",
+    "name": "Animal Companion",
+    "class": "Sylvan Bloodline",
+    "description": "You gain an animal companion. Your effective druid level for this ability is %1. This bloodline power counts as your bloodline arcana and also replaces laughing touch.|Sorcerer_SylvanAnimalCompanion_LVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sylvan Bloodline ~ Animal Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Sylvan Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary.Animal Companion"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wildblooded ~ Sylvan"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Fey_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Fey_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_SylvanAnimalCompanion_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain an animal companion. Your effective druid level for this ability is %1. This bloodline power counts as your bloodline arcana and also replaces laughing touch.|Sorcerer_SylvanAnimalCompanion_LVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Animal Companion ~ Standard Companions"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Animal Companion ~ Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_SylvanAnimalCompanion_LVL|max((Sorcerer_Fey_BloodlinePower1LVL-3),1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|Sorcerer_SylvanAnimalCompanion_LVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|FeyBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1775,
+    "record_key": "Sylvan Bloodline ~ Animal Companion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

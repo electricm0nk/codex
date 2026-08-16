@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Chilling Infusion",
+    "name": "Chilling Infusion",
+    "class": "Wild Talent",
+    "description": "Element water; Type substance infusion; Level 5; Burn 3 Associated Blasts blizzard, cold, ice Saving Throw Fortitude negates Your kinetic blast chills your foes to the bone, making their movements sluggish. Whenever an infused blast deals cold damage to a foe, that foe is staggered for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Chilling Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Water"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Water,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Element water; Type substance infusion; Level 5; Burn 3 Associated Blasts blizzard, cold, ice Saving Throw Fortitude negates Your kinetic blast chills your foes to the bone, making their movements sluggish. Whenever an infused blast deals cold damage to a foe, that foe is staggered for 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 683,
+    "record_key": "Wild Talent ~ Chilling Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

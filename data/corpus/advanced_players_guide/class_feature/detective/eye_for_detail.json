@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Detective ~ Eye for Detail",
+    "name": "Eye for Detail",
+    "class": "Detective",
+    "description": "A detective gains a bonus equal to half his level on Knowledge (local), Perception, and Sense Motive checks, as well as Diplomacy checks to gather information (minimum +1). This ability replaces bardic knowledge.|min(1,BardLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Detective ~ Eye for Detail"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardBardicKnowledge"
+      },
+      {
+        "key": "DESC",
+        "value": "A detective gains a bonus equal to half his level on Knowledge (local), Perception, and Sense Motive checks, as well as Diplomacy checks to gather information (minimum +1). This ability replaces bardic knowledge.|min(1,BardLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (local),Perception,Sense Motive|min(1,BardLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1663,
+    "record_key": "Detective ~ Eye for Detail"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,108 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Starsoul Bloodline ~ Minute Meteors",
+    "name": "Minute Meteors",
+    "class": "Starsoul Bloodline",
+    "description": "You can summon a rain of tiny meteorites as a standard action to fall in a 5-foot column, 30 feet high, with a range of 30 feet. The meteors inflict 1d4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Starsoul Bloodline ~ Minute Meteors"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Starsoul Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Starsoul"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Starsoul_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Starsoul_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Starsoul_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_StarsoulMinuteMeteors_DamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_StarsoulMinuteMeteors_DC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon a rain of tiny meteorites as a standard action to fall in a 5-foot column, 30 feet high, with a range of 30 feet. The meteors inflict 1d4"
+      },
+      {
+        "key": "DESC",
+        "value": "+ %1|Sorcerer_StarsoulMinuteMeteors_DamageBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "points of fire damage. A Reflex save negates this damage. The save DC is %1. You may use this ability %2 times per day.|Sorcerer_StarsoulMinuteMeteors_DC|Sorcerer_Starsoul_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_StarsoulMinuteMeteors_DamageBonus|Sorcerer_Starsoul_BloodlinePower1LVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_StarsoulMinuteMeteors_DC|10+(Sorcerer_Starsoul_BloodlinePower1LVL/2)+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d4 fire, DC %1)|Sorcerer_StarsoulMinuteMeteors_DC|Sorcerer_Starsoul_BloodlinePower1Times|PREVARLT:Sorcerer_StarsoulMinuteMeteors_DamageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%3/day (1d4+%1 fire, DC %2)|Sorcerer_StarsoulMinuteMeteors_DamageBonus|Sorcerer_StarsoulMinuteMeteors_DC|Sorcerer_Starsoul_BloodlinePower1Times|PREVARGTEQ:Sorcerer_StarsoulMinuteMeteors_DamageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Starsoul_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|StarsoulBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3226,
+    "record_key": "Starsoul Bloodline ~ Minute Meteors"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

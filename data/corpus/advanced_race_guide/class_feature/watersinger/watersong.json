@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Watersinger ~ Watersong",
+    "name": "Watersong",
+    "class": "Watersinger",
+    "description": "A watersinger can use bardic performance to manipulate and control the shape of water within 30 feet. A successful Perform check allows the bard to animate and control %2 5-foot-cubes of water (these cubes must be adjacent to each other). The watersinger can command the water to take various forms, bend, rise, fall, or sustain a shape, and can make it support weight as if it were solid ice. For example, the watersinger could create a pillar of water (to provide cover), ladder, channel, bridge, stairs, slide, and so on. The manipulated water is as slippery as normal ice. This ability cannot create forms more fragile or complex than what could be carved in normal ice. While under the bard's control, the water has hardness %1 and 3 hit points per inch of thickness. The manipulated water retains its shape for 1 round after the bard stops spending bardic performance rounds to maintain it.|BardLVL/3|1+(BardLVL/5)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Watersinger ~ Watersong"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A watersinger can use bardic performance to manipulate and control the shape of water within 30 feet. A successful Perform check allows the bard to animate and control %2 5-foot-cubes of water (these cubes must be adjacent to each other). The watersinger can command the water to take various forms, bend, rise, fall, or sustain a shape, and can make it support weight as if it were solid ice. For example, the watersinger could create a pillar of water (to provide cover), ladder, channel, bridge, stairs, slide, and so on. The manipulated water is as slippery as normal ice. This ability cannot create forms more fragile or complex than what could be carved in normal ice. While under the bard's control, the water has hardness %1 and 3 hit points per inch of thickness. The manipulated water retains its shape for 1 round after the bard stops spending bardic performance rounds to maintain it.|BardLVL/3|1+(BardLVL/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.176"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 810,
+    "record_key": "Watersinger ~ Watersong"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

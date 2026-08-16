@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Total Destruction",
+    "name": "Total Destruction",
+    "class": "Vigilante Talent",
+    "description": "The brute is adept at rampaging through an area, throwing whatever is available at his opponents. The brute gains Throw Anything as a bonus feat. As a standard action, while in his vigilante identity, he can throw any unattended object up to two size categories smaller than he is up to 60 feet if he is Medium and 80 feet if he is Large. This deals 1d6 points of bludgeoning damage if he is Medium or 1d8 if he is Large, and the brute adds 1-1/2 times his Strength modifier to this damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Total Destruction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Total Destruction"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsBrute,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The brute is adept at rampaging through an area, throwing whatever is available at his opponents. The brute gains Throw Anything as a bonus feat. As a standard action, while in his vigilante identity, he can throw any unattended object up to two size categories smaller than he is up to 60 feet if he is Medium and 80 feet if he is Large. This deals 1d6 points of bludgeoning damage if he is Medium or 1d8 if he is Large, and the brute adds 1-1/2 times his Strength modifier to this damage."
+      },
+      {
+        "key": "DESC",
+        "value": "He can also throw a creature up to two size categories smaller than himself, but he must succeed at a combat maneuver check against that creature's CMD to do so. The thrown creature lands prone and takes an amount of damage equal to the damage dealt to the target of the throw (as noted above), whether the brute hits or misses.|PRECLASS:1,Vigilante=8"
+      },
+      {
+        "key": "DESC",
+        "value": "He can instead throw an object one size category larger than himself at creatures within a 10-foot radius from the object's point of impact. These creatures must succeed at a Reflex save (DC %1) or take %2d6 points of damage.|10+VigilanteLVL/2+STR|VigilanteLVL|PRECLASS:1,Vigilante=16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Throw Anything"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 988,
+    "record_key": "Vigilante Talent ~ Total Destruction"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

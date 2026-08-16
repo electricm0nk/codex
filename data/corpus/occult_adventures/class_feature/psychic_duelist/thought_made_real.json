@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Duelist ~ Thought Made Real",
+    "name": "Thought Made Real",
+    "class": "Psychic Duelist",
+    "description": "At 9th level, a psychic duelist can bring offensive manifestations directly into her foes' minds, attacking with them without entering a psychic duel. When doing so, she can generate manifestation points only by sacrificing a spell, not through any other methods. Using an offensive manifestation in this way functions as casting a spell with a full-round-action casting time. Conditions imposed by these offensive manifestations last for their full duration, even though the target isn't in a psychic duel. The psychic duelist can use manifestation amplifications on offensive manifestations created this way. Such offensive manifestations can't affect thought-form creatures. This is a mind-affecting illusion (phantasm) effect. A thoughtform creature manifested in this way is visible only to its target. This ability replaces telepathic bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Duelist ~ Thought Made Real"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Duelist Class Feature.Psychic Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a psychic duelist can bring offensive manifestations directly into her foes' minds, attacking with them without entering a psychic duel. When doing so, she can generate manifestation points only by sacrificing a spell, not through any other methods. Using an offensive manifestation in this way functions as casting a spell with a full-round-action casting time. Conditions imposed by these offensive manifestations last for their full duration, even though the target isn't in a psychic duel. The psychic duelist can use manifestation amplifications on offensive manifestations created this way. Such offensive manifestations can't affect thought-form creatures. This is a mind-affecting illusion (phantasm) effect. A thoughtform creature manifested in this way is visible only to its target. This ability replaces telepathic bond."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1607,
+    "record_key": "Psychic Duelist ~ Thought Made Real"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

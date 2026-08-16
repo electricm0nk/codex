@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Saboteur",
+    "name": "Saboteur",
+    "class": "Alchemist Archetype",
+    "description": "The saboteur is an alchemist who specializes in destroying the plans, materials, and allies of his enemies. A saboteur has focused his alchemical research toward new ways to conceal his presence, sow confusion, and blow up large structures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Saboteur"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype.AlchemistMutagen"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Saboteur],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistMutagen]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsGnome=true"
+      },
+      {
+        "key": "DESC",
+        "value": "The saboteur is an alchemist who specializes in destroying the plans, materials, and allies of his enemies. A saboteur has focused his alchemical research toward new ways to conceal his presence, sow confusion, and blow up large structures."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Saboteur ~ Class Skills|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Saboteur ~ Chameleon Mutagen|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Saboteur ~ Discoveries|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Alchemist"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 153,
+    "record_key": "Alchemist Archetype ~ Saboteur"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

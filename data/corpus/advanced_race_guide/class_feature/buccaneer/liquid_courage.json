@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Buccaneer ~ Liquid Courage",
+    "name": "Liquid Courage",
+    "class": "Buccaneer",
+    "description": "A buccaneer gains the ability to fortify her grit with strong drink. The act of drinking is a standard action that provokes attacks of opportunity, and each drink provides 1 grog point. Grog points can be used in place of grit points to fuel deeds or grit feats (including those requiring a minimum of 1 grit point to use). The buccaneer can gain a maximum number of grog points each day",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Buccaneer ~ Liquid Courage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A buccaneer gains the ability to fortify her grit with strong drink. The act of drinking is a standard action that provokes attacks of opportunity, and each drink provides 1 grog point. Grog points can be used in place of grit points to fuel deeds or grit feats (including those requiring a minimum of 1 grit point to use). The buccaneer can gain a maximum number of grog points each day"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 357,
+    "record_key": "Buccaneer ~ Liquid Courage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

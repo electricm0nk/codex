@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Fire Sculptor",
+    "name": "Fire Sculptor",
+    "class": "Wild Talent",
+    "description": "Element fire; Type utility (Sp); Level 1; Burn 0 You can sculpt shapes out of flame or alter a fire's spread. As a standard action, you can move one 5-foot square of an ongoing fire per kineticist level you possess to any square contiguous to that fire. For instance, a 4th-level kineticist could move 4 contiguous squares from the center of a 20-foot-by-20-foot fire to the fire's edge in order to create a safe path to escape. The fire continues to spread normally after you sculpt it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Fire Sculptor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Fire"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Element fire; Type utility (Sp); Level 1; Burn 0 You can sculpt shapes out of flame or alter a fire's spread. As a standard action, you can move one 5-foot square of an ongoing fire per kineticist level you possess to any square contiguous to that fire. For instance, a 4th-level kineticist could move 4 contiguous squares from the center of a 20-foot-by-20-foot fire to the fire's edge in order to create a safe path to escape. The fire continues to spread normally after you sculpt it."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 748,
+    "record_key": "Wild Talent ~ Fire Sculptor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

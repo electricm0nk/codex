@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunter ~ Master Hunter",
+    "name": "Master Hunter",
+    "class": "Hunter",
+    "description": "At 20th level, a hunter becomes a master hunter. She can always move at full speed while using Survival to follow tracks without penalty. Each day when the hunter regains her spell slots, she chooses one animal focus to be active on herself for the entire day. This focus is in addition to using her animal focus class ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter ~ Master Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.HunterMasterHunter.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a hunter becomes a master hunter. She can always move at full speed while using Survival to follow tracks without penalty. Each day when the hunter regains her spell slots, she chooses one animal focus to be active on herself for the entire day. This focus is in addition to using her animal focus class ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Animal Focus|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1189,
+    "record_key": "Hunter ~ Master Hunter"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

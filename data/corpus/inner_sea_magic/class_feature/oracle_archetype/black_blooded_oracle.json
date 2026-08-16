@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oracle Archetype ~ Black-Blooded Oracle",
+    "name": "Black-Blooded Oracle",
+    "class": "Oracle Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle Archetype ~ Black-Blooded Oracle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.OracleArchetype.OracleOraclesCurse"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Black-Blooded Oracle],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleOraclesCurse]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "The black-blooded oracle has been infused with the eerie influence of strange fluids that seep from the rock in the deepest pits of the Darklands, the so-called \"Black Blood of Orv\". Often, the eerie taint of the black blood can lie dormant in a lineage for generations before manifesting. It even seems capable of reaching out to touch those destined to become oracles through other strange methods. However an oracle becomes black-blooded, her divine powers carry within them the weird power of this chilling magical substance."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Oracle ~ Curse of Black Blood|!PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Dual-Cursed Oracle"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Black Blooded Dual Cursed Choice|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Oracle"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 289,
+    "record_key": "Oracle Archetype ~ Black-Blooded Oracle"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

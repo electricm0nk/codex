@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kineticist ~ Infusion Specialization",
+    "name": "Infusion Specialization",
+    "class": "Kineticist",
+    "description": "At 5th level, whenever a kineticist uses one or more infusions with a blast, she reduces the combined burn cost of the infusions by 1. This can't reduce the total cost of the infusions used below 0. She reduces the burn cost by 1 additional point at 8th, 11th, 14th, 17th, and 20th levels.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist ~ Infusion Specialization"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, whenever a kineticist uses one or more infusions with a blast, she reduces the combined burn cost of the infusions by 1. This can't reduce the total cost of the infusions used below 0. She reduces the burn cost by 1 additional point at 8th, 11th, 14th, 17th, and 20th levels."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 548,
+    "record_key": "Kineticist ~ Infusion Specialization"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

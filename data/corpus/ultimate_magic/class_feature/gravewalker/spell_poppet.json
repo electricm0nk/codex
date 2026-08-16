@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gravewalker ~ Spell Poppet",
+    "name": "Spell Poppet",
+    "class": "Gravewalker",
+    "description": "You carry around a gristly, inanimate poppet stitched from human skin and stuffed with shards of bone, fingernails, and grave dirt. Your spells come from the will of evil spirits residing in the poppet, and its ability to hold spells functions in a manner identical to the way a witch's spells are granted by her familiar. You must commune with your poppet each day to prepare your spells and cannot prepare spells that are not stored in the poppet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravewalker ~ Spell Poppet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You carry around a gristly, inanimate poppet stitched from human skin and stuffed with shards of bone, fingernails, and grave dirt. Your spells come from the will of evil spirits residing in the poppet, and its ability to hold spells functions in a manner identical to the way a witch's spells are granted by her familiar. You must commune with your poppet each day to prepare your spells and cannot prepare spells that are not stored in the poppet."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 2003,
+    "record_key": "Gravewalker ~ Spell Poppet"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Veiled Blade ~ Soul Veil",
+    "name": "Soul Veil",
+    "class": "Veiled Blade",
+    "description": "At 15th level, a veiled blade can merge a light or one-handed piercing melee weapon with herself, as if using the spell ghost brand (see page 215), except that it takes only a swift action to manifest or store the weapon. This ability lasts until it is dispelled or until the veiled blade merges with a different light or one-handed piercing melee weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Veiled Blade ~ Soul Veil"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL15"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SwashbucklerDeedsLVL15.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, a veiled blade can merge a light or one-handed piercing melee weapon with herself, as if using the spell ghost brand (see page 215), except that it takes only a swift action to manifest or store the weapon. This ability lasts until it is dispelled or until the veiled blade merges with a different light or one-handed piercing melee weapon."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 963,
+    "record_key": "Veiled Blade ~ Soul Veil"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

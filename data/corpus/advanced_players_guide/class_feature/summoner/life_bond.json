@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Summoner ~ Life Bond",
+    "name": "Life Bond",
+    "class": "Summoner",
+    "description": "Your life becomes linked to your eidolon's. As long as your eidolon has 1 or more hit points, you are protected from harm. Damage in excess of that which would reduce you to fewer than 0 hit points is instead transferred to your eidolon. This damage is transferred 1 point at a time, meaning that as soon as your eidolon is reduced to a number of negative hit points equal to its Constitution score, all excess damage remains with the summoner.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner ~ Life Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.Supernatural.Life Bond"
+      },
+      {
+        "key": "DESC",
+        "value": "Your life becomes linked to your eidolon's. As long as your eidolon has 1 or more hit points, you are protected from harm. Damage in excess of that which would reduce you to fewer than 0 hit points is instead transferred to your eidolon. This damage is transferred 1 point at a time, meaning that as soon as your eidolon is reduced to a number of negative hit points equal to its Constitution score, all excess damage remains with the summoner."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 804,
+    "record_key": "Summoner ~ Life Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

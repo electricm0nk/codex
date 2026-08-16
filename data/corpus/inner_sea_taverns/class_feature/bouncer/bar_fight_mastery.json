@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bouncer ~ Bar Fight Mastery",
+    "name": "Bar Fight Mastery",
+    "class": "Bouncer",
+    "description": "In addition to the benefits of close weapon mastery, when a bouncer confirms a critical hit against a major participant in a bar fight, she also reduces the tenacity of the crowd by her normal brawling damage amount (this amount isn't doubled). This alters close weapon mastery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bouncer ~ Bar Fight Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.BouncerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "In addition to the benefits of close weapon mastery, when a bouncer confirms a critical hit against a major participant in a bar fight, she also reduces the tenacity of the crowd by her normal brawling damage amount (this amount isn't doubled). This alters close weapon mastery."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_abilities_class.lst",
+    "sha256": "1344b6dcf98ada3b51a62cd2169c486eb4896dda4078eee3f7abc062a7d957fa",
+    "line": 27,
+    "record_key": "Bouncer ~ Bar Fight Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

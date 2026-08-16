@@ -1,0 +1,152 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Hex ~ Prehensile Hair",
+    "name": "Prehensile Hair",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_PrehensileHair",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Prehensile Hair"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMinorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_PrehensileHair|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HairDamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HairAttackBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HairDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HairStrScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HairDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HairDamageSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NaturalHairReach|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_PrehensileHair"
+      },
+      {
+        "key": "DESC",
+        "value": "You can instantly cause your hair (or even your eyebrows) to grow up to 10 feet long or to shrink to its normal length, and can manipulate your hair as if it were a limb with a %2 Strength score. Your hair has reach %3 feet, and you can use it as a secondary natural attack that deals %4d%5 points of damage. Your hair can manipulate objects (but not weapons) as dexterously as a human hand. The hair cannot be sundered or attacked as a separate creature. Pieces cut from your elongated hair shrink away to nothing. Using your hair does not harm your head or neck, even if you lift something heavy with it. You can manipulate your hair for %1 minutes per day; these minutes do not need to be consecutive, but must be spent in 1-minute increments. A typical male witch with this hex can also manipulate his beard, moustache, or eyebrows.|HairDuration|HairStrScore|NaturalHairReach|HairDamageDice|HairDamageSize"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Prehensile Hair"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Hair"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Natural Attack|AUTOMATIC|Witch Hex ~ Hair"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_PrehensileHair|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_PrehensileHair|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Prehensile Hair)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HairDamageBonus|WitchHexStat/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HairDuration|WitchHexAbilityLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HairDamageDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HairDamageSize|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaturalHairReach|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HairDamageSize|-1|PRESIZEEQ:S"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HairStrScore|INTSCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hair|REACH|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hair|TOHIT|WitchHexStat-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hair|DAMAGE|-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hair|DAMAGE|HairDamageBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 716,
+    "record_key": "Witch Hex ~ Prehensile Hair"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

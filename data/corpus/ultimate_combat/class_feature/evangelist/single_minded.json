@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Evangelist ~ Single-Minded",
+    "name": "Single-Minded",
+    "class": "Evangelist",
+    "description": "An evangelist focuses her skills and learning on proclamation rather than the fine details of the church's deeper mysteries or martial training. Thus, she may select only one domain and does not gain medium armor proficiency or shield proficiency.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist ~ Single-Minded"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An evangelist focuses her skills and learning on proclamation rather than the fine details of the church's deeper mysteries or martial training. Thus, she may select only one domain and does not gain medium armor proficiency or shield proficiency."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Armor Proficiency (Light)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ArmorProfLight"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericDomainCount|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 582,
+    "record_key": "Evangelist ~ Single-Minded"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

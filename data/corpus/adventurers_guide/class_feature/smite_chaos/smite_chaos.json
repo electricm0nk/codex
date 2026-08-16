@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Smite Chaos ~ HK",
+    "name": "Smite Chaos",
+    "class": "Smite Chaos",
+    "description": "You can call out to the powers of law to aid you in your struggle against chaos %1/day. As a swift action, you choose one target within sight to smite. If this target is chaotic, you add +%2 to your attack rolls and +%3 to all damage rolls made against it, and automatically bypass any DR the creature might possess. This ability is twice as effective against outsiders with the chaotic subtype, chaotic-aligned aberrations, and fey. In addition, you gain a +%4 deflection bonus to your AC against attacks made by the target. If you target a creature that is not chaotic, the smite is wasted with no effect. The smite effect remains until the target is dead or the next time you rest and regain your uses of this ability.|HKSmiteTimes|max(CHA,0)|HellknightLvl|max(CHA,0)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Smite Chaos ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Hellknight Class Feature.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HKSmiteTimes|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call out to the powers of law to aid you in your struggle against chaos %1/day. As a swift action, you choose one target within sight to smite. If this target is chaotic, you add +%2 to your attack rolls and +%3 to all damage rolls made against it, and automatically bypass any DR the creature might possess. This ability is twice as effective against outsiders with the chaotic subtype, chaotic-aligned aberrations, and fey. In addition, you gain a +%4 deflection bonus to your AC against attacks made by the target. If you target a creature that is not chaotic, the smite is wasted with no effect. The smite effect remains until the target is dead or the next time you rest and regain your uses of this ability.|HKSmiteTimes|max(CHA,0)|HellknightLvl|max(CHA,0)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|HKSmiteTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 194,
+    "record_key": "Smite Chaos ~ HK"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

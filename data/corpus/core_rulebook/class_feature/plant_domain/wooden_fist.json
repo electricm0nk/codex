@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Plant Domain ~ Wooden Fist",
+    "name": "Wooden Fist",
+    "class": "Plant Domain",
+    "description": "As a free action, your hands can become as hard as wood, covered in tiny thorns. While you have wooden fists, your unarmed strikes do not provoke attacks of opportunity, deal lethal damage, and gain a +%1 bonus on damage rolls. You can use this ability for %2 rounds per day. These rounds do not need to be consecutive.|max(DomainPlantLVL/2,1)|WoodenFistRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plant Domain ~ Wooden Fist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialAttack.Supernatural.DomainPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoodenFistRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, your hands can become as hard as wood, covered in tiny thorns. While you have wooden fists, your unarmed strikes do not provoke attacks of opportunity, deal lethal damage, and gain a +%1 bonus on damage rolls. You can use this ability for %2 rounds per day. These rounds do not need to be consecutive.|max(DomainPlantLVL/2,1)|WoodenFistRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoodenFistRounds|3+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds/day)|WoodenFistRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|WoodenFistRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3247,
+    "record_key": "Plant Domain ~ Wooden Fist"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

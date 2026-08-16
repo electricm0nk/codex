@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wood Mystery ~ Speak with Wood",
+    "name": "Speak with Wood",
+    "class": "Wood Mystery",
+    "description": "You can talk to wood and learn what it knows. You must spend 1 minute meditating on and communing with the wood. At the end of this time, you can speak with the wood. This functions as the stone tell spell, except with wood instead of stones. You can use this ability for %1 minutes. This duration does not need to be consecutive, but it must be used in 1-minute increments. You can speak with natural or worked wood.|SpeakWithWoodDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wood Mystery ~ Speak with Wood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.WoodRevelation.Supernatural"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=11"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpeakWithWoodDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can talk to wood and learn what it knows. You must spend 1 minute meditating on and communing with the wood. At the end of this time, you can speak with the wood. This functions as the stone tell spell, except with wood instead of stones. You can use this ability for %1 minutes. This duration does not need to be consecutive, but it must be used in 1-minute increments. You can speak with natural or worked wood.|SpeakWithWoodDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpeakWithWoodDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 513,
+    "record_key": "Wood Mystery ~ Speak with Wood"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

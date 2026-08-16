@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Power Attack",
+    "name": "Power Attack",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can make exceptionally deadly melee attacks by sacrificing accuracy for strength.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Power Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.AttackOption"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:1],[PREVARGTEQ:WarpriestBonusFeatBAB,1]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,STR=13"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PowerAttackModifier|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkFlurryPowerAttackModifier|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make exceptionally deadly melee attacks by sacrificing accuracy for strength."
+      },
+      {
+        "key": "DESC",
+        "value": " You can choose to take a -%1 penalty on all melee attack rolls and combat maneuver checks to gain a +%2 bonus on all melee damage rolls. This bonus to damage is increased by half (+50%%) if you are making an attack with a two-handed weapon, a one handed weapon using two hands, or a primary natural weapon that adds 1-1/2 times your Strength modifier on damage rolls. This bonus to damage is halved (-50%%) if you are making an attack with an off-hand weapon or secondary natural weapon. You must choose to use this feat before making an attack roll, and its effects last until your next turn. The bonus damage does not apply to touch attacks or effects that do not deal hit point damage.|1+BAB/4|2*floor(1+BAB/4)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Power Attack"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Power Attack (Light)|Power Attack (Off-Hand)|Power Attack (One-Handed)|Power Attack (Two-Handed)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Power Attack (Flurry)|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4270,
+    "record_key": "Warpriest Bonus Feat ~ Power Attack"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

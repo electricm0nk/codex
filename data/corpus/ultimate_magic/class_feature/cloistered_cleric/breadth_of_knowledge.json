@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cloistered Cleric ~ Breadth of Knowledge",
+    "name": "Breadth of Knowledge",
+    "class": "Cloistered Cleric",
+    "description": "You gain a +%1 bonus on Knowledge skill checks and can make Knowledge checks untrained.|BreadthOfKnowledgeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cloistered Cleric ~ Breadth of Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreadthOfKnowledgeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Knowledge skill checks and can make Knowledge checks untrained.|BreadthOfKnowledgeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE.Knowledge|BreadthOfKnowledgeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreadthOfKnowledgeBonus|max(1,classlevel(\"Cleric\")/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1017,
+    "record_key": "Cloistered Cleric ~ Breadth of Knowledge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

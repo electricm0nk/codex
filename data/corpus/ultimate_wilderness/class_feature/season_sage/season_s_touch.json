@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Season Sage ~ Season's Touch",
+    "name": "Season's Touch",
+    "class": "Season Sage",
+    "description": "A season sage can infuse living things with the essence of a season with a touch, causing them to manifest the changes associated with that season-for example, a touch of winter can make some animals grow a thick winter coat, while a touch of summer can make them shed. A touch of autumn would make a deciduous tree's leaves change colors, a touch of winter would make its leaves fall, and a touch of spring would make it put forth new leaves. In addition, a season sage can use the following abilities (in any combination) %1 times per day. [Vernal Growth] A touched living creature gains the effects of enlarge person (even if it is not a humanoid) for %2 minutes. A touched non-creature plant likewise doubles in all dimensions for the same duration. [Summer Might] A touched creature gains a +4 enhancement bonus to Constitution for %2 minutes. [Autumn Rot] A touched creature or object made of plant matter takes %3d6 points of acid damage. [Winter Frost] A touched creature or object takes %3d6 points of cold damage.|1+WIS|DruidLVL|DruidLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Season Sage ~ Season's Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.SeasonSageClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A season sage can infuse living things with the essence of a season with a touch, causing them to manifest the changes associated with that season-for example, a touch of winter can make some animals grow a thick winter coat, while a touch of summer can make them shed. A touch of autumn would make a deciduous tree's leaves change colors, a touch of winter would make its leaves fall, and a touch of spring would make it put forth new leaves. In addition, a season sage can use the following abilities (in any combination) %1 times per day. [Vernal Growth] A touched living creature gains the effects of enlarge person (even if it is not a humanoid) for %2 minutes. A touched non-creature plant likewise doubles in all dimensions for the same duration. [Summer Might] A touched creature gains a +4 enhancement bonus to Constitution for %2 minutes. [Autumn Rot] A touched creature or object made of plant matter takes %3d6 points of acid damage. [Winter Frost] A touched creature or object takes %3d6 points of cold damage.|1+WIS|DruidLVL|DruidLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 555,
+    "record_key": "Season Sage ~ Season's Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

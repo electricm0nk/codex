@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Child ~ Chameleon Step",
+    "name": "Chameleon Step",
+    "class": "Wild Child",
+    "description": "The wild child can move up to twice his speed as a move action. The wild child does not take any penalty on Stealth checks for movement during this move. This move provokes attacks of opportunity as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Child ~ Chameleon Step"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Wild Child Class Feature.SpecialQuality.Extraordinary.WildChildTrickChoice"
+      },
+      {
+        "key": "DESC",
+        "value": "The wild child can move up to twice his speed as a move action. The wild child does not take any penalty on Stealth checks for movement during this move. This move provokes attacks of opportunity as normal."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2939,
+    "record_key": "Wild Child ~ Chameleon Step"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

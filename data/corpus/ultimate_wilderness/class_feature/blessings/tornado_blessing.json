@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Blessings ~ Tornado Blessing",
+    "name": "Tornado Blessing",
+    "class": "Blessings",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blessings ~ Tornado Blessing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Blessings"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDEITY:1,N],[PREDEITYDOMAIN:1,Air,Destruction]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tornado Blessing ~ Dust Devil|PREVARGTEQ:WarpriestBlessingLVL,WarpriestMinorBlessingGrantedLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tornado Blessing ~ Howling Gale|PREVARGTEQ:WarpriestBlessingLVL,WarpriestMajorBlessingGrantedLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1229,
+    "record_key": "Blessings ~ Tornado Blessing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

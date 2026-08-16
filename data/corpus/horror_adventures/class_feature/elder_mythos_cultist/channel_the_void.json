@@ -1,0 +1,112 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elder Mythos Cultist ~ Channel the Void",
+    "name": "Channel the Void",
+    "class": "Elder Mythos Cultist",
+    "description": "When an Elder Mythos cultist channels energy, he taps into the unthinkable void between the stars. This is similar to channeling negative energy, but instead of healing undead, this blast of energy deals %1d%2 points of positive energy damage, while it harms and devours living beings, corporeal non-skeletal undead, and constructs crafted from flesh (such as flesh golems). This is not negative energy damage; instead, the damage manifests in the form of wounds from supernatural deterioration and rot. A creature that would take damage from this energy can attempt a Fortitude save (DC %3) to halve the damage, rather than a Will save. You can use this ability %4 times per day.|ElderMythosCultistChannelEnergyDice|ElderMythosCultistChannelEnergyDieSize|ElderMythosCultistChannelEnergyDC|ClericChannelEnergyTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elder Mythos Cultist ~ Channel the Void"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cleric Class Feature.ElderMythosCultistClassFeatures.SpecialAttack.Supernatural.ChannelEnergy.Channel Energy.Channel Energy Negative.Channel Negative Energy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "DESC",
+        "value": "When an Elder Mythos cultist channels energy, he taps into the unthinkable void between the stars. This is similar to channeling negative energy, but instead of healing undead, this blast of energy deals %1d%2 points of positive energy damage, while it harms and devours living beings, corporeal non-skeletal undead, and constructs crafted from flesh (such as flesh golems). This is not negative energy damage; instead, the damage manifests in the form of wounds from supernatural deterioration and rot. A creature that would take damage from this energy can attempt a Fortitude save (DC %3) to halve the damage, rather than a Will save. You can use this ability %4 times per day.|ElderMythosCultistChannelEnergyDice|ElderMythosCultistChannelEnergyDieSize|ElderMythosCultistChannelEnergyDC|ClericChannelEnergyTimes"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature that both fails the Fortitude save and would be killed or destroyed by this effect is entirely disintegrated, leaving behind only a trace of fine dust. A disintegrated creature's equipment is unaffected.|PRECLASS:1,Cleric=8"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability still counts as channel energy, but it counts as neither positive nor negative energy specifically (for example, the Elder Mythos cultist couldn't take the Turn Undead or Command Undead feat). For the purposes of feats that require channel energy but refer to what happens if the character channels positive or negative energy, this ability alters the listed effect for negative energy. For instance, an Elder Mythos cultist could use Channel Smite to damage living or fleshy creatures with his melee attack. This ability alters channel energy."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Cleric_Channeling|-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Negative Energy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElderMythosCultistChannelEnergyDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElderMythosCultistChannelEnergyDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElderMythosCultistChannelEnergyDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElderMythosCultistChannelEnergyLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElderMythosCultistChannelEnergyDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElderMythosCultistChannelEnergyDice|(ElderMythosCultistChannelEnergyLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElderMythosCultistChannelEnergyDC|10+(ElderMythosCultistChannelEnergyLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElderMythosCultistChannelEnergyLVL|ClericChannelEnergyLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2, DC %3, %4/day)|ElderMythosCultistChannelEnergyDice|ElderMythosCultistChannelEnergyDieSize|ElderMythosCultistChannelEnergyDC|ClericChannelEnergyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ClericChannelEnergyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Channel Energy"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 75,
+    "record_key": "Elder Mythos Cultist ~ Channel the Void"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

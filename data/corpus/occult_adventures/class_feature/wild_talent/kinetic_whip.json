@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Kinetic Whip",
+    "name": "Kinetic Whip",
+    "class": "Wild Talent",
+    "description": "Element universal; Type form infusion; Level 3; Burn 2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Kinetic Whip"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Universal"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ Kinetic Blade"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite kinetic blade"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Base,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Element universal; Type form infusion; Level 3; Burn 2"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Associated Blasts any Saving Throw none You form a long tendril of energy or elemental matter. This functions as kinetic blade but counts as a reach weapon appropriate for your size. Unlike most reach weapons, the kinetic whip can also attack nearby creatures. The kinetic whip disappears at the beginning of your next turn, but in the intervening time, it threatens all squares within its reach, allowing you to make attacks of opportunity that deal the whip's usual damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 707,
+    "record_key": "Wild Talent ~ Kinetic Whip"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Guiding Blade ~ Interfering Blade",
+    "name": "Interfering Blade",
+    "class": "Guiding Blade",
+    "description": "A guiding blade learns how to use her weapon to interfere with enemies' attacks, protecting her allies from peril. As long as the guiding blade is wearing light or no armor, whenever she is aware of an attack against an adjacent ally and would not herself be denied her Dexterity bonus against that attack, the guiding blade grants that ally a +%1 bonus to AC against that attack. For example, if an invisible enemy attacks a guiding blade's ally and the guiding blade can't see that enemy, she would not grant the bonus from interfering blade unless she had the uncanny dodge ability. This bonus does not stack with any bonus to AC the guiding blade provides with the aid another action.|min(5,((SwashbucklerLVL+1)/4))",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guiding Blade ~ Interfering Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Features.GuidingBladeClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A guiding blade learns how to use her weapon to interfere with enemies' attacks, protecting her allies from peril. As long as the guiding blade is wearing light or no armor, whenever she is aware of an attack against an adjacent ally and would not herself be denied her Dexterity bonus against that attack, the guiding blade grants that ally a +%1 bonus to AC against that attack. For example, if an invisible enemy attacks a guiding blade's ally and the guiding blade can't see that enemy, she would not grant the bonus from interfering blade unless she had the uncanny dodge ability. This bonus does not stack with any bonus to AC the guiding blade provides with the aid another action.|min(5,((SwashbucklerLVL+1)/4))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 949,
+    "record_key": "Guiding Blade ~ Interfering Blade"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

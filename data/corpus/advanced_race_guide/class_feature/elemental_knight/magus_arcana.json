@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elemental Knight ~ Magus Arcana",
+    "name": "Magus Arcana",
+    "class": "Elemental Knight",
+    "description": "The following magus arcana complement the elemental knight archetype: empowered magic, pool strike, spell shield.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Knight ~ Magus Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The following magus arcana complement the elemental knight archetype: empowered magic, pool strike, spell shield."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.203"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 962,
+    "record_key": "Elemental Knight ~ Magus Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

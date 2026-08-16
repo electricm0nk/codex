@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bellflower Harvester ~ Obsequious",
+    "name": "Obsequious",
+    "class": "Bellflower Harvester",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bellflower Harvester ~ Obsequious"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.BellflowerHarvesterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "DESC",
+        "value": "A Bellflower harvester works hard to cultivate a social identity that plays off others' racist assumptions to deflect blame and excuse suspicious behavior, making him seem harmless or even a model servant. He can use the Bluff skill to deflect suspicion about his vigilante identity and activities (including use of vigilante talents when in his social identity) rather than Disguise, and gains a +%1 bonus on Bluff checks to do so.|min(6,2+(VigilanteLVL-1)/4)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1105,
+    "record_key": "Bellflower Harvester ~ Obsequious"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

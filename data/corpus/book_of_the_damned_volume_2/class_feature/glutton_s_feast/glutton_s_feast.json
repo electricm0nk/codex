@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Glutton's Feast ~ Xoveron",
+    "name": "Glutton's Feast",
+    "class": "Glutton's Feast",
+    "description": "You can cast heroes' feast 1/day. The food created by this effect consists of raw or rotting meat and rancid milk. Those who partake of this feast consume their food shockingly fast, as if they were starving - it takes only 1 minute to gain the effects of this spell. Non-worshipers of Xoveron must make a Fortitude save (DC %1) to avoid being sickened by the feast for 6 hours (though all other benefits of the feast still apply). This ability is the equivalent of a 7th-level spell.|16+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Glutton's Feast ~ Xoveron"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Heroes' Feast,17+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast heroes' feast 1/day. The food created by this effect consists of raw or rotting meat and rancid milk. Those who partake of this feast consume their food shockingly fast, as if they were starving - it takes only 1 minute to gain the effects of this spell. Non-worshipers of Xoveron must make a Fortitude save (DC %1) to avoid being sickened by the feast for 6 hours (though all other benefits of the feast still apply). This ability is the equivalent of a 7th-level spell.|16+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 191,
+    "record_key": "Glutton's Feast ~ Xoveron"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oath against Undeath ~ Ghost Touch Aura",
+    "name": "Ghost Touch Aura",
+    "class": "Oath against Undeath",
+    "description": "Your armor is treated as if it had the ghost touch armor property. This does not affect the cost or effect of any other abilities of the armor.|!PRECLASS:1,Paladin=9",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against Undeath ~ Ghost Touch Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your armor is treated as if it had the ghost touch armor property. This does not affect the cost or effect of any other abilities of the armor.|!PRECLASS:1,Paladin=9"
+      },
+      {
+        "key": "DESC",
+        "value": "Your armor and shield are treated as if they had the ghost touch armor property. This does not affect the cost or effect of any other abilities of the armor or shield.|PRECLASS:1,Paladin=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mercies|-1|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mercies|-1|PRECLASS:1,Paladin=9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1558,
+    "record_key": "Oath against Undeath ~ Ghost Touch Aura"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

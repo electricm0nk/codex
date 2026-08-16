@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gun Scavenger ~ Change Out",
+    "name": "Change Out",
+    "class": "Gun Scavenger",
+    "description": "At 1st level, as a full-round action, a gun scavenger can remove the broken condition from a single firearm she is currently wielding, as long as that condition was gained by a firearm misfire. When she does, she can replace the broken part with a specialized, short-lived component that does one of the following: gives the firearm the scatter weapon quality (Ultimate Combat i37); increases the damage dealt by the pistolwhip deed by one die size; OT increases the firearm's range increment by io feet. A firearm with such a modification increases its misfire chance cumulatively by 1 each time it is fired until it misfires. When it does misfire, the effects of the temporary component are lost. A gun scavenger must have at least 1 grit point to perform this deed. Alternatively, if the gun scavenger spends 1 grit point to perform a change out, she can either perform the change out as a standard action instead of a full-round action, or perform the change out on a firearm that isn't broken. This deed replaces the quick clear deed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gun Scavenger ~ Change Out"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Gunslinger Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, as a full-round action, a gun scavenger can remove the broken condition from a single firearm she is currently wielding, as long as that condition was gained by a firearm misfire. When she does, she can replace the broken part with a specialized, short-lived component that does one of the following: gives the firearm the scatter weapon quality (Ultimate Combat i37); increases the damage dealt by the pistolwhip deed by one die size; OT increases the firearm's range increment by io feet. A firearm with such a modification increases its misfire chance cumulatively by 1 each time it is fired until it misfires. When it does misfire, the effects of the temporary component are lost. A gun scavenger must have at least 1 grit point to perform this deed. Alternatively, if the gun scavenger spends 1 grit point to perform a change out, she can either perform the change out as a standard action instead of a full-round action, or perform the change out on a firearm that isn't broken. This deed replaces the quick clear deed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 74,
+    "record_key": "Gun Scavenger ~ Change Out"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

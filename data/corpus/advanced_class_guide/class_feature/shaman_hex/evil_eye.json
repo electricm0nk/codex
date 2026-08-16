@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Hex ~ Evil Eye",
+    "name": "Evil Eye",
+    "class": "Shaman Hex",
+    "description": "The shaman causes doubt to creep into the mind of a foe within 30 feet that she can see. The target takes a %1 penalty on one of the following (shaman's choice): ability checks, AC, attack rolls, saving throws, or skill checks. This hex lasts %2 rounds. A successful Will saving throw (DC %3) reduces this to just 1 round. This is a mind-affecting effect.|ShamanEvilEyeHexPenalty|ShamanEvilEyeHexDuration|ShamanEvilEyeHexDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Hex ~ Evil Eye"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Evil Eye"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanEvilEyeHexPenalty|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanEvilEyeHexDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanEvilEyeHexDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman causes doubt to creep into the mind of a foe within 30 feet that she can see. The target takes a %1 penalty on one of the following (shaman's choice): ability checks, AC, attack rolls, saving throws, or skill checks. This hex lasts %2 rounds. A successful Will saving throw (DC %3) reduces this to just 1 round. This is a mind-affecting effect.|ShamanEvilEyeHexPenalty|ShamanEvilEyeHexDuration|ShamanEvilEyeHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanEvilEyeHexPenalty|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanEvilEyeHexPenalty|-2|PREVARGTEQ:ShamanHexLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanEvilEyeHexDC|ShamanHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanEvilEyeHexDuration|3+ShamanHexStatMod"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1430,
+    "record_key": "Shaman Hex ~ Evil Eye"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

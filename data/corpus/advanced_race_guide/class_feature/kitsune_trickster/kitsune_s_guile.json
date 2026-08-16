@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kitsune Trickster ~ Kitsune's Guile",
+    "name": "Kitsune's Guile",
+    "class": "Kitsune Trickster",
+    "description": "A trickster relies on her intellect as much as her personality. She adds her Intelligence modifier on Bluff, Diplomacy, Disguise, and Sense Motive checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kitsune Trickster ~ Kitsune's Guile"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A trickster relies on her intellect as much as her personality. She adds her Intelligence modifier on Bluff, Diplomacy, Disguise, and Sense Motive checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Diplomacy,Disguise,Sense Motive|INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.193"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 875,
+    "record_key": "Kitsune Trickster ~ Kitsune's Guile"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fervor Domain ~ Fire of Belief",
+    "name": "Fire of Belief",
+    "class": "Fervor Domain",
+    "description": "You can unleash a gout of holy or unholy flame that sears one target within 30 feet as a ranged touch attack. The target takes 1d6+%1 points of fire damage. If you are good, the flames only harm nongood targets. If you are evil, the flames only harm nonevil targets. If you are neither good nor evil, when you gain this ability you must decide whether the flames harm only nongood or nonevil targets; once you make this decision, it cannot be changed (though if your alignment changes, the effect of the flames changes appropriately). You can use this ability %2 times per day.|FireOfBeliefBonusDamage|DomainFervorTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fervor Domain ~ Fire of Belief"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FireOfBeliefBonusDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a gout of holy or unholy flame that sears one target within 30 feet as a ranged touch attack. The target takes 1d6+%1 points of fire damage. If you are good, the flames only harm nongood targets. If you are evil, the flames only harm nonevil targets. If you are neither good nor evil, when you gain this ability you must decide whether the flames harm only nongood or nonevil targets; once you make this decision, it cannot be changed (though if your alignment changes, the effect of the flames changes appropriately). You can use this ability %2 times per day.|FireOfBeliefBonusDamage|DomainFervorTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireOfBeliefBonusDamage|max(1,DomainFervorLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 359,
+    "record_key": "Fervor Domain ~ Fire of Belief"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

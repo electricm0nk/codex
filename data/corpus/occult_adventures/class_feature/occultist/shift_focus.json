@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Occultist ~ Shift Focus",
+    "name": "Shift Focus",
+    "class": "Occultist",
+    "description": "An occultist gains the ability to shift his mental focus from one implement to another, though some of the focus is lost along the way. Shifting mental focus removes a number of points of mental focus from one implement and adds the same number - 1 to another implement; this takes 1 minute of quiet contemplation while touching both implements. The occultist can shift his mental focus only from one implement to another implement; he can't shift generic focus into an implement. Unlike expending focus normally, this shift can reduce the effect of a resonant power in the implement from which the mental focus was taken. It does not, however, add to the resonant power of the implement to which the focus is added.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist ~ Shift Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An occultist gains the ability to shift his mental focus from one implement to another, though some of the focus is lost along the way. Shifting mental focus removes a number of points of mental focus from one implement and adds the same number - 1 to another implement; this takes 1 minute of quiet contemplation while touching both implements. The occultist can shift his mental focus only from one implement to another implement; he can't shift generic focus into an implement. Unlike expending focus normally, this shift can reduce the effect of a resonant power in the implement from which the mental focus was taken. It does not, however, add to the resonant power of the implement to which the focus is added."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 988,
+    "record_key": "Occultist ~ Shift Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

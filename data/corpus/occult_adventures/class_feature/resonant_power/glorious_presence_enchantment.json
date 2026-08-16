@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Resonant Power ~ Glorious Presence",
+    "name": "Glorious Presence [Enchantment]",
+    "class": "Resonant Power",
+    "description": "The implement invokes the presence of those who have worn it in the past. The implement's wearer gains a +1 competence bonus on all Charisma-based skill checks and ability checks for every 2 points of mental focus invested in the implement (+%1), to a maximum bonus of +%2.|OccultistGloriousPresence|1+OccultistLVL/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Resonant Power ~ Glorious Presence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Resonant Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistGloriousPresence|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The implement invokes the presence of those who have worn it in the past. The implement's wearer gains a +1 competence bonus on all Charisma-based skill checks and ability checks for every 2 points of mental focus invested in the implement (+%1), to a maximum bonus of +%2.|OccultistGloriousPresence|1+OccultistLVL/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE=Charisma|OccultistGloriousPresence|TYPE=Competence"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistGloriousPresence|min(OccultistEnchantmentFocus/2,1+OccultistLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1062,
+    "record_key": "Resonant Power ~ Glorious Presence"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

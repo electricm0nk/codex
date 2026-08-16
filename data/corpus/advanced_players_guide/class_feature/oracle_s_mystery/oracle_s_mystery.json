@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oracle's Mystery",
+    "name": "Oracle's Mystery",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.CF_Domain.Mystery.Oracle's Mystery"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleMysteryLevel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleRevelationDC|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Oracle Mystery|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleRevelationDC|10+classlevel(\"Oracle\")/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMysteryLevel|1|PREVAREQ:Oracle_CF_Revelation1,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMysteryLevel|1|PRECLASS:1,Oracle=3|PREVAREQ:Oracle_CF_Revelation3,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMysteryLevel|1|PRECLASS:1,Oracle=7|PREVAREQ:Oracle_CF_Revelation7,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMysteryLevel|1|PRECLASS:1,Oracle=11|PREVAREQ:Oracle_CF_Revelation11,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMysteryLevel|1|PRECLASS:1,Oracle=15|PREVAREQ:Oracle_CF_Revelation15,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMysteryLevel|1|PRECLASS:1,Oracle=19|PREVAREQ:Oracle_CF_Revelation19,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 480,
+    "record_key": "Oracle's Mystery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

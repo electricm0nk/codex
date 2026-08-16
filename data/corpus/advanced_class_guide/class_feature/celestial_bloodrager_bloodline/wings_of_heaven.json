@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Celestial Bloodrager Bloodline ~ Wings of Heaven",
+    "name": "Wings of Heaven",
+    "class": "Celestial Bloodrager Bloodline",
+    "description": "You can choose to sprout feathery wings and fly with a speed of %1 feet and good maneuverability.|Bloodrager_Celestial_WingsOfHeaven_Speed",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Celestial Bloodrager Bloodline ~ Wings of Heaven"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Celestial Bloodrager Bloodline ~ Power LVL 12.Bloodrager Bloodline Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Celestial"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Celestial_BloodlineProgressionLVL,12"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower12LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_WingsOfHeaven_Speed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can choose to sprout feathery wings and fly with a speed of %1 feet and good maneuverability.|Bloodrager_Celestial_WingsOfHeaven_Speed"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Celestial_WingsOfHeaven_Speed|60+if(Bloodrager_Celestial_BloodlineLVL>=20,20,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CelestialBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 662,
+    "record_key": "Celestial Bloodrager Bloodline ~ Wings of Heaven"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skirmisher ~ Counter-Interrogation Training",
+    "name": "Counter-Interrogation Training",
+    "class": "Skirmisher",
+    "description": "A skirmisher undertaking infiltration missions learns to resist interrogation and persuasion. The skirmisher gains a bonus on Will saving throws against charms and divinations.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skirmisher ~ Counter-Interrogation Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SkirmisherConditioningSpecialty.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A skirmisher undertaking infiltration missions learns to resist interrogation and persuasion. The skirmisher gains a bonus on Will saving throws against charms and divinations."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 Will vs. charms and divinations.|SkirmisherConditioningBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 583,
+    "record_key": "Skirmisher ~ Counter-Interrogation Training"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

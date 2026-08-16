@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sanctified Slayer ~ Talented Slayer",
+    "name": "Talented Slayer",
+    "class": "Sanctified Slayer",
+    "description": "At 8th, 16th, 17th, and 20th levels, a sanctified slayer can gain a single slayer talent, including those from the list of rogue talents that a slayer can take, but not an advanced slayer talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sanctified Slayer ~ Talented Slayer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.ArchetypeAbility.SpecialQuality.Extraordinary.InquisitorTrueJudgement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlayerTalentLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th, 16th, 17th, and 20th levels, a sanctified slayer can gain a single slayer talent, including those from the list of rogue talents that a slayer can take, but not an advanced slayer talent."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Sanctified Slayer Talent|(SlayerTalentLVL>=8)+(SlayerTalentLVL>=16)+(SlayerTalentLVL>=17)+(SlayerTalentLVL>=20)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerTalentLVL|InquisitorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3300,
+    "record_key": "Sanctified Slayer ~ Talented Slayer"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

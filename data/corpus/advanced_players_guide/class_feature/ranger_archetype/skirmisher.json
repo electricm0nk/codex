@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Archetype ~ Skirmisher",
+    "name": "Skirmisher",
+    "class": "Ranger Archetype",
+    "description": "Many rangers rely on spells, but there are some who eschew aid from divine powers for their own reasons. Skirmishers rely on their wits, their wisdom, and sometimes even instinct to aid in their quests.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Skirmisher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype.RangerSpells"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Skirmisher],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerSpells]"
+      },
+      {
+        "key": "DESC",
+        "value": "Many rangers rely on spells, but there are some who eschew aid from divine powers for their own reasons. Skirmishers rely on their wits, their wisdom, and sometimes even instinct to aid in their quests."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|No Spellcasting ~ Ranger"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Skirmisher ~ Hunter's Tricks|PRECLASS:1,Ranger=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Ranger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2669,
+    "record_key": "Ranger Archetype ~ Skirmisher"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

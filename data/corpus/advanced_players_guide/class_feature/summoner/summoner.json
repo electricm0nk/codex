@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Summoner",
+    "name": "Summoner",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Class"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CFP_Level|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StandardSummoner|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_Summoner_Class_Selection|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummonerClassHasAlternative|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonCompanionBonusHD|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Archetype|AUTOMATIC|Archetype Summoner"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CFP_Level|classlevel(\"Summoner\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StandardSummoner|1|TYPE=Base|!PREABILITY:1,CATEGORY=Class,TYPE.Summoner Class Selection"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Summoner_Class_Selection|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonBaseSkill|0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 739,
+    "record_key": "Summoner"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

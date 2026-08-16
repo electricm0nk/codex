@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Protection Blessing ~ Increased Defense",
+    "name": "Increased Defense",
+    "class": "Protection Blessing",
+    "description": "You can gain a +%1 sacred bonus on saving throws and a +%1 sacred bonus to AC for 1 minute.|1+min(WarpriestLVL>20,2,WarpriestLVL/10)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Protection Blessing ~ Increased Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can gain a +%1 sacred bonus on saving throws and a +%1 sacred bonus to AC for 1 minute.|1+min(WarpriestLVL>20,2,WarpriestLVL/10)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2271,
+    "record_key": "Protection Blessing ~ Increased Defense"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

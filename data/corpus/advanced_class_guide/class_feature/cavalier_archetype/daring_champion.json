@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cavalier Archetype ~ Daring Champion",
+    "name": "Daring Champion",
+    "class": "Cavalier Archetype",
+    "description": "While many cavaliers are the champions of old fighting forms, some younger, more daring cavaliers mix a martial style influenced by the lighter armored and more flamboyant swashbuckler forms with the dedication of cavalier orders.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Archetype ~ Daring Champion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CavalierArchetype.CavalierWeaponProficiencies.CavalierArmorProficiencies.CavalierMount.CavalierCavaliersCharge.CavalierExpertTrainer.CavalierMightyCharge.CavalierSupremeCharge"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cavalier=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Daring Champion],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CavalierWeaponProficiencies,TYPE.CavalierArmorProficiencies,TYPE.CavalierMount,TYPE.CavalierCavaliersCharge,TYPE.CavalierExpertTrainer,TYPE.CavalierMightyCharge,TYPE.CavalierSupremeCharge]"
+      },
+      {
+        "key": "DESC",
+        "value": "While many cavaliers are the champions of old fighting forms, some younger, more daring cavaliers mix a martial style influenced by the lighter armored and more flamboyant swashbuckler forms with the dedication of cavalier orders."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Daring Champion ~ Weapon and Armor Proficiency|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Daring Champion ~ Champion's Finesse|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Daring Champion ~ Nimble|PRECLASS:1,Cavalier=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Daring Champion ~ Panache and Deeds|PRECLASS:1,Cavalier=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Daring Champion ~ Advanced Deeds|PRECLASS:1,Cavalier=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Daring Champion ~ Champion's Weapon Mastery|PRECLASS:1,Cavalier=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Cavalier"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2974,
+    "record_key": "Cavalier Archetype ~ Daring Champion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

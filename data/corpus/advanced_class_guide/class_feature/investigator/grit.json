@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent ~ Grit",
+    "name": "Grit",
+    "class": "Investigator",
+    "description": "An investigator with this talent gains the Amateur Gunslinger feat and one grit feat of her choice. She must fulfill the prerequisites of the grit feat in order to choose it. An investigator must have the firearm training talent before choosing this one.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent ~ Grit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorRogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rogue Talent ~ Firearm Training"
+      },
+      {
+        "key": "DESC",
+        "value": "An investigator with this talent gains the Amateur Gunslinger feat and one grit feat of her choice. She must fulfill the prerequisites of the grit feat in order to choose it. An investigator must have the firearm training talent before choosing this one."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Amateur Gunslinger|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1351,
+    "record_key": "Investigator ~ Rogue Talent ~ Grit"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

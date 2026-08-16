@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Call Forth the Spawn ~ Jubilex",
+    "name": "Call Forth the Spawn",
+    "class": "Call Forth the Spawn",
+    "description": "3/day, you may use destruction as a spell-like ability. The body of a creature slain by this ability immediately transforms into an ochre jelly under your mental control. Ochre jellies created by this ability melt away into noxious residue after 1 hr. This ability is the equivalent of a 9th-level spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Call Forth the Spawn ~ Jubilex"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Destruction,19+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "3/day, you may use destruction as a spell-like ability. The body of a creature slain by this ability immediately transforms into an ochre jelly under your mental control. Ochre jellies created by this ability melt away into noxious residue after 1 hr. This ability is the equivalent of a 9th-level spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 146,
+    "record_key": "Call Forth the Spawn ~ Jubilex"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

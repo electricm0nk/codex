@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Variant Channeling - Dreams",
+    "name": "Variant Channeling - Dreams",
+    "class": null,
+    "description": "Heal - Creatures affected by sleep effects may attempt another saving throw and apply the +%1 channel bonus on the roll. Willingly sleeping creatures gain a +%1 channel bonus on saving throws and Perception checks for up to 8 hours (this bonus ends if the creature awakens). Harm - Creatures gain a -%1 channel penalty on Perception checks and saving throws against exhaustion, fatigue, and sleep effects for 1 minute.|ChannelModifier",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VariantChanneling"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChannelModifier|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Heal - Creatures affected by sleep effects may attempt another saving throw and apply the +%1 channel bonus on the roll. Willingly sleeping creatures gain a +%1 channel bonus on saving throws and Perception checks for up to 8 hours (this bonus ends if the creature awakens). Harm - Creatures gain a -%1 channel penalty on Perception checks and saving throws against exhaustion, fatigue, and sleep effects for 1 minute.|ChannelModifier"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelModifier|min(5,1+floor(ClericChannelEnergyLVL/5))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 206,
+    "record_key": "Variant Channeling - Dreams"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

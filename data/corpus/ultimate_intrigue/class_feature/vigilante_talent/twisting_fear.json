@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Twisting Fear",
+    "name": "Twisting Fear",
+    "class": "Vigilante Talent",
+    "description": "Whenever the vigilante causes an opponent to gain the shaken, frightened, or panicked condition, that opponent takes an amount of nonlethal damage equal to the vigilante's reduced hidden strike damage, as the stress wears upon its body. A creature can't take damage from twisting fear more than once per round. Panicked creatures that take damage from twisting fear are too winded even to scream as they flee in terror.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Twisting Fear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Twisting Fear"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsStalker,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the vigilante causes an opponent to gain the shaken, frightened, or panicked condition, that opponent takes an amount of nonlethal damage equal to the vigilante's reduced hidden strike damage, as the stress wears upon its body. A creature can't take damage from twisting fear more than once per round. Panicked creatures that take damage from twisting fear are too winded even to scream as they flee in terror."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 113,
+    "record_key": "Vigilante Talent ~ Twisting Fear"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

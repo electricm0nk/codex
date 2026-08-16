@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rivethun Emissary ~ Spirit Bond",
+    "name": "Spirit Bond",
+    "class": "Rivethun Emissary",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rivethun Emissary ~ Spirit Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Rivethun Emissary Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      },
+      {
+        "key": "DESC",
+        "value": "A Rivethun emissary's training creates a powerful bond with a specific spirit. Her Rivethun emissary levels stack with any shaman levels she has for the purpose of determining the effects of her spirit class ability, spirit magic class ability, what hexes she qualifies for, and the effects of any hexes with level-dependent abilities. If a Rivethun emissary has neither the spirit class ability nor a spirit animal, she can select a single spirit from those available to the shaman upon gaining her 1st level of Rivethun emissary. She gains this spirit's spirit ability. At 8th level, she also gains this spirit's greater spirit ability. Spirit bond does not affect a shaman's wandering spirit class ability."
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexChoices|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexAbilityLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexDC|RivethunEmissaryLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexAbilityLVL|RivethunEmissaryLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexLVL|RivethunEmissaryLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 440,
+    "record_key": "Rivethun Emissary ~ Spirit Bond"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

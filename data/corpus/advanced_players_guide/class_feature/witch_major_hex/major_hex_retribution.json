@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Major Hex ~ Retribution",
+    "name": "Major Hex - Retribution",
+    "class": "Witch Major Hex",
+    "description": "DC %1 |WitchHexDC_Retribution",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Major Hex ~ Retribution"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MajorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMajorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,10]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchRetributionTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_Retribution|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_Retribution"
+      },
+      {
+        "key": "DESC",
+        "value": "For %1 rounds, immediately after the hexed creature deals damage in melee, it takes half that damage (round down). This damage bypasses any resistances, immunities, or damage reduction the creature possesses. A Will save negates this effect.|WitchRetributionTimes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Retribution"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Retribution|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Retribution|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Retribution)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchRetributionTimes|WitchHexStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 904,
+    "record_key": "Witch Major Hex ~ Retribution"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

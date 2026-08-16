@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter's Blessing ~ Form of the Dragon",
+    "name": "Form of the Dragon",
+    "class": "Shifter's Blessing",
+    "description": "The ranger's skin becomes rough and scaly. While in this form, the ranger gains a +2 natural armor bonus to AC.|!PREABILITY:1,CATEGORY=Special Ability,Shapeshifter ~ Master Shifter",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter's Blessing ~ Form of the Dragon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.ShifterBlessing"
+      },
+      {
+        "key": "DESC",
+        "value": "The ranger's skin becomes rough and scaly. While in this form, the ranger gains a +2 natural armor bonus to AC.|!PREABILITY:1,CATEGORY=Special Ability,Shapeshifter ~ Master Shifter"
+      },
+      {
+        "key": "DESC",
+        "value": "The ranger's skin becomes rough and scaly. While in this form, the ranger gains a +4 natural armor bonus to AC and a fly speed of 30 feet with average maneuverability. Alternately, the ranger can polymorph into the form of a dragon as if the caster of form of the dragon I.|PREABILITY:1,CATEGORY=Special Ability,Shapeshifter ~ Master Shifter"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2828,
+    "record_key": "Shifter's Blessing ~ Form of the Dragon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

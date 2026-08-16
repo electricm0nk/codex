@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator Archetype ~ Forensic Physician",
+    "name": "Forensic Physician",
+    "class": "Investigator Archetype",
+    "description": "A forensic physician specializes in analyzing medical details in order to solve crimes and uncover evidence. Whether it is a disease, blood work, a poison, or bones, the forensic physician's medical expertise allows him great insight into his cases, much to the chagrin of criminals who seek to cover up the nature of their crimes, even those with magical methods at their disposal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Forensic Physician"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Forensic Physician],[!PREFACT:1,ABILITIES,Investigator_Archetype_Inspiration=True,Investigator_Archetype_Trapfinding=True,Investigator_Archetype_TrapSense=True,Investigator_Archetype_Talent3=True,Investigator_Archetype_Talent5=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A forensic physician specializes in analyzing medical details in order to solve crimes and uncover evidence. Whether it is a disease, blood work, a poison, or bones, the forensic physician's medical expertise allows him great insight into his cases, much to the chagrin of criminals who seek to cover up the nature of their crimes, even those with magical methods at their disposal."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forensic Physician ~ Medical Expertise|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forensic Physician ~ Disease Lore|PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forensic Physician ~ Blood Lore|PRECLASS:1,Investigator=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Inspiration|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent5|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 498,
+    "record_key": "Investigator Archetype ~ Forensic Physician"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

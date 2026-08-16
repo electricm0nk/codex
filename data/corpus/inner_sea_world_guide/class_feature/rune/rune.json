@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rune ~ HK",
+    "name": "Rune",
+    "class": "Rune",
+    "description": "In strange and eldritch runes you find potent magic. You gain Scribe Scroll as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rune ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Domain.HKDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainRuneLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainRuneDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainRuneTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "In strange and eldritch runes you find potent magic. You gain Scribe Scroll as a bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Blast Rune|PREVARGTEQ:HellknightLvl,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Spell Rune|PREVARGTEQ:HellknightLvl,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Scribe Scroll"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainRuneLVL|HellknightLvl"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainRuneDC|HKDisciplineDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainRuneTimes|HKDiscipline"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 99,
+    "record_key": "Rune ~ HK"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

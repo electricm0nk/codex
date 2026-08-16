@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Deadly Courtesan ~ Bardic Performance",
+    "name": "Bardic Performance",
+    "class": "Deadly Courtesan",
+    "description": "A deadly courtesan gains the bardic performance ability and the fascinate bardic performance. Her fascinate DC is %1. She can use this bardic performance for %2 rounds per day. If the courtesan also has bard levels, she may use these rounds for either class's fascinate bardic performance, and her bard and rogue levels stack for determining her fascinate DC.|10+RogueLVL/2+CHA|1+CHA+RogueLVL-2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deadly Courtesan ~ Bardic Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A deadly courtesan gains the bardic performance ability and the fascinate bardic performance. Her fascinate DC is %1. She can use this bardic performance for %2 rounds per day. If the courtesan also has bard levels, she may use these rounds for either class's fascinate bardic performance, and her bard and rogue levels stack for determining her fascinate DC.|10+RogueLVL/2+CHA|1+CHA+RogueLVL-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.209"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 992,
+    "record_key": "Deadly Courtesan ~ Bardic Performance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

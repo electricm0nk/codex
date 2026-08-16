@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Argent Performance ~ Song of Silver",
+    "name": "Song of Silver",
+    "class": "Argent Performance",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Argent Performance ~ Song of Silver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Argent Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SongOfSilverRadius|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.172"
+      },
+      {
+        "key": "DESC",
+        "value": "The recovery of the lost lyrics and melody of the famed \"Song of Silver\" aided the Silver Ravens immeasurably in their fight against the Chelish tyrant Barzillai Thrune. While the true \"Song of Silver\" must be performed in the Kintargo Opera House by a skilled performer, argent dramaturges have learned to create a lesser version of the \"Song of Silver\" that can take effect when performed in any location. When the argent dramaturge uses her argent performance to create the \"Song of Silver,\" all weapons (both natural and manufactured) within a %1`-foot radius of the argent dramaturge are treated as if they were silver for the purpose of overcoming damage reduction, and %2 targets become immune to fear effects and gain a +4 sacred bonus on saving throws against charm and compulsion effects.|SongOfSilverRadius|max(1,CHA)"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as an immediate action, an argent dramaturge can grant a single ally who is currently benefiting from the saving throw bonus from the \"Song of Silver\" the effects of a breath of life spell (CL = the argent dramaturge's character level). Granting this effect immediately ends the \"Song of Silver\" performance, and the argent dramaturge must wait 3 rounds before activating a new \"Song of Silver\" (but she can activate other argent or bardic performances in the meantime).|PREVARGTEQ:ArgentDramaturgeLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SongOfSilverRadius|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SongOfSilverRadius|30|PREVARGTEQ:ArgentDramaturgeLVL,5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 27,
+    "record_key": "Argent Performance ~ Song of Silver"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spiritualist ~ Fused Consciousness",
+    "name": "Fused Consciousness",
+    "class": "Spiritualist",
+    "description": "At 10th level, a spiritualist always gains the benefits of bonded senses when her phantom is manifested. She also gains the skill ranks and bonus to mind-affecting spells granted by the spirit's emotional focus (see page 80), even when her phantom is manifested. Lastly, she can shunt the effect of a mind-affecting effect into the consciousness of her phantom as the shared consciousness ability even when the phantom is manifested, but doing so causes the phantom to immediately retreat back into the spiritualist's consciousness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Fused Consciousness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, a spiritualist always gains the benefits of bonded senses when her phantom is manifested. She also gains the skill ranks and bonus to mind-affecting spells granted by the spirit's emotional focus (see page 80), even when her phantom is manifested. Lastly, she can shunt the effect of a mind-affecting effect into the consciousness of her phantom as the shared consciousness ability even when the phantom is manifested, but doing so causes the phantom to immediately retreat back into the spiritualist's consciousness."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1287,
+    "record_key": "Spiritualist ~ Fused Consciousness"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

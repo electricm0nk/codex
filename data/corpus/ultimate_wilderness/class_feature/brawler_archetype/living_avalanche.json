@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brawler Archetype ~ Living Avalanche",
+    "name": "Living Avalanche",
+    "class": "Brawler Archetype",
+    "description": "When a living avalanche is on the move, no one can stand in her way.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler Archetype ~ Living Avalanche"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BrawlerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Brawler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Living Avalanche],[!PREFACT:1,ABILITIES,Brawler_Archetype_BonusFeat2=True,Brawler_Archetype_BonusFeat5=True,Brawler_Archetype_ManeuverTraining=True,Brawler_Archetype_ACBonus=True,Brawler_Archetype_AwesomeBlow=True,Brawler_Archetype_ImprovedAwesomeBlow=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "When a living avalanche is on the move, no one can stand in her way."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Living Avalanche ~ Earth Discipline|PRECLASS:1,Brawler=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Living Avalanche ~ Landslide|PRECLASS:1,Brawler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Living Avalanche ~ Unyielding|PRECLASS:1,Brawler=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Living Avalanche ~ Avalanche|PRECLASS:1,Brawler=16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Living Avalanche ~ Improved Avalanche|PRECLASS:1,Brawler=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BonusFeat5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ManeuverTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ACBonus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_AwesomeBlow|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ImprovedAwesomeBlow|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BonusFeat5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_ACBonus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_AwesomeBlow|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_ImprovedAwesomeBlow|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 352,
+    "record_key": "Brawler Archetype ~ Living Avalanche"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

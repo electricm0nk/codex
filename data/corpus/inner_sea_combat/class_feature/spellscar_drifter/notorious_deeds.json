@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spellscar Drifter ~ Notorious Deeds",
+    "name": "Notorious Deeds",
+    "class": "Spellscar Drifter",
+    "description": "At 9th level, a Spellscar drifter can select two additional gunslinger deeds which he can use with his Amateur Gunslinger feat. The Spellscar drifter can choose one deed from the list of deeds available to 3rd-level gunslingers and one from the list available to 7th-level gunslingers. This ability replaces greater tactician.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellscar Drifter ~ Notorious Deeds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a Spellscar drifter can select two additional gunslinger deeds which he can use with his Amateur Gunslinger feat. The Spellscar drifter can choose one deed from the list of deeds available to 3rd-level gunslingers and one from the list available to 7th-level gunslingers. This ability replaces greater tactician."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 217,
+    "record_key": "Spellscar Drifter ~ Notorious Deeds"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

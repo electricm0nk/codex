@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Undead Bloodrager Bloodline ~ Ghost Strike",
+    "name": "Ghost Strike",
+    "class": "Undead Bloodrager Bloodline",
+    "description": "Your melee attacks are treated as if they were made with a weapon with the ghost touch magic item special ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead Bloodrager Bloodline ~ Ghost Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Undead Bloodrager Bloodline ~ Power LVL 04.Bloodrager Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Undead"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Undead_BloodlineProgressionLVL,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Undead_BloodlinePower4LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your melee attacks are treated as if they were made with a weapon with the ghost touch magic item special ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|UndeadBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 878,
+    "record_key": "Undead Bloodrager Bloodline ~ Ghost Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

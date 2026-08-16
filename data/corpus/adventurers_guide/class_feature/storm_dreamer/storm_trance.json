@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Storm Dreamer ~ Storm Trance",
+    "name": "Storm Trance",
+    "class": "Storm Dreamer",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Storm Dreamer ~ Storm Trance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Medium Class Feature.StormDreamerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.182"
+      },
+      {
+        "key": "DESC",
+        "value": "A storm dreamer can enter a meditative trance during which she fuses her mind to the Eye of Abendego, mentally becoming one with the great storm. Entering the trance is a full-round action that doesn't provoke attacks of opportunity, but once in a storm trance, the storm dreamer can maintain the trance as a free action for %1 minutes per day. These minutes need not be consecutive, but they must be spent in 1-minute increments. While in a storm trance, the storm dreamer gains energy resistance 5 against cold and electricity, treats wind as one step less severe, and gains a +%2 bonus on all saving throws against wind effects, spells with the air or electricity descriptors, and effects that deal electricity damage.|MediumLVL+CHA|CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 911,
+    "record_key": "Storm Dreamer ~ Storm Trance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

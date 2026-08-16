@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Masterpiece ~ Dumbshow of Gorroc",
+    "name": "Dumbshow of Gorroc",
+    "class": "Masterpiece",
+    "description": "Your acting conjures hellfire and salt to destroy plants.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterpiece ~ Dumbshow of Gorroc"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "The Dumbshow of Gorroc"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.Masterpiece"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DumbshowOfGorrocDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DumbshowOfGorrocDamageDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DumbshowOfGorrocDamageDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your acting conjures hellfire and salt to destroy plants."
+      },
+      {
+        "key": "DESC",
+        "value": " This pantomime tells the tale of Gorroc, a foolish farmer who failed to control the weeds that grew so quickly upon his land. In desperation, Gorroc bargained with a devil, who blasted the earth with salt and withering heat, leaving the fertile land desolate for a century. When you complete the performance, you can create a 30-foot cone or a 60-foot line that is blasted with scorching air and hot salt. Plants and oozes in this area take %1d%2 points of damage; half this damage is fire damage, half is piercing damage. A Reflex save (DC %3) reduces the damage by half. Creatures other than plants or oozes take half damage, or no damage on a successful save.  Use: 2 bardic performance rounds.  Action: 1 full round.|DumbshowOfGorrocDamageDice|DumbshowOfGorrocDamageDieSize|DumbshowOfGorrocDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DumbshowOfGorrocDC|10+(MasterpieceLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DumbshowOfGorrocDamageDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DumbshowOfGorrocDamageDice|min(10,MasterpieceLVL)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 174,
+    "record_key": "Masterpiece ~ Dumbshow of Gorroc"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

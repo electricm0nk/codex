@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Masterpiece ~ Triple Time",
+    "name": "Triple Time",
+    "class": "Masterpiece",
+    "description": "Your lively cadence puts a spring in the step of weary marchers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterpiece ~ Triple Time"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Masterpiece"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TripleTimeTargets|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your lively cadence puts a spring in the step of weary marchers."
+      },
+      {
+        "key": "DESC",
+        "value": " This bright and spritely tune mimics the sound of human feet, slowly building to a steady, ground-eating pace. When you complete this performance, you affect %1 allies in hearing range. This masterpiece increases the affected target's base land speed by 10 feet for 1 hour. This adjustment is treated as an enhancement bonus. There is no effect on other modes of movement, such as burrow, climb, fly, or swim. As with any effect that increases your speed, this spell affects your jumping distance (see the Acrobatics skill).  Use: 1 bardic performance round.  Action: 1 minute.|TripleTimeTargets"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TripleTimeTargets|MasterpieceLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|MOVEADD|TYPE.Walk|10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 183,
+    "record_key": "Masterpiece ~ Triple Time"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

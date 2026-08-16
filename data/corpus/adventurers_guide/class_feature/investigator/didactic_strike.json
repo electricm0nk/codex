@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Didactic Strike",
+    "name": "Didactic Strike",
+    "class": "Investigator",
+    "description": "When the investigator activates his studied strike, he can end his studied combat and choose not to deal his studied strike damage. He is instead able to show any allies within 30 feet who can see him a weak spot on the target. Until the beginning of the investigator's next turn, each affected ally's first attack that hits the target deals additional damage equal to one-third the investigator's level. He can end this effect as an immediate action to instead cause an affected ally's first successful attack to deal the investigator's studied strike damage. This additional damage is precision damage and does not affect creatures that are immune to sneak attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Didactic Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.InvestigatorTalent"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "DESC",
+        "value": "When the investigator activates his studied strike, he can end his studied combat and choose not to deal his studied strike damage. He is instead able to show any allies within 30 feet who can see him a weak spot on the target. Until the beginning of the investigator's next turn, each affected ally's first attack that hits the target deals additional damage equal to one-third the investigator's level. He can end this effect as an immediate action to instead cause an affected ally's first successful attack to deal the investigator's studied strike damage. This additional damage is precision damage and does not affect creatures that are immune to sneak attacks."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1151,
+    "record_key": "Investigator ~ Didactic Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

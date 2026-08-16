@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Pin Down",
+    "name": "Pin Down",
+    "class": "Warpriest Bonus Feat",
+    "description": "You easily block enemy escapes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Pin Down"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Combat Reflexes"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "FighterWeaponQualifyLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "You easily block enemy escapes."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever an opponent you threaten takes a 5-foot step or uses the withdraw action, that opponent provokes an attack of opportunity from you. If the attack hits, you deal no damage, but the targeted creature is prevented from making the move action that granted a 5-foot step or the withdraw action and does not move."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Pin Down"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.113"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4511,
+    "record_key": "Warpriest Bonus Feat ~ Pin Down"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

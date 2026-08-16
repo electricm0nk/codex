@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Green Faith Marshal ~ Serpent Domain",
+    "name": "Serpent",
+    "class": "Green Faith Marshal",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Faith Marshal ~ Serpent Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GreenFaithMarshalDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSerpentLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSerpentDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSerpentTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSerpentAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serpent Domain ~ Familiar|PREVARGTEQ:DomainSerpentAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Poison|PREVARGTEQ:DomainSerpentAbilityTriggerLVL,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serpent Domain ~ Slither"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serpent Domain ~ Venom Immunity|PREMULT:2,[PREVARGTEQ:DomainSerpentAbilityTriggerLVL,6],[PREVARLT:DomainSerpentAbilityTriggerLVL,12]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSerpentLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSerpentDC|10+(DomainSerpentLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSerpentTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSerpentAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Inquisitor=1|Charm Animal|Inquisitor=2|Animal Trance|Inquisitor=3|Poison|Inquisitor=4|Strong Jaw|Inquisitor=5|Snake Staff|Inquisitor=6|Charm Monster"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 785,
+    "record_key": "Green Faith Marshal ~ Serpent Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

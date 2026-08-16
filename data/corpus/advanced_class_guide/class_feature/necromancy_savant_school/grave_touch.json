@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Necromancy Savant School ~ Grave Touch",
+    "name": "Grave Touch",
+    "class": "Necromancy Savant School",
+    "description": "As a standard action, you can make a melee touch attack that causes a living creature to become shaken for %1 rounds. If you touch a shaken creature with this ability, it becomes frightened for 1 round if it has fewer that %2 Hit Dice. You can use this ability %3 times per day.|NecromancyGraveTouchDuration|NecromancyGraveTouchLimit|NecromancyGraveTouchTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Necromancy Savant School ~ Grave Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialAttack.SpellLike.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecromancyGraveTouchDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecromancyGraveTouchLimit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecromancyGraveTouchTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can make a melee touch attack that causes a living creature to become shaken for %1 rounds. If you touch a shaken creature with this ability, it becomes frightened for 1 round if it has fewer that %2 Hit Dice. You can use this ability %3 times per day.|NecromancyGraveTouchDuration|NecromancyGraveTouchLimit|NecromancyGraveTouchTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecromancyGraveTouchDuration|max(1,ArcanistSavantSchoolLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecromancyGraveTouchLimit|ArcanistSavantSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecromancyGraveTouchTimes|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|NecromancyGraveTouchTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2572,
+    "record_key": "Necromancy Savant School ~ Grave Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

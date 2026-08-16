@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fiendish Vessel ~ Fiendish Familiar",
+    "name": "Fiendish Familiar",
+    "class": "Fiendish Vessel",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fiendish Vessel ~ Fiendish Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A fiendish vessel's patron rewards her with a fiendish servant. The fiendish vessel gains an imp, quasit, or cacodaemon familiar based on the patron she worships. If she worships Asmodeus or an archdevil, she gets an imp; if she worships a demon lord, she gets a quasit; and if she worships one of the Four Horsemen, she gains a cacodaemon. This ability is identical to the wizard's arcane bond with a familiar and the Improved Familiar feat, using the fiendish vessel's character level in place of the wizard level. This tiny fiend acts like a perverse, manifest moral compass. Furthermore, this familiar can act as a living divine focus and unholy symbol for her spellcasting if the fiendish vessel so desires, which means that when she uses her channel evil ability, its burst can be centered on the familiar instead, as long as that familiar is within 30 feet and line of sight. A fiendish vessel's familiar tends to be fawning and subservient to the fiendish vessel. Should her familiar die, the fiendish vessel's patron replaces the familiar with an identical one within 1 week, without the need for a special ritual."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|ClericLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Familiar|Devil (Imp)|PREDEITYALIGN:LE"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Familiar|Demon (Quasit)|PREDEITYALIGN:CE"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Familiar|Familiar (Cacodaemon)|PREDEITYALIGN:NE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.171"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 791,
+    "record_key": "Fiendish Vessel ~ Fiendish Familiar"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

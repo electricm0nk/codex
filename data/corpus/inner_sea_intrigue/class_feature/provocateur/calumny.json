@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Provocateur ~ Calumny",
+    "name": "Calumny",
+    "class": "Provocateur",
+    "description": "A provocateur can use his Perform (comedy, oratory, or sing) modifier in place of his Bluff and Diplomacy modifier on checks to spread a rumor and in place of his Intimidate modifier on checks to demoralize foes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Provocateur ~ Calumny"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.ProvocateurClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A provocateur can use his Perform (comedy, oratory, or sing) modifier in place of his Bluff and Diplomacy modifier on checks to spread a rumor and in place of his Intimidate modifier on checks to demoralize foes."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 30,
+    "record_key": "Provocateur ~ Calumny"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Intrigue Mystery ~ Final Revelation",
+    "name": "Final Revelation",
+    "class": "Intrigue Mystery",
+    "description": "You become a master of intrigue. You can apply Silent Spell or Still Spell to any spell you cast without increasing the level or casting time. You do not need to possess these feats to use this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intrigue Mystery ~ Final Revelation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.FinalRevelation"
+      },
+      {
+        "key": "DESC",
+        "value": "You become a master of intrigue. You can apply Silent Spell or Still Spell to any spell you cast without increasing the level or casting time. You do not need to possess these feats to use this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 577,
+    "record_key": "Intrigue Mystery ~ Final Revelation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

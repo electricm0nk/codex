@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nature Warden ~ Animal Speech",
+    "name": "Animal Speech",
+    "class": "Nature Warden",
+    "description": "At 3rd level, a nature warden can speak with animals at will when in her favored terrain. Outside her favored terrain, she can use speak with animals once per day. Her caster level is equal to her class level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Warden ~ Animal Speech"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a nature warden can speak with animals at will when in her favored terrain. Outside her favored terrain, she can use speak with animals once per day. Her caster level is equal to her class level."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1426,
+    "record_key": "Nature Warden ~ Animal Speech"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

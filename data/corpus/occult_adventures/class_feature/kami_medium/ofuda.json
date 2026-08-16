@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kami Medium ~ Ofuda",
+    "name": "Ofuda",
+    "class": "Kami Medium",
+    "description": "A kami medium uses ofudas-psychically charged prayer scrolls-to focus his spells. Each of his spells gains an ofuda as an additional inexpensive material component, and the ofuda replaces the divine focus for spells the kami medium gains via the divine surge spirit power. Unless the spell involves a touch attack or ranged touch attack, the kami medium doesn't need to attempt an attack roll to place an ofuda on an unwilling target; the ofuda simply appears on affected targets. For instantaneous spells, the ofuda is consumed during the casting, but for spells with any other duration, the ofuda remains on the target or targets throughout the duration and then disintegrates when the duration expires. A kami medium's spells can't be dispelled by dispel magic or greater dispel magic, but removing or destroying the ofuda ends the duration immediately. An ofuda must be displayed prominently and can't be hidden (though a creature bearing an ofuda can hide normally). A successful steal or grapple combat maneuver check to remove an item is sufficient to remove an ofuda from an unwilling target, and a standard action automatically removes it from a willing target. An ofuda counts as an object made of paper with %1 hit points. The target of the spell can't see, harm, or remove the ofuda attached to her, though her allies can do so. If the spell is harmless, the target can see her ofuda.|5*MediumLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kami Medium ~ Ofuda"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A kami medium uses ofudas-psychically charged prayer scrolls-to focus his spells. Each of his spells gains an ofuda as an additional inexpensive material component, and the ofuda replaces the divine focus for spells the kami medium gains via the divine surge spirit power. Unless the spell involves a touch attack or ranged touch attack, the kami medium doesn't need to attempt an attack roll to place an ofuda on an unwilling target; the ofuda simply appears on affected targets. For instantaneous spells, the ofuda is consumed during the casting, but for spells with any other duration, the ofuda remains on the target or targets throughout the duration and then disintegrates when the duration expires. A kami medium's spells can't be dispelled by dispel magic or greater dispel magic, but removing or destroying the ofuda ends the duration immediately. An ofuda must be displayed prominently and can't be hidden (though a creature bearing an ofuda can hide normally). A successful steal or grapple combat maneuver check to remove an item is sufficient to remove an ofuda from an unwilling target, and a standard action automatically removes it from a willing target. An ofuda counts as an object made of paper with %1 hit points. The target of the spell can't see, harm, or remove the ofuda attached to her, though her allies can do so. If the spell is harmless, the target can see her ofuda.|5*MediumLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1400,
+    "record_key": "Kami Medium ~ Ofuda"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

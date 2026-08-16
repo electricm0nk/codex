@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ancestor Mystery ~ Sacred Council",
+    "name": "Sacred Council",
+    "class": "Ancestor Mystery",
+    "description": "As a move action, you can call upon your ancestors to provide council. This advice grants you a +2 bonus on any one d20 roll. This effect lasts for 1 round. You can use this ability %1/day.|SacredCouncilTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancestor Mystery ~ Sacred Council"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.AncestorRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SacredCouncilTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, you can call upon your ancestors to provide council. This advice grants you a +2 bonus on any one d20 roll. This effect lasts for 1 round. You can use this ability %1/day.|SacredCouncilTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SacredCouncilTimes|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 455,
+    "record_key": "Ancestor Mystery ~ Sacred Council"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

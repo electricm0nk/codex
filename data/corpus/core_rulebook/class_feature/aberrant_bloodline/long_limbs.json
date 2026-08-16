@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Aberrant Bloodline ~ Long Limbs",
+    "name": "Long Limbs",
+    "class": "Aberrant Bloodline",
+    "description": "Your reach increases by %1 feet whenever you are making a melee touch attack. This ability does not otherwise increase your threatened area.|Sorcerer_LongLimbs_Reach",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aberrant Bloodline ~ Long Limbs"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Aberrant Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialAttack.Special Attack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Aberrant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Aberrant_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Aberrant_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_LongLimbs_Reach|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your reach increases by %1 feet whenever you are making a melee touch attack. This ability does not otherwise increase your threatened area.|Sorcerer_LongLimbs_Reach"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_LongLimbs_Reach|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_LongLimbs_Reach|5|PREVARGTEQ:Sorcerer_Aberrant_BloodlinePower3LVL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_LongLimbs_Reach|5|PREVARGTEQ:Sorcerer_Aberrant_BloodlinePower3LVL,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Your reach increases by %1 feet whenever you are making a melee touch attack.|Sorcerer_LongLimbs_Reach"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+%1 ft.)|Sorcerer_LongLimbs_Reach"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AberrantBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2344,
+    "record_key": "Aberrant Bloodline ~ Long Limbs"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

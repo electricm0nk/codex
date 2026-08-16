@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forbidden Ki Power ~ Empty Mind",
+    "name": "Empty Mind",
+    "class": "Forbidden Ki Power",
+    "description": "A black asp with this ki power can choose to lower the number of ki points in his ki pool by 3 when he recovers his ki points for the day. If he does so, he gains the benefits of mind blank for 24 hours.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Ki Power ~ Empty Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.Forbidden Ki Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Forbidden Ki Power ~ Greater Hidden Magic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MonkLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "A black asp with this ki power can choose to lower the number of ki points in his ki pool by 3 when he recovers his ki points for the day. If he does so, he gains the benefits of mind blank for 24 hours."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 549,
+    "record_key": "Forbidden Ki Power ~ Empty Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

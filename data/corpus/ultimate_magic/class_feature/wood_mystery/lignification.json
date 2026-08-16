@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wood Mystery ~ Lignification",
+    "name": "Lignification",
+    "class": "Wood Mystery",
+    "description": "You can turn a creature into wood %1/day. As a standard action, you may direct your gaze against a single creature within 30 feet. The targeted creature (along with all its carried gear) must make a Fortitude save (DC %2) or turn into a mindless, inert statue made out of wood for %3 rounds. This ability otherwise functions as a flesh to stone spell, except the target turns to wood instead of stone. This can be reversed by any effect that can reverse flesh to stone.|LignificationTimes|LignificationDC|LignificationDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wood Mystery ~ Lignification"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.WoodRevelation.Supernatural.RevelationTargetOneOnly"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=11"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LignificationTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LignificationDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LignificationDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can turn a creature into wood %1/day. As a standard action, you may direct your gaze against a single creature within 30 feet. The targeted creature (along with all its carried gear) must make a Fortitude save (DC %2) or turn into a mindless, inert statue made out of wood for %3 rounds. This ability otherwise functions as a flesh to stone spell, except the target turns to wood instead of stone. This can be reversed by any effect that can reverse flesh to stone.|LignificationTimes|LignificationDC|LignificationDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LignificationTimes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LignificationDC|10+classlevel(\"Oracle\")/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LignificationDuration|classlevel(\"Oracle\")/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LignificationTimes|1|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 512,
+    "record_key": "Wood Mystery ~ Lignification"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

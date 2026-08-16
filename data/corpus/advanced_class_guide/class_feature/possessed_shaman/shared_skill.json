@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Possessed Shaman ~ Shared Skill",
+    "name": "Shared Skill",
+    "class": "Possessed Shaman",
+    "description": "[NOT IMPLEMENTED] At 1st level, a possessed shaman selects two skills. Both of these skills must use the same ability score. The possessed shaman treats these skills as if she had a number of ranks in them equal to her shaman level, and uses her Wisdom modifier in place of the ability modifier the skills would normally use. If either of the skills are class skills, she receives the usual +3 bonus on those skill checks for having ranks in those skills. These ranks do not stack with her other skill ranks (only the higher number of ranks applies). This ability replaces spirit magic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Possessed Shaman ~ Shared Skill"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Possessed Shaman Class Feature.Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] At 1st level, a possessed shaman selects two skills. Both of these skills must use the same ability score. The possessed shaman treats these skills as if she had a number of ranks in them equal to her shaman level, and uses her Wisdom modifier in place of the ability modifier the skills would normally use. If either of the skills are class skills, she receives the usual +3 bonus on those skill checks for having ranks in those skills. These ranks do not stack with her other skill ranks (only the higher number of ranks applies). This ability replaces spirit magic."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3606,
+    "record_key": "Possessed Shaman ~ Shared Skill"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

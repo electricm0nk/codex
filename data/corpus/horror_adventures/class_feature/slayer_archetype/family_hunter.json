@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Slayer Archetype ~ Family Hunter",
+    "name": "Family Hunter",
+    "class": "Slayer Archetype",
+    "description": "Most slayers focus their efforts on single targets, but family hunters try to root out every branch of a tainted tree of life.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Archetype ~ Family Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SlayerArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "DESC",
+        "value": "Most slayers focus their efforts on single targets, but family hunters try to root out every branch of a tainted tree of life."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Slayer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Family Hunter],[!PREFACT:1,ABILITIES,Slayer_Archetype_Talent2=True,Slayer_Archetype_SneakAttack=True,Slayer_Archetype_StudiedTarget=True,Slayer_Archetype_Talent6=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Family Hunter ~ Find Family|PRECLASS:1,Slayer=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Family Hunter ~ Kinslayer|PRECLASS:1,Slayer=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Family Hunter ~ Studied Target|PRECLASS:1,Slayer=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Family Hunter ~ Disrupt Teamwork|PRECLASS:1,Slayer=6"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_SneakAttack|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_StudiedTarget|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent6|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 206,
+    "record_key": "Slayer Archetype ~ Family Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

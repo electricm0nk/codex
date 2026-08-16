@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Battle Herald ~ Teamwork Feat",
+    "name": "Teamwork Feat",
+    "class": "Battle Herald",
+    "description": "At 6th level, a battle herald receives a teamwork feat as a bonus feat. She must meet the prerequisites for this feat. She can use her cavalier tactician ability as a move action to grant this feat to allies (if she has the cavalier greater tactician ability, this is a swift action).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Herald ~ Teamwork Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extra"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, a battle herald receives a teamwork feat as a bonus feat. She must meet the prerequisites for this feat. She can use her cavalier tactician ability as a move action to grant this feat to allies (if she has the cavalier greater tactician ability, this is a swift action)."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Teamwork Feat|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1270,
+    "record_key": "Battle Herald ~ Teamwork Feat"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

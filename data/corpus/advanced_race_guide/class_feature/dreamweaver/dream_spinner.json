@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dreamweaver ~ Dream Spinner",
+    "name": "Dream Spinner",
+    "class": "Dreamweaver",
+    "description": "When a dreamweaver casts a mind-affecting spell on a target that is sleeping because of her slumber hex or a spell she cast, she adds +1 to the mind-affecting spell's DC. If the target succeeds at the saving throw against the spell, it does not wake up, nor does it have any recollection of having resisted a spell. If appropriate, the dreamweaver may incorporate elements of a mind-affecting spell (i.e., sow thought, suggestion, and so on) into the target's subconscious so it believes the spell's effects originated in its dreams (the details of how these elements fit into the dream is up to the GM).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dreamweaver ~ Dream Spinner"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When a dreamweaver casts a mind-affecting spell on a target that is sleeping because of her slumber hex or a spell she cast, she adds +1 to the mind-affecting spell's DC. If the target succeeds at the saving throw against the spell, it does not wake up, nor does it have any recollection of having resisted a spell. If appropriate, the dreamweaver may incorporate elements of a mind-affecting spell (i.e., sow thought, suggestion, and so on) into the target's subconscious so it believes the spell's effects originated in its dreams (the details of how these elements fit into the dream is up to the GM)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.185"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 824,
+    "record_key": "Dreamweaver ~ Dream Spinner"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

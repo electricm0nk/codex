@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk Archetype ~ Ouat",
+    "name": "Ouat",
+    "class": "Monk Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Ouat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Ouat],[!PREFACT:1,ABILITIES,Monk_Archetype_StunningFist=true,Dwarf_ReplaceGreed=true,Dwarf_ReplaceHatred=true,Dwarf_ReplaceDefensiveTraining=true,Dwarf_ReplaceStonecunning=true,Dwarf_ReplaceWeaponFamiliarity=true,Monk_Archetype_WholenessOfBody=true]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsDwarf=true"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "The ascetic, desert-dwelling dwarves known as the Ouat have eschewed dwarven traditions, whose unchanging rigidity, they believe, shackles their people to the past and inhibits self-improvement. Shaving their heads, living under the open sky, and practicing arts unfamiliar to the typical dwarf, the Ouat follow in the footsteps of Irori and Nethys by aspiring to awaken the divine essence that lives within each creature."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Ouat ~ Awaken Divinity|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Ouat ~ Spurn Tradition|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Ouat ~ Know the Unseen Disciples|PRECLASS:1,Monk=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_WholenessOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_WholenessOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceDefensiveTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceGreed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceHatred|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceStonecunning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceWeaponFamiliarity|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 159,
+    "record_key": "Monk Archetype ~ Ouat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

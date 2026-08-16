@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Speaker for the Past Ancestor Mystery ~ Spirit of the Warrior",
+    "name": "Spirit of the Warrior",
+    "class": "Speaker for the Past Ancestor Mystery",
+    "description": "You can summon the spirit of a great warrior ancestor and allow it to possess you, becoming a mighty warrior yourself. You gain a +4 enhancement bonus to Strength, Dexterity, and Constitution, and a +4 natural armor bonus to AC. Your base attack bonus while possessed equals your Shaman level (which may give you additional attacks), and you gain the Improved Critical feat with a weapon of your choice. You can use this ability for %1 rounds. This duration does not need to be consecutive, but it must be spent in 1-round increments.|SpiritOfTheWarriorDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Speaker for the Past Ancestor Mystery ~ Spirit of the Warrior"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "speaker for the past revelation.SpecialQuality.Supernatural.AncestorRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shaman=11"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpiritOfTheWarriorDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon the spirit of a great warrior ancestor and allow it to possess you, becoming a mighty warrior yourself. You gain a +4 enhancement bonus to Strength, Dexterity, and Constitution, and a +4 natural armor bonus to AC. Your base attack bonus while possessed equals your Shaman level (which may give you additional attacks), and you gain the Improved Critical feat with a weapon of your choice. You can use this ability for %1 rounds. This duration does not need to be consecutive, but it must be spent in 1-round increments.|SpiritOfTheWarriorDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiritOfTheWarriorDuration|floor(classlevel(\"Shaman\")/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|4|TYPE=NaturalArmor"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|BASEAB|classlevel(\"Shaman\")-(3*classlevel(\"Shaman\")/4)|TYPE=Base.REPLACE"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR,DEX,CON|4|TYPE=Enhancement"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3620,
+    "record_key": "Speaker for the Past Ancestor Mystery ~ Spirit of the Warrior"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

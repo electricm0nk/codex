@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Storyteller ~ Diminished Spirits",
+    "name": "Diminished Spirits",
+    "class": "Storyteller",
+    "description": "A storyteller does not receive his spirit's seance boon. He can't choose to channel a weaker spirit to reduce his influence from spirit surge. Because of his obsession with legends, he begins with 2 points of influence after a seance rather than 1. This ability alters spirit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Storyteller ~ Diminished Spirits"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A storyteller does not receive his spirit's seance boon. He can't choose to channel a weaker spirit to reduce his influence from spirit surge. Because of his obsession with legends, he begins with 2 points of influence after a seance rather than 1. This ability alters spirit."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1442,
+    "record_key": "Storyteller ~ Diminished Spirits"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

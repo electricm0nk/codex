@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Broodmaster ~ Larger Brood",
+    "name": "Larger Brood",
+    "class": "Broodmaster",
+    "description": "At 8th level, you can spend 4 evolution points from the evolution pool for the large evolution; unlike with other evolutions, you spend these 4 points before assigning evolution points to your individual eidolons (for an 8th-level broodmaster with 11 evolution points, This leaves 7 evolution points to distribute among the eidolons). This allows you to summon two Medium eidolons, four Small eidolons, or one Medium eidolon and two Small eidolons. At 13th level, if you has purchased the large evolution for your brood, you can spend an additional 6 evolution points from the evolution pool for the huge evolution, distributing the remaining points among your eidolons. This allows him to call two Large eidolons, four Medium eidolons, eight Small eidolons, or any similar combination in which two smaller eidolons count as one eidolon of one size larger.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Broodmaster ~ Larger Brood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can spend 4 evolution points from the evolution pool for the large evolution; unlike with other evolutions, you spend these 4 points before assigning evolution points to your individual eidolons (for an 8th-level broodmaster with 11 evolution points, This leaves 7 evolution points to distribute among the eidolons). This allows you to summon two Medium eidolons, four Small eidolons, or one Medium eidolon and two Small eidolons. At 13th level, if you has purchased the large evolution for your brood, you can spend an additional 6 evolution points from the evolution pool for the huge evolution, distributing the remaining points among your eidolons. This allows him to call two Large eidolons, four Medium eidolons, eight Small eidolons, or any similar combination in which two smaller eidolons count as one eidolon of one size larger."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Broodmaster Eidolon|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1829,
+    "record_key": "Broodmaster ~ Larger Brood"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

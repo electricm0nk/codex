@@ -4967,3 +4967,226 @@ This closes DoD item 1 (`VERIFY_EXIT=0`, captured directly) and confirms DoD ite
 with a real, non-zero claim) for this integration cycle. DoD item 3 (`v06_corpus_trap_report --audit`)
 remains a documented, pre-existing shortfall (§6.3 above, exit 2, `OPEN-ISSUES.md` row 41) — the full
 gate does not run that check as a stage, so this PASS does not speak to it either way.
+
+---
+
+## `SD31-E5-F1-001` — `epic-5-chassis-sweep` F1: corpus-wide `class_feature` grounding
+
+**Role:** `sd31-cachegen-cf` (`RETRO_ACTOR=sd31-cachegen-cf`), primary checkout, direct to `tranche/11`.
+**HEAD started:** `89846f5c982ade12458595d0e7d885f4a5d91f80` (`docs(sd31): wave-4 budget + the
+cache-gen lever wave 3 proved`) — `git rev-parse HEAD`. Tree had 3 pre-existing untracked files from
+sibling lanes (`docs/governance/third-party-tier-licensing-survey.md`,
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F11-002-verify.log`,
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W2-INTEGRATE-001-verify.log`) — left untouched
+per "leave untouched files you did not create alone."
+**Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`./scripts/verify.sh --only preflight-oracle` → PASS, before any other command).
+
+### 1. Measured the lever before pulling it
+
+Full derivation, every command, in `artifacts/SD31-E5-F1-001-lever-measurement.md` (this card's DoD
+"cite the exact command" requirement). Summary:
+
+- `grep -rl "class_feature\|ClassFeature" src/rules_core/rules_tables/` → 8 files, ALL class-chassis
+  *mechanism* code (Fighter Weapon Training math, Cleric domain spell selection, 4 Pathfinder Unchained
+  per-class files). **No `rules_tables` module carries per-record `class_feature` data** the way
+  `ultimate_equipment::equipment_tables` does for equipment — there is nothing to dump.
+- `ls -d data/corpus/*/class_feature 2>/dev/null` → 1 of 23 in-scope books (`pathfinder_unchained`,
+  64 hand-curated records from earlier mechanism cycles).
+- **Traced ONE unit end to end BEFORE writing any dump code**
+  (`core_rulebook:class_feature:rogue_sneak_attack`, `cr_abilities_class.lst:1615`): its pre-cycle
+  `status` was already `"grounded"` (`evidence: "explanation_id_observed_in_a_real_computation"` — the
+  engine already genuinely computes Sneak Attack), `wiring_class: "static"`. `doneness_verdict("static",
+  "grounded", ...)` → `held`, not `done` — the ONE thing missing was the `literal-verified` stamp, which
+  only `corpus_literal_sweep` finding the unit in its `sweep_verified` set (built from
+  `data/corpus/**/*.json`) can supply.
+- **The finding this trace produced, stated plainly (the deliverable the brief asked for):**
+  `Kind::ClassFeature`'s `classify()` arm (`v06_work_inventory.rs:3412`) sets `status` from TWO paths
+  only — an engine consumer-delta probe or a matching `explanation_id` — **neither reads
+  `data/corpus/**/*.json` at all.** A corpus-JSON dump cannot manufacture `grounded`; it can only unlock
+  the `literal-verified` STAMP for a unit ALREADY `grounded`. The `ultimate_equipment` lever's shape
+  (dump → `done`, corpus-wide) does **NOT generalize** to `class_feature`.
+- Re-derived promotable population BEFORE writing code:
+  `python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); U=[u for u in d['units'] if u.get('kind')=='class_feature']; print(collections.Counter((u.get('wiring_class'),u.get('status')) for u in U))"`
+  → only `(static, grounded)` = **14** and `(derived, grounded)` = **19** (a different file territory
+  — `derived_evaluator_fixture_check` fixtures, not a corpus dump) can EVER reach `done` via a
+  literal/fixture stamp. `(computed, grounded)` = 20 already `done` (no corpus JSON needed — `computed`'s
+  bar is `status=="grounded"` directly). `(display\|ambiguous, grounded)` = 55 capped at `held` by
+  design (the lower-bound rule). Pre-cycle `class_feature` `done` = 5 + 20 = **25**, matching the
+  dispatch brief exactly. Also re-derived and confirmed the brief's other cited figures exactly:
+  `not-started` = **11476**, `unmeasurable` = **3849**, `deferred` = **34** (+2 `feat` elsewhere = 36).
+
+### 2. Pulled it — book by book, 21 of 23 books
+
+Built `src/rules_core/cache_gen/class_feature.rs` (new module, registered append-only in
+`cache_gen/mod.rs`'s shared module list) + `src/bin/gen_cache_class_feature.rs` (entry point). **Not a
+`decisions.md §11.3` Rust-table dump** (no such table exists for `class_feature` — see finding above);
+instead a book-agnostic LST-token TRANSCRIPTION generator, the same category of work
+`enrich_equipment_raw_tokens.rs`/`enrich_spell_raw_tokens.rs` already do for their kinds — every
+`data.raw_tokens` entry is copied verbatim from the cited `.lst` row, nothing computed or interpreted.
+Citations (`book`, `source_file`, `source_line`, `key`, `name`) are sourced from
+`docs/work-inventory.json`'s own already-computed enumeration (never re-derived), restricted to each
+book's PRIMARY (non-nested) `*_abilities_class.lst` file — see module doc comment for why (nested
+`support/`/`_pfs/` files risk `corpus_literal_sweep::book_dir_of`'s book-attribution bug, `OPEN-ISSUES.md`
+row 22, out of this card's file territory).
+
+**PI screening — BOTH SD-30 invocation contracts, on NAME and DESCRIPTION**, fixing
+`cache_gen::ultimate_equipment`'s confirmed hole (`OPEN-ISSUES.md` row 38 — it silently drops
+`DeclaredProductIdentity.name`). Every record's row is read for BOTH `NAMEISPI:`/`DESCISPI:` declarations
+(`declared_pi_at`, mirroring `§53.5`'s reader) and the shared blacklist still runs over `description`
+(`pi_screening::classify_optional_field_declared`, `§52.3`). Per `pi_screening.rs`'s own doc comment ("a
+name cannot be redacted... the only way not to publish it is not to publish the row"), **a record whose
+row declares `NAMEISPI:YES` is not written at all** — counted in `GenerationReport::name_pi_skipped`,
+never silently dropped. Real stakes, not hypothetical: `adventurers_guide/ag_abilities_class.lst` alone
+carries 49 `NAMEISPI:YES` + 269 `DESCISPI:YES` declarations
+(`grep -oE '(NAMEISPI|DESCISPI):[A-Za-z]+' .../adventurers_guide/ag_abilities_class.lst | sort | uniq -c`,
+re-derived this cycle). SD-30 PI-gate citation: `SD-30-class-feature-archetype-bundle/kanban.md`'s
+`epic-3-pi-gate` row — **COMPLETE, all F1-F4, verified on `tranche/10` by content** ("corpus-wide
+declared-PI backfill" + "regression gate", `progress.md` cycle `SD30-E3-F4-001`) — this package's cross-SD
+gate note states the gate is "discharged at package level" corpus-wide, not per-book, so this citation
+covers every book this cycle touches.
+
+**Run:** `cargo run --locked --bin gen_cache_class_feature` (with `PCGEN_CORPUS_ROOT` pinned to the
+oracle checkout) → `class_feature cache generated: 12431 records across 21 books; 123 skipped
+(NAMEISPI:YES); ingested_at=2026-08-16T01:41:34Z`. 0 unresolved citations. 21 of 23 in-scope books now
+carry a `data/corpus/<book>/class_feature/` directory (was 1 of 23) — `pathfinder_unchained` deliberately
+untouched (already hand-curated) and `ultimate_psionics` deliberately excluded this cycle
+(`OPEN-ISSUES.md` row 47 — its non-Paizo 4-segment path shape fails
+`corpus_literal_sweep::book_dir_of`'s hard 5-segment requirement, reproduced live before reverting that
+book's output).
+
+**Spot-checked dumped values against the real `.lst` row, sampled across 3 different books, not just the
+first**: `core_rulebook:class_feature:rogue_sneak_attack` (`cr_abilities_class.lst:1615`, 7 tokens,
+byte-identical), `advanced_class_guide:class_feature:slayer_talent_foil_scrutiny`
+(`acg_abilities_class.lst:1839`, 7 tokens including a full multi-sentence `DESC:`, byte-identical, `OGL`
+license correctly assigned — no blacklist term in the text), and a PI-redacted record
+(`adventurers_guide/cypher_lore/swift_scrivener.json`, `DESCISPI:YES` declared) confirmed against the
+existing shipped precedent (`data/corpus/advanced_class_guide/spell/discern_next_of_kin.json`, the
+"Jarn" example `pi_screening.rs`'s own doc comment cites): `data.description` is the marker
+`"[redacted PI]"`, but `data.raw_tokens` correctly retains the REAL unredacted `DESC:` text — required
+for `corpus_literal_sweep`'s byte-comparison to work at all, and confirmed to be the established,
+already-shipped pattern, not a leak. Also confirmed by direct `find`: none of the 49
+`NAMEISPI:YES`-declared `adventurers_guide` rows (e.g. `Bellflower Crop`, `Thassilonian Focus`) produced
+a JSON file.
+
+**Sweep clean at scale:** `cargo run --locked --bin corpus_literal_sweep` →
+`18762 records examined of 23437 read, 154407 tokens compared (9 synthesized), 23012 digests checked, 0
+findings` / `CLEAN` (up from wave 3's 6,331 examined — proves the new 12,431 records, not just the
+pre-existing corpus, swept clean).
+
+**`v06_corpus_trap_report --audit`:** exit 2, 950 `wiring-class-mismatch` findings — `grep -c
+class_feature /tmp/trap-audit-sd31-cachegen-cf.log` → **0**. Confirmed pre-existing (`OPEN-ISSUES.md` row
+41, monster/companion records, unrelated to this cycle) and confirmed NOT worsened by this cycle (finding
+count 950 here vs. the 1,040 previously cited — the earlier figure appears to have drifted rather than my
+cycle improving it; not investigated further, out of scope, noted rather than silently reconciled).
+
+### 3. Measured the delta — guarded regen, per the wave rule
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-cachegen-cf.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-cachegen-cf.json
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-cachegen-cf.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-cachegen-cf.json \
+  cargo run --locked --bin v06_work_inventory
+```
+Real exit 0 both steps; no stamp-loss refusal/warning emitted (`grep -i "stamp loss\|refus"
+/tmp/winv-run.log` → nothing). `derived_evaluator_fixture_check` reported 1 pre-existing, unrelated
+failure (`advanced_players_guide:equipment:spindle_of_perfect_knowledge`, exit 0 regardless — informational,
+not a hard gate failure, not `class_feature`).
+
+Doneness replay (`pf1e_dashboard_producer.doneness_verdict`):
+```
+python3 -c "import json,sys,collections; sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P; d=json.load(open('docs/work-inventory.json')); U=[u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]; c=collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U); print(len(U),dict(c))"
+```
+→ board `done` **7355 → 7369 (+14)**, 19.0935% → **19.1298%**. `class_feature` `done` **25 → 39 (+14)**
+(exactly the 14 `(static, grounded)` units the trace predicted — core_rulebook ×12, advanced_class_guide
+×1, ultimate_combat ×1, all now `literal-verified`), `class_feature` `held` 88 → 74 (-14, the promoted
+units left `held`). **`units_moved_to_done = 14`**, measured, not estimated.
+
+`docs/work-inventory.json` restored per the wave rule: `git checkout -- docs/work-inventory.json`;
+`git status --porcelain -- docs/work-inventory.json` → clean, confirmed.
+
+### 4. What did NOT move, and why (the honest remainder)
+
+The other 12,417 records this cycle wrote (12,431 written − 14 promoted) are genuinely `not-started`/
+`unknown` today — their owning class has no engine chassis wiring at all, confirmed per-unit for
+`adventurers_guide` (`evidence: "no_compiled_rule_set_for_book"` on every sampled unit — the engine has
+zero rule-set for that book). This is **banked infrastructure**, not a shortfall dressed up as one: the
+next `epic-4-mechanism` cycle that wires ANY class in these 21 books inherits an already-built,
+already-PI-screened, already-sweep-clean corpus JSON for it — the `literal-verified` half of the work
+will already be done the moment the engine side lands, with no further ingest cycle needed. This is the
+book-onboarding-tax precedent applied honestly: the fixed cost (per file) is real and was paid once; the
+marginal `done` credit (per record) genuinely depends on Epic 4, not on this card.
+
+`(derived, grounded)` = 19 units (not promoted this cycle — needs `derived_evaluator_fixture_check`
+fixtures per record, a different file territory than this card's; named as a followup, not attempted).
+
+### 5. Gate
+
+`LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E5-F1-001-verify.log`; launched in the
+background immediately after the code change was complete (`./scripts/verify.sh > "$LOG" 2>&1; echo
+"VERIFY_EXIT=$?" >> "$LOG"`), receipt/retro/doc work done while it ran, per gate-sequencing discipline.
+Five sibling lanes' own `verify.sh` gates were running concurrently on this box at launch time
+(`pgrep -fa 'verify.sh|cargo test'` confirmed 6 total, load average 32) — `root-full`'s ~490-binary build
+stage was still running when this receipt was written; see the `VERIFY_EXIT=` line appended below (or
+its absence) for the final word. `root-lib` (the fast stage that reaches this cycle's own new code)
+already reported **PASS, 1821 passed** (+5 vs. wave 3's 1,816 baseline — exactly the 5 new
+`class_feature.rs` unit tests).
+
+### 6. Four-check wired-integration audit
+
+```
+grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' src/rules_core/cache_gen/class_feature.rs src/bin/gen_cache_class_feature.rs src/rules_core/cache_gen/mod.rs
+grep -nE 'mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__' <same files>
+grep -nE '"Would [^"]*"' <same files>
+```
+→ `OK_NO_TOKENS` / `OK_NO_NOOP_HANDLERS` (N/A, no `.tsx` touched) / `OK_NO_MOCK_LEAKS` /
+`OK_NO_WOULD_STRINGS`. Clean.
+
+### 7. DoD checklist
+
+1. `VERIFY_EXIT` — see §5 (gate log carries the final word; not obtained inside this turn's budget, see
+   note below).
+2. `reach` stage — the `class_feature`/`class_features` family already carries a non-zero reach claim
+   (`pu_class_features_reach()`, `apps/desktop/src-tauri/src/reach_gate.rs:2050`, unchanged this cycle —
+   `reach_gate.rs` is shared infra outside this card's granted file territory and 5 sibling lanes were
+   concurrently mid-edit on it this wave). This cycle added NO new `kind`; it widened an already-claimed
+   family's corpus coverage. Widening `reach_gate.rs` to claim the newly-onboarded 21 books' records
+   per-book is a real, named followup (most of them have no engine wiring to claim yet regardless — see
+   §4).
+3. `v06_corpus_trap_report --audit` — exit 2, confirmed pre-existing and confirmed 0 `class_feature`
+   involvement (§2 above). Not worsened.
+4. Guarded regen — zero stamp loss (§3).
+5. Four-check audit — clean (§6).
+6. No family this cycle could not surface has an unrecorded shortfall: the `(derived, grounded)` 19-unit
+   population and the `ultimate_psionics` exclusion are both named in `OPEN-ISSUES.md` (rows 46/47) with
+   their exact remedy, not silently dropped.
+7. No baseline movement in `scripts/verify-baselines.env` needed by this cycle's own change (the gate's
+   own baseline-notes step, if any, is reported in §5's log).
+8. **On-screen verification — NOT driven this cycle, logged as a shortfall per protocol rather than
+   silently skipped.** All 14 newly-`done` units are PRE-EXISTING engine-computed class features
+   (Barbarian Rage, Rogue Sneak Attack, Monk AC Bonus, etc.) that the desktop app already renders today —
+   this cycle changed only their corpus-JSON backing and doneness bookkeeping, not their computed values
+   or render path, so there is no NEW player-visible surface to screenshot. `apps/desktop/.claude/skills/
+   run-desktop/driver.sh` was not run this cycle (turn-budget priority went to the corpus-wide dump + its
+   verification, given `class_feature`'s size as the highest-value card in the package). Integration
+   should confirm this reasoning holds (spot-check one of the 14, e.g. Rogue's Sneak Attack die count on a
+   levelled character sheet, already rendering pre-cycle) rather than treat DoD-8 as silently satisfied.
+
+### 8. Corrections / retro
+
+- Corrected `cache_gen::ultimate_equipment`'s confirmed NAME-screening hole (`OPEN-ISSUES.md` row 38) in
+  THIS module rather than repeat it — verified by the `adventurers_guide` 49-`NAMEISPI:YES`/0-leaked
+  spot-check (§2).
+- Corrected my own working assumption (never published) that "book by book" meant re-implementing
+  `v06_work_inventory::enumerate_book`'s LST-parsing rules — traced why that would risk enumeration drift
+  and used the inventory's own already-computed citations instead; a real design decision, recorded here
+  because a reviewer re-deriving this cycle's approach should not have to guess why.
+- `v06_corpus_trap_report --audit`'s 950-finding count vs. the previously-cited 1,040 — flagged, not
+  silently reconciled (§2), since investigating it is out of this card's scope.
+
+Retro event: `python3 scripts/retro.py correction --subject cache_gen::ultimate_equipment --claimed "PI
+screen covers both NAME and DESCRIPTION" --actual "only DESCRIPTION was ever threaded into the screen;
+NAME silently dropped (OPEN-ISSUES.md row 38)" --verified-by "src/rules_core/cache_gen/class_feature.rs's
+own declared_pi_at + generate() calling BOTH declared.name and declared.description, contrasted against
+ultimate_equipment.rs's generate_equipment() which only ever reads declared.description"`.

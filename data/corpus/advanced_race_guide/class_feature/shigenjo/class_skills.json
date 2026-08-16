@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shigenjo ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Shigenjo",
+    "description": "A shigenjo adds Knowledge (nature), Knowledge (religion), Knowledge (planes), and Survival to her list of class skills. These replace the additional class skills from her mystery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shigenjo ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A shigenjo adds Knowledge (nature), Knowledge (religion), Knowledge (planes), and Survival to her list of class skills. These replace the additional class skills from her mystery."
+      },
+      {
+        "key": "CSKILL",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "CSKILL",
+        "value": "TYPE=Craft|Diplomacy|Heal|Knowledge (History)|Knowledge (Nature)|Knowledge (Religion)|Knowledge (Planes)|TYPE=Profession|Sense Motive|Spellcraft|Survival"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 749,
+    "record_key": "Shigenjo ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

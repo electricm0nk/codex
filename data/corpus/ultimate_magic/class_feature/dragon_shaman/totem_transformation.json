@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dragon Shaman ~ Totem Transformation",
+    "name": "Totem Transformation",
+    "class": "Dragon Shaman",
+    "description": "You may adopt an aspect of the dragon while retaining your normal form. You gain one of the following bonuses: movement (fly speed 30 feet [average], you must be 5th level to select this bonus), senses (low-light vision, +4 racial bonus to Perception), toughness (+2 natural armor bonus to AC, Endurance feat), or natural weapons (bite [1d6] and 2 claws [1d4] for a Medium shaman, +2 to CMB on grapple checks). While using totem transformation, you may speak normally and can cast speak with animals (lizards only) at will. Using this ability is a standard action at 2nd level, a move action at 7th level, and a swift action at 12th level. You can use this ability for %1 minutes per day. These minutes do not need to be consecutive, but they must be used in 1-minute increments. This is a polymorph effect and cannot be used while you are using another polymorph effect, such as wild shape.|TotemTransformationDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Shaman ~ Totem Transformation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TotemTransformationDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You may adopt an aspect of the dragon while retaining your normal form. You gain one of the following bonuses: movement (fly speed 30 feet [average], you must be 5th level to select this bonus), senses (low-light vision, +4 racial bonus to Perception), toughness (+2 natural armor bonus to AC, Endurance feat), or natural weapons (bite [1d6] and 2 claws [1d4] for a Medium shaman, +2 to CMB on grapple checks). While using totem transformation, you may speak normally and can cast speak with animals (lizards only) at will. Using this ability is a standard action at 2nd level, a move action at 7th level, and a swift action at 12th level. You can use this ability for %1 minutes per day. These minutes do not need to be consecutive, but they must be used in 1-minute increments. This is a polymorph effect and cannot be used while you are using another polymorph effect, such as wild shape.|TotemTransformationDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TotemTransformationDuration|classlevel(\"Druid\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1101,
+    "record_key": "Dragon Shaman ~ Totem Transformation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

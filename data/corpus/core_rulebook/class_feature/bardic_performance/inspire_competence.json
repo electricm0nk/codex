@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bardic Performance ~ Inspire Competence",
+    "name": "Inspire Competence",
+    "class": "Bardic Performance",
+    "description": "You can use your performance to help an ally succeed at a task. That ally must be within 30 feet and be able to hear you. The ally gets a +%1 competence bonus on skill checks with a particular skill as long as she continues to hear your performance. Certain uses of this ability are infeasible, such as Stealth, and may be disallowed at the GM's discretion. A bard can't inspire competence in himself. Inspire competence relies on audible components.|InspireCompetenceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Inspire Competence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InspireCompetenceBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InspireCompetenceCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your performance to help an ally succeed at a task. That ally must be within 30 feet and be able to hear you. The ally gets a +%1 competence bonus on skill checks with a particular skill as long as she continues to hear your performance. Certain uses of this ability are infeasible, such as Stealth, and may be disallowed at the GM's discretion. A bard can't inspire competence in himself. Inspire competence relies on audible components.|InspireCompetenceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireCompetenceBonus|InspireCompetenceCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireCompetenceCount|(BardicPerformanceLVL+5)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 525,
+    "record_key": "Bardic Performance ~ Inspire Competence"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

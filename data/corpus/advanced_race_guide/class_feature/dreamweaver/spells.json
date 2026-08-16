@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dreamweaver ~ Spells",
+    "name": "Spells",
+    "class": "Dreamweaver",
+    "description": "A dreamweaver replaces some of her patron's spells with the following: 2nd-sow thoughts (see below), 4th-dust of twilight (Pathfinder RPG Advanced Player's Guide), 6th-deep slumber, 8th-modify memory, 10th-dream, 12th- cloak of dreams (Advanced Player's Guide), 14th-ethereal jaunt, 16th-moment of prescience, 18th-astral projection.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dreamweaver ~ Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A dreamweaver replaces some of her patron's spells with the following: 2nd-sow thoughts (see below), 4th-dust of twilight (Pathfinder RPG Advanced Player's Guide), 6th-deep slumber, 8th-modify memory, 10th-dream, 12th- cloak of dreams (Advanced Player's Guide), 14th-ethereal jaunt, 16th-moment of prescience, 18th-astral projection."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.185"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=1|Sow Thought|PRECLASS:1,Witch=2"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=2|Dust of Twilight|PRECLASS:1,Witch=4"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=3|Deep Slumber|PRECLASS:1,Witch=6"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=4|Modify Memory|PRECLASS:1,Witch=8"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=5|Dream|PRECLASS:1,Witch=10"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=6|Cloak of Dreams|PRECLASS:1,Witch=12"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=7|Ethereal Jaunt|PRECLASS:1,Witch=14"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=8|Moment of Prescience|PRECLASS:1,Witch=16"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=9|Astral Projection|PRECLASS:1,Witch=18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 823,
+    "record_key": "Dreamweaver ~ Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

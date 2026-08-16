@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Scrollmaster ~ Improved Scroll Casting",
+    "name": "Improved Scroll Casting",
+    "class": "Scrollmaster",
+    "description": "You can cast a wizard spell from a scroll and use your own Intelligence score and relevant feats to set the DC for the spell, and can use your own caster level if it is higher than that of the scroll (similar to a caster using a staff). You must have already deciphered the writing on the scroll to use this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scrollmaster ~ Improved Scroll Casting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast a wizard spell from a scroll and use your own Intelligence score and relevant feats to set the DC for the spell, and can use your own caster level if it is higher than that of the scroll (similar to a caster using a staff). You must have already deciphered the writing on the scroll to use this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 2035,
+    "record_key": "Scrollmaster ~ Improved Scroll Casting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

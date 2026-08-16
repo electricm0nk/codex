@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Saurian Champion ~ Titanic Challenge",
+    "name": "Titanic Challenge",
+    "class": "Saurian Champion",
+    "description": "A saurian champion considers only the largest creatures a true challenge. His titanic challenge adds only +%1 on damage rolls against Medium or smaller creatures, but he adds a +1 bonus on attack rolls against a target of his challenge that is at least two size categories larger than himself (Huge for Medium saurian champions) and a +2 bonus on attack rolls against a Colossal target of his challenge. This alters challenge.|CavalierChallengeLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Saurian Champion ~ Titanic Challenge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.SaurianChampionClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A saurian champion considers only the largest creatures a true challenge. His titanic challenge adds only +%1 on damage rolls against Medium or smaller creatures, but he adds a +1 bonus on attack rolls against a target of his challenge that is at least two size categories larger than himself (Huge for Medium saurian champions) and a +2 bonus on attack rolls against a Colossal target of his challenge. This alters challenge.|CavalierChallengeLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 435,
+    "record_key": "Saurian Champion ~ Titanic Challenge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue ~ Uncanny Dodge",
+    "name": "Uncanny Dodge",
+    "class": "Rogue",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue ~ Uncanny Dodge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.Uncanny Dodge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeFlankingLevel|RogueLVL|TYPE=EachClass.REPLACE"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1621,
+    "record_key": "Rogue ~ Uncanny Dodge"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gingerbread Witch ~ Cauldron Cook",
+    "name": "Cauldron Cook",
+    "class": "Gingerbread Witch",
+    "description": "A gingerbread witch gains the cauldron and child-scent hexes. When brewing potions with her cauldron, she can create small candies, pastries, or similar edible items identical in effect and application to normal potions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gingerbread Witch ~ Cauldron Cook"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.GingerbreadWitchClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "DESC",
+        "value": "A gingerbread witch gains the cauldron and child-scent hexes. When brewing potions with her cauldron, she can create small candies, pastries, or similar edible items identical in effect and application to normal potions."
+      },
+      {
+        "key": "DESC",
+        "value": "She also gains the cook people hex."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Witch Hex ~ Cauldron|Witch Hex ~ Child-Scent"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Witch Major Hex ~ Cook People|PRECLASS:1,Witch=10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 271,
+    "record_key": "Gingerbread Witch ~ Cauldron Cook"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilant Defender ~ Shared Judgments",
+    "name": "Shared Judgments",
+    "class": "Vigilant Defender",
+    "description": "As a swift action whenever a vigilant defender has pronounced judgment on her foes, she can grant all of her allies within 60 feet the bonus or special ability that the judgment bestows. If she has multiple active judgments, they all affect her allies. When she does this, the judgments no longer affect her, and their effects only last for 1 round, after which that daily use of judgment ends immediately, even if the combat is not over. The vigilant defender cannot change any of these judgments to another type during this round. This ability modifies judgment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilant Defender ~ Shared Judgments"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.UmbralStalkerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action whenever a vigilant defender has pronounced judgment on her foes, she can grant all of her allies within 60 feet the bonus or special ability that the judgment bestows. If she has multiple active judgments, they all affect her allies. When she does this, the judgments no longer affect her, and their effects only last for 1 round, after which that daily use of judgment ends immediately, even if the combat is not over. The vigilant defender cannot change any of these judgments to another type during this round. This ability modifies judgment."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 487,
+    "record_key": "Vigilant Defender ~ Shared Judgments"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Blue Rose ~ Inner Peace",
+    "name": "Inner Peace",
+    "class": "Order of the Blue Rose",
+    "description": "At 8th level, the cavalier has learned that while not all things in the world will go as he wishes, he must remain calm and centered. Once per day as an immediate action, the cavalier may ignore an amount of damage from a single source (one attack, spell, or effect) equal to his cavalier level plus his Charisma modif ier. He can only ignore hit point damage in this fashion. The cavalier can use this ability one additional time per day at 12th level and every four levels thereafter (to a maximum of four times per day at 20th level).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Blue Rose ~ Inner Peace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, the cavalier has learned that while not all things in the world will go as he wishes, he must remain calm and centered. Once per day as an immediate action, the cavalier may ignore an amount of damage from a single source (one attack, spell, or effect) equal to his cavalier level plus his Charisma modif ier. He can only ignore hit point damage in this fashion. The cavalier can use this ability one additional time per day at 12th level and every four levels thereafter (to a maximum of four times per day at 20th level)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 441,
+    "record_key": "Order of the Blue Rose ~ Inner Peace"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

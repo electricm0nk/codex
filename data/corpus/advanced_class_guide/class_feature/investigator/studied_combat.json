@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Studied Combat",
+    "name": "Studied Combat",
+    "class": "Investigator",
+    "description": "With a keen eye and calculating mind, you can assess the mettle of your opponent to take advantage of gaps in talent and training.  You can use a move action to study a single enemy that you can see.  Upon doing so, you add %1 as an insight bonus on melee attack rolls and as a bonus on damage rolls against the creature. This effect lasts for %2 rounds or until you deal damage with a studied strike, whichever comes first. The bonus on damage rolls is precision damage, and is not multiplied on a critical hit.  An Investigator can only have one target of studied combat at a time, and once a creature has become the target of an investigator's studied combat, he cannot become the target of the same investigator's studied combat again for 24 hours unless the investigator expends one use of inspiration when taking the move action to use this ability.|InvestigatorStudiedCombatBonus|InvestigatorStudiedCombatDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Studied Combat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorStudiedCombatDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorStudiedCombatBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "With a keen eye and calculating mind, you can assess the mettle of your opponent to take advantage of gaps in talent and training.  You can use a move action to study a single enemy that you can see.  Upon doing so, you add %1 as an insight bonus on melee attack rolls and as a bonus on damage rolls against the creature. This effect lasts for %2 rounds or until you deal damage with a studied strike, whichever comes first. The bonus on damage rolls is precision damage, and is not multiplied on a critical hit.  An Investigator can only have one target of studied combat at a time, and once a creature has become the target of an investigator's studied combat, he cannot become the target of the same investigator's studied combat again for 24 hours unless the investigator expends one use of inspiration when taking the move action to use this ability.|InvestigatorStudiedCombatBonus|InvestigatorStudiedCombatDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorStudiedCombatDuration|max(1,INT)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorStudiedCombatBonus|InvestigatorLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1248,
+    "record_key": "Investigator ~ Studied Combat"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

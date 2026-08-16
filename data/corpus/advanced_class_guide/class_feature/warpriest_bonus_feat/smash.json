@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Smash",
+    "name": "Smash",
+    "class": "Warpriest Bonus Feat",
+    "description": "You overcome obstacles by breaking them.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Smash"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Power Attack"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHalfOrc=true"
+      },
+      {
+        "key": "DESC",
+        "value": "You overcome obstacles by breaking them."
+      },
+      {
+        "key": "DESC",
+        "value": " When you attack an inanimate, unattended object, you ignore the first 5 points of its hardness. You also receive a +5 bonus on Strength checks made to knock down or break open doors. Special - The benefits of this feat do not apply to sunder attempts or attacks against constructs, only attacks on inanimate, unattended objects."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Smash"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.170"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4376,
+    "record_key": "Warpriest Bonus Feat ~ Smash"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Stormborn Bloodline ~ Ride the Lightning",
+    "name": "Ride the Lightning",
+    "class": "Stormborn Bloodline",
+    "description": "As a full-round action you can become a living lightning bolt and move in a straight line up to 10 times your speed. You do not provoke attacks of opportunity while moving in this way. Creatures or objects in your path are affected as by your thunderbolt power. Creatures do not block your movement but solid barriers do unless they are reduced to 0 hit points. You can use this power once per day for %1 rounds.|Sorcerer_StormbornRideTheLightning_Duration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stormborn Bloodline ~ Ride the Lightning"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Stormborn Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Stormborn"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Stormborn_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Stormborn_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_StormbornRideTheLightning_Duration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_StormbornRideTheLightning_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action you can become a living lightning bolt and move in a straight line up to 10 times your speed. You do not provoke attacks of opportunity while moving in this way. Creatures or objects in your path are affected as by your thunderbolt power. Creatures do not block your movement but solid barriers do unless they are reduced to 0 hit points. You can use this power once per day for %1 rounds.|Sorcerer_StormbornRideTheLightning_Duration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_StormbornRideTheLightning_Duration|Sorcerer_Stormborn_BloodlinePower15LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_StormbornRideTheLightning_Times|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds)|Sorcerer_StormbornRideTheLightning_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_StormbornRideTheLightning_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|StormbornBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3247,
+    "record_key": "Stormborn Bloodline ~ Ride the Lightning"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

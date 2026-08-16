@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sister-in-Arms ~ Devoted Defender",
+    "name": "Devoted Defender",
+    "class": "Sister-in-Arms",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sister-in-Arms ~ Devoted Defender"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Feature.SisterInArmsClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "DESC",
+        "value": "Sisters-in-arms cling to their fellow Gray Maidens as closely as family and protect them with intense devotion. A sister-in-arms gains Bodyguard as a bonus feat (she does not need to meet the feat's prerequisite)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Bodyguard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 759,
+    "record_key": "Sister-in-Arms ~ Devoted Defender"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

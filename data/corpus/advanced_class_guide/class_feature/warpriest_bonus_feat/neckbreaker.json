@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Neckbreaker",
+    "name": "Neckbreaker",
+    "class": "Warpriest Bonus Feat",
+    "description": "With a quick jerk, you snap an enemy's neck.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Neckbreaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "6,CATEGORY=FEAT,Bonebreaker,Greater Grapple,Improved Grapple,Improved Unarmed Strike,Jawbreaker,Stunning Fist"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Heal=12"
+      },
+      {
+        "key": "DESC",
+        "value": "With a quick jerk, you snap an enemy's neck."
+      },
+      {
+        "key": "DESC",
+        "value": " If you have an opponent your size or smaller helpless or pinned, after you initiate or maintain a grapple, you can make a Stunning Fist attempt at a -5 penalty on the attack roll. If you succeed, you wrench that opponent's neck, dealing 2d6 Strength or Dexterity damage. If the targeted ability score is reduced to 0, any remaining damage is dealt to that opponent's Constitution score. A creature that is immune to critical hits or that has no discernible head and neck is immune to the effects of this feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Neckbreaker"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4495,
+    "record_key": "Warpriest Bonus Feat ~ Neckbreaker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

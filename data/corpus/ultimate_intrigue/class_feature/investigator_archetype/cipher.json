@@ -1,0 +1,187 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator Archetype ~ Cipher",
+    "name": "Cipher",
+    "class": "Investigator Archetype",
+    "description": "A cipher is a student of nonexistence. He trains himself to remain undetected and ignored in order to conduct his investigations without opposition or bothersome questions. By staying unseen, a cipher can follow and observe his quarry; being overlooked in a crowd suits him just fine.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Cipher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Cipher],[!PREFACT:1,ABILITIES,Investigator_Archetype_ClassSkills=True,Investigator_Archetype_Inspiration=True,Investigator_Archetype_Trapfinding=True,Investigator_Archetype_PoisonLore=True,Investigator_Archetype_PoisonResistance=True,Investigator_Archetype_PoisonImmunity=True,Investigator_Archetype_TrapSense=True,Investigator_Archetype_SwiftAlchemy=True,Investigator_Archetype_Talent3=True,Investigator_Archetype_Talent5=True,Investigator_Archetype_Talent7=True,Investigator_Archetype_Talent9=True,Investigator_Archetype_Talent11=True,Investigator_Archetype_StudiedStrike=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A cipher is a student of nonexistence. He trains himself to remain undetected and ignored in order to conduct his investigations without opposition or bothersome questions. By staying unseen, a cipher can follow and observe his quarry; being overlooked in a crowd suits him just fine."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cipher ~ Unassuming|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cipher ~ Inattention Blindness|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cipher ~ Null Aura|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cipher ~ Evasive|PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cipher ~ Tenuous Threat|PRECLASS:1,Investigator=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cipher ~ Hide in Plain Sight|PRECLASS:1,Investigator=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Inspiration|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent11|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_StudiedStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent11|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 496,
+    "record_key": "Investigator Archetype ~ Cipher"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

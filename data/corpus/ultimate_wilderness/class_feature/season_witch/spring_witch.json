@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Season Witch ~ Spring Witch",
+    "name": "Spring Witch",
+    "class": "Season Witch",
+    "description": "A spring witch has dominion over the renewing spirit of life and youth. The save DCs of her spells that deal electricity damage increase by 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Season Witch ~ Spring Witch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SeasonWitchType.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A spring witch has dominion over the renewing spirit of life and youth. The save DCs of her spells that deal electricity damage increase by 1."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Spring Witch Hex Choice|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1256,
+    "record_key": "Season Witch ~ Spring Witch"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

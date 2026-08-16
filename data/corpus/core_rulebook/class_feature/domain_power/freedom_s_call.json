@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Domain Power ~ Freedom's Call",
+    "name": "Freedom's Call",
+    "class": "Domain Power",
+    "description": "You can emit a 30-foot aura of freedom for %1 rounds per day. Allies within this aura are not affected by the confused, grappled, frightened, panicked, paralyzed, pinned, or shaken conditions. This aura only suppresses these effects, and they return once a creature leaves the aura or when the aura ends, if applicable. These rounds do not need to be consecutive.|FreedomsCallRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Freedom's Call"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower.Aura.Liberation Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FreedomsCallRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can emit a 30-foot aura of freedom for %1 rounds per day. Allies within this aura are not affected by the confused, grappled, frightened, panicked, paralyzed, pinned, or shaken conditions. This aura only suppresses these effects, and they return once a creature leaves the aura or when the aura ends, if applicable. These rounds do not need to be consecutive.|FreedomsCallRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FreedomsCallRounds|DomainLiberationLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds/day)|FreedomsCallRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|FreedomsCallRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 722,
+    "record_key": "Domain Power ~ Freedom's Call"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

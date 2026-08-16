@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Phantom Thief Talent ~ Celebrity Discount",
+    "name": "Celebrity Discount",
+    "class": "Phantom Thief Talent",
+    "description": "The phantom thief is popular enough to receive discounts in his area of renown. Whenever he buys an item in his area of renown that costs 500 gp or less, he can buy it at 90%% of the market price, rather than the full price.|CelebrityDiscountValue",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantom Thief Talent ~ Celebrity Discount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,Phantom Thief Talent ~ Renown,Phantom Thief ~ Broad Education"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CelebrityDiscountValue|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The phantom thief is popular enough to receive discounts in his area of renown. Whenever he buys an item in his area of renown that costs 500 gp or less, he can buy it at 90%% of the market price, rather than the full price.|CelebrityDiscountValue"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CelebrityDiscountValue|500"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CelebrityDiscountValue|1500|PREABILITY:1,CATEGORY=Special Ability,Social Talent ~ Great Renown"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CelebrityDiscountValue|6000|PREABILITY:1,CATEGORY=Special Ability,Social Talent ~ Incredible Renown"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 869,
+    "record_key": "Phantom Thief Talent ~ Celebrity Discount"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

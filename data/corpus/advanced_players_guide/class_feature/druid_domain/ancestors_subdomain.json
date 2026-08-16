@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Druid Domain ~ Ancestors Subdomain",
+    "name": "Ancestors Subdomain",
+    "class": "Druid Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Domain ~ Ancestors Subdomain"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Domain ~ Subdomain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "DruidAncestorsSubdomainAllowed,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Druid=1|Deathwatch|Druid=2|Gentle Repose|Druid=3|Speak with Dead|Druid=4|Rest Eternal|Druid=5|Slay Living|Druid=6|Geas/Quest|Druid=7|Destruction|Druid=8|Waves of Exhaustion|Druid=9|Wail of the Banshee"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1174,
+    "record_key": "Druid Domain ~ Ancestors Subdomain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Masked Maiden ~ Imperfect Control",
+    "name": "Imperfect Control",
+    "class": "Masked Maiden",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masked Maiden ~ Imperfect Control"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.MaskedMaidenClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "DESC",
+        "value": "A masked maiden compulsively resists entering her indoctrinated state, but certain triggers (such as violence) can cause her to lapse. The masked maiden always starts the day in her social identity. To begin willingly changing to her vigilante identity, the masked maiden must succeed at a Will save (DC %1); if she fails, she becomes shaken for 1 minute and cannot try again during that time. While in her social identity, when the masked maiden is exposed to mortal peril (such as when combat starts), she must succeed at a Will save at the same DC or be compelled to enter her vigilante identity as soon as she can get out of sight to do so. The masked maiden cannot choose to fail this Will save. In addition, if the masked maiden hasn't entered her vigilante identity for a week or longer, she must attempt this Will save at the start of each day; on a failure, she is compelled to change into her vigilante identity immediately (or as soon as she can slip out of sight to do so). A masked maiden can don Gray Maiden plate in 1 minute without aid, and can do so as part of switching to her vigilante identity. If the maiden reduces the time it takes to change identities (such as with the quick change social talent), she can still don her armor as part of changing to her vigilante identity. A masked maiden who changes to her vigilante identity unwillingly can't choose to switch from her vigilante identity back to her social identity that day. While in her vigilante identity, the masked maiden takes a -2 penalty on all Charisma-based ability and skill checks (except for Intimidate) and can't benefit from morale bonuses or bardic performances. This ability alters dual identity.|10+VigilanteLVL/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1110,
+    "record_key": "Masked Maiden ~ Imperfect Control"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

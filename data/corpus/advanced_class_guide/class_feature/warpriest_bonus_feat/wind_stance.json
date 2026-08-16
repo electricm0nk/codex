@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Wind Stance",
+    "name": "Wind Stance",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your erratic movements make it difficult for enemies to pinpoint your location.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Wind Stance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Dodge"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,15],[PREVARGTEQ:FeatDexRequirement,15]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your erratic movements make it difficult for enemies to pinpoint your location."
+      },
+      {
+        "key": "DESC",
+        "value": " If you move more than 5 feet this turn, you gain 20%% concealment for 1 round against ranged attacks."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Wind Stance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4307,
+    "record_key": "Warpriest Bonus Feat ~ Wind Stance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

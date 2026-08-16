@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gain Swim Speed ~ Dagon",
+    "name": "Gain Swim Speed",
+    "class": "Gain Swim Speed",
+    "description": "Gain a swim speed equal to your base land speed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gain Swim Speed ~ Dagon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal.DagonSecondOath"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain a swim speed equal to your base land speed."
+      },
+      {
+        "key": "MOVECLONE",
+        "value": "Walk,Swim,*1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 119,
+    "record_key": "Gain Swim Speed ~ Dagon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

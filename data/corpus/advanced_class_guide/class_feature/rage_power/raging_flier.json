@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Raging Flier",
+    "name": "Raging Flier",
+    "class": "Rage Power",
+    "description": "Once per rage, the character can fly up to her base speed as a move action. If she uses the charge action, she can use this flight as part of her movement during the charge. A character must be at least 6th level and have the raging leaper rage power to select this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Raging Flier"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Feature.Skald Class Feature.Rage Power.RagePower.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PRELEVEL:MIN=6],[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ Raging Leaper]"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per rage, the character can fly up to her base speed as a move action. If she uses the charge action, she can use this flight as part of her movement during the charge. A character must be at least 6th level and have the raging leaper rage power to select this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.114"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1764,
+    "record_key": "Rage Power ~ Raging Flier"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

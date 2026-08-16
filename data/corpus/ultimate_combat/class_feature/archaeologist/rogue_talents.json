@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Archaeologist ~ Rogue Talents",
+    "name": "Rogue Talents",
+    "class": "Archaeologist",
+    "description": "At 4th level, an Archaeologist gains a rogue talent. He gains an additional rogue talent for every four levels of Archaeologist gained after 4th level. Otherwise, this works as the rogue's rogue talent ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Archaeologist ~ Rogue Talents"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RogueTalentLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, an Archaeologist gains a rogue talent. He gains an additional rogue talent for every four levels of Archaeologist gained after 4th level. Otherwise, this works as the rogue's rogue talent ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatTrickAllowed|1|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatTrickAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatTrickTaken|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rogue Talent|RogueTalentLVL/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RogueTalentLVL|BardLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 395,
+    "record_key": "Archaeologist ~ Rogue Talents"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

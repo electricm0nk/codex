@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Filidh ~ Divinatory Song",
+    "name": "Divinatory Song",
+    "class": "Filidh",
+    "description": "A filidh can use his performance to create an effect equivalent to divination, using the filidh's level as the caster level. The filidh and all allies who can hear his performance receive the information provided by the divination as flashes of inspiration and knowledge. Divinatory song takes 10 minutes and uses 6 rounds of bardic performance. Divinatory song relies on audible components.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Filidh ~ Divinatory Song"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.FilidhClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A filidh can use his performance to create an effect equivalent to divination, using the filidh's level as the caster level. The filidh and all allies who can hear his performance receive the information provided by the divination as flashes of inspiration and knowledge. Divinatory song takes 10 minutes and uses 6 rounds of bardic performance. Divinatory song relies on audible components."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 269,
+    "record_key": "Filidh ~ Divinatory Song"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

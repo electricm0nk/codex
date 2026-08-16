@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk Archetype ~ Ki Mystic",
+    "name": "Ki Mystic",
+    "class": "Monk Archetype",
+    "description": "The ki mystic believes that violence is sometimes necessary, but knowing and understanding is the true root of perfection. Through meditation and spiritual visions, a ki mystic can see beyond the veil of reality to the underlying truth of all existence. A ki mystic has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Ki Mystic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkStillMind.MonkPurityOfBody.MonkDiamondBody.MonkDiamondSoul.MonkEmptyBody"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Ki Mystic],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStillMind,TYPE.MonkPurityOfBody,TYPE.MonkDiamondBody,TYPE.MonkDiamondSoul,TYPE.MonkEmptyBody]"
+      },
+      {
+        "key": "DESC",
+        "value": "The ki mystic believes that violence is sometimes necessary, but knowing and understanding is the true root of perfection. Through meditation and spiritual visions, a ki mystic can see beyond the veil of reality to the underlying truth of all existence. A ki mystic has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Ki Mystic ~ Ki Mystic|PRECLASS:1,Monk=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Ki Mystic ~ Mystic Insight|PRECLASS:1,Monk=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Ki Mystic ~ Mystic Visions|PRECLASS:1,Monk=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Ki Mystic ~ Mystic Prescience|PRECLASS:1,Monk=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Ki Mystic ~ Mystic Persistence|PRECLASS:1,Monk=19"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2292,
+    "record_key": "Monk Archetype ~ Ki Mystic"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

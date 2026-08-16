@@ -1,0 +1,159 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium Archetype ~ Storyteller",
+    "name": "Storyteller",
+    "class": "Medium Archetype",
+    "description": "While all mediums connect to legendary spirits, storyteller mediums take their obsession with legends to the extreme, suffusing their lives with epic tales at the cost of some of their spiritual power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium Archetype ~ Storyteller"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Medium Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Medium=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Storyteller],[!PREFACT:1,ABILITIES,Medium_Archetype_Spirit=True,Medium_Archetype_SpiritBonus=True,Medium_Archetype_SpiritSurge=True,Medium_Archetype_Taboo=True,Medium_Archetype_SharedSeance=True,Medium_Archetype_HauntChanneler=True,Medium_Archetype_Propitiation=True,Medium_Archetype_TranceOfThree=True,Medium_Archetype_ConnectionChannel=True,Medium_Archetype_SpiritMastery=True,Medium_Archetype_AstralBeacon=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "While all mediums connect to legendary spirits, storyteller mediums take their obsession with legends to the extreme, suffusing their lives with epic tales at the cost of some of their spiritual power."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Storyteller ~ Diminished Spirits|Storyteller ~ Knowledge of Tales|Storyteller ~ Versatile Surge|PRECLASS:1,Medium=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Storyteller ~ Storyteller's Performance|PRECLASS:1,Medium=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Storyteller ~ Learn the Story|PRECLASS:1,Medium=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Storyteller ~ Living Story|PRECLASS:1,Medium=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Medium"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_Spirit|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_SpiritBonus|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_SpiritSurge|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_Taboo|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_SharedSeance|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_HauntChanneler|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_Propitiation|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_TranceOfThree|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_ConnectionChannel|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_SpiritMastery|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_AstralBeacon|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_SpiritBonus|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_Taboo|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_SharedSeance|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_HauntChanneler|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_Propitiation|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_TranceOfThree|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_ConnectionChannel|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_SpiritMastery|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_AstralBeacon|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1395,
+    "record_key": "Medium Archetype ~ Storyteller"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

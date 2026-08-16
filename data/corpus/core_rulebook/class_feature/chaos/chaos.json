@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Chaos Domain",
+    "name": "Chaos",
+    "class": null,
+    "description": "Your touch infuses life and weapons with chaos, and you revel in all things anarchic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Chaos Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "CG,CN,CE"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainChaosLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainChaosDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainChaosTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainChaosAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your touch infuses life and weapons with chaos, and you revel in all things anarchic."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Touch of Chaos|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Chaos)|PREVARGTEQ:DomainChaosAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Chaos Blade|PREVARGTEQ:DomainChaosAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainChaosLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainChaosDC|10+(DomainChaosLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainChaosTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainChaosAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Chaos=1|Protection from Law|Chaos=2|Align Weapon (Chaos Only)|Chaos=3|Magic Circle against Law|Chaos=4|Chaos Hammer|Chaos=5|Dispel Law|Chaos=6|Animate Objects|Chaos=7|Word of Chaos|Chaos=8|Cloak of Chaos|Chaos=9|Summon Monster IX (Chaos Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 654,
+    "record_key": "Chaos Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

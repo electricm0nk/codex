@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Focused Arcane School ~ Controller School",
+    "name": "Controller School",
+    "class": "Focused Arcane School",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Focused Arcane School ~ Controller School"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Focused Arcane School.WizardEnchantment.WizardEnchantingSmile.WizardAuraOfDespair"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Focused Arcane School ~ Controller School],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardEnchantment]"
+      },
+      {
+        "key": "PRESUBCLASS",
+        "value": "1,Enchanter"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Controller School ~ Force of Will"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Controller School ~ Irresistible Demand|PREVARGTEQ:EnchantmentSchoolLVL,8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_EnchantingSmile|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_AuraOfDespair|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3315,
+    "record_key": "Focused Arcane School ~ Controller School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

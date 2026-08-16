@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Archetype ~ Infiltrator",
+    "name": "Infiltrator",
+    "class": "Ranger Archetype",
+    "description": "Some rangers study their favored enemies and learn their ways, applying this knowledge to their own abilities and using their foes' strengths against them. Infiltrators are willing to walk a mile in an enemy's shoes so as to learn eveything there is to know about their foes in order to more effectively hunt and kill them.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Infiltrator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype.RangerFavoredTerrain"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Infiltrator],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerFavoredTerrain]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some rangers study their favored enemies and learn their ways, applying this knowledge to their own abilities and using their foes' strengths against them. Infiltrators are willing to walk a mile in an enemy's shoes so as to learn eveything there is to know about their foes in order to more effectively hunt and kill them."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Infiltrator ~ Adaptation|PRECLASS:1,Ranger=3"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Terrain|-1*((RangerFavoredEnemyLVL+2)/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Terrain Bonus|-1*max(0,(RangerFavoredTerrainLVL-3)/5)"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Ranger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2667,
+    "record_key": "Ranger Archetype ~ Infiltrator"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Social Talent ~ Quick Change",
+    "name": "Quick Change",
+    "class": "Social Talent",
+    "description": "The vigilante learns to shift between his identities with ease. Instead of needing 1 minute to change his identity, he can now do so as a full-round action. If, after a quick change, he encounters any creature familiar with both of his identities, he must attempt a Disguise check to avoid the creature seeing through his hastily donned disguise and realizing that the identities are, in fact, the same person. The vigilante can spend 1 additional round adjusting and perfecting his appearance and persona to negate the need for this check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ Quick Change"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante learns to shift between his identities with ease. Instead of needing 1 minute to change his identity, he can now do so as a full-round action. If, after a quick change, he encounters any creature familiar with both of his identities, he must attempt a Disguise check to avoid the creature seeing through his hastily donned disguise and realizing that the identities are, in fact, the same person. The vigilante can spend 1 additional round adjusting and perfecting his appearance and persona to negate the need for this check."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 63,
+    "record_key": "Social Talent ~ Quick Change"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

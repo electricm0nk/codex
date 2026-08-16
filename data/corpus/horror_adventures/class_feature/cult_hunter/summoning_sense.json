@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cult Hunter ~ Summoning Sense",
+    "name": "Summoning Sense",
+    "class": "Cult Hunter",
+    "description": "A cult hunter gains the benefits of uncanny dodge and improved uncanny dodge against summoned creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cult Hunter ~ Summoning Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.CultHunterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "DESC",
+        "value": "A cult hunter gains the benefits of uncanny dodge and improved uncanny dodge against summoned creatures."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 164,
+    "record_key": "Cult Hunter ~ Summoning Sense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

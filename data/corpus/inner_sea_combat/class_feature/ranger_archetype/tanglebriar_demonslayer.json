@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Archetype ~ Tanglebriar Demonslayer",
+    "name": "Tanglebriar Demonslayer",
+    "class": "Ranger Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Tanglebriar Demonslayer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype.RangerEndurance"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Tanglebriar Demonslayer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerEndurance]"
+      },
+      {
+        "key": "DESC",
+        "value": "During the elves' long absence from Golarion, the nascent demon lord Treerazer took up residence in the Fierani Forest in what is now the Elven kingdom of Kyonin. Eventually, the demon's presence in the forest drew the elves back to Golarion, who sought to purge the fiendish blight from this once-sacred land. They defeated Treerazer but could not destroy him, forcing him instead into the southern reaches of the Fierani, a corrupted region of twisted plants and fiendish denizens called Tanglebriar. Even today, the elves constantly battle to keep the corruption in the Tanglebriar from spreading to the rest of the Fierani Forest and beyond. Though they are sworn foes of Treerazer and his kin, Tanglebriar demonslayers are known to venture forth from Kyonin to broaden their expertise in the destruction of demons."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Tanglebriar Demonslayer ~ Skills|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Tanglebriar Demonslayer ~ Favored Enemy|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Tanglebriar Demonslayer ~ Demonologist|PRECLASS:1,Ranger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Tanglebriar Demonslayer ~ Expanded Spell List|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Tanglebriar Demonslayer ~ Fiendish Quarry|PRECLASS:1,Ranger=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Tanglebriar Demonslayer ~ Improved Fiendish Quarry|PRECLASS:1,Ranger=19"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 36,
+    "record_key": "Ranger Archetype ~ Tanglebriar Demonslayer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

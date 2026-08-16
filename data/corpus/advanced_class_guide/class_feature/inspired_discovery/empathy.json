@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inspired Discovery ~ Empathy",
+    "name": "Empathy",
+    "class": "Inspired Discovery",
+    "description": "When attempting a Sense Motive check, the investigator makes two d20 rolls and takes the higher result. If an investigator uses inspiration on a Sense Motive check, he rolls the inspiration dice twice and takes the higher result. Once per day, the investigator can expend one use of inspiration to target a single creature that he can see and hear within 30 feet. Upon doing so, the investigator detects the surface thoughts of the target's mind, as if he concentrated for 3 rounds while using the detect thoughts spell, unless the creature succeeds on a DC %1 Will saving throw.  If the target fails, the investigator can continue to detect the surface thoughts of the target creature for %2 rounds.|InvestigatorEmpathyDC|InvestigatorEmpathyDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inspired Discovery ~ Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InspiredInvestigatorTalent.SpecialQuality.Extraordinary.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Alchemist Archetype ~ Inspired Chemist"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AlchemistLVL,5"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorEmpathyDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorEmpathyDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When attempting a Sense Motive check, the investigator makes two d20 rolls and takes the higher result. If an investigator uses inspiration on a Sense Motive check, he rolls the inspiration dice twice and takes the higher result. Once per day, the investigator can expend one use of inspiration to target a single creature that he can see and hear within 30 feet. Upon doing so, the investigator detects the surface thoughts of the target's mind, as if he concentrated for 3 rounds while using the detect thoughts spell, unless the creature succeeds on a DC %1 Will saving throw.  If the target fails, the investigator can continue to detect the surface thoughts of the target creature for %2 rounds.|InvestigatorEmpathyDC|InvestigatorEmpathyDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorEmpathyDC|AlchemistLVL/2+INT+10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorEmpathyDuration|AlchemistLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2342,
+    "record_key": "Inspired Discovery ~ Empathy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Unsworn Shaman ~ Spirit Magic",
+    "name": "Spirit Magic",
+    "class": "Unsworn Shaman",
+    "description": "The unsworn shaman gains this ability at 2nd level rather than at 1st. This ability alters spirit magic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unsworn Shaman ~ Spirit Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unsworn Shaman Class Feature.Shaman Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "The unsworn shaman gains this ability at 2nd level rather than at 1st. This ability alters spirit magic."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Shaman ~ Spirit Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3652,
+    "record_key": "Unsworn Shaman ~ Spirit Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

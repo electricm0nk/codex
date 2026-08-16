@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Druid Archetype ~ Life Channeler",
+    "name": "Life Channeler",
+    "class": "Druid Archetype",
+    "description": "Life channelers take the natural cycle to what they believe is its logical conclusion. By sacrificing the life of a sentient creature, they can generate energy that guarantees fertility and prosperity for lower creatures like plants and animals. These druids preach to flocks who become willing sacrifices, each serving as a \"king\" or \"queen\" for a short time after being chosen as the next sacrifice.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Life Channeler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LN,TN,CN,LE,NE,CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "DESC",
+        "value": "Life channelers take the natural cycle to what they believe is its logical conclusion. By sacrificing the life of a sentient creature, they can generate energy that guarantees fertility and prosperity for lower creatures like plants and animals. These druids preach to flocks who become willing sacrifices, each serving as a \"king\" or \"queen\" for a short time after being chosen as the next sacrifice."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Life Channeler],[!PREFACT:1,ABILITIES,Druid_Archetype_NatureBond=True,Druid_Archetype_WildShape=True,Druid_Archetype_VenomImmunity=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Life Channeler ~ Alignment|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Life Channeler ~ Plant Preservation|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Life Channeler ~ Wicker Talismans|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Life Channeler ~ Rampant Growth|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Life Channeler ~ Stored Life|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_NatureBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_VenomImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_VenomImmunity|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 103,
+    "record_key": "Druid Archetype ~ Life Channeler"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

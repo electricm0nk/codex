@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fire School ~ Fire Jet",
+    "name": "Fire Jet",
+    "class": "Fire School",
+    "description": "As a standard action, you can send forth a 20-foot line of fire. Anyone in this line takes 1d6+%1 points of fire damage. A successful Reflex save DC %2 halves this damage. Creatures that fail their saving throw catch fire and take 1d6 points of fire damage on the following round. Creatures that catch fire can avoid this damage by taking a full-round action to extinguish the flames by making a DC 15 Reflex save. Rolling on the ground gives a +2 circumstance bonus on the save. Dousing the creature with water automatically extinguishes the flame. You can use this ability %3 times per day.|FireSchoolLVL/2|FireSchoolLVL/2+INT+10|FireFireJetTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fire School ~ Fire Jet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FireFireJetTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can send forth a 20-foot line of fire. Anyone in this line takes 1d6+%1 points of fire damage. A successful Reflex save DC %2 halves this damage. Creatures that fail their saving throw catch fire and take 1d6 points of fire damage on the following round. Creatures that catch fire can avoid this damage by taking a full-round action to extinguish the flames by making a DC 15 Reflex save. Rolling on the ground gives a +2 circumstance bonus on the save. Dousing the creature with water automatically extinguishes the flame. You can use this ability %3 times per day.|FireSchoolLVL/2|FireSchoolLVL/2+INT+10|FireFireJetTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireFireJetTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|FireFireJetTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3292,
+    "record_key": "Fire School ~ Fire Jet"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

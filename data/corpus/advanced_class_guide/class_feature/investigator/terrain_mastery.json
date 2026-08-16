@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent ~ Terrain Mastery",
+    "name": "Terrain Mastery",
+    "class": "Investigator",
+    "description": "An investigator with this talent gains a favored terrain as the ranger ability of the same name, though the favored terrain ability does not increase with her level as the ranger's ability does. An investigator can take this ability multiple times, each time applying it to a new terrain, and granting all other favored terrains a +2 increase to the favored terrain bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent ~ Terrain Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorRogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An investigator with this talent gains a favored terrain as the ranger ability of the same name, though the favored terrain ability does not increase with her level as the ranger's ability does. An investigator can take this ability multiple times, each time applying it to a new terrain, and granting all other favored terrains a +2 increase to the favored terrain bonus."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Basic Favored Terrain|Terrain Mastery ~ Tracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Terrain Mastery|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1372,
+    "record_key": "Investigator ~ Rogue Talent ~ Terrain Mastery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

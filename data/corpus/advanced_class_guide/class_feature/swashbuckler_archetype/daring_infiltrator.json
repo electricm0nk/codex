@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Swashbuckler Archetype ~ Daring Infiltrator",
+    "name": "Daring Infiltrator",
+    "class": "Swashbuckler Archetype",
+    "description": "Not known for their flashy entrances or for standing out in a crowd, a daring infiltrator uses stealth, disguise, and ruthless guile to pursue her goals. Some of these swashbucklers work to undermine evil organizations, while others are master thieves or mysterious assassins.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler Archetype ~ Daring Infiltrator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SwashbucklerArchetype.SwashbucklerClassSkills.SwashbucklerBonusFeats.SwashbucklerCharmedLife.SwashbucklerSwashbucklerInitiativeDeed.SwashbucklerMenacingSwordplayDeed.SwashbucklerBleedingWoundDeed"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Swashbuckler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Daring Infiltrator],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerClassSkills,TYPE.SwashbucklerBonusFeats,TYPE.SwashbucklerCharmedLife,TYPE.SwashbucklerSwashbucklerInitiativeDeed,TYPE.SwashbucklerMenacingSwordplayDeed,TYPE.SwashbucklerBleedingWoundDeed]"
+      },
+      {
+        "key": "DESC",
+        "value": "Not known for their flashy entrances or for standing out in a crowd, a daring infiltrator uses stealth, disguise, and ruthless guile to pursue her goals. Some of these swashbucklers work to undermine evil organizations, while others are master thieves or mysterious assassins."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Daring Infiltrator ~ Class Skills|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Daring Infiltrator ~ Bonus Feats|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Daring Infiltrator ~ Quick-Tongued|PRECLASS:1,Swashbuckler=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Daring Infiltrator ~ Deeds|PRECLASS:1,Swashbuckler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Deed ~ Clandestine Expertise|PRECLASS:1,Swashbuckler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Deed ~ Silence Is Golden|PRECLASS:1,Swashbuckler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Deed ~ Authoritative Bluff|PRECLASS:1,Swashbuckler=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Swashbuckler"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3840,
+    "record_key": "Swashbuckler Archetype ~ Daring Infiltrator"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

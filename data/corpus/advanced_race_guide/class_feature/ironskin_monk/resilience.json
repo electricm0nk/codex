@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ironskin Monk ~ Resilience",
+    "name": "Resilience",
+    "class": "Ironskin Monk",
+    "description": "An ironskin monk can shake off the physical effects of certain attacks. If he makes a Fortitude saving throw against an attack that has a reduced effect on a successful save, he instead avoids the effect entirely. This ability can be used only if the monk is wearing light armor or no armor. A helpless monk does not gain the benefits of resilience.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ironskin Monk ~ Resilience"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An ironskin monk can shake off the physical effects of certain attacks. If he makes a Fortitude saving throw against an attack that has a reduced effect on a successful save, he instead avoids the effect entirely. This ability can be used only if the monk is wearing light armor or no armor. A helpless monk does not gain the benefits of resilience."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 582,
+    "record_key": "Ironskin Monk ~ Resilience"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

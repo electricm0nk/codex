@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Caller ~ Eidolon",
+    "name": "Eidolon",
+    "class": "Wild Caller",
+    "description": "The eidolon of a wild caller tends to take more natural and more savage forms than other summoners' eidolons. A wild caller gains 1/4 his class level as bonus evolution points in his eidolon's evolution pool, but his eidolon cannot take the following evolutions: magic attacks, skilled (while the eidolon can select this evolution, it can only do so with the following skills: Acrobatics, Climb, Escape Artist, Fly, Intimidate, Perception, Survival, and Swim), energy attacks, immunity, weapon training, damage reduction, frightful presence, breath weapon, spell resistance, basic magic, unnatural aura, channel resistance, head, minor magic, undead appearance, major magic, dimension door, incorporeal form, lifesense, no breath, ultimate magic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Caller ~ Eidolon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Eidolon"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonCompanionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IsWildCallerEidolon|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon of a wild caller tends to take more natural and more savage forms than other summoners' eidolons. A wild caller gains 1/4 his class level as bonus evolution points in his eidolon's evolution pool, but his eidolon cannot take the following evolutions: magic attacks, skilled (while the eidolon can select this evolution, it can only do so with the following skills: Acrobatics, Climb, Escape Artist, Fly, Intimidate, Perception, Survival, and Swim), energy attacks, immunity, weapon training, damage reduction, frightful presence, breath weapon, spell resistance, basic magic, unnatural aura, channel resistance, head, minor magic, undead appearance, major magic, dimension door, incorporeal form, lifesense, no breath, ultimate magic."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IsWildCallerEidolon|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonCompanionLVL|SummonerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonEvolution|floor(SummonerLVL/4)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 228,
+    "record_key": "Wild Caller ~ Eidolon"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

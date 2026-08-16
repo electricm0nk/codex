@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Martial Artist ~ Martial Arts Master",
+    "name": "Martial Arts Master",
+    "class": "Martial Artist",
+    "description": "At 4th level, a martial artist may use his monk level to qualify for feats with a fighter level prerequisite when those feats are applied to unarmed strikes or weapons with the monk special quality. This ability replaces slow fall.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Martial Artist ~ Martial Arts Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a martial artist may use his monk level to qualify for feats with a fighter level prerequisite when those feats are applied to unarmed strikes or weapons with the monk special quality. This ability replaces slow fall."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=FighterWeaponQualify"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FighterWeaponQualifyLVL|MonkLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1081,
+    "record_key": "Martial Artist ~ Martial Arts Master"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wildfire Blessing ~ Fiery Wake",
+    "name": "Fiery Wake",
+    "class": "Wildfire Blessing",
+    "description": "When you move, you can use a swift action to invoke a blazing blessing on yourself. For the rest of your turn, your movement leaves behind a 10-foot-tall wall of opaque fire in your path. The wall burns for 1 minute. A creature that touches the wall takes 2d6 points of fire damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildfire Blessing ~ Fiery Wake"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When you move, you can use a swift action to invoke a blazing blessing on yourself. For the rest of your turn, your movement leaves behind a 10-foot-tall wall of opaque fire in your path. The wall burns for 1 minute. A creature that touches the wall takes 2d6 points of fire damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1239,
+    "record_key": "Wildfire Blessing ~ Fiery Wake"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

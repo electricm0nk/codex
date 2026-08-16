@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Holy Vindicator ~ Stigmata",
+    "name": "Stigmata",
+    "class": "Holy Vindicator",
+    "description": "A vindicator willingly gives his blood in service to his faith, and is marked by scarified wounds appropriate to his deity. He may stop or start the flow of blood by force of will as a standard action; at 6th level it becomes a move action, and at 10th level it becomes a swift action. Activating stigmata causes bleed damage equal to half the vindicator's class level, and this bleed damage is not halted by curative magic. While the stigmata are bleeding, the vindicator gains a sacred bonus (if he channels positive energy) or profane bonus (if he channels negative energy) equal to half his class level (%1). Each time he activates his stigmata, the vindicator decides if the bonus applies to attack rolls, weapon damage rolls, Armor Class, caster level checks, or saving throws; to change what the bonus applies to, the vindicator must deactivate and reactivate his stigmata. While his stigmata are bleeding, the vindicator ignores blood drain and bleed damage from any other source and can use bleed or stabilize at will as a standard action.|StigmataLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holy Vindicator ~ Stigmata"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A vindicator willingly gives his blood in service to his faith, and is marked by scarified wounds appropriate to his deity. He may stop or start the flow of blood by force of will as a standard action; at 6th level it becomes a move action, and at 10th level it becomes a swift action. Activating stigmata causes bleed damage equal to half the vindicator's class level, and this bleed damage is not halted by curative magic. While the stigmata are bleeding, the vindicator gains a sacred bonus (if he channels positive energy) or profane bonus (if he channels negative energy) equal to half his class level (%1). Each time he activates his stigmata, the vindicator decides if the bonus applies to attack rolls, weapon damage rolls, Armor Class, caster level checks, or saving throws; to change what the bonus applies to, the vindicator must deactivate and reactivate his stigmata. While his stigmata are bleeding, the vindicator ignores blood drain and bleed damage from any other source and can use bleed or stabilize at will as a standard action.|StigmataLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StigmataLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StigmataLVL|floor(HolyVindicatorLVL/2)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1278,
+    "record_key": "Holy Vindicator ~ Stigmata"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

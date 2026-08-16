@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brand ~ HK",
+    "name": "Brand",
+    "class": "Brand",
+    "description": "You can use mark of justice as a spell-like ability %1/day.|HKDiscipline",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brand ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.HKAbility.HKOPyre"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Hellknight|TIMES=HKDiscipline|CASTERLEVEL=TL|Mark of Justice,HKDisciplineDC"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use mark of justice as a spell-like ability %1/day.|HKDiscipline"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.278"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 76,
+    "record_key": "Brand ~ HK"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

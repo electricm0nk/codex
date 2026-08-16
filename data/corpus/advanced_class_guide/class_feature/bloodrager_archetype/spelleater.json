@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bloodrager Archetype ~ Spelleater",
+    "name": "Spelleater",
+    "class": "Bloodrager Archetype",
+    "description": "Where other bloodragers learn to avoid or shrug off minor damage of all sorts, spelleaters tap into the power of their bloodline in order to heal damage as it comes, and can even cannibalize their own magical energy to heal more damage and continue taking the fight to the enemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Archetype ~ Spelleater"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BloodragerArchetype.BloodragerUncannyDodge.BloodragerDamageReduction.BloodragerImprovedUncannyDodge"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bloodrager=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Spelleater],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BloodragerUncannyDodge,TYPE.BloodragerDamageReduction,TYPE.BloodragerImprovedUncannyDodge]"
+      },
+      {
+        "key": "DESC",
+        "value": "Where other bloodragers learn to avoid or shrug off minor damage of all sorts, spelleaters tap into the power of their bloodline in order to heal damage as it comes, and can even cannibalize their own magical energy to heal more damage and continue taking the fight to the enemy."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Spelleater ~ Blood of Life|PRECLASS:1,Bloodrager=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Spelleater ~ Spell Eating|PRECLASS:1,Bloodrager=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bloodrager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2708,
+    "record_key": "Bloodrager Archetype ~ Spelleater"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

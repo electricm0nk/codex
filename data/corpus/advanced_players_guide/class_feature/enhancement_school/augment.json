@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Enhancement School ~ Augment",
+    "name": "Augment",
+    "class": "Enhancement School",
+    "description": "As a standard action, you can touch a creature and grant it either a +%1 enhancement bonus to a single ability score of your choice or a +%2 bonus to natural armor that stacks with any natural armor the creature might possess. This augmentation lasts %3 rounds. You can use this ability %4 times per day.|AugmentEnhancementBonus|EnchantmentAugmentArmorBonus|EnchantmentAugmentRounds|EnchantmentAugmentTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enhancement School ~ Augment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AugmentEnhancementBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnchantmentAugmentArmorBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnchantmentAugmentRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnchantmentAugmentTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can touch a creature and grant it either a +%1 enhancement bonus to a single ability score of your choice or a +%2 bonus to natural armor that stacks with any natural armor the creature might possess. This augmentation lasts %3 rounds. You can use this ability %4 times per day.|AugmentEnhancementBonus|EnchantmentAugmentArmorBonus|EnchantmentAugmentRounds|EnchantmentAugmentTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AugmentEnhancementBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AugmentEnhancementBonus|2|PREVARGTEQ:TransmutationSchoolProgressionLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnchantmentAugmentArmorBonus|min(TransmutationSchoolLVL/5+1,5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnchantmentAugmentRounds|max(TransmutationSchoolLVL/2,1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnchantmentAugmentTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|EnchantmentAugmentTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3353,
+    "record_key": "Enhancement School ~ Augment"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

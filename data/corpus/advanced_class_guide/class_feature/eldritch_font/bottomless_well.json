@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Eldritch Font ~ Bottomless Well",
+    "name": "Bottomless Well",
+    "class": "Eldritch Font",
+    "description": "An eldritch font can spend 1 hour studying her spellbook to refuel herself. Doing so allows her to prepare new spells and regain upto %1 points of arcane reservoir. She can use this ability multiple times per day, however she still only regains spell slots once per day.|floor(ArcanistLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eldritch Font ~ Bottomless Well"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Eldritch Font Class Feature.Arcanist Class Feature.SpecialQuality.ArcanistMagicalSupremacy"
+      },
+      {
+        "key": "DESC",
+        "value": "An eldritch font can spend 1 hour studying her spellbook to refuel herself. Doing so allows her to prepare new spells and regain upto %1 points of arcane reservoir. She can use this ability multiple times per day, however she still only regains spell slots once per day.|floor(ArcanistLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2452,
+    "record_key": "Eldritch Font ~ Bottomless Well"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

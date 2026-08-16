@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bogborn Alchemist ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Bogborn Alchemist",
+    "description": "A bogborn alchemist adds Swim to his list of class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bogborn Alchemist ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A bogborn alchemist adds Swim to his list of class skills."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Swim"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.191"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 861,
+    "record_key": "Bogborn Alchemist ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

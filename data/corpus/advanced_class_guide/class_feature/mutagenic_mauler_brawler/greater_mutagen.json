@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mutagenic Mauler Brawler ~ Greater Mutagen",
+    "name": "Greater Mutagen",
+    "class": "Mutagenic Mauler Brawler",
+    "description": "The mutagenic mauler's mutagen now grants a +4 natural armor bonus, a +6 alchemical bonus to one physical ability score (Strength, Dexterity, or Constitution), and a +4 alchemical bonus to a second physical ability score. The mutagenic mauler takes a -2 penalty on both associated mental ability scores as long as the mutagen persists.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutagenic Mauler Brawler ~ Greater Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Mutagenic Mauler Class Feature"
+      },
+      {
+        "key": "DESC",
+        "value": "The mutagenic mauler's mutagen now grants a +4 natural armor bonus, a +6 alchemical bonus to one physical ability score (Strength, Dexterity, or Constitution), and a +4 alchemical bonus to a second physical ability score. The mutagenic mauler takes a -2 penalty on both associated mental ability scores as long as the mutagen persists."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenicMaulerMutagenTierLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenicMaulerMutagenACBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenicMaulerMutagenStatBonus|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2869,
+    "record_key": "Mutagenic Mauler Brawler ~ Greater Mutagen"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

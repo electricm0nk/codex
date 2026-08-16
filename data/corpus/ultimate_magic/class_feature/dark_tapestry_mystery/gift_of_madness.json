@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dark Tapestry Mystery ~ Gift of Madness",
+    "name": "Gift of Madness",
+    "class": "Dark Tapestry Mystery",
+    "description": "You tap into the unthinkable void between the stars and cause a single living creature within 30 feet to become confused for %1 rounds. A successful Will save (DC %2) negates the effect. This is a mind-affecting compulsion effect. You can use this ability %3/day.|GiftOfMadnessDuration|GiftOfMadnessDC|GiftOfMadnessTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dark Tapestry Mystery ~ Gift of Madness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.DarkTapestryRevelation.Supernatural.RevelationTargetOneOnly"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiftOfMadnessDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiftOfMadnessDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiftOfMadnessTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You tap into the unthinkable void between the stars and cause a single living creature within 30 feet to become confused for %1 rounds. A successful Will save (DC %2) negates the effect. This is a mind-affecting compulsion effect. You can use this ability %3/day.|GiftOfMadnessDuration|GiftOfMadnessDC|GiftOfMadnessTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiftOfMadnessDuration|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiftOfMadnessDC|10+classlevel(\"Oracle\")/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiftOfMadnessTimes|CHA+3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiftOfMadnessDuration|classlevel(\"Oracle\")-1|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 469,
+    "record_key": "Dark Tapestry Mystery ~ Gift of Madness"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

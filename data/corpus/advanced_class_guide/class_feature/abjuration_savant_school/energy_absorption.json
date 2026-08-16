@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Abjuration Savant School ~ Energy Absorption",
+    "name": "Energy Absorption",
+    "class": "Abjuration Savant School",
+    "description": "You gain energy absorption %1 per day. Whenever you take energy damage, apply resistance and immunity first and apply the rest to this absorption, reducing your daily total by that amount. Any damage in excess of your absorption is applied to you normally.|AbjurationEnergyAbsorption",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Abjuration Savant School ~ Energy Absorption"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbjurationEnergyAbsorption|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain energy absorption %1 per day. Whenever you take energy damage, apply resistance and immunity first and apply the rest to this absorption, reducing your daily total by that amount. Any damage in excess of your absorption is applied to you normally.|AbjurationEnergyAbsorption"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbjurationEnergyAbsorption|ArcanistSavantSchoolLVL*3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1|AbjurationEnergyAbsorption"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2555,
+    "record_key": "Abjuration Savant School ~ Energy Absorption"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

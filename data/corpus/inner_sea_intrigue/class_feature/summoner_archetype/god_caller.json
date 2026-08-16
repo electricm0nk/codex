@@ -1,0 +1,131 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Summoner Archetype ~ God Caller",
+    "name": "God Caller",
+    "class": "Summoner Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner Archetype ~ God Caller"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SummonerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Summoner=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ God Caller],[!PREFACT:1,ABILITIES,Summoner_Archetype_ClassSkills=True,Summoner_Archetype_LifeLink=True,Summoner_Archetype_Transposition=True,Summoner_Archetype_Aspect=True,Summoner_Archetype_GreaterAspect=True,Summoner_Archetype_TwinEidolon=True]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "God callers follow a fractured tradition that originated in the now-lost nation of Sarkoris. They speak to an assortment of ancient divine powers to lead their communities and sometimes stir up reformations in faiths with ideals similar to their personal convictions."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|God Caller ~ Class Skills|PRECLASS:1,Summoner=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|God Caller ~ Guidance|PRECLASS:1,Summoner=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|God Caller ~ Divine Word|PRECLASS:1,Summoner=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|God Caller ~ Divine Awareness|PRECLASS:1,Summoner=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|God Caller ~ Divine Might|PRECLASS:1,Summoner=18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|God Caller ~ Overwhelming Presence|PRECLASS:1,Summoner=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_LifeLink|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Transposition|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Aspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_GreaterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_TwinEidolon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_Transposition|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_Aspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_GreaterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_TwinEidolon|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 286,
+    "record_key": "Summoner Archetype ~ God Caller"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Traceless Operative",
+    "name": "Traceless Operative",
+    "class": "Inquisitor Archetype",
+    "description": "Traceless operatives practice subterfuge and careful preparation in order to accomplish their divine mandates.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Traceless Operative"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Traceless Operative],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_MonsterLore=True,Inquisitor_Archetype_SternGaze=True,Inquisitor_Archetype_Track=True,Inquisitor_Archetype_Bane=True,Inquisitor_Archetype_GreaterBane=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Traceless operatives practice subterfuge and careful preparation in order to accomplish their divine mandates."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Traceless Operative ~ Conceal Evidence|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Traceless Operative ~ Trackless|PRECLASS:1,Inquisitor=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Traceless Operative ~ Uncanny Dodge|PRECLASS:1,Inquisitor=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Traceless Operative ~ Improved Uncanny Dodge|PRECLASS:1,Inquisitor=12"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Bane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_GreaterBane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Bane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_GreaterBane|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 442,
+    "record_key": "Inquisitor Archetype ~ Traceless Operative"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

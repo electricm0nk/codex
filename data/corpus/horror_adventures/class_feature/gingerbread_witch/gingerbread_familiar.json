@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gingerbread Witch ~ Gingerbread Familiar",
+    "name": "Gingerbread Familiar",
+    "class": "Gingerbread Witch",
+    "description": "A gingerbread witch concocts her familiar out of gingerbread, sugar, and other confections. It has the shape of the original animal or vermin, but its type changes to construct. As a construct, it gains 60-foot darkvision and construct immunities, it loses any special abilities the animal or vermin has other than movement speed, and it doesn't provide the usual familiar benefit (for instance, a gingerbread toad doesn't provide 3 bonus hit points). With a supply of flour and sugar at hand, the gingerbread witch can spend 8 hours and use her cauldron to restore her familiar to full health at no cost, unless the familiar is destroyed, in which case she must follow the usual rules for replacing her familiar. A gingerbread witch can never gain an improved familiar. This ability alters familiar.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gingerbread Witch ~ Gingerbread Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.GingerbreadWitchClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GingerbreadFamiliar|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "DESC",
+        "value": "A gingerbread witch concocts her familiar out of gingerbread, sugar, and other confections. It has the shape of the original animal or vermin, but its type changes to construct. As a construct, it gains 60-foot darkvision and construct immunities, it loses any special abilities the animal or vermin has other than movement speed, and it doesn't provide the usual familiar benefit (for instance, a gingerbread toad doesn't provide 3 bonus hit points). With a supply of flour and sugar at hand, the gingerbread witch can spend 8 hours and use her cauldron to restore her familiar to full health at no cost, unless the familiar is destroyed, in which case she must follow the usual rules for replacing her familiar. A gingerbread witch can never gain an improved familiar. This ability alters familiar."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarGrantedBonus_1|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarGrantedBonus_2|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarGrantedBonus_3|-3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarGrantedBonus_4|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GingerbreadFamiliar|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 270,
+    "record_key": "Gingerbread Witch ~ Gingerbread Familiar"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

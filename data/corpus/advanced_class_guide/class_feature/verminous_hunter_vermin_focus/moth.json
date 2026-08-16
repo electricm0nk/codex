@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Verminous Hunter Vermin Focus ~ Moth",
+    "name": "Moth",
+    "class": "Verminous Hunter Vermin Focus",
+    "description": "Get darkvision to range %1 feet|HunterVerminFocusMothBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verminous Hunter Vermin Focus ~ Moth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HunterVerminFocusAbility"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterVerminFocusMothBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Get darkvision to range %1 feet|HunterVerminFocusMothBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "and blindsense to 10 feet|PREVARGTEQ:HunterVerminFocusLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blindsense|PREVARGTEQ:HunterVerminFocusLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Darkvision"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterVerminFocusMothBonus|60"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterVerminFocusMothBonus|30|PREVARGTEQ:HunterVerminFocusLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|HunterVerminFocusMothBonus|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|10|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3270,
+    "record_key": "Verminous Hunter Vermin Focus ~ Moth"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

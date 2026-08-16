@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Naga Aspirant ~ Aspirant's Bond",
+    "name": "Aspirant's Bond",
+    "class": "Naga Aspirant",
+    "description": "A naga aspirant gains a spiritual connection to the serpentine deities worshiped by the nagas. At 1st level, and each time she gains a druid level, she may add one of the following spells to her druid spell list. 0-acid splash, bleed, daze, mage hand, open/close, ray of frost; 1st-charm person, divine favor, expeditious retreat, mage armor, magic missile, ray of enfeeblement, shield, shield of faith, silent image, true strike; 2nd-acid arrow, detect thoughts, invisibility, mirror image, scorching ray, see invisibility; 3rd- dispel magic, displacement, fireball, lightning bolt, suggestion; 4th-divine power, greater invisibility.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Naga Aspirant ~ Aspirant's Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A naga aspirant gains a spiritual connection to the serpentine deities worshiped by the nagas. At 1st level, and each time she gains a druid level, she may add one of the following spells to her druid spell list. 0-acid splash, bleed, daze, mage hand, open/close, ray of frost; 1st-charm person, divine favor, expeditious retreat, mage armor, magic missile, ray of enfeeblement, shield, shield of faith, silent image, true strike; 2nd-acid arrow, detect thoughts, invisibility, mirror image, scorching ray, see invisibility; 3rd- dispel magic, displacement, fireball, lightning bolt, suggestion; 4th-divine power, greater invisibility."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Druid=0|Acid Splash,Bleed,Daze,Mage Hand,Open/Close,Ray of Frost|Druid=1|Charm Person,Divine Favor,Expeditious Retreat,Mage Armor,Magic Missile,Ray of Enfeeblement,Shield,Shield of Faith,Silent Image,True Strike|Druid=2|Acid Arrow,Detect Thoughts,Invisibility,Mirror Image,Scorching Ray,See Invisibility|Druid=3|Dispel Magic,Displacement,Fireball,Lightning Bolt,Suggestion|Druid=4|Divine Power,Invisibility (Greater)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 915,
+    "record_key": "Naga Aspirant ~ Aspirant's Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

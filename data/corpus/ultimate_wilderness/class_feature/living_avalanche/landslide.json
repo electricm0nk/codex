@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Living Avalanche ~ Landslide",
+    "name": "Landslide",
+    "class": "Living Avalanche",
+    "description": "A living avalanche must choose overrun as her first combat maneuver for maneuver training.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Living Avalanche ~ Landslide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.LivingAvalancheClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A living avalanche must choose overrun as her first combat maneuver for maneuver training."
+      },
+      {
+        "key": "DESC",
+        "value": "She must choose bull rush as her second combat maneuver for maneuver training. She doesn't gain training in any new combat maneuvers at later levels, but her bonuses on combat maneuver checks and to CMD for bull rush and overrun combat maneuvers increase as normal.|PRECLASS:1,Brawler=7"
+      },
+      {
+        "key": "DESC",
+        "value": "If she succeeds at an overrun combat maneuver as part of a charge, she automatically knocks her target prone (no matter the result of her check). In addition, if the living avalanche succeeds at a bull rush combat maneuver as part of a charge, she reduces the penalty combat maneuver checks to bull rush each creature beyond the first by 2.|PRECLASS:1,Brawler=11"
+      },
+      {
+        "key": "DESC",
+        "value": "The living avalanche can attempt bull rush and overrun combat maneuvers against creatures two sizes larger than herself, but only as part of a charge.PRECLASS:1,Brawler=15"
+      },
+      {
+        "key": "DESC",
+        "value": "If the living avalanche succeeds at a bull rush combat maneuver as part of a charge, she reduces the penalty on combat maneuver checks to bull rush each creature beyond the first by an additional 2. When attempting an overrun combat maneuver as part of a charge, she also ignores any increase to a creature's CMD from having more than two legs.|PRECLASS:1,Brawler=19"
+      },
+      {
+        "key": "DESC",
+        "value": "This alters maneuver training."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Maneuver Training I Selection ~ Overrun|PRECLASS:1,Brawler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Maneuver Training I Selection ~ Bull Rush|PRECLASS:1,Brawler=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Maneuver Training I Selection|-1|PRECLASS:1,Brawler=3"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Maneuver Training II Selection|-1|PRECLASS:1,Brawler=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Maneuver Training III Selection|-1|PRECLASS:1,Brawler=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Maneuver Training IV Selection|-1|PRECLASS:1,Brawler=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Maneuver Training V Selection|-1|PRECLASS:1,Brawler=19"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 370,
+    "record_key": "Living Avalanche ~ Landslide"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

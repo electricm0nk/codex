@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Domain Power ~ Day's Resurgence",
+    "name": "Day's Resurgence",
+    "class": "Domain Power",
+    "description": "At 8th level, you can restore a single creature as if it had just completed 8 hours of rest. It takes 10 minutes to use this power. If the use of this power is disrupted, it must be restarted, but it is not lost. At the end of the 10 minutes, a single willing creature that you have touched regains hit points as if it had rested for the night and may make new saving throws against effects that require a save once per day. The target does not suffer any negative effects if such saving throws are failed, but success counts toward removing the affliction (if possible). This ability does not allow a target to prepare spells an additional time per day. You can use this ability %1 times per day.|DomainSunLVL/2-3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Day's Resurgence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can restore a single creature as if it had just completed 8 hours of rest. It takes 10 minutes to use this power. If the use of this power is disrupted, it must be restarted, but it is not lost. At the end of the 10 minutes, a single willing creature that you have touched regains hit points as if it had rested for the night and may make new saving throws against effects that require a save once per day. The target does not suffer any negative effects if such saving throws are failed, but success counts toward removing the affliction (if possible). This ability does not allow a target to prepare spells an additional time per day. You can use this ability %1 times per day.|DomainSunLVL/2-3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainSunLVL/2-3"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1827,
+    "record_key": "Domain Power ~ Day's Resurgence"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Picaroon ~ Two-Weapon Finesse",
+    "name": "Two-Weapon Finesse",
+    "class": "Picaroon",
+    "description": "A picaroon gains the benefits of the Weapon Finesse feat with light or onehanded piercing melee weapons. She also gains the effects of the Two-Weapon Fighting feat as long as she is wielding a light or one-handed piercing melee weapon in one hand and one-handed firearm in the other hand. This ability counts as having both the Weapon Finesse and Two-Weapon Fighting feats for the purposes of meeting feat requirements.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Picaroon ~ Two-Weapon Finesse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Picaroon Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Feat|Two-Weapon Fighting"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "HasWeaponFinesseFeat,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A picaroon gains the benefits of the Weapon Finesse feat with light or onehanded piercing melee weapons. She also gains the effects of the Two-Weapon Fighting feat as long as she is wielding a light or one-handed piercing melee weapon in one hand and one-handed firearm in the other hand. This ability counts as having both the Weapon Finesse and Two-Weapon Fighting feats for the purposes of meeting feat requirements."
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Weapon Group Melee Light Piercing|TOHIT|((max(STR,DEX)-STR)+SHIELDACCHECK)|TYPE=NotRanged|!PREABILITY:1,CATEGORY=FEAT,Weapon Finesse"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Weapon Group Melee OneHanded Piercing|TOHIT|((max(STR,DEX)-STR)+SHIELDACCHECK)|TYPE=NotRanged|!PREABILITY:1,CATEGORY=FEAT,Weapon Finesse"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.127"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3924,
+    "record_key": "Picaroon ~ Two-Weapon Finesse"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

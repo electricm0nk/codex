@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunter ~ Animal Companion",
+    "name": "Animal Companion",
+    "class": "Hunter",
+    "description": "At 1st level, a hunter forms a bond with an animal companion. A hunter may begin play with any of the animals on the druid list. This animal is a loyal companion that accompanies the hunter on her adventures. The hunter's effective druid level is equal to her hunter level. If a character receives an animal companion from more than one source, her effective druid levels stack for the purposes of determining the statistics and abilities of the companion. If a hunter releases her companion from service or her animal companion perishes, she may gain a new one by performing a ceremony requiring 24 uninterrupted hours of prayer in the environment where the sought companion typically lives. The animal companion can use skirmisher tricks when commanded, a number of times per day equal to half its Hit Dice plus its Wisdom modifier",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter ~ Animal Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.HunterAnimalCompanion.SpecialQuality.Extraordinary.Animal Companion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterAnimalCompanionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a hunter forms a bond with an animal companion. A hunter may begin play with any of the animals on the druid list. This animal is a loyal companion that accompanies the hunter on her adventures. The hunter's effective druid level is equal to her hunter level. If a character receives an animal companion from more than one source, her effective druid levels stack for the purposes of determining the statistics and abilities of the companion. If a hunter releases her companion from service or her animal companion perishes, she may gain a new one by performing a ceremony requiring 24 uninterrupted hours of prayer in the environment where the sought companion typically lives. The animal companion can use skirmisher tricks when commanded, a number of times per day equal to half its Hit Dice plus its Wisdom modifier"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Animal Companion ~ Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalCompanionLVL|HunterLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|HunterLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Animal Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|RACETYPE=Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1171,
+    "record_key": "Hunter ~ Animal Companion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

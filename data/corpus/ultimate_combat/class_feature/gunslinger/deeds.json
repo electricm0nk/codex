@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gunslinger ~ Deeds",
+    "name": "Deeds",
+    "class": "Gunslinger",
+    "description": " Gunslingers spend grit points to accomplish deeds. Most deeds grant the gunslinger some momentary bonus or effect, but there are some that provide longerlasting effects. Some deeds stay in effect as long as the gunslinger has at least 1 grit point. The following is the list of base gunslinger deeds. A gunslinger can only perform deeds of her level or lower. Unless otherwise noted, a deed can be performed multiple successive times, as long as the appropriate amount of grit is spent to perform the deed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Deeds"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_Deed_1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GunslingerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeedsLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": " Gunslingers spend grit points to accomplish deeds. Most deeds grant the gunslinger some momentary bonus or effect, but there are some that provide longerlasting effects. Some deeds stay in effect as long as the gunslinger has at least 1 grit point. The following is the list of base gunslinger deeds. A gunslinger can only perform deeds of her level or lower. Unless otherwise noted, a deed can be performed multiple successive times, as long as the appropriate amount of grit is spent to perform the deed."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeedsLVL|GunslingerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 40,
+    "record_key": "Gunslinger ~ Deeds"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

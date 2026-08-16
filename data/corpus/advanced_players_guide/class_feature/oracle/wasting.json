@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oracle ~ Wasting",
+    "name": "Wasting",
+    "class": "Oracle",
+    "description": "Your body is slowly rotting away.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle ~ Wasting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleCurse"
+      },
+      {
+        "key": "DESC",
+        "value": "Your body is slowly rotting away."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Sickened Condition|PREVARGTEQ:OracleCurseLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Disease|PREVARGTEQ:OracleCurseLVL,10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Nauseated Condition|PREVARGTEQ:OracleCurseLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|STAT.CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate|4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 500,
+    "record_key": "Oracle ~ Wasting"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

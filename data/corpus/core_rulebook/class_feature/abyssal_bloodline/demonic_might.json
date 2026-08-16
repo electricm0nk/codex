@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Abyssal Bloodline ~ Demonic Might",
+    "name": "Demonic Might",
+    "class": "Abyssal Bloodline",
+    "description": "The power of the Abyss flows through you. You gain immunity to electricity and poison. You also gain resistance to acid %1, cold %1, and fire %1, and gain telepathy with a range of 60 feet (allowing you to communicate with any creature that can speak a language).|Sorcerer_AbyssalDemonicMight_ResistanceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Abyssal Bloodline ~ Demonic Might"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Abyssal Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Abyssal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Abyssal_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Abyssal_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AbyssalDemonicMight_ResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The power of the Abyss flows through you. You gain immunity to electricity and poison. You also gain resistance to acid %1, cold %1, and fire %1, and gain telepathy with a range of 60 feet (allowing you to communicate with any creature that can speak a language).|Sorcerer_AbyssalDemonicMight_ResistanceBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Electricity|Immunity to Poison"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Telepathy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AbyssalDemonicMight_ResistanceBonus|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus,ColdResistanceBonus,FireResistanceBonus|Sorcerer_AbyssalDemonicMight_ResistanceBonus|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyRange|-40"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AbyssalBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2365,
+    "record_key": "Abyssal Bloodline ~ Demonic Might"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

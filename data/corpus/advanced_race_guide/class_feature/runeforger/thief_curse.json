@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Runeforger ~ Thief-Curse",
+    "name": "Thief-Curse",
+    "class": "Runeforger",
+    "description": "The forgemaster designates one creature as the rightful owner of an item. Any other creature that intentionally grasps the item is cursed (as bestow curse) for the duration of the rune. The forgemaster must be at least 6th level before learning this rune.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Runeforger ~ Thief-Curse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RuneforgerOption.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cleric=6"
+      },
+      {
+        "key": "DESC",
+        "value": "The forgemaster designates one creature as the rightful owner of an item. Any other creature that intentionally grasps the item is cursed (as bestow curse) for the duration of the rune. The forgemaster must be at least 6th level before learning this rune."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 84,
+    "record_key": "Runeforger ~ Thief-Curse"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Exarch",
+    "name": "Exarch",
+    "class": "Inquisitor Archetype",
+    "description": "The gruff traditionalism of most dwarves finds its apex in those who adhere to a strict orthodoxy rooted in ancient principles and practices and who are not amenable whatsoever to change or innovation.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Exarch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype.InquisitorMonsterLore.InquisitorDetectAlignment.InquisitorBane.InquisitorSecondJudgment.InquisitorGreaterBane.InquisitorThirdJudgment"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Exarch],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorMonsterLore,TYPE.InquisitorDetectAlignment,TYPE.InquisitorBane,TYPE.InquisitorSecondJudgment,TYPE.InquisitorGreaterBane,TYPE.InquisitorThirdJudgment]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsDwarf=true"
+      },
+      {
+        "key": "DESC",
+        "value": "The gruff traditionalism of most dwarves finds its apex in those who adhere to a strict orthodoxy rooted in ancient principles and practices and who are not amenable whatsoever to change or innovation."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exarch ~ Spells|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exarch ~ Inflexible Will|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exarch ~ Detect Chaos|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exarch ~ Fearsome Jurist|PRECLASS:1,Inquisitor=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exarch ~ Aura of Repetition|PRECLASS:1,Inquisitor=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exarch ~ Double Jeopardy|PRECLASS:1,Inquisitor=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exarch ~ Aura of Reversion|PRECLASS:1,Inquisitor=16"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Inquisitor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 30,
+    "record_key": "Inquisitor Archetype ~ Exarch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

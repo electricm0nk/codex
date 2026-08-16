@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wood School",
+    "name": "Wood School",
+    "class": null,
+    "description": "Wood represents flexibility, warmth, wind, generosity, cooperation, and idealism. Practitioners of this elemental magic often resemble druids in character and in the use of their magic.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoodSchoolLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoodSchoolProgressionLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Wood represents flexibility, warmth, wind, generosity, cooperation, and idealism. Practitioners of this elemental magic often resemble druids in character and in the use of their magic."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wood School ~ Flexible Enhancement|Wood School ~ Splintered Spear|Wood School ~ Wood Magic"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wood School ~ Cooperative Defense|PREVARGTEQ:WoodSchoolProgressionLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Wood Opposition School Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoodSchoolLVL|ArcaneSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoodSchoolProgressionLVL|ArcaneSchoolProgressionLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 779,
+    "record_key": "Wood School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ancient Guardian ~ Community Bond",
+    "name": "Community Bond",
+    "class": "Ancient Guardian",
+    "description": "An ancient guardian must choose the domain nature bond ability and select from the following domains: Community, Healing, Knowledge, Protection, or Repose. This ability alters nature bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancient Guardian ~ Community Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.AncientGuardianClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An ancient guardian must choose the domain nature bond ability and select from the following domains: Community, Healing, Knowledge, Protection, or Repose. This ability alters nature bond."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domains"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ancient Guardian Domain Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidCommunityAllowed,DruidHealingAllowed,DruidKnowledgeAllowed,DruidProtectionAllowed,DruidReposeAllowed|1|TYPE=DruidDomain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLVL|DruidLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 72,
+    "record_key": "Ancient Guardian ~ Community Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

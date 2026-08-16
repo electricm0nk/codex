@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Toxitician ~ Painful Injection",
+    "name": "Painful Injection",
+    "class": "Toxitician",
+    "description": "The toxitician's injection causes intense pain. This increases the damage the subject takes in the same way as the mesmerist's painful stare class feature. This extra damage is dealt automatically, without being triggered by the toxitician, but doesn't increase when the toxitician damages the target and can still be dealt only once per round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Toxitician ~ Painful Injection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The toxitician's injection causes intense pain. This increases the damage the subject takes in the same way as the mesmerist's painful stare class feature. This extra damage is dealt automatically, without being triggered by the toxitician, but doesn't increase when the toxitician damages the target and can still be dealt only once per round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1489,
+    "record_key": "Toxitician ~ Painful Injection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

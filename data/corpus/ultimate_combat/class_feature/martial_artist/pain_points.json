@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Martial Artist ~ Pain Points",
+    "name": "Pain Points",
+    "class": "Martial Artist",
+    "description": "At 3rd level, a martial artist's advanced knowledge of humanoid anatomy grants a +1 bonus on critical hit confirmation rolls and increases the DC of his stunning fist and quivering palm by 1. This ability replaces still mind.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Martial Artist ~ Pain Points"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a martial artist's advanced knowledge of humanoid anatomy grants a +1 bonus on critical hit confirmation rolls and increases the DC of his stunning fist and quivering palm by 1. This ability replaces still mind."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1080,
+    "record_key": "Martial Artist ~ Pain Points"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Archetype ~ Speaker for the Past",
+    "name": "Speaker for the Past",
+    "class": "Shaman Archetype",
+    "description": "A speaker for the past is a shaman who specifically serves as the voice for spirits from her people's history. A speaker for the past is often an advocate of the ancestors of a specific group, the voice of experience, and a powerful resource that allows the past to aid the present.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Archetype ~ Speaker for the Past"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ShamanArchetype.ShamanSpiritAnimal.ShamanWanderingSpirit.ShamanWanderingHex"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shaman=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shaman Archetype ~ Speaker for the Past],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ShamanWanderingSpirit,TYPE.ShamanWanderingHex]"
+      },
+      {
+        "key": "DESC",
+        "value": "A speaker for the past is a shaman who specifically serves as the voice for spirits from her people's history. A speaker for the past is often an advocate of the ancestors of a specific group, the voice of experience, and a powerful resource that allows the past to aid the present."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Speaker for the Past ~ Mysteries of the Past|PRECLASS:1,Shaman=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Speaker for the Past ~ Revelations of the Past|PRECLASS:1,Shaman=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Shaman"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3588,
+    "record_key": "Shaman Archetype ~ Speaker for the Past"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

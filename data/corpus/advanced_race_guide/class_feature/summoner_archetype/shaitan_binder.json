@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Summoner Archetype ~ Shaitan Binder",
+    "name": "Shaitan Binder",
+    "class": "Summoner Archetype",
+    "description": "Shaitan binders call upon a reflection of their genie ancestors to serve as their eidolons. A shaitan binder has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner Archetype ~ Shaitan Binder"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SummonerArchetype.SummonerShareSpells.SummonerShieldAlly.SummonerGreaterShieldAlly.SummonerAspect.SummonerGreaterAspect.SummonerTwinEidolon"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Summoner=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Shaitan Binder],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerShareSpells,TYPE.SummonerEidolon,TYPE.SummonerShieldAlly,TYPE.SummonerGreaterShieldAlly,TYPE.SummonerAspect,TYPE.SummonerGreaterAspect,TYPE.SummonerTwinEidolon]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsOread=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Shaitan binders call upon a reflection of their genie ancestors to serve as their eidolons. A shaitan binder has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shaitan Binder ~ Base Form|PRECLASS:1,Summoner=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shaitan Binder ~ Shaitan Magic|PRECLASS:1,Summoner=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shaitan Binder ~ Earth Glide|PRECLASS:1,Summoner=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shaitan Binder ~ Stone Curse|PRECLASS:1,Summoner=18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shaitan Binder ~ Noble Eidolon|PRECLASS:1,Summoner=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Summoner"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 668,
+    "record_key": "Summoner Archetype ~ Shaitan Binder"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

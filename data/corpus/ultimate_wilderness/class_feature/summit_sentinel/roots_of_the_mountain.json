@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Summit Sentinel ~ Roots of the Mountain",
+    "name": "Roots of the Mountain",
+    "class": "Summit Sentinel",
+    "description": "A summit sentinel gains Toughness as a bonus feat. Additionally, as a move action, she can enter a defensive stance for 1 minute. While in this stance, the summit sentinel's speed is reduced to 5 feet, she gains a +%1 enhancement bonus to her natural armor, and she gains a +%2 bonus to her CMD against maneuvers that would move her or knock her prone. If the ranger loses contact with the ground or other solid surface, the stance ends immediately. The ranger can enter this stance %3 times per day.|1+SummitSentinelStanceBonus|SummitSentinelStanceBonus*2|3+CON",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summit Sentinel ~ Roots of the Mountain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.SummitSentinelClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummitSentinelStanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A summit sentinel gains Toughness as a bonus feat. Additionally, as a move action, she can enter a defensive stance for 1 minute. While in this stance, the summit sentinel's speed is reduced to 5 feet, she gains a +%1 enhancement bonus to her natural armor, and she gains a +%2 bonus to her CMD against maneuvers that would move her or knock her prone. If the ranger loses contact with the ground or other solid surface, the stance ends immediately. The ranger can enter this stance %3 times per day.|1+SummitSentinelStanceBonus|SummitSentinelStanceBonus*2|3+CON"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Toughness"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SummitSentinelStanceBonus|((RangerLVL+2)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 922,
+    "record_key": "Summit Sentinel ~ Roots of the Mountain"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

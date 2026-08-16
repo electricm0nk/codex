@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Unarmed Fighter ~ Trick Throw",
+    "name": "Trick Throw",
+    "class": "Unarmed Fighter",
+    "description": "When you successfully trip an opponent with an unarmed attack, you can attempt a dirty trick combat maneuver against that creature (before the opponent becomes prone) as an immediate action that does not provoke attacks of opportunity. This ability replaces the 8th-level bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unarmed Fighter ~ Trick Throw"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "When you successfully trip an opponent with an unarmed attack, you can attempt a dirty trick combat maneuver against that creature (before the opponent becomes prone) as an immediate action that does not provoke attacks of opportunity. This ability replaces the 8th-level bonus feat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 765,
+    "record_key": "Unarmed Fighter ~ Trick Throw"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

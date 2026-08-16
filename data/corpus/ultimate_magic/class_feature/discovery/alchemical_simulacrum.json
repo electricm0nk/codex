@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Alchemical Simulacrum",
+    "name": "Alchemical Simulacrum",
+    "class": "Discovery",
+    "description": "You gain the ability to create a lesser simulacrum.  This works like the lesser simulacrum spell, except it costs 100 gp in alchemical materials per Hit Die of the simulacrum, requires 24 hours to grow, and decays into inert flesh rather than ice or snow if killed.  The created simulacrum is a creature, not a supernatual effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Alchemical Simulacrum"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the ability to create a lesser simulacrum.  This works like the lesser simulacrum spell, except it costs 100 gp in alchemical materials per Hit Die of the simulacrum, requires 24 hours to grow, and decays into inert flesh rather than ice or snow if killed.  The created simulacrum is a creature, not a supernatual effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 124,
+    "record_key": "Discovery ~ Alchemical Simulacrum"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

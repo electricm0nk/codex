@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Discovery ~ Dilution",
+    "name": "Dilution",
+    "class": "Investigator",
+    "description": "Once per day, you can dilute any one potion or elixir, creating two doses of the same potion from one. Diluting a potion costs a number of gp equal to one-quarter of the potion's market value. A potion that has been diluted cannot be diluted again. This discovery cannot be used to dilute extracts or mutagens.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Discovery ~ Dilution"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorAlchemistDiscovery.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "InvestigatorLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you can dilute any one potion or elixir, creating two doses of the same potion from one. Diluting a potion costs a number of gp equal to one-quarter of the potion's market value. A potion that has been diluted cannot be diluted again. This discovery cannot be used to dilute extracts or mutagens."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1319,
+    "record_key": "Investigator ~ Discovery ~ Dilution"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

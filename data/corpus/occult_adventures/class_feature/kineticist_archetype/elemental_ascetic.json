@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kineticist Archetype ~ Elemental Ascetic",
+    "name": "Elemental Ascetic",
+    "class": "Kineticist Archetype",
+    "description": "Combining the elemental powers of a kineticist with the rigid physical discipline of a monk, an elemental ascetic channels his powers through his body to enhance himself in combat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Archetype ~ Elemental Ascetic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Kineticist Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Kineticist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Kineticist Archetype ~ Elemental Ascetic],[!PREFACT:1,ABILITIES,Kineticist_Archetype_ElementalDefense=True,Kineticist_Archetype_ElementalOverflow=True,Kineticist_Archetype_Infusion5=True,Kineticist_Archetype_Infusion9=True,Kineticist_Archetype_Infusion13=True,Kineticist_Archetype_KeyAbilityScoreWildTalent=True,Kineticist_Archetype_KineticBlast=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Combining the elemental powers of a kineticist with the rigid physical discipline of a monk, an elemental ascetic channels his powers through his body to enhance himself in combat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Elemental Ascetic ~ Elemental Flurry|PRECLASS:1,Kineticist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Elemental Ascetic ~ Elemental Wisdom|PRECLASS:1,Kineticist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Elemental Ascetic ~ AC Bonus|PRECLASS:1,Kineticist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Elemental Ascetic ~ Powerful Fist|PRECLASS:1,Kineticist=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_ElementalDefense|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_ElementalOverflow|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_Infusion5|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_Infusion9|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_Infusion13|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_KeyAbilityScoreWildTalent|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_KineticBlast|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_ElementalDefense|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_ElementalOverflow|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_Infusion5|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_Infusion9|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_Infusion13|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1312,
+    "record_key": "Kineticist Archetype ~ Elemental Ascetic"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

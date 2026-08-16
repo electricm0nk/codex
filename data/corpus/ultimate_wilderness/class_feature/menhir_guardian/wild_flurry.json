@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Menhir Guardian ~ Wild Flurry",
+    "name": "Wild Flurry",
+    "class": "Menhir Guardian",
+    "description": "A menhir guardian gains flurry of blows. He can use this ability with the natural attacks provided by his shifter claws ability or the weapons specified under weapon and armor proficiency. This alters furry of blows.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Menhir Guardian ~ Wild Flurry"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Features.MenhirGuardianClassFeatures.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A menhir guardian gains flurry of blows. He can use this ability with the natural attacks provided by his shifter claws ability or the weapons specified under weapon and armor proficiency. This alters furry of blows."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 813,
+    "record_key": "Menhir Guardian ~ Wild Flurry"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

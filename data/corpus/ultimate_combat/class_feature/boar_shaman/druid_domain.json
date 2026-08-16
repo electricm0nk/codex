@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Boar Shaman ~ Druid Domain",
+    "name": "Druid Domain",
+    "class": "Boar Shaman",
+    "description": "A boar shaman who chooses an animal companion must select a boar. If choosing a domain, the boar shaman must choose from the Animal, Destruction (Rage), Protection, and Strength domains.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Boar Shaman ~ Druid Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeAbility.SpecialQuality.DruidDomain"
+      },
+      {
+        "key": "DESC",
+        "value": "A boar shaman who chooses an animal companion must select a boar. If choosing a domain, the boar shaman must choose from the Animal, Destruction (Rage), Protection, and Strength domains."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidAnimalAllowed,DruidRageAllowed,DruidProtectionAllowed,DruidStrengthAllowed,PreventDruidInquisitions|1|TYPE=DruidDomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 661,
+    "record_key": "Boar Shaman ~ Druid Domain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

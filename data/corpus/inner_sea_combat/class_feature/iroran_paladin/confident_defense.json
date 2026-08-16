@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Iroran Paladin ~ Confident Defense",
+    "name": "Confident Defense",
+    "class": "Iroran Paladin",
+    "description": "When wearing light or no armor and not using a shield, you add 1 point of your Charisma bonus (if any) per paladin level to your Dexterity bonus to your Armor Class; you lose this bonus whenever you are denied your Dexterity bonus.  This ability is currently increasing your effective dexterity modifier to AC by %1.|ConfidentDefenseGain",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Iroran Paladin ~ Confident Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConfidentDefenseGain|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When wearing light or no armor and not using a shield, you add 1 point of your Charisma bonus (if any) per paladin level to your Dexterity bonus to your Armor Class; you lose this bonus whenever you are denied your Dexterity bonus.  This ability is currently increasing your effective dexterity modifier to AC by %1.|ConfidentDefenseGain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConfidentDefenseGain|max(0,min(CHA,PaladinLvl))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ACAbilityStat|ConfidentDefenseGain|!PREEQUIP:1,TYPE=Armor.Medium,TYPE=Armor.Heavy,TYPE=Shield,TYPE=Buckler"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 122,
+    "record_key": "Iroran Paladin ~ Confident Defense"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gunslinger Archetype ~ Gun Scavenger",
+    "name": "Gun Scavenger",
+    "class": "Gunslinger Archetype",
+    "description": "Although Alkenstar is the center of firearm production and innovation in the Inner Sea, the crack of flint and tang of gun smoke is enough to inspire enthusiasts elsewhere to try their hand at making their own guns using intuition instead of blueprints. A gun scavenger collects scraps, spare parts, and other components that might-if modified properly-give her firearm an extra edge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger Archetype ~ Gun Scavenger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.GunslingerArchetype.GunslingerQuickClearDeed.GunslingerTargetingDeed.GunslingerNimble"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Gunslinger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ Gun Scavenger],[!PREABILITY:1,CATEGORY=Archetype,TYPE.GunslingerQuickClearDeed,TYPE.GunslingerTargetingDeed,TYPE.GunslingerNimble]"
+      },
+      {
+        "key": "DESC",
+        "value": "Although Alkenstar is the center of firearm production and innovation in the Inner Sea, the crack of flint and tang of gun smoke is enough to inspire enthusiasts elsewhere to try their hand at making their own guns using intuition instead of blueprints. A gun scavenger collects scraps, spare parts, and other components that might-if modified properly-give her firearm an extra edge."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Gun Scavenger ~ Gunsmith|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Gun Scavenger ~ Go By Feel|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Gun Scavenger ~ Deeds|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Gun Scavenger ~ Change Out|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Gun Scavenger ~ Jury-Rig|PRECLASS:1,Gunslinger=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Gun Scavenger ~ Arbitrary Aim|PRECLASS:1,Gunslinger=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 21,
+    "record_key": "Gunslinger Archetype ~ Gun Scavenger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

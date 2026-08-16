@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shark Shaman ~ Totemic Summons",
+    "name": "Totemic Summons",
+    "class": "Shark Shaman",
+    "description": "You may use summon nature's ally I to summon a stingray (Bestiary 2) and summon nature's ally II to summon a manta ray (Bestiary 2).  You may cast summon nature's ally as a standard action when summoning rays and sharks, and summoned rays and sharks gain %1 temporary hit points. This ability otherwise functions as the dragon shaman's totemic summons ability.|TotemicSummonsTempHP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shark Shaman ~ Totemic Summons"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TotemicSummonsTempHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use summon nature's ally I to summon a stingray (Bestiary 2) and summon nature's ally II to summon a manta ray (Bestiary 2).  You may cast summon nature's ally as a standard action when summoning rays and sharks, and summoned rays and sharks gain %1 temporary hit points. This ability otherwise functions as the dragon shaman's totemic summons ability.|TotemicSummonsTempHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TotemicSummonsTempHP|classlevel(\"Druid\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1205,
+    "record_key": "Shark Shaman ~ Totemic Summons"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

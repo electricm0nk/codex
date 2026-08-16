@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Lion Blade ~ Narrow Miss",
+    "name": "Narrow Miss",
+    "class": "Lion Blade",
+    "description": "A Lion Blade can dodge erratically as a swift action, gaining 20%% concealment until her next turn. She can use this ability %1 times per day.|LionBladeLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lion Blade ~ Narrow Miss"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A Lion Blade can dodge erratically as a swift action, gaining 20%% concealment until her next turn. She can use this ability %1 times per day.|LionBladeLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 170,
+    "record_key": "Lion Blade ~ Narrow Miss"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

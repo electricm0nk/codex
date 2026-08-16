@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hexcrafter ~ Hex Magus",
+    "name": "Hex Magus",
+    "class": "Hexcrafter",
+    "description": "You gain access to a small number of witch's hexes (see the Advanced Player's Guide). The hexcrafter magus picks one hex from the witch's hex class feature. He gains the benefit of or uses that hex as if he were a witch of a level equal to his magus level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hexcrafter ~ Hex Magus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexStat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexAbilityLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain access to a small number of witch's hexes (see the Advanced Player's Guide). The hexcrafter magus picks one hex from the witch's hex class feature. He gains the benefit of or uses that hex as if he were a witch of a level equal to his magus level."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Witch Hex|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexAllowed|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchIntelligenceScore|CONSCORE-INTSCORE|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexStat|INT|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchMinorHexQualify|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchMinorHexQualify|(MagusLVL>=1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexAbilityLVL|MagusLVL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC|10+WitchHexStat+(WitchHexAbilityLVL/2)|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1309,
+    "record_key": "Hexcrafter ~ Hex Magus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

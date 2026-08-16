@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "River Rat ~ Swamper",
+    "name": "Swamper",
+    "class": "River Rat",
+    "description": "A river rat gains a +%1 bonus on Swim checks. A river rat ignores difficult terrain caused by light undergrowth and shallow bogs, and it costs her only 2 squares of movement to enter a square of deep bog or heavy undergrowth, rather than 4 squares of movement. She takes no penalty on Acrobatics or Stealth checks for being in bogs and undergrowth. All of these abilities apply only when she is wearing light or no armor and carrying no more than a light load.|max(1,RogueLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "River Rat ~ Swamper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.RiverRatClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A river rat gains a +%1 bonus on Swim checks. A river rat ignores difficult terrain caused by light undergrowth and shallow bogs, and it costs her only 2 squares of movement to enter a square of deep bog or heavy undergrowth, rather than 4 squares of movement. She takes no penalty on Acrobatics or Stealth checks for being in bogs and undergrowth. All of these abilities apply only when she is wearing light or no armor and carrying no more than a light load.|max(1,RogueLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|max(1,RogueLVL/2)|PREVARLT:ENCUMBERANCE,1,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.MEDIUM]\"),1,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 985,
+    "record_key": "River Rat ~ Swamper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

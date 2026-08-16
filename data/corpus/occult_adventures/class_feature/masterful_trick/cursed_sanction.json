@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Masterful Trick ~ Cursed Sanction",
+    "name": "Cursed Sanction",
+    "class": "Masterful Trick",
+    "description": "A ward curses an enemy who attacks the subject. While this trick is implanted, a visible, circular symbol appears on the subject's forehead. The mesmerist can trigger this trick when the subject is attacked or becomes the target of a spell that requires an attack roll. The attacker takes a -4 penalty on attack rolls, saves, ability checks, and skill checks for %1 minutes (Will negates). This penalty applies to the triggering attack roll. This is a curse effect. (Masterful Trick)|MesmeristLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterful Trick ~ Cursed Sanction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristTrick.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mesmerist ~ Masterful Tricks"
+      },
+      {
+        "key": "DESC",
+        "value": "A ward curses an enemy who attacks the subject. While this trick is implanted, a visible, circular symbol appears on the subject's forehead. The mesmerist can trigger this trick when the subject is attacked or becomes the target of a spell that requires an attack roll. The attacker takes a -4 penalty on attack rolls, saves, ability checks, and skill checks for %1 minutes (Will negates). This penalty applies to the triggering attack roll. This is a curse effect. (Masterful Trick)|MesmeristLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 968,
+    "record_key": "Masterful Trick ~ Cursed Sanction"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

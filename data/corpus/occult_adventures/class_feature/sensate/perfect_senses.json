@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sensate ~ Perfect Senses",
+    "name": "Perfect Senses",
+    "class": "Sensate",
+    "description": "At 19th level, a sensate's senses reach perfection, and he can easily notice illusions and unseen foes by combining his senses. While centered, he gains the effects of true seeing as well as blindsense 60 feet. An unseen creature that makes no sound and leaves no scent (such as a creature under the effects of invisibility, silence, and negate aroma) can still avoid both the true seeing and the blindsense. This ability replaces armor mastery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sensate ~ Perfect Senses"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sensate Class Feature.Fighter Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 19th level, a sensate's senses reach perfection, and he can easily notice illusions and unseen foes by combining his senses. While centered, he gains the effects of true seeing as well as blindsense 60 feet. An unseen creature that makes no sound and leaves no scent (such as a creature under the effects of invisibility, silence, and negate aroma) can still avoid both the true seeing and the blindsense. This ability replaces armor mastery."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1745,
+    "record_key": "Sensate ~ Perfect Senses"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

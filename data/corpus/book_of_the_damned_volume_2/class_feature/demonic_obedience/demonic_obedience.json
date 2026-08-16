@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Demonic Obedience Base",
+    "name": "Demonic Obedience",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Demonic Obedience Base"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DemonicObedienceApply|0"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Apply the bonuses associated with conducting the demonic obedience."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|DemonicObedienceApply|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 36,
+    "record_key": "Demonic Obedience Base"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Treetop Monk ~ Wood Affinity 2",
+    "name": "Wood Affinity",
+    "class": "Treetop Monk",
+    "description": "As a free action, a treetop monk can expend 1 point from his ki pool to use the Lunge feat with any wooden or wood-hafted melee weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Treetop Monk ~ Wood Affinity 2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, a treetop monk can expend 1 point from his ki pool to use the Lunge feat with any wooden or wood-hafted melee weapon."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 985,
+    "record_key": "Treetop Monk ~ Wood Affinity 2"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

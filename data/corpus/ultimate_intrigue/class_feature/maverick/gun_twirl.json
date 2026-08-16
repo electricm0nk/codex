@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Maverick ~ Gun Twirl",
+    "name": "Gun Twirl",
+    "class": "Maverick",
+    "description": "As long as the maverick has at least 1 grit point, she can use flashy gunplay to intimidate her opponents. She gains the Dazzling Display feat and can use it with any firearm, even if she doesn't have Weapon Focus in that firearm.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maverick ~ Gun Twirl"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_Deed_LVL03"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeedsLVL1.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as the maverick has at least 1 grit point, she can use flashy gunplay to intimidate her opponents. She gains the Dazzling Display feat and can use it with any firearm, even if she doesn't have Weapon Focus in that firearm."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 382,
+    "record_key": "Maverick ~ Gun Twirl"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

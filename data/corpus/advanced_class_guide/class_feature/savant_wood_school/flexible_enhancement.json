@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Savant Wood School ~ Flexible Enhancement",
+    "name": "Flexible Enhancement",
+    "class": "Savant Wood School",
+    "description": "You are able to bend like bamboo when stressed and snap back into place. You gain a +%1 enhancement bonus to your Dexterity, Constitution, or Wisdom ability score. You can change this bonus to a new ability score when you prepare spells.|FlexibleEnhancementBonus|!PRECLASS:1,Arcanist=20",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Wood School ~ Flexible Enhancement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlexibleEnhancementBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are able to bend like bamboo when stressed and snap back into place. You gain a +%1 enhancement bonus to your Dexterity, Constitution, or Wisdom ability score. You can change this bonus to a new ability score when you prepare spells.|FlexibleEnhancementBonus|!PRECLASS:1,Arcanist=20"
+      },
+      {
+        "key": "DESC",
+        "value": "You are able to bend like bamboo when stressed and snap back into place. You gain a +%1 enhancement bonus to two of your Dexterity, Constitution, or Wisdom ability scores. You can change this bonus to a new ability score when you prepare spells.|FlexibleEnhancementBonus|PRECLASS:1,Arcanist=20"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Savant Flexible Enhancement Bonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Savant Flexible Enhancement Bonus|1|PRECLASS:1,Arcanist=20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlexibleEnhancementBonus|1+floor(classlevel(\"Arcanist\")/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2631,
+    "record_key": "Savant Wood School ~ Flexible Enhancement"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

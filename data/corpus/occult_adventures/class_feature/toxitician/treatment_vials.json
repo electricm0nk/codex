@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Toxitician ~ Treatment Vials",
+    "name": "Treatment Vials",
+    "class": "Toxitician",
+    "description": "A toxitician can create treatment vials when he creates his injections for the day; creating each treatment vial expends one use of touch treatment. A treatment vial has the same benefit as his touch treatment, but anyone can administer it as a standard action. A vial can remove any condition the toxitician is able to remove at his mesmerist level, but can't be used for a break enchantment effect. A treatment vial becomes inert after 24 hours.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Toxitician ~ Treatment Vials"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A toxitician can create treatment vials when he creates his injections for the day; creating each treatment vial expends one use of touch treatment. A treatment vial has the same benefit as his touch treatment, but anyone can administer it as a standard action. A vial can remove any condition the toxitician is able to remove at his mesmerist level, but can't be used for a break enchantment effect. A treatment vial becomes inert after 24 hours."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1491,
+    "record_key": "Toxitician ~ Treatment Vials"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

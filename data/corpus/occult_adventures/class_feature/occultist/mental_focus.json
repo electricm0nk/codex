@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Occultist ~ Mental Focus",
+    "name": "Mental Focus",
+    "class": "Occultist",
+    "description": "An occultist can invest a portion of his mental focus into his chosen implements for the day, allowing him to utilize a variety of abilities depending on the implements and the amount of mental focus invested in them. An occultist has %1 points of mental focus; these points refresh each day. He can divide this mental focus between his implements in any way he desires. If an implement is lost or destroyed, the focus invested in it is lost as well, though the occultist still refreshes those points of focus normally. Once mental focus is invested inside an implement, the implement gains the resonant power of its implement school, and the occultist can expend the mental focus stored in the implement to activate the associated focus powers he knows. If a resonant power grants a bonus that varies based on the amount of mental focus invested in the implement, the bonus is determined when the focus is invested, and is not reduced or altered by expending the mental focus invested in the item. Once all of the mental focus in an implement has been expended, it loses its resonant power until mental focus is once again invested in the implement. The implement grants its resonant power to whoever possesses it; the occultist can lend the implement to an ally to assist that ally, but if he does so, he has difficulty casting that implement's spells (see Implements) and can't expend that implement's focus on focus powers until he retrieves the implement or refreshes his focus. The occultist refreshes his mental focus once each day after receiving at least 8 hours of sleep. After refreshing his mental focus, the occultist must spend 1 hour preparing his implements and investing them with this power. Mental focus that is not used before the next time the occultist refreshes his focus is lost. The occultist can choose to save generic mental focus inside his own body instead of investing all of it, but expending this focus comes at a higher cost. Any focus power the occultist activates with generic focus costs twice as much mental focus to use (and to maintain, if applicable). The occultist can expend his generic focus through an appropriate implement on any focus power he knows, but an implement he didn't invest any focus in at the start of the day grants no resonant power.|OccultistMentalFocus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist ~ Mental Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistMentalFocus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An occultist can invest a portion of his mental focus into his chosen implements for the day, allowing him to utilize a variety of abilities depending on the implements and the amount of mental focus invested in them. An occultist has %1 points of mental focus; these points refresh each day. He can divide this mental focus between his implements in any way he desires. If an implement is lost or destroyed, the focus invested in it is lost as well, though the occultist still refreshes those points of focus normally. Once mental focus is invested inside an implement, the implement gains the resonant power of its implement school, and the occultist can expend the mental focus stored in the implement to activate the associated focus powers he knows. If a resonant power grants a bonus that varies based on the amount of mental focus invested in the implement, the bonus is determined when the focus is invested, and is not reduced or altered by expending the mental focus invested in the item. Once all of the mental focus in an implement has been expended, it loses its resonant power until mental focus is once again invested in the implement. The implement grants its resonant power to whoever possesses it; the occultist can lend the implement to an ally to assist that ally, but if he does so, he has difficulty casting that implement's spells (see Implements) and can't expend that implement's focus on focus powers until he retrieves the implement or refreshes his focus. The occultist refreshes his mental focus once each day after receiving at least 8 hours of sleep. After refreshing his mental focus, the occultist must spend 1 hour preparing his implements and investing them with this power. Mental focus that is not used before the next time the occultist refreshes his focus is lost. The occultist can choose to save generic mental focus inside his own body instead of investing all of it, but expending this focus comes at a higher cost. Any focus power the occultist activates with generic focus costs twice as much mental focus to use (and to maintain, if applicable). The occultist can expend his generic focus through an appropriate implement on any focus power he knows, but an implement he didn't invest any focus in at the start of the day grants no resonant power.|OccultistMentalFocus"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Occultist Mental Focus|OccultistMentalFocus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistMentalFocus|OccultistLVL+INT+if(OccultistMentalFocusFCB>=2,OccultistMentalFocusFCB/2,0)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 985,
+    "record_key": "Occultist ~ Mental Focus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

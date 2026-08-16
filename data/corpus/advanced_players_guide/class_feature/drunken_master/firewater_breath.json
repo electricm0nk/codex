@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Drunken Master ~ Firewater Breath",
+    "name": "Firewater Breath",
+    "class": "Drunken Master",
+    "description": "At 19th level, a drunken master can take a drink and expel a gout of alcohol-fueled fire in a 30-foot cone. Creatures within the cone take 20d6 points of fire damage. A successful Reflex saving throw DC %1 (DC 10 + 1/2 the monk's level + the monk's Wis modifier) halves the damage. Using this ability is a standard action that consumes 4 ki points from the monk's ki pool. The monk must have at least 1 drunken ki point to use this ability. This ability replaces empty body.|10+CHA+(MonkLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Drunken Master ~ Firewater Breath"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.Supernatural.MonkEmptyBody"
+      },
+      {
+        "key": "DESC",
+        "value": "At 19th level, a drunken master can take a drink and expel a gout of alcohol-fueled fire in a 30-foot cone. Creatures within the cone take 20d6 points of fire damage. A successful Reflex saving throw DC %1 (DC 10 + 1/2 the monk's level + the monk's Wis modifier) halves the damage. Using this ability is a standard action that consumes 4 ki points from the monk's ki pool. The monk must have at least 1 drunken ki point to use this ability. This ability replaces empty body.|10+CHA+(MonkLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2308,
+    "record_key": "Drunken Master ~ Firewater Breath"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

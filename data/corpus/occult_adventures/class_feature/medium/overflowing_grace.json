@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Overflowing Grace",
+    "name": "Overflowing Grace",
+    "class": "Medium",
+    "description": "(Greater) When you heal a creature to full hit points or a creature already at full hit points with your positive or negative energy, that creature gains a +1 sacred bonus on attack rolls, skill checks, ability checks, and saving throws for 1 round. The bonus is sacred if you use positive energy and profane if you use negative energy. If you destroy or kill one or more creatures with positive or negative energy, you gain a +1 bonus of the same type on attack rolls, skill checks, ability checks, and saving throws for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Overflowing Grace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "(Greater) When you heal a creature to full hit points or a creature already at full hit points with your positive or negative energy, that creature gains a +1 sacred bonus on attack rolls, skill checks, ability checks, and saving throws for 1 round. The bonus is sacred if you use positive energy and profane if you use negative energy. If you destroy or kill one or more creatures with positive or negative energy, you gain a +1 bonus of the same type on attack rolls, skill checks, ability checks, and saving throws for 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 862,
+    "record_key": "Medium ~ Overflowing Grace"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

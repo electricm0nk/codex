@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fiend Flayer ~ Infernal Mortification",
+    "name": "Infernal Mortification",
+    "class": "Fiend Flayer",
+    "description": "A fiend flayer can sacrifice some of his own infernal blood to add to his arcane pool. Sacrificing blood in this way is a standard action. For every 2 points of Constitution damage the fiend flayer takes in this way, his arcane pool increases by 1 point. Any arcane pool points gained in this way and not spent disappear the next time the magus prepares his spells. Unlike normal ability score damage, this damage cannot be healed by way of lesser restoration. Only time can heal the Constitution damage taken by way of infernal mortification. This ability cannot be used if the fiend flayer's Constitution damage is equal to or greater than %1.|CONSCORE/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fiend Flayer ~ Infernal Mortification"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A fiend flayer can sacrifice some of his own infernal blood to add to his arcane pool. Sacrificing blood in this way is a standard action. For every 2 points of Constitution damage the fiend flayer takes in this way, his arcane pool increases by 1 point. Any arcane pool points gained in this way and not spent disappear the next time the magus prepares his spells. Unlike normal ability score damage, this damage cannot be healed by way of lesser restoration. Only time can heal the Constitution damage taken by way of infernal mortification. This ability cannot be used if the fiend flayer's Constitution damage is equal to or greater than %1.|CONSCORE/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.170"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 780,
+    "record_key": "Fiend Flayer ~ Infernal Mortification"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Summoner Archetype ~ Naturalist",
+    "name": "Naturalist",
+    "class": "Summoner Archetype",
+    "description": "A naturalist is a summoner who is in tune with the natural world, using his magic like a lens to focus various animal aspects onto his eidolon. More akin to a hunter than to other arcane spellcasters, a naturalist instinctively masters the power of such creatures as the bear, wolf, mouse, or tiger to make his exotic eidolon the perfect living tool for battle or stealth, and he eventually discovers how to apply these transformations to himself as well.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner Archetype ~ Naturalist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SummonerArchetype.SummonerSummonMonsterI.SummonerShieldAlly.SummonerGreaterShieldAlly.SummonerAspect.SummonerLifeBond.SummonerGreaterAspect"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Summoner=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Naturalist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerSummonMonsterI,TYPE.SummonerShieldAlly,TYPE.SummonerGreaterShieldAlly,TYPE.SummonerAspect,TYPE.SummonerLifeBond,TYPE.SummonerGreaterAspect]"
+      },
+      {
+        "key": "DESC",
+        "value": "A naturalist is a summoner who is in tune with the natural world, using his magic like a lens to focus various animal aspects onto his eidolon. More akin to a hunter than to other arcane spellcasters, a naturalist instinctively masters the power of such creatures as the bear, wolf, mouse, or tiger to make his exotic eidolon the perfect living tool for battle or stealth, and he eventually discovers how to apply these transformations to himself as well."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Naturalist ~ Nature's Call|PRECLASS:1,Summoner=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Naturalist ~ Animal Focus|PRECLASS:1,Summoner=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Naturalist ~ Second Animal Focus|PRECLASS:1,Summoner=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Naturalist ~ Shared Focus|PRECLASS:1,Summoner=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Naturalist ~ Third Animal Focus|PRECLASS:1,Summoner=18"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Summoner"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3809,
+    "record_key": "Summoner Archetype ~ Naturalist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

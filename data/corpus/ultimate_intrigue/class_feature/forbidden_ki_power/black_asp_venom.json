@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forbidden Ki Power ~ Black Asp Venom",
+    "name": "Black Asp Venom",
+    "class": "Forbidden Ki Power",
+    "description": "As a swift action, a black asp with this ki power can poison his unarmed strike or a weapon in his hand. The poison lasts for 1 minute or until expended. A creature damaged by the poisoned weapon is affected as per the poison spell. The save DC is %1. Each use of this ability costs 2 ki points.|10+MonkLVL/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Ki Power ~ Black Asp Venom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.Forbidden Ki Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MonkLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, a black asp with this ki power can poison his unarmed strike or a weapon in his hand. The poison lasts for 1 minute or until expended. A creature damaged by the poisoned weapon is affected as per the poison spell. The save DC is %1. Each use of this ability costs 2 ki points.|10+MonkLVL/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 548,
+    "record_key": "Forbidden Ki Power ~ Black Asp Venom"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger ~ Favored Enemy",
+    "name": "Ranger Favored Enemy",
+    "class": "Ranger",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger ~ Favored Enemy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.Internal.ClassFeatures"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerFavoredEnemyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerFavoredEnemyCount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredEnemyBonusCount|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Basic Favored Enemy"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Enemy|RangerFavoredEnemyCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Enemy Bonus|FavoredEnemyBonusCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerFavoredEnemyCount|RangerFavoredEnemyLVL/5+1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredEnemyBonusCount|RangerFavoredEnemyLVL/5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerFavoredEnemyLVL|RangerLVL"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|TOHIT|%CHOICE"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|DAMAGE.Melee,DAMAGE.Ranged|%CHOICE"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Bluff,Perception,Sense Motive,Survival|%CHOICE"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|TYPE=Knowledge|%CHOICE"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=2|MAX=10|TITLE=Choose favored enemy bonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1444,
+    "record_key": "Ranger ~ Favored Enemy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

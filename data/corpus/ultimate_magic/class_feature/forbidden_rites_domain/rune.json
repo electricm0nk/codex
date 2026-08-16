@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Rune Domain",
+    "name": "Rune",
+    "class": "Forbidden Rites Domain",
+    "description": "In strange and eldritch runes you find potent magic. You gain Scribe Scroll as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Rune Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.RuneDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainRuneLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainRuneDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainRuneTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainRuneAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "In strange and eldritch runes you find potent magic. You gain Scribe Scroll as a bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Scribe Scroll"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Blast Rune|PREDOMAIN:1,Rune|PREVARGTEQ:DomainRuneAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Spell Rune|PREDOMAIN:1,Rune|PREVARGTEQ:DomainRuneAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainRuneLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainRuneDC|10+(DomainRuneLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainRuneTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainRuneAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Erase|Cleric=2|Secret Page|Cleric=3|Glyph of Warding|Cleric=4|Explosive Runes|Cleric=5|Planar Binding (Lesser)|Cleric=6|Glyph of Warding (Greater)|Cleric=7|Instant Summons|Cleric=8|Symbol of Death|Cleric=9|Teleportation Circle"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1052,
+    "record_key": "Forbidden Rites Domain ~ Rune Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

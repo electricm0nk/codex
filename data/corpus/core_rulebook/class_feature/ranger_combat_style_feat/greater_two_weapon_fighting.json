@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Combat Style Feat ~ Greater Two-Weapon Fighting",
+    "name": "Greater Two-Weapon Fighting",
+    "class": "Ranger Combat Style Feat",
+    "description": "You are incredibly skilled at fighting with two weapons at the same time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Combat Style Feat ~ Greater Two-Weapon Fighting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Greater Two-Weapon Fighting"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Ranger_Combat_Style_Feat_Greater_Two_Weapon_Fighting,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You are incredibly skilled at fighting with two weapons at the same time."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Two-Weapon Fighting|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1509,
+    "record_key": "Ranger Combat Style Feat ~ Greater Two-Weapon Fighting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

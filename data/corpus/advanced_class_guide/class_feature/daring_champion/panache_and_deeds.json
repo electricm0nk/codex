@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Daring Champion ~ Panache and Deeds",
+    "name": "Panache and Deeds",
+    "class": "Daring Champion",
+    "description": "A daring champion gains the swashbuckler's panache class feature, along with the following swashbuckler deeds: dodging panache, precise strike, and swashbuckler initiative.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Daring Champion ~ Panache and Deeds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Daring Champion Class Feature.Cavalier Class Feature.SpecialQuality.Extraordinary.CavalierExpertTrainer"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwashbucklerDeedsLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A daring champion gains the swashbuckler's panache class feature, along with the following swashbuckler deeds: dodging panache, precise strike, and swashbuckler initiative."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Panache"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Dodging Panache"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Precise Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Swashbuckler Initiative"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwashbucklerDeedsLVL|CavalierLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2980,
+    "record_key": "Daring Champion ~ Panache and Deeds"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

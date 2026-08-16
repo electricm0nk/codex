@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sanguine Angel Discipline ~ Erinyes Fury",
+    "name": "Erinyes Fury",
+    "class": "Sanguine Angel Discipline",
+    "description": "The sanguine angel can enter a dispassionate, murderous state as a free action, granting her additional combat prowess. This functions as rage, but the sanguine angel gains only half the usual bonuses from her rage but takes no penalty to her AC, can use all her normal skills and effects that require concentration, and is not fatigued when her rage ends. The sanguine angel cannot enter a rage for 1 minute after she ends her rage, and she cannot charge or run while under the effects of her rage. This fury is usable for a number of rounds each day equal to twice her class level. If the sanguine angel has levels in barbarian and has the dreadnought archetype, her sanguine angel levels instead stack with her barbarian levels to determine the duration of her rage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sanguine Angel Discipline ~ Erinyes Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SanguineAngelDiscipline.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "DESC",
+        "value": "The sanguine angel can enter a dispassionate, murderous state as a free action, granting her additional combat prowess. This functions as rage, but the sanguine angel gains only half the usual bonuses from her rage but takes no penalty to her AC, can use all her normal skills and effects that require concentration, and is not fatigued when her rage ends. The sanguine angel cannot enter a rage for 1 minute after she ends her rage, and she cannot charge or run while under the effects of her rage. This fury is usable for a number of rounds each day equal to twice her class level. If the sanguine angel has levels in barbarian and has the dreadnought archetype, her sanguine angel levels instead stack with her barbarian levels to determine the duration of her rage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Erinyes Fury Temp Bonus|!PREABILITY:1,CATEGORY=Special Ability,Dreadnought ~ Dead Calm"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DreadnoughtDeadCalmLVL|SanguineAngelLVL|PREABILITY:1,CATEGORY=Special Ability,Dreadnought ~ Dead Calm"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 465,
+    "record_key": "Sanguine Angel Discipline ~ Erinyes Fury"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

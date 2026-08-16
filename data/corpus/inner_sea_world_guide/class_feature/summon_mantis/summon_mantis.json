@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Summon Mantis",
+    "name": "Summon Mantis",
+    "class": null,
+    "description": "Once per day, you may summon an advanced fiendish giant mantis, 1d3 fiendish giant mantises, or 1d4+1 giant mantises, as if using Summon Monster V. You can mentally direct these blood-red summoned vermin as a free action.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spelllike.SpecialQuality"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=RedMantisLvl|Summon Mantis"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you may summon an advanced fiendish giant mantis, 1d3 fiendish giant mantises, or 1d4+1 giant mantises, as if using Summon Monster V. You can mentally direct these blood-red summoned vermin as a free action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 158,
+    "record_key": "Summon Mantis"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Terrain Dominance ~ Plane (Aligned)",
+    "name": "Terrain Dominance (Aligned Plane)",
+    "class": "Terrain Dominance",
+    "description": "For the purpose of bypassing damage reduction, the horizon walker's manufactured and natural weapons count as the opposite alignment of his chosen plane of dominance. If his chosen plane has more than one alignment type, he must choose one of those types for this ability. For example, if he selects \"Hell\" (an evil, lawful plane) for his terrain dominance ability, he may choose \"evil\" or \"lawful,\" which means his attacks bypass good or chaotic damage reduction, respectively. Alternatively, if native creatures of his chosen plane are vulnerable to a particular special material (such as cold iron or silver), he may choose to have his weapons bypass damage reduction as if they were that special material. If he selects this plane more than once for his terrain dominance ability, his attacks count as an additional alignment or special material (such as \"good and silver\" or \"chaotic and good\").",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terrain Dominance ~ Plane (Aligned)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.TerrainDominance"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Terrain Mastery ~ Plane (Aligned)"
+      },
+      {
+        "key": "DESC",
+        "value": "For the purpose of bypassing damage reduction, the horizon walker's manufactured and natural weapons count as the opposite alignment of his chosen plane of dominance. If his chosen plane has more than one alignment type, he must choose one of those types for this ability. For example, if he selects \"Hell\" (an evil, lawful plane) for his terrain dominance ability, he may choose \"evil\" or \"lawful,\" which means his attacks bypass good or chaotic damage reduction, respectively. Alternatively, if native creatures of his chosen plane are vulnerable to a particular special material (such as cold iron or silver), he may choose to have his weapons bypass damage reduction as if they were that special material. If he selects this plane more than once for his terrain dominance ability, his attacks count as an additional alignment or special material (such as \"good and silver\" or \"chaotic and good\")."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1345,
+    "record_key": "Terrain Dominance ~ Plane (Aligned)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

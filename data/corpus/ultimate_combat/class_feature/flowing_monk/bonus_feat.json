@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Flowing Monk ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class": "Flowing Monk",
+    "description": "A flowing monk replaces the normal monk bonus feats with the following - Agile Maneuvers, Combat Reflexes, Deflect Arrows, Dodge, Improved Reposition*, Improved Trip, Nimble Moves, and Weapon Finesse. At 6th level, the following feats are also available - Acrobatic Steps, Bodyguard*, Improved Disarm, Improved Feint, Ki Throw*, Mobility, Second Chance*, and Sidestep*. At 10th level, the following feats are added - In Harm's Way*, Repositioning Strike*, Snatch Arrows, Spring Attack, and Tripping Strike*. (Asterisks denotes feats from the Advanced Player's Guide.)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flowing Monk ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlowingMonkFeatCount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeatLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A flowing monk replaces the normal monk bonus feats with the following - Agile Maneuvers, Combat Reflexes, Deflect Arrows, Dodge, Improved Reposition*, Improved Trip, Nimble Moves, and Weapon Finesse. At 6th level, the following feats are also available - Acrobatic Steps, Bodyguard*, Improved Disarm, Improved Feint, Ki Throw*, Mobility, Second Chance*, and Sidestep*. At 10th level, the following feats are added - In Harm's Way*, Repositioning Strike*, Snatch Arrows, Spring Attack, and Tripping Strike*. (Asterisks denotes feats from the Advanced Player's Guide.)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Flowing Monk Bonus Feat|FlowingMonkFeatCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlowingMonkFeatCount|1+max((MonkBonusFeatLVL+2)/4,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeatLVL|MonkLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeatLVL|0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 936,
+    "record_key": "Flowing Monk ~ Bonus Feat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

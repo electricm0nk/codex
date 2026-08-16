@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Magnetic Infusion",
+    "name": "Magnetic Infusion",
+    "class": "Wild Talent",
+    "description": "Element air or earth; Type substance infusion; Level 3; Burn 2 Associated Blasts charged water, electric, metal, plasma, thunderstorm Saving Throw none Your kinetic blast causes your foes to become mildly magnetic. Whenever an infused blast deals damage to a foe, attacks made with metal weapons (including metal kinetic blasts) against that foe receive a +4 bonus until the end of your next turn, and the foe takes a -4 penalty on Reflex saving throws to avoid metallic objects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Magnetic Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Air.Infusion Wild Talent Earth"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:KineticistLVL_Air,6],[PREVARGTEQ:KineticistLVL_Earth,6]"
+      },
+      {
+        "key": "DESC",
+        "value": "Element air or earth; Type substance infusion; Level 3; Burn 2 Associated Blasts charged water, electric, metal, plasma, thunderstorm Saving Throw none Your kinetic blast causes your foes to become mildly magnetic. Whenever an infused blast deals damage to a foe, attacks made with metal weapons (including metal kinetic blasts) against that foe receive a +4 bonus until the end of your next turn, and the foe takes a -4 penalty on Reflex saving throws to avoid metallic objects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 708,
+    "record_key": "Wild Talent ~ Magnetic Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

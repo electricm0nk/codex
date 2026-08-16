@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Secret Lore ~ Instant Mastery",
+    "name": "Instant Mastery",
+    "class": "Secret Lore",
+    "description": "4 ranks of a skill in which the character has no ranks",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Secret Lore ~ Instant Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LoremasterSecret"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "LoremasterSecretsLVL,1"
+      },
+      {
+        "key": "DESC",
+        "value": "4 ranks of a skill in which the character has no ranks"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SKILL|NORANK"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|LIST|4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.387"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3028,
+    "record_key": "Secret Lore ~ Instant Mastery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

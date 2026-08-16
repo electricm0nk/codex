@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Metal Mystery ~ Iron Weapon",
+    "name": "Iron Weapon",
+    "class": "Metal Mystery",
+    "description": "You can create a melee simple or martial weapon that lasts for %1 minutes.  This weapon is appropriate for your size and entirely made of metal (even if it would normally include non-metal parts, such as a spear's shaft) but functions as if it were a normal weapon of its type. You are considered proficient with this weapon. The weapon disappears after 1 round if it leaves your grasp. You can use this ability %2/day.|IronWeaponDuration|IronWeaponTimes|!PRECLASS:1,Oracle=3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metal Mystery ~ Iron Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.MetalRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IronWeaponDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IronWeaponTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IronWeaponEnhancement|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a melee simple or martial weapon that lasts for %1 minutes.  This weapon is appropriate for your size and entirely made of metal (even if it would normally include non-metal parts, such as a spear's shaft) but functions as if it were a normal weapon of its type. You are considered proficient with this weapon. The weapon disappears after 1 round if it leaves your grasp. You can use this ability %2/day.|IronWeaponDuration|IronWeaponTimes|!PRECLASS:1,Oracle=3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a melee simple or martial cold iron weapon that lasts for %1 minutes.  This weapon is appropriate for your size and entirely made of metal (even if it would normally include non-metal parts, such as a spear's shaft) but functions as if it were a normal weapon of its type. You are considered proficient with this weapon. The weapon disappears after 1 round if it leaves your grasp. You can use this ability %2/day.|IronWeaponDuration|IronWeaponTimes|PREMULT:2,[PRECLASS:1,Oracle=3],[!PRECLASS:1,Oracle=7]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a melee simple or martial +%2 cold iron weapon that lasts for %1 minutes.  This weapon is appropriate for your size and entirely made of metal (even if it would normally include non-metal parts, such as a spear's shaft) but functions as if it were a normal weapon of its type. You are considered proficient with this weapon. The weapon disappears after 1 round if it leaves your grasp. You can use this ability %3/day.|IronWeaponDuration|IronWeaponEnhancement|IronWeaponTimes|PREMULT:2,[PRECLASS:1,Oracle=7],[!PRECLASS:1,Oracle=11]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a melee simple or martial +%2 adamantine weapon that lasts for %1 minutes.  This weapon is appropriate for your size and entirely made of metal (even if it would normally include non-metal parts, such as a spear's shaft) but functions as if it were a normal weapon of its type. You are considered proficient with this weapon. The weapon disappears after 1 round if it leaves your grasp. You can use this ability %3/day.|IronWeaponDuration|IronWeaponEnhancement|IronWeaponTimes|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IronWeaponDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IronWeaponTimes|3+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IronWeaponEnhancement|1|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IronWeaponEnhancement|1|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IronWeaponEnhancement|1|PRECLASS:1,Oracle=19"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 485,
+    "record_key": "Metal Mystery ~ Iron Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

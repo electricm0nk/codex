@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mutagen ~ Stat Selection First",
+    "name": "Mutagen (Prime Stat Selection)",
+    "class": "Mutagen",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutagen ~ Stat Selection First"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Mutagen_1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Display"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutagenPrimeAbility|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutagenActive|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Alchemist ~ Mutagen Strength (First)|PREVAREQ:MutagenPrimeAbility,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Alchemist ~ Mutagen Dexterity (First)|PREVAREQ:MutagenPrimeAbility,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Alchemist ~ Mutagen Constitution (First)|PREVAREQ:MutagenPrimeAbility,3"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|MutagenPrimeAbility|%CHOICE"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|MutagenActive|1|TYPE=Boolean"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=3|TITLE=Str is 1, Dex is 2, Con is 3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 77,
+    "record_key": "Mutagen ~ Stat Selection First"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Flame Mystery ~ Molten Skin",
+    "name": "Molten Skin",
+    "class": "Flame Mystery",
+    "description": "You gain resist fire %1|OracleFireResist|PREVARLT:OracleLVL,17",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flame Mystery ~ Molten Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.FlameRevelation.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleFireResist|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain resist fire %1|OracleFireResist|PREVARLT:OracleLVL,17"
+      },
+      {
+        "key": "DESC",
+        "value": "You are immune to fire.|PREVARGTEQ:OracleLVL,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleFireResist|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleFireResist|5|PRECLASS:1,Oracle=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleFireResist|10|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 599,
+    "record_key": "Flame Mystery ~ Molten Skin"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

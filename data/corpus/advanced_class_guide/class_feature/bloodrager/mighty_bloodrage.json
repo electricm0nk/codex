@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bloodrager ~ Mighty Bloodrage",
+    "name": "Mighty Bloodrage",
+    "class": "Bloodrager",
+    "description": "At 20th level, when a bloodrager enters a bloodrage, the morale bonus to his Strength, Constitution and the morale bonus on his Will saves increases. Furthermore, the spell he can apply to himself at the beginning of a bloodrage due to the greater bloodrage class feature is not limited to only spells of 2nd level or lower.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager ~ Mighty Bloodrage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, when a bloodrager enters a bloodrage, the morale bonus to his Strength, Constitution and the morale bonus on his Will saves increases. Furthermore, the spell he can apply to himself at the beginning of a bloodrage due to the greater bloodrage class feature is not limited to only spells of 2nd level or lower."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageStrBonus,BloodrageConBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageSaveBonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageStage|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 345,
+    "record_key": "Bloodrager ~ Mighty Bloodrage"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

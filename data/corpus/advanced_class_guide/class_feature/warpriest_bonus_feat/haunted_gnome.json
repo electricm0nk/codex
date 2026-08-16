@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Haunted Gnome",
+    "name": "Haunted Gnome",
+    "class": "Warpriest Bonus Feat",
+    "description": "You use your gnome magic to take on an eerie illusory appearance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Haunted Gnome"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Gnome ~ Gnome Magic"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Knowledge (arcana)=1"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,CHA=13"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=2|CASTERLEVEL=TL|Haunted Fey Aspect,10+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You use your gnome magic to take on an eerie illusory appearance."
+      },
+      {
+        "key": "DESC",
+        "value": " You add haunted fey aspect (page 230) to your list of gnome magic spell-like abilities, and you can use this spell-like ability twice per day."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Haunted Gnome"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4457,
+    "record_key": "Warpriest Bonus Feat ~ Haunted Gnome"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

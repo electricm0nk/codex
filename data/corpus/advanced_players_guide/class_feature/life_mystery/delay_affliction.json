@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Life Mystery ~ Delay Affliction",
+    "name": "Delay Affliction",
+    "class": "Life Mystery",
+    "description": "As an immediate action, %1 time(s) per day, whenever you fail a saving throw against a disease or poison, you may ignore its effects for %2 hour(s).|OracleDelayAfflictionTimes|OracleDelayAfflictionDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Mystery ~ Delay Affliction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.LifeRevelation.Supernatural.PerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleDelayAfflictionTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleDelayAfflictionDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As an immediate action, %1 time(s) per day, whenever you fail a saving throw against a disease or poison, you may ignore its effects for %2 hour(s).|OracleDelayAfflictionTimes|OracleDelayAfflictionDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleDelayAfflictionTimes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleDelayAfflictionTimes|1|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleDelayAfflictionTimes|1|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleDelayAfflictionDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 622,
+    "record_key": "Life Mystery ~ Delay Affliction"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

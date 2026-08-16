@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Trap ~ Marking Trap",
+    "name": "Marking Trap",
+    "class": "Ranger Trap",
+    "description": "If the triggering creature fails its save against the trap, it is marked with a dye and/or scent of your choosing. A scent mark decreases the DC of tracking the marked creature by scent by 4. The mark can be washed off with vigorous scrubbing, but fades on its own over several days.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Trap ~ Marking Trap"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Trap Marking"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialAttack.RangerTrap.Extraordinary.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If the triggering creature fails its save against the trap, it is marked with a dye and/or scent of your choosing. A scent mark decreases the DC of tracking the marked creature by scent by 4. The mark can be washed off with vigorous scrubbing, but fades on its own over several days."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1619,
+    "record_key": "Ranger Trap ~ Marking Trap"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

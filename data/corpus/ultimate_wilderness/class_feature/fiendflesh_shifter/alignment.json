@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fiendflesh Shifter ~ Alignment",
+    "name": "Alignment",
+    "class": "Fiendflesh Shifter",
+    "description": "A fiendflesh shifter must be evil in alignment. If the fiendflesh shifter becomes nonevil, she loses all powers granted by this archetype. This alters the shifter's alignment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fiendflesh Shifter ~ Alignment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.FiendfleshShifterClassFeatures"
+      },
+      {
+        "key": "DESC",
+        "value": "A fiendflesh shifter must be evil in alignment. If the fiendflesh shifter becomes nonevil, she loses all powers granted by this archetype. This alters the shifter's alignment."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1062,
+    "record_key": "Fiendflesh Shifter ~ Alignment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

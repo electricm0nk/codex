@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gunslinger ~ Gunslinger Initiative",
+    "name": "Gunslinger Initiative",
+    "class": "Gunslinger",
+    "description": "At 3rd level, as long as the gunslinger has at least 1 grit point, she gains the following benefits. First, she gains a +%1 bonus on initiative checks. Furthermore, if she has the Quick Draw feat, her hands are free and unrestrained, and the firearm is not hidden, she can draw a single firearm as part of the initiative check.|GunslingerInitiative",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Gunslinger Initiative"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_Deed_LVL03"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeedsLVL3.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GunslingerInitiative|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, as long as the gunslinger has at least 1 grit point, she gains the following benefits. First, she gains a +%1 bonus on initiative checks. Furthermore, if she has the Quick Draw feat, her hands are free and unrestrained, and the firearm is not hidden, she can draw a single firearm as part of the initiative check.|GunslingerInitiative"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GunslingerInitiative|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+%1 bonus on initiative checks if you have 1+ grit points.|GunslingerInitiative"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|INITIATIVE|GunslingerInitiative"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 61,
+    "record_key": "Gunslinger ~ Gunslinger Initiative"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

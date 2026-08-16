@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Resonant Power ~ Necromantic Focus",
+    "name": "Necromantic Focus [Necromancy]",
+    "class": "Resonant Power",
+    "description": "The implement grants its possessor greater power over the undead. Whoever possesses the implement can control an additional 2 Hit Dice of undead for every point of mental focus invested in the item (+%1 HD), to a maximum of +%2 Hit Dice. Any spellcaster who bears the implement can add it as an additional focus component for a necromancy spell he casts to create undead. If he does so, he can create an additional number of HD of undead equal to the additional HD the implement allows him to control (apply this effect after doubling the HD of undead for desecrate, if applicable). Undead creatures take a -1 penalty on saving throws against spells cast by the bearer of this implement (%3) for every 4 points of mental focus invested in this implement.|OccultistNecromanticFocusBonus|4*OccultistLVL|-OccultistNecromanticFocus/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Resonant Power ~ Necromantic Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Resonant Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistNecromanticFocusBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The implement grants its possessor greater power over the undead. Whoever possesses the implement can control an additional 2 Hit Dice of undead for every point of mental focus invested in the item (+%1 HD), to a maximum of +%2 Hit Dice. Any spellcaster who bears the implement can add it as an additional focus component for a necromancy spell he casts to create undead. If he does so, he can create an additional number of HD of undead equal to the additional HD the implement allows him to control (apply this effect after doubling the HD of undead for desecrate, if applicable). Undead creatures take a -1 penalty on saving throws against spells cast by the bearer of this implement (%3) for every 4 points of mental focus invested in this implement.|OccultistNecromanticFocusBonus|4*OccultistLVL|-OccultistNecromanticFocus/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistNecromanticFocusBonus|min(2*OccultistNecromanticFocus,4*OccultistLVL)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1102,
+    "record_key": "Resonant Power ~ Necromantic Focus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

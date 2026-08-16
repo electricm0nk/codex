@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Flame Mystery ~ Wings of Fire",
+    "name": "Wings of Fire",
+    "class": "Flame Mystery",
+    "description": "As a swift action, you can manifest a pair of fiery wings that grant you a fly speed of 60 feet with average maneuverability. You can use these wings for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 1 minute increments.|classlevel(\"Oracle\")",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flame Mystery ~ Wings of Fire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.FlameRevelation.Supernatural.MinutesPerDayOracleRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can manifest a pair of fiery wings that grant you a fly speed of 60 feet with average maneuverability. You can use these wings for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 1 minute increments.|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 601,
+    "record_key": "Flame Mystery ~ Wings of Fire"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

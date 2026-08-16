@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Summoner Archetype ~ Broodmaster",
+    "name": "Broodmaster",
+    "class": "Summoner Archetype",
+    "description": "A broodmaster forges a link with multiple smaller eidolons that make up his brood.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner Archetype ~ Broodmaster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SummonerArchetype.SummonerLifeLink.SummonerLifeBond.SummonerMergeForms"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Summoner=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Broodmaster],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerEidolon,TYPE.SummonerLifeLink,TYPE.SummonerLifeBond,TYPE.SummonerMergeForms]"
+      },
+      {
+        "key": "DESC",
+        "value": "A broodmaster forges a link with multiple smaller eidolons that make up his brood."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Broodmaster ~ Eidolon Brood|PRECLASS:1,Summoner=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Broodmaster ~ Brood Link|PRECLASS:1,Summoner=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Broodmaster ~ Larger Brood|PRECLASS:1,Summoner=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Broodmaster ~ Brood Bond|PRECLASS:1,Summoner=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Broodmaster ~ Merge Forms|PRECLASS:1,Summoner=16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Eidolon_CF_EvolutionProgression|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Summoner"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1814,
+    "record_key": "Summoner Archetype ~ Broodmaster"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

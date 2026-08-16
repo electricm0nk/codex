@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gunslinger ~ Startling Shot",
+    "name": "Startling Shot",
+    "class": "Gunslinger",
+    "description": "At 7th level, a gunslinger with least 1 grit point can spend a standard action to purposely miss a creature that she could normally hit with a firearm attack. When she does, that creature becomes flat-footed until the start of its next turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Startling Shot"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_Deed_LVL07"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeedsLVL7.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, a gunslinger with least 1 grit point can spend a standard action to purposely miss a creature that she could normally hit with a firearm attack. When she does, that creature becomes flat-footed until the start of its next turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 66,
+    "record_key": "Gunslinger ~ Startling Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

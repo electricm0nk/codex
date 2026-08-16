@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oadiran Horselord ~ As One",
+    "name": "As One",
+    "class": "Oadiran Horselord",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oadiran Horselord ~ As One"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a Qadiran horselord gains the benefits of the Spring Attack feat so long as she remains mounted. The horselord uses her mount's movement for this action and neither the horselord nor her mount provoke attacks of opportunity from the target. When making a single attack with a one-handed slashing weapon while using the Spring Attack feat, the Qadiran horselord treats her mount as charging. This ability can be used to qualify for other feats that treat Spring Attack as a prerequisite; however, the cavalier can benefit from those feats only while mounted. This ability replaces greater tactician."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 171,
+    "record_key": "Oadiran Horselord ~ As One"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

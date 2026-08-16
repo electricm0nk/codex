@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Veil Of Mists",
+    "name": "Veil Of Mists",
+    "class": "Wild Talent",
+    "description": "Element water; Type utility (Su); Level 2; Burn 0 You create a misty veil over your features, disguising yourself as disguise self for a number of minutes equal to your Constitution modifier. If you accept 1 point of burn, until the next time your burn is removed, each use of this wild talent lasts until you dismiss it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Veil Of Mists"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Water"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Water,4"
+      },
+      {
+        "key": "DESC",
+        "value": "Element water; Type utility (Su); Level 2; Burn 0 You create a misty veil over your features, disguising yourself as disguise self for a number of minutes equal to your Constitution modifier. If you accept 1 point of burn, until the next time your burn is removed, each use of this wild talent lasts until you dismiss it."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 794,
+    "record_key": "Wild Talent ~ Veil Of Mists"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

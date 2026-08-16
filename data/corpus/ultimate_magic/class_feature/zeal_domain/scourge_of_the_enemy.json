@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Zeal Domain ~ Scourge of the Enemy",
+    "name": "Scourge of the Enemy",
+    "class": "Zeal Domain",
+    "description": "Select one religion that is a rival or opponent of your religion. You treat members of this religion as if they were your favored enemy (as the ranger class ability), gaining a +%1 bonus on the appropriate rolls. These bonuses do not stack with other favored enemy bonuses (use the highest bonus that applies).|ScourgeOfTheEnemyBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Zeal Domain ~ Scourge of the Enemy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ScourgeOfTheEnemyBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Select one religion that is a rival or opponent of your religion. You treat members of this religion as if they were your favored enemy (as the ranger class ability), gaining a +%1 bonus on the appropriate rolls. These bonuses do not stack with other favored enemy bonuses (use the highest bonus that applies).|ScourgeOfTheEnemyBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScourgeOfTheEnemyBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScourgeOfTheEnemyBonus|2|PREVARGTEQ:DomainZealLVL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScourgeOfTheEnemyBonus|2|PREVARGTEQ:DomainZealLVL,18"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 414,
+    "record_key": "Zeal Domain ~ Scourge of the Enemy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

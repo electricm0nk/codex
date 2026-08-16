@@ -1,0 +1,111 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Archetype ~ Heister",
+    "name": "Heister",
+    "class": "Rogue Archetype",
+    "description": "Notorious for their stealth, imagination, and elaborately planned thefts and capers, heisters specialize in breaking into secure locations, stealing items of value, and escaping undetected. Heisters often work as members of or independent operatives contracted to criminal organizations, crime families, or wealthy individuals inclined to unlawful activity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ Heister"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RogueArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Heister],[!PREFACT:1,ABILITIES,Rogue_Archetype_RogueTalent2=True,Rogue_Archetype_RogueTalent4=True,Rogue_Archetype_RogueTalent8=True,Rogue_Archetype_UncannyDodge=True,Rogue_Archetype_ImprovedUncannyDodge=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Notorious for their stealth, imagination, and elaborately planned thefts and capers, heisters specialize in breaking into secure locations, stealing items of value, and escaping undetected. Heisters often work as members of or independent operatives contracted to criminal organizations, crime families, or wealthy individuals inclined to unlawful activity."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heister ~ Rum Dubber|PRECLASS:1,Rogue=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heister ~ Ferret's Grace|PRECLASS:1,Rogue=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heister ~ Unseen|PRECLASS:1,Rogue=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_ImprovedUncannyDodge|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 717,
+    "record_key": "Rogue Archetype ~ Heister"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

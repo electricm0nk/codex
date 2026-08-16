@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pure Legion Enforcer ~ Voice of Law",
+    "name": "Voice of Law",
+    "class": "Pure Legion Enforcer",
+    "description": "At 2nd level, a Pure Legion enforcer can, as a standard action, attempt an Intimidate check to demoralize all worshipers of a specific deity within 30 feet. Spellcasters who are affected by this ability also take a -4 penalty on concentration checks to cast divine spells as long as they are shaken.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pure Legion Enforcer ~ Voice of Law"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pure Legion Enforcer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a Pure Legion enforcer can, as a standard action, attempt an Intimidate check to demoralize all worshipers of a specific deity within 30 feet. Spellcasters who are affected by this ability also take a -4 penalty on concentration checks to cast divine spells as long as they are shaken."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 537,
+    "record_key": "Pure Legion Enforcer ~ Voice of Law"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

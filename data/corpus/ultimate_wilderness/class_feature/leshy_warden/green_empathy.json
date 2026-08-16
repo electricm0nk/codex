@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Leshy Warden ~ Green Empathy",
+    "name": "Green Empathy",
+    "class": "Leshy Warden",
+    "description": "A leshy warden can improve the attitude of a plant creature as if using wild empathy. The typical wild plant creature has a starting attitude of indifferent. If the plant creature is mindless, the leshy warden imparts a modicum of intellect to the plant so that it can be interacted with as if it were an animal. A leshy warden can also use this ability to influence an animal, but she takes a -4 penalty on the check to do so.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leshy Warden ~ Green Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.LeshyWardenClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A leshy warden can improve the attitude of a plant creature as if using wild empathy. The typical wild plant creature has a starting attitude of indifferent. If the plant creature is mindless, the leshy warden imparts a modicum of intellect to the plant so that it can be interacted with as if it were an animal. A leshy warden can also use this ability to influence an animal, but she takes a -4 penalty on the check to do so."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 519,
+    "record_key": "Leshy Warden ~ Green Empathy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

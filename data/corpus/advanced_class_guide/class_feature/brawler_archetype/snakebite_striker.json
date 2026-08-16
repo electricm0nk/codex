@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brawler Archetype ~ Snakebite Striker",
+    "name": "Snakebite Striker",
+    "class": "Brawler Archetype",
+    "description": "With her lightning quickness and guile, a snakebite striker keeps her foes' attention focused on her, because any one of her feints might be an actual attack. By giving up some of a brawler's versatility, she increases her damage potential and exposes opponents to deadly and unexpected strikes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler Archetype ~ Snakebite Striker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BrawlerArchetype.BrawlerManeuverTraining.BrawlerMartialFlexibility.BrawlerClassSkills"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Brawler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Snakebite Striker],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerManeuverTraining,TYPE.BrawlerMartialFlexibility,TYPE.BrawlerClassSkills]"
+      },
+      {
+        "key": "DESC",
+        "value": "With her lightning quickness and guile, a snakebite striker keeps her foes' attention focused on her, because any one of her feints might be an actual attack. By giving up some of a brawler's versatility, she increases her damage potential and exposes opponents to deadly and unexpected strikes."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Snakebite Striker Brawler ~ Sneak Attack|PRECLASS:1,Brawler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Snakebite Striker Brawler ~ Class Skills|PRECLASS:1,Brawler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Snakebite Striker Brawler ~ Snake Feint|PRECLASS:1,Brawler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Snakebite Striker Brawler ~ Opportunist|PRECLASS:1,Brawler=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Snakebite Striker Brawler ~ Maneuver Training|PRECLASS:1,Brawler=15"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Brawler"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2848,
+    "record_key": "Brawler Archetype ~ Snakebite Striker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

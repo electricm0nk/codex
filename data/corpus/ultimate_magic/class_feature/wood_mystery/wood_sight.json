@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wood Mystery ~ Wood Sight",
+    "name": "Wood Sight",
+    "class": "Wood Mystery",
+    "description": "As a move action, you can alter your vision to see through underbrush and plant growth that would normally grant concealment, up to a range of 60 feet (though darkness and other obstacles still may block your sight).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wood Mystery ~ Wood Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.WoodRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoodSightDistance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoodSightDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, you can alter your vision to see through underbrush and plant growth that would normally grant concealment, up to a range of 60 feet (though darkness and other obstacles still may block your sight)."
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability to see through wood or other plant material as easily as if it were transparent glass, penetrating %1 feet of wood.|WoodSightDistance|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 rounds per day, but these rounds do not need to be consecutive.|WoodSightDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoodSightDistance|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoodSightDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 518,
+    "record_key": "Wood Mystery ~ Wood Sight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

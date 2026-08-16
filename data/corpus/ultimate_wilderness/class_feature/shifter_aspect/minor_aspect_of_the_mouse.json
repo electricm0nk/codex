@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter Aspect ~ Mouse ~ Minor",
+    "name": "Minor Aspect of the Mouse",
+    "class": "Shifter Aspect",
+    "description": "You gain evasion, as per the rogue class feature.|PREVARLT:ShifterMouseAspectLVL,12",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Mouse ~ Minor"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Mouse_2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain evasion, as per the rogue class feature.|PREVARLT:ShifterMouseAspectLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain improved evasion, as per the rogue advanced talent.|PREVARGTEQ:ShifterMouseAspectLVL,12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 78,
+    "record_key": "Shifter Aspect ~ Mouse ~ Minor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

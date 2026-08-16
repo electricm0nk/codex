@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Fragmentation",
+    "name": "Fragmentation",
+    "class": "Wild Talent",
+    "description": "Element earth or water; Type form infusion; Level 7; Burn 4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Fragmentation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Earth.Infusion Wild Talent Water"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ Extended Range"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:KineticistLVL_Earth,14],[PREVARGTEQ:KineticistLVL_Water,14]"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite extended range"
+      },
+      {
+        "key": "DESC",
+        "value": "Element earth or water; Type form infusion; Level 7; Burn 4"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Associated Blasts earth, ice, metal Saving Throw none or Reflex half; see text You throw a volatile sphere of solid matter that shatters into countless shards. Attempt a ranged attack roll against a target within 120 feet. If you hit, the target takes your kinetic blast damage with no saving throw. All other creatures and objects within a 20-foot burst take half the normal amount of damage and can attempt a Reflex save to reduce that damage by half again. If the attack misses its target, the blast has no effect. The saving throw DC is Dexterity-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 701,
+    "record_key": "Wild Talent ~ Fragmentation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brazen Deceiver ~ Deceptive Tale",
+    "name": "Deceptive Tale",
+    "class": "Brazen Deceiver",
+    "description": "A brazen deceiver learns the deceptive tale bardic performance, allowing him to weave magic into his lies and imbue the most fantastic claims with the appearance of truth. While the brazen deceiver maintains this performance, he takes half the normal penalty on Bluff checks for unlikely lies (rounding down to -2).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brazen Deceiver ~ Deceptive Tale"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Feature.BrazenDeceiverClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "DESC",
+        "value": "A brazen deceiver learns the deceptive tale bardic performance, allowing him to weave magic into his lies and imbue the most fantastic claims with the appearance of truth. While the brazen deceiver maintains this performance, he takes half the normal penalty on Bluff checks for unlikely lies (rounding down to -2)."
+      },
+      {
+        "key": "DESC",
+        "value": "This effect also applies to Bluff checks for far-fetched lies.|PRECLASS:1,Bard=5"
+      },
+      {
+        "key": "DESC",
+        "value": "It also applies to Bluff checks for impossible lies.|PRECLASS:1,Bard=11"
+      },
+      {
+        "key": "DESC",
+        "value": "Deceptive tale relies on audible components."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 645,
+    "record_key": "Brazen Deceiver ~ Deceptive Tale"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

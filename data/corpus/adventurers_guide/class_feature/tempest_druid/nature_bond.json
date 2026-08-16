@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tempest Druid ~ Nature Bond",
+    "name": "Nature Bond",
+    "class": "Tempest Druid",
+    "description": "As a result of his beliefs, a tempest druid has little connection to the spirituality of animals or plants. He can't choose an animal companion, and must instead select a domain or subdomain from the following list when he gains the nature bond ability: Air, Aquatic, Cloud, Storm, Swamp, Weather, or Wind. This alters nature bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tempest Druid ~ Nature Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.TempestDruidClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.183"
+      },
+      {
+        "key": "DESC",
+        "value": "As a result of his beliefs, a tempest druid has little connection to the spirituality of animals or plants. He can't choose an animal companion, and must instead select a domain or subdomain from the following list when he gains the nature bond ability: Air, Aquatic, Cloud, Storm, Swamp, Weather, or Wind. This alters nature bond."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Tempest Druid Domain Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLVL|DruidLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domains"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 811,
+    "record_key": "Tempest Druid ~ Nature Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

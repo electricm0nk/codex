@@ -1,0 +1,113 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Champion of the Faith ~ Smite",
+    "name": "Smite",
+    "class": "Champion of the Faith",
+    "description": "A champion of the faith can focus his powers against his chosen foes. As a swift action, the champion of the faith chooses one target within sight to smite. If this target is",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Champion of the Faith ~ Smite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Champion of the Faith Class Feature.Warpriest Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A champion of the faith can focus his powers against his chosen foes. As a swift action, the champion of the faith chooses one target within sight to smite. If this target is"
+      },
+      {
+        "key": "DESC",
+        "value": "lawful|PREVARGTEQ:ChampionOfTheFaithChaos,1"
+      },
+      {
+        "key": "DESC",
+        "value": "good|PREVARGTEQ:ChampionOfTheFaithEvil,1"
+      },
+      {
+        "key": "DESC",
+        "value": "evil|PREVARGTEQ:ChampionOfTheFaithGood,1"
+      },
+      {
+        "key": "DESC",
+        "value": "chaotic|PREVARGTEQ:ChampionOfTheFaithLaw,1"
+      },
+      {
+        "key": "DESC",
+        "value": ", the champion of the faith adds +%1 to his attack rolls and adds +%2 to all damage rolls made against the target of his smite.|max(0,CHA)|WarpriestLVL"
+      },
+      {
+        "key": "DESC",
+        "value": " If the target of his smite is an outsider with the"
+      },
+      {
+        "key": "DESC",
+        "value": "lawful|PREVARGTEQ:ChampionOfTheFaithChaos,1"
+      },
+      {
+        "key": "DESC",
+        "value": "good|PREVARGTEQ:ChampionOfTheFaithEvil,1"
+      },
+      {
+        "key": "DESC",
+        "value": "evil|PREVARGTEQ:ChampionOfTheFaithGood,1"
+      },
+      {
+        "key": "DESC",
+        "value": "chaotic|PREVARGTEQ:ChampionOfTheFaithLaw,1"
+      },
+      {
+        "key": "DESC",
+        "value": " subtype, the bonus to damage on the first successful attack increases to %1 points. Regardless of the target, smite attacks automatically bypass any DR the target possesses. In addition, while smite is in effect, the champion of the faith gains a +%2 deflection bonus to his AC against attacks made by the target of the smite. If the smite targets a creature that's not|WarpriestLVL*2|max(0,CHA)"
+      },
+      {
+        "key": "DESC",
+        "value": "lawful|PREVARGTEQ:ChampionOfTheFaithChaos,1"
+      },
+      {
+        "key": "DESC",
+        "value": "good|PREVARGTEQ:ChampionOfTheFaithEvil,1"
+      },
+      {
+        "key": "DESC",
+        "value": "evil|PREVARGTEQ:ChampionOfTheFaithGood,1"
+      },
+      {
+        "key": "DESC",
+        "value": "chaotic|PREVARGTEQ:ChampionOfTheFaithLaw,1"
+      },
+      {
+        "key": "DESC",
+        "value": ", the smite is wasted with no effect. The smite effect remains until the target of the smite is dead or the next time the champion of the faith regains spells. The champion of the faith can use this ability %1 times per day. Using this ability consumes two uses of his fervor ability.|floor(min5,(WarpriestLVL/4))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3942,
+    "record_key": "Champion of the Faith ~ Smite"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

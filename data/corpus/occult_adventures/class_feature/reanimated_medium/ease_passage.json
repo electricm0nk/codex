@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Reanimated Medium ~ Ease Passage",
+    "name": "Ease Passage",
+    "class": "Reanimated Medium",
+    "description": "As long as a reanimated medium's body is intact, it's easy for him to return to it. He takes only 1 negative level instead of 2 from raise dead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reanimated Medium ~ Ease Passage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as a reanimated medium's body is intact, it's easy for him to return to it. He takes only 1 negative level instead of 2 from raise dead."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1415,
+    "record_key": "Reanimated Medium ~ Ease Passage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

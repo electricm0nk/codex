@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cavalier Order ~ Order of the Tome",
+    "name": "Order of the Tome",
+    "class": "Cavalier Order",
+    "description": "Knowledge is the stepping stone of both truth and power. The members of this order devote themselves to the preservation of knowledge. Most would protect written knowledge at all costs, but there are members that believe there is such thing as knowledge too dangerous to be allowed to exist, and seek to destroy it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Order ~ Order of the Tome"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrder.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Knowledge is the stepping stone of both truth and power. The members of this order devote themselves to the preservation of knowledge. Most would protect written knowledge at all costs, but there are members that believe there is such thing as knowledge too dangerous to be allowed to exist, and seek to destroy it."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Tome ~ Edicts|Order of the Tome ~ Challenge|Order of the Tome ~ Skills|Order of the Tome ~ Order Abilities|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Tome ~ Specialized Knowledge|PREVARGTEQ:OrderAbilityLVL,2|PREVAREQ:OrderAbility2,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Tome ~ Powerful Knowledge|PREVARGTEQ:OrderAbilityLVL,8|PREVAREQ:OrderAbility8,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Tome ~ Defensive Knowledge|PREVARGTEQ:OrderAbilityLVL,15|PREVAREQ:OrderAbility15,0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 456,
+    "record_key": "Cavalier Order ~ Order of the Tome"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

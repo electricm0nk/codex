@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Plant Master ~ Master Hunter",
+    "name": "Master Hunter",
+    "class": "Plant Master",
+    "description": "When a plant master prepares spells for the day, he chooses one plant focus to be active for the entire day. This alters master hunter.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plant Master ~ Master Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.PlantMasterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When a plant master prepares spells for the day, he chooses one plant focus to be active for the entire day. This alters master hunter."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Plant Master Plant Focus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Animal Focus|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 680,
+    "record_key": "Plant Master ~ Master Hunter"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "River Soul ~ River Soul Revelation",
+    "name": "River Soul Revelation",
+    "class": "River Soul",
+    "description": "You strengthen your ties to the river with which you bonded. While traveling on or immersed in the river, you gain fast healing 10 and immunity to bleed, death attacks, exhaustion, fatigue, nausea effects, negative levels, and sickened effects. Additionally, if you are slain and your body or some part of your body (including your ashes, if applicable) is floated down the river in a specially prepared vessel costing 5,000 gp, you return to life as per resurrection once you reach the mouth of the river, as long as the trip has taken 24 hours or longer.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "River Soul ~ River Soul Revelation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Oracle Class Features.RiverSoulClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You strengthen your ties to the river with which you bonded. While traveling on or immersed in the river, you gain fast healing 10 and immunity to bleed, death attacks, exhaustion, fatigue, nausea effects, negative levels, and sickened effects. Additionally, if you are slain and your body or some part of your body (including your ashes, if applicable) is floated down the river in a specially prepared vessel costing 5,000 gp, you return to life as per resurrection once you reach the mouth of the river, as long as the trip has taken 24 hours or longer."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 848,
+    "record_key": "River Soul ~ River Soul Revelation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

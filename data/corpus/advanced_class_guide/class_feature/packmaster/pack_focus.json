@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Packmaster ~ Pack Focus",
+    "name": "Pack Focus",
+    "class": "Packmaster",
+    "description": "[NOT IMPLEMENTED] This ability functions like animal focus, with the following exceptions. A packmaster can apply her animal aspect to only one of her animal companions at a time without it counting against the number of minutes per day she can use that ability. When using animal focus on herself or her other animal companion, the ability counts against her minutes per day as normal. She can have only two animal aspects in effect at a time-one that counts against her minutes per day and one that doesn't - and they can't both target the same companion. Unless both her companions are dead, the hunter can't apply the companion's aspect to herself (and thereby gain the benefit of its unlimited duration).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Packmaster ~ Pack Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.ArchetypeAbility.Supernatural.HunterAnimalFocus"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] This ability functions like animal focus, with the following exceptions. A packmaster can apply her animal aspect to only one of her animal companions at a time without it counting against the number of minutes per day she can use that ability. When using animal focus on herself or her other animal companion, the ability counts against her minutes per day as normal. She can have only two animal aspects in effect at a time-one that counts against her minutes per day and one that doesn't - and they can't both target the same companion. Unless both her companions are dead, the hunter can't apply the companion's aspect to herself (and thereby gain the benefit of its unlimited duration)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "P.96"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3159,
+    "record_key": "Packmaster ~ Pack Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

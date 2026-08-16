@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Steel Falcon ~ Chainbreaker",
+    "name": "Chainbreaker",
+    "class": "Steel Falcon",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Steel Falcon ~ Chainbreaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Steel Falcon Class Feature.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "DESC",
+        "value": "A Steel Falcon's attacks against bindings, chains, and manacles bypasses up to 10 points of hardness. This includes weapons with chains (such as flails, nunchaku, and spiked chains), a kyton's armor and weapons, chains animated by animate objects, and so on. The Steel Falcon also gains a +10 bonus on all checks to escape bindings with manacles or ropes."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Escape Artist=Escape manacles or ropes|10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 489,
+    "record_key": "Steel Falcon ~ Chainbreaker"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

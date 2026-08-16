@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Blood Conduit ~ Contact Specialist",
+    "name": "Contact Specialist",
+    "class": "Blood Conduit",
+    "description": "At 1st level, a blood conduit selects a bonus feat from the following: Improved Bull Rush, Improved Grapple, Improved Reposition, Improved Trip, and Improved Unarmed Strike. He does not need to meet the prerequisites to take this feat. He also adds those feats to his list of bloodline feats. This ability replaces fast movement and alters bloodline feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blood Conduit ~ Contact Specialist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bloodrager Class Feature.SpecialQuality.Extraordinary.BloodragerFastMovement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BonusContactSpecialistFeats|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a blood conduit selects a bonus feat from the following: Improved Bull Rush, Improved Grapple, Improved Reposition, Improved Trip, and Improved Unarmed Strike. He does not need to meet the prerequisites to take this feat. He also adds those feats to his list of bloodline feats. This ability replaces fast movement and alters bloodline feats."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Contact Specialist Feat|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BonusContactSpecialistFeats|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_ImprovedBullRush|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_ImprovedGrapple|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_ImprovedReposition|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_ImprovedTrip|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_ImprovedUnarmedStrike|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2719,
+    "record_key": "Blood Conduit ~ Contact Specialist"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

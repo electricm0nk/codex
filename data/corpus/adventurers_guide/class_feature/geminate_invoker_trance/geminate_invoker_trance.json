@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Geminate Invoker Trance",
+    "name": "Geminate Invoker Trance",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Raging|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageConBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageSaveBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageConBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageSaveBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageDuration|2+var(\"STAT.2.MOD.NOTEMP\")+(2*RageLVL)"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|Reflex,Will|RageSaveBonus"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|CON|RageConBonus"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|Raging|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 619,
+    "record_key": "Geminate Invoker Trance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

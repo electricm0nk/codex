@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Verminous Hunter ~ Second Vermin Focus",
+    "name": "Second Vermin Focus",
+    "class": "Verminous Hunter",
+    "description": "Whenever a hunter uses her animal focus ability, she selects two different animal aspects for herself instead of one, and can assign two aspects to her companion instead of one.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verminous Hunter ~ Second Vermin Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.ArchetypeAbility.Supernatural.HunterSecondVerminFocus"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a hunter uses her animal focus ability, she selects two different animal aspects for herself instead of one, and can assign two aspects to her companion instead of one."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Verminous Hunter Vermin Focus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterVerminFocusACPool|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3252,
+    "record_key": "Verminous Hunter ~ Second Vermin Focus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

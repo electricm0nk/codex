@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Breaker ~ Battle Scavenger",
+    "name": "Battle Scavenger",
+    "class": "Breaker",
+    "description": "At 3rd level, the breaker barbarian suffers no penalty on attack rolls when using an improvised weapon or a weapon with the broken condition. In addition, she gains a +%1 bonus on damage rolls with improvised or broken weapons for every three levels beyond 3rd. This ability replaces trap sense.|BattleScavengerDamage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Breaker ~ Battle Scavenger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BarbarianClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BattleScavengerDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, the breaker barbarian suffers no penalty on attack rolls when using an improvised weapon or a weapon with the broken condition. In addition, she gains a +%1 bonus on damage rolls with improvised or broken weapons for every three levels beyond 3rd. This ability replaces trap sense.|BattleScavengerDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BattleScavengerDamage|BarbarianLVL/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1569,
+    "record_key": "Breaker ~ Battle Scavenger"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

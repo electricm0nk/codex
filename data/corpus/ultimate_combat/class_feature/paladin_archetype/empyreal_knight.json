@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Paladin Archetype ~ Empyreal Knight",
+    "name": "Empyreal Knight",
+    "class": "Paladin Archetype",
+    "description": "The empyreal knight dedicates her life to serving the celestial beings that guide mortals in their struggle toward the light.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Empyreal Knight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype.PaladinDivineBond.PaladinDivineGrace.PaladinMercy.PaladinLayOnHands.PaladinChannelPositiveEnergy.PaladinHolyChampion"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ EMPYREAL KNIGHT],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinDivineGrace,TYPE.PaladinMercy,TYPE.PaladinLayOnHands,TYPE.PaladinChannelPositiveEnergy,TYPE.PaladinHolyChampion]"
+      },
+      {
+        "key": "DESC",
+        "value": "The empyreal knight dedicates her life to serving the celestial beings that guide mortals in their struggle toward the light."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Empyreal Knight ~ Voices of the Spheres|PRECLASS:1,Paladin=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Empyreal Knight ~ Celestial Heart|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Empyreal Knight ~ Celestial Ally|PRECLASS:1,Paladin=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Empyreal Knight ~ Divine Bond|PRECLASS:1,Paladin=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Empyreal Knight ~ Empyreal Champion|PRECLASS:1,Paladin=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Paladin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1441,
+    "record_key": "Paladin Archetype ~ Empyreal Knight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

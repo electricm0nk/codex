@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nature Mystery ~ Bonded Mount",
+    "name": "Bonded Mount",
+    "class": "Nature Mystery",
+    "description": "You gain the service of an unusually intelligent, strong, and loyal mount. The creature must be one that you are capable of riding and is suitable as a mount. A Medium oracle can select a camel or a horse. A Small oracle can select a pony or wolf, but can also select a boar or a dog if she is at least 4th level. This mount functions as a druid's animal companion, using your oracle level as your effective druid level. Bonded mounts have an Intelligence score of at least 6.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Mystery ~ Bonded Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.NatureRevelation.Supernatural.Special Mount"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpecialMountLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the service of an unusually intelligent, strong, and loyal mount. The creature must be one that you are capable of riding and is suitable as a mount. A Medium oracle can select a camel or a horse. A Small oracle can select a pony or wolf, but can also select a boar or a dog if she is at least 4th level. This mount functions as a druid's animal companion, using your oracle level as your effective druid level. Bonded mounts have an Intelligence score of at least 6."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpecialMountLVL|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Special Mount|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Special Mount|Companion (Boar),Companion (Camel),Companion (Dog),Companion (Horse),Companion (Pony),Companion (Wolf)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 652,
+    "record_key": "Nature Mystery ~ Bonded Mount"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

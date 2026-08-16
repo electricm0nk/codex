@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cleric Archetype ~ Theologian",
+    "name": "Theologian",
+    "class": "Cleric Archetype",
+    "description": "A theologian is an expert on one particular area of her religion. She is so focused on that area that she eschews the broader sweep of her deity's dogma and focuses intensely upon that aspect of it, embodying its power in all she does. Theologians tend to be more zealous than other clerics, and many crusades are started by theologians.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric Archetype ~ Theologian"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ClericArchetype.ClericDomains"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cleric=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Theologian],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericDomains]"
+      },
+      {
+        "key": "DESC",
+        "value": "A theologian is an expert on one particular area of her religion. She is so focused on that area that she eschews the broader sweep of her deity's dogma and focuses intensely upon that aspect of it, embodying its power in all she does. Theologians tend to be more zealous than other clerics, and many crusades are started by theologians."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Theologian ~ Focused Domain|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Theologian ~ Domain Secret|PRECLASS:1,Cleric=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Cleric"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1003,
+    "record_key": "Cleric Archetype ~ Theologian"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

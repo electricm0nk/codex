@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Water School",
+    "name": "Water School",
+    "class": null,
+    "description": "The water elementalist draws magic from the ocean depths. His power is fluid as well, crushing foes in mighty waves or wearing them down through timeless erosion.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WaterSchoolLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WaterSchoolProgressionLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The water elementalist draws magic from the ocean depths. His power is fluid as well, crushing foes in mighty waves or wearing them down through timeless erosion."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water School ~ Cold Blast|Water School ~ Water Supremacy"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water School ~ Wave|PREVARGTEQ:WaterSchoolProgressionLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WaterSchoolLVL|WizardSchoolLvl"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WaterSchoolProgressionLVL|ArcaneSchoolProgressionLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3278,
+    "record_key": "Water School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

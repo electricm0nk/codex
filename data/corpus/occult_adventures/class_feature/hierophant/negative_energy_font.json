@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hierophant ~ Negative Energy Font",
+    "name": "Negative Energy Font",
+    "class": "Hierophant",
+    "description": "You can unleash a wave of negative energy. You must choose to deal %1d6 points of negative energy damage to living creatures or to heal undead creatures of %1d6 points of damage. Creatures that take damage from channeled energy receive a DC %2 Will save to halve the damage. You can use this ability %3 times per day.|HierophantChannelDice|HierophantChannelDC|HierophantChannelTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hierophant ~ Negative Energy Font"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpecialQuality.Supernatural.HierophantEnergyFont"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of negative energy. You must choose to deal %1d6 points of negative energy damage to living creatures or to heal undead creatures of %1d6 points of damage. Creatures that take damage from channeled energy receive a DC %2 Will save to halve the damage. You can use this ability %3 times per day.|HierophantChannelDice|HierophantChannelDC|HierophantChannelTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Negative Energy Font|(%1d6, DC %2, %3/day)|HierophantChannelDice|HierophantChannelDC|HierophantChannelTimes"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=1|Inflict Light Wounds"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=2|Inflict Moderate Wounds"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=3|Inflict Serious Wounds"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=4|Inflict Critical Wounds"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=5|Inflict Light Wounds (Mass)"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=6|Inflict Moderate Wounds (Mass)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 908,
+    "record_key": "Hierophant ~ Negative Energy Font"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

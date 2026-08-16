@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Lore Spirit ~ Monstrous Insight",
+    "name": "Monstrous Insight",
+    "class": "Lore Spirit",
+    "description": "The shaman can identify creatures and gain insight into their strengths and weaknesses. As a standard action, the shaman can attempt a Knowledge skill check to identify a creature and its abilities (using the appropriate skill for the monster's type) with a +%1 insight bonus. Whether or not the check is successful, she also gains a +2 insight bonus for 1 minute on attack rolls made against that creature and a +2 insight bonus to her AC against attacks made by that creature. These bonuses last for 1 minute. The shaman can use this ability %2/day.|ShamanMonstrousInsightBonus|ShamanMonstrousInsightTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lore Spirit ~ Monstrous Insight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanMonstrousInsightBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanMonstrousInsightTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can identify creatures and gain insight into their strengths and weaknesses. As a standard action, the shaman can attempt a Knowledge skill check to identify a creature and its abilities (using the appropriate skill for the monster's type) with a +%1 insight bonus. Whether or not the check is successful, she also gains a +2 insight bonus for 1 minute on attack rolls made against that creature and a +2 insight bonus to her AC against attacks made by that creature. These bonuses last for 1 minute. The shaman can use this ability %2/day.|ShamanMonstrousInsightBonus|ShamanMonstrousInsightTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanMonstrousInsightBonus|ShamanSpiritLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanMonstrousInsightTimes|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1623,
+    "record_key": "Lore Spirit ~ Monstrous Insight"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

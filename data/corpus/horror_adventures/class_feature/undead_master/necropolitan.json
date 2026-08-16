@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Undead Master ~ Necropolitan",
+    "name": "Necropolitan",
+    "class": "Undead Master",
+    "description": "An undead master gains a +%1 bonus on Diplomacy and Knowledge checks regarding undead creatures. Because of his obsessive focus on the undead, he takes a -2 penalty when attempting such checks regarding living creatures.|max(1,WizardLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead Master ~ Necropolitan"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wizard Class Feature.UndeadMasterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "DESC",
+        "value": "An undead master gains a +%1 bonus on Diplomacy and Knowledge checks regarding undead creatures. Because of his obsessive focus on the undead, he takes a -2 penalty when attempting such checks regarding living creatures.|max(1,WizardLVL/2)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 320,
+    "record_key": "Undead Master ~ Necropolitan"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

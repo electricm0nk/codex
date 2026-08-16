@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sanguine Angel Discipline ~ Unyielding",
+    "name": "Unyielding",
+    "class": "Sanguine Angel Discipline",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sanguine Angel Discipline ~ Unyielding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SanguineAngelDiscipline.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SanguineAngelUnyieldingDR|0"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SanguineAngelLVL,6"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "DESC",
+        "value": "While wearing Gray Maiden plate, the sanguine angel gains DR %1/-. This damage reduction does not stack with damage reduction granted by other sources.|SanguineAngelUnyieldingDR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SanguineAngelUnyieldingDR|1+(SanguineAngelLVL>=8)+(SanguineAngelLVL>=10)"
+      },
+      {
+        "key": "DR",
+        "value": "SanguineAngelUnyieldingDR/-|PREEQUIP:1,Gray Maiden Plate%"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 471,
+    "record_key": "Sanguine Angel Discipline ~ Unyielding"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:dr"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcanist School Necromancy ~ Power Over Undead",
+    "name": "Power Over Undead",
+    "class": "Arcanist School Necromancy",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcanist School Necromancy ~ Power Over Undead"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistSchoolChoice"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Arcanist School ~ Necromancy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistSchoolBoost_Power_Over_Undead|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Necromancy School ~ Power Over Undead|!PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistSchoolBoost_Power_Over_Undead|-1|!PRECLASS:1,Wizard=1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 262,
+    "record_key": "Arcanist School Necromancy ~ Power Over Undead"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

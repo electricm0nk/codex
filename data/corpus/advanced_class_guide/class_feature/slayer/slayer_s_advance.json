@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Slayer ~ Slayer's Advance",
+    "name": "Slayer's Advance",
+    "class": "Slayer",
+    "description": "A slayer can %1 times per day move up to twice his base speed as a move action. He may use Stealth as part of this movement, but takes a -10 penalty to his check for doing so.|SlayersAdvanceTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer ~ Slayer's Advance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlayersAdvanceTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A slayer can %1 times per day move up to twice his base speed as a move action. He may use Stealth as part of this movement, but takes a -10 penalty to his check for doing so.|SlayersAdvanceTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayersAdvanceTimes|1+(SlayerLVL>16)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SlayersAdvanceTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1791,
+    "record_key": "Slayer ~ Slayer's Advance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

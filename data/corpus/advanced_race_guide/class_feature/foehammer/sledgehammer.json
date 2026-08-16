@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Foehammer ~ Sledgehammer",
+    "name": "Sledgehammer",
+    "class": "Foehammer",
+    "description": "At 3rd level, a foehammer wielding a hammer gains a +2 circumstance bonus on combat maneuver checks made to bull rush, overrun, sunder, or trip. This ability replaces armor training 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Foehammer ~ Sledgehammer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a foehammer wielding a hammer gains a +2 circumstance bonus on combat maneuver checks made to bull rush, overrun, sunder, or trip. This ability replaces armor training 1."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_BullRush,CMB_Overrun,CMB_Sunder,CMB_Trip|2|TYPE=Circumstance|PREEQUIPPRIMARY:1,TYPE=Hammer"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 48,
+    "record_key": "Foehammer ~ Sledgehammer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

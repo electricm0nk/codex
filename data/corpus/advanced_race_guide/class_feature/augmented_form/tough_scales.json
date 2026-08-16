@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Augmented Form ~ Tough Scales",
+    "name": "Tough Scales",
+    "class": "Augmented Form",
+    "description": "The druid's enhancement bonus to her natural armor increases by +2. The druid may select this ability more than once. Its effects stack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Augmented Form ~ Tough Scales"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary.AugmentedFormSelection"
+      },
+      {
+        "key": "DESC",
+        "value": "The druid's enhancement bonus to her natural armor increases by +2. The druid may select this ability more than once. Its effects stack."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.197"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 932,
+    "record_key": "Augmented Form ~ Tough Scales"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

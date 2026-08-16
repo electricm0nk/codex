@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Asavir ~ Janni's Blessing",
+    "name": "Janni's Blessing",
+    "class": "Asavir",
+    "description": "When an asavir rolls a d20 to resolve an attack, saving throw, or skill check, she can roll twice and choose the better result. The asavir can use this ability once per day for herself and once per day for her mount. Both the asavir and her mount gain a +1 luck bonus on all saving throws.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Asavir ~ Janni's Blessing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.AsavirClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "DESC",
+        "value": "When an asavir rolls a d20 to resolve an attack, saving throw, or skill check, she can roll twice and choose the better result. The asavir can use this ability once per day for herself and once per day for her mount. Both the asavir and her mount gain a +1 luck bonus on all saving throws."
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|1|TYPE=Luck"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 54,
+    "record_key": "Asavir ~ Janni's Blessing"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

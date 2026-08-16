@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Shadow's Speed",
+    "name": "Shadow's Speed",
+    "class": "Vigilante Talent",
+    "description": "The vigilante's base speed increases by 10 feet.|ShadowsSpeedBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Shadow's Speed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Shadow's Speed"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShadowsSpeedBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante's base speed increases by 10 feet.|ShadowsSpeedBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|ShadowsSpeedBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowsSpeedBonus|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowsSpeedBonus|10|PREVARGTEQ:VigilanteTalentLVL,10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 101,
+    "record_key": "Vigilante Talent ~ Shadow's Speed"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

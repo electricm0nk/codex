@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Thunderstriker ~ Hammer And Anvil",
+    "name": "Hammer and Anvil",
+    "class": "Thunderstriker",
+    "description": "At 13th level, a thunderstriker suffers only half the normal penalties for two-weapon fighting when using a buckler as his off-hand weapon. This ability replaces weapon training 3.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thunderstriker ~ Hammer And Anvil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 13th level, a thunderstriker suffers only half the normal penalties for two-weapon fighting when using a buckler as his off-hand weapon. This ability replaces weapon training 3."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 746,
+    "record_key": "Thunderstriker ~ Hammer And Anvil"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

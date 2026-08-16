@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Abyssal Blood (Greater)",
+    "name": "Abyssal Blood, Greater",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian gains resistance 5 to acid, cold, and fire.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Abyssal Blood (Greater)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialQuality.Supernatural.BloodRageGreater"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Abyssal Blood"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,10"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Special Ability,TYPE.BloodRageGreater],[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ Abyssal Blood (Greater)]"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian gains resistance 5 to acid, cold, and fire."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|5|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|5|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|5|TYPE=Resistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2659,
+    "record_key": "Rage Power ~ Abyssal Blood (Greater)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

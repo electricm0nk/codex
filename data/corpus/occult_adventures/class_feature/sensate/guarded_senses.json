@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sensate ~ Guarded Senses",
+    "name": "Guarded Senses",
+    "class": "Sensate",
+    "description": "At 2nd level, a sensate gains a +1 bonus on saves against sonic effects, figments, glamers, patterns, gaze attacks, and scent-based attacks. This bonus increases by 1 for every 4 levels the sensate possesses beyond 2nd. This ability replaces bravery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sensate ~ Guarded Senses"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sensate Class Feature.Fighter Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a sensate gains a +1 bonus on saves against sonic effects, figments, glamers, patterns, gaze attacks, and scent-based attacks. This bonus increases by 1 for every 4 levels the sensate possesses beyond 2nd. This ability replaces bravery."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1739,
+    "record_key": "Sensate ~ Guarded Senses"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

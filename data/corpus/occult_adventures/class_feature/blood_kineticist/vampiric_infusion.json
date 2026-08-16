@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Blood Kineticist ~ Vampiric Infusion",
+    "name": "Vampiric Infusion",
+    "class": "Blood Kineticist",
+    "description": "At 11th level, a blood kineticist can drain the vitality from her enemy's blood to restore her own. If her blast hits (or the enemy fails its saving throw against a blast without an attack roll) the blood kineticist can activate the kinetic healer utility wild talent on herself by accepting its burn cost; she doesn't need to take an action to do so. If she doesn't possess the kinetic healer utility wild talent, she can still use this ability, but it heals only half as much. This is a 5th-level substance infusion that costs 3 points of burn and can be used with water and blood blasts. This ability replaces the 11th-level infusion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blood Kineticist ~ Vampiric Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Blood Kineticist Class Feature.Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, a blood kineticist can drain the vitality from her enemy's blood to restore her own. If her blast hits (or the enemy fails its saving throw against a blast without an attack roll) the blood kineticist can activate the kinetic healer utility wild talent on herself by accepting its burn cost; she doesn't need to take an action to do so. If she doesn't possess the kinetic healer utility wild talent, she can still use this ability, but it heals only half as much. This is a 5th-level substance infusion that costs 3 points of burn and can be used with water and blood blasts. This ability replaces the 11th-level infusion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1324,
+    "record_key": "Blood Kineticist ~ Vampiric Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

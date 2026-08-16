@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oath against the Wyrm ~ Divine Bond",
+    "name": "Divine Bond",
+    "class": "Oath against the Wyrm",
+    "description": "This works like the paladin's normal divine bond ability, except as follows. If your bond is with a weapon, you cannot use that ability to add the brilliant energy, disruption, or merciful weapon properties, but you can add the bane weapon property (but only against dragons). If your bond is with your steed, the steed gains the paladin's aura-based immunities and your aura does not affect allies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against the Wyrm ~ Divine Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "This works like the paladin's normal divine bond ability, except as follows. If your bond is with a weapon, you cannot use that ability to add the brilliant energy, disruption, or merciful weapon properties, but you can add the bane weapon property (but only against dragons). If your bond is with your steed, the steed gains the paladin's aura-based immunities and your aura does not affect allies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Paladin ~ Divine Bond"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1567,
+    "record_key": "Oath against the Wyrm ~ Divine Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

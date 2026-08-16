@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcane Trickster ~ Impromptu Sneak Attack",
+    "name": "Impromptu Sneak Attack",
+    "class": "Arcane Trickster",
+    "description": "Beginning at 3rd level, %1 per day an arcane trickster can declare one melee or ranged attack she makes to be a sneak attack (the target can be no more than 30 feet distant if the impromptu sneak attack is a ranged attack). The target of an impromptu sneak attack loses any Dexterity bonus to AC, but only against that attack. The power can be used against any target, but creatures that are not subject to critical hits take no extra damage (though they still lose any Dexterity bonus to AC against the attack). At 7th level, an arcane trickster can use this ability twice per day.|ImpromptuSneakTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Trickster ~ Impromptu Sneak Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.AttackOption"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ImpromptuSneakTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Beginning at 3rd level, %1 per day an arcane trickster can declare one melee or ranged attack she makes to be a sneak attack (the target can be no more than 30 feet distant if the impromptu sneak attack is a ranged attack). The target of an impromptu sneak attack loses any Dexterity bonus to AC, but only against that attack. The power can be used against any target, but creatures that are not subject to critical hits take no extra damage (though they still lose any Dexterity bonus to AC against the attack). At 7th level, an arcane trickster can use this ability twice per day.|ImpromptuSneakTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpromptuSneakTimes|(ArcaneTricksterLVL+1)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.377"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Impromptu Sneak Attack %1/day|ImpromptuSneakTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|ImpromptuSneakTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2935,
+    "record_key": "Arcane Trickster ~ Impromptu Sneak Attack"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Celestial Bloodline ~ Bonus Spells",
+    "name": "Celestial Bloodline ~ Bonus Spells",
+    "class": "Celestial Bloodline",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=1|Bless|PREVAREQ:Sorcerer_CF_BloodlineSpell1,0|PREVARGTEQ:BloodlineCasterLVL,3"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=2|Resist Energy|PREVAREQ:Sorcerer_CF_BloodlineSpell2,0|PREVARGTEQ:BloodlineCasterLVL,5"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=3|Magic Circle against Evil|PREVAREQ:Sorcerer_CF_BloodlineSpell3,0|PREVARGTEQ:BloodlineCasterLVL,7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=4|Remove Curse|PREVAREQ:Sorcerer_CF_BloodlineSpell4,0|PREVARGTEQ:BloodlineCasterLVL,9"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=5|Flame Strike|PREVAREQ:Sorcerer_CF_BloodlineSpell5,0|PREVARGTEQ:BloodlineCasterLVL,11"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=6|Dispel Magic (Greater)|PREVAREQ:Sorcerer_CF_BloodlineSpell6,0|PREVARGTEQ:BloodlineCasterLVL,13"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=7|Banishment|PREVAREQ:Sorcerer_CF_BloodlineSpell7,0|PREVARGTEQ:BloodlineCasterLVL,15"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=8|Sunburst|PREVAREQ:Sorcerer_CF_BloodlineSpell8,0|PREVARGTEQ:BloodlineCasterLVL,17"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=9|Gate|PREVAREQ:Sorcerer_CF_BloodlineSpell9,0|PREVARGTEQ:BloodlineCasterLVL,19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2403,
+    "record_key": "Celestial Bloodline ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

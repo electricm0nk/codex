@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ True Inspiration",
+    "name": "True Inspiration",
+    "class": "Investigator",
+    "description": "You can use inspiration on all skill checks-even ones you arn't trained in-and all ability checks without spending inspiration.  In addition, whenever you expends inspiration on an ability check, attack roll, saving throw, or skill check, you adds 2d6 rather than 1d6 to the result. Some talents can affect this. If using the amazing inspiration investigator talent, you roll 2d8 instead. If using this with empathy, tenacious inspiration, underworld inspiration, or a similar talent, you roll two sets of inspiration dice and use the higher of the two results.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ True Inspiration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use inspiration on all skill checks-even ones you arn't trained in-and all ability checks without spending inspiration.  In addition, whenever you expends inspiration on an ability check, attack roll, saving throw, or skill check, you adds 2d6 rather than 1d6 to the result. Some talents can affect this. If using the amazing inspiration investigator talent, you roll 2d8 instead. If using this with empathy, tenacious inspiration, underworld inspiration, or a similar talent, you roll two sets of inspiration dice and use the higher of the two results."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1253,
+    "record_key": "Investigator ~ True Inspiration"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

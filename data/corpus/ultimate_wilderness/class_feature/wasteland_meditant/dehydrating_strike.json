@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wasteland Meditant ~ Dehydrating Strike",
+    "name": "Dehydrating Strike",
+    "class": "Wasteland Meditant",
+    "description": "As a free action as part of a melee attack, a wasteland meditant can draw the moisture out of a living creature damaged by his unarmed strike. Unless the creature succeeds at a Will save (DC %1), the creature is|10+MonkLVL/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wasteland Meditant ~ Dehydrating Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Features.WastelandMeditantClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action as part of a melee attack, a wasteland meditant can draw the moisture out of a living creature damaged by his unarmed strike. Unless the creature succeeds at a Will save (DC %1), the creature is|10+MonkLVL/2+WIS"
+      },
+      {
+        "key": "DESC",
+        "value": "fatigued|!PRECLASS:1,Monk=10"
+      },
+      {
+        "key": "DESC",
+        "value": "exhausted|PRECLASS:1,Monk=10"
+      },
+      {
+        "key": "DESC",
+        "value": "for %1 rounds.|max(1,MonkLVL/2)"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature struck is also staggered for 1 round if it fails its save."
+      },
+      {
+        "key": "DESC",
+        "value": "When used against a plant creature or a creature with the water subtype, dehydrating strike inflicts the above conditions (as applicable) on a failed save and also deals 1d6 points of damage, plus %1d6 additional points of damage. This damage is in addition to the wasteland meditant's normal unarmed strike damage. A wasteland meditant can use this ability %2 times per day but only once per round. Creatures immune to critical hits or precision damage are immune to this ability.|MonkLVL/4|3+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 817,
+    "record_key": "Wasteland Meditant ~ Dehydrating Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

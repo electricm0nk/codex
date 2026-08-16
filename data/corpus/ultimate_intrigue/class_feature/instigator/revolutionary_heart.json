@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Instigator ~ Revolutionary Heart",
+    "name": "Revolutionary Heart",
+    "class": "Instigator",
+    "description": "An instigator's tumultuous mastery of demagoguery and revolution makes it difficult for others' compulsions to sway him.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Instigator ~ Revolutionary Heart"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.InstigatorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An instigator's tumultuous mastery of demagoguery and revolution makes it difficult for others' compulsions to sway him."
+      },
+      {
+        "key": "DESC",
+        "value": " Once|!PRECLASS:1,Skald=13"
+      },
+      {
+        "key": "DESC",
+        "value": " Twice|PRECLASS:1,Skald=13|!PRECLASS:1,Skald=19"
+      },
+      {
+        "key": "DESC",
+        "value": " Three times|PRECLASS:1,Skald=19"
+      },
+      {
+        "key": "DESC",
+        "value": " per day, when he fails a saving throw against a compulsion effect, he can attempt another saving throw after 1 time increment (1 round if the effect is measured in rounds, 1 minute if the effect is measured in minutes, 10 minutes if the spell is measured in 10-minute increments, and so on)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 917,
+    "record_key": "Instigator ~ Revolutionary Heart"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Crusader ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class": "Crusader",
+    "description": "A crusader gains a bonus feat at 1st level, then again at 5th level and every five levels thereafter (to a maximum of six at 20th level). These bonus feats must be chosen from the following list - Heavy Armor Proficiency, Improved Shield Bash, Martial Weapon Proficiency, Saving Shield, Shield Focus, Tower Shield Proficiency, and Weapon Focus*. At 10th level, a crusader may also choose from the following feats - Exotic Weapon Proficiency, Greater Shield Focus, Greater Weapon Focus*, Improved Critical*, Shield Slam, Shield Specialization, and Weapon Specialization*. At 20th level, a crusader may also choose from the following feats - Greater Shield Specialization and Greater Weapon Specialization*. Bonus feats marked with an asterisk (*) must be applied to the favored weapon of the crusader's deity. A crusader need not meet the normal class- or level-based prerequisites for these bonus feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crusader ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CrusaderBonusFeatCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A crusader gains a bonus feat at 1st level, then again at 5th level and every five levels thereafter (to a maximum of six at 20th level). These bonus feats must be chosen from the following list - Heavy Armor Proficiency, Improved Shield Bash, Martial Weapon Proficiency, Saving Shield, Shield Focus, Tower Shield Proficiency, and Weapon Focus*. At 10th level, a crusader may also choose from the following feats - Exotic Weapon Proficiency, Greater Shield Focus, Greater Weapon Focus*, Improved Critical*, Shield Slam, Shield Specialization, and Weapon Specialization*. At 20th level, a crusader may also choose from the following feats - Greater Shield Specialization and Greater Weapon Specialization*. Bonus feats marked with an asterisk (*) must be applied to the favored weapon of the crusader's deity. A crusader need not meet the normal class- or level-based prerequisites for these bonus feats."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Crusader Feat|CrusaderBonusFeatCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrusaderBonusFeatCount|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrusaderBonusFeatCount|1|PRECLASS:1,Cleric=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrusaderBonusFeatCount|1|PRECLASS:1,Cleric=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrusaderBonusFeatCount|1|PRECLASS:1,Cleric=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrusaderBonusFeatCount|1|PRECLASS:1,Cleric=20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 535,
+    "record_key": "Crusader ~ Bonus Feat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

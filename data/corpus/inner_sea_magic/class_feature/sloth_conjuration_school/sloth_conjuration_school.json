@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sloth (Conjuration) School",
+    "name": "Sloth (Conjuration) School",
+    "class": null,
+    "description": "You have chosen to specialize in Sloth, calling agents and minions to perform your deeds for you, or creating what you need when you need it.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConjurationSchoolLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to specialize in Sloth, calling agents and minions to perform your deeds for you, or creating what you need when you need it."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Conjuration School ~ Summoner's Charm|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardSummonersCharm|PREVARGTEQ:ConjurationSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Conjuration School ~ Acid Dart|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardAcidDart|PREVARGTEQ:ConjurationSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Conjuration School ~ Dimensional Steps|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardDimensionalSteps|PREVARGTEQ:ConjurationSchoolLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConjurationSchoolLVL|ArcaneSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisallowWizardArcaneSchoolArchetype|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OppositionalSchool|-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 131,
+    "record_key": "Sloth (Conjuration) School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Paw ~ Giant Slayer",
+    "name": "Giant Slayer",
+    "class": "Order of the Paw",
+    "description": "When the cavalier hits the target of his challenge with a melee attack, and that target is at least two size categories larger than the cavalier, he gains a bonus on damage rolls equal to %1. This damage is multiplied on a critical hit.|Cavalier/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Paw ~ Giant Slayer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When the cavalier hits the target of his challenge with a melee attack, and that target is at least two size categories larger than the cavalier, he gains a bonus on damage rolls equal to %1. This damage is multiplied on a critical hit.|Cavalier/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 324,
+    "record_key": "Order of the Paw ~ Giant Slayer"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

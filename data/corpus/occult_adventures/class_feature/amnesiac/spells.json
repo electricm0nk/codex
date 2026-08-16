@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Amnesiac ~ Spells",
+    "name": "Spells",
+    "class": "Amnesiac",
+    "description": "An amnesiac's ability to cast psychic spells is the same as that of the psychic class, with the following exceptions. An amnesiac's faulty memory makes remembering and casting spells difficult, but the increased flexibility can be a great benefit. Instead of choosing a number of spells known from Table 1-8: Psychic Spells Known, an amnesiac accesses spells she knew the previous day from the recesses of her mind. This requires 1 hour of meditation. Each day, for each spell level the amnesiac can cast, she retains a number of spells known equal to half the number listed on Table 1-8, rounded up. These spells must be selected from spells the amnesiac knew the previous day (including any spells she remembered using spell recollection; see below). The remainder of her spells known (half the number on Table 1-8, rounded down) become amnesia slots, which the amnesiac can use with her spell recollection ability (see below). To determine the spells she knows on the day when she first takes this archetype, the amnesiac picks any one 1st-level spell from the psychic spell list. This change to spells doesn't apply to knacks (0-level spells) or discipline spells, which function the same way they do for a normal psychic. When the amnesiac gains access to 3rd-level spells, she gains full recall of her 1st-level spells and no longer gains 1st-level amnesia slots, instead gaining the full number of 1st-level spells known from Table 1-8 and casting them as a normal psychic. When this happens, the amnesiac can select any level-appropriate spells from the psychic spell list as her spells known, even if they were never among the spells she prepared or recalled; once selected, these spells can no longer be changed, as with a normal psychic. Each time the psychic gains access to a new level of spells, she gains full memory of spells 2 levels lower in the same way (gaining full memory and permanently selecting her 2nd-level spells when she gains access to 4thlevel spells, and so on). This ability alters spellcasting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Amnesiac ~ Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Amnesiac Class Feature.Psychic Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An amnesiac's ability to cast psychic spells is the same as that of the psychic class, with the following exceptions. An amnesiac's faulty memory makes remembering and casting spells difficult, but the increased flexibility can be a great benefit. Instead of choosing a number of spells known from Table 1-8: Psychic Spells Known, an amnesiac accesses spells she knew the previous day from the recesses of her mind. This requires 1 hour of meditation. Each day, for each spell level the amnesiac can cast, she retains a number of spells known equal to half the number listed on Table 1-8, rounded up. These spells must be selected from spells the amnesiac knew the previous day (including any spells she remembered using spell recollection; see below). The remainder of her spells known (half the number on Table 1-8, rounded down) become amnesia slots, which the amnesiac can use with her spell recollection ability (see below). To determine the spells she knows on the day when she first takes this archetype, the amnesiac picks any one 1st-level spell from the psychic spell list. This change to spells doesn't apply to knacks (0-level spells) or discipline spells, which function the same way they do for a normal psychic. When the amnesiac gains access to 3rd-level spells, she gains full recall of her 1st-level spells and no longer gains 1st-level amnesia slots, instead gaining the full number of 1st-level spells known from Table 1-8 and casting them as a normal psychic. When this happens, the amnesiac can select any level-appropriate spells from the psychic spell list as her spells known, even if they were never among the spells she prepared or recalled; once selected, these spells can no longer be changed, as with a normal psychic. Each time the psychic gains access to a new level of spells, she gains full memory of spells 2 levels lower in the same way (gaining full memory and permanently selecting her 2nd-level spells when she gains access to 4thlevel spells, and so on). This ability alters spellcasting."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1560,
+    "record_key": "Amnesiac ~ Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

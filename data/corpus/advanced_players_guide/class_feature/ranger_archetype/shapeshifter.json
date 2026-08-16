@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Archetype ~ Shapeshifter",
+    "name": "Shapeshifter",
+    "class": "Ranger Archetype",
+    "description": "Most rangers venture into the wilderness, but there are some who let the wilderness seep into them. Whether by curse, disease, ancient rite, a slight lycanthropic influence in the blood, or the corrupting influence of chaos, these rangers embrace the wild to transform themselves into something untamed and feral. Shapeshifters are often held in awe, but are even more often feared.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Shapeshifter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype.RangerCamouflage.RangerMasterHunter.RangerFavoredTerrain"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Shapeshifter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerCamouflage,TYPE.RangerMasterHunter,TYPE.RangerFavoredTerrain]"
+      },
+      {
+        "key": "DESC",
+        "value": "Most rangers venture into the wilderness, but there are some who let the wilderness seep into them. Whether by curse, disease, ancient rite, a slight lycanthropic influence in the blood, or the corrupting influence of chaos, these rangers embrace the wild to transform themselves into something untamed and feral. Shapeshifters are often held in awe, but are even more often feared."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Shapeshifter ~ Combat Style Feat|PRECLASS:1,Ranger=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Shapeshifter ~ Shifter's Blessing|PRECLASS:1,Ranger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Shapeshifter ~ Dual Form Shifter|PRECLASS:1,Ranger=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Shapeshifter ~ Master Shifter|PRECLASS:1,Ranger=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Ranger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2668,
+    "record_key": "Ranger Archetype ~ Shapeshifter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

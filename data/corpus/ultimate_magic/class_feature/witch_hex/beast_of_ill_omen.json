@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Hex ~ Beast of Ill-Omen",
+    "name": "Beast of Ill-Omen",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_BeastofIllOmen",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Beast of Ill-Omen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMinorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_BeastofIllOmen|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BeastOfIllOmenCasterLevel|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_BeastofIllOmen"
+      },
+      {
+        "key": "DESC",
+        "value": "You imbue your familiar with strange magic, putting a minor curse upon the next enemy to see it. The enemy must make a Will save or be affected by bane (caster level %1). You can use this hex on your familiar at a range of up to 60 feet. The affected enemy must be no more than 60 feet from the familiar to trigger the effect; seeing the familiar from a greater distance has no effect (though if the enemy and familiar approach to within 60 feet of each other, the hex takes effect). The bane affects the closest creature to the familiar (ties affect the creature with the highest initiative score). Whether or not the target's save is successful, the creature cannot be the target of the bane effect for 1 day (later uses of this hex ignore that creature when determining who is affected).|BeastOfIllOmenCasterLevel"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Beast of Ill-Omen"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_BeastofIllOmen|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_BeastofIllOmen|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Beast of Ill-Omen)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BeastOfIllOmenCasterLevel|WitchHexAbilityLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 711,
+    "record_key": "Witch Hex ~ Beast of Ill-Omen"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skirmisher ~ Alpine Training",
+    "name": "Alpine Training",
+    "class": "Skirmisher",
+    "description": "A skirmisher operating in mountainous terrain becomes resistant to cold climates and the rigors of long treks at high altitudes. He gains a bonus on Fortitude saving throws against altitude sickness, exposure to cold weather, and other effects that cause fatigue or exhaustion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skirmisher ~ Alpine Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SkirmisherConditioningSpecialty.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A skirmisher operating in mountainous terrain becomes resistant to cold climates and the rigors of long treks at high altitudes. He gains a bonus on Fortitude saving throws against altitude sickness, exposure to cold weather, and other effects that cause fatigue or exhaustion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 Fortitude vs. effects that cause fatigue or exhaustion.|SkirmisherConditioningBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 582,
+    "record_key": "Skirmisher ~ Alpine Training"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

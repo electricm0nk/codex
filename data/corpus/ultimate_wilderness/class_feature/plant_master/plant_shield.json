@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Plant Master ~ Plant Shield",
+    "name": "Plant Shield",
+    "class": "Plant Master",
+    "description": "A plant master and his companion are distasteful to plant creatures. Creatures of the plant type with an Intelligence score of 2 or lower will not willingly attack either the plant master or his companion unless magically compelled to do so or the plant master or his companion attacks the creature first.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plant Master ~ Plant Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.PlantMasterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A plant master and his companion are distasteful to plant creatures. Creatures of the plant type with an Intelligence score of 2 or lower will not willingly attack either the plant master or his companion unless magically compelled to do so or the plant master or his companion attacks the creature first."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 679,
+    "record_key": "Plant Master ~ Plant Shield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

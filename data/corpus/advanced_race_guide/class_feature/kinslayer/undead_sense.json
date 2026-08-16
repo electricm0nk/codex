@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kinslayer ~ Undead Sense",
+    "name": "Undead Sense",
+    "class": "Kinslayer",
+    "description": "The kinslayer gains the ability to use detect undead as a spell-like ability (caster level %1) at will. If she detects the presence of undead, she can use her monster lore ability to attempt to determine the type of undead detected as well as to reveal any strengths or weaknesses the undead might have. If any of the detected undead are vampires, she gains a bonus of %2 on the check to immediately identify them as such.|KinslayerUndeadSenseLVL|KinslayerUndeadSenseBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kinslayer ~ Undead Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KinslayerUndeadSenseLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KinslayerUndeadSenseBonus|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=KinslayerUndeadSenseLVL|Detect Undead"
+      },
+      {
+        "key": "DESC",
+        "value": "The kinslayer gains the ability to use detect undead as a spell-like ability (caster level %1) at will. If she detects the presence of undead, she can use her monster lore ability to attempt to determine the type of undead detected as well as to reveal any strengths or weaknesses the undead might have. If any of the detected undead are vampires, she gains a bonus of %2 on the check to immediately identify them as such.|KinslayerUndeadSenseLVL|KinslayerUndeadSenseBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KinslayerUndeadSenseLVL|InquisitorLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KinslayerUndeadSenseBonus|InquisitorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 475,
+    "record_key": "Kinslayer ~ Undead Sense"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

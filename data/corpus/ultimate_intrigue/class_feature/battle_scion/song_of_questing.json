@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Battle Scion ~ Song of Questing",
+    "name": "Song of Questing",
+    "class": "Battle Scion",
+    "description": "The battle scion can spend 4 rounds of raging song to draw upon a target's honor, ambition, and sense of self in order to bind the target to an agreed-upon task, often a noble quest. This works like geas/quest, except it applies only if the target is truly willing (not magically compelled or tricked), and the target automatically understands the full terms of the agreement before deciding whether he is willing. The battle scion can offer a reward for the completion of the noble quest, but if she does so and fails to live up to her agreement, she becomes an ex-battle scion and loses all benefits gained from the archetype (she does not gain the abilities they replaced, either).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Scion ~ Song of Questing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.BattleScionClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The battle scion can spend 4 rounds of raging song to draw upon a target's honor, ambition, and sense of self in order to bind the target to an agreed-upon task, often a noble quest. This works like geas/quest, except it applies only if the target is truly willing (not magically compelled or tricked), and the target automatically understands the full terms of the agreement before deciding whether he is willing. The battle scion can offer a reward for the completion of the noble quest, but if she does so and fails to live up to her agreement, she becomes an ex-battle scion and loses all benefits gained from the archetype (she does not gain the abilities they replaced, either)."
+      },
+      {
+        "key": "DESC",
+        "value": " he can offer the same quest to up to %1 willing creatures. If she does so, the effect ends for all creatures as soon as anyone completes the quest, though only the creature who completes it earns any offered reward.|SkaldLVL|PRECLASS:1,Skald=14"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 903,
+    "record_key": "Battle Scion ~ Song of Questing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

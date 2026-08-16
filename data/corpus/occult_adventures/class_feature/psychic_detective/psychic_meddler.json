@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Detective ~ Psychic Meddler",
+    "name": "Psychic Meddler",
+    "class": "Psychic Detective",
+    "description": "At 2nd level, a psychic detective receives a +1 bonus on saves against psychic spells and spell-like abilities. This bonus increases by 1 at 5th level and every 3 levels thereafter, to a maximum of +6 at 17th level. Starting at 5th level, the psychic investigator adds half this bonus on caster level checks to dispel psychic effects. This ability replaces poison lore, poison resistance, swift alchemy, and poison immunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Detective ~ Psychic Meddler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Detective Class Feature.Investigator Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a psychic detective receives a +1 bonus on saves against psychic spells and spell-like abilities. This bonus increases by 1 at 5th level and every 3 levels thereafter, to a maximum of +6 at 17th level. Starting at 5th level, the psychic investigator adds half this bonus on caster level checks to dispel psychic effects. This ability replaces poison lore, poison resistance, swift alchemy, and poison immunity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 bonus on saves against psychic spells and spell-like abilities|(InvestigatorLVL+1)/3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1761,
+    "record_key": "Psychic Detective ~ Psychic Meddler"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

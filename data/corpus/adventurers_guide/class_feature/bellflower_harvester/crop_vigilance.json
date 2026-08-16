@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bellflower Harvester ~ Crop Vigilance",
+    "name": "Crop Vigilance",
+    "class": "Bellflower Harvester",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bellflower Harvester ~ Crop Vigilance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.BellflowerHarvesterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CropVigilanceBonusLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VigilanteIsStalker|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "DESC",
+        "value": "When the Bellflower harvester uses the aid another action to grant a member of his Bellflower crop a bonus on an attack roll against an opponent, on a skill check, or to AC against an opponent's next attack, the bonus increases to +3. This doesn't stack with the benefits of other feats or class features that improve the bonus he grants to an ally with aid another. This ability replaces vigilante specialization, but the Bellflower harvester is still treated as if he had the stalker specialization for the purpose of selecting other vigilante talents.|min(1,3+(CropVigilanceBonusLVL+1)/6)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CropVigilanceBonusLVL|VigilanteLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VigilanteIsStalker|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1104,
+    "record_key": "Bellflower Harvester ~ Crop Vigilance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Profiler ~ Blood Sleuth",
+    "name": "Blood Sleuth",
+    "class": "Profiler",
+    "description": "A profiler can expend one use of his inspiration to use discern next of kin as a spell-like ability. Alternatively, he can expend two uses of inspiration to use blood biography as a spell-like ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Profiler ~ Blood Sleuth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.ProfilerClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "DESC",
+        "value": "A profiler can expend one use of his inspiration to use discern next of kin as a spell-like ability. Alternatively, he can expend two uses of inspiration to use blood biography as a spell-like ability."
+      },
+      {
+        "key": "SPELLS",
+        "value": "Blood Sleuth|TIMES=1|TIMEUNIT=Inspiration|CASTERLEVEL=InvestigatorLVL|Discern Next of Kin,11+INT"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Blood Sleuth|TIMES=2|TIMEUNIT=Inspiration|CASTERLEVEL=InvestigatorLVL|Blood Biography,13+INT"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 170,
+    "record_key": "Profiler ~ Blood Sleuth"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

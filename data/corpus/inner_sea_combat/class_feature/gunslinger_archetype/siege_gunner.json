@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gunslinger Archetype ~ Siege Gunner",
+    "name": "Siege Gunner",
+    "class": "Gunslinger Archetype",
+    "description": "The Grand Duchy of Alkenstar has spawned all manner of firearm specialists, wielding small and large firearms alike. Siege gunners specialize in the very largestcannons, bombards, and firedrakes. These specialists are rarely seen outside of Alkenstar, however, in part because the duchy keeps close tabs on its most powerful guns and few are found elsewhere in the Inner Sea. A few siege gunners outside of Alkenstar make a living renting out their services and the use of their personal collection of siege weaponry to causes in which they believe or to the highest bidder.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger Archetype ~ Siege Gunner"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.GunslingerArchetype.GunslingerNimble.GunslingerDeadeyeDeed.GunslingerGunslingerInitiativeDeed.GunslingerBonusFeat"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Gunslinger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ Siege Gunner],[!PREABILITY:1,CATEGORY=Archetype,TYPE.GunslingerNimble,TYPE.GunslingerDeadeyeDeed,TYPE.GunslingerGunslingerInitiativeDeed,TYPE.GunslingerBonusFeat]"
+      },
+      {
+        "key": "DESC",
+        "value": "The Grand Duchy of Alkenstar has spawned all manner of firearm specialists, wielding small and large firearms alike. Siege gunners specialize in the very largestcannons, bombards, and firedrakes. These specialists are rarely seen outside of Alkenstar, however, in part because the duchy keeps close tabs on its most powerful guns and few are found elsewhere in the Inner Sea. A few siege gunners outside of Alkenstar make a living renting out their services and the use of their personal collection of siege weaponry to causes in which they believe or to the highest bidder."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Siege Gunner ~ Grit|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Siege Gunner ~ Engineer Training|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Siege Gunner ~ Deeds|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Siege Gunner ~ Targeted Blast|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Siege Gunner ~ Scattershot|PRECLASS:1,Gunslinger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Siege Gunner ~ Bonus Feats|PRECLASS:1,Gunslinger=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 34,
+    "record_key": "Gunslinger Archetype ~ Siege Gunner"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

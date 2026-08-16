@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Unexpected Strike",
+    "name": "Unexpected Strike",
+    "class": "Vigilante Talent",
+    "description": "The vigilante gains Quick Draw as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Unexpected Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Unexpected Strike"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante gains Quick Draw as a bonus feat."
+      },
+      {
+        "key": "DESC",
+        "value": " He can draw hidden weapons as a swift action (instead of a move action).|PREVARGTEQ:VigilanteTalentLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Quick Draw"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 114,
+    "record_key": "Vigilante Talent ~ Unexpected Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

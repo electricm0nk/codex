@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Experimental Gunsmith Innovations ~ Expanded Chamber",
+    "name": "Expanded Chamber",
+    "class": "Experimental Gunsmith Innovations",
+    "description": "The Experimental Gunsmith's firearm has a much larger than normal chamber for black powder, allowing her to use 2 doses of powder with each shot. The weapon grants a +1 circumstance bonus on damage rolls. However, when the weapon misfires, it causes a flashburn. This is the same as the weapon exploding (dealing damage from a corner of the Experimental Gunsmith's square), except the weapon is not automatically destroyed. If a broken weapon misfires, it is destroyed as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Experimental Gunsmith Innovations ~ Expanded Chamber"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ExperimentalGunsmithInnovation"
+      },
+      {
+        "key": "DESC",
+        "value": "The Experimental Gunsmith's firearm has a much larger than normal chamber for black powder, allowing her to use 2 doses of powder with each shot. The weapon grants a +1 circumstance bonus on damage rolls. However, when the weapon misfires, it causes a flashburn. This is the same as the weapon exploding (dealing damage from a corner of the Experimental Gunsmith's square), except the weapon is not automatically destroyed. If a broken weapon misfires, it is destroyed as normal."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 163,
+    "record_key": "Experimental Gunsmith Innovations ~ Expanded Chamber"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

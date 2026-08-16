@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pathfinder Savant ~ Esoteric Magic",
+    "name": "Esoteric Magic",
+    "class": "Pathfinder Savant",
+    "description": "[NOT IMPLEMETED] You treat %1 spells from any class's spell list as if they were on the spell list of your base spellcasting classes; if your base class could not normally cast that spell, it is treated as 1 level higher. If you could cast the spell using your base spellcasting class, the spell's level does not increase. The spell is cast as if its type (arcane, divine, or psychic) were that of your base spellcasting class, and save DCs function as normal for spells of that class. All other restrictions of your normal spellcasting class apply. This ability does not grant other spellcasters special allowance to prepare, cast, or use spell-trigger or spell-completion items of esoteric spells (such as a sorcerer using a cure light wounds scroll prepared by the Pathfinder savant).|PaSEsotericSpells",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Savant ~ Esoteric Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder Savant Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaSEsotericSpells|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMETED] You treat %1 spells from any class's spell list as if they were on the spell list of your base spellcasting classes; if your base class could not normally cast that spell, it is treated as 1 level higher. If you could cast the spell using your base spellcasting class, the spell's level does not increase. The spell is cast as if its type (arcane, divine, or psychic) were that of your base spellcasting class, and save DCs function as normal for spells of that class. All other restrictions of your normal spellcasting class apply. This ability does not grant other spellcasters special allowance to prepare, cast, or use spell-trigger or spell-completion items of esoteric spells (such as a sorcerer using a cure light wounds scroll prepared by the Pathfinder savant).|PaSEsotericSpells"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Esoteric Magic Spell|PaSEsotericSpells"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 400,
+    "record_key": "Pathfinder Savant ~ Esoteric Magic"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

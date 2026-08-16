@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic ~ Telepathic Bond",
+    "name": "Telepathic Bond",
+    "class": "Psychic",
+    "description": "At 9th level, a psychic can use telepathic bond as a spell-like ability once per day, using her psychic level as her caster level. She can't leave herself out of a bond created in this way. She can also expend any unused spell slot of 4th level or higher to cast telepathic bond. Casting the spell using a higher-level spell slot gives no benefit on its own, but the psychic can apply metamagic feats that would increase the spell level to the appropriate level. For instance, if the psychic knows Extend Spell, she can use a 5th-level spell slot to cast extended telepathic bond as a full-round action. When a psychic who knows telepathic bond gains this ability, she can learn a different 4th-level spell in place of telepathic bond, losing the old spell in exchange for the new one.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic ~ Telepathic Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a psychic can use telepathic bond as a spell-like ability once per day, using her psychic level as her caster level. She can't leave herself out of a bond created in this way. She can also expend any unused spell slot of 4th level or higher to cast telepathic bond. Casting the spell using a higher-level spell slot gives no benefit on its own, but the psychic can apply metamagic feats that would increase the spell level to the appropriate level. For instance, if the psychic knows Extend Spell, she can use a 5th-level spell slot to cast extended telepathic bond as a full-round action. When a psychic who knows telepathic bond gains this ability, she can learn a different 4th-level spell in place of telepathic bond, losing the old spell in exchange for the new one."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1159,
+    "record_key": "Psychic ~ Telepathic Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

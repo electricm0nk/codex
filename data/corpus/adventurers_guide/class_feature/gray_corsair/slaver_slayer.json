@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gray Corsair ~ Slaver Slayer",
+    "name": "Slaver Slayer",
+    "class": "Gray Corsair",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gray Corsair ~ Slaver Slayer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Gray Corsair Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlaverSlayerBonus|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "DESC",
+        "value": "A Gray Corsair gains a +2 bonus on weapon attack and damage rolls against targets he knows to be slavers or to own slaves. A Gray Corsair automatically confirms critical hits against such targets.|SlaverSlayerBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlaverSlayerBonus|2*(1+(GrayCorsairLVL>=6)+(GrayCorsairLVL>=9))"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 167,
+    "record_key": "Gray Corsair ~ Slaver Slayer"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

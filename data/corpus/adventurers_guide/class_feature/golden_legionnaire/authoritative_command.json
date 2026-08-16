@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Golden Legionnaire ~ Authoritative Command",
+    "name": "Authoritative Command",
+    "class": "Golden Legionnaire",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Golden Legionnaire ~ Authoritative Command"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Golden Legionnaire Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AuthoritativeCommandBonus|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action,|PREVARLT:GoldenLegionnaireLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action,|PREVARGTEQ:GoldenLegionnaireLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "a Golden Legionnaire can issue orders to %1 allies who are within 30 feet and can see, hear, and understand him. As long as at least one selected ally obeys the Golden Legionnaire's orders during that round, the Golden Legionnaire and each compliant ally gain a +%2 competence bonus on attack rolls, weapon damage rolls, and saving throws and to Armor Class for 1 round. Affected allies are not under any obligation to obey these commands, but do not gain the bonuses if they ignore the commands.|GoldenLegionnaireLVL/2|AuthoritativeCommandBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AuthoritativeCommandBonus|1+(GoldenLegionnaireLVL>=6)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 141,
+    "record_key": "Golden Legionnaire ~ Authoritative Command"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

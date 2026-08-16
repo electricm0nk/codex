@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Domain Power ~ Destructive Smite",
+    "name": "Destructive Smite",
+    "class": "Domain Power",
+    "description": "You gain the destructive smite power; the supernatural ability to make a single melee attack with a +%1 morale bonus on damage rolls. You must declare the destructive smite before making the attack. You can use this ability %2 times per day.|max(DomainDestructionLVL/2,1)|DestructiveSmiteTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Destructive Smite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialAttack.Supernatural.DomainPower.Destruction Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DestructiveSmiteTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the destructive smite power; the supernatural ability to make a single melee attack with a +%1 morale bonus on damage rolls. You must declare the destructive smite before making the attack. You can use this ability %2 times per day.|max(DomainDestructionLVL/2,1)|DestructiveSmiteTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DestructiveSmiteTimes|DomainDestructionTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|DestructiveSmiteTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DestructiveSmiteTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 703,
+    "record_key": "Domain Power ~ Destructive Smite"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

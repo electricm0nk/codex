@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Runeforger ~ Glowglyph",
+    "name": "Glowglyph",
+    "class": "Runeforger",
+    "description": "The inscribed item sheds light as a torch. As a standard action, the bearer can command the rune to erupt in a burst of light as a shield with the blinding special ability with a burst radius of 5 feet per glowglyph rune inscribed on the item. This expends all glowglyph runes on the item.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Runeforger ~ Glowglyph"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RuneforgerOption.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The inscribed item sheds light as a torch. As a standard action, the bearer can command the rune to erupt in a burst of light as a shield with the blinding special ability with a burst radius of 5 feet per glowglyph rune inscribed on the item. This expends all glowglyph runes on the item."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 78,
+    "record_key": "Runeforger ~ Glowglyph"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dominate Thrall ~ Nocticula",
+    "name": "Dominate Thrall",
+    "class": "Dominate Thrall",
+    "description": "1/day, you may cast dominate monster. You may only have 1 creature dominated at a time via this effect, but the effects are permanent until you dominate a new target, at which point the previous target is released from domination but is stunned for 1d4 rounds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dominate Thrall ~ Nocticula"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Dominate Monster,19+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, you may cast dominate monster. You may only have 1 creature dominated at a time via this effect, but the effects are permanent until you dominate a new target, at which point the previous target is released from domination but is stunned for 1d4 rounds."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 165,
+    "record_key": "Dominate Thrall ~ Nocticula"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

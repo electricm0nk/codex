@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brawler ~ Close Control",
+    "name": "Close Control",
+    "class": "Brawler",
+    "description": "At 2nd level, a brawler becomes skilled at forcefully moving his opponent around the battlefield. The brawler gains a +1 bonus on bull rush, drag, and reposition combat maneuver checks. The brawler also gains a +1 bonus to CMD when attacked with the bull rush, drag, and reposition maneuvers. These bonuses increase by +1 for every four levels after 2nd (to a maximum of +5 at 18th level). This ability replaces armor training 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler ~ Close Control"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CloseControlBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a brawler becomes skilled at forcefully moving his opponent around the battlefield. The brawler gains a +1 bonus on bull rush, drag, and reposition combat maneuver checks. The brawler also gains a +1 bonus to CMD when attacked with the bull rush, drag, and reposition maneuvers. These bonuses increase by +1 for every four levels after 2nd (to a maximum of +5 at 18th level). This ability replaces armor training 1."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CloseControlBonus|floor(min(5,max(0,(classlevel(\"Fighter\")-2)/4)+1))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_BullRush,CMD_BullRush|CloseControlBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Drag,CMD_Drag|CloseControlBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Reposition,CMD_Reposition|CloseControlBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 695,
+    "record_key": "Brawler ~ Close Control"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

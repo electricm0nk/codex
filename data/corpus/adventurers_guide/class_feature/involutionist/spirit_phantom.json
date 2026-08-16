@@ -1,0 +1,144 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Involutionist ~ Spirit Phantom",
+    "name": "Spirit Phantom",
+    "class": "Involutionist",
+    "description": "An involutionist's phantom is manifested from her own psyche and invested into the spirit-stuff of the world around her. Rather than an emotional focus, the involutionist selects a spirit from those available to the shaman (Advanced Class Guide p35). A spirit phantom always has good Fortitude and Reflex saves, and it gains a number of ranks equal to the phantom's Hit Dice in two skills depending on the spirit it represents. When fully manifested, the involutionist's spirit phantom gains the special ability normally applied to a shaman's spirit animal. The spirit phantom also gains a single hex from the list of those provided by that spirit. At 7th, 12th, and 17th levels, the spirit phantom gains one additional hex from this list. This ability alters phantom and replaces its emotional focus abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Involutionist ~ Spirit Phantom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Features.InvolutionistClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.167"
+      },
+      {
+        "key": "DESC",
+        "value": "An involutionist's phantom is manifested from her own psyche and invested into the spirit-stuff of the world around her. Rather than an emotional focus, the involutionist selects a spirit from those available to the shaman (Advanced Class Guide p35). A spirit phantom always has good Fortitude and Reflex saves, and it gains a number of ranks equal to the phantom's Hit Dice in two skills depending on the spirit it represents. When fully manifested, the involutionist's spirit phantom gains the special ability normally applied to a shaman's spirit animal. The spirit phantom also gains a single hex from the list of those provided by that spirit. At 7th, 12th, and 17th levels, the spirit phantom gains one additional hex from this list. This ability alters phantom and replaces its emotional focus abilities."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Spirit Phantom Focus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhantomGoodSave_Fortitude|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhantomGoodSave_Reflex|1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanSpiritLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanSpiritLVL|PhantomMasterLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarIsSpiritAnimal|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarIsSpiritAnimal|1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpiritAnimalLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiritAnimalLVL|PhantomMasterLVL*FamiliarIsSpiritAnimal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanSpiritGreater|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanSpiritGreater|1|PRECLASS:1,Spiritualist=8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanSpiritTrue|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanSpiritTrue|1|PRECLASS:1,Spiritualist=12"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman Manifestation|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman Manifestation|1|PRECLASS:1,Spiritualist=20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexLVL|SpiritualistLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexDC|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexDC|10+(SpiritualistLVL/2)+WIS"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexAbilityLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexAbilityLVL|SpiritualistLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvolutionistHexChoices|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvolutionistHexChoices|1+(SpiritualistLVL>=7)+(SpiritualistLVL>=12)+(SpiritualistLVL>=17)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Hex|ShamanHexChoices"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1055,
+    "record_key": "Involutionist ~ Spirit Phantom"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

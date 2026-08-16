@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Separatist ~ Forbidden Rites",
+    "name": "Forbidden Rites",
+    "class": "Separatist",
+    "description": "You select one domain from your deity's domain list, and a second domain that is not on your deity's domain list. This second domain cannot be an alignment domain that doesn't match your or your deity's alignment. For example, a lawful good separatist cleric of a neutral good deity cannot choose the Chaos or Evil domain with this ability, but can select the Lawful domain even though her deity isn't lawful. Granted powers from your second domain function as if your level, Wisdom, and Charisma were 2 lower than normal (minimum level 1) in terms of effect, DC, and uses per day. This also means you don't gain the domain's higher-level ability until 2 levels later than normal. If the second domain grants additional class skills, you gain these as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Separatist ~ Forbidden Rites"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SeparistDomainLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You select one domain from your deity's domain list, and a second domain that is not on your deity's domain list. This second domain cannot be an alignment domain that doesn't match your or your deity's alignment. For example, a lawful good separatist cleric of a neutral good deity cannot choose the Chaos or Evil domain with this ability, but can select the Lawful domain even though her deity isn't lawful. Granted powers from your second domain function as if your level, Wisdom, and Charisma were 2 lower than normal (minimum level 1) in terms of effect, DC, and uses per day. This also means you don't gain the domain's higher-level ability until 2 levels later than normal. If the second domain grants additional class skills, you gain these as normal."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Forbidden Rites Domain|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericDomainCount|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SeparistDomainLVL|-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1024,
+    "record_key": "Separatist ~ Forbidden Rites"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

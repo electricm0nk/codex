@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Samurai Order ~ Order of the Warrior",
+    "name": "Order of the Warrior",
+    "class": "Samurai Order",
+    "description": "Most samurai swear themselves to the code of the warrior, which emphasizes duty, honor, loyalty, and obedience. This code extends not only to the samurai's lord and master, but also to his comrades and family. Samurai who follow the order of the warrior are among the most trusted and feared warriors in the land. An order of the warrior samurai adds Knowledge (history) and Knowledge (nobility) to his list of class skills, and can make Knowledge (nobility) checks untrained. If he has ranks in the skill, he receives a +%1 bonus on the check as long as the check involves the nobles or politics of his land.|max(SamuraiLVL/2,1)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samurai Order ~ Order of the Warrior"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SamuraiOrder.CavalierOrder"
+      },
+      {
+        "key": "DESC",
+        "value": "Most samurai swear themselves to the code of the warrior, which emphasizes duty, honor, loyalty, and obedience. This code extends not only to the samurai's lord and master, but also to his comrades and family. Samurai who follow the order of the warrior are among the most trusted and feared warriors in the land. An order of the warrior samurai adds Knowledge (history) and Knowledge (nobility) to his list of class skills, and can make Knowledge (nobility) checks untrained. If he has ranks in the skill, he receives a +%1 bonus on the check as long as the check involves the nobles or politics of his land.|max(SamuraiLVL/2,1)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Warrior ~ Edicts|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Warrior ~ Honor in All Things|PREVARGTEQ:OrderAbilityLVL,2|PREVAREQ:OrderAbility2,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Warrior ~ Way of the Samurai|PREVARGTEQ:OrderAbilityLVL,8|PREVAREQ:OrderAbility8,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Warrior ~ Strike True|PREVARGTEQ:OrderAbilityLVL,15|PREVAREQ:OrderAbility15,0"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (History)|Knowledge (Nobility)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 216,
+    "record_key": "Samurai Order ~ Order of the Warrior"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Divine Commander ~ Resolute Mount",
+    "name": "Blessed Mount (Resolute)",
+    "class": "Divine Commander",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Commander ~ Resolute Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine Commander Class Feature.Warpriest Class Feature.Divine Commander Blessed Mount Template"
+      },
+      {
+        "key": "PREDEITYALIGN",
+        "value": "LG,LN,LE"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivineCommanderResoluteMount|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivineCommanderResoluteMount|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3987,
+    "record_key": "Divine Commander ~ Resolute Mount"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

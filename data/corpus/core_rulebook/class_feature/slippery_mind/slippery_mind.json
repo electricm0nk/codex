@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Slippery Mind",
+    "name": "Slippery Mind",
+    "class": null,
+    "description": "This ability represents your ability to wriggle free from magical effects that would otherwise control or compel you. If you are affected by an enchantment spell or effect and fails your saving throw, you can attempt it again 1 round later at the same DC.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slippery Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlipperymindTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability represents your ability to wriggle free from magical effects that would otherwise control or compel you. If you are affected by an enchantment spell or effect and fails your saving throw, you can attempt it again 1 round later at the same DC."
+      },
+      {
+        "key": "DESC",
+        "value": " You get only this one extra chance to succeed on your saving throw.|PREVAREQ:SlipperymindTimes,1"
+      },
+      {
+        "key": "DESC",
+        "value": " You get %1 extra chances to succeed on your saving throw.|SlipperymindTimes|PREVARGTEQ:SlipperymindTimes,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2870,
+    "record_key": "Slippery Mind"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

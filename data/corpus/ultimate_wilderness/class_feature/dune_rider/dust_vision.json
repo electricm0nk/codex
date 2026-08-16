@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dune Rider ~ Dust Vision",
+    "name": "Dust Vision",
+    "class": "Dune Rider",
+    "description": "The dune rider is at home in the desert. He exists comfortably in hot conditions up to 140º Fahrenheit without having to attempt Fortitude saves. His equipment is likewise protected. He takes no penalties on Perception checks from blowing sand, dust, or heat shimmers, nor do these effects grant concealment to the dune rider's enemies within 30 feet. Effects that would grant total concealment work normally.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dune Rider ~ Dust Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Features.DuneRiderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The dune rider is at home in the desert. He exists comfortably in hot conditions up to 140º Fahrenheit without having to attempt Fortitude saves. His equipment is likewise protected. He takes no penalties on Perception checks from blowing sand, dust, or heat shimmers, nor do these effects grant concealment to the dune rider's enemies within 30 feet. Effects that would grant total concealment work normally."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1159,
+    "record_key": "Dune Rider ~ Dust Vision"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

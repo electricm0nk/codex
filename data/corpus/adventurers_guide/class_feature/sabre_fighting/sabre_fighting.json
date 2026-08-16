@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sabre Fighting",
+    "name": "Sabre Fighting",
+    "class": null,
+    "description": "You gain Weapon Specialization (Sawtooth Sabre) as a bonus feat and treats sawtooth sabres as a light weapon for all purposes, including being able to use a sawtooth sabre with Weapon Finesse..|PREVARLT:SabreFightingLvl,5",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SabreFightingLvl|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Weapon Specialization (Sawtooth Sabre) as a bonus feat and treats sawtooth sabres as a light weapon for all purposes, including being able to use a sawtooth sabre with Weapon Finesse..|PREVARLT:SabreFightingLvl,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Weapon Specialization (Sawtooth Sabre)"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Sawtooth Sabre|((max(STR,DEX)-STR)+SHIELDACCHECK)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 421,
+    "record_key": "Sabre Fighting"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

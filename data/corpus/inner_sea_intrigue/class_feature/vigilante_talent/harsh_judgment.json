@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Harsh Judgment",
+    "name": "Harsh Judgment",
+    "class": "Vigilante Talent",
+    "description": "A vigilante with this talent can pronounce judgment upon his foes as a swift action as per the inquisitor class feature (Advanced Player's Guide 38). He can choose from among the following inquisitor judgments: destruction, piercing, purity, and smiting. Once activated, this ability lasts until the combat ends, at which point all of the bonuses immediately end. When the vigilante uses this ability, he must select one type of judgment to make. As a swift action, he can change this judgment to another type. For the purpose of determining the bonuses provided by this ability, the vigilante's level stacks with levels in any other classes that grant judgment or harsh judgment. The vigilante can use this ability %1/day. Only a vigilante with the zealot archetype (Ultimate Intrigue 62) can select this talent.|min(7,(VigilanteTalentLVL+2)/3)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Harsh Judgment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Harsh Judgment"
+      },
+      {
+        "key": "DESC",
+        "value": "A vigilante with this talent can pronounce judgment upon his foes as a swift action as per the inquisitor class feature (Advanced Player's Guide 38). He can choose from among the following inquisitor judgments: destruction, piercing, purity, and smiting. Once activated, this ability lasts until the combat ends, at which point all of the bonuses immediately end. When the vigilante uses this ability, he must select one type of judgment to make. As a swift action, he can change this judgment to another type. For the purpose of determining the bonuses provided by this ability, the vigilante's level stacks with levels in any other classes that grant judgment or harsh judgment. The vigilante can use this ability %1/day. Only a vigilante with the zealot archetype (Ultimate Intrigue 62) can select this talent.|min(7,(VigilanteTalentLVL+2)/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 321,
+    "record_key": "Vigilante Talent ~ Harsh Judgment"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

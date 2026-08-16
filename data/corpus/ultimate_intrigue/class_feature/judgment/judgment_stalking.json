@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Judgment ~ Stalking",
+    "name": "Judgment / Stalking",
+    "class": "Judgment",
+    "description": "The umbral stalker gains a +%1 sacred bonus on attack rolls against creatures that are unaware of her presence (typically because she is invisible or using Stealth).|(1+InquisitorLVL/5)*2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Judgment ~ Stalking"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.InquisitorJudgmentNeither.SpecialAttack"
+      },
+      {
+        "key": "DESC",
+        "value": "The umbral stalker gains a +%1 sacred bonus on attack rolls against creatures that are unaware of her presence (typically because she is invisible or using Stealth).|(1+InquisitorLVL/5)*2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 484,
+    "record_key": "Judgment ~ Stalking"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

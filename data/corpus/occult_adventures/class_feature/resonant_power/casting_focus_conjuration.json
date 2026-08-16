@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Resonant Power ~ Casting Focus",
+    "name": "Casting Focus [Conjuration]",
+    "class": "Resonant Power",
+    "description": "The implement empowers the bearer's ties to the worlds beyond, allowing his spells to maintain their power for a longer period of time. The bearer can add the implement as an additional focus component to any conjuration spell he casts that has a duration measured in rounds per level. If he does so, he adds 1 to his caster level for every 2 points of mental focus stored in the implement (+%1), to a maximum +%2 bonus. This increase applies only when determining the duration of the spell. Apply this increase after other effects that adjust a spell's duration, such as Extend Spell.|OccultistCastingFocus|OccultistLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Resonant Power ~ Casting Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Resonant Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistCastingFocus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The implement empowers the bearer's ties to the worlds beyond, allowing his spells to maintain their power for a longer period of time. The bearer can add the implement as an additional focus component to any conjuration spell he casts that has a duration measured in rounds per level. If he does so, he adds 1 to his caster level for every 2 points of mental focus stored in the implement (+%1), to a maximum +%2 bonus. This increase applies only when determining the duration of the spell. Apply this increase after other effects that adjust a spell's duration, such as Extend Spell.|OccultistCastingFocus|OccultistLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistCastingFocus|min(OccultistConjurationFocus/2,OccultistLVL)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1030,
+    "record_key": "Resonant Power ~ Casting Focus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Starsoul Bloodline ~ Starborn",
+    "name": "Starborn",
+    "class": "Starsoul Bloodline",
+    "description": "You gain immunity to cold and blindness, and you can see perfectly in natural or magical darkness. In addition, you gain fast healing 1 when you are outdoors at night.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Starsoul Bloodline ~ Starborn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Starsoul Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Starsoul"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Starsoul_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Starsoul_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain immunity to cold and blindness, and you can see perfectly in natural or magical darkness. In addition, you gain fast healing 1 when you are outdoors at night."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Cold|Immunity to Blindness|See in Darkness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|StarsoulBloodlinePowers"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|FastHealingRate|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3230,
+    "record_key": "Starsoul Bloodline ~ Starborn"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

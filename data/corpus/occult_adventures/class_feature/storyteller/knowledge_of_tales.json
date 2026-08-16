@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Storyteller ~ Knowledge of Tales",
+    "name": "Knowledge of Tales",
+    "class": "Storyteller",
+    "description": "A storyteller gains a +1 bonus on all Knowledge skill checks with Knowledge skills in which he's trained.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Storyteller ~ Knowledge of Tales"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KnowledgeOfTalesBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A storyteller gains a +1 bonus on all Knowledge skill checks with Knowledge skills in which he's trained."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KnowledgeOfTalesBonus|(1+MediumLVL/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Arcana)|KnowledgeOfTalesBonus|PRESKILL:1,Knowledge (Arcana)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Dungeoneering)|KnowledgeOfTalesBonus|PRESKILL:1,Knowledge (Dungeoneering)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Engineering)|KnowledgeOfTalesBonus|PRESKILL:1,Knowledge (Engineering)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Geography)|KnowledgeOfTalesBonus|PRESKILL:1,Knowledge (Geography)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (History)|KnowledgeOfTalesBonus|PRESKILL:1,Knowledge (History)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Local)|KnowledgeOfTalesBonus|PRESKILL:1,Knowledge (Local)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Nature)|KnowledgeOfTalesBonus|PRESKILL:1,Knowledge (Nature)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Nobility)|KnowledgeOfTalesBonus|PRESKILL:1,Knowledge (Nobility)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Planes)|KnowledgeOfTalesBonus|PRESKILL:1,Knowledge (Planes)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Religion)|KnowledgeOfTalesBonus|PRESKILL:1,Knowledge (Religion)=1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1443,
+    "record_key": "Storyteller ~ Knowledge of Tales"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

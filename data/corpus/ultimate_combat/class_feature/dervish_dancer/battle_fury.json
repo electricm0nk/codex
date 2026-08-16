@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dervish Dancer ~ Battle Fury",
+    "name": "Battle Fury",
+    "class": "Dervish Dancer",
+    "description": "At 20th level, the dervish dancer can unleash a whirlwind of blows while performing a battle dance. As a full-round action, he can take a single move action and unleash a single attack at his highest bonus against each target within his reach during any point of his move, up to a maximum number of attacks equal to the dervish dancer's character level. This movement provokes attacks of opportunity as normal, and replaces deadly performance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dervish Dancer ~ Battle Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, the dervish dancer can unleash a whirlwind of blows while performing a battle dance. As a full-round action, he can take a single move action and unleash a single attack at his highest bonus against each target within his reach during any point of his move, up to a maximum number of attacks equal to the dervish dancer's character level. This movement provokes attacks of opportunity as normal, and replaces deadly performance."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 428,
+    "record_key": "Dervish Dancer ~ Battle Fury"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

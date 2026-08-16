@@ -1,0 +1,147 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Living Grimoire",
+    "name": "Living Grimoire",
+    "class": "Inquisitor Archetype",
+    "description": "The living grimoire literally wields the sacred word of his deity, using his holy tome to smite the foes of his god with divine might. Unlike most inquisitors, a living grimoire focuses on careful study of divine scripture, valuing knowledge over intuition.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Living Grimoire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "DESC",
+        "value": "The living grimoire literally wields the sacred word of his deity, using his holy tome to smite the foes of his god with divine might. Unlike most inquisitors, a living grimoire focuses on careful study of divine scripture, valuing knowledge over intuition."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Living Grimoire],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_MonsterLore=True,Inquisitor_Archetype_Spells=True,Inquisitor_Archetype_CunningInitiative=True,Inquisitor_Archetype_Judgment=True,Inquisitor_Archetype_Bane=True,Inquisitor_Archetype_SecondJudgment=True,Inquisitor_Archetype_GreaterBane=True,Inquisitor_Archetype_ThirdJudgment=True,Inquisitor_Archetype_TrueJudgment=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Living Grimoire ~ Holy Book|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Living Grimoire ~ Spells|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Living Grimoire ~ Sacred Word|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Living Grimoire ~ Blessed Script|PRECLASS:1,Inquisitor=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Living Grimoire ~ Word of God|PRECLASS:1,Inquisitor=20"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_CunningInitiative|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Judgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Bane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SecondJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_GreaterBane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_ThirdJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_TrueJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_CunningInitiative|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Judgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Bane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SecondJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_GreaterBane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_ThirdJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_TrueJudgment|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 124,
+    "record_key": "Inquisitor Archetype ~ Living Grimoire"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

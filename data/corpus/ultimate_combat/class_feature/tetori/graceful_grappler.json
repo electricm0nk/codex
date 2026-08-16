@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tetori ~ Graceful Grappler",
+    "name": "Graceful Grappler",
+    "class": "Tetori",
+    "description": "A tetori uses his monk level in place of his base attack bonus to determine CMB and CMD for grappling. At 4th level, he suffers no penalties on attack rolls, can make attacks of opportunity while grappling, and retains his Dexterity bonus to AC when pinning an opponent or when grappled. At 8th level, a tetori gains the grab special attack when using unarmed strikes (Pathfinder RPG Bestiary 301), and can use this ability against creatures his own size or smaller by spending 1 point from his ki pool, or against larger creatures by spending 2 points from his ki pool. At 15th level, a tetori gains the constrict special attack (Bestiary 298), inflicting his unarmed strike damage on any successful grapple check. This ability replaces flurry of blows.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tetori ~ Graceful Grappler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A tetori uses his monk level in place of his base attack bonus to determine CMB and CMD for grappling. At 4th level, he suffers no penalties on attack rolls, can make attacks of opportunity while grappling, and retains his Dexterity bonus to AC when pinning an opponent or when grappled. At 8th level, a tetori gains the grab special attack when using unarmed strikes (Pathfinder RPG Bestiary 301), and can use this ability against creatures his own size or smaller by spending 1 point from his ki pool, or against larger creatures by spending 2 points from his ki pool. At 15th level, a tetori gains the constrict special attack (Bestiary 298), inflicting his unarmed strike damage on any successful grapple check. This ability replaces flurry of blows."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1399,
+    "record_key": "Tetori ~ Graceful Grappler"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

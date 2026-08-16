@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Druid Archetype ~ Green Faith Initiate",
+    "name": "Green Faith Initiate",
+    "class": "Druid Archetype",
+    "description": "Druids who are initiated into the magic of nature as strict students of the Green Faith's traditions sometimes demonstrate abilities unique to their organization.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Green Faith Initiate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Green Faith Initiate],[!PREFACT:1,ABILITIES,Druid_Archetype_TracklessStep=True,Druid_Archetype_WildShapeUses6=True,Druid_Archetype_VenomImmunity=True,Druid_Archetype_WildShapeUses10=True,Druid_Archetype_AThousandFaces=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Druids who are initiated into the magic of nature as strict students of the Green Faith's traditions sometimes demonstrate abilities unique to their organization."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Faith Initiate ~ Mediator's Ear|PRECLASS:1,Druid=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Faith Initiate ~ Zephyr Message|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Faith Initiate ~ Path to Refuge|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Faith Initiate ~ Secrets across Lifetimes|PRECLASS:1,Druid=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Faith Initiate ~ A Thousand Voices|PRECLASS:1,Druid=13"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_TracklessStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildShapeUses6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_VenomImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildShapeUses10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_AThousandFaces|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_TracklessStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildShapeUses6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_VenomImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildShapeUses10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_AThousandFaces|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 496,
+    "record_key": "Druid Archetype ~ Green Faith Initiate"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

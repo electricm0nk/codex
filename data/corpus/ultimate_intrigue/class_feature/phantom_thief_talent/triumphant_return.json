@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Phantom Thief Talent ~ Triumphant Return",
+    "name": "Triumphant Return",
+    "class": "Phantom Thief Talent",
+    "description": "The phantom thief's tales are never truly forgotten. This makes it easier to establish his renown in a place he has established it before. In any settlement where the phantom thief previously gained renown, it takes only 3 days, rather than 1 week, to gain renown again.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantom Thief Talent ~ Triumphant Return"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,Phantom Thief Talent ~ Renown,Phantom Thief ~ Broad Education"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,3"
+      },
+      {
+        "key": "DESC",
+        "value": "The phantom thief's tales are never truly forgotten. This makes it easier to establish his renown in a place he has established it before. In any settlement where the phantom thief previously gained renown, it takes only 3 days, rather than 1 week, to gain renown again."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 880,
+    "record_key": "Phantom Thief Talent ~ Triumphant Return"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Plague Bomb",
+    "name": "Plague Bomb*",
+    "class": "Discovery",
+    "description": "The effects of the smoke created by your bomb duplicates the effect of Contagion instead of Fog Cloud, filling an area equal to twice the bomb's splash area for %1 rounds.|PlagueBombDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Plague Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.AlchemistDiscovery.Supernatural.AlchemistBombModifier"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Discovery ~ Smoke Bomb"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PlagueBombDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The effects of the smoke created by your bomb duplicates the effect of Contagion instead of Fog Cloud, filling an area equal to twice the bomb's splash area for %1 rounds.|PlagueBombDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlagueBombDuration|AlchemistDiscoveryLVL+charbonusto(\"PCLEVEL\",\"Alchemist\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 157,
+    "record_key": "Discovery ~ Plague Bomb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

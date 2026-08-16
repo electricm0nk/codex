@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Honor Guard ~ Intercept",
+    "name": "Intercept",
+    "class": "Honor Guard",
+    "description": "At 3rd level, an honor guard learns to better disrupt the attacks of his enemies. He gains Bodyguard (Advanced Player's Guide 151) as a bonus feat, even if he does not meet the prerequisite. In addition, whenever the honor guard uses the aid another action to increase an ally's Armor Class, the bonus to Armor Class granted by the aid another action increases by +1. This ability replaces cavalier's charge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Honor Guard ~ Intercept"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, an honor guard learns to better disrupt the attacks of his enemies. He gains Bodyguard (Advanced Player's Guide 151) as a bonus feat, even if he does not meet the prerequisite. In addition, whenever the honor guard uses the aid another action to increase an ally's Armor Class, the bonus to Armor Class granted by the aid another action increases by +1. This ability replaces cavalier's charge."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Bodyguard"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 498,
+    "record_key": "Honor Guard ~ Intercept"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

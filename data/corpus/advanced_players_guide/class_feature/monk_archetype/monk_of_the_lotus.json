@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk Archetype ~ Monk of the Lotus",
+    "name": "Monk of the Lotus",
+    "class": "Monk Archetype",
+    "description": "Monks are warriors who hone their bodies into deadly weapons, but some monks eschew violence in favor of a more peaceful philosophy. While a monk of the lotus realizes that combat cannot always be avoided-and is more than capable in a fight-he understands that all creatures are connected, and to harm another is to harm the self. Instead, he strives to find peaceful resolutions to conflicts, and in doing so, hopes to achieve inner peace. A monk of the lotus has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Monk of the Lotus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkStunningFist.MonkAbundantStep.MonkQuiveringPalm.MonkTongueOfTheSunAndMoon"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Monk of the Lotus],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStunningFist,TYPE.MonkAbundantStep,TYPE.MonkQuiveringPalm,TYPE.MonkTongueOfTheSunAndMoon]"
+      },
+      {
+        "key": "DESC",
+        "value": "Monks are warriors who hone their bodies into deadly weapons, but some monks eschew violence in favor of a more peaceful philosophy. While a monk of the lotus realizes that combat cannot always be avoided-and is more than capable in a fight-he understands that all creatures are connected, and to harm another is to harm the self. Instead, he strives to find peaceful resolutions to conflicts, and in doing so, hopes to achieve inner peace. A monk of the lotus has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Lotus ~ Touch of Serenity|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Lotus ~ Touch of Surrender|PRECLASS:1,Monk=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Lotus ~ Touch of Peace|PRECLASS:1,Monk=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Lotus ~ Learned Master|PRECLASS:1,Monk=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.114"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2296,
+    "record_key": "Monk Archetype ~ Monk of the Lotus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

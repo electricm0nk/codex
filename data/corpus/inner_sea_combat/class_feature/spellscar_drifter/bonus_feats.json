@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spellscar Drifter ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Spellscar Drifter",
+    "description": "At 6th level, and at every 6 levels thereafter, a Spellscar drifter gains a bonus feat in addition to those gained from normal advancement. These bonus feats must be either combat or grit feats, and the Spellscar drifter must meet the prerequisites as normal. This replaces the cavalier's normal bonus feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellscar Drifter ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, and at every 6 levels thereafter, a Spellscar drifter gains a bonus feat in addition to those gained from normal advancement. These bonus feats must be either combat or grit feats, and the Spellscar drifter must meet the prerequisites as normal. This replaces the cavalier's normal bonus feats."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 216,
+    "record_key": "Spellscar Drifter ~ Bonus Feats"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

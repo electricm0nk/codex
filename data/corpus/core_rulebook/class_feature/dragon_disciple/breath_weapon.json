@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dragon Disciple ~ Breath Weapon",
+    "name": "Breath Weapon",
+    "class": "Dragon Disciple",
+    "description": "At 3rd level, a dragon disciple gains the breath weapon bloodline power, even if his level does not yet grant that power. Once his level is high enough to grant this ability through the bloodline, the dragon disciple gains an additional use of his breath weapon each day. The type and shape of the breath weapon depends on the type of dragon selected by the dragon disciple, as detailed under the Draconic sorcerer bloodline description (see page 75).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Disciple ~ Breath Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.ClassFeatures.Dragon Disciple Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a dragon disciple gains the breath weapon bloodline power, even if his level does not yet grant that power. Once his level is high enough to grant this ability through the bloodline, the dragon disciple gains an additional use of his breath weapon each day. The type and shape of the breath weapon depends on the type of dragon selected by the dragon disciple, as detailed under the Draconic sorcerer bloodline description (see page 75)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Draconic Bloodline ~ Breath Weapon|PREABILITY:1,CATEGORY=Blood of Dragons Bloodline,TYPE.SorcererBloodlineChoice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DraconicBreathWeapon_Times,BreathWeaponTimes|1|PREVARGTEQ:DragonDiscipleLVL,3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.382"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2969,
+    "record_key": "Dragon Disciple ~ Breath Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

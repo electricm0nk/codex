@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Profiler ~ Pack Psychology",
+    "name": "Pack Psychology",
+    "class": "Profiler",
+    "description": "A profiler can understand the way that groups act together, allowing him to exploit the vulnerabilities in their attacks. A profiler can't be flanked by creatures with an Intelligence score and he gains a +1 bonus to his AC against such creatures when they would otherwise flank him, as he plays their movements against each other.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Profiler ~ Pack Psychology"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.ProfilerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "DESC",
+        "value": "A profiler can understand the way that groups act together, allowing him to exploit the vulnerabilities in their attacks. A profiler can't be flanked by creatures with an Intelligence score and he gains a +1 bonus to his AC against such creatures when they would otherwise flank him, as he plays their movements against each other."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 171,
+    "record_key": "Profiler ~ Pack Psychology"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

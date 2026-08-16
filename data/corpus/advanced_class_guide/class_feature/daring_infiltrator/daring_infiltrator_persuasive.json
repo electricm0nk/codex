@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Daring Infiltrator ~ Persuasive Bonus Feat",
+    "name": "Daring Infiltrator Persuasive",
+    "class": "Daring Infiltrator",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Daring Infiltrator ~ Persuasive Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Daring Infiltrator Class Feature.Daring Infiltrator Bonus Feat"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Persuasive"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3864,
+    "record_key": "Daring Infiltrator ~ Persuasive Bonus Feat"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

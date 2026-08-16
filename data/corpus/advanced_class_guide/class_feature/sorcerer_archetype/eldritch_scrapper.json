@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sorcerer Archetype ~ Eldritch Scrapper",
+    "name": "Eldritch Scrapper",
+    "class": "Sorcerer Archetype",
+    "description": "An eldritch scrapper is usually spoiling for a fight, looking to prove that she's just as tough as a martial character. A veteran of many brawls against opponents who were suspicious of her manifesting magic, an eldritch scrapper has a thick skin and a fighting style that blends weapons with spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Archetype ~ Eldritch Scrapper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Sorcerer Archetype.SorcererBloodlinePowerLvl1.SorcererBloodlinePowerLvl9.SorcererBloodlinePowerLvl15"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Sorcerer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Sorcerer Archetype ~ Eldritch Scrapper],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SorcererBloodlinePowerLvl1.SorcererBloodlinePowerLvl9.SorcererBloodlinePowerLvl15]"
+      },
+      {
+        "key": "DESC",
+        "value": "An eldritch scrapper is usually spoiling for a fight, looking to prove that she's just as tough as a martial character. A veteran of many brawls against opponents who were suspicious of her manifesting magic, an eldritch scrapper has a thick skin and a fighting style that blends weapons with spells."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Sorcerer Class Feature|AUTOMATIC|Eldritch Scrapper ~ Martial Flexibility|PRECLASS:1,Sorcerer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Sorcerer Class Feature|AUTOMATIC|Eldritch Scrapper ~ Bloodline Weapons|PRECLASS:1,Sorcerer=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Sorcerer"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3794,
+    "record_key": "Sorcerer Archetype ~ Eldritch Scrapper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

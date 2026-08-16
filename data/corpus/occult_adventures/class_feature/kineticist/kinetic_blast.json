@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kineticist ~ Kinetic Blast",
+    "name": "Kinetic Blast",
+    "class": "Kineticist",
+    "description": "At 1st level, a kineticist gains a kinetic blast wild talent of her choice. This kinetic blast must be a simple blast that matches her element. As a standard action, the kineticist can unleash a kinetic blast at a single target up to a range of 30 feet. She must have at least one hand free to aim the blast (or one prehensile appendage, if she doesn't have hands). All damage from a kinetic blast is treated as magic for the purpose of bypassing damage reduction. Kinetic blasts count as a type of weapon for the purpose of feats such as Weapon Focus. The kineticist is never considered to be wielding or gripping the kinetic blast (regardless of effects from form infusions; see Infusion on page 12), and she can't use Vital Strike feats with kinetic blasts. Even the weakest kinetic blast involves a sizable mass of elemental matter or energy, so kinetic blasts always deal full damage to swarms of any size (though only area blasts deal extra damage to swarms). A readied kinetic blast can be used to counterspell any spell of equal or lower level that shares its descriptor. A kinetic blast that deals energy damage of any type (including force) has the corresponding descriptor. The various kinetic blasts, as well as additional rules for simple blasts, are described on pages 15-16.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist ~ Kinetic Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KB_Tier|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a kineticist gains a kinetic blast wild talent of her choice. This kinetic blast must be a simple blast that matches her element. As a standard action, the kineticist can unleash a kinetic blast at a single target up to a range of 30 feet. She must have at least one hand free to aim the blast (or one prehensile appendage, if she doesn't have hands). All damage from a kinetic blast is treated as magic for the purpose of bypassing damage reduction. Kinetic blasts count as a type of weapon for the purpose of feats such as Weapon Focus. The kineticist is never considered to be wielding or gripping the kinetic blast (regardless of effects from form infusions; see Infusion on page 12), and she can't use Vital Strike feats with kinetic blasts. Even the weakest kinetic blast involves a sizable mass of elemental matter or energy, so kinetic blasts always deal full damage to swarms of any size (though only area blasts deal extra damage to swarms). A readied kinetic blast can be used to counterspell any spell of equal or lower level that shares its descriptor. A kinetic blast that deals energy damage of any type (including force) has the corresponding descriptor. The various kinetic blasts, as well as additional rules for simple blasts, are described on pages 15-16."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist Blast ~ Simple Blasts"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|KB Selector"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 543,
+    "record_key": "Kineticist ~ Kinetic Blast"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Divine Scion ~ Divine Wrath",
+    "name": "Divine Wrath",
+    "class": "Divine Scion",
+    "description": "A divine scion's damaging spells deal +%1 point of damage per die against creatures with an alignment subtype that matches the divine scion's opposition alignment.|DivineWrathBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Scion ~ Divine Wrath"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DivineScionClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivineWrathBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A divine scion's damaging spells deal +%1 point of damage per die against creatures with an alignment subtype that matches the divine scion's opposition alignment.|DivineWrathBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivineWrathBonus|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 31,
+    "record_key": "Divine Scion ~ Divine Wrath"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

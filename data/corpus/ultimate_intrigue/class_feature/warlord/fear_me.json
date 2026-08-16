@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warlord ~ Fear Me",
+    "name": "Fear Me",
+    "class": "Warlord",
+    "description": "The warlord can remind his allies that failing him is far more frightening than the opposition. This raging song works like distraction, except that it applies to saving throws against fear effects instead of patterns and figments, and the warlord attempts an Intimidate check with a -10 penalty instead of a Perform check. Additionally, the warlord's allies can use the warlord's Intimidate check result (with the -10 penalty) as the DC for attempts to demoralize them using Intimidate.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warlord ~ Fear Me"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.WarlordClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The warlord can remind his allies that failing him is far more frightening than the opposition. This raging song works like distraction, except that it applies to saving throws against fear effects instead of patterns and figments, and the warlord attempts an Intimidate check with a -10 penalty instead of a Perform check. Additionally, the warlord's allies can use the warlord's Intimidate check result (with the -10 penalty) as the DC for attempts to demoralize them using Intimidate."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 922,
+    "record_key": "Warlord ~ Fear Me"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

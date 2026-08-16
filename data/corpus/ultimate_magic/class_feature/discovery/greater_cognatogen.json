@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Greater Cognatogen",
+    "name": "Greater Cognatogen",
+    "class": "Discovery",
+    "description": "Your mutagen now grants a +4 natural armor bonus, a +6 alchemical bonus to one mental ability score (Intelligence, Wisdom, or Charisma), and a +4 alchemical bonus to a second mental ability score. You take a -2 penalty on both associated physical ability scores as long as the mutagen persists, and take 2 points of ability damage to both associated physical ability scores when the cognatogen ends.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Greater Cognatogen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery.Supernatural.AlchemistMutagenMod"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Discovery ~ Cognatogen,Cognatogen ~ Alchemist"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "Your mutagen now grants a +4 natural armor bonus, a +6 alchemical bonus to one mental ability score (Intelligence, Wisdom, or Charisma), and a +4 alchemical bonus to a second mental ability score. You take a -2 penalty on both associated physical ability scores as long as the mutagen persists, and take 2 points of ability damage to both associated physical ability scores when the cognatogen ends."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 151,
+    "record_key": "Discovery ~ Greater Cognatogen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

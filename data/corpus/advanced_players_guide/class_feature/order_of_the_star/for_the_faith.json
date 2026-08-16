@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Star ~ For the Faith",
+    "name": "For the Faith",
+    "class": "Order of the Star",
+    "description": "At 8th level, the cavalier can call upon his faith to bolster himself in combat. As a free action, the cavalier can call out the name of his deity, granting him a morale bonus on attack rolls equal to his Charisma modifier for 1 round. In addition, any allies within 30 feet that share his faith also receive half this bonus (minimum +1). The cavalier can use this ability once per day, plus one additional time per day at 12th level and every four levels thereafter.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Star ~ For the Faith"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, the cavalier can call upon his faith to bolster himself in combat. As a free action, the cavalier can call out the name of his deity, granting him a morale bonus on attack rolls equal to his Charisma modifier for 1 round. In addition, any allies within 30 feet that share his faith also receive half this bonus (minimum +1). The cavalier can use this ability once per day, plus one additional time per day at 12th level and every four levels thereafter."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 275,
+    "record_key": "Order of the Star ~ For the Faith"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

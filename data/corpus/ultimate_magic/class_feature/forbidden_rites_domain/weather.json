@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Weather Domain",
+    "name": "Weather",
+    "class": "Forbidden Rites Domain",
+    "description": "With power over storm and sky, you can call down the wrath of the gods upon the world below.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Weather Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.WeatherDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWeatherLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWeatherDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWeatherTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWeatherAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "With power over storm and sky, you can call down the wrath of the gods upon the world below."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Storm Burst|PREDOMAIN:1,Weather|PREVARGTEQ:DomainWeatherAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Lightning Lord|PREDOMAIN:1,Weather|PREVARGTEQ:DomainWeatherAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWeatherLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWeatherDC|10+(DomainWeatherLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWeatherTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWeatherAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Obscuring Mist|Cleric=2|Fog Cloud|Cleric=3|Call Lightning|Cleric=4|Sleet Storm|Cleric=5|Ice Storm|Cleric=6|Control Winds|Cleric=7|Control Weather|Cleric=8|Whirlwind|Cleric=9|Storm of Vengeance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1059,
+    "record_key": "Forbidden Rites Domain ~ Weather Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

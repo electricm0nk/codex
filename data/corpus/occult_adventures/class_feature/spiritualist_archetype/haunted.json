@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spiritualist Archetype ~ Haunted",
+    "name": "Haunted",
+    "class": "Spiritualist Archetype",
+    "description": "The haunted are a dangerous breed of spellcasters bound to temperamental and unpredictable phantoms that leech power from their spiritualists.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist Archetype ~ Haunted"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpiritualistArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Spiritualist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Spiritualist Archetype ~ Haunted],[!PREFACT:1,ABILITIES,Spiritualist_Archetype_bondedManifestation=true,Spiritualist_Archetype_dualbond=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "The haunted are a dangerous breed of spellcasters bound to temperamental and unpredictable phantoms that leech power from their spiritualists."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Haunted ~ Usurp Manifestation|PRECLASS:1,Spiritualist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Haunted ~ Usurped Bond|PRECLASS:1,Spiritualist=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_bondedmanifestation|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_dualbond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_bondedmanifestation|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_dualbond|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1614,
+    "record_key": "Spiritualist Archetype ~ Haunted"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Savant Earth School ~ Earth Glide",
+    "name": "Earth Glide",
+    "class": "Savant Earth School",
+    "description": "At 8th level, you gain the ability to move through earth, dirt, and stone for a %1 rounds per day. You cannot move through worked earth or stone; only natural substances can be traversed. If your total duration expires before you exit the earth, you are flung back to the point where you entered the stone, take 4d6 points of damage, and are stunned for 1 round. Your burrowing does not leave a hole, nor does it give any sign of your presence (although you can be detected by creatures with tremorsense). These rounds do not need to be consecutive.|ArcanistSavantSchoolLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Earth School ~ Earth Glide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you gain the ability to move through earth, dirt, and stone for a %1 rounds per day. You cannot move through worked earth or stone; only natural substances can be traversed. If your total duration expires before you exit the earth, you are flung back to the point where you entered the stone, take 4d6 points of damage, and are stunned for 1 round. Your burrowing does not leave a hole, nor does it give any sign of your presence (although you can be detected by creatures with tremorsense). These rounds do not need to be consecutive.|ArcanistSavantSchoolLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2615,
+    "record_key": "Savant Earth School ~ Earth Glide"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

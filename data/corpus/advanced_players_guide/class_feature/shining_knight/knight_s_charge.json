@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shining Knight ~ Knight's Charge",
+    "name": "Knight's Charge",
+    "class": "Shining Knight",
+    "description": "At 11th level, whenever a mounted shining knight charges a foe, her movement does not provoke attacks of opportunity, for either her or her mount. In addition, if her target is also the target of her smite evil ability and the charge attack hits, the target must make a Will save DC %1 or be panicked for a number of rounds equal to %2 [1/2 the shining knight's level]. The DC of this save is equal to 10 + 1/2 the shining knight's level + the shining knight's Charisma modifier. This ability replaces aura of justice.|ShiningKnightDC|ShiningKnightDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shining Knight ~ Knight's Charge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.PaladinClassFeatures.SpecialQuality.Supernatural.PaladinAuraofJustice"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShiningKnightDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShiningKnightDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, whenever a mounted shining knight charges a foe, her movement does not provoke attacks of opportunity, for either her or her mount. In addition, if her target is also the target of her smite evil ability and the charge attack hits, the target must make a Will save DC %1 or be panicked for a number of rounds equal to %2 [1/2 the shining knight's level]. The DC of this save is equal to 10 + 1/2 the shining knight's level + the shining knight's Charisma modifier. This ability replaces aura of justice.|ShiningKnightDC|ShiningKnightDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShiningKnightDC|10+(PaladinLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShiningKnightDuration|(PaladinLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2502,
+    "record_key": "Shining Knight ~ Knight's Charge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mindblade ~ Psychic Access",
+    "name": "Psychic Access",
+    "class": "Mindblade",
+    "description": "At 4th level, the mindblade gains access to an expanded spell list. She adds two spells from the psychic class spell list to her magus spell list as magus spells of the same spell level. These must be spells of levels the mindblade is able to cast. At 7th, 11th, 14th, and 19th levels, she adds two more psychic class spells to her spell list, following the same restrictions. When a mindblade takes the spell blending arcana, she gains spells from the psychic class spell list instead of the wizard spell list. This ability replaces spell recall, knowledge pool, improved spell recall, greater spell combat, and greater spell access.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mindblade ~ Psychic Access"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mindblade Class Feature.Magus Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, the mindblade gains access to an expanded spell list. She adds two spells from the psychic class spell list to her magus spell list as magus spells of the same spell level. These must be spells of levels the mindblade is able to cast. At 7th, 11th, 14th, and 19th levels, she adds two more psychic class spells to her spell list, following the same restrictions. When a mindblade takes the spell blending arcana, she gains spells from the psychic class spell list instead of the wizard spell list. This ability replaces spell recall, knowledge pool, improved spell recall, greater spell combat, and greater spell access."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1787,
+    "record_key": "Mindblade ~ Psychic Access"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

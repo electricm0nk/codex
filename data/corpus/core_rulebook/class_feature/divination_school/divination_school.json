@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Divination School",
+    "name": "Divination School",
+    "class": null,
+    "description": "You have chosen to specialize in divination spells.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivinationSchoolLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivinationProgressionSchoolLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to specialize in divination spells."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Divination School ~ Forwarned|PREVAREQ:Wizard_CF_Forwarned,0|PREVARGTEQ:DivinationProgressionSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Divination School ~ Diviner's Fortune|PREVAREQ:Wizard_CF_DivinersFortune,0|PREVARGTEQ:DivinationProgressionSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Divination School ~ Scrying Adept|PREVAREQ:Wizard_CF_ScryingAdept,0|PREVARGTEQ:DivinationProgressionSchoolLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_ArcaneOppositionSchool|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OppositionalSchool|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Diviner;LEVEL=1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Diviner;LEVEL=2|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Diviner;LEVEL=3|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Diviner;LEVEL=4|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Diviner;LEVEL=5|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Diviner;LEVEL=6|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Diviner;LEVEL=7|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Diviner;LEVEL=8|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Diviner;LEVEL=9|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivinationSchoolLVL|ArcaneSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivinationProgressionSchoolLVL|ArcaneSchoolProgressionLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisallowWizardArcaneSchoolArchetype|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2599,
+    "record_key": "Divination School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

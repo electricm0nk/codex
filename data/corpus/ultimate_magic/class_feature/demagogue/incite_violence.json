@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Demagogue ~ Incite Violence",
+    "name": "Incite Violence",
+    "class": "Demagogue",
+    "description": "You can use your performance to fan the fury of a crowd of people you has fascinated. Using this ability does not disrupt the fascinate effect, but does require a standard action to activate (in addition to the free action to continue the fascinate effect). You select %1 targets equal to your level, who must make Will saves (DC %2) or be affected by rage for %3 rounds. You indicate who is the intended target of violence (either after using this ability or as part of the performance leading to it) and the enraged members of the crowd immediately attack the target if possible. The target does not need to be present (\"kill the king\" is a suitable choice) and can be an object instead of a person (\"destroy the prison!\" is likewise appropriate). Other members of the crowd may follow suit, though they do not gain the benefits of rage . This is a sound-based effect and is affected by countersong. If two or more bards are attempting to direct the crowd against different targets, they must make opposed Charisma checks, with the crowd following the directions of the winner.|InciteViolenceTargets|InciteViolenceDC|InciteViolenceDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Demagogue ~ Incite Violence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Extraordinary.BardicPerformance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InciteViolenceTargets|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InciteViolenceDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InciteViolenceDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your performance to fan the fury of a crowd of people you has fascinated. Using this ability does not disrupt the fascinate effect, but does require a standard action to activate (in addition to the free action to continue the fascinate effect). You select %1 targets equal to your level, who must make Will saves (DC %2) or be affected by rage for %3 rounds. You indicate who is the intended target of violence (either after using this ability or as part of the performance leading to it) and the enraged members of the crowd immediately attack the target if possible. The target does not need to be present (\"kill the king\" is a suitable choice) and can be an object instead of a person (\"destroy the prison!\" is likewise appropriate). Other members of the crowd may follow suit, though they do not gain the benefits of rage . This is a sound-based effect and is affected by countersong. If two or more bards are attempting to direct the crowd against different targets, they must make opposed Charisma checks, with the crowd following the directions of the winner.|InciteViolenceTargets|InciteViolenceDC|InciteViolenceDuration"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Incite Violence"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InciteViolenceTargets|classlevel(\"Bard\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InciteViolenceDC|10+CHA+classlevel(\"Bard\")/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InciteViolenceDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Incite Violence)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InciteViolenceDuration|classlevel(\"Bard\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 962,
+    "record_key": "Demagogue ~ Incite Violence"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

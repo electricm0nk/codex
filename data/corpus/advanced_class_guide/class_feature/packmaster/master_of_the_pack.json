@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Packmaster ~ Master Of The Pack",
+    "name": "Master Of The Pack",
+    "class": "Packmaster",
+    "description": "At 20th level, a packmaster and her animal companions can always move at full speed while using Survival to follow tracks without penalty. Each day when a packmaster gains new spells for the day, she chooses one animal focus to be active on herself or one of her animal companions for the entire day (if all of her animal companions are dead, she instead chooses two animal foci to be active on herself for the entire day). This focus is in addition to her pack focus class ability. This ability replaces master hunter.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Packmaster ~ Master Of The Pack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.ArchetypeAbility.Extraordinary.HunterMasterHunter"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a packmaster and her animal companions can always move at full speed while using Survival to follow tracks without penalty. Each day when a packmaster gains new spells for the day, she chooses one animal focus to be active on herself or one of her animal companions for the entire day (if all of her animal companions are dead, she instead chooses two animal foci to be active on herself for the entire day). This focus is in addition to her pack focus class ability. This ability replaces master hunter."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "P.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3162,
+    "record_key": "Packmaster ~ Master Of The Pack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

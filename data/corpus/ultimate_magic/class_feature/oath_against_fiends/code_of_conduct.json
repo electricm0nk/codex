@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oath against Fiends ~ Code of Conduct",
+    "name": "Code of Conduct",
+    "class": "Oath against Fiends",
+    "description": "Never suffer an evil outsider to live if it is in your power to destroy it. Banish fiends you cannot kill. Purge the evil from those possessed by fiends.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against Fiends ~ Code of Conduct"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Never suffer an evil outsider to live if it is in your power to destroy it. Banish fiends you cannot kill. Purge the evil from those possessed by fiends."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1545,
+    "record_key": "Oath against Fiends ~ Code of Conduct"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

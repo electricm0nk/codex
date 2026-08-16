@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Snakebite Striker Brawler ~ Sneak Attack",
+    "name": "Sneak Attack",
+    "class": "Snakebite Striker Brawler",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Snakebite Striker Brawler ~ Sneak Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Snakebite Striker Class Feature.Extraordinary.BrawlerMartialFlexibility.Internal"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SnakebiteStrikerSneakAttackLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sneak Attack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SnakebiteStrikerSneakAttackLVL|BrawlerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|1+(SnakebiteStrikerSneakAttackLVL>5)+(SnakebiteStrikerSneakAttackLVL>9)+(SnakebiteStrikerSneakAttackLVL>11)+(SnakebiteStrikerSneakAttackLVL>19)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2904,
+    "record_key": "Snakebite Striker Brawler ~ Sneak Attack"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

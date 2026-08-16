@@ -1,0 +1,131 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bard Archetype ~ Silver Balladeer",
+    "name": "Silver Balladeer",
+    "class": "Bard Archetype",
+    "description": "The bright purity of silver makes beautiful music, and its vibrations are also anathema to unnatural creatures. Some bards use a mixture of silver-stringed instruments and esoteric knowledge to battle the dark forces of the world.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Silver Balladeer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardArchetype"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LG,NG,CG"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Silver Balladeer],[!PREFACT:1,ABILITIES,Bard_Archetype_Alignment=true,Bard_Archetype_VersatilePerformance2=true,Bard_Archetype_MassSuggestion=true,Bard_Archetype_WellVersed=true,Bard_Archetype_Suggestion=true,Bard_Archetype_InspireGreatness=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "The bright purity of silver makes beautiful music, and its vibrations are also anathema to unnatural creatures. Some bards use a mixture of silver-stringed instruments and esoteric knowledge to battle the dark forces of the world."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Silver Balladeer ~ Alignment|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Silver Balladeer ~ Bardic Performance|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Silver Balladeer ~ Break Curse|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Silver Balladeer ~ Holy Vibration|PRECLASS:1,Bard=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Silver Balladeer ~ Mass Break Curse|PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Silver Balladeer ~ Pure Heart|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Silver Balladeer ~ Silver Mastery|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_Alignment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_VersatilePerformance2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_MassSuggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_Suggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireGreatness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_VersatilePerformance2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_MassSuggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_Suggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireGreatness|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1677,
+    "record_key": "Bard Archetype ~ Silver Balladeer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent ~ Minor Magic",
+    "name": "Minor Magic",
+    "class": "Investigator",
+    "description": "You can cast %1. This spell can be cast three times a day as a spell-like ability. The caster level for this ability is %2. The save DC for this spell is %3.|%CHOICE|RogueCasterLevel|RogueMinorMagicDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent ~ Minor Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorRogueTalent.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,INT=10"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rogue Talent ~ Minor Magic"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RogueCasterLevel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RogueMinorMagicDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast %1. This spell can be cast three times a day as a spell-like ability. The caster level for this ability is %2. The save DC for this spell is %3.|%CHOICE|RogueCasterLevel|RogueMinorMagicDC"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SPELLS|CLASSLIST=Wizard[LEVELMAX=0;LEVELMIN=0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RogueCasterLevel|RogueTalentLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RogueMinorMagicDC|10+INT"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1361,
+    "record_key": "Investigator ~ Rogue Talent ~ Minor Magic"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

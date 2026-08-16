@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk ~ Standard Class",
+    "name": "Standard Monk",
+    "class": "Monk",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk ~ Standard Class"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Class"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Archetype|AUTOMATIC|Archetype Monk"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Class Skills ~ Monk|PREVAREQ:Monk_CF_ClassSkills,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")*3/4|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude,BASE.Reflex,BASE.Will|classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABModerate|classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Fortitude|classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Reflex|classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Will|classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Monk HD d8"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 137,
+    "record_key": "Monk ~ Standard Class"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

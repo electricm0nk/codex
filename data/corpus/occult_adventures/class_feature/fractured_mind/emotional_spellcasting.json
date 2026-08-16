@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fractured Mind ~ Emotional Spellcasting",
+    "name": "Emotional Spellcasting",
+    "class": "Fractured Mind",
+    "description": "[not implemented]A fractured mind's ability to cast spells is tied to the force of her own spirit rather than her connection to the spirit world. As a result, she uses her Charisma score rather than her Wisdom score to determine the highest spell level she can cast, the saving throw DCs of spells she casts, and her bonus spells per day. This ability alters spellcasting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fractured Mind ~ Emotional Spellcasting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fractured Mind Class Feature.Spiritualist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[not implemented]A fractured mind's ability to cast spells is tied to the force of her own spirit rather than her connection to the spirit world. As a result, she uses her Charisma score rather than her Wisdom score to determine the highest spell level she can cast, the saving throw DCs of spells she casts, and her bonus spells per day. This ability alters spellcasting."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1623,
+    "record_key": "Fractured Mind ~ Emotional Spellcasting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

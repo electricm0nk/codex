@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Involutionist ~ Involuate",
+    "name": "Involuate",
+    "class": "Involutionist",
+    "description": "An involutionist gains the ability to awaken the latent spiritual energy in inanimate objects. She gains the ability to cast animate objects as a spell-like ability once per day. At 15th and 19th levels, she can use this ability one additional time per day. This ability replaces the additional uses of calm spirit available at 11th, 15th, and 17th levels.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Involutionist ~ Involuate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Features.InvolutionistClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.167"
+      },
+      {
+        "key": "DESC",
+        "value": "An involutionist gains the ability to awaken the latent spiritual energy in inanimate objects. She gains the ability to cast animate objects as a spell-like ability once per day. At 15th and 19th levels, she can use this ability one additional time per day. This ability replaces the additional uses of calm spirit available at 11th, 15th, and 17th levels."
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvoluateTimes|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvoluateTimes|1+(SpiritualistLVL>=15)+(SpiritualistLVL>=19)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=InvoluateTimes|CASTERLEVEL=TL|Animate Objects"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1058,
+    "record_key": "Involutionist ~ Involuate"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Lore Mystery ~ Think On It",
+    "name": "Think On It",
+    "class": "Lore Mystery",
+    "description": "Once per day, the oracle of lore can reattempt any previously failed Knowledge check. On this attempt, add a +10 competence bonus on the check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lore Mystery ~ Think On It"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.LoreRevelation.Extraordinary.PerDayOracleRevelation"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, the oracle of lore can reattempt any previously failed Knowledge check. On this attempt, add a +10 competence bonus on the check."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 643,
+    "record_key": "Lore Mystery ~ Think On It"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

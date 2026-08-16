@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Soul ~ Dizzying Onslaught",
+    "name": "Dizzying Onslaught",
+    "class": "Wild Soul",
+    "description": "A wild soul lands punishing blows that devastate his nemeses' ability to focus. When he confirms a critical hit against a creature against whom his nemesis bonus applies, for 1 minute the target must succeed at a concentration check (DC = 20 + the wild soul's Wisdom modifier + twice the spell's level) to cast an arcane spell, create an extract, or use an alchemist's bomb, and the target can't spend or gain grit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Soul ~ Dizzying Onslaught"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.WildSoulClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wild soul lands punishing blows that devastate his nemeses' ability to focus. When he confirms a critical hit against a creature against whom his nemesis bonus applies, for 1 minute the target must succeed at a concentration check (DC = 20 + the wild soul's Wisdom modifier + twice the spell's level) to cast an arcane spell, create an extract, or use an alchemist's bomb, and the target can't spend or gain grit."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 956,
+    "record_key": "Wild Soul ~ Dizzying Onslaught"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

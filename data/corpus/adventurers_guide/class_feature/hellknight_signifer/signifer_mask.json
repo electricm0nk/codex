@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hellknight Signifer ~ Signifer Mask",
+    "name": "Signifer Mask",
+    "class": "Hellknight Signifer",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hellknight Signifer ~ Signifer Mask"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Hellknight Signifer Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "DESC",
+        "value": "Upon initiation, a Hellknight signifer receives a mask, often devoid of eyeholes or other personal features. This mask doesn't obscure the Hellknight signifer's vision, and while wearing it he gains a +2 competence bonus on Sense Motive checks and on saving throws against spells and abilities that rely on visual effects. A Hellknight signifer with a bonded object from the arcane bond class feature can perform a special ritual that costs 500 gp and takes 8 hours to complete. This ritual converts the Hellknight signifer's mask into his new bonded object, which takes up the head slot. In this case, his Hellknight signifer levels stack with levels from the class that grants the arcane bond for determining what additional magical abilities can be added to the bonded object."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sense Motive|2|TYPE=Competence|PREEQUIP:1,Signifer Mask%"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 287,
+    "record_key": "Hellknight Signifer ~ Signifer Mask"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

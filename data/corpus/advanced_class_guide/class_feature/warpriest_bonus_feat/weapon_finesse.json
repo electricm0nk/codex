@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Weapon Finesse",
+    "name": "Weapon Finesse",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are trained in using your agility in melee combat, as opposed to brute strength.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Weapon Finesse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "DESC",
+        "value": "You are trained in using your agility in melee combat, as opposed to brute strength."
+      },
+      {
+        "key": "DESC",
+        "value": " With a light weapon, rapier, whip, or spiked chain made for a creature of your size category, you may use your Dexterity modifier instead of your Strength modifier on attack rolls. If you carry a shield, its armor check penalty applies to your attack rolls."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Weapon Finesse"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4303,
+    "record_key": "Warpriest Bonus Feat ~ Weapon Finesse"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

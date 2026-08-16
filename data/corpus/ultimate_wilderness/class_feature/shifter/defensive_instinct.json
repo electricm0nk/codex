@@ -1,0 +1,101 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter ~ Defensive Instinct",
+    "name": "Defensive Instinct",
+    "class": "Shifter",
+    "description": "When unarmored, not using a shield, unencumbered, and conscious, the shifter adds %1 to her AC and CMD. If she is wearing nonmetal armor or using a nonmetal shield, she instead adds %2 to her AC.|ShifterACWisBonus|ShifterACWisBonus/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter ~ Defensive Instinct"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterACLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterACWisBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkACBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When unarmored, not using a shield, unencumbered, and conscious, the shifter adds %1 to her AC and CMD. If she is wearing nonmetal armor or using a nonmetal shield, she instead adds %2 to her AC.|ShifterACWisBonus|ShifterACWisBonus/2"
+      },
+      {
+        "key": "DESC",
+        "value": " In addition, the shifter gains a +%1 bonus to her AC and CMD.|(ShifterACLVL)/4|PREVARGTEQ:ShifterLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": " These bonuses to AC apply even against touch attacks and when the shifter is flat-footed. She loses these bonuses when she is immobilized or helpless. These bonuses do not stack with the monk AC bonus class feature."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|ShifterACBonus-MonkACBonus|PREVARGT:ShifterACBonus,MonkACBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterACBonus|min((ShifterACLVL)/4,5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterACBonus|ShifterACWisBonus/2|PREVAREQ:ENCUMBERANCE,0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED]\"),0,var(\"COUNT[EQTYPE.SHIELD.EQUIPPED]\"),0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterACBonus|ShifterACWisBonus/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD|ShifterACBonus-MonkACBonus|PREVARGT:ShifterACBonus,MonkACBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterACWisBonus|max(WIS,0)|PREVARGTEQ:ShifterLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterACLVL|ShifterLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 16,
+    "record_key": "Shifter ~ Defensive Instinct"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

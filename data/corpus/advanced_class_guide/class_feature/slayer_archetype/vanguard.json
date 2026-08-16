@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Slayer Archetype ~ Vanguard",
+    "name": "Vanguard",
+    "class": "Slayer Archetype",
+    "description": "Vanguards are battlefield commanders who focus on the brutality of combat and lead their allies to bloody victory. Quick to react to danger, a vanguard is a valuable scout, capable officer, and skilled tactician.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Archetype ~ Vanguard"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SlayerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Slayer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Vanguard],[!PREFACT:1,ABILITIES,Slayer_Archetype_Track=true,Slayer_Archetype_Talent2=true,Slayer_Archetype_Talent4=true,Slayer_Archetype_Stalker=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Vanguards are battlefield commanders who focus on the brutality of combat and lead their allies to bloody victory. Quick to react to danger, a vanguard is a valuable scout, capable officer, and skilled tactician."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Vanguard ~ Lookout|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Vanguard ~ Tactician|PRECLASS:1,Slayer=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Vanguard ~ Vanguard's Bond|PRECLASS:1,Slayer=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Vanguard ~ Ever Ready|PRECLASS:1,Slayer=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Slayer"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Stalker|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3731,
+    "record_key": "Slayer Archetype ~ Vanguard"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

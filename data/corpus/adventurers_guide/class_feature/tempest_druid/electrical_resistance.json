@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tempest Druid ~ Electrical Resistance",
+    "name": "Electrical Resistance",
+    "class": "Tempest Druid",
+    "description": "A tempest druid gains electricity resistance 5. As a standard action, he can transfer this resistance to another creature for 1 hour, after which time it reverts to him.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tempest Druid ~ Electrical Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.TempestDruidClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.183"
+      },
+      {
+        "key": "DESC",
+        "value": "A tempest druid gains electricity resistance 5. As a standard action, he can transfer this resistance to another creature for 1 hour, after which time it reverts to him."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|5|TYPE=Resistance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 813,
+    "record_key": "Tempest Druid ~ Electrical Resistance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

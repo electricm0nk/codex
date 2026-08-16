@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Feral Gnasher ~ Wicked Improvisation",
+    "name": "Wicked Improvisation",
+    "class": "Feral Gnasher",
+    "description": "The feral gnasher becomes more capable with improvised weapons and natural attacks. The feral gnasher gains a +%1 competence bonus on damage rolls when using natural attacks or improvised weapons while raging.  This increase is not precision damage and is thus multiplied on a critical hit.|FeralGnasherWickedImprovisationBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Gnasher ~ Wicked Improvisation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeralGnasherWickedImprovisationBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The feral gnasher becomes more capable with improvised weapons and natural attacks. The feral gnasher gains a +%1 competence bonus on damage rolls when using natural attacks or improvised weapons while raging.  This increase is not precision damage and is thus multiplied on a critical hit.|FeralGnasherWickedImprovisationBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralGnasherWickedImprovisationBonus|1+(BarbarianLVL-12)/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 540,
+    "record_key": "Feral Gnasher ~ Wicked Improvisation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skald ~ Inspired Rage",
+    "name": "Inspired Rage",
+    "class": "Skald",
+    "description": "At 1st level, affected allies gain a +%1 morale bonus to Strength and Constitution and a +%2 morale bonus on Will saving throws, but also take a -1 penalty to AC. While under the effects of inspired rage, allies other than the skald cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration. (Unlike the barbarian's rage ability, those affected are not fatigued after the song ends.) If an ally has her own rage class ability (such as barbarian's rage, bloodrager's bloodrage, or skald's inspired rage), she may use the Strength, Constitution, and Will saving throw bonuses, as well as AC penalties, based on her own ability and level instead of those from the skald (still suffering no fatigue afterward). However, inspired rage does not allow the ally to activate abilities dependent on other rage class abilities, such as rage powers, blood casting, or bloodrager bloodlines; the ally must activate her own rage class ability in order to use these features.|SkaldInspiredRageStrConBonus|SkaldInspiredRageWillBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald ~ Inspired Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SkaldInspiredRage.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SkaldInspiredRageStrConBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SkaldInspiredRageWillBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, affected allies gain a +%1 morale bonus to Strength and Constitution and a +%2 morale bonus on Will saving throws, but also take a -1 penalty to AC. While under the effects of inspired rage, allies other than the skald cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration. (Unlike the barbarian's rage ability, those affected are not fatigued after the song ends.) If an ally has her own rage class ability (such as barbarian's rage, bloodrager's bloodrage, or skald's inspired rage), she may use the Strength, Constitution, and Will saving throw bonuses, as well as AC penalties, based on her own ability and level instead of those from the skald (still suffering no fatigue afterward). However, inspired rage does not allow the ally to activate abilities dependent on other rage class abilities, such as rage powers, blood casting, or bloodrager bloodlines; the ally must activate her own rage class ability in order to use these features.|SkaldInspiredRageStrConBonus|SkaldInspiredRageWillBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SkaldInspiredRageStrConBonus|2+floor(SkaldLVL/8)*2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SkaldInspiredRageWillBonus|1+(SkaldLVL/4)*1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1739,
+    "record_key": "Skald ~ Inspired Rage"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

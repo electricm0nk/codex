@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Undead Master ~ Necromantic Focus",
+    "name": "Necromantic Focus",
+    "class": "Undead Master",
+    "description": "An undead master must be of an evil alignment. If he becomes nonevil, he can still use his powers but can't progress any further as a wizard. Most undead masters specialize in the necromancy school, and an undead master can't have necromancy as an opposition school. This alters arcane school and alignment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead Master ~ Necromantic Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wizard Class Feature.UndeadMasterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "DESC",
+        "value": "An undead master must be of an evil alignment. If he becomes nonevil, he can still use his powers but can't progress any further as a wizard. Most undead masters specialize in the necromancy school, and an undead master can't have necromancy as an opposition school. This alters arcane school and alignment."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 319,
+    "record_key": "Undead Master ~ Necromantic Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Talent ~ Vicious Claws",
+    "name": "Vicious Claws",
+    "class": "Rogue Talent",
+    "description": "A catfolk with this talent uses d8s to roll sneak attack damage instead of d6s, but only when she uses her claws to make the sneak attack. A catfolk rogue must have the cat's claws racial trait before taking this talent. [Sneak Attack with Claws %1d8]|SneakAttackDice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Vicious Claws"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.SpecialQuality.Extraordinary.RogueTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Catfolk ~ Cat's Claws"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsCatfolk=true"
+      },
+      {
+        "key": "DESC",
+        "value": "A catfolk with this talent uses d8s to roll sneak attack damage instead of d6s, but only when she uses her claws to make the sneak attack. A catfolk rogue must have the cat's claws racial trait before taking this talent. [Sneak Attack with Claws %1d8]|SneakAttackDice"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 439,
+    "record_key": "Rogue Talent ~ Vicious Claws"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

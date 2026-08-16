@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Infernal Blood (Lesser)",
+    "name": "Infernal Blood, Lesser",
+    "class": "Rage Power",
+    "description": "While raging, up to three times a day as a swift action, the barbarian can infuse her attacks with hellfire for 1 round. During this time, all of her melee attacks gain the flaming magic weapon special ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Infernal Blood (Lesser)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialQuality.Supernatural.BloodRageLesser"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Special Ability,TYPE.BloodRageLesser],[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ Infernal Blood (Lesser)]"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, up to three times a day as a swift action, the barbarian can infuse her attacks with hellfire for 1 round. During this time, all of her melee attacks gain the flaming magic weapon special ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2675,
+    "record_key": "Rage Power ~ Infernal Blood (Lesser)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

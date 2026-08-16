@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gunslinger ~ Slinger's Luck",
+    "name": "Slinger's Luck",
+    "class": "Gunslinger",
+    "description": "At 15th level, the gunslinger can spend grit to reroll a saving throw or a skill check. It costs 2 grit points to reroll a saving throw, and 1 grit point to reroll a skill check. The gunslinger must take the result of the second roll, even if it is lower. The deed's cost cannot be reduced by the true grit class ability, the Signature Deed feat, or any other effect that reduces the amount of grit a deed costs.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Slinger's Luck"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_Deed_LVL15"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeedsLVL15.DeedHasCost.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, the gunslinger can spend grit to reroll a saving throw or a skill check. It costs 2 grit points to reroll a saving throw, and 1 grit point to reroll a skill check. The gunslinger must take the result of the second roll, even if it is lower. The deed's cost cannot be reduced by the true grit class ability, the Signature Deed feat, or any other effect that reduces the amount of grit a deed costs."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 75,
+    "record_key": "Gunslinger ~ Slinger's Luck"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Ingest Venom",
+    "name": "Ingest Venom",
+    "class": "Discovery",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Ingest Venom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.AlchemistDiscovery"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Discovery ~ Arms of Achaekek"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a standard action, the crimson chymist can ingest one dose of any poison without harming herself. The next time she imbibes her mutagen and uses her arms of Achaekek discovery, both claws are envenomed with a dose of the poison she ingested. An ingested venom remains latent in the alchemist's system until she activates her arms of Achaekek discovery or until 24 hours have passed, whichever comes first. Additional doses of venom ingested during that time affect the alchemist normally."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 591,
+    "record_key": "Discovery ~ Ingest Venom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

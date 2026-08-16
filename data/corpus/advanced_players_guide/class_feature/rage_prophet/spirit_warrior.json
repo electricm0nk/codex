@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Prophet ~ Spirit Warrior",
+    "name": "Spirit Warrior",
+    "class": "Rage Prophet",
+    "description": "At 9th level, the competence bonus provided by the rage prophet's guidance increases to his rage prophet level when used while battling a fey, outsider, undead, or incorporeal creature. His ability to give his armor and weapons the ghost touch property becomes an immediate action instead of a swift action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Prophet ~ Spirit Warrior"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Rage ProphetClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, the competence bonus provided by the rage prophet's guidance increases to his rage prophet level when used while battling a fey, outsider, undead, or incorporeal creature. His ability to give his armor and weapons the ghost touch property becomes an immediate action instead of a swift action."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1447,
+    "record_key": "Rage Prophet ~ Spirit Warrior"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

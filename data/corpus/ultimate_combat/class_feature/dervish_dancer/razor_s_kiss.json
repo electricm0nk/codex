@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dervish Dancer ~ Razor's Kiss",
+    "name": "Razor's Kiss",
+    "class": "Dervish Dancer",
+    "description": "At 8th level, a dervish dancer can use his battle dance to improve his weapons' critical range. All attacks he makes with manufactured weapons are treated as though he had the Improved Critical feat. Natural weapons and spells are not affected. This ability replaces dirge of doom.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dervish Dancer ~ Razor's Kiss"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, a dervish dancer can use his battle dance to improve his weapons' critical range. All attacks he makes with manufactured weapons are treated as though he had the Improved Critical feat. Natural weapons and spells are not affected. This ability replaces dirge of doom."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 423,
+    "record_key": "Dervish Dancer ~ Razor's Kiss"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

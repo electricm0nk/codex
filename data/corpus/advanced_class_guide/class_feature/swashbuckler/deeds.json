@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Swashbuckler ~ Deeds",
+    "name": "Deeds",
+    "class": "Swashbuckler",
+    "description": "Swashbucklers spend panache points to accomplish deeds. Most deeds grant the swashbuckler a momentary bonus or effect, but some provide longer-lasting effects. Some deeds remain in effect while the swashbuckler has at least 1 panache point, but do not require expending panache to be maintained. A swashbuckler can only perform deeds of her level or lower. Unless otherwise noted, a deed can be performed multiple successive times, as long as the swashbuckler has or spends the required number of panache points to perform the deed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler ~ Deeds"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwashbucklerDeedsLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Swashbucklers spend panache points to accomplish deeds. Most deeds grant the swashbuckler a momentary bonus or effect, but some provide longer-lasting effects. Some deeds remain in effect while the swashbuckler has at least 1 panache point, but do not require expending panache to be maintained. A swashbuckler can only perform deeds of her level or lower. Unless otherwise noted, a deed can be performed multiple successive times, as long as the swashbuckler has or spends the required number of panache points to perform the deed."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwashbucklerDeedsLVL|SwashbucklerLVL|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1956,
+    "record_key": "Swashbuckler ~ Deeds"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

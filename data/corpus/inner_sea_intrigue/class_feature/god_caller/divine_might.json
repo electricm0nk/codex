@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "God Caller ~ Divine Might",
+    "name": "Divine Might",
+    "class": "God Caller",
+    "description": "A god caller's eidolon's attacks are treated as epic for the purpose of overcoming damage reduction and harming mythic creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "God Caller ~ Divine Might"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TYPE:Summoner Class Features.GodCallerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A god caller's eidolon's attacks are treated as epic for the purpose of overcoming damage reduction and harming mythic creatures."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 293,
+    "record_key": "God Caller ~ Divine Might"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

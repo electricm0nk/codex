@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fell Rider ~ Deadly Rampage",
+    "name": "Deadly Rampage",
+    "class": "Fell Rider",
+    "description": "A mounted fell rider no longer provokes attacks of opportunity when he attempts to overrun a creature. He can make a single melee attack against the creature as a free action if the overrun attempt succeeds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fell Rider ~ Deadly Rampage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A mounted fell rider no longer provokes attacks of opportunity when he attempts to overrun a creature. He can make a single melee attack against the creature as a free action if the overrun attempt succeeds."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 574,
+    "record_key": "Fell Rider ~ Deadly Rampage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

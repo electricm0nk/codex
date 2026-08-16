@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Street Performer ~ Harmless Performer",
+    "name": "Harmless Performer",
+    "class": "Street Performer",
+    "description": "At 3rd level, a street performer can use performance to appear meek and unworthy of being attacked. While using this performance, whenever an enemy targets the street performer, the enemy must succeed at a Will save DC %1 (DC 10 + 1/2 the bard's level + the bard's Cha bonus) or be unable to attack the bard this round, as per sanctuary. The enemy loses the attack that targeted the bard, but may spend additional attacks targeting other creatures. If the opponent was targeting the street performer with a spell, it must succeed at a concentration check at the same DC or lose the spell. If this check succeeds, it may target another creature with the spell instead. This mind-affecting ability requires audible or visual components. This performance replaces inspire competence.|10+CHA+(BardLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Street Performer ~ Harmless Performer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Supernatural.BardInspireCompetence"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a street performer can use performance to appear meek and unworthy of being attacked. While using this performance, whenever an enemy targets the street performer, the enemy must succeed at a Will save DC %1 (DC 10 + 1/2 the bard's level + the bard's Cha bonus) or be unable to attack the bard this round, as per sanctuary. The enemy loses the attack that targeted the bard, but may spend additional attacks targeting other creatures. If the opponent was targeting the street performer with a spell, it must succeed at a concentration check at the same DC or lose the spell. If this check succeeds, it may target another creature with the spell instead. This mind-affecting ability requires audible or visual components. This performance replaces inspire competence.|10+CHA+(BardLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1728,
+    "record_key": "Street Performer ~ Harmless Performer"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

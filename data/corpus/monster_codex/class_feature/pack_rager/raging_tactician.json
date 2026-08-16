@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pack Rager ~ Raging Tactician",
+    "name": "Raging Tactician",
+    "class": "Pack Rager",
+    "description": "While a pack rager is raging, she grants",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pack Rager ~ Raging Tactician"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.PackRagerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RagingTacticianRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "While a pack rager is raging, she grants"
+      },
+      {
+        "key": "DESC",
+        "value": "a single teamwork feat|!PRECLASS:1,Barbarian=13"
+      },
+      {
+        "key": "DESC",
+        "value": "two teamwork feats|PRECLASS:1,Barbarian=13|!PRECLASS:1,Barbarian=19"
+      },
+      {
+        "key": "DESC",
+        "value": "three teamwork feats|PRECLASS:1,Barbarian=19"
+      },
+      {
+        "key": "DESC",
+        "value": "she knows to all allies within %1 feet who can see and hear her. She chooses the feat at the start of the rage, and cannot change it during the rage. An ally who moves more than %1 feet away from the raging pack rager loses access to the feat, but regains it again each time he moves back within %1 feet of the raging pack rager. Allies do not need to meet the prerequisites of these teamwork feats.|RagingTacticianRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RagingTacticianRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RagingTacticianRange|30|PRECLASS:1,Barbarian=16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 54,
+    "record_key": "Pack Rager ~ Raging Tactician"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

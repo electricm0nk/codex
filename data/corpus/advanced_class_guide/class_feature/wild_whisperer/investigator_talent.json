@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Whisperer ~ Investigator Talent",
+    "name": "Investigator Talent",
+    "class": "Wild Whisperer",
+    "description": "A wild whisperer selects an investigator talent (see page 32).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Whisperer ~ Investigator Talent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wild Whisperer Class Feature.Druid Class Feature.SpecialQuality.DruidWildShape8"
+      },
+      {
+        "key": "DESC",
+        "value": "A wild whisperer selects an investigator talent (see page 32)."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Investigator Talent|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3039,
+    "record_key": "Wild Whisperer ~ Investigator Talent"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dragon Shaman ~ Druid Domain",
+    "name": "Druid Domain",
+    "class": "Dragon Shaman",
+    "description": "If you choose an animal companion, you must select a crocodile (see page 54 of the Core Rulebook) or monitor lizard (see page 194 of the Bestiary). If you choose a domain, you must choose from the Air, Animal, Destruction, Earth, Fire, War, and Water domains.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Shaman ~ Druid Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.DruidDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidAnimalTerrainDomainNotAllowed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If you choose an animal companion, you must select a crocodile (see page 54 of the Core Rulebook) or monitor lizard (see page 194 of the Bestiary). If you choose a domain, you must choose from the Air, Animal, Destruction, Earth, Fire, War, and Water domains."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidAnimalTerrainDomainNotAllowed|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidAirAllowed,DruidAnimalAllowed,DruidDestructionAllowed,DruidEarthAllowed,DruidFireAllowed,DruidWarAllowed,PreventDruidInquisitions|1|TYPE=DruidDomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1112,
+    "record_key": "Dragon Shaman ~ Druid Domain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

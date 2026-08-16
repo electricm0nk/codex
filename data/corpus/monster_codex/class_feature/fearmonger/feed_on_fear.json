@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fearmonger ~ Feed on Fear",
+    "name": "Feed on Fear",
+    "class": "Fearmonger",
+    "description": "The first time in a round a creature fails a saving throw against a fear effect created by a fearmonger's spell, spell-like ability, or supernatural ability (including any ability that causes a creature to be shaken, frightened, or panicked), the fearmonger is healed of %1 points of damage. If the fearmonger is at full hit points when this ability is activated, he instead gains an equal number of temporary hit points. These temporary hit points last for 1 minute. Temporary hit points gained through multiple successful uses of this ability do not stack; the duration increases instead. The antipaladin can use this ability %2 times per day.|AntipaladinLVL/2|CHA+AntipaladinLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fearmonger ~ Feed on Fear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Antipaladin Class Features.FearmongerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The first time in a round a creature fails a saving throw against a fear effect created by a fearmonger's spell, spell-like ability, or supernatural ability (including any ability that causes a creature to be shaken, frightened, or panicked), the fearmonger is healed of %1 points of damage. If the fearmonger is at full hit points when this ability is activated, he instead gains an equal number of temporary hit points. These temporary hit points last for 1 minute. Temporary hit points gained through multiple successful uses of this ability do not stack; the duration increases instead. The antipaladin can use this ability %2 times per day.|AntipaladinLVL/2|CHA+AntipaladinLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 42,
+    "record_key": "Fearmonger ~ Feed on Fear"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

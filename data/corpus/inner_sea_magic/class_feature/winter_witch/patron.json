@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Winter Witch ~ Patron",
+    "name": "Patron",
+    "class": "Winter Witch",
+    "description": "A winter witch must choose her patron from one of the following patron themes: ancestors*, deception, enchantment*, endurance, moon*, occult*, portents*, stars*, transformation, trickery, vengeance*, water, winter*, or wisdom. An asterisk (*) indicates a patron theme detailed in Ultimate Magic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Winter Witch ~ Patron"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Witch Class Feature.Winter Witch Class Feature"
+      },
+      {
+        "key": "DESC",
+        "value": "A winter witch must choose her patron from one of the following patron themes: ancestors*, deception, enchantment*, endurance, moon*, occult*, portents*, stars*, transformation, trickery, vengeance*, water, winter*, or wisdom. An asterisk (*) indicates a patron theme detailed in Ultimate Magic."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Witch Patron|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Winter Witch Patron|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 392,
+    "record_key": "Winter Witch ~ Patron"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elemental Bloodrager Bloodline ~ Elemental Resistance",
+    "name": "Elemental Resistance",
+    "class": "Elemental Bloodrager Bloodline",
+    "description": "You gain electricity resistance %1|Bloodrager_Elemental_ElementalResistance_ResistBonus|PREVAREQ:BloodragerElementalBloodline_Air,1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Bloodrager Bloodline ~ Elemental Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Elemental Bloodrager Bloodline ~ Power LVL 04.Bloodrager Bloodline Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Elemental"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Elemental_BloodlineProgressionLVL,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Elemental_BloodlinePower4LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Elemental_ElementalResistance_ResistBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain electricity resistance %1|Bloodrager_Elemental_ElementalResistance_ResistBonus|PREVAREQ:BloodragerElementalBloodline_Air,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain acid resistance %1|Bloodrager_Elemental_ElementalResistance_ResistBonus|PREVAREQ:BloodragerElementalBloodline_Earth,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain fire resistance %1|Bloodrager_Elemental_ElementalResistance_ResistBonus|PREVAREQ:BloodragerElementalBloodline_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain cold resistance %1|Bloodrager_Elemental_ElementalResistance_ResistBonus|PREVAREQ:BloodragerElementalBloodline_Water,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Electricity|PREVAREQ:BloodragerElementalBloodline_Air,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Acid|PREVAREQ:BloodragerElementalBloodline_Earth,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Fire|PREVAREQ:BloodragerElementalBloodline_Fire,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Cold|PREVAREQ:BloodragerElementalBloodline_Water,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Elemental_ElementalResistance_ResistBonus|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|Bloodrager_Elemental_ElementalResistance_ResistBonus|PREVAREQ:BloodragerElementalBloodline_Air,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|Bloodrager_Elemental_ElementalResistance_ResistBonus|PREVAREQ:BloodragerElementalBloodline_Earth,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|Bloodrager_Elemental_ElementalResistance_ResistBonus|PREVAREQ:BloodragerElementalBloodline_Fire,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|Bloodrager_Elemental_ElementalResistance_ResistBonus|PREVAREQ:BloodragerElementalBloodline_Water,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ElementalBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 777,
+    "record_key": "Elemental Bloodrager Bloodline ~ Elemental Resistance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

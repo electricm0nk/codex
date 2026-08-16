@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Knife Master ~ Sneak Stab",
+    "name": "Sneak Stab",
+    "class": "Knife Master",
+    "description": "A knife master focuses her ability to deal sneak attack damage with daggers and similar weapons to such a degree that she can deal more sneak attack damage with those weapons at the expense of sneak attacks with other weapons. When she makes a sneak attack with a dagger, kerambit (page 130), kukri, punching daggers, starknife, or swordbreaker dagger (Advanced Player's Guide 178), she uses d8s to roll sneak attack damage instead of d6s. For sneak attacks with all other weapons, she uses d4s instead of d6s. This ability is identical in all other ways to sneak attack, and supplements that ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Knife Master ~ Sneak Stab"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A knife master focuses her ability to deal sneak attack damage with daggers and similar weapons to such a degree that she can deal more sneak attack damage with those weapons at the expense of sneak attacks with other weapons. When she makes a sneak attack with a dagger, kerambit (page 130), kukri, punching daggers, starknife, or swordbreaker dagger (Advanced Player's Guide 178), she uses d8s to roll sneak attack damage instead of d6s. For sneak attacks with all other weapons, she uses d4s instead of d6s. This ability is identical in all other ways to sneak attack, and supplements that ability."
+      },
+      {
+        "key": "DESC",
+        "value": "[Knife Master Sneak Attack %1d%2; Regular Sneak Attack %1d%3]|SneakAttackDice|SneakAttackDieSize+4|SneakAttackDieSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDie|-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1705,
+    "record_key": "Knife Master ~ Sneak Stab"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

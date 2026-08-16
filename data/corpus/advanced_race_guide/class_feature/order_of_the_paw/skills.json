@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Paw ~ Skills",
+    "name": "Skills",
+    "class": "Order of the Paw",
+    "description": "An order of the paw cavalier adds Knowledge (nature) and Survival to his list of class skills. He can make Knowledge (nature) checks untrained. Also, an order of the paw cavalier is adept at following tracks while mounted, using his mount's speed rather than his own to determine the penalty for tracking while moving, whether he is mounted or not.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Paw ~ Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An order of the paw cavalier adds Knowledge (nature) and Survival to his list of class skills. He can make Knowledge (nature) checks untrained. Also, an order of the paw cavalier is adept at following tracks while mounted, using his mount's speed rather than his own to determine the penalty for tracking while moving, whether he is mounted or not."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (Nature)|Survival"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 320,
+    "record_key": "Order of the Paw ~ Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

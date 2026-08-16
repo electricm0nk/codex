@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Involutionist ~ Spirit Awareness",
+    "name": "Spirit Awareness",
+    "class": "Involutionist",
+    "description": "An involutionist gains great insight into the spiritual influence people invest into the world around them. She can cast detect psychic significance as a spell-like ability at will and analyze aura once per day as a spell-like ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Involutionist ~ Spirit Awareness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Features.InvolutionistClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.167"
+      },
+      {
+        "key": "DESC",
+        "value": "An involutionist gains great insight into the spiritual influence people invest into the world around them. She can cast detect psychic significance as a spell-like ability at will and analyze aura once per day as a spell-like ability."
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=TL|Detect Psychic Significance"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Analyze Aura"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1057,
+    "record_key": "Involutionist ~ Spirit Awareness"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

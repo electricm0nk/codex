@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Argent Voice ~ Dedicated Performance",
+    "name": "Dedicated Performance",
+    "class": "Argent Voice",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Argent Voice ~ Dedicated Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Feature.ArgentVoiceClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DedicatedPerformanceBonus|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.174"
+      },
+      {
+        "key": "DESC",
+        "value": "An argent voice can call upon the training of the Chelish opera to influence and scrutinize his foes. At 2nd level, an argent voice must choose Perform (sing) as his versatile performance skill. At 6th level, the argent voice gains a bonus on Perform (sing) checks made as part of a versatile performance equal to the number of additional Perform skills in which he has the maximum number of ranks possible at his level. This bonus increases by 1 per maximized Perform skill at 10th level and every four levels thereafter, to a maximum of a +4 bonus per fully ranked Perform skill other than Perform (sing) at 18th level. This alters versatile performance."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Versatile Performance ~ Sing"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff (Perform (Sing))|DedicatedPerformanceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sense Motive (Perform (Sing))|DedicatedPerformanceBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 642,
+    "record_key": "Argent Voice ~ Dedicated Performance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

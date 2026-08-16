@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ninja Trick ~ Undetected Sabotage",
+    "name": "Undetected Sabotage",
+    "class": "Ninja Trick",
+    "description": "Whenever a ninja with this trick uses Disable Device to sabotage or disable a device, she can make a Stealth check with a bonus equal to her level. Anyone who inspects the device does not notice the sabotage and assumes the object works unless he beats the ninja's check with an opposed Perception skill check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Undetected Sabotage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a ninja with this trick uses Disable Device to sabotage or disable a device, she can make a Stealth check with a bonus equal to her level. Anyone who inspects the device does not notice the sabotage and assumes the object works unless he beats the ninja's check with an opposed Perception skill check."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 150,
+    "record_key": "Ninja Trick ~ Undetected Sabotage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

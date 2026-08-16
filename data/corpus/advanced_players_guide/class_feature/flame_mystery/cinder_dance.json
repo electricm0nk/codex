@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Flame Mystery ~ Cinder Dance",
+    "name": "Cinder Dance",
+    "class": "Flame Mystery",
+    "description": "Your base speed increases by 10 feet. At 5th level, you receive Nimble Moves as a bonus feat. At 10th level, you receive Acrobatic Steps as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flame Mystery ~ Cinder Dance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.FlameRevelation.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Oracle ~ Lame"
+      },
+      {
+        "key": "DESC",
+        "value": "Your base speed increases by 10 feet. At 5th level, you receive Nimble Moves as a bonus feat. At 10th level, you receive Acrobatic Steps as a bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Nimble Moves|PRECLASS:1,Oracle=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Acrobatic Steps|PRECLASS:1,Oracle=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.WALK|10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 593,
+    "record_key": "Flame Mystery ~ Cinder Dance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

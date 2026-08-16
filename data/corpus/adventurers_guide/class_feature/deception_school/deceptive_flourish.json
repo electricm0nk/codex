@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Deception School ~ Deceptive Flourish",
+    "name": "Deceptive Flourish",
+    "class": "Deception School",
+    "description": "You gain a +%1 enhancement bonus on Bluff and Disguise skill checks.|DeceptiveFlourishBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deception School ~ Deceptive Flourish"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeceptiveFlourishBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 enhancement bonus on Bluff and Disguise skill checks.|DeceptiveFlourishBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the benefits of misdirection (Will DC %1) or nondetection permanently. At will as a standard action, you can change which of the two spells is active, and each time you activate misdirection, you can choose a new creature or object as the secondary object.|20+INT|PREVARGTEQ:IllusionSchoolLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeceptiveFlourishBonus|2+IllusionSchoolLVL/5"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Disguise|DeceptiveFlourishBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1238,
+    "record_key": "Deception School ~ Deceptive Flourish"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

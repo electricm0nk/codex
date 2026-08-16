@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Songhealer ~ Enhance Healing",
+    "name": "Enhance Healing",
+    "class": "Songhealer",
+    "description": "%1 times per day, you can cause any healing effect from a spell completion or spell trigger item to function at caster level %2.|EnhanceHealingTimes|EnhanceHealingCL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Songhealer ~ Enhance Healing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnhanceHealingTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnhanceHealingCL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times per day, you can cause any healing effect from a spell completion or spell trigger item to function at caster level %2.|EnhanceHealingTimes|EnhanceHealingCL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnhanceHealingTimes|CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnhanceHealingCL|classlevel(\"Bard\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 988,
+    "record_key": "Songhealer ~ Enhance Healing"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

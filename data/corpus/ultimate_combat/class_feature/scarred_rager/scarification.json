@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Scarred Rager ~ Scarification",
+    "name": "Scarification",
+    "class": "Scarred Rager",
+    "description": "At 3rd level, a scarred rager can ignore 1 point of bleed damage per round (currently %1 points). This amount increases by 1 every three levels beyond 3rd. At 15th level, a scarred rager can ignore 1 bleed effect each round. This ability replaces trap sense.|ScarredScarBleedIgnore",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scarred Rager ~ Scarification"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ScarredScarBleedIgnore|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a scarred rager can ignore 1 point of bleed damage per round (currently %1 points). This amount increases by 1 every three levels beyond 3rd. At 15th level, a scarred rager can ignore 1 bleed effect each round. This ability replaces trap sense.|ScarredScarBleedIgnore"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScarredScarBleedIgnore|1|PREVARGTEQ:classlevel(\"Barbarian\"),3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScarredScarBleedIgnore|1|PREVARGTEQ:classlevel(\"Barbarian\"),6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScarredScarBleedIgnore|1|PREVARGTEQ:classlevel(\"Barbarian\"),9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScarredScarBleedIgnore|1|PREVARGTEQ:classlevel(\"Barbarian\"),12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScarredScarBleedIgnore|1|PREVARGTEQ:classlevel(\"Barbarian\"),15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScarredScarBleedIgnore|1|PREVARGTEQ:classlevel(\"Barbarian\"),18"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 324,
+    "record_key": "Scarred Rager ~ Scarification"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

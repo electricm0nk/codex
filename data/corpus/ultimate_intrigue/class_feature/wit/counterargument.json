@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wit ~ Counterargument",
+    "name": "Counterargument",
+    "class": "Wit",
+    "description": "A wit can use only Perform (act, comedy, or oratory) to perform a countersong. This ability alters countersong.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wit ~ Counterargument"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.WitClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A wit can use only Perform (act, comedy, or oratory) to perform a countersong. This ability alters countersong."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 257,
+    "record_key": "Wit ~ Counterargument"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

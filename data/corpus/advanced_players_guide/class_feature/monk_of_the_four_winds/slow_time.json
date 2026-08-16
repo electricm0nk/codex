@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk of the Four Winds ~ Slow Time",
+    "name": "Slow Time",
+    "class": "Monk of the Four Winds",
+    "description": "At 12th level, a monk of the four winds can use his ki to slow time or quicken his movements, depending on the observer. As a swift action, the monk can expend 6 ki points to gain three standard actions during his turn instead of just one. The monk can use these actions to do the following: take a melee attack action, use a skill, use an extraordinary ability, or take a move action. The monk cannot use these actions to cast spells or use spell-like abilities, and cannot combine them to take full-attack actions. Any move actions the monk makes this turn do not provoke attacks of opportunity. This ability replaces abundant step.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk of the Four Winds ~ Slow Time"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.Supernatural.MonkAbundantStep"
+      },
+      {
+        "key": "DESC",
+        "value": "At 12th level, a monk of the four winds can use his ki to slow time or quicken his movements, depending on the observer. As a swift action, the monk can expend 6 ki points to gain three standard actions during his turn instead of just one. The monk can use these actions to do the following: take a melee attack action, use a skill, use an extraordinary ability, or take a move action. The monk cannot use these actions to cast spells or use spell-like abilities, and cannot combine them to take full-attack actions. Any move actions the monk makes this turn do not provoke attacks of opportunity. This ability replaces abundant step."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2340,
+    "record_key": "Monk of the Four Winds ~ Slow Time"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

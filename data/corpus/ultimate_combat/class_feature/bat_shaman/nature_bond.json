@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bat Shaman ~ Nature Bond",
+    "name": "Nature Bond",
+    "class": "Bat Shaman",
+    "description": "A bat shaman who chooses an animal companion must select a bat. If choosing a domain, the bat shaman must choose from Air, Animal, Darkness (Night subdomain), and Trickery (Deception subdomain).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bat Shaman ~ Nature Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeAbility.SpecialQuality.NaturesBondAnimalCompanion.NaturesBondDruidDomain"
+      },
+      {
+        "key": "DESC",
+        "value": "A bat shaman who chooses an animal companion must select a bat. If choosing a domain, the bat shaman must choose from Air, Animal, Darkness (Night subdomain), and Trickery (Deception subdomain)."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidAirAllowed,DruidAnimalAllowed,DruidNightAllowed,DruidDeceptionAllowed,PreventDruidInquisitions|1|TYPE=DruidDomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 636,
+    "record_key": "Bat Shaman ~ Nature Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

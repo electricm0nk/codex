@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Waves Mystery ~ Final Revelation",
+    "name": "Final Revelation",
+    "class": "Waves Mystery",
+    "description": "You become a master of cold and water. You can apply any one of the following feats to any cold or water spell without increasing the level or casting time: Enlarge Spell, Extend Spell, Silent Spell, or Still Spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Waves Mystery ~ Final Revelation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.FinalRevelation"
+      },
+      {
+        "key": "DESC",
+        "value": "You become a master of cold and water. You can apply any one of the following feats to any cold or water spell without increasing the level or casting time: Enlarge Spell, Extend Spell, Silent Spell, or Still Spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 694,
+    "record_key": "Waves Mystery ~ Final Revelation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

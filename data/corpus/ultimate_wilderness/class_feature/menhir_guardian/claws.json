@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Menhir Guardian ~ Claws",
+    "name": "Claws",
+    "class": "Menhir Guardian",
+    "description": "A menhir guardian learns to draw upon natural forces to subtly change his body. He gains the shifter's shifter claws class feature and treats his monk level as his shifter level for the purposes of this ability. The menhir guardian cannot use the ki strike aspect of ki pool. This replaces unarmed strike and alters ki pool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Menhir Guardian ~ Claws"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Features.MenhirGuardianClassFeatures.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A menhir guardian learns to draw upon natural forces to subtly change his body. He gains the shifter's shifter claws class feature and treats his monk level as his shifter level for the purposes of this ability. The menhir guardian cannot use the ki strike aspect of ki pool. This replaces unarmed strike and alters ki pool."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterClawSize|1|PREVARGTEQ:MonkLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterClawSize|1|PREVARGTEQ:MonkLVL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterClawSize|1|PREVARGTEQ:MonkLVL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shifter Claw|CRITMULTADD|1|PREVARGTEQ:MonkLVL,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 812,
+    "record_key": "Menhir Guardian ~ Claws"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

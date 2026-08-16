@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shadowdancer ~ Shadow Master",
+    "name": "Shadow Master",
+    "class": "Shadowdancer",
+    "description": "At 10th level, whenever a shadowdancer is in an area of dim light, she gains DR 10/- and a +2 luck bonus on all saving throws. In addition, whenever she successfully scores a critical hit against a foe who is in an area of dim light, that foe is blinded for 1d6 rounds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadowdancer ~ Shadow Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShadowdancerClassFeatures.SpecialQuality.Supernatural.Defensive"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, whenever a shadowdancer is in an area of dim light, she gains DR 10/- and a +2 luck bonus on all saving throws. In addition, whenever she successfully scores a critical hit against a foe who is in an area of dim light, that foe is blinded for 1d6 rounds."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.393"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3075,
+    "record_key": "Shadowdancer ~ Shadow Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

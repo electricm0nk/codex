@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Leafshifter Aspect ~ Brambles",
+    "name": "Aspect of the Brambles",
+    "class": "Leafshifter Aspect",
+    "description": "You are hit by an unarmed strike or natural attack, the attacker takes %1 points of piercing damage.|BramblesAspectBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leafshifter Aspect ~ Brambles"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Leafshifter Aspect.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BramblesAspectBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are hit by an unarmed strike or natural attack, the attacker takes %1 points of piercing damage.|BramblesAspectBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BramblesAspectBonus|1+(ShifterAspectLVL>=8)+(ShifterAspectLVL>=15)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1074,
+    "record_key": "Leafshifter Aspect ~ Brambles"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

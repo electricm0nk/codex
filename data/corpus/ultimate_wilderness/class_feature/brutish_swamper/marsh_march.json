@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brutish Swamper ~ Marsh March",
+    "name": "Marsh March",
+    "class": "Brutish Swamper",
+    "description": "A brutish swamper can move through the underbrush and muddy terrain of bogs and swamps at her normal speed without taking damage or suffering other impairments. Briars, mud, thorns, and overgrown areas that have been magically manipulated to impede motion, however, still affect her.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brutish Swamper ~ Marsh March"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.BrutishSwamperClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A brutish swamper can move through the underbrush and muddy terrain of bogs and swamps at her normal speed without taking damage or suffering other impairments. Briars, mud, thorns, and overgrown areas that have been magically manipulated to impede motion, however, still affect her."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 191,
+    "record_key": "Brutish Swamper ~ Marsh March"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

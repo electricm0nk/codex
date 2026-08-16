@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Instigator ~ Song of Riot",
+    "name": "Song of Riot",
+    "class": "Instigator",
+    "description": "The instigator can fill the hearts of his listeners with hatred and rouse them into a frenzy. He can use this performance on all targets with fewer than 4 Hit Dice and a Wisdom score lower than 16 who are currently enthralled, without disrupting the enthrall effect (even if a creature succeeds at its saving throw). This ability requires a standard action to activate and costs 4 additional rounds of raging song. Enthralled creatures must each attempt a new saving throw against an effect that functions as the foster hatred (Occult Adventures) spell, except that, unlike with the spell, the instigator is free to choose subgroups, organizations, religions, or the like regardless of the targets' races. Creatures that fail the saving throw or choose to forego it also gain the effects of the instigator's raging song whenever they attack the target of their hatred, for as long as the foster hatred effect lasts; however, they do not gain the effects of the instigator's rage powers when they're under the effects of raging song in this way.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Instigator ~ Song of Riot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.InstigatorClassFeatures.SpecialQuality.Supernatural.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "The instigator can fill the hearts of his listeners with hatred and rouse them into a frenzy. He can use this performance on all targets with fewer than 4 Hit Dice and a Wisdom score lower than 16 who are currently enthralled, without disrupting the enthrall effect (even if a creature succeeds at its saving throw). This ability requires a standard action to activate and costs 4 additional rounds of raging song. Enthralled creatures must each attempt a new saving throw against an effect that functions as the foster hatred (Occult Adventures) spell, except that, unlike with the spell, the instigator is free to choose subgroups, organizations, religions, or the like regardless of the targets' races. Creatures that fail the saving throw or choose to forego it also gain the effects of the instigator's raging song whenever they attack the target of their hatred, for as long as the foster hatred effect lasts; however, they do not gain the effects of the instigator's rage powers when they're under the effects of raging song in this way."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 916,
+    "record_key": "Instigator ~ Song of Riot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

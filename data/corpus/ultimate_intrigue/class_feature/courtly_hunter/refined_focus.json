@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Courtly Hunter ~ Refined Focus",
+    "name": "Refined Focus",
+    "class": "Courtly Hunter",
+    "description": "A courtly hunter has access to a different set of animal aspects with her animal focus. She does not gain access to the bear, bull, frog, monkey, snake, stag, tiger, or wolf aspects. Instead, she gains access to the other aspects. This ability alters animal focus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Courtly Hunter ~ Refined Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.CourtlyHunterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CourtlyHunterFocusAnimalACPool|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A courtly hunter has access to a different set of animal aspects with her animal focus. She does not gain access to the bear, bull, frog, monkey, snake, stag, tiger, or wolf aspects. Instead, she gains access to the other aspects. This ability alters animal focus."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Animal Focus|-1-(HunterACDead>0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Courtly Hunter Animal Focus|1+HunterACDead+(HunterLVL>=8)+(HunterLVL>=20)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusACPool|-1+(HunterLVL>=8)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CourtlyHunterFocusAnimalACPool|1+(HunterLVL>=8)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 394,
+    "record_key": "Courtly Hunter ~ Refined Focus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

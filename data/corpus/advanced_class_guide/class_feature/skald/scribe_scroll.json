@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skald ~ Scribe Scroll",
+    "name": "Scribe Scroll",
+    "class": "Skald",
+    "description": "At 1st level, a skald gains Scribe Scroll as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald ~ Scribe Scroll"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SkaldScribeScroll"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a skald gains Scribe Scroll as a bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Scribe Scroll"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1724,
+    "record_key": "Skald ~ Scribe Scroll"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

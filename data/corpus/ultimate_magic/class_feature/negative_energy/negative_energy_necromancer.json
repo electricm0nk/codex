@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Negative Energy ~ Necromancer",
+    "name": "Negative Energy ~ Necromancer",
+    "class": "Negative Energy",
+    "description": "You can channel energy to command undead. You can command up to %1 hit dice of undead.  The will save DC of your command undead attempts is %2.|PowerOverUndeadCommandHD|PowerOverUndeadCommandDC",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.Channel Energy.Channel Negative Energy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PowerOverUndeadCommandDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PowerOverUndeadCommandHD|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can channel energy to command undead. You can command up to %1 hit dice of undead.  The will save DC of your command undead attempts is %2.|PowerOverUndeadCommandHD|PowerOverUndeadCommandDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerOverUndeadCommandDC|10+(NecromancySchoolLVL-2)/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerOverUndeadCommandHD|NecromancySchoolLVL-2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 825,
+    "record_key": "Negative Energy ~ Necromancer"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

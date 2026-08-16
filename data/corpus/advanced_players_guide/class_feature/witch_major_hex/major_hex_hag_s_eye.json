@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Major Hex ~ Hags Eye",
+    "name": "Major Hex - Hag's Eye",
+    "class": "Witch Major Hex",
+    "description": "DC %1 |WitchHexDC_HagsEye",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Major Hex ~ Hags Eye"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MajorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMajorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,10]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_HagsEye|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_HagsEye"
+      },
+      {
+        "key": "DESC",
+        "value": "For %1 minutes per day (spent in 1 minute increments) the witch can create a magic sensor as per the spell arcane eye. If the witch has the coven hex, all other witches  within 10 feet who also have the coven hex can see through this sensor as well, although the witch that created it still controls it.|WitchHexAbilityLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Hags Eye"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_HagsEye|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_HagsEye|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Hags Eye)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 901,
+    "record_key": "Witch Major Hex ~ Hags Eye"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Scarred Witch Doctor ~ Scarshield",
+    "name": "Scarshield",
+    "class": "Scarred Witch Doctor",
+    "description": "A scarred witch doctor learns how to harden her mutilated skin, gaining an enhancement bonus to her natural armor bonus equal to %1. She can use this ability for %2 minutes per day. These minutes do not need to be consecutive but she must spend them in 1-minute increments. This ability replaces the witch's 1st-level hex.|ScarredWitchNaturalArmorBonus|ScarredWithDoctorNaturalArmorDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scarred Witch Doctor ~ Scarshield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ScarredWithDoctorNaturalArmorDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ScarredWitchNaturalArmorBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A scarred witch doctor learns how to harden her mutilated skin, gaining an enhancement bonus to her natural armor bonus equal to %1. She can use this ability for %2 minutes per day. These minutes do not need to be consecutive but she must spend them in 1-minute increments. This ability replaces the witch's 1st-level hex.|ScarredWitchNaturalArmorBonus|ScarredWithDoctorNaturalArmorDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScarredWithDoctorNaturalArmorDuration|WitchLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScarredWitchNaturalArmorBonus|max(1,(WitchLVL/2))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|ScarredWitchNaturalArmorBonus|TYPE=NaturalArmor.STACK"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 661,
+    "record_key": "Scarred Witch Doctor ~ Scarshield"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

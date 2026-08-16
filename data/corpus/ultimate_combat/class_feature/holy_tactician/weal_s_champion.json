@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Holy Tactician ~ Weal's Champion",
+    "name": "Weal's Champion",
+    "class": "Holy Tactician",
+    "description": "Once per day as swift action, a holy tactician can call on the powers of good to aid her against evil. Against evil targets, the holy tactician gains her Charisma bonus (if any) on her attack rolls against evil creatures, and if she hits, she adds 1/2 her paladin level on her weapon damage rolls as well. These bonuses last for 1 round for every two paladin levels the holy tactician has attained (minimum 1 round). In addition, for 1 round after the holy tactician successfully strikes an evil creature, all non-evil allies within 30 feet of her gain a competence bonus on attack rolls equal to 1/2 her Charisma bonus against that creature as well as a +1 competence bonus on damage rolls. The bonus on damage rolls increases by +1 for every five levels the holy tactician attains (to a maximum of +5 at 20th level). She can grant this bonus against more than one creature at a time. To gain this benefit, the holy tactician's allies must be able to see or hear her, and she must be conscious. At 4th level, and every three levels thereafter, the holy tactician may use weal's champion one additional time per day (to a maximum of seven times per day at 19th level). This ability replaces smite evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holy Tactician ~ Weal's Champion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as swift action, a holy tactician can call on the powers of good to aid her against evil. Against evil targets, the holy tactician gains her Charisma bonus (if any) on her attack rolls against evil creatures, and if she hits, she adds 1/2 her paladin level on her weapon damage rolls as well. These bonuses last for 1 round for every two paladin levels the holy tactician has attained (minimum 1 round). In addition, for 1 round after the holy tactician successfully strikes an evil creature, all non-evil allies within 30 feet of her gain a competence bonus on attack rolls equal to 1/2 her Charisma bonus against that creature as well as a +1 competence bonus on damage rolls. The bonus on damage rolls increases by +1 for every five levels the holy tactician attains (to a maximum of +5 at 20th level). She can grant this bonus against more than one creature at a time. To gain this benefit, the holy tactician's allies must be able to see or hear her, and she must be conscious. At 4th level, and every three levels thereafter, the holy tactician may use weal's champion one additional time per day (to a maximum of seven times per day at 19th level). This ability replaces smite evil."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1483,
+    "record_key": "Holy Tactician ~ Weal's Champion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

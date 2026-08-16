@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Weapon Specialization",
+    "name": "Weapon Specialization",
+    "class": "Warpriest Bonus Feat",
+    "description": "You deal extra damage when using your chosen weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Weapon Specialization"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Weapon Focus"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "WeapSpecQualify,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You deal extra damage when using your chosen weapon."
+      },
+      {
+        "key": "DESC",
+        "value": " You gain a +2 bonus on all damage rolls you make using the selected weapon."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "WEAPONPROFICIENCY|ABILITY=FEAT[Weapon Focus]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Weapon Specialization (%LIST)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4305,
+    "record_key": "Warpriest Bonus Feat ~ Weapon Specialization"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

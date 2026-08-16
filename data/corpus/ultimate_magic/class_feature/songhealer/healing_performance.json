@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Songhealer ~ Healing Performance",
+    "name": "Healing Performance",
+    "class": "Songhealer",
+    "description": "You can use your performance to create an effect equivalent to heal on a living target (or harm on an undead target), using your level as the caster level. Using this ability requires 5 rounds of continuous performance, and the target must be able to see and hear the bard throughout the performance. The healing performance relies on audible and visual components.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Songhealer ~ Healing Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Supernatural.BardicPerformance"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your performance to create an effect equivalent to heal on a living target (or harm on an undead target), using your level as the caster level. Using this ability requires 5 rounds of continuous performance, and the target must be able to see and hear the bard throughout the performance. The healing performance relies on audible and visual components."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 989,
+    "record_key": "Songhealer ~ Healing Performance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

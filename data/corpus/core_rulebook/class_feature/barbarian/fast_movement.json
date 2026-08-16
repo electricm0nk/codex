@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Barbarian ~ Fast Movement",
+    "name": "Fast Movement",
+    "class": "Barbarian",
+    "description": "Your land speed is faster than the norm for your race by +10 feet. This benefit applies only when you are wearing no armor, light armor, or medium armor, and not carrying a heavy load.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian ~ Fast Movement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.SpecialQuality.Extraordinary.ModifyMovement.Fast Movement"
+      },
+      {
+        "key": "DESC",
+        "value": "Your land speed is faster than the norm for your race by +10 feet. This benefit applies only when you are wearing no armor, light armor, or medium armor, and not carrying a heavy load."
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE=Walk|10|PREVARLT:ENCUMBERANCE,2,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 420,
+    "record_key": "Barbarian ~ Fast Movement"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

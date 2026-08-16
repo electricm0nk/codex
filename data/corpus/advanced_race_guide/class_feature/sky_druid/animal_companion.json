@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sky Druid ~ Animal Companion",
+    "name": "Animal Companion",
+    "class": "Sky Druid",
+    "description": "A sky druid who chooses an animal companion must select one with a fly speed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sky Druid ~ Animal Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary.Animal Companion"
+      },
+      {
+        "key": "DESC",
+        "value": "A sky druid who chooses an animal companion must select one with a fly speed."
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Animal Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Bird (Eagle)),Companion (Bird (Hawk)),Companion (Bird (Owl))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 733,
+    "record_key": "Sky Druid ~ Animal Companion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

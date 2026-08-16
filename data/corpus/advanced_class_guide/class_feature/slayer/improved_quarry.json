@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Slayer ~ Improved Quarry",
+    "name": "Improved Quarry",
+    "class": "Slayer",
+    "description": "You can, as a free action, denote one target within your line of sight as your quarry. Whenever you are following the tracks of your quarry, you can take 20 on Survival skill checks while moving at normal speed, without penalty. In addition, you receive a +4 insight bonus on attack rolls made against your quarry and all critical threats are automatically confirmed. You can have no more than one quarry at a time and your target must be selected as a studied target. You can end this effect at any time as a free action, but you cannot select a new quarry for 24 hours. If your quarry is killed or dismissed, you can select a new quarry after waiting 10 minutes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer ~ Improved Quarry"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.SpecialQuality.Extraordinary.AttackOption.SlayerImprovedQuarry"
+      },
+      {
+        "key": "DESC",
+        "value": "You can, as a free action, denote one target within your line of sight as your quarry. Whenever you are following the tracks of your quarry, you can take 20 on Survival skill checks while moving at normal speed, without penalty. In addition, you receive a +4 insight bonus on attack rolls made against your quarry and all critical threats are automatically confirmed. You can have no more than one quarry at a time and your target must be selected as a studied target. You can end this effect at any time as a free action, but you cannot select a new quarry for 24 hours. If your quarry is killed or dismissed, you can select a new quarry after waiting 10 minutes."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1789,
+    "record_key": "Slayer ~ Improved Quarry"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

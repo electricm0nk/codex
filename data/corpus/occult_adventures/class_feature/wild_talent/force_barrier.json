@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Force Barrier",
+    "name": "Force Barrier",
+    "class": "Wild Talent",
+    "description": "Element aether; Type utility (Sp); Level 5; Burn 0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Force Barrier"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Aether"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Elemental Defense ~ Force Ward"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite force ward"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Aether,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Element aether; Type utility (Sp); Level 5; Burn 0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;You create an immobile sphere or hemisphere of force around your square or squares. The force barrier functions as a wall of force in all other ways. Activating this ability is a standard action, and the barrier lasts until the beginning of your next turn. Each round, just before the barrier would disappear, you can extend its duration by accepting 1 point of burn. If an attack manages to destroy the force barrier, you immediately take 1 point of burn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 754,
+    "record_key": "Wild Talent ~ Force Barrier"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

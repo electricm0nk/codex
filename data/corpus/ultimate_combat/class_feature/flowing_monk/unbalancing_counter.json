@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Flowing Monk ~ Unbalancing Counter",
+    "name": "Unbalancing Counter",
+    "class": "Flowing Monk",
+    "description": "At 2nd level, a flowing monk's attacks of opportunity render a struck creature flat-footed until the end of the flowing monk's next turn (Reflex DC 10 + 1/2 the monk's level + Wisdom modifier negates). This ability replaces the bonus feat gained at 2nd level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flowing Monk ~ Unbalancing Counter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a flowing monk's attacks of opportunity render a struck creature flat-footed until the end of the flowing monk's next turn (Reflex DC 10 + 1/2 the monk's level + Wisdom modifier negates). This ability replaces the bonus feat gained at 2nd level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 938,
+    "record_key": "Flowing Monk ~ Unbalancing Counter"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Terrain Mastery 9",
+    "name": "Terrain Mastery XI",
+    "class": null,
+    "description": "+%1 vs. %2|FavoredTerrain9|%CHOICE",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terrain Mastery 9"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "9"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Terrain Mastery"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Terrain Mastery 8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredTerrain9|0"
+      },
+      {
+        "key": "DESC",
+        "value": "+%1 vs. %2|FavoredTerrain9|%CHOICE"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|STRING|Cold|Desert|Forest|Jungle|Mountain|Plains|Plane|Swamp|Underground|Urban|Water"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrain9|FavoredTerrainCount*2-18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainCount|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1635,
+    "record_key": "Terrain Mastery 9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

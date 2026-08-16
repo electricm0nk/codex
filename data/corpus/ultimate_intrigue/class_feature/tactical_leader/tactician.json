@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tactical Leader ~ Tactician",
+    "name": "Tactician",
+    "class": "Tactical Leader",
+    "description": "At 3rd level, 9th level, and 18th level, a tactical leader gains a teamwork feat as a bonus feat. He must meet the prerequisites for this feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tactical Leader ~ Tactician"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.TacticalLeaderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, 9th level, and 18th level, a tactical leader gains a teamwork feat as a bonus feat. He must meet the prerequisites for this feat."
+      },
+      {
+        "key": "DESC",
+        "value": " As a standard action, the tactical leader can grant|!PRECLASS:1,Inquisitor=12"
+      },
+      {
+        "key": "DESC",
+        "value": " As a swift action, the tactical leader can grant|PRECLASS:1,Inquisitor=12"
+      },
+      {
+        "key": "DESC",
+        "value": " one of these feats|!PRECLASS:1,Inquisitor=18"
+      },
+      {
+        "key": "DESC",
+        "value": " any two teamwork feats that he knows, not just his bonus feats,|PRECLASS:1,Inquisitor=18"
+      },
+      {
+        "key": "DESC",
+        "value": " to all allies within 30 feet who can see and hear him. Allies retain the use of this bonus feat for %1 rounds. Allies do not need to meet the prerequisites of these bonus feats. The tactical leader can use this ability %2/day. If the tactical leader also has cavalier levels, these levels stack for determining the number of uses of this ability per day.|3+InquisitorLVL/2|1+(InquisitorLVL>=6)+(InquisitorLVL>=9)+(InquisitorLVL>=15)+(InquisitorLVL>=18)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Tactical Leader Teamwork Feat|1+(InquisitorLVL>=9)+(InquisitorLVL>=18)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 468,
+    "record_key": "Tactical Leader ~ Tactician"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

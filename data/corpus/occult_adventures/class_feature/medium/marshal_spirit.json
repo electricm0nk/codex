@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Marshal Spirit",
+    "name": "Marshal Spirit",
+    "class": "Medium",
+    "description": "A marshal spirit is a towering presence and an inspiration to others.&nl;",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Marshal Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.MediumSpirit"
+      },
+      {
+        "key": "DESC",
+        "value": "A marshal spirit is a towering presence and an inspiration to others.&nl;"
+      },
+      {
+        "key": "DESC",
+        "value": "Favored Locations: Council rooms, stages, theaters, throne rooms.&nl; |PREVARLT:SpiritHideLocation,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Influence Penalty: The time you spend concentrating on your allies prevents you from attending to other important matters. You take a -%1 penalty on Wisdom checks and Wisdom-based skill checks. Additionally, if you are not at least nominally in charge of your present allies, you lose the marshal's spirit bonus and seance boon.&nl; Taboos: Choose one: you may not allow yourself or your allies to prevent a fleeing enemy from escaping, since an at-large villain makes a better tale (this applies only to enemies seeking to escape, not to those retreating to alert others or fight again from a better position); you may never leave an ally behind or allow yourself or your allies to sacrifice another ally, even a summoned creature; you must embrace any opportunity to spread the legend of yourself and your allies, even when a low profile would be helpful.|SpiritBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Marshal Spirit Bonus|!PREFACT:1,ABILITIES,Medium_CF_SpiritBonus=True"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Marshal Seance Boon|Medium ~ Marshal's Order"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Inspiring Call|PREVARGTEQ:MediumLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Decisive Strike|PREVARGTEQ:MediumLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Legendary Marshal|PREVARGTEQ:MediumLVL,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 833,
+    "record_key": "Medium ~ Marshal Spirit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

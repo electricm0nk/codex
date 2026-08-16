@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bloodrager ~ Blood Sanctuary",
+    "name": "Blood Sanctuary",
+    "class": "Bloodrager",
+    "description": "At 3rd level, due to the power of his blood, a bloodrager can stand confidently amid the effects of spells cast by himself or his allies. He gains a +%1 bonus on saving throws against spells that he or an ally casts.|BloodragerBloodSanctuaryBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager ~ Blood Sanctuary"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature.Defensive.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerBloodSanctuaryBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, due to the power of his blood, a bloodrager can stand confidently amid the effects of spells cast by himself or his allies. He gains a +%1 bonus on saving throws against spells that he or an ally casts.|BloodragerBloodSanctuaryBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerBloodSanctuaryBonus|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 336,
+    "record_key": "Bloodrager ~ Blood Sanctuary"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

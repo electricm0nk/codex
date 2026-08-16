@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter's Blessing ~ Form of the Eagle",
+    "name": "Form of the Eagle",
+    "class": "Shifter's Blessing",
+    "description": "The ranger's skin stretches, his nose becomes hooked, and his eyes enlarge. While in this form, the ranger gains a +10 bonus on Perception checks.|!PREABILITY:1,CATEGORY=Special Ability,Shapeshifter ~ Master Shifter",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter's Blessing ~ Form of the Eagle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.ShifterBlessing"
+      },
+      {
+        "key": "DESC",
+        "value": "The ranger's skin stretches, his nose becomes hooked, and his eyes enlarge. While in this form, the ranger gains a +10 bonus on Perception checks.|!PREABILITY:1,CATEGORY=Special Ability,Shapeshifter ~ Master Shifter"
+      },
+      {
+        "key": "DESC",
+        "value": "The ranger's skin stretches, his nose becomes hooked, and his eyes enlarge. While in this form, the ranger gains a +10 bonus on Perception checks and a fly speed of 40 feet with good maneuverability. Alternatively, the ranger can polymorph into the form of an eagle or similar raptor as if the caster of beast shape IV.|PREABILITY:1,CATEGORY=Special Ability,Shapeshifter ~ Master Shifter"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2829,
+    "record_key": "Shifter's Blessing ~ Form of the Eagle"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

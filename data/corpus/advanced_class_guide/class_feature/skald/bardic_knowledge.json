@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skald ~ Bardic Knowledge",
+    "name": "Bardic Knowledge",
+    "class": "Skald",
+    "description": "A skald adds half his class level (minimum 1) (the current bonus is +%1) on all Knowledge skill checks, and may make all Knowledge skill checks untrained.|BardicKnowledgeSkillBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald ~ Bardic Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SkaldBardicKnowledge.SpecialQuality.Extraordinary.Bardic Knowledge"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BardicKnowledgeSkillBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A skald adds half his class level (minimum 1) (the current bonus is +%1) on all Knowledge skill checks, and may make all Knowledge skill checks untrained.|BardicKnowledgeSkillBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE=Knowledge|BardicKnowledgeSkillBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardicKnowledgeSkillBonus|max(1,SkaldLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1721,
+    "record_key": "Skald ~ Bardic Knowledge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Stalwart Defender ~ Uncanny Dodge",
+    "name": "Uncanny Dodge",
+    "class": "Stalwart Defender",
+    "description": "At 3rd level, a stalwart defender gains the ability to react to danger before his senses would normally allow him to do so. He cannot be caught flat-footed, even if the attacker is invisible. He still loses his Dexterity bonus to AC if immobilized. A stalwart defender with this ability can still lose his Dexterity bonus to AC if an opponent successfully uses the feint action against him. If the character gains uncanny dodge from a second class, he automatically gains improved uncanny dodge (see below).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stalwart Defender ~ Uncanny Dodge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a stalwart defender gains the ability to react to danger before his senses would normally allow him to do so. He cannot be caught flat-footed, even if the attacker is invisible. He still loses his Dexterity bonus to AC if immobilized. A stalwart defender with this ability can still lose his Dexterity bonus to AC if an opponent successfully uses the feint action against him. If the character gains uncanny dodge from a second class, he automatically gains improved uncanny dodge (see below)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1469,
+    "record_key": "Stalwart Defender ~ Uncanny Dodge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

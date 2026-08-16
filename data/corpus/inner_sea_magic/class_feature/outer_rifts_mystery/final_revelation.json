@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Outer Rifts Mystery ~ Final Revelation",
+    "name": "Final Revelation",
+    "class": "Outer Rifts Mystery",
+    "description": "You gain the ability to open rifts between planes. This allows you to use gate as a spell-like ability once per day. If you use this ability to call creatures, you still need to provide 10,000 gp in offerings to secure the creature's aid.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Outer Rifts Mystery ~ Final Revelation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.FinalRevelation"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=OracleLVL|Gate,19+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the ability to open rifts between planes. This allows you to use gate as a spell-like ability once per day. If you use this ability to call creatures, you still need to provide 10,000 gp in offerings to secure the creature's aid."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 121,
+    "record_key": "Outer Rifts Mystery ~ Final Revelation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

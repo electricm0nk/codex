@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Antipaladin ~ Cruelty",
+    "name": "Cruelty",
+    "class": "Antipaladin",
+    "description": " At 3rd level, and every three levels thereafter, an antipaladin can select one cruelty. Each cruelty adds an effect to the antipaladin's touch of corruption ability. Whenever the antipaladin uses touch of corruption to deal damage to one target, the target also receives the additional effect from one of the cruelties possessed by the antipaladin. This choice is made when the touch is used. The target receives a Fortitude save to avoid this cruelty. If the save is successful, the target takes the damage as normal, but not the effects of the cruelty. The DC of this save is %1.|CrueltyDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Antipaladin ~ Cruelty"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AntipaladinClassFeatures.SpecialQuality.Mercy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Cruelties|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CrueltyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CrueltyDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": " At 3rd level, and every three levels thereafter, an antipaladin can select one cruelty. Each cruelty adds an effect to the antipaladin's touch of corruption ability. Whenever the antipaladin uses touch of corruption to deal damage to one target, the target also receives the additional effect from one of the cruelties possessed by the antipaladin. This choice is made when the touch is used. The target receives a Fortitude save to avoid this cruelty. If the save is successful, the target takes the damage as normal, but not the effects of the cruelty. The DC of this save is %1.|CrueltyDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cruelty|Cruelties"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrueltyDC|10+CHA+(AntipaladinLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cruelties|min(CrueltyLVL/3,6)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 970,
+    "record_key": "Antipaladin ~ Cruelty"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

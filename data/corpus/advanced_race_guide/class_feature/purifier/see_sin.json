@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Purifier ~ See Sin",
+    "name": "See Sin",
+    "class": "Purifier",
+    "description": "The purifier gains a bonus of %1 on Sense Motive checks to sense enchantments, which she can make as a full-round action. She also gains a bonus of %1 on Spellcraft checks to identify enchantment school spells and spells with the curse or emotion descriptor.|OracleLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Purifier ~ See Sin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "The purifier gains a bonus of %1 on Sense Motive checks to sense enchantments, which she can make as a full-round action. She also gains a bonus of %1 on Spellcraft checks to identify enchantment school spells and spells with the curse or emotion descriptor.|OracleLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Sense Motive=Sense Enchantment|OracleLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Spellcraft=Identify Enchantment,Identify Curse or Emotion|OracleLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 418,
+    "record_key": "Purifier ~ See Sin"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,143 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Druid Archetype ~ Aerie Protector",
+    "name": "Aerie Protector",
+    "class": "Druid Archetype",
+    "description": "The aerie protector guards nature's nests and lairs in the highest mountains, and she is only ever truly at ease when under vast expanses of open sky.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Aerie Protector"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Aerie Protector],[!PREFACT:1,ABILITIES,Druid_Archetype_ArmorProficiencies=True,Druid_Archetype_WeaponProficiencies=True,Druid_Archetype_NatureBond=True,Druid_Archetype_WildEmpathy=True,Druid_Archetype_WoodlandStride=True,Druid_Archetype_ResistNaturesLure=True,Druid_Archetype_WildShape=True,Druid_Archetype_VenomImmunity=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The aerie protector guards nature's nests and lairs in the highest mountains, and she is only ever truly at ease when under vast expanses of open sky."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Aerie Protector ~ Weapon and Armor Proficiency|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aerie Protector ~ Nature Bond|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aerie Protector ~ Wild Empathy|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aerie Protector ~ Sky and Stone|PRECLASS:1,Druid=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aerie Protector ~ Wind at Her Back|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aerie Protector ~ Wild Shape|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aerie Protector ~ In the Wind|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_NatureBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_VenomImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_VenomImmunity|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 493,
+    "record_key": "Druid Archetype ~ Aerie Protector"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

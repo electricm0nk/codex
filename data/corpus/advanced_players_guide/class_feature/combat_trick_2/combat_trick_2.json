@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Combat Trick 2",
+    "name": "Combat Trick 2",
+    "class": null,
+    "description": "You gain a bonus combat feat.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RogueTalent"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,Rogue Talent ~ Combat Trick,Swashbuckler ~ Martial Training"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "CombatTrickTaken,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a bonus combat feat."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Combat Trick Feat|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2888,
+    "record_key": "Combat Trick 2"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

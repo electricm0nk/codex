@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Duelist ~ Extended Effect",
+    "name": "Extended Effect",
+    "class": "Psychic Duelist",
+    "description": "The psychic duelist can spend points from her phrenic pool to increase the duration of a condition by 1 round per point spent. She can spend a maximum of 1 phrenic pool point in this way; this maximum increases to 2 points at 11th level, to 3 points at 15th level, and to 4 points at 19th level. If the target succeeds at its saving throw, this amplification has no effect (though the points are still lost). This amplification can be linked only to offensive manifestations that impose conditions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Duelist ~ Extended Effect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Duelist Class Feature.Psychic Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The psychic duelist can spend points from her phrenic pool to increase the duration of a condition by 1 round per point spent. She can spend a maximum of 1 phrenic pool point in this way; this maximum increases to 2 points at 11th level, to 3 points at 15th level, and to 4 points at 19th level. If the target succeeds at its saving throw, this amplification has no effect (though the points are still lost). This amplification can be linked only to offensive manifestations that impose conditions."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1603,
+    "record_key": "Psychic Duelist ~ Extended Effect"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

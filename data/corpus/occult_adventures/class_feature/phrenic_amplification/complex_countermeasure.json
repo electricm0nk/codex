@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Phrenic Amplification ~ Complex Countermeasure",
+    "name": "Complex Countermeasure",
+    "class": "Phrenic Amplification",
+    "description": "The psychic can spend 1 point from her phrenic pool to increase by 2 the DCs of concentration checks or caster level checks the linked spell requires enemies to attempt. For example, if the linked spell were nondetection, the DC of the caster level check for using a divination on the warded creature or item would increase. This increase also applies to checks to dispel, counterspell, or identify the linked spell. The bonus applies while the spell is cast and lasts for the spell's duration (if appropriate), to a maximum of 24 hours. The psychic can choose to spend 2 points from her phrenic pool to instead increase the linked spell's DCs by 4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phrenic Amplification ~ Complex Countermeasure"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The psychic can spend 1 point from her phrenic pool to increase by 2 the DCs of concentration checks or caster level checks the linked spell requires enemies to attempt. For example, if the linked spell were nondetection, the DC of the caster level check for using a divination on the warded creature or item would increase. This increase also applies to checks to dispel, counterspell, or identify the linked spell. The bonus applies while the spell is cast and lasts for the spell's duration (if appropriate), to a maximum of 24 hours. The psychic can choose to spend 2 points from her phrenic pool to instead increase the linked spell's DCs by 4."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1165,
+    "record_key": "Phrenic Amplification ~ Complex Countermeasure"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

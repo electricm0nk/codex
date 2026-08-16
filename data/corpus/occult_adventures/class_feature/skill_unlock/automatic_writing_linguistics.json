@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skill Unlock ~ Automatic Writing",
+    "name": "Automatic Writing (Linguistics)",
+    "class": "Skill Unlock",
+    "description": "You can produce mysterious writing that pertains to the immediate future, either under the influence of enigmatic guiding spirits or by unleashing your subconscious intuition. Check: Once per week, you can spend 1 hour posing questions while your hand unconsciously scribbles messages of varying legibility and accuracy. At the end of this hour, you attempt a Linguistics check to decipher the meanings of these messages. If successful, you gain information as though you had used augury. If you have 10 or more ranks in Linguistics, you can attempt a higher DC check to instead gain information as though you had used divination. The chance of successfully producing coherent or meaningful writing from any of these effects equals 60%% plus 5%% for every 1 by which your check result exceeds the DC (to a maximum of 90%%). You must choose which DC you'll try to meet before attempting the check. The GM rolls the check and d%% roll secretly, so that you can't tell whether the messages are accurate. Action: Automatic writing takes 1 hour. Try Again: Yes. You can attempt to learn more about a subject, but can still attempt only one check per week.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skill Unlock ~ Automatic Writing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SkillUnlock.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "You can produce mysterious writing that pertains to the immediate future, either under the influence of enigmatic guiding spirits or by unleashing your subconscious intuition. Check: Once per week, you can spend 1 hour posing questions while your hand unconsciously scribbles messages of varying legibility and accuracy. At the end of this hour, you attempt a Linguistics check to decipher the meanings of these messages. If successful, you gain information as though you had used augury. If you have 10 or more ranks in Linguistics, you can attempt a higher DC check to instead gain information as though you had used divination. The chance of successfully producing coherent or meaningful writing from any of these effects equals 60%% plus 5%% for every 1 by which your check result exceeds the DC (to a maximum of 90%%). You must choose which DC you'll try to meet before attempting the check. The GM rolls the check and d%% roll secretly, so that you can't tell whether the messages are accurate. Action: Automatic writing takes 1 hour. Try Again: Yes. You can attempt to learn more about a subject, but can still attempt only one check per week."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1948,
+    "record_key": "Skill Unlock ~ Automatic Writing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Armor Master ~ Deflective Shield",
+    "name": "Deflective Shield",
+    "class": "Armor Master",
+    "description": "An armor master specializes in using his shield to deflect attacks. He gains a +%1 bonus to his touch AC; however, this bonus cannot exceed the sum of the armor and enhancement bonus to AC provided by the shield that the armor master is currently carrying. This ability replaces bravery.|DeflectiveShieldBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Armor Master ~ Deflective Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeflectiveShieldBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An armor master specializes in using his shield to deflect attacks. He gains a +%1 bonus to his touch AC; however, this bonus cannot exceed the sum of the armor and enhancement bonus to AC provided by the shield that the armor master is currently carrying. This ability replaces bravery.|DeflectiveShieldBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|DeflectiveShieldBonus|TYPE=TouchMisc"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeflectiveShieldBonus|(FighterLVL+3)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 689,
+    "record_key": "Armor Master ~ Deflective Shield"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

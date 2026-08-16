@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Master Spy ~ Fool Casting",
+    "name": "Fool Casting",
+    "class": "Master Spy",
+    "description": "A master spy of 8th level or higher can trick an opponent into believing that she has been charmed or dominated. When the master spy succeeds at a saving throw against a magical effect that provides ongoing control (such as charm person, dominate person, or a vampire's dominate ability), she can allow the spell to take partial effect. To the caster, it appears that the spy failed her saving throw, but the spy is not under the caster's control. If the spell provides a telepathic link, it functions normally, but the spy is under no obligation to follow the caster's commands. The master spy can dismiss a fooled spell as a standard action. Fooled casting can be used when the spy succeeds at a subsequent saving throw against an ongoing effect, such as that granted by slippery mind.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master Spy ~ Fool Casting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A master spy of 8th level or higher can trick an opponent into believing that she has been charmed or dominated. When the master spy succeeds at a saving throw against a magical effect that provides ongoing control (such as charm person, dominate person, or a vampire's dominate ability), she can allow the spell to take partial effect. To the caster, it appears that the spy failed her saving throw, but the spy is not under the caster's control. If the spell provides a telepathic link, it functions normally, but the spy is under no obligation to follow the caster's commands. The master spy can dismiss a fooled spell as a standard action. Fooled casting can be used when the spy succeeds at a subsequent saving throw against an ongoing effect, such as that granted by slippery mind."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1415,
+    "record_key": "Master Spy ~ Fool Casting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

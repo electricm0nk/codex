@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dragon Disciple ~ Wings",
+    "name": "Wings",
+    "class": "Dragon Disciple",
+    "description": "At 9th level, a dragon disciple gains the wings bloodline power, even if his level does not yet grant that power. Once his level is high enough to grant this ability through the bloodline, the dragon disciple's speed increases to 90 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Disciple ~ Wings"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.ClassFeatures.Dragon Disciple Class Feature.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a dragon disciple gains the wings bloodline power, even if his level does not yet grant that power. Once his level is high enough to grant this ability through the bloodline, the dragon disciple's speed increases to 90 feet."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Draconic Bloodline ~ Wings"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DragonDisciple_Wings_SpeedBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Fly|DragonDisciple_Wings_SpeedBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DragonDisciple_Wings_SpeedBonus|30|PREVARGTEQ:Sorcerer_Draconic_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.382"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2972,
+    "record_key": "Dragon Disciple ~ Wings"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arrow Champion ~ Retaliation",
+    "name": "Retaliation",
+    "class": "Arrow Champion",
+    "description": "When a foe hits the arrow champion with an attack, she can spend 1 panache point to make a retaliatory attack of opportunity against that foe. If the triggering attack is a melee attack, she can retaliate with a melee attack using a light or one-handed piercing melee weapon, provided the creature is within her reach. If the triggering attack is a ranged attack, she can retaliate with a ranged attack using a bow, provided that the creature is within 30 feet of her. This deed's cost cannot be reduced by any ability or effect that reduces the number of panache points a deed costs.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arrow Champion ~ Retaliation"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL01"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SwashbucklerDeedsLVL1.DeedHasCost.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When a foe hits the arrow champion with an attack, she can spend 1 panache point to make a retaliatory attack of opportunity against that foe. If the triggering attack is a melee attack, she can retaliate with a melee attack using a light or one-handed piercing melee weapon, provided the creature is within her reach. If the triggering attack is a ranged attack, she can retaliate with a ranged attack using a bow, provided that the creature is within 30 feet of her. This deed's cost cannot be reduced by any ability or effect that reduces the number of panache points a deed costs."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1200,
+    "record_key": "Arrow Champion ~ Retaliation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

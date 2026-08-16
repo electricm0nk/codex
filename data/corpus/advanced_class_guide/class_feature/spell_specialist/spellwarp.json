@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spell Specialist ~ Spellwarp",
+    "name": "Spellwarp",
+    "class": "Spell Specialist",
+    "description": "A spell specialist can reduce the radius of a spread or burst effect or shorten the length of a cone. All changes must occur in 5-foot increments, to a minimum of 5 feet. Alternatively, the spell specialist can change the area of effect of a cone spell to a line with a length equal to the spell's range. This ability replaces the arcanist exploits gained at 1st, 7th, 13th, and 19th levels.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spell Specialist ~ Spellwarp"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spell Specialist Class Feature.Arcanist Class Feature.SpecialQuality.Supernatural.ArcanistExploit19"
+      },
+      {
+        "key": "DESC",
+        "value": "A spell specialist can reduce the radius of a spread or burst effect or shorten the length of a cone. All changes must occur in 5-foot increments, to a minimum of 5 feet. Alternatively, the spell specialist can change the area of effect of a cone spell to a line with a length equal to the spell's range. This ability replaces the arcanist exploits gained at 1st, 7th, 13th, and 19th levels."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2642,
+    "record_key": "Spell Specialist ~ Spellwarp"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

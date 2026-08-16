@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Hive Totem",
+    "name": "Hive Totem",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian takes half damage from attacks by swarms of vermin, including spells and effects that act like a swarm of vermin (like summon swarm used to summon spiders or insect plague). She also gains a +1 bonus on Strength ability checks and to CMD against bull rush, drag, and trip attacks for every four barbarian levels she has (maximum +5). A barbarian must have the animal fury power and be at least 4th level before selecting this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Hive Totem"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialAttack.Supernatural.BarbarianTotemRagePower"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Special Ability,TYPE=BarbarianTotemRagePower],[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ Hive Totem]"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Animal Fury"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian takes half damage from attacks by swarms of vermin, including spells and effects that act like a swarm of vermin (like summon swarm used to summon spiders or insect plague). She also gains a +1 bonus on Strength ability checks and to CMD against bull rush, drag, and trip attacks for every four barbarian levels she has (maximum +5). A barbarian must have the animal fury power and be at least 4th level before selecting this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 283,
+    "record_key": "Rage Power ~ Hive Totem"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

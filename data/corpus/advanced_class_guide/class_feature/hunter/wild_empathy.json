@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunter ~ Wild Empathy",
+    "name": "Wild Empathy",
+    "class": "Hunter",
+    "description": "At 1st level, a hunter can improve the initial attitude of an animal. This ability functions just like a Diplomacy check to improve the attitude of a person (see Chapter 4 of the Core Rulebook). The hunter rolls 1d20 and adds %1 (Hunter level + Charisma modifier + any other bonuses) to determine the wild empathy check result.  The typical domestic animal has a starting attitude of indifferent, while wild animals are usually unfriendly.|HunterWildEmpatyBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter ~ Wild Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.HunterWildEmpathy.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterWildEmpatyBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a hunter can improve the initial attitude of an animal. This ability functions just like a Diplomacy check to improve the attitude of a person (see Chapter 4 of the Core Rulebook). The hunter rolls 1d20 and adds %1 (Hunter level + Charisma modifier + any other bonuses) to determine the wild empathy check result.  The typical domestic animal has a starting attitude of indifferent, while wild animals are usually unfriendly.|HunterWildEmpatyBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterWildEmpatyBonus|CHA+HunterLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildEmpathyLVL|HunterLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1175,
+    "record_key": "Hunter ~ Wild Empathy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunting Paladin ~ Detect Evil",
+    "name": "Detect Evil",
+    "class": "Hunting Paladin",
+    "description": "A hunting paladin cannot use this ability as a move action. However, when a hunting paladin has successfully followed a creature's tracks for at least 1 minute, she can discern whether the tracked creature's alignment was evil, as if she had cast detect evil in its presence and concentrated for 3 rounds. This alters detect evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunting Paladin ~ Detect Evil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Features.HuntingPaladinClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A hunting paladin cannot use this ability as a move action. However, when a hunting paladin has successfully followed a creature's tracks for at least 1 minute, she can discern whether the tracked creature's alignment was evil, as if she had cast detect evil in its presence and concentrated for 3 rounds. This alters detect evil."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 879,
+    "record_key": "Hunting Paladin ~ Detect Evil"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

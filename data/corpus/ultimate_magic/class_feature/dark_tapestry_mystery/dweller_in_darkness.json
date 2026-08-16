@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dark Tapestry Mystery ~ Dweller in Darkness",
+    "name": "Dweller in Darkness",
+    "class": "Dark Tapestry Mystery",
+    "description": "Once per day, you cast your psyche into the void of space to attract the attention of a terrible otherworldly being. The dweller in darkness behaves in all ways as if you had cast phantasmal killer.|!PRECLASS:1,Oracle=17",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dark Tapestry Mystery ~ Dweller in Darkness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.DarkTapestryRevelation.SpellLike"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=11"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you cast your psyche into the void of space to attract the attention of a terrible otherworldly being. The dweller in darkness behaves in all ways as if you had cast phantasmal killer.|!PRECLASS:1,Oracle=17"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you cast your psyche into the void of space to attract the attention of a terrible otherworldly being. The dweller in darkness behaves in all ways as if you had cast weird.|PRECLASS:1,Oracle=17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 468,
+    "record_key": "Dark Tapestry Mystery ~ Dweller in Darkness"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

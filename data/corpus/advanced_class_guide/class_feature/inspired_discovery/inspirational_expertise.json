@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inspired Discovery ~ Inspirational Expertise",
+    "name": "Inspirational Expertise",
+    "class": "Inspired Discovery",
+    "description": "When an investigator succeeds at a Knowledge check to identify a monster's special powers or vulnerabilities, he can expend one use of inspiration as a swift action to grant allies within 30 feet that can hear him a +4 insight bonus on attack rolls against that monster or type of monster for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inspired Discovery ~ Inspirational Expertise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InspiredInvestigatorTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Alchemist Archetype ~ Inspired Chemist"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AlchemistLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "When an investigator succeeds at a Knowledge check to identify a monster's special powers or vulnerabilities, he can expend one use of inspiration as a swift action to grant allies within 30 feet that can hear him a +4 insight bonus on attack rolls against that monster or type of monster for 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2346,
+    "record_key": "Inspired Discovery ~ Inspirational Expertise"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

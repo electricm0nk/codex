@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elemental Annihilator ~ Increased Range",
+    "name": "Increased Range",
+    "class": "Elemental Annihilator",
+    "description": "At 3rd level, an elemental annihilator gains the extended range infusion. At 9th level, she gains the extreme range infusion. This ability replaces the 3rd- and 9th-level infusions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Annihilator ~ Increased Range"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Elemental Annihilator Class Feature.Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, an elemental annihilator gains the extended range infusion. At 9th level, she gains the extreme range infusion. This ability replaces the 3rd- and 9th-level infusions."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Talent ~ Extended Range"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Talent ~ Extreme Range|PRECLASS:1,Kinesticist=9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1331,
+    "record_key": "Elemental Annihilator ~ Increased Range"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

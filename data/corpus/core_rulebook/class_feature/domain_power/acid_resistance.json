@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Domain Power ~ Acid Resistance",
+    "name": "Acid Resistance",
+    "class": "Domain Power",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Acid Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Extraordinary.DomainPower.Earth Domain"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEarthResistanceBonus|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Acid|PREVARGTEQ:DomainEarthLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Acid|PREVARGTEQ:DomainEarthLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|DomainEarthResistanceBonus|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEarthResistanceBonus|10|PREVARGTEQ:DomainEarthLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEarthResistanceBonus|10|PREVARGTEQ:DomainEarthLVL,12"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 706,
+    "record_key": "Domain Power ~ Acid Resistance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

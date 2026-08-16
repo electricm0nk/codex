@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Sudden Block",
+    "name": "Sudden Block",
+    "class": "Medium",
+    "description": "(Greater) After an enemy's attack would hit you or an adjacent creature, you can use spirit surge to increase the victim's AC, possibly causing the attack to fail, by rolling your spirit surge die and adding it to the chosen character's AC. You must not be flat-footed, and you must be aware of the attack. If use of this ability causes the enemy's attack to miss, you can make an attack at your highest base attack bonus against that enemy as an immediate action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Sudden Block"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "(Greater) After an enemy's attack would hit you or an adjacent creature, you can use spirit surge to increase the victim's AC, possibly causing the attack to fail, by rolling your spirit surge die and adding it to the chosen character's AC. You must not be flat-footed, and you must be aware of the attack. If use of this ability causes the enemy's attack to miss, you can make an attack at your highest base attack bonus against that enemy as an immediate action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 855,
+    "record_key": "Medium ~ Sudden Block"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

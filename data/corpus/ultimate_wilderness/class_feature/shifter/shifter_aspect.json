@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter ~ Shifter Aspect",
+    "name": "Shifter Aspect",
+    "class": "Shifter",
+    "description": "At 1st level, a shifter gains her first aspect-a category of animal to which her body and soul have become supernaturally attuned. She can shift into her aspect's minor form for %1 minutes per day. The duration need not be consecutive but must be spent in 1-minute increments. Shifting into a minor form is a swift action, while ending the effect is a free action that can be taken only on the shifter's turn. Until a shifter gains the chimeric aspect class feature, she can assume only one minor form at a time. Shifting to a new aspect (or aspects, in the case of chimeric aspects or greater chimeric aspects) ends all minor forms currently manifested. The minor forms of aspects are not polymorph effects, and the shifter does not lose the benefits of a minor form while affected by polymorph effects. As the shifter gains levels, she gains more aspects.|ShifterAspectMinutes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter ~ Shifter Aspect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterAspectMinutes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterAspectCount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterAspectLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a shifter gains her first aspect-a category of animal to which her body and soul have become supernaturally attuned. She can shift into her aspect's minor form for %1 minutes per day. The duration need not be consecutive but must be spent in 1-minute increments. Shifting into a minor form is a swift action, while ending the effect is a free action that can be taken only on the shifter's turn. Until a shifter gains the chimeric aspect class feature, she can assume only one minor form at a time. Shifting to a new aspect (or aspects, in the case of chimeric aspects or greater chimeric aspects) ends all minor forms currently manifested. The minor forms of aspects are not polymorph effects, and the shifter does not lose the benefits of a minor form while affected by polymorph effects. As the shifter gains levels, she gains more aspects.|ShifterAspectMinutes"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shifter Aspect Choice|ShifterAspectCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterAspectMinutes|ShifterLVL+3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterAspectCount|1+min(3,(ShifterLVL/5))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterAspectLVL|ShifterLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Minutes per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ShifterAspectMinutes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Shifter Aspect"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 13,
+    "record_key": "Shifter ~ Shifter Aspect"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

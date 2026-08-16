@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Armored Hulk ~ Resilience of Steel",
+    "name": "Resilience of Steel",
+    "class": "Armored Hulk",
+    "description": "At 3rd level, an armored hulk is able to use her armor to help avoid deadly hits. While wearing heavy armor, she gains a +1 bonus to AC that applies only on critical hit confirmation rolls. This bonus increases by +1 every 3 levels beyond 3rd (maximum +6 at 18th level). This ability replaces trap sense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Armored Hulk ~ Resilience of Steel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArmHulkSteelBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, an armored hulk is able to use her armor to help avoid deadly hits. While wearing heavy armor, she gains a +1 bonus to AC that applies only on critical hit confirmation rolls. This bonus increases by +1 every 3 levels beyond 3rd (maximum +6 at 18th level). This ability replaces trap sense."
+      },
+      {
+        "key": "DESC",
+        "value": "(currently at +%1)|ArmHulkSteelBonus|PREVARGT:ArmHulkSteelBonus,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmHulkSteelBonus|1|PREVARGTEQ:classlevel(\"Barbarian\"),3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmHulkSteelBonus|1|PREVARGTEQ:classlevel(\"Barbarian\"),6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmHulkSteelBonus|1|PREVARGTEQ:classlevel(\"Barbarian\"),9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmHulkSteelBonus|1|PREVARGTEQ:classlevel(\"Barbarian\"),12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmHulkSteelBonus|1|PREVARGTEQ:classlevel(\"Barbarian\"),15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmHulkSteelBonus|1|PREVARGTEQ:classlevel(\"Barbarian\"),18"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 317,
+    "record_key": "Armored Hulk ~ Resilience of Steel"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

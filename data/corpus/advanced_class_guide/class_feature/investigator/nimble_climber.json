@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent ~ Nimble Climber",
+    "name": "Nimble Climber",
+    "class": "Investigator",
+    "description": "When an investigator with this talent fails a Climb check by 5 or more, she can immediately make another Climb check at the surface's base DC +10. If successful, she stops her fall by clinging onto the surface. The investigator does not take falling damage when she stops her fall in this manner.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent ~ Nimble Climber"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorRogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When an investigator with this talent fails a Climb check by 5 or more, she can immediately make another Climb check at the surface's base DC +10. If successful, she stops her fall by clinging onto the surface. The investigator does not take falling damage when she stops her fall in this manner."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1362,
+    "record_key": "Investigator ~ Rogue Talent ~ Nimble Climber"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

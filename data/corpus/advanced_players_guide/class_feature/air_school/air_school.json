@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Air School",
+    "name": "Air School",
+    "class": null,
+    "description": "The air elementalist uses the forces of the wind, sky, clouds, and lightning to confuse and destroy his foes, all while flying through the air with ease.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AirSchoolLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AirSchoolProgressionLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The air elementalist uses the forces of the wind, sky, clouds, and lightning to confuse and destroy his foes, all while flying through the air with ease."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Air School ~ Air Supremacy|Air School ~ Lightning Flash"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Air School ~ Cyclone|PREVARGTEQ:AirSchoolProgressionLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AirSchoolLVL|WizardSchoolLvl"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AirSchoolProgressionLVL|ArcaneSchoolProgressionLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3275,
+    "record_key": "Air School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

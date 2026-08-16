@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spirit Deck",
+    "name": "Spirit Deck",
+    "class": null,
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.Checklist"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpiritDeckTimes|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "You may, as a standard action, summon a shimmering, translucent Harrow deck that flies through the air and engulfs a target within 30 ft. in a whirling cloud of knife-edged cards. You then draw %1 Harrow cards, and the spirit deck deals damage based on the number of drawn cards that match your alignment. Each exact match deals 5 points of damage, each partial match (identical on one alignment axis) deals 3 points, each non-matched card deals 1 point, and each opposite match deals 0 points. You may use this ability %2/day.|HarrowerLvl|SpiritDeckTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SpiritDeckTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|SpiritDeckTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 46,
+    "record_key": "Spirit Deck"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

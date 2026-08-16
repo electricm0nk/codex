@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Device Talent",
+    "name": "Device Talent",
+    "class": "Investigator",
+    "description": "The investigator can use the Use Magic Device skill even if not trained in that skill. If the investigator is trained in Use Magic Device, he can use the inspiration ability with that skill without expending uses of inspiration.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Device Talent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.InvestigatorTalent"
+      },
+      {
+        "key": "DESC",
+        "value": "The investigator can use the Use Magic Device skill even if not trained in that skill. If the investigator is trained in Use Magic Device, he can use the inspiration ability with that skill without expending uses of inspiration."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1286,
+    "record_key": "Investigator ~ Device Talent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

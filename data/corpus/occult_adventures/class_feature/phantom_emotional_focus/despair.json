@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Phantom Emotional Focus ~ Despair",
+    "name": "Despair",
+    "class": "Phantom Emotional Focus",
+    "description": "Some creatures die in such horrific ways, or live such pointless and senseless lives, that despair grips their very beings. Phantoms with this focus use misery as a weapon, inf licting the living with the gloom of the phantoms' continued existence. Despair phantoms often appear twisted or wounded, showing the grisly circumstances of their demise. Their coloration tends to have a grayish or sickly green cast. When they speak, they do so in terrifying whispers or high-pitched screeches.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantom Emotional Focus ~ Despair"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phantom Emotional Focus"
+      },
+      {
+        "key": "DESC",
+        "value": "Some creatures die in such horrific ways, or live such pointless and senseless lives, that despair grips their very beings. Phantoms with this focus use misery as a weapon, inf licting the living with the gloom of the phantoms' continued existence. Despair phantoms often appear twisted or wounded, showing the grisly circumstances of their demise. Their coloration tends to have a grayish or sickly green cast. When they speak, they do so in terrifying whispers or high-pitched screeches."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Skill Focus (Intimidate)|Skill Focus (Stealth)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhantomEmotionalFocus_Despair|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1298,
+    "record_key": "Phantom Emotional Focus ~ Despair"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

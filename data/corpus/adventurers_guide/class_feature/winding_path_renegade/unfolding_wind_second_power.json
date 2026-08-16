@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Winding Path Renegade ~ Unfolding Wind Second Power",
+    "name": "Unfolding Wind Second Power",
+    "class": "Winding Path Renegade",
+    "description": "She can harness the power of the wind to make enormous leaps. As a move action, she can leap without attempting an Acrobatics check, jumping any distance up to her move speed (upward movement counts as double, as when flying). She can leap in this way %1 times per day.|BrawlerLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Winding Path Renegade ~ Unfolding Wind Second Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.WindingPathRenegadeClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      },
+      {
+        "key": "DESC",
+        "value": "She can harness the power of the wind to make enormous leaps. As a move action, she can leap without attempting an Acrobatics check, jumping any distance up to her move speed (upward movement counts as double, as when flying). She can leap in this way %1 times per day.|BrawlerLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 731,
+    "record_key": "Winding Path Renegade ~ Unfolding Wind Second Power"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

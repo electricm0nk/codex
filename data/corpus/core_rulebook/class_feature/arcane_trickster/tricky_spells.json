@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcane Trickster ~ Tricky Spells",
+    "name": "Tricky Spells",
+    "class": "Arcane Trickster",
+    "description": "Starting at 5th level, an arcane trickster can cast her spells without their somatic or verbal components, as if using the Still Spell and Silent Spell feats. Spells cast using this ability do not increase in spell level or casting time. She can use this ability 3 times per day at 5th level and one additional time per every two levels thereafter, to a maximum of 5 times per day at 9th level. The arcane trickster decides to use this ability at the time of casting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Trickster ~ Tricky Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrickySpellsTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 5th level, an arcane trickster can cast her spells without their somatic or verbal components, as if using the Still Spell and Silent Spell feats. Spells cast using this ability do not increase in spell level or casting time. She can use this ability 3 times per day at 5th level and one additional time per every two levels thereafter, to a maximum of 5 times per day at 9th level. The arcane trickster decides to use this ability at the time of casting."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrickySpellsTimes|3|PREVARGTEQ:ArcaneTricksterLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrickySpellsTimes|1|PREVARGTEQ:ArcaneTricksterLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrickySpellsTimes|1|PREVARGTEQ:ArcaneTricksterLVL,9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.378"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Tricky Spells %1/day|TrickySpellsTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|TrickySpellsTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2936,
+    "record_key": "Arcane Trickster ~ Tricky Spells"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

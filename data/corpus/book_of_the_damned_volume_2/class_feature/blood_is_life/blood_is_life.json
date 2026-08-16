@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Blood is Life ~ Zura",
+    "name": "Blood is Life",
+    "class": "Blood is Life",
+    "description": "1/day as a full-round action, you may drink the blood of a creature that has been dead for no more than an hour to gain the benefits of heroes' feast and death knell for 1 hour. The blood imbibed must come from a creature with a minimum CR of %1.|TL-2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blood is Life ~ Zura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Heroes' Feast,16+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Death Knell,12+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day as a full-round action, you may drink the blood of a creature that has been dead for no more than an hour to gain the benefits of heroes' feast and death knell for 1 hour. The blood imbibed must come from a creature with a minimum CR of %1.|TL-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 201,
+    "record_key": "Blood is Life ~ Zura"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

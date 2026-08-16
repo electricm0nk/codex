@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dazzling Feint ~ Critical Strike",
+    "name": "Critical Strike",
+    "class": "Dazzling Feint",
+    "description": "Ever alert, the vexing daredevil hones in on the target's weak points. If her next attack is a critical threat against the target of this dazzling feint, the vexing daredevil gains a +%1 circumstance bonus on the roll to confirm that critical hit.|MesmeristLVL/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dazzling Feint ~ Critical Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DazzlingFeint.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Ever alert, the vexing daredevil hones in on the target's weak points. If her next attack is a critical threat against the target of this dazzling feint, the vexing daredevil gains a +%1 circumstance bonus on the roll to confirm that critical hit.|MesmeristLVL/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1510,
+    "record_key": "Dazzling Feint ~ Critical Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

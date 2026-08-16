@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Prankster ~ Mock",
+    "name": "Mock",
+    "class": "Prankster",
+    "description": "The prankster can use his performance to cause up to %1 creatures to become furious with him. Each creature to be mocked must be within 90 feet, able to see, hear, and understand the prankster, and capable of paying attention to him. The prankster must also be able to see the creatures affected. Each creature within range receives a Will save (DC %2) to negate the effect. If a creature's saving throw succeeds, the prankster cannot successfully mock that creature for 24 hours. If its saving throw fails, the creature is angered by the performance and seeks to harm the prankster. While the prankster maintains the mocking, the target takes a -2 penalty on all attack rolls and skill checks until it has successfully attacked the prankster with a melee or ranged attack, or has harmed the creature with a spell that deals damage. Mock is an enchantment (compulsion) mind-affecting ability. Mock relies on audible and visual components in order to function.|1+(BardLVL-1)/3|10+BardLVL/2+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Prankster ~ Mock"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The prankster can use his performance to cause up to %1 creatures to become furious with him. Each creature to be mocked must be within 90 feet, able to see, hear, and understand the prankster, and capable of paying attention to him. The prankster must also be able to see the creatures affected. Each creature within range receives a Will save (DC %2) to negate the effect. If a creature's saving throw succeeds, the prankster cannot successfully mock that creature for 24 hours. If its saving throw fails, the creature is angered by the performance and seeks to harm the prankster. While the prankster maintains the mocking, the target takes a -2 penalty on all attack rolls and skill checks until it has successfully attacked the prankster with a melee or ranged attack, or has harmed the creature with a spell that deals damage. Mock is an enchantment (compulsion) mind-affecting ability. Mock relies on audible and visual components in order to function.|1+(BardLVL-1)/3|10+BardLVL/2+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 171,
+    "record_key": "Prankster ~ Mock"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

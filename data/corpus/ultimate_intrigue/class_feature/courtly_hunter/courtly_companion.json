@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Courtly Hunter ~ Courtly Companion",
+    "name": "Courtly Companion",
+    "class": "Courtly Hunter",
+    "description": "A courtly hunter's animal companion was touched by either the fey or the nature spirits that form leshys and answer to commune with nature, granting it its own intelligence. The companion's type changes to magical beast (augmented animal), but his doesn't change any of its statistics and it counts as an animal, not as a magical beast, for the purposes of determining all effects, prerequisites, and so on. It does not learn tricks, but it does have an Intelligence score equal to that of a familiar belonging to a wizard of the courtly hunter's hunter level. Levels in other classes that grant animal companions do not stack with levels of courtly hunter for the purpose of determining the abilities of her courtly companion. [Change to magical beast and stacking restriction not yet implemented] This ability alters animal companion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Courtly Hunter ~ Courtly Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.CourtlyHunterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CourtlyCompanionLvL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A courtly hunter's animal companion was touched by either the fey or the nature spirits that form leshys and answer to commune with nature, granting it its own intelligence. The companion's type changes to magical beast (augmented animal), but his doesn't change any of its statistics and it counts as an animal, not as a magical beast, for the purposes of determining all effects, prerequisites, and so on. It does not learn tricks, but it does have an Intelligence score equal to that of a familiar belonging to a wizard of the courtly hunter's hunter level. Levels in other classes that grant animal companions do not stack with levels of courtly hunter for the purpose of determining the abilities of her courtly companion. [Change to magical beast and stacking restriction not yet implemented] This ability alters animal companion."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CourtlyCompanionLvL|HunterLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 393,
+    "record_key": "Courtly Hunter ~ Courtly Companion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

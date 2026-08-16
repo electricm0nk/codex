@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Eldritch Raider ~ New Talents",
+    "name": "New Talents",
+    "class": "Eldritch Raider",
+    "description": "An eldritch raider has access to the following new advanced talents when selecting rogue advanced talents.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eldritch Raider ~ New Talents"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An eldritch raider has access to the following new advanced talents when selecting rogue advanced talents."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.189"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 849,
+    "record_key": "Eldritch Raider ~ New Talents"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

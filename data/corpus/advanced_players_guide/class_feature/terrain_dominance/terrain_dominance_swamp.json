@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Terrain Dominance ~ Swamp",
+    "name": "Terrain Dominance (Swamp)",
+    "class": "Terrain Dominance",
+    "description": "The horizon walker gains tremorsense with a 30-foot range. He must be at least 5th level before selecting this power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terrain Dominance ~ Swamp"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.TerrainDominance"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Terrain Mastery ~ Swamp"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Horizon Walker=5"
+      },
+      {
+        "key": "DESC",
+        "value": "The horizon walker gains tremorsense with a 30-foot range. He must be at least 5th level before selecting this power."
+      },
+      {
+        "key": "VISION",
+        "value": "Tremorsense (30')"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1352,
+    "record_key": "Terrain Dominance ~ Swamp"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcanist School ~ Water",
+    "name": "Water School",
+    "class": "Arcanist School",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcanist School ~ Water"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ArcanistSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WaterSchoolLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WaterSchoolProgressionLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WaterSchoolLVL|ArcaneSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WaterSchoolProgressionLVL|ArcaneSchoolProgressionLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 204,
+    "record_key": "Arcanist School ~ Water"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

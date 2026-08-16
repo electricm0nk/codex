@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Greater Plague Bomb",
+    "name": "Greater Plague Bomb",
+    "class": "Discovery",
+    "description": "The effects of the smoke created by an alchemist's bomb duplicates the effects of greater contagion instead of fog cloud, filling an area equal to twice the bomb's splash radius for %1 rounds.|AlchemistDiscoveryLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Greater Plague Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "12,CATEGORY=Special Ability,Discovery ~ Plague Bomb,Discovery ~ Smoke Bomb"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "The effects of the smoke created by an alchemist's bomb duplicates the effects of greater contagion instead of fog cloud, filling an area equal to twice the bomb's splash radius for %1 rounds.|AlchemistDiscoveryLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 716,
+    "record_key": "Discovery ~ Greater Plague Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

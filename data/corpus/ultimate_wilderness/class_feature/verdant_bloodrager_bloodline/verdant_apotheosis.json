@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Verdant Bloodrager Bloodline ~ Verdant Apotheosis",
+    "name": "Verdant Apotheosis",
+    "class": "Verdant Bloodrager Bloodline",
+    "description": "Verdant power surges throughout your being. While bloodraging, you gain tremorsense out to 30 feet. In addition, you gain immunity to paralysis, poison, sleep, and stunning effects, even while you are not bloodraging.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Bloodrager Bloodline ~ Verdant Apotheosis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Verdant Bloodrager Bloodline ~ Power LVL 20.Bloodrager Bloodline Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Verdant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Verdant_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Verdant_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Verdant power surges throughout your being. While bloodraging, you gain tremorsense out to 30 feet. In addition, you gain immunity to paralysis, poison, sleep, and stunning effects, even while you are not bloodraging."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|VerdantBloodragerBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 312,
+    "record_key": "Verdant Bloodrager Bloodline ~ Verdant Apotheosis"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

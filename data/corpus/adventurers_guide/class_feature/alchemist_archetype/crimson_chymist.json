@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Crimson Chymist",
+    "name": "Crimson Chymist",
+    "class": "Alchemist Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Crimson Chymist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "DESC",
+        "value": "Red Mantis agents are easily identifiable by their iconic equipment. Yet some assassins believe even subtler killing methods can be employed while still honoring Achaekek. These crimson chymists turn to the alchemical arts, infusing their bodies with the mutagenic essence of the Mantis God."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Crimson Chymist],[!PREFACT:1,ABILITIES,Alchemist_Archetype_Discovery=True,Alchemist_Archetype_Mutagen=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Crimson Chymist ~ Crimson Discoveries|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Crimson Chymist ~ Mantis Mutagen|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Discovery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Mutagen|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 583,
+    "record_key": "Alchemist Archetype ~ Crimson Chymist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

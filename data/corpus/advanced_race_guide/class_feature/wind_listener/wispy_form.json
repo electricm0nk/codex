@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wind Listener ~ Wispy Form",
+    "name": "Wispy Form",
+    "class": "Wind Listener",
+    "description": "The wind listener gains the ability to become airy and translucent as a standard action, gaining DR 10/magic and the effects of greater invisibility for %1 rounds per day. These rounds need not be consecutive. Like the natural invisibility universal monster ability (Bestiary 2 299), this ability is not subject to invisibility purge.|WizardLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wind Listener ~ Wispy Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The wind listener gains the ability to become airy and translucent as a standard action, gaining DR 10/magic and the effects of greater invisibility for %1 rounds per day. These rounds need not be consecutive. Like the natural invisibility universal monster ability (Bestiary 2 299), this ability is not subject to invisibility purge.|WizardLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 742,
+    "record_key": "Wind Listener ~ Wispy Form"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

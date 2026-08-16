@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Trapper ~ Trapfinding",
+    "name": "Trapfinding",
+    "class": "Trapper",
+    "description": "A trapper adds 1/2 her ranger level on Perception skill checks made to locate traps and on Disable Device skill checks (minimum +1). A trapper can use Disable Device to disarm magic traps.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trapper ~ Trapfinding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapperTrapfindingBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapperTrapfindingBonus|max(1,RangerLVL/2)"
+      },
+      {
+        "key": "DESC",
+        "value": "A trapper adds 1/2 her ranger level on Perception skill checks made to locate traps and on Disable Device skill checks (minimum +1). A trapper can use Disable Device to disarm magic traps."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=Trapfinding|TrapperTrapfindingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disable Device|TrapperTrapfindingBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1609,
+    "record_key": "Trapper ~ Trapfinding"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

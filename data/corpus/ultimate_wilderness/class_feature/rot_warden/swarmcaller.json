@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rot Warden ~ Swarmcaller",
+    "name": "Swarmcaller",
+    "class": "Rot Warden",
+    "description": "A rot warden can summon a swarm of vermin once per day as a standard action. This functions like summon swarm, except the swarm the rot warden summons must be a cockroach, locust, or spider swarm. If he uses this ability during the surprise round of combat, nearby animals and vermin become hushed until the first round of combat ends; during this surprise round and first round of combat, flat-footed creatures also gain the shaken condition (this doesn't stack with other fear effects). At 9th level, he adds army ant, centipede, and wasp swarms to the list of swarms he can call with this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rot Warden ~ Swarmcaller"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.SeasonSageClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A rot warden can summon a swarm of vermin once per day as a standard action. This functions like summon swarm, except the swarm the rot warden summons must be a cockroach, locust, or spider swarm. If he uses this ability during the surprise round of combat, nearby animals and vermin become hushed until the first round of combat ends; during this surprise round and first round of combat, flat-footed creatures also gain the shaken condition (this doesn't stack with other fear effects). At 9th level, he adds army ant, centipede, and wasp swarms to the list of swarms he can call with this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 563,
+    "record_key": "Rot Warden ~ Swarmcaller"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Kirin Style",
+    "name": "Kirin Style",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your study and your grace allows you to exploit your enemies' weaknesses.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Kirin Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Style"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Improved Unarmed Strike"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Knowledge (arcana)=6"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Knowledge (dungeoneering)=1,Knowledge (local)=1,Knowledge (nature)=1,Knowledge (planes)=1,Knowledge (religion)=1"
+      },
+      {
+        "key": "DESC",
+        "value": "Your study and your grace allows you to exploit your enemies' weaknesses."
+      },
+      {
+        "key": "DESC",
+        "value": " While using this style, you can spend a swift action to make a Knowledge check to identify a single creature (DC 15 + the creature's CR for this purpose). If you succeed at the check, while using this style, you gain a +2 bonus on saving throws against that creature's attacks, as well as a +2 dodge bonus to AC against that creature's attacks of opportunity. These bonuses last for as long as you use this style. If you cease combat with the creature during this time and resume it later, you can attempt the check again."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Kirin Style"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4478,
+    "record_key": "Warpriest Bonus Feat ~ Kirin Style"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

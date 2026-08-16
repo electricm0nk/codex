@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Airborne Ambusher ~ Weapon and Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Airborne Ambusher",
+    "description": "An airborne ambusher is not proficient with heavy armor or tower shields.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Airborne Ambusher ~ Weapon and Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An airborne ambusher is not proficient with heavy armor or tower shields."
+      },
+      {
+        "key": "REMOVE",
+        "value": "FEAT|2|Armor Proficiency (Heavy),Tower Shield Proficiency"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.201"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 950,
+    "record_key": "Airborne Ambusher ~ Weapon and Armor Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

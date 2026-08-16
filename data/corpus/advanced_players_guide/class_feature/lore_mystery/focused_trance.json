@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Lore Mystery ~ Focused Trance",
+    "name": "Focused Trance",
+    "class": "Lore Mystery",
+    "description": "You can enter a deep meditation, blocking out visual and auditory stimuli and allowing you to concentrate on a single problem, philosophical issue, or memory. This trance lasts 1d6 rounds, during which time you can only take move actions. During this period, you gain a +%1 bonus on all saves against sonic effects and gaze attacks. When you come out of your trance, you may make a single Intelligence-based skill check with a +20 circumstance bonus. You may enter your focused trance %2 time(s) per day.|OracleFocusedTranceSaveBonus|OracleFocusedTranceTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lore Mystery ~ Focused Trance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.LoreRevelation.Extraordinary.PerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleFocusedTranceSaveBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleFocusedTranceTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can enter a deep meditation, blocking out visual and auditory stimuli and allowing you to concentrate on a single problem, philosophical issue, or memory. This trance lasts 1d6 rounds, during which time you can only take move actions. During this period, you gain a +%1 bonus on all saves against sonic effects and gaze attacks. When you come out of your trance, you may make a single Intelligence-based skill check with a +20 circumstance bonus. You may enter your focused trance %2 time(s) per day.|OracleFocusedTranceSaveBonus|OracleFocusedTranceTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleFocusedTranceSaveBonus|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleFocusedTranceTimes|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 638,
+    "record_key": "Lore Mystery ~ Focused Trance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

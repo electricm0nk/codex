@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Warrior ~ Honor in All Things",
+    "name": "Honor in All Things",
+    "class": "Order of the Warrior",
+    "description": "The order of the warrior samurai draws strength from his sense of honor. Whenever the samurai makes a skill check or saving throw, he can call upon his honor as a free action to grant him a +4 morale bonus on the roll. He can use this ability %1/day.|SamuraiHonorTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Warrior ~ Honor in All Things"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Order of the Warrior_2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SamuraiHonorTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The order of the warrior samurai draws strength from his sense of honor. Whenever the samurai makes a skill check or saving throw, he can call upon his honor as a free action to grant him a +4 morale bonus on the roll. He can use this ability %1/day.|SamuraiHonorTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SamuraiHonorTimes|(2+SamuraiLVL)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 220,
+    "record_key": "Order of the Warrior ~ Honor in All Things"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

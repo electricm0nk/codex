@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Titan Mauler ~ Evade Reach",
+    "name": "Evade Reach",
+    "class": "Titan Mauler",
+    "description": "At 5th level, as a swift action, a titan mauler may choose one creature within her line of sight. Until the end of her turn, that target's reach is treated as if it were 5 feet shorter with respect to reaching the titan mauler, and this reduction increases by 5 feet for every five levels beyond 5th (currently %1 feet). This ability replaces improved uncanny dodge.|MaulerEvadeReach",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Titan Mauler ~ Evade Reach"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MaulerEvadeReach|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, as a swift action, a titan mauler may choose one creature within her line of sight. Until the end of her turn, that target's reach is treated as if it were 5 feet shorter with respect to reaching the titan mauler, and this reduction increases by 5 feet for every five levels beyond 5th (currently %1 feet). This ability replaces improved uncanny dodge.|MaulerEvadeReach"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaulerEvadeReach|5|PREVARGTEQ:classlevel(\"Barbarian\"),5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaulerEvadeReach|5|PREVARGTEQ:classlevel(\"Barbarian\"),10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaulerEvadeReach|5|PREVARGTEQ:classlevel(\"Barbarian\"),15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaulerEvadeReach|5|PREVARGTEQ:classlevel(\"Barbarian\"),20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 342,
+    "record_key": "Titan Mauler ~ Evade Reach"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

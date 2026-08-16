@@ -1,0 +1,151 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Druid Archetype ~ Ancient Guardian",
+    "name": "Ancient Guardian",
+    "class": "Druid Archetype",
+    "description": "Ancient guardians revere nature and draw power from its divine energies, but also protect the customs, histories, and lore of their tribe and race. They act as ambassadors and protectors of the old ways, nurturing their tribe's growth and holding back civilization's corruptive influence.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Ancient Guardian"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Ancient Guardian],[!PREFACT:1,ABILITIES,Druid_Archetype_WeaponProficiencies=True,Druid_Archetype_NatureBond=True,Druid_Archetype_WildEmpathy=True,Druid_Archetype_TracklessStep=True,Druid_Archetype_WoodlandStride=True,Druid_Archetype_SpontaneousCasting=True,Druid_Archetype_ResistNaturesLure=True,Druid_Archetype_AThousandFaces=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Ancient guardians revere nature and draw power from its divine energies, but also protect the customs, histories, and lore of their tribe and race. They act as ambassadors and protectors of the old ways, nurturing their tribe's growth and holding back civilization's corruptive influence."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ancient Guardian ~ Ancient Arms|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ancient Guardian ~ Community Bond|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ancient Guardian ~ Patience of Nature|PRECLASS:1,Druid=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ancient Guardian ~ Ancient Ways|PRECLASS:1,Druid=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ancient Guardian ~ Dispel Hostility|PRECLASS:1,Druid=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ancient Guardian ~ Unimpeachable|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ancient Guardian ~ Undo Artifice|PRECLASS:1,Druid=13"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_NatureBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_TracklessStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_SpontaneousCasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_AThousandFaces|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_TracklessStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_SpontaneousCasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_AThousandFaces|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 69,
+    "record_key": "Druid Archetype ~ Ancient Guardian"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

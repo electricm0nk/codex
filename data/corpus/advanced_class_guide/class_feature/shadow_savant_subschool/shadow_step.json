@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shadow Savant Subschool ~ Shadow Step",
+    "name": "Shadow Step",
+    "class": "Shadow Savant Subschool",
+    "description": "You can use this ability to walk through the Shadow Plane and reappear as a standard action. You can travel up to %1 feet per day in this fashion, either in a single round or broken up across multiple shadow steps. This movement must be used in 5-foot increments and does not provoke an attack of opportunity. Travel through the Shadow Plane is imprecise; when you arrive, you re-enter 1 square off target, as per the rules for thrown splash weapons (see page 202 of the Pathfinder RPG Core Rulebook). If this would place you in an occupied square, you instead arrive in the nearest safe location. When you arrive, you are cloaked in shadow and gain concealment as the blur spell for 1 round. You may bring other willing creatures with you, but you must expend an equal amount of distance for each additional creature brought with you. They likewise re-enter off target (roll location for each creature) and are cloaked in shadow for 1 round.|ArcanistSavantSchoolLVL*30",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Savant Subschool ~ Shadow Step"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.SpellLike.ArcanistSavantSchoolPower.Aura.ArcanistExploit7"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability to walk through the Shadow Plane and reappear as a standard action. You can travel up to %1 feet per day in this fashion, either in a single round or broken up across multiple shadow steps. This movement must be used in 5-foot increments and does not provoke an attack of opportunity. Travel through the Shadow Plane is imprecise; when you arrive, you re-enter 1 square off target, as per the rules for thrown splash weapons (see page 202 of the Pathfinder RPG Core Rulebook). If this would place you in an occupied square, you instead arrive in the nearest safe location. When you arrive, you are cloaked in shadow and gain concealment as the blur spell for 1 round. You may bring other willing creatures with you, but you must expend an equal amount of distance for each additional creature brought with you. They likewise re-enter off target (roll location for each creature) and are cloaked in shadow for 1 round.|ArcanistSavantSchoolLVL*30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2606,
+    "record_key": "Shadow Savant Subschool ~ Shadow Step"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

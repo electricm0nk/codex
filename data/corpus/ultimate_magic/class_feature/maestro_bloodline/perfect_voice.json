@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Maestro Bloodline ~ Perfect Voice",
+    "name": "Perfect Voice",
+    "class": "Maestro Bloodline",
+    "description": "You understand all efforts to communicate through sound, and can make yourself understood to any creature able to understand language. You can speak to, and understand the speech of, any creature that understands at least one spoken language. The save DCs of language-dependent spells you cast increase by +1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maestro Bloodline ~ Perfect Voice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Maestro Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural.Communicate"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Maestro"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Maestro_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Maestro_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You understand all efforts to communicate through sound, and can make yourself understood to any creature able to understand language. You can speak to, and understand the speech of, any creature that understands at least one spoken language. The save DCs of language-dependent spells you cast increase by +1."
+      },
+      {
+        "key": "BONUS",
+        "value": "DC|DESCRIPTOR.Language-Dependent|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|MaestroBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 631,
+    "record_key": "Maestro Bloodline ~ Perfect Voice"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

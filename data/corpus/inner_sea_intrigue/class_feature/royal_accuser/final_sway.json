@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Royal Accuser ~ Final Sway",
+    "name": "Final Sway",
+    "class": "Royal Accuser",
+    "description": "A royal accuser's word and intuition are greatly trusted and valued. Once per day, when using the influence system (Ultimate Intrigue 102) and interacting with an individual or organization with whom he has at least minor sway or is respected (rank 2), the royal accuser can treat his influence as two steps higher for the purposes of making a single request of that individual or organization. Alternatively, he can treat an individual's attitude toward him as up to two steps higher for the purpose of such a request.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Royal Accuser ~ Final Sway"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.RoyalAccuserClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A royal accuser's word and intuition are greatly trusted and valued. Once per day, when using the influence system (Ultimate Intrigue 102) and interacting with an individual or organization with whom he has at least minor sway or is respected (rank 2), the royal accuser can treat his influence as two steps higher for the purposes of making a single request of that individual or organization. Alternatively, he can treat an individual's attitude toward him as up to two steps higher for the purpose of such a request."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 112,
+    "record_key": "Royal Accuser ~ Final Sway"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

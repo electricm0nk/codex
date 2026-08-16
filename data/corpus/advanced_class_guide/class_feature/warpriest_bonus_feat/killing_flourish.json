@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Killing Flourish",
+    "name": "Killing Flourish",
+    "class": "Warpriest Bonus Feat",
+    "description": "When you reduce your target to below 0 hit points with a melee attack, as a swift action you can attempt an Intimidate check to demoralize all foes within 30 feet who can see your attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Killing Flourish"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Intimidating Prowess"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Slayer=4"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Intimidate=4"
+      },
+      {
+        "key": "DESC",
+        "value": "When you reduce your target to below 0 hit points with a melee attack, as a swift action you can attempt an Intimidate check to demoralize all foes within 30 feet who can see your attack."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Killing Flourish"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.152"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4170,
+    "record_key": "Warpriest Bonus Feat ~ Killing Flourish"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

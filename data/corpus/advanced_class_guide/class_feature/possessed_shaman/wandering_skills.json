@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Possessed Shaman ~ Wandering Skills",
+    "name": "Wandering Skills",
+    "class": "Possessed Shaman",
+    "description": "[NOT IMPLEMENTED] At 6th level, a possessed shaman is able to make room for another spirit. When choosing her wandering spirit for the day, the possessed shaman chooses one skill. The possessed shaman treats this skill as if she had a number of ranks in it equal to her shaman level, and uses her Wisdom modifier in place of the ability modifier the skill would normally use. If the skill is a class skill, she receives the usual +3 bonus on skill checks for having ranks in that skill. Each time the possessed shaman changes her wandering spirit, she can also change the skill gained through this ability. These ranks do not stack with her other skill ranks (only the higher number of ranks applies). This ability replaces the wandering hex gained at 6th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Possessed Shaman ~ Wandering Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Possessed Shaman Class Feature.Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] At 6th level, a possessed shaman is able to make room for another spirit. When choosing her wandering spirit for the day, the possessed shaman chooses one skill. The possessed shaman treats this skill as if she had a number of ranks in it equal to her shaman level, and uses her Wisdom modifier in place of the ability modifier the skill would normally use. If the skill is a class skill, she receives the usual +3 bonus on skill checks for having ranks in that skill. Each time the possessed shaman changes her wandering spirit, she can also change the skill gained through this ability. These ranks do not stack with her other skill ranks (only the higher number of ranks applies). This ability replaces the wandering hex gained at 6th level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3608,
+    "record_key": "Possessed Shaman ~ Wandering Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

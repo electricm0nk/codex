@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator Archetype ~ Sleuth",
+    "name": "Sleuth",
+    "class": "Investigator Archetype",
+    "description": "A sleuth is an investigator who relies on good fortune and guile rather than alchemy. Having no mystical energy intrinsic to her, she must forgo the more magical aspects of alchemy to solve her mysteries with wits, gumption, and the fickle consideration of luck.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Sleuth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype.InvestigatorAlchemy.InvestigatorSwiftAlchemy"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Sleuth],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InvestigatorAlchemy,TYPE.InvestigatorSwiftAlchemy]"
+      },
+      {
+        "key": "DESC",
+        "value": "A sleuth is an investigator who relies on good fortune and guile rather than alchemy. Having no mystical energy intrinsic to her, she must forgo the more magical aspects of alchemy to solve her mysteries with wits, gumption, and the fickle consideration of luck."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Sleuth ~ Sleuth's Luck|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Sleuth ~ Deeds|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Deed ~ Daring|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Deed ~ Opportunistic Evasion|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Deed ~ Sleuth's Initiative|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Deed ~ Make It Count|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Deed ~ Run Like Hell|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Sleuth ~ Second Chance|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.101"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Investigator"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3308,
+    "record_key": "Investigator Archetype ~ Sleuth"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vexing Daredevil ~ Dazzling Feint",
+    "name": "Dazzling Feint",
+    "class": "Vexing Daredevil",
+    "description": "Each time a vexing daredevil successfully feints against a creature under the effect of her hypnotic stare, she also chooses one of her dazzling feint benefits to activate. Unless otherwise stated, a dazzling feint's benefit applies only on the vexing daredevil's next attack this round. The DC for any saving throw against a dazzling feint's effect is %1.|DazzlingFeintDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vexing Daredevil ~ Dazzling Feint"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DazzlingFeintDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Each time a vexing daredevil successfully feints against a creature under the effect of her hypnotic stare, she also chooses one of her dazzling feint benefits to activate. Unless otherwise stated, a dazzling feint's benefit applies only on the vexing daredevil's next attack this round. The DC for any saving throw against a dazzling feint's effect is %1.|DazzlingFeintDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Dazzling Feint Choice|(MesmeristLVL+1)/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DazzlingFeintDC|10+MesmeristLVL/2+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1505,
+    "record_key": "Vexing Daredevil ~ Dazzling Feint"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

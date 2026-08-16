@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ancient Guardian ~ Ancient Arms",
+    "name": "Ancient Arms",
+    "class": "Ancient Guardian",
+    "description": "An ancient guardian can't wield weapons made primarily of metal. She is proficient with only the club, dart, quarterstaff, shortspear, sling, and spear. She is also proficient with all natural attacks (claw, bite, and so forth) of any form she assumes with wild shape. Using a prohibited weapon renders her unable to cast druid spells or use any of her druid supernatural or spell-like class abilities while wielding the weapon and for 24 hours after ceasing to wield it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancient Guardian ~ Ancient Arms"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.AncientGuardianClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An ancient guardian can't wield weapons made primarily of metal. She is proficient with only the club, dart, quarterstaff, shortspear, sling, and spear. She is also proficient with all natural attacks (claw, bite, and so forth) of any form she assumes with wild shape. Using a prohibited weapon renders her unable to cast druid spells or use any of her druid supernatural or spell-like class abilities while wielding the weapon and for 24 hours after ceasing to wield it."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Club|Dart|Quarterstaff|Shortspear|Sling|Spear|TYPE=Auto"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 71,
+    "record_key": "Ancient Guardian ~ Ancient Arms"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

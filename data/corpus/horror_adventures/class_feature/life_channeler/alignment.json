@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Life Channeler ~ Alignment",
+    "name": "Alignment",
+    "class": "Life Channeler",
+    "description": "In addition to a druid's usual alignment requirements, a life channeler must be of a nongood alignment. If she becomes good, she can no longer take levels in the druid class or fill her wicker talismans (see below), but she otherwise keeps all her abilities. This alters the druid's alignment requirements.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Channeler ~ Alignment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.LifeChannelerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "DESC",
+        "value": "In addition to a druid's usual alignment requirements, a life channeler must be of a nongood alignment. If she becomes good, she can no longer take levels in the druid class or fill her wicker talismans (see below), but she otherwise keeps all her abilities. This alters the druid's alignment requirements."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 110,
+    "record_key": "Life Channeler ~ Alignment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Awaken Flames ~ Flauros",
+    "name": "Awaken Flames",
+    "class": "Awaken Flames",
+    "description": "As a standard action 1/day, you may call forth an elder fire elemental from any flame source. Alternatively, you may activate this ability as a swift action during the casting of any fire spell. The elemental appears immediately and you can direct its actions as a free action via telepathy. The elemental is considered called not summoned, and remains your minion for 1 hour.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Awaken Flames ~ Flauros"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action 1/day, you may call forth an elder fire elemental from any flame source. Alternatively, you may activate this ability as a swift action during the casting of any fire spell. The elemental appears immediately and you can direct its actions as a free action via telepathy. The elemental is considered called not summoned, and remains your minion for 1 hour."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 129,
+    "record_key": "Awaken Flames ~ Flauros"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

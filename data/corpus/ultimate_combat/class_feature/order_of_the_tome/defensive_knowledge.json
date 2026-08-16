@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Tome ~ Defensive Knowledge",
+    "name": "Defensive Knowledge",
+    "class": "Order of the Tome",
+    "description": "At 15th level, an order of the tome cavalier can grant nearby allies some of the boons of his cavalier challenge. While allies are adjacent to the cavalier, they gain a +2 bonus on all saving throws against spells or spell-like abilities cast by the subject of the cavalier's challenge. In addition, as an immediate action, a number of times per day equal to the cavalier's Intelligence modif ier (minimum 1) or Wisdom modif ier (minimum 1), the cavalier can allow an ally adjacent to him to reroll a single failed saving throw against a spell or spell-like ability from the target of his challenge. The ally must be able to see and hear the cavalier in order to gain this reroll. The ability score that determines how many times per day a cavalier can use this ability depends on which Knowledge skill the cavalier picked for specialized knowledge. If the cavalier picked Knowledge (arcana), the number of times per day this ability can be used is based on Intelligence. If he picked Knowledge (religion) it is based on Wisdom.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Tome ~ Defensive Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, an order of the tome cavalier can grant nearby allies some of the boons of his cavalier challenge. While allies are adjacent to the cavalier, they gain a +2 bonus on all saving throws against spells or spell-like abilities cast by the subject of the cavalier's challenge. In addition, as an immediate action, a number of times per day equal to the cavalier's Intelligence modif ier (minimum 1) or Wisdom modif ier (minimum 1), the cavalier can allow an ally adjacent to him to reroll a single failed saving throw against a spell or spell-like ability from the target of his challenge. The ally must be able to see and hear the cavalier in order to gain this reroll. The ability score that determines how many times per day a cavalier can use this ability depends on which Knowledge skill the cavalier picked for specialized knowledge. If the cavalier picked Knowledge (arcana), the number of times per day this ability can be used is based on Intelligence. If he picked Knowledge (religion) it is based on Wisdom."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 464,
+    "record_key": "Order of the Tome ~ Defensive Knowledge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

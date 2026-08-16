@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shigenjo ~ Ki Pool",
+    "name": "Ki Pool",
+    "class": "Shigenjo",
+    "description": "A shigenjo gains a pool of ki points, supernatural energy she can use to accomplish amazing feats. The ki pool is replenished each morning after 8 hours of rest or meditation; these hours do not need to be consecutive. If the shigenjo possesses levels in another class that grants points to a ki pool, ki points gained from the shigenjo class stack with those gained from the other class to determine the total number of ki points in the combined pool, but only one ability score modifier is added to the total. The choice of which score to use is made when the second class ability is gained, and once made, the choice is permanent. The shigenjo can use ki points from this pool to power the abilities of every class she possesses that grants a ki pool. As long as she has at least 1 point in her ki pool, a shigenjo can make a ki strike as a monk of level %1.|OracleLVL-3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shigenjo ~ Ki Pool"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural.Ki"
+      },
+      {
+        "key": "DESC",
+        "value": "A shigenjo gains a pool of ki points, supernatural energy she can use to accomplish amazing feats. The ki pool is replenished each morning after 8 hours of rest or meditation; these hours do not need to be consecutive. If the shigenjo possesses levels in another class that grants points to a ki pool, ki points gained from the shigenjo class stack with those gained from the other class to determine the total number of ki points in the combined pool, but only one ability score modifier is added to the total. The choice of which score to use is made when the second class ability is gained, and once made, the choice is permanent. The shigenjo can use ki points from this pool to power the abilities of every class she possesses that grants a ki pool. As long as she has at least 1 point in her ki pool, a shigenjo can make a ki strike as a monk of level %1.|OracleLVL-3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Monk ~ Ki Pool|!PREABILITY:1,CATEGORY=Special Ability,TYPE.Ki Pool"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoints|OracleLVL/3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 753,
+    "record_key": "Shigenjo ~ Ki Pool"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

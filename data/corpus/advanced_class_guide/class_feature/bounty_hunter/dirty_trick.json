@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bounty Hunter ~ Dirty Trick",
+    "name": "Dirty Trick",
+    "class": "Bounty Hunter",
+    "description": "Anytime a bounty hunter is able to deal sneak attack damage to a studied target, he can instead attempt to hamper the target. The bounty hunter must declare that he's using this ability before the attack roll is made. If the attack hits, it deals damage normally, but instead of rolling sneak attack damage, the bounty hunter can attempt a dirty trick combat maneuver against the studied target as a free action, adding 1 to the combat maneuver check for each die of the bounty hunter's sneak attack damage. This combat maneuver does not provoke attacks of opportunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bounty Hunter ~ Dirty Trick"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bounty Hunter Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Anytime a bounty hunter is able to deal sneak attack damage to a studied target, he can instead attempt to hamper the target. The bounty hunter must declare that he's using this ability before the attack roll is made. If the attack hits, it deals damage normally, but instead of rolling sneak attack damage, the bounty hunter can attempt a dirty trick combat maneuver against the studied target as a free action, adding 1 to the combat maneuver check for each die of the bounty hunter's sneak attack damage. This combat maneuver does not provoke attacks of opportunity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3735,
+    "record_key": "Bounty Hunter ~ Dirty Trick"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

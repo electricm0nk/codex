@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brawler Archetype ~ Winding Path Renegade",
+    "name": "Winding Path Renegade",
+    "class": "Brawler Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler Archetype ~ Winding Path Renegade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BrawlerArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      },
+      {
+        "key": "DESC",
+        "value": "In the sacred text Unbinding the Fetters, Irori teaches that the path to transcendence can be straight or twisted. Those who follow the straight path adhere to the traditions and techniques perfected by others who have traveled before them, while those who seek the twisted path abandon tradition and follow their own unique routes to self-perfection. Both paths can lead to the same place, but those who follow the twisted path must take care to not lose their way. Winding path renegades epitomize those who have chosen the twisted path. These brawlers initially studied at the Houses of Perfection in Jalmeray, but while they grasped the mechanical aspects of the forms, they lacked the mental discipline required by the masters of the school. Thus, they have withdrawn from their monasteries-some peacefully, some not-to find their own paths."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Brawler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Winding Path Renegade],[!PREFACT:1,ABILITIES,Brawler_Archetype_BonusFeat2=True,Brawler_Archetype_BonusFeat8=True,Brawler_Archetype_BonusFeat14=True,Brawler_Archetype_ACBonus=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Winding Path Renegade ~ School Focus|PRECLASS:1,Brawler=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Winding Path Renegade ~ Monk Moves|PRECLASS:1,Brawler=4"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BonusFeat8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BonusFeat14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ACBonus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BonusFeat8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BonusFeat14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_ACBonus|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 719,
+    "record_key": "Brawler Archetype ~ Winding Path Renegade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warden ~ Able ExploreR",
+    "name": "Able Explorer",
+    "class": "Warden",
+    "description": "At 5th level, when making an Acrobatics, Climb, Fly, Ride, or Swim check in any of his favored terrains, a warden can make two skill checks and take the higher. This ability replaces the ranger's second, third, and fourth favored enemies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warden ~ Able ExploreR"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, when making an Acrobatics, Climb, Fly, Ride, or Swim check in any of his favored terrains, a warden can make two skill checks and take the higher. This ability replaces the ranger's second, third, and fourth favored enemies."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1570,
+    "record_key": "Warden ~ Able ExploreR"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

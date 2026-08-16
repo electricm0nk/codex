@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Green ~ Skills",
+    "name": "Skills",
+    "class": "Order of the Green",
+    "description": "An order of the Green cavalier gains Knowledge (nature) and Survival as class skills. In addition, whenever an order of the Green cavalier attempts a Survival check to track foes of the aberrant or undead type, he receives a +%1 bonus on the check.|max(1,CavalierLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Green ~ Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An order of the Green cavalier gains Knowledge (nature) and Survival as class skills. In addition, whenever an order of the Green cavalier attempts a Survival check to track foes of the aberrant or undead type, he receives a +%1 bonus on the check.|max(1,CavalierLVL/2)"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (Nature)|Survival"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 458,
+    "record_key": "Order of the Green ~ Skills"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

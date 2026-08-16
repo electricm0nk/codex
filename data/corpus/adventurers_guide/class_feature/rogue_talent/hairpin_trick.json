@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Talent ~ Hairpin Trick",
+    "name": "Hairpin Trick",
+    "class": "Rogue Talent",
+    "description": "The rogue is skilled at making do with anything she can find. She takes no penalty on Disable Device checks for using improvised tools, and can attempt such checks without any tools at a -4 penalty. She treats all non-improvised thieves' tools as masterwork and doubles the bonus she gets from masterwork thieves' tools from +2 to +4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Hairpin Trick"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "DESC",
+        "value": "The rogue is skilled at making do with anything she can find. She takes no penalty on Disable Device checks for using improvised tools, and can attempt such checks without any tools at a -4 penalty. She treats all non-improvised thieves' tools as masterwork and doubles the bonus she gets from masterwork thieves' tools from +2 to +4."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1190,
+    "record_key": "Rogue Talent ~ Hairpin Trick"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

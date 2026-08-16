@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Advanced Mutagen ~ Dual Mind",
+    "name": "Dual Mind",
+    "class": "Advanced Mutagen",
+    "description": "The chymist's alter ego gives her a +2 bonus on Will saving throws in her normal and mutagenic forms. If she is affected by an enchantment spell or effect and fails her saving throw, she can attempt it again 1 round later at the same DC; if she succeeds, she is free of the effect (as if she had made her original save) and immediately changes to her mutagenic form or back to her normal form. If she has no more uses of the mutate ability remaining for the day, she cannot use dual mind. The character must have an effective alchemist level (alchemist level plus master chymist levels) of at least 10 to select this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Advanced Mutagen ~ Dual Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MasterChymistAdvancedMutagen.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterChymistLVL+DiscoveryQualifyLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "The chymist's alter ego gives her a +2 bonus on Will saving throws in her normal and mutagenic forms. If she is affected by an enchantment spell or effect and fails her saving throw, she can attempt it again 1 round later at the same DC; if she succeeds, she is free of the effect (as if she had made her original save) and immediately changes to her mutagenic form or back to her normal form. If she has no more uses of the mutate ability remaining for the day, she cannot use dual mind. The character must have an effective alchemist level (alchemist level plus master chymist levels) of at least 10 to select this ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.269"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Master Chymist Advanced Mutagen"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1373,
+    "record_key": "Advanced Mutagen ~ Dual Mind"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

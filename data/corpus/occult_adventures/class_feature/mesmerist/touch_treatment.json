@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mesmerist ~ Touch Treatment",
+    "name": "Touch Treatment",
+    "class": "Mesmerist",
+    "description": "The mesmerist can help allies shake off harmful conditions-especially those that affect their minds-by channeling psychic energy through his healing hands. He can use touch treatment %1 times per day. Using the ability is a standard action (or a swift action if the mesmerist uses it on himself), and the mesmerist must be able to touch his target. He can remove one condition from one target each time he uses this ability from the following list: fascinated, shaken|TouchTreatmentsUses",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist ~ Touch Treatment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TouchTreatmentsUses|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The mesmerist can help allies shake off harmful conditions-especially those that affect their minds-by channeling psychic energy through his healing hands. He can use touch treatment %1 times per day. Using the ability is a standard action (or a swift action if the mesmerist uses it on himself), and the mesmerist must be able to touch his target. He can remove one condition from one target each time he uses this ability from the following list: fascinated, shaken|TouchTreatmentsUses"
+      },
+      {
+        "key": "DESC",
+        "value": ", confused, dazed, frightened, sickened|PREVARGTEQ:MesmeristLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": ", cowering, nauseated, panicked, stunned|PREVARGTEQ:MesmeristLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; The mesmerist can instead expend one use of touch treatment to replicate the effects of break enchantment. This targets only one creature the mesmerist is touching and follows all other restrictions of touch treatment.|PREVARGTEQ:MesmeristLVL,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TouchTreatmentsUses|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 925,
+    "record_key": "Mesmerist ~ Touch Treatment"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

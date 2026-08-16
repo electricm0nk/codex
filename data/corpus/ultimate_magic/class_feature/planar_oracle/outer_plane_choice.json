@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Planar Oracle ~ Revelations",
+    "name": "Outer Plane Choice",
+    "class": "Planar Oracle",
+    "description": "Choose an outer plane with which you have affinity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Planar Oracle ~ Revelations"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose an outer plane with which you have affinity."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Planar Resistance Energy Type|1|PRECLASS:1,Oracle=3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1492,
+    "record_key": "Planar Oracle ~ Revelations"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

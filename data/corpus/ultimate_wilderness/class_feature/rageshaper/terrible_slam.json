@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rageshaper ~ Terrible Slam",
+    "name": "Terrible Slam",
+    "class": "Rageshaper",
+    "description": "A rageshaper can deliver blows that demolish his foes. This functions as the shifter claws class ability, except his natural weapons are treated as slam attacks. Additionally, rather than granting the ability to bypass different kinds of damage reduction, the rageshaper's terrible slam ignores some of an object's hardness. Terrible slam ignores %1 points of an object's hardness. This alters shifter claws.|RageshaperTerribleSlam",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rageshaper ~ Terrible Slam"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.RageshaperClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageshaperTerribleSlam|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A rageshaper can deliver blows that demolish his foes. This functions as the shifter claws class ability, except his natural weapons are treated as slam attacks. Additionally, rather than granting the ability to bypass different kinds of damage reduction, the rageshaper's terrible slam ignores some of an object's hardness. Terrible slam ignores %1 points of an object's hardness. This alters shifter claws.|RageshaperTerribleSlam"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageshaperTerribleSlam|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageshaperTerribleSlam|5|PRECLASS:1,Shifter=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageshaperTerribleSlam|5|PRECLASS:1,Shifter=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageshaperTerribleSlam|5|PRECLASS:1,Shifter=15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1095,
+    "record_key": "Rageshaper ~ Terrible Slam"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

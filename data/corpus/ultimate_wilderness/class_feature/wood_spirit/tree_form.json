@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wood Spirit ~ Tree Form",
+    "name": "Tree Form",
+    "class": "Wood Spirit",
+    "description": "As a standard action, the shaman can assume the form of a plant creature as plant shape III with a duration of %1 hours. She can use this ability once per day.|ShamanLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wood Spirit ~ Tree Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the shaman can assume the form of a plant creature as plant shape III with a duration of %1 hours. She can use this ability once per day.|ShamanLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1026,
+    "record_key": "Wood Spirit ~ Tree Form"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Paladin Archetype ~ Oath against Undeath",
+    "name": "Oath against Undeath",
+    "class": "Paladin Archetype",
+    "description": "You vow to restore the natural state of death to any animate corpse you encounter, and destroy the undead energy in the process.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Oath against Undeath"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype.PaladinDetectEvil.PaladinMercy3.PaladinMercy9.PaladinAuraOfResolve.PaladinAuraOfJustice"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Oath against Undeath],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinDetectEvil,TYPE.PaladinMercy,TYPE.PaladinMercy3,TYPE.PaladinMercy9,TYPE.PaladinAuraOfResolve,TYPE.PaladinAuraOfJustice]"
+      },
+      {
+        "key": "DESC",
+        "value": "You vow to restore the natural state of death to any animate corpse you encounter, and destroy the undead energy in the process."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Oath against Undeath ~ Detect Undead|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Oath against Undeath ~ Ghost Touch Aura|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Oath against Undeath ~ Aura of Life|PRECLASS:1,Paladin=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Oath against Undeath ~ Superior Channeler|PRECLASS:1,Paladin=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Oath against Undeath ~ Code of Conduct"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Oath against Undeath ~ Oath Spells"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Paladin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1524,
+    "record_key": "Paladin Archetype ~ Oath against Undeath"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

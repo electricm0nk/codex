@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wit ~ Duel Master",
+    "name": "Duel Master",
+    "class": "Wit",
+    "description": "The wit does not lose any edges for being at an extreme disadvantage in a verbal duel (see Ultimate Intrigue pages 176-181) and can either ask about one additional bias when successfully using Sense Motive to determine an audience's biases or automatically seed one of the biases that he discovered. Once during a verbal duel, he can reassign an appropriate skill from one tactic to another tactic in which he didn't assign any skills. The original tactic is treated as being unprepared for the rest of the duel.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wit ~ Duel Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.WitClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The wit does not lose any edges for being at an extreme disadvantage in a verbal duel (see Ultimate Intrigue pages 176-181) and can either ask about one additional bias when successfully using Sense Motive to determine an audience's biases or automatically seed one of the biases that he discovered. Once during a verbal duel, he can reassign an appropriate skill from one tactic to another tactic in which he didn't assign any skills. The original tactic is treated as being unprepared for the rest of the duel."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 260,
+    "record_key": "Wit ~ Duel Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oath of Charity ~ Charitable Hands",
+    "name": "Charitable Hands",
+    "class": "Oath of Charity",
+    "description": "You heal 50%% less when you use lay on hands on yourself, but 50%% more than the normal amount when you use it to heal others. Using lay on hands to harm undead deals the normal amount of damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath of Charity ~ Charitable Hands"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You heal 50%% less when you use lay on hands on yourself, but 50%% more than the normal amount when you use it to heal others. Using lay on hands to harm undead deals the normal amount of damage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Paladin ~ Lay on Hands"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1574,
+    "record_key": "Oath of Charity ~ Charitable Hands"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

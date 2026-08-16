@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cipher ~ Hide in Plain Sight",
+    "name": "Hide in Plain Sight",
+    "class": "Cipher",
+    "description": "A cipher can use the Stealth skill to hide even while being observed; as long as his observer is within range of his inattention blindness ability (even if it is not affected by inattention blindness), he can hide without anything to actually hide behind.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cipher ~ Hide in Plain Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.CipherClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A cipher can use the Stealth skill to hide even while being observed; as long as his observer is within range of his inattention blindness ability (even if it is not affected by inattention blindness), he can hide without anything to actually hide behind."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 507,
+    "record_key": "Cipher ~ Hide in Plain Sight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

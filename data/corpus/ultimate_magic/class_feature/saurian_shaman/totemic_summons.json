@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Saurian Shaman ~ Totemic Summons",
+    "name": "Totemic Summons",
+    "class": "Saurian Shaman",
+    "description": "You may cast summon nature's ally as a standard action when summoning reptiles and dinosaurs, and those summoned creatures gain %1 temporary hit points. You can apply the young template to any reptile or dinosaur to reduce the level of the summoning spell required by one. You can also increase the level of summoning required by one in order to apply either the advanced or the giant template, or increase it by two to apply both the advanced and giant templates.|TotemicSummonsTempHP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Saurian Shaman ~ Totemic Summons"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TotemicSummonsTempHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You may cast summon nature's ally as a standard action when summoning reptiles and dinosaurs, and those summoned creatures gain %1 temporary hit points. You can apply the young template to any reptile or dinosaur to reduce the level of the summoning spell required by one. You can also increase the level of summoning required by one in order to apply either the advanced or the giant template, or increase it by two to apply both the advanced and giant templates.|TotemicSummonsTempHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TotemicSummonsTempHP|classlevel(\"Druid\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1189,
+    "record_key": "Saurian Shaman ~ Totemic Summons"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

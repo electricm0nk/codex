@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Scryer Savant Subschool ~ Send Senses",
+    "name": "Send Senses",
+    "class": "Scryer Savant Subschool",
+    "description": "As a standard action, you place a scrying sensor at a point within %1 feet that you can see and have line of effect to. You can see or hear (not both) through this sensor %2 rounds. The sensor otherwise functions as a clairaudience/clairvoyance spell with a caster level equal to your arcanist level. You can use this ability %3 times per day.|100+ArcanistSavantSchoolLVL*10|max(ArcanistSavantSchoolLVL/2,1)|INT+3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scryer Savant Subschool ~ Send Senses"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.SpellLike.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you place a scrying sensor at a point within %1 feet that you can see and have line of effect to. You can see or hear (not both) through this sensor %2 rounds. The sensor otherwise functions as a clairaudience/clairvoyance spell with a caster level equal to your arcanist level. You can use this ability %3 times per day.|100+ArcanistSavantSchoolLVL*10|max(ArcanistSavantSchoolLVL/2,1)|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2604,
+    "record_key": "Scryer Savant Subschool ~ Send Senses"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

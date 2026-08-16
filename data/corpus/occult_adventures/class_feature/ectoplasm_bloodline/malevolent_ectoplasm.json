@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ectoplasm Bloodline ~ Malevolent Ectoplasm",
+    "name": "Malevolent Ectoplasm",
+    "class": "Ectoplasm Bloodline",
+    "description": "Your ectoplasmic tendrils can lash out at creatures around you. Treat this as a black tentacles effect centered on your position, but the tentacles can also grapple ethereal and incorporeal creatures, and they do not affect you (though they still affect your allies). You can use this ability %1 rounds per day. These rounds need not be consecutive.|Sorcerer_EctoplasmMalevolentEctoplasm_Duration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ectoplasm Bloodline ~ Malevolent Ectoplasm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Ectoplasm Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Ectoplasm"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Ectoplasm_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_EctoplasmMalevolentEctoplasm_Duration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your ectoplasmic tendrils can lash out at creatures around you. Treat this as a black tentacles effect centered on your position, but the tentacles can also grapple ethereal and incorporeal creatures, and they do not affect you (though they still affect your allies). You can use this ability %1 rounds per day. These rounds need not be consecutive.|Sorcerer_EctoplasmMalevolentEctoplasm_Duration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_EctoplasmMalevolentEctoplasm_Duration|Sorcerer_Ectoplasm_BloodlinePower15LVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1 rounds/day|Sorcerer_EctoplasmMalevolentEctoplasm_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_EctoplasmMalevolentEctoplasm_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|EctoplasmBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1866,
+    "record_key": "Ectoplasm Bloodline ~ Malevolent Ectoplasm"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

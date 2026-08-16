@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Shield of Fury",
+    "name": "Shield of Fury",
+    "class": "Vigilante Talent",
+    "description": "The vigilante gains Improved Shield Bash as a bonus feat. If he already has the Improved Shield Bash feat, he can immediately swap it for another feat for which he qualified at the level he chose Improved Shield Bash.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Shield of Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Shield of Fury"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante gains Improved Shield Bash as a bonus feat. If he already has the Improved Shield Bash feat, he can immediately swap it for another feat for which he qualified at the level he chose Improved Shield Bash."
+      },
+      {
+        "key": "DESC",
+        "value": " In addition, he is treated as if he has the Two-Weapon Fighting feat as long as one of the weapons used is a shield. This allows him to take feats that require Two-Weapon Fighting as a prerequisite without meeting the Two-Weapon Fighting or Dexterity prerequisites, but these feats only apply while he is wielding a shield as one of his weapons (unless he takes Two-Weapon Fighting as normal, in which case this restriction is lifted).|PREVARGTEQ:VigilanteTalentLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Shield Bash"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Two-Weapon Fighting|PREVARGTEQ:VigilanteTalentLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PreStatScore_DEX|19|PREVARGTEQ:VigilanteTalentLVL,6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 103,
+    "record_key": "Vigilante Talent ~ Shield of Fury"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk Archetype ~ Monk of the Seven Forms",
+    "name": "Monk of the Seven Forms",
+    "class": "Monk Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Monk of the Seven Forms"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkStunningFist.MonkManeuverTraining.MonkAbundantStep.MonkQuiveringPalm"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Monk of the Seven Forms],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStunningFist,TYPE.MonkManeuverTraining,TYPE.MonkAbundantStep,TYPE.MonkQuiveringPalm]"
+      },
+      {
+        "key": "DESC",
+        "value": "When Tian monks founded the Monastery of the Seven Forms near the present border between Qadira and Taldor, they did so as a challenge to prospective students to travel great distances and prove their devotion before training within the monastery's walls. Over the centuries, the monastery has fallen under Qadiran control many times, and the original seven forms for which the monastery was named have been lost to history. In their place, the monks of the isolated sanctuary now teach a style featuring lightningfast strikes that mimic both dervish dances and the searing winds of the arid desert, favoring mobility and endurance."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Seven Forms ~ Bonus Feats|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Seven Forms ~ Lightning Finish|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Seven Forms ~ Endurance|PRECLASS:1,Monk=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Seven Forms ~ Sirocco Fury|PRECLASS:1,Monk=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 26,
+    "record_key": "Monk Archetype ~ Monk of the Seven Forms"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

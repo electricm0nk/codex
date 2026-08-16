@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spirit Dancer ~ Spirit Dance",
+    "name": "Spirit Dance",
+    "class": "Spirit Dancer",
+    "description": "Each day during his seance, a spirit dancer makes all his spirit power choices as if he were channeling one spirit of each of the six legends. He can't choose to channel a weaker spirit to reduce his influence from spirit surge. He does not always possess the seance boon, spirit bonus, spirit powers, or spirit surge ability from any of these six spirits. &nl; Instead, he can enter a spirit dance as a free action to gain the aforementioned abilities from one of the six spirits he prepared during his seance for the duration of his spirit dance. He can spirit dance for %1 rounds per day; these rounds don't need to be consecutive. After his spirit dance ends, the spirit dancer takes a –2 penalty on attack rolls, saving throws, and skill checks for 1 minute and can't enter a spirit dance again during that time. He also can't enter a spirit dance while shaken, frightened, or panicked. He combines all influence incurred during spirit dances into a single pool. At 3 points of influence or higher, he takes a –2 penalty on initiative checks even when he's not in a spirit dance, and at 5 points of influence or higher, his current spirit takes control as it would for a normal medium (this control is not limited by rounds of spirit dance). A spirit dancer can accept 1 point of influence to recover 4 rounds of spirit dance, up to his normal daily maximum. &nl; A spirit dancer continues to track daily uses of abilities from each of his spirits even while he is not in a spirit dance. A spirit dancer with the supreme spirit power ability can use only one once-per-day ability from the supreme spirit power each day; he can't use any other spirit's once-per-day supreme spirit power until after his next seance. This ability alters spirit and replaces spirit bonus and spirit surge.|CHA+MediumLVL*2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Dancer ~ Spirit Dance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Each day during his seance, a spirit dancer makes all his spirit power choices as if he were channeling one spirit of each of the six legends. He can't choose to channel a weaker spirit to reduce his influence from spirit surge. He does not always possess the seance boon, spirit bonus, spirit powers, or spirit surge ability from any of these six spirits. &nl; Instead, he can enter a spirit dance as a free action to gain the aforementioned abilities from one of the six spirits he prepared during his seance for the duration of his spirit dance. He can spirit dance for %1 rounds per day; these rounds don't need to be consecutive. After his spirit dance ends, the spirit dancer takes a –2 penalty on attack rolls, saving throws, and skill checks for 1 minute and can't enter a spirit dance again during that time. He also can't enter a spirit dance while shaken, frightened, or panicked. He combines all influence incurred during spirit dances into a single pool. At 3 points of influence or higher, he takes a –2 penalty on initiative checks even when he's not in a spirit dance, and at 5 points of influence or higher, his current spirit takes control as it would for a normal medium (this control is not limited by rounds of spirit dance). A spirit dancer can accept 1 point of influence to recover 4 rounds of spirit dance, up to his normal daily maximum. &nl; A spirit dancer continues to track daily uses of abilities from each of his spirits even while he is not in a spirit dance. A spirit dancer with the supreme spirit power ability can use only one once-per-day ability from the supreme spirit power each day; he can't use any other spirit's once-per-day supreme spirit power until after his next seance. This ability alters spirit and replaces spirit bonus and spirit surge.|CHA+MediumLVL*2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1434,
+    "record_key": "Spirit Dancer ~ Spirit Dance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

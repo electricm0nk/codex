@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mindblade ~ Dual Weapons",
+    "name": "Dual Weapons",
+    "class": "Mindblade",
+    "description": "At 7th level, a mindblade can maintain two psychic weapons at a time or a psychic double weapon, though each weapon (or each end of a double weapon) has an enhancement bonus 1 lower than normal. Starting at 12th level, each of the two psychic weapons (or each end of a double weapon) instead has an enhancement bonus 2 lower than normal. When using two-weapon fighting with two psychic weapons or a psychic double weapon, the mindblade can use her spell combat ability as though she had a hand free. This ability replaces medium armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mindblade ~ Dual Weapons"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mindblade Class Feature.Magus Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, a mindblade can maintain two psychic weapons at a time or a psychic double weapon, though each weapon (or each end of a double weapon) has an enhancement bonus 1 lower than normal. Starting at 12th level, each of the two psychic weapons (or each end of a double weapon) instead has an enhancement bonus 2 lower than normal. When using two-weapon fighting with two psychic weapons or a psychic double weapon, the mindblade can use her spell combat ability as though she had a hand free. This ability replaces medium armor."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1788,
+    "record_key": "Mindblade ~ Dual Weapons"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

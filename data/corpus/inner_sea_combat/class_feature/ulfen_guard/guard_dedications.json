@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ulfen Guard ~ Guard Dedications",
+    "name": "Guard Dedications",
+    "class": "Ulfen Guard",
+    "description": "At 1st level, and at every 2 levels thereafter, an Ulfen Guard chooses a guard dedication from the list below. An Ulfen Guard cannot choose a guard dedication more than once unless the dedication specifies otherwise.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ulfen Guard ~ Guard Dedications"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ulfen Guard Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_GuardDedication|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, and at every 2 levels thereafter, an Ulfen Guard chooses a guard dedication from the list below. An Ulfen Guard cannot choose a guard dedication more than once unless the dedication specifies otherwise."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_GuardDedication|(Ulfen_GuardLVL+1)/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 552,
+    "record_key": "Ulfen Guard ~ Guard Dedications"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

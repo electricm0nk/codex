@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Slayer ~ Stalker",
+    "name": "Stalker",
+    "class": "Slayer",
+    "description": "A slayer gains a +%1 bonus on Disguise, Intimidate, and Stealth checks against his studied opponent.|SlayerStalkerBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer ~ Stalker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlayerStalkerLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlayerStalkerBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A slayer gains a +%1 bonus on Disguise, Intimidate, and Stealth checks against his studied opponent.|SlayerStalkerBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerStalkerLVL|SlayerStudiedTargetLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerStalkerBonus|SlayerStalkerLVL/5+1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1793,
+    "record_key": "Slayer ~ Stalker"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

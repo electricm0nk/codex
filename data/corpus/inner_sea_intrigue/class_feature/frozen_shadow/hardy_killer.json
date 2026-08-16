@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Frozen Shadow ~ Hardy Killer",
+    "name": "Hardy Killer",
+    "class": "Frozen Shadow",
+    "description": "A frozen shadow has become incredibly inured to his surrounding climate. At the beginning of any day, the frozen shadow can spend 1 point from his ki pool to benefit from the effects of an endure elements spell. The frozen shadow does not treat any Acrobatics skill check to jump as if he had a running start, and at 10th level he cannot reduce the DC of Acrobatics skill checks made to jump by half. This ability alters ki pool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Frozen Shadow ~ Hardy Killer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ninja Class Features.FrozenShadowClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A frozen shadow has become incredibly inured to his surrounding climate. At the beginning of any day, the frozen shadow can spend 1 point from his ki pool to benefit from the effects of an endure elements spell. The frozen shadow does not treat any Acrobatics skill check to jump as if he had a running start, and at 10th level he cannot reduce the DC of Acrobatics skill checks made to jump by half. This ability alters ki pool."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 218,
+    "record_key": "Frozen Shadow ~ Hardy Killer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

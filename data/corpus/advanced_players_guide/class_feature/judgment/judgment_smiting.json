@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Judgment ~ Smiting",
+    "name": "Judgment / Smiting",
+    "class": "Judgment",
+    "description": "This judgment bathes the inquisitor's weapons in a divine light. The inquisitor's weapons count as magic for the purposes of bypassing damage reduction.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Judgment ~ Smiting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.InquisitorJudgmentNeither.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InqJudgeSmitingLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This judgment bathes the inquisitor's weapons in a divine light. The inquisitor's weapons count as magic for the purposes of bypassing damage reduction."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InqJudgeSmitingLVL|InquisitorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 321,
+    "record_key": "Judgment ~ Smiting"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

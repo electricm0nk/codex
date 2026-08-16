@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Instigator ~ Song of Rabble-Rousing",
+    "name": "Song of Rabble-Rousing",
+    "class": "Instigator",
+    "description": "The instigator can perform for 1 full round and spend 4 rounds of raging song. This affects those who hear the song for up to 1 hour as per enthrall.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Instigator ~ Song of Rabble-Rousing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.InstigatorClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "The instigator can perform for 1 full round and spend 4 rounds of raging song. This affects those who hear the song for up to 1 hour as per enthrall."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 915,
+    "record_key": "Instigator ~ Song of Rabble-Rousing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

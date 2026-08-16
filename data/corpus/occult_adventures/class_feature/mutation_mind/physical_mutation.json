@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mutation Mind ~ Physical Mutation",
+    "name": "Physical Mutation",
+    "class": "Mutation Mind",
+    "description": "[not implemented]A mutation mind's psychic powers warp her body, allowing her to physically mutate herself as a swift action, which grants her a +4 enhancement bonus to Strength and a -2 penalty to Intelligence. At 12th level, the bonus to Strength increases to +6. A mutation mind can assume her physically mutated form for a number of minutes per day equal to her psychic level. The minutes don't have to be used consecutively, but must be used in 1-minute increments. When the duration runs out, the mutation mind can spend 1 point from her phrenic pool to extend the duration by 1 round. She can continue extending it in this way until she runs out of points. After the mutation ends, the mutation mind is fatigued and can't activate a physical mutation again for 1 round. Turning back to normal before the end of a 1-minute increment takes a standard action. This ability replaces the 1st-level phrenic amplification.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutation Mind ~ Physical Mutation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mutation Mind Class Feature.Psychic Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "[not implemented]A mutation mind's psychic powers warp her body, allowing her to physically mutate herself as a swift action, which grants her a +4 enhancement bonus to Strength and a -2 penalty to Intelligence. At 12th level, the bonus to Strength increases to +6. A mutation mind can assume her physically mutated form for a number of minutes per day equal to her psychic level. The minutes don't have to be used consecutively, but must be used in 1-minute increments. When the duration runs out, the mutation mind can spend 1 point from her phrenic pool to extend the duration by 1 round. She can continue extending it in this way until she runs out of points. After the mutation ends, the mutation mind is fatigued and can't activate a physical mutation again for 1 round. Turning back to normal before the end of a 1-minute increment takes a standard action. This ability replaces the 1st-level phrenic amplification."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1575,
+    "record_key": "Mutation Mind ~ Physical Mutation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

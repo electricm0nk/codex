@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cult Hunter ~ Cultic Study",
+    "name": "Cultic Study",
+    "class": "Cult Hunter",
+    "description": "A cult hunter can spend 8 hours studying a specific deity or religion to gain a +%1 bonus on Bluff, Intimidate, Knowledge, Perception, and Sense Motive checks against followers of that deity or religion and against extraplanar creatures. If he studies a new deity or religion, the bonuses replace the former bonuses.|InvestigatorLVL/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cult Hunter ~ Cultic Study"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.CultHunterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "DESC",
+        "value": "A cult hunter can spend 8 hours studying a specific deity or religion to gain a +%1 bonus on Bluff, Intimidate, Knowledge, Perception, and Sense Motive checks against followers of that deity or religion and against extraplanar creatures. If he studies a new deity or religion, the bonuses replace the former bonuses.|InvestigatorLVL/4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 161,
+    "record_key": "Cult Hunter ~ Cultic Study"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

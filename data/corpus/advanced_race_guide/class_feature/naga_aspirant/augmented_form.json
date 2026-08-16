@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Naga Aspirant ~ Augmented Form",
+    "name": "Augmented Form",
+    "class": "Naga Aspirant",
+    "description": "A naga aspirant can choose one of the augmented form selections to enhance her naga form. Once chosen, this augmentation cannot be changed and always applies to her naga form. The caster level for these abilities is equal to %1, and unless otherwise stated, the DC is equal to %2.|DruidLVL|10+DruidLVL/2+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Naga Aspirant ~ Augmented Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A naga aspirant can choose one of the augmented form selections to enhance her naga form. Once chosen, this augmentation cannot be changed and always applies to her naga form. The caster level for these abilities is equal to %1, and unless otherwise stated, the DC is equal to %2.|DruidLVL|10+DruidLVL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Augmented Form Selection|1+(DruidLVL-9)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.197"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 918,
+    "record_key": "Naga Aspirant ~ Augmented Form"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

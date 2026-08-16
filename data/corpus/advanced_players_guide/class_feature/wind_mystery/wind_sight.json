@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wind Mystery ~ Wind Sight",
+    "name": "Wind Sight",
+    "class": "Wind Mystery",
+    "description": "You ignore penalties on Perception checks based on wind and the first 100 feet of distance. At 7th level, as a standard action, you can see and hear into any area (as if using clairaudience and clairvoyance) within range as long as there is an unobstructed path for air to travel between you and the target area (this does not require line of effect, meaning the path can turn corners and go through spaces no smaller than 1 inch in diameter). You can use this ability %1 rounds per day, but these rounds do not need to be consecutive.|OracleWindSightDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wind Mystery ~ Wind Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.WindRevelation.Extraordinary.Sense.RoundsPerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleWindSightDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You ignore penalties on Perception checks based on wind and the first 100 feet of distance. At 7th level, as a standard action, you can see and hear into any area (as if using clairaudience and clairvoyance) within range as long as there is an unobstructed path for air to travel between you and the target area (this does not require line of effect, meaning the path can turn corners and go through spaces no smaller than 1 inch in diameter). You can use this ability %1 rounds per day, but these rounds do not need to be consecutive.|OracleWindSightDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleWindSightDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 706,
+    "record_key": "Wind Mystery ~ Wind Sight"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

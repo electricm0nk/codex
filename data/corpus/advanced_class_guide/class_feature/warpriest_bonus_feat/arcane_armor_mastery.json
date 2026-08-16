@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Arcane Armor Mastery",
+    "name": "Arcane Armor Mastery",
+    "class": "Warpriest Bonus Feat",
+    "description": "You have mastered the ability to cast spells while wearing armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Arcane Armor Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Arcane Armor Training"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRECLASS:1,SPELLCASTER=7],[PREVARGTEQ:CasterLevel_Highest,7]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREPROFWITHARMOR:1,TYPE.Medium],[PREABILITY:1,CATEGORY=FEAT,Armor Proficiency (Medium)]"
+      },
+      {
+        "key": "DESC",
+        "value": "You have mastered the ability to cast spells while wearing armor."
+      },
+      {
+        "key": "DESC",
+        "value": " As a swift action, reduce the arcane spell failure chance due to the armor you are wearing by 20%% for any spells you cast this round. This bonus replaces, and does not stack with, the bonus granted by Arcane Armor Training."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Arcane Armor Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4200,
+    "record_key": "Warpriest Bonus Feat ~ Arcane Armor Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

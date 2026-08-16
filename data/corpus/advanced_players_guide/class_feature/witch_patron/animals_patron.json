@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Patron ~ Animals",
+    "name": "Animals Patron",
+    "class": "Witch Patron",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Patron ~ Animals"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchPatron.SpecialQuality"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=1|Charm Animal|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,2],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell2]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=2|Speak With Animals|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,4],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell4]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=3|Dominate Animal|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,6],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell6]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=4|Summon Nature's Ally IV|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,8],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell8]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=5|Animal Growth|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,10],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell10]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=6|Antilife Shell|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,12],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell12]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=7|Beast Shape IV|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,14],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell14]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=8|Animal Shapes|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,16],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell16]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=9|Summon Nature's Ally IX|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,18],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell18]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 948,
+    "record_key": "Witch Patron ~ Animals"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

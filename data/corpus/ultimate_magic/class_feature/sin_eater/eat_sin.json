@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sin Eater ~ Eat Sin",
+    "name": "Eat Sin",
+    "class": "Sin Eater",
+    "description": "As a free action, when you kill an enemy, you may eat the sins of that enemy by spending 1 minute adjacent to its corpse. This provokes attacks of opportunity. You can rush this ritual, performing it as a full-round action that provokes attacks of opportunity, but you only gain half the normal benefit (see below). Eating the enemy's sins heals you %1d8+%2 hit points of damage. The enemy must have been killed by you within the last hour, and it must have had at least %3 Hit Dice. You can use this ability once for each enemy you kill. This ability has no effect on mindless creatures or those with Intelligence 2 or less.  In some faiths, this \"eating\" is a purely symbolic act, while in others, the inquisitor must eat a small amount of food and water as part of the ritual. A few extreme faiths actually require the inquisitor to eat some of the body of the slain enemy.|EatSinDice|EatSinBonus|EatSinMinHD",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sin Eater ~ Eat Sin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EatSinDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EatSinBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EatSinMinHD|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, when you kill an enemy, you may eat the sins of that enemy by spending 1 minute adjacent to its corpse. This provokes attacks of opportunity. You can rush this ritual, performing it as a full-round action that provokes attacks of opportunity, but you only gain half the normal benefit (see below). Eating the enemy's sins heals you %1d8+%2 hit points of damage. The enemy must have been killed by you within the last hour, and it must have had at least %3 Hit Dice. You can use this ability once for each enemy you kill. This ability has no effect on mindless creatures or those with Intelligence 2 or less.  In some faiths, this \"eating\" is a purely symbolic act, while in others, the inquisitor must eat a small amount of food and water as part of the ritual. A few extreme faiths actually require the inquisitor to eat some of the body of the slain enemy.|EatSinDice|EatSinBonus|EatSinMinHD"
+      },
+      {
+        "key": "DESC",
+        "value": "When you eat the sins of a creature that would rise as an undead (such as someone slain by a shadow, spectre, or vampire), you may choose to accept 1 temporary negative level to absorb the taint in the corpse, preventing it from rising as an undead. This negative level can be removed with the appropriate magic, though it automatically expires after 24 hours, and never becomes a permanent negative level. At the GM's discretion, this ability may prevent a ghost from using its rejuvenation ability.|PREVARGTEQ:classlevel(\"Inquisitor\"),8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EatSinDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EatSinBonus|min(20,classlevel(\"Inquisitor\"))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EatSinMinHD|(classlevel(\"Inquisitor\")+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EatSinDice|1|PRECLASS:1,Inquisitor=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EatSinDice|1|PRECLASS:1,Inquisitor=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EatSinDice|1|PRECLASS:1,Inquisitor=13"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1282,
+    "record_key": "Sin Eater ~ Eat Sin"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

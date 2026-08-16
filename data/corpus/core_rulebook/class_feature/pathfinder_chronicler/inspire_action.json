@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pathfinder Chronicler ~ Inspire Action",
+    "name": "Inspire Action",
+    "class": "Pathfinder Chronicler",
+    "description": "As a special use of bardic music, a 6th level Pathfinder chronicler can exhort any one ally within hearing to a sudden surge of action, allowing her ally to immediately take an extra standard action. This does not count against the ally's number of actions on his own turn.|PREVARGTEQ:InspireActionBonus,1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Chronicler ~ Inspire Action"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder ChroniclerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InspireActionBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a special use of bardic music, a 6th level Pathfinder chronicler can exhort any one ally within hearing to a sudden surge of action, allowing her ally to immediately take an extra standard action. This does not count against the ally's number of actions on his own turn.|PREVARGTEQ:InspireActionBonus,1"
+      },
+      {
+        "key": "DESC",
+        "value": "As a special use of bardic music, a 6th level Pathfinder chronicler can exhort any one ally within hearing to a sudden surge of action, allowing her ally to immediately take an extra move action. This does not count against the ally's number of actions on his own turn.|PREVAREQ:InspireActionBonus,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireActionBonus|1|PREVARGTEQ:PathfinderChroniclerLVL,9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.391"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3057,
+    "record_key": "Pathfinder Chronicler ~ Inspire Action"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

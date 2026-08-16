@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Antipaladin ~ Aura of Cowardice",
+    "name": "Aura of Cowardice",
+    "class": "Antipaladin",
+    "description": "You radiate a palpably daunting aura that causes all enemies within 10 feet to take a -4 penalty on saving throws against fear effects. Creatures that are normally immune to fear lose that immunity while within 10 feet of you. This ability functions only while you remain conscious, not if you are unconscious or dead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Antipaladin ~ Aura of Cowardice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AntipaladinClassFeatures.SpecialQuality.Supernatural.Aura"
+      },
+      {
+        "key": "DESC",
+        "value": "You radiate a palpably daunting aura that causes all enemies within 10 feet to take a -4 penalty on saving throws against fear effects. Creatures that are normally immune to fear lose that immunity while within 10 feet of you. This ability functions only while you remain conscious, not if you are unconscious or dead."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 997,
+    "record_key": "Antipaladin ~ Aura of Cowardice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

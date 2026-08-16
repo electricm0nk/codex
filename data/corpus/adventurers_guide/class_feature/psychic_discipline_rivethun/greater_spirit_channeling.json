@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Discipline Rivethun ~ Greater Channeling",
+    "name": "Greater Spirit Channeling",
+    "class": "Psychic Discipline Rivethun",
+    "description": "When you open your body to a wandering spirit, you also gain that wandering spirit's greater spirit ability as long as you are in a metamorphosed form.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Rivethun ~ Greater Channeling"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.168"
+      },
+      {
+        "key": "DESC",
+        "value": "When you open your body to a wandering spirit, you also gain that wandering spirit's greater spirit ability as long as you are in a metamorphosed form."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1182,
+    "record_key": "Psychic Discipline Rivethun ~ Greater Channeling"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

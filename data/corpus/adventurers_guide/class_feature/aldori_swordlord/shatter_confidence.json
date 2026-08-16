@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Aldori Swordlord ~ Shatter Confidence",
+    "name": "Shatter Confidence",
+    "class": "Aldori Swordlord",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aldori Swordlord ~ Shatter Confidence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Aldori Swordlord Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "DESC",
+        "value": "An Aldori swordlord can attempt an Intimidate check to demoralize his target as a swift action after he confirms a critical hit or succeeds at a disarm, reposition, or sunder combat maneuver with an Aldori dueling sword. If his target is already shaken, the swordlord can attempt an Intimidate check to demoralize the target as a swift action after any successful melee attack or combat maneuver. If he succeeds at this check, any morale bonuses the target has are suppressed for %1 rounds. Suppressed effects are not dispelled, and they resume after this time elapses if their duration has not expired. Suppressed morale bonuses include those gained from a barbarian's rage ability; however, this ability doesn't end rage, nor does it suppress other effects of rage or rage powers that do not provide morale bonuses (thus, it doesn't cause a barbarian to become fatigued unless the barbarian chooses to end the rage during the suppressed duration, in which case fatigue from rage affects the barbarian normally).|AldoriSwordlordLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 10,
+    "record_key": "Aldori Swordlord ~ Shatter Confidence"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

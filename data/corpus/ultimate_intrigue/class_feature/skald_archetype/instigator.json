@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skald Archetype ~ Instigator",
+    "name": "Instigator",
+    "class": "Skald Archetype",
+    "description": "The instigator influences the will of the people, turning them toward his own purposes. Regardless of whether what the instigator says is true or not, he inflames emotions in others and suspends their reason. Instigators are often revolutionaries, political or otherwise, but they might also be warmongering firebrands or wicked souls who spread prejudice against others.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald Archetype ~ Instigator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SkaldArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Skald=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Skald Archetype ~ Instigator],[!PREFACT:1,ABILITIES,Skald_Archetype_SpellKenning=True,Skald_Archetype_DirgeOfDoom=True,Skald_Archetype_LoreMaster=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The instigator influences the will of the people, turning them toward his own purposes. Regardless of whether what the instigator says is true or not, he inflames emotions in others and suspends their reason. Instigators are often revolutionaries, political or otherwise, but they might also be warmongering firebrands or wicked souls who spread prejudice against others."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Instigator ~ Song of Rabble-Rousing|PRECLASS:1,Skald=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Instigator ~ Song of Riot|PRECLASS:1,Skald=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Instigator ~ Revolutionary Heart|PRECLASS:1,Skald=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_SpellKenning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_SpellKenning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_LoreMaster|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 897,
+    "record_key": "Skald Archetype ~ Instigator"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

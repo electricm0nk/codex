@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ninja Trick ~ Acrobatic Master",
+    "name": "Acrobatic Master",
+    "class": "Ninja Trick",
+    "description": "As a swift action, a ninja with this trick can focus her ki to grant her a +20 bonus on one Acrobatics check of her choice made before the start of her next turn. Using this ability expends 1 ki point from her ki pool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Acrobatic Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialAttack.Supernatural.NinjaTrick.NinjaTrickOnly"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, a ninja with this trick can focus her ki to grant her a +20 bonus on one Acrobatics check of her choice made before the start of her next turn. Using this ability expends 1 ki point from her ki pool."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 124,
+    "record_key": "Ninja Trick ~ Acrobatic Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

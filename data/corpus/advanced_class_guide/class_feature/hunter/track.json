@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunter ~ Track",
+    "name": "Track",
+    "class": "Hunter",
+    "description": "At 2nd level, a hunter adds half her level to Survival skill checks made to follow tracks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter ~ Track"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.HunterTrack.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a hunter adds half her level to Survival skill checks made to follow tracks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Survival|HunterLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrackLVL|HunterLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1177,
+    "record_key": "Hunter ~ Track"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

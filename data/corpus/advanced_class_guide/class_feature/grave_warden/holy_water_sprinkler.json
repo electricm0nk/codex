@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Grave Warden ~ Holy Water Sprinkler",
+    "name": "Holy Water Sprinkler",
+    "class": "Grave Warden",
+    "description": "A grave warden can draw a flask of holy water as if it were a weapon (and can thus the Quick Draw feat to draw flasks of holy water). As a swift action, he can open a flask of holy water and pour it onto a held or adjacent melee weapon. If the weapon successfully hits an undead creature before the end of the grave warden's next turn, the undead takes damage as if it took a direct hit from the holy water, in addition to the damage from the weapon, if any.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Grave Warden ~ Holy Water Sprinkler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Grave Warden Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A grave warden can draw a flask of holy water as if it were a weapon (and can thus the Quick Draw feat to draw flasks of holy water). As a swift action, he can open a flask of holy water and pour it onto a held or adjacent melee weapon. If the weapon successfully hits an undead creature before the end of the grave warden's next turn, the undead takes damage as if it took a direct hit from the holy water, in addition to the damage from the weapon, if any."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3757,
+    "record_key": "Grave Warden ~ Holy Water Sprinkler"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

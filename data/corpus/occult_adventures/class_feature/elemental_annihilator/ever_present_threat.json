@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elemental Annihilator ~ Ever-Present Threat",
+    "name": "Ever-Present Threat",
+    "class": "Elemental Annihilator",
+    "description": "At 4th level, an elemental annihilator threatens all foes within her natural reach. If anyone provokes an attack of opportunity from her, she can form her melee devastating infusion and make the attack, after which the weapon disappears. This ability replaces the 4th-level utility wild talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Annihilator ~ Ever-Present Threat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Elemental Annihilator Class Feature.Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, an elemental annihilator threatens all foes within her natural reach. If anyone provokes an attack of opportunity from her, she can form her melee devastating infusion and make the attack, after which the weapon disappears. This ability replaces the 4th-level utility wild talent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1332,
+    "record_key": "Elemental Annihilator ~ Ever-Present Threat"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

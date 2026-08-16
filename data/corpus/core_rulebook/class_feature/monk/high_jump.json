@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk ~ High Jump",
+    "name": "High Jump",
+    "class": "Monk",
+    "description": "You can adds +%1 to all Acrobatics checks made to jump, both for vertical jumps and horizontal jumps. In addition, you always count as having a running start when making jump checks using Acrobatics. By spending 1 point from your ki pool as a swift action, you gain a +20 bonus on Acrobatics checks made to jump for 1 round.|HighJumpBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk ~ High Jump"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.Extraordinary.ModifyMovement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HighJumpLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HighJumpBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can adds +%1 to all Acrobatics checks made to jump, both for vertical jumps and horizontal jumps. In addition, you always count as having a running start when making jump checks using Acrobatics. By spending 1 point from your ki pool as a swift action, you gain a +20 bonus on Acrobatics checks made to jump for 1 round.|HighJumpBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Acrobatics=When Jumping|HighJumpBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HighJumpBonus|HighJumpLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HighJumpLVL|MonkLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1104,
+    "record_key": "Monk ~ High Jump"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

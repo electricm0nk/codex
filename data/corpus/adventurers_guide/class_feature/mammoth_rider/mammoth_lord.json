@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mammoth Rider ~ Mammoth Lord",
+    "name": "Mammoth Lord",
+    "class": "Mammoth Rider",
+    "description": "A mammoth rider becomes immune to the dazed, fatigued, shaken, sickened, staggered, and stunned conditions. If she succeeds at a Fortitude or Will save against an attack that has a reduced effect on a successful save, she instead avoids the effect entirely. If a mammoth rider and her steed both hit an opponent on the same turn, the foe must succeed at a Fortitude save (DC = 10 + half the steedӳ Hit Dice + the steedӳ Strength modifier) or be stunned for 1 round. Whether or not the target succeeds, it is immune to this ability for 24 hours thereafter.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mammoth Rider ~ Mammoth Lord"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mammoth Rider Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "DESC",
+        "value": "A mammoth rider becomes immune to the dazed, fatigued, shaken, sickened, staggered, and stunned conditions. If she succeeds at a Fortitude or Will save against an attack that has a reduced effect on a successful save, she instead avoids the effect entirely. If a mammoth rider and her steed both hit an opponent on the same turn, the foe must succeed at a Fortitude save (DC = 10 + half the steedӳ Hit Dice + the steedӳ Strength modifier) or be stunned for 1 round. Whether or not the target succeeds, it is immune to this ability for 24 hours thereafter."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 368,
+    "record_key": "Mammoth Rider ~ Mammoth Lord"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

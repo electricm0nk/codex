@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mountain Witch ~ Spells",
+    "name": "Spells",
+    "class": "Mountain Witch",
+    "description": "A mountain witch replaces some of her patron spells with the following: 2nd-magic stone, 4th-stone callAPG, 6th- meld into stone, 8th-stoneskin, 10th-wall of stone, 12th-stone tell, 14th-statue, 16th-repel metal or stone, 18th-clashing rocksAPG.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mountain Witch ~ Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mountain Witch Class Feature.Witch Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A mountain witch replaces some of her patron spells with the following: 2nd-magic stone, 4th-stone callAPG, 6th- meld into stone, 8th-stoneskin, 10th-wall of stone, 12th-stone tell, 14th-statue, 16th-repel metal or stone, 18th-clashing rocksAPG."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4026,
+    "record_key": "Mountain Witch ~ Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

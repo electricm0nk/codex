@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sword of Valor ~ First Into Battle",
+    "name": "First Into Battle",
+    "class": "Sword of Valor",
+    "description": "A sword of valor can spend 1 use of smite evil or lay on hands to act in the surprise round, even if she is surprised. When the paladin makes an Initiative check, she gains a +%1 bonus to the check.|CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sword of Valor ~ First Into Battle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.Supernatural.PaladinDivineGrace"
+      },
+      {
+        "key": "DESC",
+        "value": "A sword of valor can spend 1 use of smite evil or lay on hands to act in the surprise round, even if she is surprised. When the paladin makes an Initiative check, she gains a +%1 bonus to the check.|CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 315,
+    "record_key": "Sword of Valor ~ First Into Battle"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

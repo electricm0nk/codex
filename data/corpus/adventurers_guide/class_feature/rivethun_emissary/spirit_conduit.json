@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rivethun Emissary ~ Spirit Conduit",
+    "name": "Spirit Conduit",
+    "class": "Rivethun Emissary",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rivethun Emissary ~ Spirit Conduit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Rivethun Emissary Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      },
+      {
+        "key": "DESC",
+        "value": "A Rivethun emissary's bond to an animus strengthens considerably. Any animus she summons is treated as if the Rivethun emissary had the Augment Summoning feat, gaining a +4 enhancement bonus to its Strength and Constitution."
+      },
+      {
+        "key": "DESC",
+        "value": "When the animus vanishes, the Rivethun emissary can have her spirit animal appear in an empty square adjacent to herself instead of in the animus's location.|PREVARGTEQ:RivethunEmissaryLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "The bond allows the animus to leave parting insight when it vanishes, answering a single yes-or-no question for the Rivethun emissary as per commune.|PREVARGTEQ:RivethunEmissaryLVL,10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 445,
+    "record_key": "Rivethun Emissary ~ Spirit Conduit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

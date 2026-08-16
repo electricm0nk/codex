@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bardic Performance ~ Frightening Tune",
+    "name": "Frightening Tune",
+    "class": "Bardic Performance",
+    "description": "You can use your performance to cause fear in your enemies. To be affected, an enemy must be able to hear you perform and be within 30 feet. Each enemy within range receives a Will save (DC %1) to negate the effect. If the save succeeds, the creature is immune to this ability for 24 hours. If the save fails, the target becomes frightened and flees for as long as the target can hear your performance. Frightening Tune relies on audible components.|FrighteningTuneDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Frightening Tune"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialAttack.SpellLike.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FrighteningTuneDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your performance to cause fear in your enemies. To be affected, an enemy must be able to hear you perform and be within 30 feet. Each enemy within range receives a Will save (DC %1) to negate the effect. If the save succeeds, the creature is immune to this ability for 24 hours. If the save fails, the target becomes frightened and flees for as long as the target can hear your performance. Frightening Tune relies on audible components.|FrighteningTuneDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrighteningTuneDC|10+(BardicPerformanceLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 530,
+    "record_key": "Bardic Performance ~ Frightening Tune"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

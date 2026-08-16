@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Serpent Shaman ~ Animal Companion",
+    "name": "Animal Companion",
+    "class": "Serpent Shaman",
+    "description": "A serpent shaman who chooses an animal companion must select a snake. If choosing a domain, the serpent shaman must choose from the Animal, Charm, Trickery, and Water domains.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serpent Shaman ~ Animal Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DruidClassFeatures.ArchetypeDruid.Animal Companion"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Druid Archetype ~ Serpent Shaman"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A serpent shaman who chooses an animal companion must select a snake. If choosing a domain, the serpent shaman must choose from the Animal, Charm, Trickery, and Water domains."
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Snake (Constrictor)),Companion (Snake (Viper))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2073,
+    "record_key": "Serpent Shaman ~ Animal Companion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

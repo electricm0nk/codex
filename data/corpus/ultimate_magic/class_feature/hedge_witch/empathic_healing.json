@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hedge Witch ~ Empathic Healing",
+    "name": "Empathic Healing",
+    "class": "Hedge Witch",
+    "description": "You can minister to a diseased or poisoned target, redirecting the affliction into yourself. For a poisoned target, you must tend to him as a standard action; he makes his next saving throw against the poison as normal, but you suffer the effects of the failed save instead of the poisoned creature. For a diseased target, you must tend to the sick person for an hour; he makes his next saving throw against the disease as normal, but you suffer the effects of the failed save instead of the diseased creature. You do not actually become poisoned or diseased (and are not contagious and do not need to be cured), but suffer the effects of the affliction as if you had been. You normally use this ability to extend the life of someone near death, giving him time to recover. This ability has no effect if you are immune to disease or poison.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hedge Witch ~ Empathic Healing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can minister to a diseased or poisoned target, redirecting the affliction into yourself. For a poisoned target, you must tend to him as a standard action; he makes his next saving throw against the poison as normal, but you suffer the effects of the failed save instead of the poisoned creature. For a diseased target, you must tend to the sick person for an hour; he makes his next saving throw against the disease as normal, but you suffer the effects of the failed save instead of the diseased creature. You do not actually become poisoned or diseased (and are not contagious and do not need to be cured), but suffer the effects of the affliction as if you had been. You normally use this ability to extend the life of someone near death, giving him time to recover. This ability has no effect if you are immune to disease or poison."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 2016,
+    "record_key": "Hedge Witch ~ Empathic Healing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

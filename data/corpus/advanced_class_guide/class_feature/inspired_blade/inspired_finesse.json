@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inspired Blade ~ Inspired Finesse",
+    "name": "Inspired Finesse",
+    "class": "Inspired Blade",
+    "description": "An inspired blade gains the benefits of Weapon Finesse with the rapier (this ability counts as having the Weapon Finesse feat for the purpose of meeting feat prerequisites) and gains Weapon Focus (rapier) as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inspired Blade ~ Inspired Finesse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Feature.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "HasWeaponFinesseFeat,1"
+      },
+      {
+        "key": "DESC",
+        "value": "An inspired blade gains the benefits of Weapon Finesse with the rapier (this ability counts as having the Weapon Finesse feat for the purpose of meeting feat prerequisites) and gains Weapon Focus (rapier) as a bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Weapon Focus (Rapier)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rapier|TOHIT|((max(STR,DEX)-STR)+SHIELDACCHECK)|TYPE=NotRanged|!PREABILITY:1,CATEGORY=FEAT,Weapon Finesse"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3890,
+    "record_key": "Inspired Blade ~ Inspired Finesse"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

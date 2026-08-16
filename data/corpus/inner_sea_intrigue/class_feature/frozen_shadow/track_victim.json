@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Frozen Shadow ~ Track Victim",
+    "name": "Track Victim",
+    "class": "Frozen Shadow",
+    "description": "A frozen shadow adds half his ninja level on Survival checks to follow tracks and on Perception checks to see through disguises. Additionally, if the frozen shadow sees a creature that has changed its appearance using the Disguise skill, he can always attempt a Perception check to see through the disguise, even if the disguised creature did nothing to draw attention to itself. The frozen shadow also gains a +2 bonus to Will saving throws when attempting to disbelieve an illusion affecting a creature or creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Frozen Shadow ~ Track Victim"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ninja Class Features.FrozenShadowClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A frozen shadow adds half his ninja level on Survival checks to follow tracks and on Perception checks to see through disguises. Additionally, if the frozen shadow sees a creature that has changed its appearance using the Disguise skill, he can always attempt a Perception check to see through the disguise, even if the disguised creature did nothing to draw attention to itself. The frozen shadow also gains a +2 bonus to Will saving throws when attempting to disbelieve an illusion affecting a creature or creatures."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Survival=Follow or identify tracks,Perception=See Through Disguise|NinjaLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 219,
+    "record_key": "Frozen Shadow ~ Track Victim"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

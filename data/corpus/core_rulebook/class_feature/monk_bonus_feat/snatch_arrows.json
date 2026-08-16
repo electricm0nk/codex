@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk Bonus Feat ~ Snatch Arrows",
+    "name": "Snatch Arrows",
+    "class": "Monk Bonus Feat",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Bonus Feat ~ Snatch Arrows"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Snatch Arrows"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MonkBonusFeat_SnatchArrows,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Snatch Arrows"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1275,
+    "record_key": "Monk Bonus Feat ~ Snatch Arrows"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

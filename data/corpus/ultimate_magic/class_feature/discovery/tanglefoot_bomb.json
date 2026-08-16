@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Tanglefoot Bomb",
+    "name": "Tanglefoot Bomb*",
+    "class": "Discovery",
+    "description": "A creature that takes a direct hit from a tanglefoot bomb must save against the bomb's DC or be entangled and glued to the floor as if it had failed its save against a tanglefoot bag (see page 160 of the Core Rulebook). Creatures in the splash area that fail their saves are entangled but not glued to the floor; those who make this save are not entangled at all.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Tanglefoot Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.AlchemistDiscovery.Supernatural.AlchemistBombModifier"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature that takes a direct hit from a tanglefoot bomb must save against the bomb's DC or be entangled and glued to the floor as if it had failed its save against a tanglefoot bag (see page 160 of the Core Rulebook). Creatures in the splash area that fail their saves are entangled but not glued to the floor; those who make this save are not entangled at all."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 162,
+    "record_key": "Discovery ~ Tanglefoot Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

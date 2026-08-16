@@ -1,0 +1,143 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk Archetype ~ Flowing Monk",
+    "name": "Flowing Monk",
+    "class": "Monk Archetype",
+    "description": "The flowing monk is the wind and the river. He knows how the world flows, and forces his enemies to flow with it. Even the most powerful stone breaks under the graceful and persistent pressure of wind and water.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Flowing Monk"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "DESC",
+        "value": "The flowing monk is the wind and the river. He knows how the world flows, and forces his enemies to flow with it. Even the most powerful stone breaks under the graceful and persistent pressure of wind and water."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Flowing Monk ~ Bonus Feat|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Flowing Monk ~ Redirection|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Flowing Monk ~ Unbalancing Counter|PRECLASS:1,Monk=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Flowing Monk ~ Flowing Dodge|PRECLASS:1,Monk=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Flowing Monk ~ Elusive Target|PRECLASS:1,Monk=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Flowing Monk ~ Volley Spell|PRECLASS:1,Monk=15"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Flowing Monk],[!PREFACT:1,ABILITIES,Monk_Archetype_BonusFeat2=True,Monk_Archetype_StunningFist=True,Monk_Archetype_PurityOfBody=True,Monk_Archetype_DiamondBody=True,Monk_Archetype_FastMovement=True,Monk_Archetype_QuiveringPalm=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_PurityOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_DiamondBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_QuiveringPalm|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_PurityOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_DiamondBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_QuiveringPalm|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 925,
+    "record_key": "Monk Archetype ~ Flowing Monk"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

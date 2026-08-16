@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Outer Rifts Mystery ~ Planar Haze",
+    "name": "Planar Haze",
+    "class": "Outer Rifts Mystery",
+    "description": "You can fill an area with the smoky miasma of the Outer Rifts. %1 per day when you cast a spell that has an area, as a swift action you may also fill that area that acts as|PlanarHazeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Outer Rifts Mystery ~ Planar Haze"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PlanarHazeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can fill an area with the smoky miasma of the Outer Rifts. %1 per day when you cast a spell that has an area, as a swift action you may also fill that area that acts as|PlanarHazeTimes"
+      },
+      {
+        "key": "DESC",
+        "value": "obscuring mist,|PREVARLT:OracleLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "fog cloud,|PREVARGTEQ:OracleLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "except it originates at the center of your spell effect and cannot expand beyond the spell's area."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlanarHazeTimes|1+OracleLVL/7"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 114,
+    "record_key": "Outer Rifts Mystery ~ Planar Haze"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

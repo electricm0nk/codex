@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "First Worlder ~ Eidolon",
+    "name": "Eidolon",
+    "class": "First Worlder",
+    "description": "You possess the ability to summon a powerful extraplanar fey called an eidolon. You always summon an aspect of the same creature. Your eidolon has your alignment and can speak all of your languages. Your eidolon is treated as a summoned creature, except that it is not sent back to the First World until reduced to a number of negative hit points equal to or greater than its Constitution score. In addition, due to its tie to you, your eidolon can touch and attack creatures warded by protection from evil and similar effects that prevent contact with summoned creatures. You can summon your eidolon in a ritual that takes 1 minute to perform. When summoned in this way, your eidolon's hit points are unchanged from the last time it was summoned. The only exception to this is if your eidolon was slain, in which case it returns with half its normal hit points. Your eidolon remains until dismissed (a standard action). If your eidolon is sent back to its home plane due to damage, it cannot be summoned again until the following day. Your eidolon cannot be sent back to the First World by means of dispel magic, but spells such as dismissal and banishment work normally.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "First Worlder ~ Eidolon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.Extraordinary.Eidolon"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FirstWorlderEidolon|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You possess the ability to summon a powerful extraplanar fey called an eidolon. You always summon an aspect of the same creature. Your eidolon has your alignment and can speak all of your languages. Your eidolon is treated as a summoned creature, except that it is not sent back to the First World until reduced to a number of negative hit points equal to or greater than its Constitution score. In addition, due to its tie to you, your eidolon can touch and attack creatures warded by protection from evil and similar effects that prevent contact with summoned creatures. You can summon your eidolon in a ritual that takes 1 minute to perform. When summoned in this way, your eidolon's hit points are unchanged from the last time it was summoned. The only exception to this is if your eidolon was slain, in which case it returns with half its normal hit points. Your eidolon remains until dismissed (a standard action). If your eidolon is sent back to its home plane due to damage, it cannot be summoned again until the following day. Your eidolon cannot be sent back to the First World by means of dispel magic, but spells such as dismissal and banishment work normally."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FirstWorlderEidolon|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 373,
+    "record_key": "First Worlder ~ Eidolon"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

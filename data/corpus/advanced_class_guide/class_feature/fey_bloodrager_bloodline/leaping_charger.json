@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fey Bloodrager Bloodline ~ Leaping Charger",
+    "name": "Leaping Charger",
+    "class": "Fey Bloodrager Bloodline",
+    "description": "You are able to leap over overgrowth and similar impediments with ease when you charge. When you charge you ignore difficult terrain (but not other creatures). You can move through it at normal speed and it does not impede your charge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Bloodrager Bloodline ~ Leaping Charger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Fey Bloodrager Bloodline ~ Power LVL 04.Bloodrager Bloodline Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Fey"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Fey_BloodlineProgressionLVL,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower4LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are able to leap over overgrowth and similar impediments with ease when you charge. When you charge you ignore difficult terrain (but not other creatures). You can move through it at normal speed and it does not impede your charge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|FeyBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 826,
+    "record_key": "Fey Bloodrager Bloodline ~ Leaping Charger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

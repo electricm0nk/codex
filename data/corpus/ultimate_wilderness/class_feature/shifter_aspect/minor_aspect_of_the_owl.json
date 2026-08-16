@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter Aspect ~ Owl ~ Minor",
+    "name": "Minor Aspect of the Owl",
+    "class": "Shifter Aspect",
+    "description": "You gain a +%1 competence bonus on Stealth checks.|OwlAspectStealthBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Owl ~ Minor"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Owl_2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OwlAspectStealthBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 competence bonus on Stealth checks.|OwlAspectStealthBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OwlAspectStealthBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OwlAspectStealthBonus|2|PREVARGTEQ:ShifterOwlAspectLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OwlAspectStealthBonus|2|PREVARGTEQ:ShifterOwlAspectLVL,15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 82,
+    "record_key": "Shifter Aspect ~ Owl ~ Minor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

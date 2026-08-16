@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hexenhammer ~ Pride and Penance",
+    "name": "Pride and Penance",
+    "class": "Hexenhammer",
+    "description": "Hexenhammers are deeply conflicted about their dealings with dark powers. If a hexenhammer uses a hex or casts a spell gained from the witch class spell list, she temporarily loses access to her domain abilities and her cunning mind bonus until she undergoes a brief period of penance and atonement that takes 1 minute of quiet prayer and contemplation; this atonement doesn't require any additional cost, and it automatically restores the lost abilities, regardless of how many times the hexenhammer uses her dark powers. If the hexenhammer uses her dark trade ability (see below) to trade uses of judgment for hexes, she loses access to her domain abilities and cunning mind bonus until the next time she regains her spell slots for the day. This ability alters domain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hexenhammer ~ Pride and Penance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.HexenhammerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "DESC",
+        "value": "Hexenhammers are deeply conflicted about their dealings with dark powers. If a hexenhammer uses a hex or casts a spell gained from the witch class spell list, she temporarily loses access to her domain abilities and her cunning mind bonus until she undergoes a brief period of penance and atonement that takes 1 minute of quiet prayer and contemplation; this atonement doesn't require any additional cost, and it automatically restores the lost abilities, regardless of how many times the hexenhammer uses her dark powers. If the hexenhammer uses her dark trade ability (see below) to trade uses of judgment for hexes, she loses access to her domain abilities and cunning mind bonus until the next time she regains her spell slots for the day. This ability alters domain."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 128,
+    "record_key": "Hexenhammer ~ Pride and Penance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

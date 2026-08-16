@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brawler ~ Brawler's Flurry",
+    "name": "Brawler's Flurry",
+    "class": "Brawler",
+    "description": "Starting at 2nd level, a brawler can make a brawler's flurry as a full-attack action. When doing so, a brawler has the Two-Weapon Fighting feat when attacking with any combination of unarmed strikes, weapons from the close fighter weapon group, or weapons with the \"monk\" special feature. She does not need to use two different weapons to use this ability. A brawler applies her full Strength modifier to her damage rolls for all attacks made with brawler's flurry, whether the attacks are made with an off-hand weapon or a weapon wielded in both hands. A brawler can substitute disarm, sunder, and trip combat maneuvers for unarmed attacks as part of brawler's flurry. A brawler with natural weapons can't use such weapons as part of brawler's flurry, nor can she make natural weapon attacks in addition to her brawler's flurry attacks. At 8th level, the brawler gains use of the Improved Two- Weapon Fighting feat when using brawler's flurry. At 15th level, she gains use of the Greater Two-Weapon Fighting feat when using brawler's flurry.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler ~ Brawler's Flurry"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlersFlurryLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlersFlurryExtraAttacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlersFlurryAttackPenalty|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 2nd level, a brawler can make a brawler's flurry as a full-attack action. When doing so, a brawler has the Two-Weapon Fighting feat when attacking with any combination of unarmed strikes, weapons from the close fighter weapon group, or weapons with the \"monk\" special feature. She does not need to use two different weapons to use this ability. A brawler applies her full Strength modifier to her damage rolls for all attacks made with brawler's flurry, whether the attacks are made with an off-hand weapon or a weapon wielded in both hands. A brawler can substitute disarm, sunder, and trip combat maneuvers for unarmed attacks as part of brawler's flurry. A brawler with natural weapons can't use such weapons as part of brawler's flurry, nor can she make natural weapon attacks in addition to her brawler's flurry attacks. At 8th level, the brawler gains use of the Improved Two- Weapon Fighting feat when using brawler's flurry. At 15th level, she gains use of the Greater Two-Weapon Fighting feat when using brawler's flurry."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 896,
+    "record_key": "Brawler ~ Brawler's Flurry"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

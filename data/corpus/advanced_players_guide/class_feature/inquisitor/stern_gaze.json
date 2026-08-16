@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inquisitor ~ Stern Gaze",
+    "name": "Stern Gaze",
+    "class": "Inquisitor",
+    "description": "Inquisitors are skilled at sensing deception and intimidating their foes. An inquisitor receives a +%1 morale bonus on all Intimidate and Sense Motive checks.|SternGazeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor ~ Stern Gaze"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SternGazeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Inquisitors are skilled at sensing deception and intimidating their foes. An inquisitor receives a +%1 morale bonus on all Intimidate and Sense Motive checks.|SternGazeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate,Sense Motive|SternGazeBonus|TYPE=Morale"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SternGazeBonus|max(1,InquisitorLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 300,
+    "record_key": "Inquisitor ~ Stern Gaze"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

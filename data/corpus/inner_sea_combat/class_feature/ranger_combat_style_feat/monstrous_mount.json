@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Combat Style Feat ~ Monstrous Mount",
+    "name": "Monstrous Mount",
+    "class": "Ranger Combat Style Feat",
+    "description": "You have learned how to tame and ride exotic beasts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Combat Style Feat ~ Monstrous Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Monstrous Mount"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CombatStyleLVL,2"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RangerLVL,2"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Ranger_Combat_Style_Feat_Monstrous_Mount,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned how to tame and ride exotic beasts."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Monstrous Mount|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 13,
+    "record_key": "Ranger Combat Style Feat ~ Monstrous Mount"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

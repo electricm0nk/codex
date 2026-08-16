@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Geminate Invoker ~ Haunt Channeler",
+    "name": "Haunt Channeler",
+    "class": "Geminate Invoker",
+    "description": "A geminate invoker gains the power to sense and absorb lingering spiritual energy. This functions identically to the medium class ability of the same name (Occult Adventures p31), except the geminate invoker deals %1d6 points of damage to haunts.|BarbarianLVL/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Geminate Invoker ~ Haunt Channeler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Feature.GeminateInvokerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.166"
+      },
+      {
+        "key": "DESC",
+        "value": "A geminate invoker gains the power to sense and absorb lingering spiritual energy. This functions identically to the medium class ability of the same name (Occult Adventures p31), except the geminate invoker deals %1d6 points of damage to haunts.|BarbarianLVL/3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 616,
+    "record_key": "Geminate Invoker ~ Haunt Channeler"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

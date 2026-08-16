@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Talent ~ Ninja Trick",
+    "name": "Ninja Trick",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent can choose a trick from the ninja trick list (see pages 14-16). The rogue can choose but cannot use talents that require ki points, unless she has a ki pool. A rogue can pick this talent more than once. The rogue cannot choose a ninja trick with the same name as a rogue talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Ninja Trick"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RogueTalent"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent can choose a trick from the ninja trick list (see pages 14-16). The rogue can choose but cannot use talents that require ki points, unless she has a ki pool. A rogue can pick this talent more than once. The rogue cannot choose a ninja trick with the same name as a rogue talent."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ninja Trick|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1607,
+    "record_key": "Rogue Talent ~ Ninja Trick"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

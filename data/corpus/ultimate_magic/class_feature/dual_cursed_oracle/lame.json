@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dual-Cursed Oracle ~ Lame",
+    "name": "Lame",
+    "class": "Dual-Cursed Oracle",
+    "description": "One of your legs is permanently wounded, reducing your base land speed by %1 feet. Your speed is never reduced due to encumbrance.|OracleLameEffect",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dual-Cursed Oracle ~ Lame"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleSecondCurse"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Oracle ~ Lame"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleLameEffect|0"
+      },
+      {
+        "key": "DESC",
+        "value": "One of your legs is permanently wounded, reducing your base land speed by %1 feet. Your speed is never reduced due to encumbrance.|OracleLameEffect"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|-OracleLameEffect"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleLameEffect|10|PREMOVE:1,Walk=30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleLameEffect|5|!PREMOVE:1,Walk=30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "UNENCUMBEREDMOVE",
+        "value": "HeavyLoad"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1478,
+    "record_key": "Dual-Cursed Oracle ~ Lame"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

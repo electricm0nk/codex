@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk Archetype ~ Drunken Master",
+    "name": "Drunken Master",
+    "class": "Monk Archetype",
+    "description": "Most monks lead lives of moderation and quiet contemplation. But the drunken master finds perfection through excess. Powered by strong wine, he uses his intoxication to reach a state where his ki is more potent, if somewhat fleeting. A drunken master has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Drunken Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkStillMind.MonkPurityOfBody.MonkDiamondBody.MonkDiamondSoul.MonkEmptyBody"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Drunken Master],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStillMind,TYPE.MonkPurityOfBody,TYPE.MonkDiamondBody,TYPE.MonkDiamondSoul,TYPE.MonkEmptyBody]"
+      },
+      {
+        "key": "DESC",
+        "value": "Most monks lead lives of moderation and quiet contemplation. But the drunken master finds perfection through excess. Powered by strong wine, he uses his intoxication to reach a state where his ki is more potent, if somewhat fleeting. A drunken master has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Drunken Master ~ Drunken Ki|PRECLASS:1,Monk=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Drunken Master ~ Drunken Strength|PRECLASS:1,Monk=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Drunken Master ~ Drunken Courage|PRECLASS:1,Monk=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Drunken Master ~ Drunken Resilience|PRECLASS:1,Monk=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Drunken Master ~ Firewater Breath|PRECLASS:1,Monk=19"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2290,
+    "record_key": "Monk Archetype ~ Drunken Master"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

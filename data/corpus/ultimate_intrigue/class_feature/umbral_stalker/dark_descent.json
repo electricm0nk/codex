@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Umbral Stalker ~ Dark Descent",
+    "name": "Dark Descent",
+    "class": "Umbral Stalker",
+    "description": "An umbral stalker gains the Darkness domain with the Night subdomain, even if her deity normally doesn't offer it. This ability alters domain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Umbral Stalker ~ Dark Descent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.UmbralStalkerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An umbral stalker gains the Darkness domain with the Night subdomain, even if her deity normally doesn't offer it. This ability alters domain."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Inquisitor Domain ~ Night Subdomain"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Inquisitor Domain Choice|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorDomainNightSubdomain|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 479,
+    "record_key": "Umbral Stalker ~ Dark Descent"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

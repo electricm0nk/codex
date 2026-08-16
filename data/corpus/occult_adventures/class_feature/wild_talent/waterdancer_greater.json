@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Waterdancer (Greater)",
+    "name": "Waterdancer, Greater",
+    "class": "Wild Talent",
+    "description": "Element water; Type utility (Su); Level 5; Burn 0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Waterdancer (Greater)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Water"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ waterdancer"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite waterdancer"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Water,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Element water; Type utility (Su); Level 5; Burn 0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;You can move across water (as water walk) at will and breathe underwater, and your slashing and bludgeoning attacks don't take the usual penalties when you're underwater."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 798,
+    "record_key": "Wild Talent ~ Waterdancer (Greater)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

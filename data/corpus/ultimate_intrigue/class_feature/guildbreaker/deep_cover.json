@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Guildbreaker ~ Deep Cover",
+    "name": "Deep Cover",
+    "class": "Guildbreaker",
+    "description": "Guildbreakers may work to dismantle their enemies' power structures from within, and they know how to gather resources and the necessary trappings in order to masquerade as a member of those organizations. A guildbreaker adds a circumstance bonus equal to twice his favored organization bonus to all Bluff and Disguise checks to appear to be a member of the organization (this does not apply on Disguise checks to change his appearance and replace a specific member, but rather to checks related to appear to be a general member of the organization). The bonus on Bluff checks from deep cover stacks with the guildbreaker's overall bonus from favored organization if the person he is attempting to deceive is also a member of that organization. A guildbreaker posing as a member of one of his favored enemy organizations automatically defeats truth-telling magic (as if under the effects of glibness), but only for the purpose of claiming to be a member of the organization. Truth-telling magic can still expose him with a more indirect question, such as a member of a non-religious evil organization asking the guildbreaker for the identity of his patron deity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guildbreaker ~ Deep Cover"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.GuildbreakerClassFeatures.SpecialQuality.Extraordinary.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Guildbreakers may work to dismantle their enemies' power structures from within, and they know how to gather resources and the necessary trappings in order to masquerade as a member of those organizations. A guildbreaker adds a circumstance bonus equal to twice his favored organization bonus to all Bluff and Disguise checks to appear to be a member of the organization (this does not apply on Disguise checks to change his appearance and replace a specific member, but rather to checks related to appear to be a general member of the organization). The bonus on Bluff checks from deep cover stacks with the guildbreaker's overall bonus from favored organization if the person he is attempting to deceive is also a member of that organization. A guildbreaker posing as a member of one of his favored enemy organizations automatically defeats truth-telling magic (as if under the effects of glibness), but only for the purpose of claiming to be a member of the organization. Truth-telling magic can still expose him with a more indirect question, such as a member of a non-religious evil organization asking the guildbreaker for the identity of his patron deity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 660,
+    "record_key": "Guildbreaker ~ Deep Cover"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

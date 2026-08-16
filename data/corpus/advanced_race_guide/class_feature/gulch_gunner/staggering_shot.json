@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gulch Gunner ~ Staggering Shot",
+    "name": "Staggering Shot",
+    "class": "Gulch Gunner",
+    "description": "When the gulch gunner hits an adjacent target with a ranged firearm attack, the target must also make a Fortitude save (DC %1) or be staggered for 1d4 rounds.|10+GunslingerLVL/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gulch Gunner ~ Staggering Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When the gulch gunner hits an adjacent target with a ranged firearm attack, the target must also make a Fortitude save (DC %1) or be staggered for 1d4 rounds.|10+GunslingerLVL/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.152"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 706,
+    "record_key": "Gulch Gunner ~ Staggering Shot"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

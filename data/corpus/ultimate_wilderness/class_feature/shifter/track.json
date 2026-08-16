@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter ~ Track",
+    "name": "Track",
+    "class": "Shifter",
+    "description": "A shifter adds +%1 as a bonus on Survival checks to follow tracks.|TrackBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter ~ Track"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A shifter adds +%1 as a bonus on Survival checks to follow tracks.|TrackBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Track Bonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrackLVL|ShifterLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|TrackBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 17,
+    "record_key": "Shifter ~ Track"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

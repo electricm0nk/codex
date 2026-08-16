@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Liberation Blessing ~ Liberation",
+    "name": "Liberation",
+    "class": "Liberation Blessing",
+    "description": "For 1 round as a swift action, you can ignore impediments to your mobility and effects that cause paralysis (as freedom of movement). You can activate this blessing even if you're otherwise unable to take actions, but not if you're unconscious.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Liberation Blessing ~ Liberation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "For 1 round as a swift action, you can ignore impediments to your mobility and effects that cause paralysis (as freedom of movement). You can activate this blessing even if you're otherwise unable to take actions, but not if you're unconscious."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2259,
+    "record_key": "Liberation Blessing ~ Liberation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

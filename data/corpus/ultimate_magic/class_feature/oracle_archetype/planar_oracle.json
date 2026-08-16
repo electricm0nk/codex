@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oracle Archetype ~ Planar Oracle",
+    "name": "Planar Oracle",
+    "class": "Oracle Archetype",
+    "description": "A planar oracle has an affinity with one of the Outer Planes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle Archetype ~ Planar Oracle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.OracleArchetype.OracleMysterySpell2.OracleMysterySpell4.OracleMysterySpell6.OracleMysterySpell8.OracleMysterySpell10.OracleMysterySpell12.OracleMysterySpell14.OracleMysterySpell16.OracleMysterySpell18.OracleRevelation3.OracleFinalRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Planar Oracle],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleMysterySpell2,TYPE.OracleMysterySpell4,TYPE.OracleMysterySpell6,TYPE.OracleMysterySpell8,TYPE.OracleMysterySpell10,TYPE.OracleMysterySpell12,TYPE.OracleMysterySpell14,TYPE.OracleMysterySpell16,TYPE.OracleMysterySpell18,TYPE.OracleRevelation3,TYPE.OracleFinalRevelation]"
+      },
+      {
+        "key": "DESC",
+        "value": "A planar oracle has an affinity with one of the Outer Planes."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Planar Oracle ~ Bonus Spells|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Oracle Class Feature|AUTOMATIC|Planar Oracle ~ Revelations|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Oracle Class Feature|AUTOMATIC|Planar Oracle ~ Final Revelation|PRECLASS:1,Oracle=20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMysteryLevel|-1|PRECLASS:1,Oracle=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Oracle"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1456,
+    "record_key": "Oracle Archetype ~ Planar Oracle"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

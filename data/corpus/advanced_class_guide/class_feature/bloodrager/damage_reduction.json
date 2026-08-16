@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bloodrager ~ Damage Reduction",
+    "name": "Damage Reduction",
+    "class": "Bloodrager",
+    "description": "At 7th level, a bloodrager gains damage reduction. Subtract %1 from the damage the bloodrager takes each time he is dealt damage from a weapon or a natural attack. Damage reduction can reduce damage to 0, but not below 0.|BloodragerDR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager ~ Damage Reduction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerDR|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerDRLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, a bloodrager gains damage reduction. Subtract %1 from the damage the bloodrager takes each time he is dealt damage from a weapon or a natural attack. Damage reduction can reduce damage to 0, but not below 0.|BloodragerDR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerDRLVL|BloodragerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerDR|(BloodragerDRLVL-4)/3"
+      },
+      {
+        "key": "DR",
+        "value": "BloodragerDR/-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 341,
+    "record_key": "Bloodrager ~ Damage Reduction"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

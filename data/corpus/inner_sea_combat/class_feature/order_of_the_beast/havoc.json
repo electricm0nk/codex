@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Beast ~ Havoc",
+    "name": "Havoc",
+    "class": "Order of the Beast",
+    "description": "At 8th level, the cavalier's mount gains the trample monster special ability. If the cavalier's mount has trample from another source, damage from the mount's trample attack instead increases as though the mount were one size category larger (see Table 3-1 on page 302 of the Pathfinder RPG Bestiary); this does not alter the damage dealt by the mount's slam attack. A creature that attempts a Reflex saving throw to avoid damage from the mount's trample attack provokes an attack of opportunity from the cavalier.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Beast ~ Havoc"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, the cavalier's mount gains the trample monster special ability. If the cavalier's mount has trample from another source, damage from the mount's trample attack instead increases as though the mount were one size category larger (see Table 3-1 on page 302 of the Pathfinder RPG Bestiary); this does not alter the damage dealt by the mount's slam attack. A creature that attempts a Reflex saving throw to avoid damage from the mount's trample attack provokes an attack of opportunity from the cavalier."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 515,
+    "record_key": "Order of the Beast ~ Havoc"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

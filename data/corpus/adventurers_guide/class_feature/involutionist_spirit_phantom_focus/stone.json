@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Involutionist Spirit Phantom Focus ~ Stone",
+    "name": "Stone",
+    "class": "Involutionist Spirit Phantom Focus",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Involutionist Spirit Phantom Focus ~ Stone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpiritPhantomFocus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiritPhantomFocus_Stone|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1067,
+    "record_key": "Involutionist Spirit Phantom Focus ~ Stone"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

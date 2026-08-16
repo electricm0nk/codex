@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Combat Patrol",
+    "name": "Combat Patrol",
+    "class": "Warpriest Bonus Feat",
+    "description": "You range across the battlefield, dealing with threats wherever they arise.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Combat Patrol"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Combat Reflexes,Mobility"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:5],[PREVARGTEQ:WarpriestBonusFeatBAB,5]"
+      },
+      {
+        "key": "DESC",
+        "value": "You range across the battlefield, dealing with threats wherever they arise."
+      },
+      {
+        "key": "DESC",
+        "value": " As a full-round action, you may set up a combat patrol, increasing your threatened area by 5 feet for every 5 points of your base attack bonus. Until the beginning of your next turn, you may make attacks of opportunity against any opponent in this threatened area that provokes attacks of opportunity. You may move as part of these attacks, provided your total movement before your next turn does not exceed your speed. Any movement you make provokes attacks of opportunity as normal."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Combat Patrol"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4317,
+    "record_key": "Warpriest Bonus Feat ~ Combat Patrol"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

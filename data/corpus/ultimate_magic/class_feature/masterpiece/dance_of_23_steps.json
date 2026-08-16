@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Masterpiece ~ Dance of 23 Steps",
+    "name": "Dance of 23 Steps",
+    "class": "Masterpiece",
+    "description": "This complex dance makes you difficult to strike.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterpiece ~ Dance of 23 Steps"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "The Dance of 23 Steps"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Masterpiece"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DanceOf23StepsModifier|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This complex dance makes you difficult to strike."
+      },
+      {
+        "key": "DESC",
+        "value": " The shuffling steps, bends, and leaps of this intricate dance make you a difficult target to hit, but also make it more difficult for you to perform other actions. When using this masterpiece, you take a -%1 penalty on melee attack rolls and combat maneuver checks, and you must make a concentration check to cast any spell (DC 15 + the spell's level), but you gain a +%1 dodge bonus to your Armor Class. You can combine this masterpiece with fighting defensively and Combat Expertise, but not total defense. When you use this masterpiece, it lasts until the start of your next turn. Abilities that extend the duration of a bardic performance (such as Lingering Performance; see page 164 of the Advanced Player's Guide ) affect this masterpiece; this allows you to get multiple rounds of its benefit (and its penalties) at the cost of only 1 round of bardic performance.  Use: 1 bardic performance round.  Action: 1 free action.|DanceOf23StepsModifier"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DanceOf23StepsModifier|1+floor(skillinfo(\"TOTALRANK\",\"Perform (Dance)\")/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|DanceOf23StepsModifier|TYPE=Dodge"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|TOHIT|-1*DanceOf23StepsModifier"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|CMB|-1*DanceOf23StepsModifier"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 172,
+    "record_key": "Masterpiece ~ Dance of 23 Steps"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

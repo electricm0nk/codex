@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Name-Keeper ~ Keeper Spirit Magic",
+    "name": "Keeper Spirit Magic",
+    "class": "Name-Keeper",
+    "description": "The name-keeper adds the following spells to the list of spells she can cast using spirit magic: stone shield (ARG)(1st), object reading (OA)(2nd), speak with dead (3rd), wall of stone (4th), breath of life (5th), stone tell (6th), vision (7th), word of recall (8th), and true resurrection (9th). This ability replaces the spirit magic spells gained from the shaman's spirit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Name-Keeper ~ Keeper Spirit Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Features.NameKeeperClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "DESC",
+        "value": "The name-keeper adds the following spells to the list of spells she can cast using spirit magic: stone shield (ARG)(1st), object reading (OA)(2nd), speak with dead (3rd), wall of stone (4th), breath of life (5th), stone tell (6th), vision (7th), word of recall (8th), and true resurrection (9th). This ability replaces the spirit magic spells gained from the shaman's spirit."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1040,
+    "record_key": "Name-Keeper ~ Keeper Spirit Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

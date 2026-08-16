@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Bone Ward",
+    "name": "Bone Ward",
+    "class": "Shaman Spirit Hex",
+    "description": "A shaman touches a willing creature (including herself) and grants a bone ward. The warded creature becomes encircled by a group of flying bones that grant it a +%1 deflection bonus to AC for|ShamanBoneWardBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Bone Ward"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Bone Ward"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanBonesSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanBoneWardBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanBoneWardDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A shaman touches a willing creature (including herself) and grants a bone ward. The warded creature becomes encircled by a group of flying bones that grant it a +%1 deflection bonus to AC for|ShamanBoneWardBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 rounds.|ShamanBoneWardDuration|PREVARLT:ShamanSpiritLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "1 minute.|PREMULT:2,[PREVARGTEQ:ShamanSpiritLVL,8],[PREVARLT:ShamanSpiritLVL,16]"
+      },
+      {
+        "key": "DESC",
+        "value": "1 hour.|PREVARGTEQ:ShamanSpiritLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature affected by this hex cannot be affected by it again for 24 hours."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanBoneWardBonus|2+min(2,ShamanSpiritLVL/8)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanBoneWardDuration|ShamanSpiritLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1528,
+    "record_key": "Shaman Spirit Hex ~ Bone Ward"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

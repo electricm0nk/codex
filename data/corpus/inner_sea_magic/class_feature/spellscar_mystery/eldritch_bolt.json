@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spellscar Mystery ~ Eldritch Bolt",
+    "name": "Eldritch Bolt",
+    "class": "Spellscar Mystery",
+    "description": "You can damage foes with a bolt of raw magical energy. Make a ranged touch attack against any foe within %1 feet.|EldritchBoltRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellscar Mystery ~ Eldritch Bolt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EldritchBoltBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EldritchBoltRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EldritchBoltTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can damage foes with a bolt of raw magical energy. Make a ranged touch attack against any foe within %1 feet.|EldritchBoltRange"
+      },
+      {
+        "key": "DESC",
+        "value": "On a hit, you deal 1d8 points of force damage.|PREVAREQ:EldritchBoltBonusDamage,0"
+      },
+      {
+        "key": "DESC",
+        "value": "On a hit, you deal 1d8+%1 points of force damage.|EldritchBoltBonusDamage|PREVARGT:EldritchBoltBonusDamage,0"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this revelation %1 times per day.|EldritchBoltTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchBoltBonusDamage|floor(OracleLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchBoltRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchBoltRange|30|PREVARGTEQ:OracleLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchBoltTimes|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|EldritchBoltTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 98,
+    "record_key": "Spellscar Mystery ~ Eldritch Bolt"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

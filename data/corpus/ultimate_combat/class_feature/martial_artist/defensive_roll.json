@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Martial Artist ~ Defensive Roll",
+    "name": "Defensive Roll",
+    "class": "Martial Artist",
+    "description": "At 13th level, a martial artist may use the defensive roll advanced rogue talent (Core Rulebook 69) once per day, plus once per three levels beyond 13th (to a maximum of 3 times a day at 19th level). This ability replaces diamond soul.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Martial Artist ~ Defensive Roll"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 13th level, a martial artist may use the defensive roll advanced rogue talent (Core Rulebook 69) once per day, plus once per three levels beyond 13th (to a maximum of 3 times a day at 19th level). This ability replaces diamond soul."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1086,
+    "record_key": "Martial Artist ~ Defensive Roll"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

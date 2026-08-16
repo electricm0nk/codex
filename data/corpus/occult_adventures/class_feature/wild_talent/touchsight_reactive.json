@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Reactive Touchsight",
+    "name": "Touchsight, Reactive",
+    "class": "Wild Talent",
+    "description": "Element aether; Type utility (Su); Level 5; Burn 0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Reactive Touchsight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Aether"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ touchsight"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite touchsight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Aether,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Element aether; Type utility (Su); Level 5; Burn 0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Your strands of aether surround you, making it virtually impossible for a violent motion to catch you off guard, so long as the motion originates within their range. You are never denied your Dexterity bonus to AC against attacks from within 30 feet because of being flat-footed or because your assailant is unseen or invisible. You always succeed at any Perception check to act on the surprise round against opponents within 30 feet."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 790,
+    "record_key": "Wild Talent ~ Reactive Touchsight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

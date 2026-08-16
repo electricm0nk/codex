@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spellscar Mystery ~ Primal Mastery",
+    "name": "Primal Mastery",
+    "class": "Spellscar Mystery",
+    "description": "Whenever a spell you cast triggers a primal magic event, or whenever you use a Rod of Wonder, roll d%% twice when generating the result. You may pick which of the two results actually occurs. You gain a +2 bonus on all saving throws made to resist primal magic events or magical effects caused by a Rod of Wonder.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellscar Mystery ~ Primal Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Supernatural.SaveBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a spell you cast triggers a primal magic event, or whenever you use a Rod of Wonder, roll d%% twice when generating the result. You may pick which of the two results actually occurs. You gain a +2 bonus on all saving throws made to resist primal magic events or magical effects caused by a Rod of Wonder."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 bonus against primal magic events or magical effects caused by a Rod of Wonder|MysticNull"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 104,
+    "record_key": "Spellscar Mystery ~ Primal Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

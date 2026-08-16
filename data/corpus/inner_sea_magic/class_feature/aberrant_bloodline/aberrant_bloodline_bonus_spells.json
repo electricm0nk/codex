@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Aberrant Bloodline ~ Bonus Spells",
+    "name": "Aberrant Bloodline ~ Bonus Spells",
+    "class": "Aberrant Bloodline",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=1|Enlarge Person|PREVAREQ:BloodlineBonusSpell1,0|PREVARGTEQ:BloodlineCasterLVL,3"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=2|See Invisibility|PREVAREQ:BloodlineBonusSpell2,0|PREVARGTEQ:BloodlineCasterLVL,5"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=3|Tongues|PREVAREQ:BloodlineBonusSpell3,0|PREVARGTEQ:BloodlineCasterLVL,7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=4|Black Tentacles|PREVAREQ:BloodlineBonusSpell4,0|PREVARGTEQ:BloodlineCasterLVL,9"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=5|Feeblemind|PREVAREQ:BloodlineBonusSpell5,0|PREVARGTEQ:BloodlineCasterLVL,11"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=6|Veil|PREVAREQ:BloodlineBonusSpell6,0|PREVARGTEQ:BloodlineCasterLVL,13"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=7|Plane Shift|PREVAREQ:BloodlineBonusSpell7,0|PREVARGTEQ:BloodlineCasterLVL,15"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=8|Mind Blank|PREVAREQ:BloodlineBonusSpell8,0|PREVARGTEQ:BloodlineCasterLVL,17"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=9|Shapechange|PREVAREQ:BloodlineBonusSpell9,0|PREVARGTEQ:BloodlineCasterLVL,19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 345,
+    "record_key": "Aberrant Bloodline ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

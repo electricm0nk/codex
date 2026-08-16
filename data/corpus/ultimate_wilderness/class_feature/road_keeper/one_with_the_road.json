@@ -1,0 +1,120 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Road Keeper ~ One with the Road",
+    "name": "One with the Road",
+    "class": "Road Keeper",
+    "description": "A road keeper casts the following spells as though her caster level were 1 higher: 1st-longstrider, 2nd-scent trail, 3rd-nature's exile, 4th-freedom of movement, 5th-tree stride, 6th-find the path, 7th-wind walk, 8th-word of recall, 9th-world wave. At 9th level, the bonus to her caster level for these spells increases to +2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Road Keeper ~ One with the Road"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.RoadKeeperClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A road keeper casts the following spells as though her caster level were 1 higher: 1st-longstrider, 2nd-scent trail, 3rd-nature's exile, 4th-freedom of movement, 5th-tree stride, 6th-find the path, 7th-wind walk, 8th-word of recall, 9th-world wave. At 9th level, the bonus to her caster level for these spells increases to +2."
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Longstrider|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Scent Trail|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Nature's Exile|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Freedom of Movement|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Tree Stride|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Find the Path|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Wind Walk|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Word of Recall|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.World Wave|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Longstrider|1|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Scent Trail|1|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Nature's Exile|1|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Freedom of Movement|1|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Tree Stride|1|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Find the Path|1|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Wind Walk|1|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Word of Recall|1|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.World Wave|1|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 548,
+    "record_key": "Road Keeper ~ One with the Road"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spell Dancer ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Spell Dancer",
+    "description": "A spell dancer adds Acrobatics and Perform (dance) to his list of class skills and removes Intimidate and Ride from his list of class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spell Dancer ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A spell dancer adds Acrobatics and Perform (dance) to his list of class skills and removes Intimidate and Ride from his list of class skills."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Perform (Dance)|Climb|TYPE=Craft|Fly|Knowledge (Arcana)|Knowledge (Dungeoneering)|Knowledge (Planes)|TYPE=Profession|Spellcraft|Swim|Use Magic Device"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 121,
+    "record_key": "Spell Dancer ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

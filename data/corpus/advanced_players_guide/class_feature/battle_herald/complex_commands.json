@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Battle Herald ~ Complex Commands",
+    "name": "Complex Commands",
+    "class": "Battle Herald",
+    "description": "At 10th level, a battle herald can have more than one command ability in effect at one time. Each must be begun separately and requires a separate maintenance cost. This allows the battle herald to have more than one single-target command (such as battle magic) in effect at the same time. The effects of multiple instances of the same command ability do not stack, even if the bonuses provided by that ability would normally stack (for example, if the battle herald maintains two pincer maneuver commands, her allies do not get double the bonus, even though dodge bonuses normally stack). The battle herald can also maintain one bardic performance in addition to her inspiring commands, though each must be begun separately and each requires its own maintenance cost.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Herald ~ Complex Commands"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, a battle herald can have more than one command ability in effect at one time. Each must be begun separately and requires a separate maintenance cost. This allows the battle herald to have more than one single-target command (such as battle magic) in effect at the same time. The effects of multiple instances of the same command ability do not stack, even if the bonuses provided by that ability would normally stack (for example, if the battle herald maintains two pincer maneuver commands, her allies do not get double the bonus, even though dodge bonuses normally stack). The battle herald can also maintain one bardic performance in addition to her inspiring commands, though each must be begun separately and each requires its own maintenance cost."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1274,
+    "record_key": "Battle Herald ~ Complex Commands"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

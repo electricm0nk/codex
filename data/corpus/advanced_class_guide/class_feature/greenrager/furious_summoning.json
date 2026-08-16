@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Greenrager ~ Furious Summoning",
+    "name": "Furious Summoning",
+    "class": "Greenrager",
+    "description": "Creatures summoned by the bloodrager's summon nature's ally spell gain a +%1 morale bonus to Strength and Constitution and gain the druid's woodland stride ability.|min(8,(floor((CASTERLEVEL-2)/9)+2)*2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Greenrager ~ Furious Summoning"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Greenrager Class Feature.Bloodrager Class Feature.SpecialQuality.Supernatural.BloodragerBloodlineFeat9"
+      },
+      {
+        "key": "DESC",
+        "value": "Creatures summoned by the bloodrager's summon nature's ally spell gain a +%1 morale bonus to Strength and Constitution and gain the druid's woodland stride ability.|min(8,(floor((CASTERLEVEL-2)/9)+2)*2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2768,
+    "record_key": "Greenrager ~ Furious Summoning"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

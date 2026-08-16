@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mooncaller ~ Night Sight Low-Light",
+    "name": "Night Sight (Low-Light Vision)",
+    "class": "Mooncaller",
+    "description": "You gain low-light vision.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mooncaller ~ Night Sight Low-Light"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Night Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Extraordinary.NightSight"
+      },
+      {
+        "key": "!PREVISION",
+        "value": "1,Low-Light Vision=ANY"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain low-light vision."
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1124,
+    "record_key": "Mooncaller ~ Night Sight Low-Light"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

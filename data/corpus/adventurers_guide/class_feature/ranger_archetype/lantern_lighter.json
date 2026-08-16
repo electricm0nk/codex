@@ -1,0 +1,151 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Archetype ~ Lantern Lighter",
+    "name": "Lantern Lighter",
+    "class": "Ranger Archetype",
+    "description": "Lantern lighters were originally entrusted with secretly eliminating the drow and quarantining any knowledge of their existence, but in the new Lantern Lighter era, the lantern lighters have refocused their efforts on helping to rescue those imprisoned by the drow, or even to help individual drow who seek to escape the cruelties of their society for a chance at redemption on the surface. of course, escape from drow society is only the beginning of a drow's long and fraught path to redemption, and even the kindest or most repentant drow are likely to face prejudice from most of those who recognize her origins. In addition to their rescue efforts, lantern lighters often serve as sponsors for escapees and work to create pockets of civilization where redeemed drow can live in relative peace and safety by encouraging surface dwellers to cast aside the lurking shadows of prejudice and fear.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Lantern Lighter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.113"
+      },
+      {
+        "key": "DESC",
+        "value": "Lantern lighters were originally entrusted with secretly eliminating the drow and quarantining any knowledge of their existence, but in the new Lantern Lighter era, the lantern lighters have refocused their efforts on helping to rescue those imprisoned by the drow, or even to help individual drow who seek to escape the cruelties of their society for a chance at redemption on the surface. of course, escape from drow society is only the beginning of a drow's long and fraught path to redemption, and even the kindest or most repentant drow are likely to face prejudice from most of those who recognize her origins. In addition to their rescue efforts, lantern lighters often serve as sponsors for escapees and work to create pockets of civilization where redeemed drow can live in relative peace and safety by encouraging surface dwellers to cast aside the lurking shadows of prejudice and fear."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Lantern Lighter],[!PREFACT:1,ABILITIES,Ranger_Archetype_Spells=True,Ranger_Archetype_WildEmpathy=True,Ranger_Archetype_Endurance=True,Ranger_Archetype_FavoredTerrain=True,Ranger_Archetype_WoodlandStride=True,Ranger_Archetype_Camouflage=True,Ranger_Archetype_HideInPlainSight=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Lantern Lighter ~ Daylight|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lantern Lighter ~ Enhanced Vision|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lantern Lighter ~ Poison Resistance|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Lantern Lighter ~ Favored Terrain|PRECLASS:1,Ranger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lantern Lighter ~ Cavern Stride|PRECLASS:1,Ranger=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lantern Lighter ~ Darkvision|PRECLASS:1,Ranger=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Lantern Lighter ~ Poison Immunity|PRECLASS:1,Ranger=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lantern Lighter ~ Stunning Light|PRECLASS:1,Ranger=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ranger ~ Camouflage|PRECLASS:1,Ranger=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lantern Lighter ~ Paralyzing Light|PRECLASS:1,Ranger=18"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Endurance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Camouflage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_HideInPlainSight|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Endurance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Camouflage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_HideInPlainSight|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 980,
+    "record_key": "Ranger Archetype ~ Lantern Lighter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

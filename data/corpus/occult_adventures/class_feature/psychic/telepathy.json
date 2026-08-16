@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic ~ Telepathy",
+    "name": "Telepathy",
+    "class": "Psychic",
+    "description": "At 17th level, the psychic can mentally communicate with any other creature within 100 feet that has a language. It is possible to address multiple creatures at once telepathically, although maintaining a telepathic conversation with more than one creature at a time is just as difficult as both speaking and listening to multiple people at the same time. When a psychic who knows telepathy (see page 189) gains this ability, she can learn a different 5th-level spell in place of telepathy, losing the old spell in exchange for the new one.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic ~ Telepathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 17th level, the psychic can mentally communicate with any other creature within 100 feet that has a language. It is possible to address multiple creatures at once telepathically, although maintaining a telepathic conversation with more than one creature at a time is just as difficult as both speaking and listening to multiple people at the same time. When a psychic who knows telepathy (see page 189) gains this ability, she can learn a different 5th-level spell in place of telepathy, losing the old spell in exchange for the new one."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1161,
+    "record_key": "Psychic ~ Telepathy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

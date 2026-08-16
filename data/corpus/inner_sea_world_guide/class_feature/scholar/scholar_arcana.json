@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Scholar ~ Arcana",
+    "name": "Scholar ~ Arcana",
+    "class": "Scholar",
+    "description": "You gain a +%1 bonus on Knowledge (Arcana).|ScholarArBonus",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Scholar"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ScholarArBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Knowledge (Arcana).|ScholarArBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Arcana)|ScholarArBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScholarArBonus|if(skillinfo(\"TOTALRANK\",\"Knowledge (Arcana)\")>=10,4,2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.288"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 203,
+    "record_key": "Scholar ~ Arcana"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

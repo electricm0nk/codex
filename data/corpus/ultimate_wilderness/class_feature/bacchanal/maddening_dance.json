@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bacchanal ~ Maddening Dance",
+    "name": "Maddening Dance",
+    "class": "Bacchanal",
+    "description": "The bacchanal's raging song can compel a creature within 30 feet to perform an ecstatic dance. Unless it succeeds at its Will save, the victim becomes confused, takes a -2 penalty to its AC and on Reflex saving throws, and loses the benefit of any shield it holds. The effect ends when the target can no longer hear the bacchanal from within 30 feet. As an immediate action, an ally of the bacchanal within 30 feet can dance along as a full-round action (taking all penalties except the confused condition for that round) to allow the bacchanal to target an additional creature. A creature that succeeds at the Will saving throw against this raging song is immune to this effect for 24 hours. This is a compulsion, emotion, enchantment, and mind-affecting effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bacchanal ~ Maddening Dance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.BacchanalClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The bacchanal's raging song can compel a creature within 30 feet to perform an ecstatic dance. Unless it succeeds at its Will save, the victim becomes confused, takes a -2 penalty to its AC and on Reflex saving throws, and loses the benefit of any shield it holds. The effect ends when the target can no longer hear the bacchanal from within 30 feet. As an immediate action, an ally of the bacchanal within 30 feet can dance along as a full-round action (taking all penalties except the confused condition for that round) to allow the bacchanal to target an additional creature. A creature that succeeds at the Will saving throw against this raging song is immune to this effect for 24 hours. This is a compulsion, emotion, enchantment, and mind-affecting effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1123,
+    "record_key": "Bacchanal ~ Maddening Dance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

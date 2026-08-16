@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skald Archetype ~ Totemic Skald",
+    "name": "Totemic Skald",
+    "class": "Skald Archetype",
+    "description": "The totemic skald forms a close connection to an animal totem. Through the power of this mystical ally, the skald can change shapes, assuming its form as his own. Additionally, the totem animal grants the skald a measure of its spiritual power that he can share with his allies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald Archetype ~ Totemic Skald"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SkaldArchetype.SkaldRagePowers.SkaldUncannyDodge.SkaldImprovedUncannyDodge.SkaldSpellKenning"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Skald=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Skald Archetype ~ Totemic Skald],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldRagePower3,TYPE.SkaldUncannyDodge,TYPE.SkaldImprovedUncannyDodge,TYPE.SkaldSpellKenning]"
+      },
+      {
+        "key": "DESC",
+        "value": "The totemic skald forms a close connection to an animal totem. Through the power of this mystical ally, the skald can change shapes, assuming its form as his own. Additionally, the totem animal grants the skald a measure of its spiritual power that he can share with his allies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skald Class Feature|AUTOMATIC|Totemic Skald ~ Totem|PRECLASS:1,Skald=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skald Class Feature|AUTOMATIC|Totemic Skald ~ Song of the Beast|PRECLASS:1,Skald=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skald Class Feature|AUTOMATIC|Totemic Skald ~ Totem Empathy|PRECLASS:1,Skald=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skald Class Feature|AUTOMATIC|Totemic Skald ~ Wild Shape|PRECLASS:1,Skald=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Skald"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3678,
+    "record_key": "Skald Archetype ~ Totemic Skald"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

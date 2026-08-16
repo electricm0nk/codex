@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Adder Strike",
+    "name": "Adder Strike",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can quickly apply poison to gloved hands, protected feet, or other protected body parts, delivering the poison with your unarmed strikes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Adder Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.Poison Use,Poison Use,Alchemist ~ Poison Use,Rogue ~ Poison Use"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Improved Unarmed Strike"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Craft (Alchemy)=1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can quickly apply poison to gloved hands, protected feet, or other protected body parts, delivering the poison with your unarmed strikes."
+      },
+      {
+        "key": "DESC",
+        "value": " As a swift action, you can apply one dose of contact or injury poison to two body parts that you use for unarmed strikes. You must still protect yourself against exposure to contact poisons you apply in this way. &nl; [Normal] Applying poison to a weapon or single piece of ammunition is a standard action."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Adder Strike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4394,
+    "record_key": "Warpriest Bonus Feat ~ Adder Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

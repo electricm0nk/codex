@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Creation Savant Subschool ~ Creator's Will",
+    "name": "Creator's Will",
+    "class": "Creation Savant Subschool",
+    "description": "You can cast minor creation as a spell-like ability. You can have no more than one minor creation active at a time. If you cast the spell again, the previous casting immediately ends. At 12th level, this ability improves to major creation. You can use this ability %1 times per day.|ArcanistSavantSchoolLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Creation Savant Subschool ~ Creator's Will"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.SpellLike.ArcanistSavantSchoolPower.ArcanistExploit7"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast minor creation as a spell-like ability. You can have no more than one minor creation active at a time. If you cast the spell again, the previous casting immediately ends. At 12th level, this ability improves to major creation. You can use this ability %1 times per day.|ArcanistSavantSchoolLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2591,
+    "record_key": "Creation Savant Subschool ~ Creator's Will"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

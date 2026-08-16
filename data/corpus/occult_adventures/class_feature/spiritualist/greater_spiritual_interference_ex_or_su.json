@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spiritualist ~ Greater Spiritual Interference",
+    "name": "Greater Spiritual Interference (Ex or Su)",
+    "class": "Spiritualist",
+    "description": "At 12th level, whenever allies are within the phantom's reach, as long as the manifested phantom is in ectoplasmic form, each ally gains a +2 shield bonus to its Armor Class and a +2 circumstance bonus on its saving throws. For the spiritualist, these bonuses increase to +4. The spiritualist and allies within range don't gain this bonus if the manifested phantom is grappled, helpless, or unconscious. While the phantom is incorporeally manifested, allies within 30 feet of the phantom receive a +2 circumstance bonus on saving throws against mind-affecting effects. For the spiritualist, this bonus increases to +4. This bonus doesn't apply if the phantom is unconscious.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Greater Spiritual Interference"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 12th level, whenever allies are within the phantom's reach, as long as the manifested phantom is in ectoplasmic form, each ally gains a +2 shield bonus to its Armor Class and a +2 circumstance bonus on its saving throws. For the spiritualist, these bonuses increase to +4. The spiritualist and allies within range don't gain this bonus if the manifested phantom is grappled, helpless, or unconscious. While the phantom is incorporeally manifested, allies within 30 feet of the phantom receive a +2 circumstance bonus on saving throws against mind-affecting effects. For the spiritualist, this bonus increases to +4. This bonus doesn't apply if the phantom is unconscious."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1288,
+    "record_key": "Spiritualist ~ Greater Spiritual Interference"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

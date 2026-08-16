@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter Aspect ~ Wolverine ~ Major",
+    "name": "Major Aspect of the Wolverine",
+    "class": "Shifter Aspect",
+    "description": "Your shape changes to that of a dire wolverine (Bestiary p279). While in this form, you gain a climb speed of 10 feet, two claw attacks (1d8 damage), a bite attack (1d6 damage), low-light vision, and scent (30 feet). While in dire wolverine form, you gain the barbarian's rage power, but can activate this rage only in a round after you've taken damage. You can rage for %1 rounds each day. This ability otherwise functions the same as the barbarian rage ability (unlike a dire wolverine, you can choose to end this rage voluntarily).|ShifterWolverineAspectLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Wolverine ~ Major"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Wolverine_3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your shape changes to that of a dire wolverine (Bestiary p279). While in this form, you gain a climb speed of 10 feet, two claw attacks (1d8 damage), a bite attack (1d6 damage), low-light vision, and scent (30 feet). While in dire wolverine form, you gain the barbarian's rage power, but can activate this rage only in a round after you've taken damage. You can rage for %1 rounds each day. This ability otherwise functions the same as the barbarian rage ability (unlike a dire wolverine, you can choose to end this rage voluntarily).|ShifterWolverineAspectLVL"
+      },
+      {
+        "key": "DESC",
+        "value": "You can choose two barbarian rage powers, treating your shifter level as your effective barbarian level for the purposes of meeting prerequisites.|PREVARGTEQ:ShifterWolverineAspectLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "You are no longer fatigued at the end of your rage.|PREVARGTEQ:ShifterWolverineAspectLVL,15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 103,
+    "record_key": "Shifter Aspect ~ Wolverine ~ Major"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

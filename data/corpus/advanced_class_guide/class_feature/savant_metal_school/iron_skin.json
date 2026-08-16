@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Savant Metal School ~ Iron Skin",
+    "name": "Iron Skin",
+    "class": "Savant Metal School",
+    "description": "You gain a +%1 armor bonus to your Armor Class for 10 minutes. You can use this ability %2 times per day.|IronSkinACBonus|IronSkinTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Metal School ~ Iron Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IronSkinACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IronSkinTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 armor bonus to your Armor Class for 10 minutes. You can use this ability %2 times per day.|IronSkinACBonus|IronSkinTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IronSkinACBonus|2+floor(classlevel(\"Arcanist\")/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IronSkinTimes|3+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|IronSkinACBonus|TYPE=Armor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2628,
+    "record_key": "Savant Metal School ~ Iron Skin"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mesmerist Trick ~ Meek Facade",
+    "name": "Meek Facade",
+    "class": "Mesmerist Trick",
+    "description": "The subject magically seems like a weak target, goading an enemy into attacking her. The mesmerist can trigger this trick when the subject misses a creature with an attack (even if it's part of a full attack in which she hits that creature with another attack). The enemy must attack no one other than the subject, and the subject gains a +%1 dodge bonus to AC against the triggering enemy's attacks. Both of these effects last for 1 round. This is mind-affecting compulsion effect.|2+MesmeristLVL/5",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Trick ~ Meek Facade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristTrick.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The subject magically seems like a weak target, goading an enemy into attacking her. The mesmerist can trigger this trick when the subject misses a creature with an attack (even if it's part of a full attack in which she hits that creature with another attack). The enemy must attack no one other than the subject, and the subject gains a +%1 dodge bonus to AC against the triggering enemy's attacks. Both of these effects last for 1 round. This is mind-affecting compulsion effect.|2+MesmeristLVL/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 946,
+    "record_key": "Mesmerist Trick ~ Meek Facade"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

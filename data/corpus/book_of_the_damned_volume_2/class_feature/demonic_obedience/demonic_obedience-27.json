@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Demonic Obedience ~ Nurgal",
+    "name": "Demonic Obedience",
+    "class": "Demonic Obedience",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Demonic Obedience ~ Nurgal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DemonicObedience.SaveBonus"
+      },
+      {
+        "key": "PREDEITY",
+        "value": "1,Nurgal"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "Offer prayers to Nurgal during an hour-long ritual of self-flagellation with a salt-encrusted whip - the ritual must end at noon. If this obedience does not take place under the light of the sun, you must end the ritual by swallowing a handful of sand and salt. Gain a +4 profane bonus on all Fortitude saving throws against effects that cause fatigue or exhaustion, or that damage, drain, or penalize ability scores."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Desert's Embrace ~ Nurgal|PREVARGTEQ:DemonicBoon,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Nurgal's Breath ~ Nurgal|PREVARGTEQ:DemonicBoon,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Desiccating Pulse ~ Nurgal|PREVARGTEQ:DemonicBoon,3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 Fortitude (profane) vs fatigue, exhaustion and ability reduction|PREVARGTEQ:DemonicObedienceApply,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 59,
+    "record_key": "Demonic Obedience ~ Nurgal"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

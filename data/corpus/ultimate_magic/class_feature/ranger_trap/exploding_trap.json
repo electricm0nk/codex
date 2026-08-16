@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Trap ~ Exploding Trap",
+    "name": "Exploding Trap",
+    "class": "Ranger Trap",
+    "description": "You can only add this to a fire trap. The trap explodes in fire, filling all squares adjacent to the trap and dealing 1d6+%1 points of fire damage (Reflex negates). If it is an extraordinary trap, the ranger must use an explosive material such as alchemist's fire when setting the trap.|ExplodingTrapBonusDamage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Trap ~ Exploding Trap"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Trap Exploding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialAttack.RangerTrap.Extraordinary.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExplodingTrapBonusDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can only add this to a fire trap. The trap explodes in fire, filling all squares adjacent to the trap and dealing 1d6+%1 points of fire damage (Reflex negates). If it is an extraordinary trap, the ranger must use an explosive material such as alchemist's fire when setting the trap.|ExplodingTrapBonusDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExplodingTrapBonusDamage|RangerTrapLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1616,
+    "record_key": "Ranger Trap ~ Exploding Trap"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

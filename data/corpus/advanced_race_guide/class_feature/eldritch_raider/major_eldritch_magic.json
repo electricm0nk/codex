@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Eldritch Raider ~ Major Eldritch Magic",
+    "name": "Major Eldritch Magic",
+    "class": "Eldritch Raider",
+    "description": "The eldritch raider gains the ability to cast %1 two times per day as a spell-like ability. The caster level for this ability is %2. The save DC for this spell is %3.|%CHOICE|RogueLVL|13+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eldritch Raider ~ Major Eldritch Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.RogueTalent.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=Special Ability,Eldritch Raider ~ New Talents,Minor Magic ~ Rogue Talent,Major Magic ~ Rogue Talent,Eldritch Raider ~ Minor Eldritch Magic"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Eldritch Raider ~ Major Eldritch Magic"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,INT=13"
+      },
+      {
+        "key": "DESC",
+        "value": "The eldritch raider gains the ability to cast %1 two times per day as a spell-like ability. The caster level for this ability is %2. The save DC for this spell is %3.|%CHOICE|RogueLVL|13+INT"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SPELLS|CLASSLIST=Wizard[LEVELMAX=3;LEVELMIN=3]"
+      },
+      {
+        "key": "SELECT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.189"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 852,
+    "record_key": "Eldritch Raider ~ Major Eldritch Magic"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

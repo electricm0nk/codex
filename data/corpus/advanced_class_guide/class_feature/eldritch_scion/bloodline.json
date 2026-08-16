@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Eldritch Scion ~ Bloodline",
+    "name": "Bloodline",
+    "class": "Eldritch Scion",
+    "description": "An eldritch scion gains a bloodrager bloodline. The bloodline is selected at 1st level, and this choice cannot be changed. An eldritch scion's effective bloodrager level for his bloodline abilities is equal to his eldritch scion level. He does not gain any bonus feats, and he gains bonus spells from his bloodline at different levels (see the bonus spell class feature below). To use any ability that normally functions when in a bloodrage, an eldritch scion must spend a point from his eldritch pool (see below). If an eldritch scion takes levels in another class that grant a bloodline, the bloodlines must be the same type, even if that means that the bloodline of one of the classes must change. Subject to GM discretion, an eldritch scion can change his former bloodline to make them conform. This ability replaces spell recall.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eldritch Scion ~ Bloodline"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Eldritch Scion Class Feature.Magus Class Feature.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodlineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodlineCasterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodlinePowerTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodlineFeatProgression|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodlineBonusFeats|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An eldritch scion gains a bloodrager bloodline. The bloodline is selected at 1st level, and this choice cannot be changed. An eldritch scion's effective bloodrager level for his bloodline abilities is equal to his eldritch scion level. He does not gain any bonus feats, and he gains bonus spells from his bloodline at different levels (see the bonus spell class feature below). To use any ability that normally functions when in a bloodrage, an eldritch scion must spend a point from his eldritch pool (see below). If an eldritch scion takes levels in another class that grant a bloodline, the bloodlines must be the same type, even if that means that the bloodline of one of the classes must change. Subject to GM discretion, an eldritch scion can change his former bloodline to make them conform. This ability replaces spell recall."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Bloodline|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerLVL|MagusLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlinePowerTimes|3+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineCasterLVL|MagusLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineLVL|MagusLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineFeatProgression|-MagusLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3372,
+    "record_key": "Eldritch Scion ~ Bloodline"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

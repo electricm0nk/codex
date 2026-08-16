@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Infuse Mutagen",
+    "name": "Infuse Mutagen",
+    "class": "Discovery",
+    "description": "When the alchemist creates a mutagen, he can infuse it with an extra bit of his own magical power. This inflicts 2 points of Intelligence damage to the alchemist and costs 1,000 gp in rare reagents, but the mutagen created persists on its own and is not rendered inert if the alchemist creates another mutagen. This allows an alchemist to create different types of mutagens and keep them handy for emergencies. This does not allow an alchemist to gain the effects of multiple mutagens - only the most recently imbibed mutagen has any effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Infuse Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistMutagenMod"
+      },
+      {
+        "key": "DESC",
+        "value": "When the alchemist creates a mutagen, he can infuse it with an extra bit of his own magical power. This inflicts 2 points of Intelligence damage to the alchemist and costs 1,000 gp in rare reagents, but the mutagen created persists on its own and is not rendered inert if the alchemist creates another mutagen. This allows an alchemist to create different types of mutagens and keep them handy for emergencies. This does not allow an alchemist to gain the effects of multiple mutagens - only the most recently imbibed mutagen has any effect."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 140,
+    "record_key": "Discovery ~ Infuse Mutagen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Faith Hunter ~ Sworn Enemy ~ NE",
+    "name": "Sworn Enemy (Neutral Evil)",
+    "class": "Faith Hunter",
+    "description": "All neutral evil creatures are your sworn enemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Faith Hunter ~ Sworn Enemy ~ NE"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FaithHunterSwornEnemy"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LG,NG,CG"
+      },
+      {
+        "key": "DESC",
+        "value": "All neutral evil creatures are your sworn enemy."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 461,
+    "record_key": "Faith Hunter ~ Sworn Enemy ~ NE"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

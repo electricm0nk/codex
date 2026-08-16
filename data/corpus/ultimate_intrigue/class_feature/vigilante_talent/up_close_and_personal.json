@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Up Close and Personal",
+    "name": "Up Close and Personal",
+    "class": "Vigilante Talent",
+    "description": "When the vigilante attempts an Acrobatics check to move through an opponent's space during a move action, he can attempt a single melee attack against that opponent as a swift action. If the Acrobatics check succeeds, this attack applies the vigilante's hidden strike damage as if the foe were unaware of the vigilante. Otherwise, the vigilante applies the hidden strike damage he would deal if the target were denied its Dexterity bonus to AC.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Up Close and Personal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Up Close and Personal"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsStalker,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "When the vigilante attempts an Acrobatics check to move through an opponent's space during a move action, he can attempt a single melee attack against that opponent as a swift action. If the Acrobatics check succeeds, this attack applies the vigilante's hidden strike damage as if the foe were unaware of the vigilante. Otherwise, the vigilante applies the hidden strike damage he would deal if the target were denied its Dexterity bonus to AC."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 116,
+    "record_key": "Vigilante Talent ~ Up Close and Personal"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

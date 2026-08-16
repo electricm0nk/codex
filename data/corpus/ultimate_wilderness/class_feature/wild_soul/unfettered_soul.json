@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Soul ~ Unfettered Soul",
+    "name": "Unfettered Soul",
+    "class": "Wild Soul",
+    "description": "A wild soul swears to himself never to make use of advanced technology, alchemy, arcane magic, or firearms. He also must oppose their use on his person, refusing to be a willing target and attempting a saving throw if possible (even if the effect is harmless or beneficial). Violating this oath causes a wild soul to lose the abilities granted by this archetype until he atones.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Soul ~ Unfettered Soul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.WildSoulClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A wild soul swears to himself never to make use of advanced technology, alchemy, arcane magic, or firearms. He also must oppose their use on his person, refusing to be a willing target and attempting a saving throw if possible (even if the effect is harmless or beneficial). Violating this oath causes a wild soul to lose the abilities granted by this archetype until he atones."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 952,
+    "record_key": "Wild Soul ~ Unfettered Soul"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

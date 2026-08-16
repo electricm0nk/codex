@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Water Sight",
+    "name": "Water Sight",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman sees through fog and mist without penalty as long as there is enough light to otherwise allow her to see normally.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Water Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanWavesHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Water Sight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanWavesSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWaterSightRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman sees through fog and mist without penalty as long as there is enough light to otherwise allow her to see normally."
+      },
+      {
+        "key": "DESC",
+        "value": "She can use|PREVARGTEQ:ShamanSpiritLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "greater|PREVARGTEQ:ShamanSpiritLVL,15"
+      },
+      {
+        "key": "DESC",
+        "value": "scrying, using any calm pool of water that's at least 1 foot in diameter as the sole focus.|PREVARGTEQ:ShamanSpiritLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "She can use these abilities for %1 rounds per day, but these rounds do not need to be consecutive.|ShamanWaterSightRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWaterSightRounds|ShamanSpiritLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1676,
+    "record_key": "Shaman Spirit Hex ~ Water Sight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

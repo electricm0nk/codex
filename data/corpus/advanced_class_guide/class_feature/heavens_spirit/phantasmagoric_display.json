@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Heavens Spirit ~ Phantasmagoric Display",
+    "name": "Phantasmagoric Display",
+    "class": "Heavens Spirit",
+    "description": "The shaman can cast prismatic wall and prismatic spray, each once per day with a caster level equal to her shaman level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heavens Spirit ~ Phantasmagoric Display"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=ShamanSpiritLVL|Prismatic Spray|Prismatic Wall"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can cast prismatic wall and prismatic spray, each once per day with a caster level equal to her shaman level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1581,
+    "record_key": "Heavens Spirit ~ Phantasmagoric Display"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

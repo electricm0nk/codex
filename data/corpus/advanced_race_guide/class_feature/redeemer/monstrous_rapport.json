@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Redeemer ~ Monstrous Rapport",
+    "name": "Monstrous Rapport",
+    "class": "Redeemer",
+    "description": "Redeemers gain a +2 bonus on Diplomacy checks to influence creatures who are commonly considered monstrous. This includes but is not limited to \"monstrous\" races such as goblins and orcs, monstrous humanoids, and other intelligent nonhumanoid monsters.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Redeemer ~ Monstrous Rapport"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Redeemers gain a +2 bonus on Diplomacy checks to influence creatures who are commonly considered monstrous. This includes but is not limited to \"monstrous\" races such as goblins and orcs, monstrous humanoids, and other intelligent nonhumanoid monsters."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Diplomacy=Influence Monster|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 268,
+    "record_key": "Redeemer ~ Monstrous Rapport"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

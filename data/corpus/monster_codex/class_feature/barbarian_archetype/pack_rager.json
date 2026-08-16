@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Pack Rager",
+    "name": "Pack Rager",
+    "class": "Barbarian Archetype",
+    "description": "Barbarian rages can be a thing of savage beauty, exhibiting a lethal grace. While such uncontrolled displays of carnage often disregard group tactics, there are those barbarians whose rages inspire and spur on their allies during the ferocious dance of death.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Pack Rager"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Pack Rager],[!PREFACT:1,ABILITIES,Barbarian_Archetype_RagePower2=True,Barbarian_Archetype_RagePower6=True,Barbarian_Archetype_RagePower10=True,Barbarian_Archetype_RagePower14=True,Barbarian_Archetype_RagePower18=True,Barbarian_Archetype_DamageReduction=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Barbarian rages can be a thing of savage beauty, exhibiting a lethal grace. While such uncontrolled displays of carnage often disregard group tactics, there are those barbarians whose rages inspire and spur on their allies during the ferocious dance of death."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Pack Rager ~ Bonus Feat|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Pack Rager ~ Raging Tactician|PRECLASS:1,Barbarian=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_DamageReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_DamageReduction|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 51,
+    "record_key": "Barbarian Archetype ~ Pack Rager"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

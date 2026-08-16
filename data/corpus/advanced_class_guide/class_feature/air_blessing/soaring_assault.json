@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Air Blessing ~ Soaring Assault",
+    "name": "Soaring Assault",
+    "class": "Air Blessing",
+    "description": "You can touch an ally and give her the gift of flight for 1 minute (as fly). The ally gains a fly speed of 60 feet with average maneuverability. She gains a bonus on Fly skill checks equal to your level. Whenever the ally succeeds at a charge attack while flying, that attack deals an amount of additional electricity damage equal to your level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Air Blessing ~ Soaring Assault"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch an ally and give her the gift of flight for 1 minute (as fly). The ally gains a fly speed of 60 feet with average maneuverability. She gains a bonus on Fly skill checks equal to your level. Whenever the ally succeeds at a charge attack while flying, that attack deals an amount of additional electricity damage equal to your level."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2226,
+    "record_key": "Air Blessing ~ Soaring Assault"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

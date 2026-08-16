@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Guiding Blade ~ Opportune Redirection and Riposte",
+    "name": "Opportune Redirection and Riposte",
+    "class": "Guiding Blade",
+    "description": "At 3rd level, when an opponent threatening both the guiding blade and an adjacent ally attacks that ally, the guiding blade can spend 1 point of panache and expend a use of an attack of opportunity to attempt to redirect the attack to herself. The guiding blade makes an attack roll as if she were making an attack of opportunity; for each size category the attacking creature is larger than the guiding blade, the guiding blade takes a -2 penalty on this roll. If her result is greater than the attacking creature's attack result, the creature's attack is redirected to the guiding blade instead of the guiding blade's adjacent ally. The guiding blade must declare the use of this ability after the creature's attack is announced but before its attack roll is made. Upon performing a successful redirection, if the guiding blade has at least 1 panache point, the guiding blade can, as an immediate action, make an attack against the creature whose attack she redirected, provided that creature is within reach. A guiding blade can't select opportune redirection and riposte as a signature deed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guiding Blade ~ Opportune Redirection and Riposte"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL03"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SwashbucklerDeedsLVL3.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, when an opponent threatening both the guiding blade and an adjacent ally attacks that ally, the guiding blade can spend 1 point of panache and expend a use of an attack of opportunity to attempt to redirect the attack to herself. The guiding blade makes an attack roll as if she were making an attack of opportunity; for each size category the attacking creature is larger than the guiding blade, the guiding blade takes a -2 penalty on this roll. If her result is greater than the attacking creature's attack result, the creature's attack is redirected to the guiding blade instead of the guiding blade's adjacent ally. The guiding blade must declare the use of this ability after the creature's attack is announced but before its attack roll is made. Upon performing a successful redirection, if the guiding blade has at least 1 panache point, the guiding blade can, as an immediate action, make an attack against the creature whose attack she redirected, provided that creature is within reach. A guiding blade can't select opportune redirection and riposte as a signature deed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 950,
+    "record_key": "Guiding Blade ~ Opportune Redirection and Riposte"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

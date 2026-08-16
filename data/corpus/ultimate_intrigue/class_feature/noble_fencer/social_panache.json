@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Noble Fencer ~ Social Panache",
+    "name": "Social Panache",
+    "class": "Noble Fencer",
+    "description": "At 1st level, a noble fencer can spend 1 panache point when he attempts a Bluff, Diplomacy, Intimidate, or Sense Motive check to roll 1d6 and add the result to the check. He can do this after he rolls the check but before the result is revealed. If the result of the d6 roll is a natural 6, he rolls another 1d6 and adds it to the check. He can continue to do this as long as he rolls natural 6s, up to %1 times. Just before a verbal duel (see pages 176-181), a noble fencer can spend up to 4 panache points. For each point he spends, he selects a tactic for which he has chosen Bluff, Diplomacy, Intimidate, or Sense Motive as an associated skill and gains an edge he can only use with that tactic.|max(1,CHA)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Noble Fencer ~ Social Panache"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL01"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SwashbucklerDeedsLVL1.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a noble fencer can spend 1 panache point when he attempts a Bluff, Diplomacy, Intimidate, or Sense Motive check to roll 1d6 and add the result to the check. He can do this after he rolls the check but before the result is revealed. If the result of the d6 roll is a natural 6, he rolls another 1d6 and adds it to the check. He can continue to do this as long as he rolls natural 6s, up to %1 times. Just before a verbal duel (see pages 176-181), a noble fencer can spend up to 4 panache points. For each point he spends, he selects a tactic for which he has chosen Bluff, Diplomacy, Intimidate, or Sense Motive as an associated skill and gains an edge he can only use with that tactic.|max(1,CHA)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 953,
+    "record_key": "Noble Fencer ~ Social Panache"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Antipaladin ~ Channel Negative Energy",
+    "name": "Channel Negative Energy",
+    "class": "Antipaladin",
+    "description": "You can unleash a wave of negative energy. You must choose to deal %1d%2 points of negative energy damage to living creatures or to heal undead creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. Using this ability consumes two uses of your touch of corruption ability.|AntipaladinChannelDice|AntipaladinChannelDieSize|AntipaladinChannelDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Antipaladin ~ Channel Negative Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AntipaladinClassFeatures.SpecialAttack.Supernatural.Channel Energy"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Channel Negative Energy|Cleric ~ Channel Energy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AntipaladinChannelDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AntipaladinChannelDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AntipaladinChannelDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AntipaladinChannelLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of negative energy. You must choose to deal %1d%2 points of negative energy damage to living creatures or to heal undead creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. Using this ability consumes two uses of your touch of corruption ability.|AntipaladinChannelDice|AntipaladinChannelDieSize|AntipaladinChannelDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AntipaladinChannelDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AntipaladinChannelDice|(AntipaladinChannelLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AntipaladinChannelDC|10+(AntipaladinChannelLVL/2)+CHA"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2, DC %3)|AntipaladinChannelDice|AntipaladinChannelDieSize|AntipaladinChannelDC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 971,
+    "record_key": "Antipaladin ~ Channel Negative Energy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

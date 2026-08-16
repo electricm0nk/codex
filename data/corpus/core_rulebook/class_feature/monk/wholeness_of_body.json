@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk ~ Wholeness of Body",
+    "name": "Wholeness of Body",
+    "class": "Monk",
+    "description": "You can heal your own wounds as a standard action. You can heal %1 hit points of damage by using 2 points from your ki pool.|WholenessOfBody",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk ~ Wholeness of Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.Supernatural.Ki.Wholeness of Body"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WholenessOfBody|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WholenessOfBodyLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can heal your own wounds as a standard action. You can heal %1 hit points of damage by using 2 points from your ki pool.|WholenessOfBody"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WholenessOfBody|WholenessOfBodyLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WholenessOfBodyLVL|MonkLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1106,
+    "record_key": "Monk ~ Wholeness of Body"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

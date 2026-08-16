@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ninja ~ Ki Pool",
+    "name": "Ki Pool",
+    "class": "Ninja",
+    "description": "A ninja with this ability has a pool of %1 ki points, supernatural energy she can use to accomplish amazing feats. As long as she has at least 1 point in her ki pool, she treats any Acrobatics skill check made to jump as if she had a running start.|KiPoints",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja ~ Ki Pool"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.Supernatural.SpecialQuality.ClassFeatures.Ki Pool"
+      },
+      {
+        "key": "DESC",
+        "value": "A ninja with this ability has a pool of %1 ki points, supernatural energy she can use to accomplish amazing feats. As long as she has at least 1 point in her ki pool, she treats any Acrobatics skill check made to jump as if she had a running start.|KiPoints"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, she also reduces the DC of Acrobatics skill checks made to jump by 1/2 (although she still cannot move farther than her speed allows).|PREVARGTEQ:NinjaLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "By spending 1 point from her ki pool, a ninja can make one additional attack at her highest attack bonus, but she can do so only when making a full attack. In addition, she can spend 1 point to increase her speed by 20 feet for 1 round. Finally, a ninja can spend 1 point from her ki pool to give herself a +4 insight bonus on Stealth checks for 1 round. Each of these powers is activated as a swift action. A ninja can gain additional powers that consume points from her ki pool by selecting certain ninja tricks. The ki pool is replenished each morning after 8 hours of rest or meditation; these hours do not need to be consecutive. The ninja can now use ki points from this pool to power the abilities of every class she possesses that grants a ki pool."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Ki Pool Tracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoolLVL|NinjaLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "KiPoints|Ki points"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 120,
+    "record_key": "Ninja ~ Ki Pool"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

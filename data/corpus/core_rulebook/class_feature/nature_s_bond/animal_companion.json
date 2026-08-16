@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nature's Bond ~ Animal Companion",
+    "name": "Animal Companion",
+    "class": "Nature's Bond",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature's Bond ~ Animal Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.SpecialQuality.Extraordinary.NatureBond.DruidAnimalCompanion.Animal Companion"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "Druid_CF_AnimalCompanion,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionGranted|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CompanionDisable_AnimalCompanion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CompanionMasterLVL_Druid|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Animal Companion ~ Standard Companions|!PREABILITY:1,CATEGORY=Special Ability,TYPE.NatureBondAnimalCompanion,TYPE.NaturesBondAnimalCompanion"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Animal Companion ~ Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionGranted|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|CompanionMasterLVL_Druid|PREVAREQ:CompanionDisable_AnimalCompanion,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CompanionMasterLVL_Druid|DruidLVL|PREABILITY:1,CATEGORY=Special Ability,TYPE.DruidAnimalCompanion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 772,
+    "record_key": "Nature's Bond ~ Animal Companion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

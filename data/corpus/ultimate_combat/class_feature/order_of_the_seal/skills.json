@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Seal ~ Skills",
+    "name": "Skills",
+    "class": "Order of the Seal",
+    "description": "An order of the seal cavalier adds Disable Device (Dex) and Linguistics (Int) to his list of class skills. Whenever the cavalier uses Bluff to conceal information about his sworn charge, he receives a competence bonus equal to 1/2 his cavalier level (minimum +1).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Seal ~ Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An order of the seal cavalier adds Disable Device (Dex) and Linguistics (Int) to his list of class skills. Whenever the cavalier uses Bluff to conceal information about his sworn charge, he receives a competence bonus equal to 1/2 his cavalier level (minimum +1)."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Disable Device|Linguistics"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+%1 competence to Bluff to conceal information about his sworn charge|CavalierLVL/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 449,
+    "record_key": "Order of the Seal ~ Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

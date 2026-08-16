@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pathfinder Delver ~ Vigilant Combatant",
+    "name": "Vigilant Combatant",
+    "class": "Pathfinder Delver",
+    "description": "You add %1 to initiative checks.|PaDInitiative",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Delver ~ Vigilant Combatant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder Delver Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaDInitiative|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "DESC",
+        "value": "You add %1 to initiative checks.|PaDInitiative"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|Initiative|PaDInitiative"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 384,
+    "record_key": "Pathfinder Delver ~ Vigilant Combatant"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Combat Style ~ Thrown Weapon",
+    "name": "Thrown Weapon",
+    "class": "Ranger Combat Style",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Combat Style ~ Thrown Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerCombatStyle"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RangerCombatStyleThrownWeaponAllowed,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Distance_Thrower|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Precise_Shot|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Quick_Draw|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Two_Weapon_Fighting|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Close_Quarters_Thrower|1|PREVARGTEQ:CombatStyleLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_False_Opening|1|PREVARGTEQ:CombatStyleLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Pinpoint_Targeting|1|PREVARGTEQ:CombatStyleLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Shot_on_the_Run|1|PREVARGTEQ:CombatStyleLVL,10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3710,
+    "record_key": "Ranger Combat Style ~ Thrown Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

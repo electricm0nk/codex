@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fiendflesh Shifter ~ Fiendish Aspect",
+    "name": "Fiendish Aspect",
+    "class": "Fiendflesh Shifter",
+    "description": "A fiendflesh shifter can temporarily transform her body into an amalgam of otherworldly evil creatures as a swift action. While in this form, the fiendflesh shifter gains darkvision out to a range of 60 feet (or doubles the range of her darkvision if she already has it), a gore natural attack that deals 1d6 points of damage (1d4 points of damage if the shifter is Small), and DR %1/good. A fiendflesh shifter can maintain this form for %2 minutes per day. The duration does not need to be consecutive but must be spent in 1-minute increments.|FiendfleshShifterDR|3+ShifterLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fiendflesh Shifter ~ Fiendish Aspect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.FiendfleshShifterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FiendfleshShifterDR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A fiendflesh shifter can temporarily transform her body into an amalgam of otherworldly evil creatures as a swift action. While in this form, the fiendflesh shifter gains darkvision out to a range of 60 feet (or doubles the range of her darkvision if she already has it), a gore natural attack that deals 1d6 points of damage (1d4 points of damage if the shifter is Small), and DR %1/good. A fiendflesh shifter can maintain this form for %2 minutes per day. The duration does not need to be consecutive but must be spent in 1-minute increments.|FiendfleshShifterDR|3+ShifterLVL"
+      },
+      {
+        "key": "DESC",
+        "value": "The fiendflesh shifter also grows a pair of bat-like wings when in her fiendish aspect, granting her a fly speed of|PRECLASS:1,Shifter=5"
+      },
+      {
+        "key": "DESC",
+        "value": "30 feet with average maneuverability.|PRECLASS:1,Shifter=5|!PRECLASS:1,Shifter=15"
+      },
+      {
+        "key": "DESC",
+        "value": "60 feet with average maneuverability.|PRECLASS:1,Shifter=15"
+      },
+      {
+        "key": "DESC",
+        "value": "The electricity and fire resistance provided by her fiendish resilience ability doubles while she's in her fiendish aspect.|PRECLASS:1,Shifter=10|!PRECLASS:1,Shifter=20"
+      },
+      {
+        "key": "DESC",
+        "value": "She gains immunity to electricity and fire and spell resistance %1.|15+ShifterLVL|PRECLASS:1,Shifter=20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FiendfleshShifterDR|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FiendfleshShifterDR|1|PRECLASS:1,Shifter=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FiendfleshShifterDR|3|PRECLASS:1,Shifter=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FiendfleshShifterDR|2|PRECLASS:1,Shifter=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FiendfleshShifterDR|3|PRECLASS:1,Shifter=20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1064,
+    "record_key": "Fiendflesh Shifter ~ Fiendish Aspect"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

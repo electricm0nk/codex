@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Bloodline ~ Undercasting Prodigy",
+    "name": "Undercasting Prodigy",
+    "class": "Psychic Bloodline",
+    "description": "Whenever you gain a new level of spells, you automatically replace any psychic bloodline spells that can be undercast with the highest-level version you can cast in your list of spells known. For example, at 9th level, you would replace mind thrust I, id insinuation I, and ego whip I with mind thrust IV, id insinuation III, and ego whip II, respectively, as spells known.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Bloodline ~ Undercasting Prodigy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Psychic Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Special Quality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Psychic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Psychic_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you gain a new level of spells, you automatically replace any psychic bloodline spells that can be undercast with the highest-level version you can cast in your list of spells known. For example, at 9th level, you would replace mind thrust I, id insinuation I, and ego whip I with mind thrust IV, id insinuation III, and ego whip II, respectively, as spells known."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|PsychicBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1883,
+    "record_key": "Psychic Bloodline ~ Undercasting Prodigy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

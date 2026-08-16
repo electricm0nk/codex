@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sorcerer Elemental Bloodline (Earth)",
+    "name": "Earth",
+    "class": null,
+    "description": "One of the four elements infuses your being, and you can draw upon its power in times of need. At first level, you must select one of the four elements: air, earth, fire, or water. This choice cannot be changed. A number of your abilities grant resistances and deal damage based on your element. Earth is associate with the Acid energy type and the burrow movement type (Burrow 30 feet).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Elemental Bloodline (Earth)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Elemental Bloodline Choice"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_ElementalBloodlineChoice_Earth|0"
+      },
+      {
+        "key": "DESC",
+        "value": "One of the four elements infuses your being, and you can draw upon its power in times of need. At first level, you must select one of the four elements: air, earth, fire, or water. This choice cannot be changed. A number of your abilities grant resistances and deal damage based on your element. Earth is associate with the Acid energy type and the burrow movement type (Burrow 30 feet)."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_ElementalBloodlineChoice_Earth|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2493,
+    "record_key": "Sorcerer Elemental Bloodline (Earth)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

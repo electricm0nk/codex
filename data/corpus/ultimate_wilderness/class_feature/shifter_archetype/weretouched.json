@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter Archetype ~ Weretouched",
+    "name": "Weretouched",
+    "class": "Shifter Archetype",
+    "description": "Weretouched shifters are scions of lycanthropic forces, whether hereditary or supernaturally imposed. They can assume both animal and hybrid forms, as a lycanthrope does.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Archetype ~ Weretouched"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ShifterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shifter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shifter Archetype ~ Weretouched],[!PREFACT:1,ABILITIES,Shifter_Archetype_ShifterAspect=True,Shifter_Archetype_WildEmpathy=True,Shifter_Archetype_WildShape=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Weretouched shifters are scions of lycanthropic forces, whether hereditary or supernaturally imposed. They can assume both animal and hybrid forms, as a lycanthrope does."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Weretouched ~ Lycanthrope Aspect|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Weretouched ~ Lycanthropic Empathy|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Weretouched ~ Lycanthropic Wild Shape|PRECLASS:1,Shifter=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ShifterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_WildShape|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1039,
+    "record_key": "Shifter Archetype ~ Weretouched"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

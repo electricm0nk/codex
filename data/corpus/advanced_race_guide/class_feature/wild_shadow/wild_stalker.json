@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Shadow ~ Wild Stalker",
+    "name": "Wild Stalker",
+    "class": "Wild Shadow",
+    "description": "A wild shadow learns to better use natural surroundings to obscure his position in combat. Whenever a wild shadow is within one of his favored terrains and a feature of that terrain grants him cover, the bonuses to AC and Reflex saves for that cover improve by %1. Additionally, while he is within one of his favored terrains, if he gains concealment or total concealment, the miss chance of either type of concealment improves by %10%%.|1+(RangerLVL-10)/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Shadow ~ Wild Stalker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wild shadow learns to better use natural surroundings to obscure his position in combat. Whenever a wild shadow is within one of his favored terrains and a feature of that terrain grants him cover, the bonuses to AC and Reflex saves for that cover improve by %1. Additionally, while he is within one of his favored terrains, if he gains concealment or total concealment, the miss chance of either type of concealment improves by %10%%.|1+(RangerLVL-10)/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 240,
+    "record_key": "Wild Shadow ~ Wild Stalker"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

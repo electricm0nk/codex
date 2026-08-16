@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Buccaneer ~ Rope Swing",
+    "name": "Rope Swing",
+    "class": "Buccaneer",
+    "description": "As long as the buccaneer has at least 1 grit point, she gains a bonus on Acrobatics and Climb checks equal to her gunslinger level when climbing or swinging on a rope. If she spends 1 grit point, her move while climbing or swinging on a rope does not provoke attacks of opportunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Buccaneer ~ Rope Swing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as the buccaneer has at least 1 grit point, she gains a bonus on Acrobatics and Climb checks equal to her gunslinger level when climbing or swinging on a rope. If she spends 1 grit point, her move while climbing or swinging on a rope does not provoke attacks of opportunity."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Acrobatics=Swing|GunslingerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Climb=Rope|GunslingerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 353,
+    "record_key": "Buccaneer ~ Rope Swing"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

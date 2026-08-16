@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Draconic Bloodline Choice ~ Gold",
+    "name": "Gold",
+    "class": "Draconic Bloodline Choice",
+    "description": "The power of dragons flows through you and manifests in a number of ways. At 1st level, you must select one of the chromatic or metallic dragon types (see the Pathfinder RPG Bestiary). This choice cannot be changed. A number of your abilities grant resistances and deal damage based on your dragon type. Gold dragons are associated with the fire energy type and have a 30-foot cone breath shape.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Bloodline Choice ~ Gold"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Draconic Bloodline Choice"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicBloodlineChoice_Gold|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The power of dragons flows through you and manifests in a number of ways. At 1st level, you must select one of the chromatic or metallic dragon types (see the Pathfinder RPG Bestiary). This choice cannot be changed. A number of your abilities grant resistances and deal damage based on your dragon type. Gold dragons are associated with the fire energy type and have a 30-foot cone breath shape."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DraconicBloodlineChoice_Gold|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DraconicBreathWeapon_Cone|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DraconicDamageType_Fire|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2470,
+    "record_key": "Draconic Bloodline Choice ~ Gold"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

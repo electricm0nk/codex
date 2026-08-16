@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante ~ Unshakable",
+    "name": "Unshakable",
+    "class": "Vigilante",
+    "description": "A vigilante adds %1 to the DC of any attempts to Intimidate him.|VigilanteUnshakableDCBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante ~ Unshakable"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VigilanteUnshakableDCBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A vigilante adds %1 to the DC of any attempts to Intimidate him.|VigilanteUnshakableDCBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VigilanteUnshakableDCBonus|VigilanteLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 34,
+    "record_key": "Vigilante ~ Unshakable"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

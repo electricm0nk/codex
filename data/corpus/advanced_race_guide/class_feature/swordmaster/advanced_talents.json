@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Swordmaster ~ Advanced Talents",
+    "name": "Advanced Talents",
+    "class": "Swordmaster",
+    "description": "The following advanced rogue talents complement the swordmaster archetype: crippling strike, defensive roll (Core Rulebook); hunter's surprise, redirect attack (Advanced Player's Guide); confounding blade (Ultimate Combat).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swordmaster ~ Advanced Talents"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The following advanced rogue talents complement the swordmaster archetype: crippling strike, defensive roll (Core Rulebook); hunter's surprise, redirect attack (Advanced Player's Guide); confounding blade (Ultimate Combat)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.165"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 774,
+    "record_key": "Swordmaster ~ Advanced Talents"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

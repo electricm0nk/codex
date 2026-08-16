@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Dragon Totem Wings",
+    "name": "Dragon Totem Wings",
+    "class": "Rage Power",
+    "description": "When a barbarian selects this rage power, the Fly (Dex) skill becomes a class skill for her. While raging and wearing medium or lighter armor, the barbarian can spend a standard action to manifest a pair of spiritual dragon wings that grant her a fly speed equal to her base speed (average maneuverability). She can expend 2 rounds of her rage to instead spend an immediate action to gain this fly speed. She can end her fly speed at any time, even when it is not her turn. Each round she spends raging and flying counts as 2 rounds of rage. Her ability to fly ends automatically when she ceases raging. A barbarian must have the dragon totem and dragon totem resilience rage powers, and she must be at least 10th level before selecting this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Dragon Totem Wings"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,Rage Power ~ Dragon Totem,Rage Power ~ Dragon Totem Resilience"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "When a barbarian selects this rage power, the Fly (Dex) skill becomes a class skill for her. While raging and wearing medium or lighter armor, the barbarian can spend a standard action to manifest a pair of spiritual dragon wings that grant her a fly speed equal to her base speed (average maneuverability). She can expend 2 rounds of her rage to instead spend an immediate action to gain this fly speed. She can end her fly speed at any time, even when it is not her turn. Each round she spends raging and flying counts as 2 rounds of rage. Her ability to fly ends automatically when she ceases raging. A barbarian must have the dragon totem and dragon totem resilience rage powers, and she must be at least 10th level before selecting this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 278,
+    "record_key": "Rage Power ~ Dragon Totem Wings"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

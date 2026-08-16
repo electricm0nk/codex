@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oracle ~ Black Blood Spray",
+    "name": "Black Blood Spray",
+    "class": "Oracle",
+    "description": "As an immediate action whenever a black-blooded oracle takes piercing or slashing damage, she can cause some of her black blood to spray from the wound to strike any adjacent target. She must make a touch attack to hit the target (if she's attacking the creature that caused the wound, she gains a +4 circumstance bonus on her attack roll). If she hits, she deals 1d8+%1 points of cold damage. She can use this ability %2 times per day.|OracleLVL/2|max(1,OracleLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle ~ Black Blood Spray"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.Supernatural.GeneralRevelation.OracleRevelation.PerDayOracleRevelation"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Oracle Archetype ~ Black-Blooded Oracle"
+      },
+      {
+        "key": "DESC",
+        "value": "As an immediate action whenever a black-blooded oracle takes piercing or slashing damage, she can cause some of her black blood to spray from the wound to strike any adjacent target. She must make a touch attack to hit the target (if she's attacking the creature that caused the wound, she gains a +4 circumstance bonus on her attack roll). If she hits, she deals 1d8+%1 points of cold damage. She can use this ability %2 times per day.|OracleLVL/2|max(1,OracleLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 304,
+    "record_key": "Oracle ~ Black Blood Spray"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

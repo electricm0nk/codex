@@ -1,0 +1,147 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Druid Archetype ~ Sunrider",
+    "name": "Sunrider",
+    "class": "Druid Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Sunrider"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "DESC",
+        "value": "Sunriders help their allies, be they fellow tribe members or fellow adventurers, to survive in harsh desert terrain, while simultaneously making it even harsher for their foes. They seem to share a single mind with their loyal steeds, and companions who ride with them become an eerily well-coordinated cavalry unit that traverses the treacherous desert sands with ease to wreak havoc upon invaders. Sunriders almost never leave their tribal homelands; those found outside Al-Zabrit are usually either exiles or emissaries sent to deal with issues that can't be addressed from their holds."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Sunrider],[!PREFACT:1,ABILITIES,Druid_Archetype_ClassSkills=True,Druid_Archetype_WeaponProficiencies=True,Druid_Archetype_NatureBond=True,Druid_Archetype_WoodlandStride=True,Druid_Archetype_TracklessStep=True,Druid_Archetype_ResistNaturesLure=True,Druid_Archetype_WildShape=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Sunrider ~ Class Skills|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Sunrider ~ Weapon and Armor Proficiencies|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sunrider ~ Nature Bond|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sunrider ~ Born to the Saddle|PRECLASS:1,Druid=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sunrider ~ Mounted Advantage|PRECLASS:1,Druid=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sunrider ~ Desert Born|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sunrider ~ Concerted Effort|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_NatureBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_TracklessStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_DruidDomain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_TracklessStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildShape|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 784,
+    "record_key": "Druid Archetype ~ Sunrider"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

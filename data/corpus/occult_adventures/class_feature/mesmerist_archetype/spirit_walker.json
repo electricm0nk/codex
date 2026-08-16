@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mesmerist Archetype ~ Spirit Walker",
+    "name": "Spirit Walker",
+    "class": "Mesmerist Archetype",
+    "description": "Some mesmerists specialize in dominating and controlling undead rather than the living.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Archetype ~ Spirit Walker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Mesmerist Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Mesmerist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Mesmerist Archetype ~ Spirit Walker],[!PREFACT:1,ABILITIES,Mesmerist_Archetype_SpellList=True,Mesmerist_Archetype_ConsummateLiar=True,Mesmerist_Archetype_MentalPotency=True,Mesmerist_Archetype_TouchTreatment=True,Mesmerist_Archetype_RuleMinds=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some mesmerists specialize in dominating and controlling undead rather than the living."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Class Feature|AUTOMATIC|Spirit Walker ~ Spells|Spirit Walker ~ Undead Inception|PRECLASS:1,Mesmerist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Class Feature|AUTOMATIC|Spirit Walker ~ Continued Animation|PRECLASS:1,Mesmerist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Class Feature|AUTOMATIC|Spirit Walker ~ Command Undead|PRECLASS:1,Mesmerist=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Class Feature|AUTOMATIC|Spirit Walker ~ Master of the Dead|PRECLASS:1,Mesmerist=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Mesmerist"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_SpellList|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_ConsummateLiar|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_MentalPotency|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_TouchTreatment|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_RuleMinds|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_ConsummateLiar|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_MentalPotency|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_TouchTreatment|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_RuleMinds|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1460,
+    "record_key": "Mesmerist Archetype ~ Spirit Walker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ectoplasm Bloodline ~ Entangling Ectoplasm",
+    "name": "Entangling Ectoplasm",
+    "class": "Ectoplasm Bloodline",
+    "description": "You can create a ball of ectoplasm and hurl it at targets within 30 feet. This ectoplasm acts as a tanglefoot bag that can also entangle incorporeal creatures. The ectoplasm dissipates within 1d3 rounds. You can use this ability %1 times per day.|Sorcerer_Ectoplasm_BloodlinePower1Times",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ectoplasm Bloodline ~ Entangling Ectoplasm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Ectoplasm Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Ectoplasm"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Ectoplasm_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a ball of ectoplasm and hurl it at targets within 30 feet. This ectoplasm acts as a tanglefoot bag that can also entangle incorporeal creatures. The ectoplasm dissipates within 1d3 rounds. You can use this ability %1 times per day.|Sorcerer_Ectoplasm_BloodlinePower1Times"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day|Sorcerer_Ectoplasm_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Ectoplasm_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|EctoplasmBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1863,
+    "record_key": "Ectoplasm Bloodline ~ Entangling Ectoplasm"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

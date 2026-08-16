@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dinosaur Druid ~ Dinosaur Bond",
+    "name": "Dinosaur Bond",
+    "class": "Dinosaur Druid",
+    "description": "A dinosaur druid must choose an animal companion as her nature's bond, and the animal companion must be a dinosaur (including those detailed in Pathfinder RPG Bestiary volumes). This alters nature's bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dinosaur Druid ~ Dinosaur Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.DinosaurDruidClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A dinosaur druid must choose an animal companion as her nature's bond, and the animal companion must be a dinosaur (including those detailed in Pathfinder RPG Bestiary volumes). This alters nature's bond."
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|RACESUBTYPE=AnimalCompanionDinosaur"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 513,
+    "record_key": "Dinosaur Druid ~ Dinosaur Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sister-in-Arms ~ Order of the Lion",
+    "name": "Order of the Lion",
+    "class": "Sister-in-Arms",
+    "description": "An order of the lion cavalier can make Knowledge (nobility) skill checks untrained. If she has ranks in the skill, she receives a bonus on the check equal to 1/2 her cavalier level (minimum +1) as long as the check involves her sovereign.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sister-in-Arms ~ Order of the Lion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SisterInArmsClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An order of the lion cavalier can make Knowledge (nobility) skill checks untrained. If she has ranks in the skill, she receives a bonus on the check equal to 1/2 her cavalier level (minimum +1) as long as the check involves her sovereign."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Lion ~ Lion's Call"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Lion ~ For the King"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Lion ~ Shield of the Liege"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (Local)|Knowledge (Nobility)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 764,
+    "record_key": "Sister-in-Arms ~ Order of the Lion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

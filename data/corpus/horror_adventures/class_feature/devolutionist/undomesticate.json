@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Devolutionist ~ Undomesticate",
+    "name": "Undomesticate",
+    "class": "Devolutionist",
+    "description": "A devolutionist can spend 1 minute with a willing or restrained domesticated animal to undo the effects of domestication, transforming it into a wild animal and causing it to lose any tricks it knew. The animal no longer recognizes any humanoids as friends or allies and gladly tears former playmates apart for food. Handle Animal checks don't work on an undomesticated creature, though wild empathy does. This ability doesn't function on animal companions, special mounts, or the like, and other exceptional domesticated animals can attempt a Will save (DC %1) to negate the effect and become immune to it for 24 hours. Though this ability is instantaneous, break enchantment, limited wish, miracle, or wish can reverse the effects.|10+DruidLVL/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Devolutionist ~ Undomesticate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.DevolutionistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "DESC",
+        "value": "A devolutionist can spend 1 minute with a willing or restrained domesticated animal to undo the effects of domestication, transforming it into a wild animal and causing it to lose any tricks it knew. The animal no longer recognizes any humanoids as friends or allies and gladly tears former playmates apart for food. Handle Animal checks don't work on an undomesticated creature, though wild empathy does. This ability doesn't function on animal companions, special mounts, or the like, and other exceptional domesticated animals can attempt a Will save (DC %1) to negate the effect and become immune to it for 24 hours. Though this ability is instantaneous, break enchantment, limited wish, miracle, or wish can reverse the effects.|10+DruidLVL/2+WIS"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 107,
+    "record_key": "Devolutionist ~ Undomesticate"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

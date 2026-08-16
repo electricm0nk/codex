@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus ~ Fighter Training",
+    "name": "Fighter Training",
+    "class": "Magus",
+    "description": "You count 1/2 your total magus level as your fighter level for the purpose of qualifying for feats. If you have levels in fighter, these levels stack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus ~ Fighter Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MagusFighterTrainingLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You count 1/2 your total magus level as your fighter level for the purpose of qualifying for feats. If you have levels in fighter, these levels stack."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Critical Mastery Qualify|Fighter Level Advanced Feat Tracker|Greater Penetrating Strike Qualify|Greater Shield Focus Qualify|Greater Weapon Focus Qualify|Greater Weapon Specialization Qualify|Penetrating Strike Qualify|Spellbreaker Qualify|Weapon Specialization Qualify|Disruptive Qualify"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FighterWeaponQualifyLVL|MagusFighterTrainingLVL/2|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusFighterTrainingLVL|MagusLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 51,
+    "record_key": "Magus ~ Fighter Training"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

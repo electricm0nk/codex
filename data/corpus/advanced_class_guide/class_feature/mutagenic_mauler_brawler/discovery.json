@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mutagenic Mauler Brawler ~ Discovery",
+    "name": "Discovery",
+    "class": "Mutagenic Mauler Brawler",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutagenic Mauler Brawler ~ Discovery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Mutagenic Mauler Class Feature.Internal.Discovery"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutagenicMaulerDiscoveryLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutagenicMaulerDiscoveryDC|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mutagenic Mauler Brawler Discovery|1|PREVARGTEQ:MutagenicMaulerDiscoveryLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenicMaulerDiscoveryLVL|BrawlerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2868,
+    "record_key": "Mutagenic Mauler Brawler ~ Discovery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

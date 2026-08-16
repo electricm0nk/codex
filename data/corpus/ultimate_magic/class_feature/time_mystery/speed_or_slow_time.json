@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Time Mystery ~ Speed or Slow Time",
+    "name": "Speed or Slow Time",
+    "class": "Time Mystery",
+    "description": "As a standard action, you can speed up or slow down time, as either the haste or slow spell. You can use this ability %1/day.|SpeedOrSlowTimeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Time Mystery ~ Speed or Slow Time"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.TimeRevelation.SpellLike"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpeedOrSlowTimeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can speed up or slow down time, as either the haste or slow spell. You can use this ability %1/day.|SpeedOrSlowTimeTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpeedOrSlowTimeTimes|min(3,(classlevel(\"Oracle\")-2)/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 503,
+    "record_key": "Time Mystery ~ Speed or Slow Time"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

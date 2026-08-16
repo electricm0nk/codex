@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus Archetype ~ Spire Defender",
+    "name": "Spire Defender",
+    "class": "Magus Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Spire Defender"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MagusArchetype.MagusWeaponProficiency.MagusArmorProficiency.MagusSpellRecall"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Spire Defender],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MagusWeaponProficiency,TYPE.MagusArmorProficiency,TYPE.MagusSpellRecall]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "Spire defenders are magi who train themselves to accompany sages and archaeologists who venture from the Mordant Spire, acting as aides and bodyguards. Because they often operate in difficult terrain-narrow trenches in dig sites, flooded dungeons, and tight corridors in ancient ruins-spire defenders place mobility and agility at a premium. As a result, they eschew armor entirely. Most spire defenders are elves-it's exceptionally rare for a non-elf to be granted access to the training required to take this archetype (non-elves need GM approval to take this archetype)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spire Defender ~ Weapon Proficiency"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spire Defender ~ Bonus Feats"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spire Defender ~ Arcane Augmentation|PRECLASS:1,Magus=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Magus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 277,
+    "record_key": "Magus Archetype ~ Spire Defender"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

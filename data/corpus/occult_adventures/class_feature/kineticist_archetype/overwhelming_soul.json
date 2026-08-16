@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kineticist Archetype ~ Overwhelming Soul",
+    "name": "Overwhelming Soul",
+    "class": "Kineticist Archetype",
+    "description": "Some kineticists have such a powerful personality that they can seize control of their element with their minds alone, without endangering their bodies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Archetype ~ Overwhelming Soul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Kineticist Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Kineticist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Kineticist Archetype ~ Overwhelming Soul],[!PREFACT:1,ABILITIES,Kineticist_Archetype_ClassSkills=True,Kineticist_Archetype_KeyAbilityScoreWildTalent=True,Kineticist_Archetype_InternalBuffer=True,Kineticist_Archetype_ElementalOverflow=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some kineticists have such a powerful personality that they can seize control of their element with their minds alone, without endangering their bodies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Overwhelming Soul ~ Mind Over Matter|PRECLASS:1,Kineticist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Overwhelming Soul ~ Mental Prowess|PRECLASS:1,Kineticist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Overwhelming Soul ~ Overwhelming Power|PRECLASS:1,Kineticist=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_ClassSkills|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_KeyAbilityScoreWildTalent|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_InternalBuffer|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_ElementalOverflow|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_InternalBuffer|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_ElementalOverflow|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1314,
+    "record_key": "Kineticist Archetype ~ Overwhelming Soul"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

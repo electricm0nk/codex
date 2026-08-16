@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcanist School Void ~ Aura of Prescience",
+    "name": "Aura of Prescience",
+    "class": "Arcanist School Void",
+    "description": "You can emit a 30-foot aura of void energy for %1 rounds. Allies within this aura gain a +2 insight bonus on ability checks, attack rolls, damage rolls, saving throws, and skill checks. These rounds do not need to be consecutive.|VoidElementalSchoolLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcanist School Void ~ Aura of Prescience"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistSchoolChoice"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Arcanist School ~ Void"
+      },
+      {
+        "key": "DESC",
+        "value": "You can emit a 30-foot aura of void energy for %1 rounds. Allies within this aura gain a +2 insight bonus on ability checks, attack rolls, damage rolls, saving throws, and skill checks. These rounds do not need to be consecutive.|VoidElementalSchoolLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds/day)|VoidElementalSchoolLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|VoidElementalSchoolLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 238,
+    "record_key": "Arcanist School Void ~ Aura of Prescience"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

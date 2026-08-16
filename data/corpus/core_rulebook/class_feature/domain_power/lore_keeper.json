@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Domain Power ~ Lore Keeper",
+    "name": "Lore Keeper",
+    "class": "Domain Power",
+    "description": "You can touch a creature to learn about its abilities and weaknesses. With a successful touch attack, you gain information as if you made the appropriate Knowledge skill check with a result equal to %1.|LoreKeeperDomainSkillBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Lore Keeper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialAttack.SpellLike.DomainPower.Knowledge Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LoreKeeperDomainSkillBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch a creature to learn about its abilities and weaknesses. With a successful touch attack, you gain information as if you made the appropriate Knowledge skill check with a result equal to %1.|LoreKeeperDomainSkillBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LoreKeeperDomainSkillBonus|15+DomainKnowledgeLVL+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 717,
+    "record_key": "Domain Power ~ Lore Keeper"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

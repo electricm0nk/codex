@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magic Warrior ~ Magic Warrior's Aspect",
+    "name": "Magic Warrior's Aspect",
+    "class": "Magic Warrior",
+    "description": "A magic warrior can gain an aspect of an animal's might. The animal must suit the magic warrior's mask (and the animal changes if the magic warrior must create or obtain a new mask). As a standard action, the magic warrior gains one ability possessed by that animal from the list of abilities given in beast shape I (this ability does not allow her to change her size). The ability lasts for %1 minutes.|MagusLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magic Warrior ~ Magic Warrior's Aspect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magus Class Features.MagicWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A magic warrior can gain an aspect of an animal's might. The animal must suit the magic warrior's mask (and the animal changes if the magic warrior must create or obtain a new mask). As a standard action, the magic warrior gains one ability possessed by that animal from the list of abilities given in beast shape I (this ability does not allow her to change her size). The ability lasts for %1 minutes.|MagusLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 185,
+    "record_key": "Magic Warrior ~ Magic Warrior's Aspect"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

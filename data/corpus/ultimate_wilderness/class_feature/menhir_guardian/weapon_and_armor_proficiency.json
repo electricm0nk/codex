@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Menhir Guardian ~ Weapon Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Menhir Guardian",
+    "description": "A menhir guardian is proficient with the club, dagger, dart, quarterstaff, sickle, shortspear, sling, and spear. A menhir guardian can use these weapons in conjunction with his wild flurry ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Menhir Guardian ~ Weapon Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Features.MenhirGuardianClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A menhir guardian is proficient with the club, dagger, dart, quarterstaff, sickle, shortspear, sling, and spear. A menhir guardian can use these weapons in conjunction with his wild flurry ability."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Club|Dagger|Dart|Quarterstaff|Sickle|Shortspear|Sling|Spear|Flurry of Blows|TYPE=Auto"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 811,
+    "record_key": "Menhir Guardian ~ Weapon Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

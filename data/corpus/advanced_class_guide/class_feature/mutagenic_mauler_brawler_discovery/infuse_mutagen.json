@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mutagenic Mauler Brawler Discovery ~ Infuse Mutagen",
+    "name": "Infuse Mutagen",
+    "class": "Mutagenic Mauler Brawler Discovery",
+    "description": "When the mutagenic mauler creates a mutagen, he can infuse it with an extra bit of his own magical power. This inflicts 2 points of Intelligence damage to the mutagenic mauler and costs 1,000 gp in rare reagents, but the mutagen created persists on its own and is not rendered inert if the mutagenic mauler creates another mutagen. This allows an mutagenic mauler to create different types of mutagens and keep them handy for emergencies. This does not allow an mutagenic mauler to gain the effects of multiple mutagens - only the most recently imbibed mutagen has any effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutagenic Mauler Brawler Discovery ~ Infuse Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Mutagenic Mauler Class Feature.SpecialAttack.MutagenicMaulerDiscovery"
+      },
+      {
+        "key": "DESC",
+        "value": "When the mutagenic mauler creates a mutagen, he can infuse it with an extra bit of his own magical power. This inflicts 2 points of Intelligence damage to the mutagenic mauler and costs 1,000 gp in rare reagents, but the mutagen created persists on its own and is not rendered inert if the mutagenic mauler creates another mutagen. This allows an mutagenic mauler to create different types of mutagens and keep them handy for emergencies. This does not allow an mutagenic mauler to gain the effects of multiple mutagens - only the most recently imbibed mutagen has any effect."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2888,
+    "record_key": "Mutagenic Mauler Brawler Discovery ~ Infuse Mutagen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,135 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium Archetype ~ Kami Medium",
+    "name": "Kami Medium",
+    "class": "Medium Archetype",
+    "description": "Some mediums channel the power of nature spirits called kami rather than the spirits of legend.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium Archetype ~ Kami Medium"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Medium Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Medium=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Kami Medium],[!PREFACT:1,ABILITIES,Medium_Archetype_Spirit=True,Medium_Archetype_Taboo=True,Medium_Archetype_Spellcasting=True,Medium_Archetype_HauntChanneler=True,Medium_Archetype_LocationChannel=True,Medium_Archetype_ConnectionChannel=True,Medium_Archetype_AskTheSpirits=True,Medium_Archetype_AstralJourney=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some mediums channel the power of nature spirits called kami rather than the spirits of legend."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Kami Medium ~ Kami Channeler|Kami Medium ~ Natural Taboo|Kami Medium ~ Ofuda|PRECLASS:1,Medium=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Kami Medium ~ Shikigami|PRECLASS:1,Medium=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Kami Medium ~ Ask the Kami|PRECLASS:1,Medium=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Kami Medium ~ Ward|PRECLASS:1,Medium=14"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Medium"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_Spirit|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_Taboo|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_Spellcasting|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_HauntChanneler|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_LocationChannel|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_ConnectionChannel|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_AskTheSpirits|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_AstralJourney|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_Taboo|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_HauntChanneler|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_LocationChannel|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_ConnectionChannel|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_AskTheSpirits|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_AstralJourney|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1391,
+    "record_key": "Medium Archetype ~ Kami Medium"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

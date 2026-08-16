@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Lantern Bearer ~ Aiudara Alignment",
+    "name": "Aiudara Alignment",
+    "class": "Lantern Bearer",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lantern Bearer ~ Aiudara Alignment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Lantern Bearer Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a full-round action, a Lantern Bearer can use the interconnected power of the aiudara (a series of magical portals sometimes called \"elf gates\") to teleport herself to an elf gate that she has studied carefully (as per the spell teleport). This functions as word of recall, but the Lantern Bearer can transport only herself plus 50 pounds of objects. In addition, a Lantern Bearer can magically slip between the spaces in reality twice per day as a swift action, as if using dimension door. This ability has a range of 50 feet, and the Lantern Bearer cannot take other creatures with her."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 313,
+    "record_key": "Lantern Bearer ~ Aiudara Alignment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

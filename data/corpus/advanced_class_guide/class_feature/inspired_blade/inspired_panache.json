@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inspired Blade ~ Inspired Panache",
+    "name": "Inspired Panache",
+    "class": "Inspired Blade",
+    "description": "Each day, an inspired blade gains %1 panache points. Unlike other swashbucklers, an inspired blade gains no panache from a killing blow. She gains panache only from scoring a critical hit with a rapier. This ability alters the panache class feature.|PanachePoints",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inspired Blade ~ Inspired Panache"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Feature.ArchetypeAbility.SpecialQuality.Extraordinary.Panache"
+      },
+      {
+        "key": "DESC",
+        "value": "Each day, an inspired blade gains %1 panache points. Unlike other swashbucklers, an inspired blade gains no panache from a killing blow. She gains panache only from scoring a critical hit with a rapier. This ability alters the panache class feature.|PanachePoints"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Display Panache Points|!PREABILITY:2,CATEGORY=Special Ability,TYPE.GritShared"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Panache_Cap|MAX(1,CHA)+MAX(1,INT)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PanachePoints|MAX(1,CHA)+MAX(1,INT)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3889,
+    "record_key": "Inspired Blade ~ Inspired Panache"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

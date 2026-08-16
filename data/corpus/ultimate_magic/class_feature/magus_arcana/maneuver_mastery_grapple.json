@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus Arcana ~ Maneuver Mastery Grapple",
+    "name": "Maneuver Mastery (Grapple)",
+    "class": "Magus Arcana",
+    "description": "You have mastered the grapple combat maneuver. Whenever you attempt a grapple maneuver, you use your magus level in place of your base attack bonus (in addition to any base attack bonus gained from other classes).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Maneuver Mastery Grapple"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.MagusArcana"
+      },
+      {
+        "key": "DESC",
+        "value": "You have mastered the grapple combat maneuver. Whenever you attempt a grapple maneuver, you use your magus level in place of your base attack bonus (in addition to any base attack bonus gained from other classes)."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Grapple|MagusArcanaLVL-floor(var(\"CL=Magus\")*3/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 92,
+    "record_key": "Magus Arcana ~ Maneuver Mastery Grapple"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

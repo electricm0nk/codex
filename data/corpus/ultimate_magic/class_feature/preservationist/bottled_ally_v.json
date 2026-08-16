@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Preservationist ~ Bottled Ally V",
+    "name": "Bottled Ally V",
+    "class": "Preservationist",
+    "description": "You add Summon Nature's Ally VII to your formula book as a 5th-level extract.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Preservationist ~ Bottled Ally V"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You add Summon Nature's Ally VII to your formula book as a 5th-level extract."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Alchemist=5|Summon Nature's Ally VII"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 901,
+    "record_key": "Preservationist ~ Bottled Ally V"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

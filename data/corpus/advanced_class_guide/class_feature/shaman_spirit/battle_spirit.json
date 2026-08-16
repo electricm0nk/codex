@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit ~ Battle",
+    "name": "Battle (Spirit)",
+    "class": "Shaman Spirit",
+    "description": "Spirit Magic Spells: enlarge person (1st), fog cloud (2nd), magic vestment (3rd), wall of fire (4th), righteous might (5th), mass bull's strength (6th), control weather (7th), earthquake (8th), storm of vengeance (9th)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit ~ Battle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpirit.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanBattleSpirit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanBattleSpiritAnimal|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: enlarge person (1st), fog cloud (2nd), magic vestment (3rd), wall of fire (4th), righteous might (5th), mass bull's strength (6th), control weather (7th), earthquake (8th), storm of vengeance (9th)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Battle Spirit ~ Battle Spirit"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Battle Spirit ~ Enemies' Bane|PREVARGTEQ:ShamanSpiritGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Battle Spirit ~ Paragon of Battle|PREVARGTEQ:ShamanSpiritTrue,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Battle Spirit ~ Manifestation|PREVARGTEQ:Shaman Manifestation,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanBattleSpirit|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanBattleSpiritAnimal|FamiliarIsSpiritAnimal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1445,
+    "record_key": "Shaman Spirit ~ Battle"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

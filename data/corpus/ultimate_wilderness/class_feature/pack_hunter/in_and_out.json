@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pack Hunter ~ In and Out",
+    "name": "In and Out",
+    "class": "Pack Hunter",
+    "description": "A pack hunter gains a +%1 dodge bonus to AC against attacks of opportunity.|PackHunterDodgeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pack Hunter ~ In and Out"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.PackHunterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PackHunterDodgeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A pack hunter gains a +%1 dodge bonus to AC against attacks of opportunity.|PackHunterDodgeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PackHunterDodgeBonus|min(6,BarbarianLVL/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 204,
+    "record_key": "Pack Hunter ~ In and Out"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

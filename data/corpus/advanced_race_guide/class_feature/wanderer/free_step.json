@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wanderer ~ Free Step",
+    "name": "Free Step",
+    "class": "Wanderer",
+    "description": "The wanderer gains continuous freedom of movement as a continuous spell-like ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wanderer ~ Free Step"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=MonkLVL|Freedom of Movement"
+      },
+      {
+        "key": "DESC",
+        "value": "The wanderer gains continuous freedom of movement as a continuous spell-like ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 401,
+    "record_key": "Wanderer ~ Free Step"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

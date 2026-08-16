@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Herald of the Horn ~ Rousing Retort",
+    "name": "Rousing Retort",
+    "class": "Herald of the Horn",
+    "description": "A herald of the horn can use raging song to free allies from enchantment effects and fear. When beginning a raging song, he can expend 4 rounds of that ability to grant all allies within 60 feet a new saving throw against an ongoing enchantment or fear effect. The allies gain a +2 bonus on this new saving throw.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Herald of the Horn ~ Rousing Retort"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Herald of the Horn Class Feature.Skald Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A herald of the horn can use raging song to free allies from enchantment effects and fear. When beginning a raging song, he can expend 4 rounds of that ability to grant all allies within 60 feet a new saving throw against an ongoing enchantment or fear effect. The allies gain a +2 bonus on this new saving throw."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3688,
+    "record_key": "Herald of the Horn ~ Rousing Retort"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

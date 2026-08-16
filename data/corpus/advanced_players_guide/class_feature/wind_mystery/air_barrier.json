@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wind Mystery ~ Air Barrier",
+    "name": "Air Barrier",
+    "class": "Wind Mystery",
+    "description": "You can create an invisible shell of air that grants you a +%1 armor bonus. At 13th level, this barrier causes incoming arrows, rays, and other ranged attacks requiring an attack roll against you to have a 50%% miss chance. You can use this barrier for %2 hour(s) per day. This duration does not need to be consecutive, but it must be spent in 1-hour increments.|OracleAirBarrierACBonus|OracleAirBarrierDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wind Mystery ~ Air Barrier"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.WindRevelation.Extraordinary.HoursPerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleAirBarrierACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleAirBarrierDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create an invisible shell of air that grants you a +%1 armor bonus. At 13th level, this barrier causes incoming arrows, rays, and other ranged attacks requiring an attack roll against you to have a 50%% miss chance. You can use this barrier for %2 hour(s) per day. This duration does not need to be consecutive, but it must be spent in 1-hour increments.|OracleAirBarrierACBonus|OracleAirBarrierDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleAirBarrierACBonus|4+2*max(0,floor((classlevel(\"Oracle\")-3)/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleAirBarrierDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants an armor bonus to AC"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|OracleAirBarrierACBonus|TYPE=Armor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 698,
+    "record_key": "Wind Mystery ~ Air Barrier"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

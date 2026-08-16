@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Life Savant Subschool ~ Share Essence",
+    "name": "Share Essence",
+    "class": "Life Savant Subschool",
+    "description": "As a standard action, you can share your vital energy with a living creature that you touch. You take 1d6+%1 points of nonlethal damage. You cannot take an amount of nonlethal damage equal to or greater than your current hit point total; any excess is prevented. The recipient gains a number of temporary hit points equal to the amount of damage you received (prevented damage is not counted). These temporary hit points disappear 1 hour later. You may not use this ability to grant yourself temporary hit points. You can use this ability %2 times per day. This ability has no effect if you are immune to nonlethal damage.|ArcanistSavantSchoolLVL/2|INT+3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Savant Subschool ~ Share Essence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.SpellLike.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can share your vital energy with a living creature that you touch. You take 1d6+%1 points of nonlethal damage. You cannot take an amount of nonlethal damage equal to or greater than your current hit point total; any excess is prevented. The recipient gains a number of temporary hit points equal to the amount of damage you received (prevented damage is not counted). These temporary hit points disappear 1 hour later. You may not use this ability to grant yourself temporary hit points. You can use this ability %2 times per day. This ability has no effect if you are immune to nonlethal damage.|ArcanistSavantSchoolLVL/2|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2599,
+    "record_key": "Life Savant Subschool ~ Share Essence"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

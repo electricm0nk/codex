@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fighter Archetype ~ Tribal Fighter",
+    "name": "Tribal Fighter",
+    "class": "Fighter Archetype",
+    "description": "A tribal fighter knows that it is not the weapon that matters but the hand that wields it. Instead of encasing himself in metal armor like the soldiers fighting and dying for the so-called civilized lands do, he prefers to wear something he or his ancestors have killed. These relics and trophies help the tribal fighter attain a battle focus that allows him to perform incredible feats of violence with the simplest of weapons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Tribal Fighter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Tribal Fighter],[!PREFACT:1,ABILITIES,Fighter_Archetype_BonusFeat1=True,Fighter_Archetype_WeaponTraining=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A tribal fighter knows that it is not the weapon that matters but the hand that wields it. Instead of encasing himself in metal armor like the soldiers fighting and dying for the so-called civilized lands do, he prefers to wear something he or his ancestors have killed. These relics and trophies help the tribal fighter attain a battle focus that allows him to perform incredible feats of violence with the simplest of weapons."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tribal Fighter ~ Forbidden Armor|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tribal Fighter ~ Battle Focus|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tribal Fighter ~ Tribal Weapon Training|PRECLASS:1,Fighter=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeat1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining4|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 572,
+    "record_key": "Fighter Archetype ~ Tribal Fighter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

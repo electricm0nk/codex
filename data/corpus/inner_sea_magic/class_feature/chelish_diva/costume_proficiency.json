@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Chelish Diva ~ Costume Proficiency",
+    "name": "Costume Proficiency",
+    "class": "Chelish Diva",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Chelish Diva ~ Costume Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Extraordinary.BardLoreMaster"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "The Chelish diva has become so used to wearing strange and cumbersome costumes for her perfromance that she gains medium"
+      },
+      {
+        "key": "DESC",
+        "value": "and heavy|PREVARGTEQ:BardLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "armor proficiency and can cast bard spells while wearing medium"
+      },
+      {
+        "key": "DESC",
+        "value": "or heavy|PREVARGTEQ:BardLVL11,"
+      },
+      {
+        "key": "DESC",
+        "value": "armor without incurring the normal arcane spell failure chance. A multiclassed diva still incurs the normal arcane spell failure chance for arcane spells received from other classes."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ArmorProfMedium"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ArmorProfHeavy|PREVARGTEQ:BardLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Diva Medium Armor|PREEQUIP:2,TYPE=Armor,TYPE=Medium"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Diva Heavy Armor|PREEQUIP:2,TYPE=Armor,TYPE=Heavy|PREVARGTEQ:BardLVL,11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 167,
+    "record_key": "Chelish Diva ~ Costume Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

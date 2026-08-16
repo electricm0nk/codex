@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ghoul Bloodline ~ Leathery Skin",
+    "name": "Leathery Skin",
+    "class": "Ghoul Bloodline",
+    "description": "You gain cold resistance %1 and a +%2 natural armor bonus to AC.|Sorcerer_GhoulLeatherySkin_ResistanceBonus|Sorcerer_GhoulLeatherySkin_NaturalArmorBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Bloodline ~ Leathery Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Ghoul Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Ghoul"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Ghoul_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ghoul_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_GhoulLeatherySkin_ResistanceBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_GhoulLeatherySkin_NaturalArmorBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain cold resistance %1 and a +%2 natural armor bonus to AC.|Sorcerer_GhoulLeatherySkin_ResistanceBonus|Sorcerer_GhoulLeatherySkin_NaturalArmorBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|Sorcerer_GhoulLeatherySkin_NaturalArmorBonus|TYPE=NaturalArmor.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_GhoulLeatherySkin_ResistanceBonus|min(floor((Sorcerer_Ghoul_BloodlinePower3LVL+3)/6),2)*5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_GhoulLeatherySkin_NaturalArmorBonus|floor((Sorcerer_Ghoul_BloodlineProgressionLVL+3)/6)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_GhoulLeatherySkin_NaturalArmorBonus|1|PREVARGTEQ:Sorcerer_Ghoul_BloodlinePower3LVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|Sorcerer_GhoulLeatherySkin_ResistanceBonus|TYPE=Resistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|GhoulBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 142,
+    "record_key": "Ghoul Bloodline ~ Leathery Skin"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

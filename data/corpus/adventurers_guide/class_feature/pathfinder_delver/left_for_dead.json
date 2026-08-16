@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pathfinder Delver ~ Left for Dead",
+    "name": "Left for Dead",
+    "class": "Pathfinder Delver",
+    "description": "1/day, you can cheat death. If you would be killed by a melee attack, ranged attack, or an effect that requires a saving throw, you are instead reduced to -1 hit points and knocked unconscious, but are stable. You appear dead (though a character who succeeds at a DC 25 Heal check or who uses an ability such as deathwatch can tell he is not), but become conscious 1 minute later unless awakened sooner.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Delver ~ Left for Dead"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder Delver Class Features.ClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, you can cheat death. If you would be killed by a melee attack, ranged attack, or an effect that requires a saving throw, you are instead reduced to -1 hit points and knocked unconscious, but are stable. You appear dead (though a character who succeeds at a DC 25 Heal check or who uses an ability such as deathwatch can tell he is not), but become conscious 1 minute later unless awakened sooner."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 385,
+    "record_key": "Pathfinder Delver ~ Left for Dead"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

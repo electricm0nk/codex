@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nobility Blessing ~ Lead by Example",
+    "name": "Lead by Example",
+    "class": "Nobility Blessing",
+    "description": "As a swift action you can inspire your allies to follow your lead. If the following action on your turn is an attack or skill check, all allies within 30 feet who take the same action against the same foe or obstacle on their next turn gain a +4 morale bonus on that roll.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nobility Blessing ~ Lead by Example"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action you can inspire your allies to follow your lead. If the following action on your turn is an attack or skill check, all allies within 30 feet who take the same action against the same foe or obstacle on their next turn gain a +4 morale bonus on that roll."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2268,
+    "record_key": "Nobility Blessing ~ Lead by Example"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

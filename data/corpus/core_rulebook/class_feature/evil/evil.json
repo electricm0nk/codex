@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Evil Domain",
+    "name": "Evil",
+    "class": null,
+    "description": "You are sinister and cruel, and have wholly pledged your soul to the cause of evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evil Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEvilLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEvilDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEvilTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEvilAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are sinister and cruel, and have wholly pledged your soul to the cause of evil."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Touch of Evil|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Evil)|PREVARGTEQ:DomainEvilAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Scythe of Evil|PREVARGTEQ:DomainEvilAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEvilLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEvilDC|10+(DomainEvilLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEvilTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEvilAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Evil=1|Protection from Good|Evil=2|Align Weapon (Evil Only)|Evil=3|Magic Circle against Good|Evil=4|Unholy Blight|Evil=5|Dispel Good|Evil=6|Create Undead|Evil=7|Blasphemy|Evil=8|Unholy Aura|Evil=9|Summon Monster IX (Evil Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 661,
+    "record_key": "Evil Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Reincarnated Oracle ~ Spirit Memories",
+    "name": "Spirit Memories",
+    "class": "Reincarnated Oracle",
+    "description": "Once per day, you call upon the unfulfilled desires and goals of your past lives and project their frustration and despair through your eyes at a target. This is a gaze attack affecting one creature. The target must make a Will save (DC %1) or be sickened and staggered for 1 round. This is a mind-affecting compulsion effect. You can use this ability %2 times per day. You must take this revelation at 1st, 3rd, or 7th level.|10+OracleLVL/2+CHA|3+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reincarnated Oracle ~ Spirit Memories"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural.ReincarnatedOracleRevelation"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PRECLASS:1,Oracle=3],[PREABILITY:1,CATEGORY=Special Ability,Reincarnated Oracle ~ Location Memories]"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you call upon the unfulfilled desires and goals of your past lives and project their frustration and despair through your eyes at a target. This is a gaze attack affecting one creature. The target must make a Will save (DC %1) or be sickened and staggered for 1 round. This is a mind-affecting compulsion effect. You can use this ability %2 times per day. You must take this revelation at 1st, 3rd, or 7th level.|10+OracleLVL/2+CHA|3+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMysteryLevel|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 944,
+    "record_key": "Reincarnated Oracle ~ Spirit Memories"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

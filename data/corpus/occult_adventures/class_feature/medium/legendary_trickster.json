@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Legendary Trickster",
+    "name": "Legendary Trickster",
+    "class": "Medium",
+    "description": "(Supreme) Once per day, instead of rolling for a skill check, you can choose your d20 result. Additionally, you gain the ability to change form at will as if using greater polymorph, except that you can mimic the form of a specific individual.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Legendary Trickster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Trickster|TIMES=ATWILL|CASTERLEVEL=MediumLVL|Polymorph (Greater)"
+      },
+      {
+        "key": "DESC",
+        "value": "(Supreme) Once per day, instead of rolling for a skill check, you can choose your d20 result. Additionally, you gain the ability to change form at will as if using greater polymorph, except that you can mimic the form of a specific individual."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 877,
+    "record_key": "Medium ~ Legendary Trickster"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

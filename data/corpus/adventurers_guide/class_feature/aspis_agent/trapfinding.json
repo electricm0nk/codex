@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Aspis Agent ~ Trapfinding",
+    "name": "Trapfinding",
+    "class": "Aspis Agent",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aspis Agent ~ Trapfinding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Aspis Agent Class Feature.SpecialQuality.Extraordinary.Trapfinding"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapfindingLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapfindingBonus|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "DESC",
+        "value": "You add +%1 to Perception skill checks made to locate traps and to Disable Device skill checks. You can use the Disable Device skill to disarm magical traps. Levels in Aspis agent stack with levels from any other class that grants this ability for the purposes of determining an Aspis agent's total trapfinding bonus.|TrapfindingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=Trapfinding|TrapfindingBonus|TYPE=Trapfinding"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disable Device|TrapfindingBonus|TYPE=Trapfinding"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapfindingBonus|max(TrapfindingLVL/2,1)|TYPE=Trapfinding"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapfindingLVL|AspisAgentLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 68,
+    "record_key": "Aspis Agent ~ Trapfinding"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

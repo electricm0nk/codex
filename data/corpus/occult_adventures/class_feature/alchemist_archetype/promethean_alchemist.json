@@ -1,0 +1,111 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Promethean Alchemist",
+    "name": "Promethean Alchemist",
+    "class": "Alchemist Archetype",
+    "description": "Obsessed with discovering the origins of life, promethean alchemists build constructs they gradually endow with life.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Promethean Alchemist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Psychic Archetype ~ Mutation Mind],[!PREFACT:1,ABILITIES,Alchemist_Archetype_BrewPotion=true,Alchemist_Archetype_ThrowAnything=true,Alchemist_Archetype_Bomb=true,Alchemist_Archetype_Mutagen=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Obsessed with discovering the origins of life, promethean alchemists build constructs they gradually endow with life."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Promethean Alchemist ~ Craft Construct|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Promethean Alchemist ~ Homunculus Companion|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_BrewPotion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_ThrowAnything|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Bomb|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_BrewPotion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_ThrowAnything|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Bomb|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_BrewPotion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_ThrowAnything|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Bomb|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Mutagen|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1660,
+    "record_key": "Alchemist Archetype ~ Promethean Alchemist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

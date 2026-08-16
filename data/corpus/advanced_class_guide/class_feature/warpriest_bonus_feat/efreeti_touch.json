@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Efreeti Touch",
+    "name": "Efreeti Touch",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your knowledge of the secrets of the burning wind and blazing sun allows you to collect flames into your hands and unleash them in a gout of elemental fire.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Efreeti Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "4,CATEGORY=FEAT,Efreeti Style,Efreeti Stance,Elemental Fist,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:1,[PRETOTALAB:13],[PREVARGTEQ:WarpriestBonusFeatBAB,13]],[PREVARGTEQ:MonkFeatQualify,11]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "2,CON=15,WIS=17"
+      },
+      {
+        "key": "DESC",
+        "value": "Your knowledge of the secrets of the burning wind and blazing sun allows you to collect flames into your hands and unleash them in a gout of elemental fire."
+      },
+      {
+        "key": "DESC",
+        "value": " While using Efreeti Style, as a standard action, you can spend two Elemental Fist (Advanced Player's Guide 158) attempts to unleash a 15-foot cone-shaped burst of flame. Creatures caught in the cone take your unarmed strike damage plus the fire damage from your Elemental Fist and catch on fire. A successful Reflex save (DC 10 + 1/2 your character level + your Wis modifier) reduces the damage by half and prevents a target from catching on fire."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Efreeti Touch"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4441,
+    "record_key": "Warpriest Bonus Feat ~ Efreeti Touch"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

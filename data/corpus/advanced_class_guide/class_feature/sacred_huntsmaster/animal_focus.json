@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sacred Huntsmaster ~ Animal Focus",
+    "name": "Animal Focus",
+    "class": "Sacred Huntsmaster",
+    "description": "A sacred huntsmaster can take on the aspects of an animal as a swift action, gaining a bonus or special ability based on the type of animal emulated. The ability is usable %1 minutes per day. The animal companion gets a constant benefit. This ability works as the hunter's animal focus class feature, with her inquisitor level serving as her hunter level.|HunterAnimalFocusMinutes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Huntsmaster ~ Animal Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.ArchetypeAbility.SpecialQuality.Supernatural.InquisitorJudgements.Animal Focus"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterAnimalFocusMinutes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterAnimalFocusLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterAnimalFocusACPool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterACDead|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A sacred huntsmaster can take on the aspects of an animal as a swift action, gaining a bonus or special ability based on the type of animal emulated. The ability is usable %1 minutes per day. The animal companion gets a constant benefit. This ability works as the hunter's animal focus class feature, with her inquisitor level serving as her hunter level.|HunterAnimalFocusMinutes"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Animal Focus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Animal Companion Status|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Animal Focus|HunterACDead"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusMinutes|InquisitorLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusLVL|InquisitorLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusACPool|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3291,
+    "record_key": "Sacred Huntsmaster ~ Animal Focus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

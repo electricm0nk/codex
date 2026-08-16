@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Stonelord ~ Stonestrike",
+    "name": "Stonestrike",
+    "class": "Stonelord",
+    "description": "Once per day per paladin level, a stonelord can draw upon the power of the living rock. As a swift action, she treats her melee attacks until the beginning of her next turn (whether armed or unarmed) as magical and adamantine, including ignoring hardness up to %1, with a +%2 bonus on attack and damage rolls, as well as on combat maneuver checks. This bonus also applies to her CMD if she or her target is touching the ground or a stone structure|PaladinLVL*2|1+PaladinLVL/5",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stonelord ~ Stonestrike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day per paladin level, a stonelord can draw upon the power of the living rock. As a swift action, she treats her melee attacks until the beginning of her next turn (whether armed or unarmed) as magical and adamantine, including ignoring hardness up to %1, with a +%2 bonus on attack and damage rolls, as well as on combat maneuver checks. This bonus also applies to her CMD if she or her target is touching the ground or a stone structure|PaladinLVL*2|1+PaladinLVL/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 90,
+    "record_key": "Stonelord ~ Stonestrike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

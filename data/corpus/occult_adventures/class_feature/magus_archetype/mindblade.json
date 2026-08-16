@@ -1,0 +1,151 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus Archetype ~ Mindblade",
+    "name": "Mindblade",
+    "class": "Magus Archetype",
+    "description": "A mindblade blends psychic talent and martial skill to lethal effect. By forming weapons with her mind, she always has the right tool for any situation.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Mindblade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Mindblade],[!PREFACT:1,ABILITIES,Magus_Archetype_ImprovedSpellCombat=true,Magus_Archetype_ArmorProficiency=true,Magus_Archetype_SpellRecall=true,Magus_Archetype_KnowledgePool=true,Magus_Archetype_ImprovedSpellRecall=true,Magus_Archetype_GreaterSpellCombat=true,Magus_Archetype_GreaterSpellAccess=true,Magus_Archetype_ArcanePool=true,Magus_Archetype_Spells=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "A mindblade blends psychic talent and martial skill to lethal effect. By forming weapons with her mind, she always has the right tool for any situation."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Mindblade ~ Spells|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Mindblade ~ Psychic Pool|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Mindblade ~ Psychic Access|PRECLASS:1,Magus=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Mindblade ~ Dual Weapons|PRECLASS:1,Magus=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Mindblade ~ Rapid Manifest|PRECLASS:1,Magus=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Mindblade ~ Dual Manifest|PRECLASS:1,Magus=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ArmorProfLight"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ImprovedSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_KnowledgePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ImprovedSpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_GreaterSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_GreaterSpellAccess|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ArcanePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ImprovedSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_KnowledgePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ImprovedSpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_GreaterSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_GreaterSpellAccess|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ArcanePool|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1783,
+    "record_key": "Magus Archetype ~ Mindblade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

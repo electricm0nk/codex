@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Discipline ~ Pain",
+    "name": "Pain",
+    "class": "Psychic Discipline",
+    "description": "Mental blocks prevent your immense inborn psychic energies from flowing freely. They are unleashed only when you suffer pain. Phrenic Pool Ability: Charisma. Discipline Powers: Your powers allow you to cause and endure pain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline ~ Pain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Discipline.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Mental blocks prevent your immense inborn psychic energies from flowing freely. They are unleashed only when you suffer pain. Phrenic Pool Ability: Charisma. Discipline Powers: Your powers allow you to cause and endure pain."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Pain ~ Bonus Spells|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Pain ~ Painful Reminder|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Pain ~ Power from Pain|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Pain ~ Live On|PRECLASS:1,Psychic=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Pain ~ Agonizing Wound|PRECLASS:1,Psychic=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhrenicPoolAbility|CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1192,
+    "record_key": "Psychic Discipline ~ Pain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

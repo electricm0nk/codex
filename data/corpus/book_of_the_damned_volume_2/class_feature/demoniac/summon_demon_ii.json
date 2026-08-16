@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Demoniac ~ Summon Demon II",
+    "name": "Summon Demon II",
+    "class": "Demoniac",
+    "description": "1/day you can use Summon Monster VIII to conjure one hezrou, 1d3 vrocks, or 1d4+1 succubi to serve you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Demoniac ~ Summon Demon II"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demoniac|TIMES=1|CASTERLEVEL=TL-1|Summon Monster VIII (Demoniac)"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day you can use Summon Monster VIII to conjure one hezrou, 1d3 vrocks, or 1d4+1 succubi to serve you."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 15,
+    "record_key": "Demoniac ~ Summon Demon II"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

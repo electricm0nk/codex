@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Primalist ~ Enhance Primal Magic Event",
+    "name": "Enhance Primal Magic Event",
+    "class": "Primalist",
+    "description": "When a primalist triggers a primal magic event, as a swift action she can increase or decrease its CR by 1. If she makes a concentration check (DC 15 + the primal magic event's CR), she can instead increase or decrease the CR by 2. If she reduces a primal magic event's CR to less than 1, the event is negated. She can choose to use this ability after she determines what primal magic event she triggers, but before she resolves the effects of that event.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Primalist ~ Enhance Primal Magic Event"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural.WizardBonusFeat5"
+      },
+      {
+        "key": "DESC",
+        "value": "When a primalist triggers a primal magic event, as a swift action she can increase or decrease its CR by 1. If she makes a concentration check (DC 15 + the primal magic event's CR), she can instead increase or decrease the CR by 2. If she reduces a primal magic event's CR to less than 1, the event is negated. She can choose to use this ability after she determines what primal magic event she triggers, but before she resolves the effects of that event."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 424,
+    "record_key": "Primalist ~ Enhance Primal Magic Event"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

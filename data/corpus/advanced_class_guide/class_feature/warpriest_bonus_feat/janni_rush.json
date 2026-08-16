@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Janni Rush",
+    "name": "Janni Rush",
+    "class": "Warpriest Bonus Feat",
+    "description": "When you leap to the attack, your blows are like bolts from on high.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Janni Rush"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Improved Unarmed Strike,Janni Style,Janni Tempest"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "2,Acrobatics=8,Perform (dance)=8"
+      },
+      {
+        "key": "DESC",
+        "value": "When you leap to the attack, your blows are like bolts from on high."
+      },
+      {
+        "key": "DESC",
+        "value": " While using Janni Style, you are always considered to have a running start when jumping. Further, if you jump as part of a charge and make an unarmed strike against the designated opponent, a hit allows you to roll the unarmed strike's damage dice twice and add the results together before adding modifiers (such as from Strength) or extra dice (such as precision-based damage or dice from weapon abilities). The extra damage dice are not multiplied on a successful critical hit."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Janni Rush"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4473,
+    "record_key": "Warpriest Bonus Feat ~ Janni Rush"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

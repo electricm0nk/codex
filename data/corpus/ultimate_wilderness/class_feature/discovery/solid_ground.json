@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Solid Ground",
+    "name": "Solid Ground*",
+    "class": "Discovery",
+    "description": "The alchemist launches an explosive paste bomb that bonds with any earthen surface. Each application of this paste deals no damage and affects a 5-foot-cube of dirt, loose soil, or stone, transmuting the earth for %1 minutes. Creatures cannot use burrow, earthmeld, or similar abilities (such as the meld into stone spell) while the ground remains transmuted in this way.|AlchemistDiscoveryLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Solid Ground"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.Supernatural.AlchemistBombModifier"
+      },
+      {
+        "key": "DESC",
+        "value": "The alchemist launches an explosive paste bomb that bonds with any earthen surface. Each application of this paste deals no damage and affects a 5-foot-cube of dirt, loose soil, or stone, transmuting the earth for %1 minutes. Creatures cannot use burrow, earthmeld, or similar abilities (such as the meld into stone spell) while the ground remains transmuted in this way.|AlchemistDiscoveryLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 112,
+    "record_key": "Discovery ~ Solid Ground"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

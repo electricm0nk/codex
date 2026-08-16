@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bolt Ace ~ Pistol-Whip",
+    "name": "Pistol-Whip",
+    "class": "Bolt Ace",
+    "description": "The bolt ace can make a surprise melee attack with the butt or handle of her crossbow as a standard action. When she does, she is considered to be proficient with the crossbow as a melee weapon and gains a bonus on the attack and damage rolls equal to the enhancement bonus of the crossbow. The damage dealt by the pistol-whip is of the bludgeoning type, and is determined by the size of the crossbow. One-handed crossbow deal 1d6 points of damage (1d4 if wielded by Small creatures) and two-handed crossbow deal 1d10 points of damage (1d8 if wielded by Small creatures). Regardless of the bolt ace's size, the critical multiplier of this attack is 20/x2. If the attack hits, the bolt ace can make a combat maneuver check to knock the target prone as a free action. Performing this deed costs 1 grit point.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bolt Ace ~ Pistol-Whip"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bolt Ace Class Feature.Gunslinger Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The bolt ace can make a surprise melee attack with the butt or handle of her crossbow as a standard action. When she does, she is considered to be proficient with the crossbow as a melee weapon and gains a bonus on the attack and damage rolls equal to the enhancement bonus of the crossbow. The damage dealt by the pistol-whip is of the bludgeoning type, and is determined by the size of the crossbow. One-handed crossbow deal 1d6 points of damage (1d4 if wielded by Small creatures) and two-handed crossbow deal 1d10 points of damage (1d8 if wielded by Small creatures). Regardless of the bolt ace's size, the critical multiplier of this attack is 20/x2. If the attack hits, the bolt ace can make a combat maneuver check to knock the target prone as a free action. Performing this deed costs 1 grit point."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3114,
+    "record_key": "Bolt Ace ~ Pistol-Whip"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

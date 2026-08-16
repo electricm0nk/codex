@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Social Talent ~ Discreet Inquiries",
+    "name": "Discreet Inquiries",
+    "class": "Social Talent",
+    "description": "The vigilante can attempt Diplomacy checks to gather information without being obvious he is seeking any, whether by buying the silence of informants or by talking foes into revealing information without realizing they are doing so. While the vigilante is in his area of renown, gathering information in this way takes 2d4 hours and costs 2d4 gp. Anyone who might take notice of the information gathering does not notice unless she succeeds at a Sense Motive check opposed by the vigilante's Bluff check. The vigilante gains a +4 bonus on this Bluff check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ Discreet Inquiries"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Social Talent ~ Discreet Inquiries"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante can attempt Diplomacy checks to gather information without being obvious he is seeking any, whether by buying the silence of informants or by talking foes into revealing information without realizing they are doing so. While the vigilante is in his area of renown, gathering information in this way takes 2d4 hours and costs 2d4 gp. Anyone who might take notice of the information gathering does not notice unless she succeeds at a Sense Motive check opposed by the vigilante's Bluff check. The vigilante gains a +4 bonus on this Bluff check."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 314,
+    "record_key": "Social Talent ~ Discreet Inquiries"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

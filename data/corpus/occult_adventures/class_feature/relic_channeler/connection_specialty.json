@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Relic Channeler ~ Connection Specialty",
+    "name": "Connection Specialty",
+    "class": "Relic Channeler",
+    "description": "A relic channeler gains connection channel and can use that ability as a normal medium, despite not possessing location channel. She requires familiarity to use this ability, even if she is in an appropriate location. This ability alters connection channel.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Relic Channeler ~ Connection Specialty"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A relic channeler gains connection channel and can use that ability as a normal medium, despite not possessing location channel. She requires familiarity to use this ability, even if she is in an appropriate location. This ability alters connection channel."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1425,
+    "record_key": "Relic Channeler ~ Connection Specialty"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

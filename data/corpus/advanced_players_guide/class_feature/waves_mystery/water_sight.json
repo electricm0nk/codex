@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Waves Mystery ~ Water Sight",
+    "name": "Water Sight",
+    "class": "Waves Mystery",
+    "description": "You can see through fog and mist without penalty as long as there is enough light to allow you to see normal. At 7th level, you can use any calm pool of water at least 1 foot in diameter as a scrying device, as if using the scry spell. At 15th level, this functions like greater scrying. You can use the scrying abilities for %1 rounds per day, but these rounds do not need to be consecutive.|OracleWaterSightDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Waves Mystery ~ Water Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.WavesRevelation.Supernatural.Sense.RoundsPerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleWaterSightDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can see through fog and mist without penalty as long as there is enough light to allow you to see normal. At 7th level, you can use any calm pool of water at least 1 foot in diameter as a scrying device, as if using the scry spell. At 15th level, this functions like greater scrying. You can use the scrying abilities for %1 rounds per day, but these rounds do not need to be consecutive.|OracleWaterSightDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleWaterSightDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 692,
+    "record_key": "Waves Mystery ~ Water Sight"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

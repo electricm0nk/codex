@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Trophy Hunter ~ Firearm Style",
+    "name": "Firearm Style",
+    "class": "Trophy Hunter",
+    "description": "At 2nd level, a trophy hunter gains the Amateur Gunslinger feat and Exotic Weapon Proficiency (Firearms), and can use any 1st-level gunslinger deed (page 10). At every four levels thereafter, the trophy hunter can take a grit feat or select a gunslinger deed of his level or lower, ranger's choice. This ability replaces all combat style feats. [Not fully Implemented]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trophy Hunter ~ Firearm Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a trophy hunter gains the Amateur Gunslinger feat and Exotic Weapon Proficiency (Firearms), and can use any 1st-level gunslinger deed (page 10). At every four levels thereafter, the trophy hunter can take a grit feat or select a gunslinger deed of his level or lower, ranger's choice. This ability replaces all combat style feats. [Not fully Implemented]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Amateur Gunslinger|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1563,
+    "record_key": "Trophy Hunter ~ Firearm Style"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Winter Witch ~ Cantrips",
+    "name": "Cantrips",
+    "class": "Winter Witch",
+    "description": "A winter witch adds ray of frost to her spell list, but does not automatically learn this cantrip.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Winter Witch ~ Cantrips"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Witch Class Feature.Winter Witch Class Feature"
+      },
+      {
+        "key": "DESC",
+        "value": "A winter witch adds ray of frost to her spell list, but does not automatically learn this cantrip."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 391,
+    "record_key": "Winter Witch ~ Cantrips"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

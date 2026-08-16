@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "River Soul ~ River Form",
+    "name": "River Form",
+    "class": "River Soul",
+    "description": "You can become one with a river. Once a day as a standard action, while immersed in a river, you can completely merge with it. Your body and all your gear meld into the water, as per meld into stone, except abilities that control or shape water expel you and deal you 5d6 damage rather than abilities that control or shape stone. You travel along with the river at the rate it is currently moving. You can remain in this form %1 hours. Transforming back to your normal form is a swift action.|max(1,3+CHA)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "River Soul ~ River Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Oracle Class Features.RiverSoulClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can become one with a river. Once a day as a standard action, while immersed in a river, you can completely merge with it. Your body and all your gear meld into the water, as per meld into stone, except abilities that control or shape water expel you and deal you 5d6 damage rather than abilities that control or shape stone. You travel along with the river at the rate it is currently moving. You can remain in this form %1 hours. Transforming back to your normal form is a swift action.|max(1,3+CHA)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 847,
+    "record_key": "River Soul ~ River Form"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

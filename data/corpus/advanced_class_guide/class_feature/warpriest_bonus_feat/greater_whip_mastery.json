@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Greater Whip Mastery",
+    "name": "Greater Whip Mastery",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can use a whip to make combat maneuvers with ease.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Greater Whip Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Improved Whip Mastery,Weapon Focus (whip),Whip Mastery"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:8],[PREVARGTEQ:WarpriestBonusFeatBAB,8]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use a whip to make combat maneuvers with ease."
+      },
+      {
+        "key": "DESC",
+        "value": " You are so quick with your whip that you never drop it due to a failed disarm or trip combat maneuver attempt. Further, you gain the ability to grapple using your whip. To do so, use the normal grapple rules with the following changes. &nl;Attack - You cannot use your whip to attack while you are using it to grapple an opponent. &nl;Damage - When dealing damage to your grappled opponent, you deal your whip's weapon damage rather than your unarmed strike damage. &nl;Free Hands - You take no penalty on your combat maneuver check for having fewer than two hands free when you use your whip to grapple. &nl;Reach - Rather than pulling your grappled opponent adjacent to you when you successfully grapple and when you move the grapple, you must keep him within your whip's reach minus his own reach to maintain the grapple. If the difference in reach is less than 0, such as is the case for a Medium whip wielder and a Gargantuan creature, you cannot grapple that opponent with your whip. If you have to pull a creature adjacent to you to grapple it with your whip, you still provoke an attack of opportunity from that opponent unless you have the Improved Grapple feat. &nl;Tie Up - While adjacent to your opponent, you can attempt to use your whip to tie him up. If you do so to an opponent you have grappled rather than pinned, you take only a -5 penalty on the combat maneuver check rather than the normal -10."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Whip Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4538,
+    "record_key": "Warpriest Bonus Feat ~ Greater Whip Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bolt Ace ~ Crossbow Training",
+    "name": "Crossbow Training",
+    "class": "Bolt Ace",
+    "description": "A bolt ace can select one specific type of crossbow, such as hand crossbow or heavy crossbow. She gains a bonus on damage rolls equal to her Dexterity modifier with that crossbow. Furthermore, when she scores a critical hit with that type of crossbow, her critical modifier increases by 1 (a  2 becomes a  3, for example). Every 4 levels thereafter, she can pick a different type of crossbow, gaining the bonus damage and increased critical multiplier with that type of crossbow as well.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bolt Ace ~ Crossbow Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bolt Ace Class Feature.Gunslinger Class Feature.SpecialQuality.Extraordinary.GunTraining"
+      },
+      {
+        "key": "DESC",
+        "value": "A bolt ace can select one specific type of crossbow, such as hand crossbow or heavy crossbow. She gains a bonus on damage rolls equal to her Dexterity modifier with that crossbow. Furthermore, when she scores a critical hit with that type of crossbow, her critical modifier increases by 1 (a  2 becomes a  3, for example). Every 4 levels thereafter, she can pick a different type of crossbow, gaining the bonus damage and increased critical multiplier with that type of crossbow as well."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Crossbow Training Selection|GunslingerLVL/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3108,
+    "record_key": "Bolt Ace ~ Crossbow Training"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rime-Blooded Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Rime-Blooded Bloodline",
+    "description": "Whenever you cast a spell with the cold descriptor, you may select one target of the spell to be slowed (as the spell) for 1 round. A Fortitude save (DC 10 + the level of cold spell + your Charisma modifier) negates the effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rime-Blooded Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a spell with the cold descriptor, you may select one target of the spell to be slowed (as the spell) for 1 round. A Fortitude save (DC 10 + the level of cold spell + your Charisma modifier) negates the effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(cold spells slow one target)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1742,
+    "record_key": "Rime-Blooded Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

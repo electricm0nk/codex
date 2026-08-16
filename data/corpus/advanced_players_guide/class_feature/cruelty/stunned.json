@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cruelty ~ Stunned",
+    "name": "Stunned",
+    "class": "Cruelty",
+    "description": "Whenever you use Touch of Corruption to deal damage to one target, the target is also stunned for %1 rounds.|CrueltyLVL/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cruelty ~ Stunned"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AntipaladinClassFeatures.SpecialAttack.Supernatural.Cruelty.LayOnHands"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AntipaladinLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you use Touch of Corruption to deal damage to one target, the target is also stunned for %1 rounds.|CrueltyLVL/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1031,
+    "record_key": "Cruelty ~ Stunned"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcane Bloodline ~ New Arcana",
+    "name": "New Arcana",
+    "class": "Arcane Bloodline",
+    "description": "You can add any %1 spells from the sorcerer/wizard spell list to your list of spells known. This spell must be of a level that you are capable of casting.|Sorcerer_NewArcana_Number",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Bloodline ~ New Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Arcane Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Arcane"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Arcane_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_NewArcana_Number|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can add any %1 spells from the sorcerer/wizard spell list to your list of spells known. This spell must be of a level that you are capable of casting.|Sorcerer_NewArcana_Number"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|New Arcana|Sorcerer_NewArcana_Number"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_NewArcana_Number|floor((Sorcerer_Arcane_BloodlinePower9LVL-5)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ArcaneBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2381,
+    "record_key": "Arcane Bloodline ~ New Arcana"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

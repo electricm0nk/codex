@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Telekinetic Blast",
+    "name": "Telekinetic Blast",
+    "class": "Wild Talent",
+    "description": "Element aether; Type simple blast (Sp); Level -; Burn 0 Blast Type physical; Damage bludgeoning, piercing, or slashing You throw a nearby unattended object at a single foe as a ranged attack. The object must weigh no more than 5 pounds per kineticist level you possess. If the attack hits, the target and the thrown object each take the blast's damage. Since the object is enfolded in strands of aether, even if you use this power on a magic weapon or other unusual object, the attack doesn't use any of the magic weapon's bonuses or effects; it simply deals your blast damage. Alternatively, you can loosen the strands of aether in order to deal damage to both the object and the target as though you had thrown the object yourself (instead of dealing your normal blast damage). You substitute your Constitution modifier for your Strength modifier if throwing the object would have added your Strength modifier on the damage roll, and you don't take the -4 penalty on the attack roll for throwing an object that wasn't designed to be thrown. In this case, the object's special effects apply (including effects from its materials), and if the object is a weapon, you must be proficient with it and able to wield it with one hand; otherwise, the item deals damage as a one-handed improvised weapon for a creature of your size.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Telekinetic Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Simple Blast.PhysicalBlast"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ElementTracker_Aether,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Element aether; Type simple blast (Sp); Level -; Burn 0 Blast Type physical; Damage bludgeoning, piercing, or slashing You throw a nearby unattended object at a single foe as a ranged attack. The object must weigh no more than 5 pounds per kineticist level you possess. If the attack hits, the target and the thrown object each take the blast's damage. Since the object is enfolded in strands of aether, even if you use this power on a magic weapon or other unusual object, the attack doesn't use any of the magic weapon's bonuses or effects; it simply deals your blast damage. Alternatively, you can loosen the strands of aether in order to deal damage to both the object and the target as though you had thrown the object yourself (instead of dealing your normal blast damage). You substitute your Constitution modifier for your Strength modifier if throwing the object would have added your Strength modifier on the damage roll, and you don't take the -4 penalty on the attack roll for throwing an object that wasn't designed to be thrown. In this case, the object's special effects apply (including effects from its materials), and if the object is a weapon, you must be proficient with it and able to wield it with one hand; otherwise, the item deals damage as a one-handed improvised weapon for a creature of your size."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 630,
+    "record_key": "Wild Talent ~ Telekinetic Blast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

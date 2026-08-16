@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Boreal Bloodline ~ Blizzard",
+    "name": "Blizzard",
+    "class": "Boreal Bloodline",
+    "description": "You can create a savage winter storm centered on you. This power acts as control winds, but in addition the entire area (not including the \"eye\" at the center of the storm) is affected as a sleet storm and all in the area are exposed to extreme cold. You may use this ability once per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Boreal Bloodline ~ Blizzard"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Boreal Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Boreal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Boreal_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BorealBlizzard_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a savage winter storm centered on you. This power acts as control winds, but in addition the entire area (not including the \"eye\" at the center of the storm) is affected as a sleet storm and all in the area are exposed to extreme cold. You may use this ability once per day."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BorealBlizzard_Times|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|Sorcerer_BorealBlizzard_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_BorealBlizzard_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|BorealBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3121,
+    "record_key": "Boreal Bloodline ~ Blizzard"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

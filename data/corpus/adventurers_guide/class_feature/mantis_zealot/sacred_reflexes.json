@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mantis Zealot ~ Sacred Reflexes",
+    "name": "Sacred Reflexes",
+    "class": "Mantis Zealot",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mantis Zealot ~ Sacred Reflexes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Features.MantisZealotClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "DESC",
+        "value": "A mantis zealot can emulate Achaekek's grace. As long as he is wearing light or no armor, as a swift action he can gain"
+      },
+      {
+        "key": "DESC",
+        "value": "improved |PRECLASS:1,Warpriest=13"
+      },
+      {
+        "key": "DESC",
+        "value": "uncanny dodge. He can use this ability for %1 minutes per day, but it must be spent in 1-minute increments.|WarpriestLVL"
+      },
+      {
+        "key": "DESC",
+        "value": " If he already has the uncanny dodge ability from another source, he instead gains improved uncanny dodge while this ability is active.|!PRECLASS:1,Warpriest=13"
+      },
+      {
+        "key": "DESC",
+        "value": " When he uses this ability, he gains evasion (or improved evasion if he already has evasion from another source).|PRECLASS:1,Warpriest=10|!PRECLASS:1,Warpriest=19"
+      },
+      {
+        "key": "DESC",
+        "value": " He can activate this ability as part of making an initiative check, before rolling the die.|PRECLASS:1,Warpriest=16"
+      },
+      {
+        "key": "DESC",
+        "value": " He gains improved evasion instead of evasion.|PRECLASS:1,Warpriest=19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1123,
+    "record_key": "Mantis Zealot ~ Sacred Reflexes"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

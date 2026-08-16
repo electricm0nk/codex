@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Sticky Bomb",
+    "name": "Sticky Bomb",
+    "class": "Discovery",
+    "description": "The effects of the alchemist's bombs are persistent and continue to damage creatures for 1 round after the initial damage. Creatures that take a direct hit from a sticky bomb take the splash damage 1 round later. Bombs that have effects that would normally occur 1 round later instead have those effects occur 2 rounds later.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Sticky Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "The effects of the alchemist's bombs are persistent and continue to damage creatures for 1 round after the initial damage. Creatures that take a direct hit from a sticky bomb take the splash damage 1 round later. Bombs that have effects that would normally occur 1 round later instead have those effects occur 2 rounds later."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 148,
+    "record_key": "Discovery ~ Sticky Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

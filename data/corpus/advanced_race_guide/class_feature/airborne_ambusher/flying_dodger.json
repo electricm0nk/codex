@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Airborne Ambusher ~ Flying Dodger",
+    "name": "Flying Dodger",
+    "class": "Airborne Ambusher",
+    "description": "When an airborne ambusher flies at least half its fly speed on its turn, it gains a +%1 dodge bonus to AC for 1 round.|1+if(FighterLVL>=17,3,if(FighterLVL>=11,1,0))",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Airborne Ambusher ~ Flying Dodger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When an airborne ambusher flies at least half its fly speed on its turn, it gains a +%1 dodge bonus to AC for 1 round.|1+if(FighterLVL>=17,3,if(FighterLVL>=11,1,0))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.201"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 954,
+    "record_key": "Airborne Ambusher ~ Flying Dodger"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

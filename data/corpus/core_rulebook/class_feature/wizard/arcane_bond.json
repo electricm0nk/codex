@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wizard ~ Arcane Bond",
+    "name": "Arcane Bond",
+    "class": "Wizard",
+    "description": "At 1st level, wizards form a powerful bond with an object or a creature. This bond can take one of two forms: a familiar or a bonded object. A familiar is a magical pet that enhances the wizard's skills and senses and can aid him in magic, while a bonded object is an item a wizard can use to cast additional spells or to serve as a magical item. Once a wizard makes this choice, it is permanent and cannot be changed.|!PREABILITY:1,CATEGORY=Special Ability,Arcane Bond ~ Familiar,Arcane Bond ~ Bonded Object",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wizard ~ Arcane Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Wizard Class Feature.SpecialQuality.Supernatural or Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcaneBondLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, wizards form a powerful bond with an object or a creature. This bond can take one of two forms: a familiar or a bonded object. A familiar is a magical pet that enhances the wizard's skills and senses and can aid him in magic, while a bonded object is an item a wizard can use to cast additional spells or to serve as a magical item. Once a wizard makes this choice, it is permanent and cannot be changed.|!PREABILITY:1,CATEGORY=Special Ability,Arcane Bond ~ Familiar,Arcane Bond ~ Bonded Object"
+      },
+      {
+        "key": "DESC",
+        "value": "(You have selected to establish a powerful arcane bond with an object.)|PREABILITY:1,CATEGORY=Special Ability,Arcane Bond ~ Bonded Object"
+      },
+      {
+        "key": "DESC",
+        "value": "(You have selected to establish a powerful arcane bond with a creature.)|PREABILITY:1,CATEGORY=Special Ability,Arcane Bond ~ Familiar"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Arcane Bond|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcaneBondLVL|WizardLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2569,
+    "record_key": "Wizard ~ Arcane Bond"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

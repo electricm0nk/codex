@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Hex ~ Bouda's Eye",
+    "name": "Bouda's Eye",
+    "class": "Witch Hex",
+    "description": "A bouda's gaze can bestow ill fortune on her enemies. This hex can affect a creature within 30 feet that the bouda can see. The target takes a -%1 penalty on one of the following (bouda's choice): AC, ability checks, attack rolls, saving throws, or skill checks. The hex lasts for %2 rounds. A successful Will saving throw reduces the duration of the hex to 1 round. Once per day when the bouda uses this hex, she can impose two different penalties on the target instead of just one. If the bouda takes the evil eye hex, it increases the number of different penalties she can impose on the hex's target by 1. This is a mind-affecting effect.|BoudasEyePenalty|3+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Bouda's Eye"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Features.BoudaClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BoudasEyePenalty|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A bouda's gaze can bestow ill fortune on her enemies. This hex can affect a creature within 30 feet that the bouda can see. The target takes a -%1 penalty on one of the following (bouda's choice): AC, ability checks, attack rolls, saving throws, or skill checks. The hex lasts for %2 rounds. A successful Will saving throw reduces the duration of the hex to 1 round. Once per day when the bouda uses this hex, she can impose two different penalties on the target instead of just one. If the bouda takes the evil eye hex, it increases the number of different penalties she can impose on the hex's target by 1. This is a mind-affecting effect.|BoudasEyePenalty|3+INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BoudasEyePenalty|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BoudasEyePenalty|2|PRECLASS:1,Witch=8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 154,
+    "record_key": "Witch Hex ~ Bouda's Eye"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

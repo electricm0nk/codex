@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Earth Blessing ~ Armor of Earth",
+    "name": "Armor of Earth",
+    "class": "Earth Blessing",
+    "description": "You can touch an ally and harden its armor or clothing. For 1 minute, the ally gains DR %1/-. This doesn't stack with any other damage resistance.|if(WarpriestLVL<19,1+((WarpriestLVL/2)-5),5)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Earth Blessing ~ Armor of Earth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch an ally and harden its armor or clothing. For 1 minute, the ally gains DR %1/-. This doesn't stack with any other damage resistance.|if(WarpriestLVL<19,1+((WarpriestLVL/2)-5),5)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2244,
+    "record_key": "Earth Blessing ~ Armor of Earth"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

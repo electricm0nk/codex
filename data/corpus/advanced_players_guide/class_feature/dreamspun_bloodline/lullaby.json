@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dreamspun Bloodline ~ Lullaby",
+    "name": "Lullaby",
+    "class": "Dreamspun Bloodline",
+    "description": "You can use lullaby as a spelllike ability %1 times per day. This effect lasts for 1 minute and does not require concentration. The penalty on saves versus sleep effects increases to -4.|Sorcerer_Dreamspun_BloodlinePower1Times",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dreamspun Bloodline ~ Lullaby"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Dreamspun Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Dreamspun"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Dreamspun_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use lullaby as a spelllike ability %1 times per day. This effect lasts for 1 minute and does not require concentration. The penalty on saves versus sleep effects increases to -4.|Sorcerer_Dreamspun_BloodlinePower1Times"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day|Sorcerer_Dreamspun_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Dreamspun_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DreamspunBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3154,
+    "record_key": "Dreamspun Bloodline ~ Lullaby"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

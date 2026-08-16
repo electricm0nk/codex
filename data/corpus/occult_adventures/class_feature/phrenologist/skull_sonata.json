@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Phrenologist ~ Skull Sonata",
+    "name": "Skull Sonata",
+    "class": "Phrenologist",
+    "description": "At 1st level, a phrenologist learns to use the resonance of other creatures' skulls to increase sonic damage. All enemies within 30 feet of the phrenologist that have skulls take an amount of additional sonic damage equal to half the phrenologist's bard level (minimum 1) each time they take sonic damage. Skull sonata relies on audible components. This ability replaces inspire courage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phrenologist ~ Skull Sonata"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenologist Class Feature.Bard Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a phrenologist learns to use the resonance of other creatures' skulls to increase sonic damage. All enemies within 30 feet of the phrenologist that have skulls take an amount of additional sonic damage equal to half the phrenologist's bard level (minimum 1) each time they take sonic damage. Skull sonata relies on audible components. This ability replaces inspire courage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1684,
+    "record_key": "Phrenologist ~ Skull Sonata"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Shield ~ Resolute",
+    "name": "Resolute",
+    "class": "Order of the Shield",
+    "description": "At 2nd level, whenever the cavalier takes damage from a melee or ranged attack while wearing heavy armor, the cavalier can convert 1 point of lethal damage to 1 point of nonlethal damage. He can use this ability once each time he takes damage. This ability cannot be used to convert ability damage, ability drain, or energy damage to nonlethal damage. At 6th level, and every four levels thereafter, the amount of damage the cavalier can convert increases by 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Shield ~ Resolute"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, whenever the cavalier takes damage from a melee or ranged attack while wearing heavy armor, the cavalier can convert 1 point of lethal damage to 1 point of nonlethal damage. He can use this ability once each time he takes damage. This ability cannot be used to convert ability damage, ability drain, or energy damage to nonlethal damage. At 6th level, and every four levels thereafter, the amount of damage the cavalier can convert increases by 1."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 265,
+    "record_key": "Order of the Shield ~ Resolute"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

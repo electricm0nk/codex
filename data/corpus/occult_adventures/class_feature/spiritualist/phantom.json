@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spiritualist ~ Phantom",
+    "name": "Phantom",
+    "class": "Spiritualist",
+    "description": "A spiritualist begins play with the aid of a powerful and versatile spirit entity called a phantom. The phantom forms a link with the spiritualist, who forever after can either harbor the creature within her consciousness or manifest it as an ectoplasmic or incorporeal entity. A phantom has the same alignment as the spiritualist, and it can speak all the languages its master can. A spiritualist can harbor her phantom in her consciousness (see the shared consciousness class feature on page 73), manifest it partially (see the bonded manifestation class feature on page 74), or fully manifest it. A fully manifested phantom is treated as a summoned creature from the Ethereal Plane, except it is not sent back to the Ethereal Plane until it is reduced to a negative amount of hit points equal to or greater than its Constitution score. A spiritualist can fully manifest her phantom through a ritual that takes 1 minute to perform. When the phantom is fully manifested, the spiritualist can change the form of the phantom's manifestation (either from ectoplasmic to incorporeal or vice versa) as a full-round action that provokes attacks of opportunity. When the phantom manifests, its hit points are unchanged from the last time it manifested, unless the phantom was slain and returned to the Ethereal Plane; in this case, the phantom manifests with half its maximum number of hit points. The phantom does not heal naturally, and can be healed only with magic or by being tended to with the Heal skill while fully manifested in ectoplasmic form. The phantom stays fully manifested until it is either returned to the spiritualist's consciousness (a standard action) or banished to the Ethereal Plane. If the phantom is banished to the Ethereal Plane, it can't return to the spiritualist's consciousness or manifest again for 24 hours. While fully manifested, a phantom can't be returned to the Ethereal Plane by means of dispel magic, but spells such as dismissal and banishment work normally. Whenever the spiritualist is unconscious or asleep, the phantom immediately returns to the spiritualist's consciousness. If the spiritualist dies, the phantom is returned to the Ethereal Plane, and can't return to the spiritualist's consciousness until 24 hours after the spiritualist is brought back to life. A phantom can't be dismissed or banished (by a spell or any other similar effect) while it resides in the spiritualist's consciousness, as the phantom is protected from such effects by the power of the spiritualist's psyche. Fully manifested phantoms can wear armor and use items (though not wield weapons) appropriate to their forms. Any items worn, carried, or held by a phantom are dropped when the phantom returns to the spiritualist's consciousness, and must be retrieved and donned anew if the phantom wishes to use them when it fully manifests in the future. Phantoms are self-involved, even jealous, creatures that do not play well with other summoned companions. A phantom refuses to manifest (either fully or as part of a bonded manifestation; see Bonded Manifestation on page 74) in the presence of an eidolon or shadow summoned by the phantom's master. Furthermore, if a phantom is manifested when such a creature is summoned, it immediately retreats into its spiritualist's consciousness, and will not manifest again until the eidolon or shadow is dismissed. A fully manifested phantom's abilities, feats, Hit Dice, saving throws, and skills are tied to the spiritualist's class level and increase as the spiritualist gains levels. See the Phantoms section starting on page 78 for more information.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Phantom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhantomMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A spiritualist begins play with the aid of a powerful and versatile spirit entity called a phantom. The phantom forms a link with the spiritualist, who forever after can either harbor the creature within her consciousness or manifest it as an ectoplasmic or incorporeal entity. A phantom has the same alignment as the spiritualist, and it can speak all the languages its master can. A spiritualist can harbor her phantom in her consciousness (see the shared consciousness class feature on page 73), manifest it partially (see the bonded manifestation class feature on page 74), or fully manifest it. A fully manifested phantom is treated as a summoned creature from the Ethereal Plane, except it is not sent back to the Ethereal Plane until it is reduced to a negative amount of hit points equal to or greater than its Constitution score. A spiritualist can fully manifest her phantom through a ritual that takes 1 minute to perform. When the phantom is fully manifested, the spiritualist can change the form of the phantom's manifestation (either from ectoplasmic to incorporeal or vice versa) as a full-round action that provokes attacks of opportunity. When the phantom manifests, its hit points are unchanged from the last time it manifested, unless the phantom was slain and returned to the Ethereal Plane; in this case, the phantom manifests with half its maximum number of hit points. The phantom does not heal naturally, and can be healed only with magic or by being tended to with the Heal skill while fully manifested in ectoplasmic form. The phantom stays fully manifested until it is either returned to the spiritualist's consciousness (a standard action) or banished to the Ethereal Plane. If the phantom is banished to the Ethereal Plane, it can't return to the spiritualist's consciousness or manifest again for 24 hours. While fully manifested, a phantom can't be returned to the Ethereal Plane by means of dispel magic, but spells such as dismissal and banishment work normally. Whenever the spiritualist is unconscious or asleep, the phantom immediately returns to the spiritualist's consciousness. If the spiritualist dies, the phantom is returned to the Ethereal Plane, and can't return to the spiritualist's consciousness until 24 hours after the spiritualist is brought back to life. A phantom can't be dismissed or banished (by a spell or any other similar effect) while it resides in the spiritualist's consciousness, as the phantom is protected from such effects by the power of the spiritualist's psyche. Fully manifested phantoms can wear armor and use items (though not wield weapons) appropriate to their forms. Any items worn, carried, or held by a phantom are dropped when the phantom returns to the spiritualist's consciousness, and must be retrieved and donned anew if the phantom wishes to use them when it fully manifests in the future. Phantoms are self-involved, even jealous, creatures that do not play well with other summoned companions. A phantom refuses to manifest (either fully or as part of a bonded manifestation; see Bonded Manifestation on page 74) in the presence of an eidolon or shadow summoned by the phantom's master. Furthermore, if a phantom is manifested when such a creature is summoned, it immediately retreats into its spiritualist's consciousness, and will not manifest again until the eidolon or shadow is dismissed. A fully manifested phantom's abilities, feats, Hit Dice, saving throws, and skills are tied to the spiritualist's class level and increase as the spiritualist gains levels. See the Phantoms section starting on page 78 for more information."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhantomMasterLVL|SpiritualistLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Phantom|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Phantom|Phantom"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1275,
+    "record_key": "Spiritualist ~ Phantom"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

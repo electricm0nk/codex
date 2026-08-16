@@ -1,0 +1,151 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Archetype ~ Lantern Bearer",
+    "name": "Lantern Bearer",
+    "class": "Ranger Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Lantern Bearer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Lantern Bearer],[!PREFACT:1,ABILITIES,Ranger_Archetype_WildEmpathy=True,Ranger_Archetype_Endurance=True,Ranger_Archetype_FavoredTerrain=True,Ranger_Archetype_WoodlandStride=True,Ranger_Archetype_Camouflage=True,Ranger_Archetype_HideInPlainSight=True]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "Lantern bearers are entrusted with secretly eliminating the drow and containing any knowledge of their existence. While the vast majority of lantern bearers are elves from Kyonin, a rare few members of the organization have proven themselves trustworthy and dedicated enough to join their ranks despite their non-elven heritage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Lantern Bearer ~ Daylight|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lantern Bearer ~ Enhanced Vision|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lantern Bearer ~ Poison Resistance|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Lantern Bearer ~ Favored Terrain|PRECLASS:1,Ranger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lantern Bearer ~ Cavern Stride|PRECLASS:1,Ranger=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lantern Bearer ~ Darkvision|PRECLASS:1,Ranger=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Lantern Bearer ~ Poison Immunity|PRECLASS:1,Ranger=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lantern Bearer ~ Stunning Light|PRECLASS:1,Ranger=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ranger ~ Camouflage|PRECLASS:1,Ranger=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lantern Bearer ~ Paralyzing Light|PRECLASS:1,Ranger=18"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Endurance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Camouflage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_HideInPlainSight|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Endurance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Camouflage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_HideInPlainSight|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 226,
+    "record_key": "Ranger Archetype ~ Lantern Bearer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

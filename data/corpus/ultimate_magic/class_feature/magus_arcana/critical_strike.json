@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus Arcana ~ Critical Strike",
+    "name": "Critical Strike",
+    "class": "Magus Arcana",
+    "description": "Whenever you score a critical hit with a melee weapon, you may cast a spell with a range of touch as a swift action, then make a touch with that spell attack against the target of the critical hit as a free action. You can use this ability once per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Critical Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.MagusArcana"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ArcanaQualifyLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you score a critical hit with a melee weapon, you may cast a spell with a range of touch as a swift action, then make a touch with that spell attack against the target of the critical hit as a free action. You can use this ability once per day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 85,
+    "record_key": "Magus Arcana ~ Critical Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

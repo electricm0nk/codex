@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Perfect Scholar ~ Learn from Failure",
+    "name": "Learn from Failure",
+    "class": "Perfect Scholar",
+    "description": "When the perfect scholar misses with an attack roll or fails a Research check (Ultimate Intrigue 148), he gains a +%1 insight bonus on his next attack roll or Research check against the same target attempted in the next 24 hours. An individual target cannot be affected by this ability more than once in a 24-hour period.|(MonkLVL-2)/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Perfect Scholar ~ Learn from Failure"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Features.PerfectScholarClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When the perfect scholar misses with an attack roll or fails a Research check (Ultimate Intrigue 148), he gains a +%1 insight bonus on his next attack roll or Research check against the same target attempted in the next 24 hours. An individual target cannot be affected by this ability more than once in a 24-hour period.|(MonkLVL-2)/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 197,
+    "record_key": "Perfect Scholar ~ Learn from Failure"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

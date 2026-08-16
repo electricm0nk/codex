@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcanist School Counterspell ~ Disruption",
+    "name": "Disruption",
+    "class": "Arcanist School Counterspell",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcanist School Counterspell ~ Disruption"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistSchoolChoice"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Arcanist School ~ Counterspell"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistSchoolBoost_Disruption|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Counterspell School ~ Disruption|!PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistSchoolBoost_Disruption|-1|!PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Disruption (Arcanist Boost Only)|!PRECLASS:1,Wizard=1|PREVARGTEQ:ArcanistSchoolBoost_Disruption,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 280,
+    "record_key": "Arcanist School Counterspell ~ Disruption"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

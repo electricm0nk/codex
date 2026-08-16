@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Golden Legionnaire ~ United Defense",
+    "name": "United Defense",
+    "class": "Golden Legionnaire",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Golden Legionnaire ~ United Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Golden Legionnaire Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnitedDefenseBonus|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "DESC",
+        "value": "A Golden Legionnaire can select one ally as a swift action. While he is adjacent to this ally, the Golden Legionnaire takes a -%1 penalty to his Armor Class and the selected ally receives a +%2 dodge bonus to his Armor Class for 1 round.|UnitedDefenseBonus|UnitedDefenseBonus*2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnitedDefenseBonus|1+(GoldenLegionnaireLVL>=6)+(GoldenLegionnaireLVL>=10)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 145,
+    "record_key": "Golden Legionnaire ~ United Defense"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

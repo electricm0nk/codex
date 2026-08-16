@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Westcrown Devil ~ Classically Trained",
+    "name": "Classically Trained",
+    "class": "Westcrown Devil",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Westcrown Devil ~ Classically Trained"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Westcrown Devil Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "DESC",
+        "value": "The god Aroden's return to Westcrown was long foretold, but when he died instead and prophecy proved unreliable, the citizens of Westcrown had to adapt. Today, Westcrown honors Aroden's legacy with memorial statues, cathedrals, and other remembrances. The Council of Thieves, for its part, trains its members with Aroden's favored weapon, the longsword-a weapon the god used to great effect by eschewing strength for finesse and expertise. A Westcrown devil can use Weapon Finesse with a longsword sized for him when he wields it one-handed, even though it is not a light weapon."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Longsword"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Longsword|((max(STR,DEX)-STR)+SHIELDACCHECK)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 563,
+    "record_key": "Westcrown Devil ~ Classically Trained"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

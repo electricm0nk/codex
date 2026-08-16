@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Deep Bomber ~ Stonekin",
+    "name": "Stonekin",
+    "class": "Deep Bomber",
+    "description": "The deep bomber automatically learns tree shape as a 2nd-level extract, except instead of a tree, he takes the form of a stalagmite that is the same size as his current size. At 7th level, he automatically learns meld into stone as a 3rd-level extract.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep Bomber ~ Stonekin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The deep bomber automatically learns tree shape as a 2nd-level extract, except instead of a tree, he takes the form of a stalagmite that is the same size as his current size. At 7th level, he automatically learns meld into stone as a 3rd-level extract."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.205"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Alchemist=2|Tree Shape"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Alchemist=3|Meld Into Stone|PRECLASS:1,Alchemist=7"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 974,
+    "record_key": "Deep Bomber ~ Stonekin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

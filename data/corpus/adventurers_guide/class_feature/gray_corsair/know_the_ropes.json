@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gray Corsair ~ Know the Ropes",
+    "name": "Know the Ropes",
+    "class": "Gray Corsair",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gray Corsair ~ Know the Ropes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Gray Corsair Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "DESC",
+        "value": "Gray Corsairs spend a lot of time in the rigging of their ships, as this affords them the best view. While climbing ropes or rigging, a Gray Corsair gains a +4 circumstance bonus on Climb checks and needs only one hand free to do so. In addition, in such circumstances he doesn't take a penalty when using the accelerated climbing option, doesn't lose his Dexterity bonus to AC, and doesn't need to attempt a Climb check to avoid falling when he takes damage."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 166,
+    "record_key": "Gray Corsair ~ Know the Ropes"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

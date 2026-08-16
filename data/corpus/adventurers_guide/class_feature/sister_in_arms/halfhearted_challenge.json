@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sister-in-Arms ~ Halfhearted Challenge",
+    "name": "Halfhearted Challenge",
+    "class": "Sister-in-Arms",
+    "description": "Sisters-in-arms vigilantly protect their allies, weakening their focus on their challenged foe. A sister-in-arms adds only half her cavalier level (minimum 1) to damage rolls against her challenge target. This ability alters challenge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sister-in-Arms ~ Halfhearted Challenge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Feature.SisterInArmsClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "DESC",
+        "value": "Sisters-in-arms vigilantly protect their allies, weakening their focus on their challenged foe. A sister-in-arms adds only half her cavalier level (minimum 1) to damage rolls against her challenge target. This ability alters challenge."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CavalierChallengeLVL|max(1,CavalierLVL/2-CavalierLVL)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 757,
+    "record_key": "Sister-in-Arms ~ Halfhearted Challenge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

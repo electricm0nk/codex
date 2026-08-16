@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fated Champion ~ Shield of Foresight",
+    "name": "Shield of Foresight",
+    "class": "Fated Champion",
+    "description": "A fated champion's certainty of his own fate grants him the ability to stare down fear and remain unbowed. When using raging song, he is immune to fear effects, and allies affected by his raging song gain a +5 bonus on saves attempted against fear effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fated Champion ~ Shield of Foresight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fated Champion Class Feature.Skald Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A fated champion's certainty of his own fate grants him the ability to stare down fear and remain unbowed. When using raging song, he is immune to fear effects, and allies affected by his raging song gain a +5 bonus on saves attempted against fear effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3683,
+    "record_key": "Fated Champion ~ Shield of Foresight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

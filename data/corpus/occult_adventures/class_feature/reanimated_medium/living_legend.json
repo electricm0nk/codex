@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Reanimated Medium ~ Living Legend",
+    "name": "Living Legend",
+    "class": "Reanimated Medium",
+    "description": "The reanimated medium reaches the legendary potential from which he borrowed so long ago and becomes a living embodiment of his legend. Any ally in the reanimated medium's presence can perform a seance to channel the reanimated medium (the seance takes 1 hour and is subject to the other rules for a medium's seance). Each ally can do this only once per day. At the end of the seance, the reanimated medium can choose to reduce his influence by 1 point. If the reanimated medium does so, some of his spirit seeps into that ally, which can then spend that 1 point of influence to use any of the reanimated medium's abilities that decrease influence.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reanimated Medium ~ Living Legend"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The reanimated medium reaches the legendary potential from which he borrowed so long ago and becomes a living embodiment of his legend. Any ally in the reanimated medium's presence can perform a seance to channel the reanimated medium (the seance takes 1 hour and is subject to the other rules for a medium's seance). Each ally can do this only once per day. At the end of the seance, the reanimated medium can choose to reduce his influence by 1 point. If the reanimated medium does so, some of his spirit seeps into that ally, which can then spend that 1 point of influence to use any of the reanimated medium's abilities that decrease influence."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1418,
+    "record_key": "Reanimated Medium ~ Living Legend"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

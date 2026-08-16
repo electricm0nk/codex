@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Hex ~ Water Lung",
+    "name": "Water Lung",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_WaterLung",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Water Lung"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMinorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_WaterLung|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_WaterLung"
+      },
+      {
+        "key": "DESC",
+        "value": "An air-breathing target can breathe water or an aquatic target can breathe air. This lasts 1 minute. If you use this hex on herself, you can maintain it while you sleep, allowing you to safely sleep underwater."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Water Lung"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_WaterLung|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_WaterLung|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Water Lung)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 721,
+    "record_key": "Witch Hex ~ Water Lung"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

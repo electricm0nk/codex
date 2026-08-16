@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wildcat ~ Knockout",
+    "name": "Knockout",
+    "class": "Wildcat",
+    "description": "A wildcat can unleash a devastating attack that can instantly knock a target unconscious. He must announce this intent before making his attack roll. If the wildcat's strike is successful and the target takes damage from the blow, the target must succeed at a Fortitude saving throw (DC %1) or fall unconscious for 1d6 rounds. Each round on its turn, the unconscious target can attempt a new saving throw to end the effect; this is a fullround action that does not provoke attacks of opportunity. Creatures immune to critical hits or nonlethal damage are immune to this ability.|10+floor(MonkLVL/2)+max(STR,DEX)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildcat ~ Knockout"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wildcat Class Feature.Monk Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wildcat can unleash a devastating attack that can instantly knock a target unconscious. He must announce this intent before making his attack roll. If the wildcat's strike is successful and the target takes damage from the blow, the target must succeed at a Fortitude saving throw (DC %1) or fall unconscious for 1d6 rounds. Each round on its turn, the unconscious target can attempt a new saving throw to end the effect; this is a fullround action that does not provoke attacks of opportunity. Creatures immune to critical hits or nonlethal damage are immune to this ability.|10+floor(MonkLVL/2)+max(STR,DEX)"
+      },
+      {
+        "key": "DESC",
+        "value": " A wildcat can use this ability once per day.|PREVARLT:MonkLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": " A wildcat can use this ability twice per day.|PREVARGTEQ:MonkLVL,12"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3450,
+    "record_key": "Wildcat ~ Knockout"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

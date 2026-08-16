@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Knight Of The Sepulcher ~ Touch Of The Crypt",
+    "name": "Touch of the Crypt",
+    "class": "Knight Of The Sepulcher",
+    "description": "At 5th level, a knight of the sepulcher gains a +2 bonus on saving throws against mind-affecting effects, death effects, and poison. He is harmed by positive energy effects and healed by negative energy effects as though he were undead, although negative energy effects that don't heal undead (such as enervation) affect him normally. The knight of the sepulcher has a 25%% chance of ignoring critical hits and the bonus damage from sneak attacks as though he were wearing armor of light fortification. This ability replaces the fiendish boon ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Knight Of The Sepulcher ~ Touch Of The Crypt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AntipaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KnightSepulcherSaveBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a knight of the sepulcher gains a +2 bonus on saving throws against mind-affecting effects, death effects, and poison. He is harmed by positive energy effects and healed by negative energy effects as though he were undead, although negative energy effects that don't heal undead (such as enervation) affect him normally. The knight of the sepulcher has a 25%% chance of ignoring critical hits and the bonus damage from sneak attacks as though he were wearing armor of light fortification. This ability replaces the fiendish boon ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KnightSepulcherSaveBonus|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Save Bonus|+%1 bonus on saving throws against mind-affecting effects, death effects, and poison|KnightSepulcherSaveBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1491,
+    "record_key": "Knight Of The Sepulcher ~ Touch Of The Crypt"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

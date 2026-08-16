@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Verdant Bloodline ~ Massmorph",
+    "name": "Massmorph",
+    "class": "Verdant Bloodline",
+    "description": "As a full-round action, you can alter the size and health of plant life, as if using plant growth or diminish plants. Alternatively, you can transform %1 willing non-plant creatures (no two of which can be more than 30 feet apart) as|Sorcerer_VerdantMassmorph_Targets",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Bloodline ~ Massmorph"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Verdant Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Verdant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Verdant_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_VerdantMassmorph_Targets|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_VerdantMassmorph_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, you can alter the size and health of plant life, as if using plant growth or diminish plants. Alternatively, you can transform %1 willing non-plant creatures (no two of which can be more than 30 feet apart) as|Sorcerer_VerdantMassmorph_Targets"
+      },
+      {
+        "key": "DESC",
+        "value": "tree shape.|PREVARLT:Sorcerer_Verdant_BloodlinePower9LVL,15"
+      },
+      {
+        "key": "DESC",
+        "value": "tree shape or plant shape I.|PREVARGTEQ:Sorcerer_Verdant_BloodlinePower9LVL,15|PREVARLT:Sorcerer_Verdant_BloodlinePower9LVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": "tree shape or plant shape II.|PREVARGTEQ:Sorcerer_Verdant_BloodlinePower9LVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": "You can transform non-plant creatures using this power once per day."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_VerdantMassmorph_Targets|Sorcerer_Verdant_BloodlinePower9LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_VerdantMassmorph_Times|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_VerdantMassmorph_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|VerdantBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3264,
+    "record_key": "Verdant Bloodline ~ Massmorph"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

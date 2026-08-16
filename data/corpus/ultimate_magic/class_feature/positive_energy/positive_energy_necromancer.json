@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Positive Energy ~ Necromancer",
+    "name": "Positive Energy ~ Necromancer",
+    "class": "Positive Energy",
+    "description": "You can channel energy to turn undead. The DC of the will save for your Turn Undead attempts is %1.|PowerOverUndeadTurnDC",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.Channel Energy.Channel Positive Energy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PowerOverUndeadTurnDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can channel energy to turn undead. The DC of the will save for your Turn Undead attempts is %1.|PowerOverUndeadTurnDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerOverUndeadTurnDC|10+(NecromancySchoolLVL-2)/2+CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 824,
+    "record_key": "Positive Energy ~ Necromancer"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

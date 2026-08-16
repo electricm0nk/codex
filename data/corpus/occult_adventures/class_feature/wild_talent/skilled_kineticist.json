@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Skilled Kineticist",
+    "name": "Skilled Kineticist",
+    "class": "Wild Talent",
+    "description": "Element universal; Type utility (Su); Level 1; Burn - You gain a bonus equal to 1/2 your kineticist level on skill checks with the skills your primary element added to your class skill list, and you can use the Knowledge skill associated with your primary element to identify elementals of your primary element's subtype.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Skilled Kineticist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Universal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Base,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Element universal; Type utility (Su); Level 1; Burn - You gain a bonus equal to 1/2 your kineticist level on skill checks with the skills your primary element added to your class skill list, and you can use the Knowledge skill associated with your primary element to identify elementals of your primary element's subtype."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 774,
+    "record_key": "Wild Talent ~ Skilled Kineticist"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

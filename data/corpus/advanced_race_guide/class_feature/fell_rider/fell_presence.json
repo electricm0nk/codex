@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fell Rider ~ Fell Presence",
+    "name": "Fell Presence",
+    "class": "Fell Rider",
+    "description": "At 5th level, a fell rider inspires dread while mounted. As long as the fell rider is mounted, all enemies within 60 feet receive a -%1 penalty on saving throws against fear.|FellRiderFellPresenceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fell Rider ~ Fell Presence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FellRiderFellPresenceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a fell rider inspires dread while mounted. As long as the fell rider is mounted, all enemies within 60 feet receive a -%1 penalty on saving throws against fear.|FellRiderFellPresenceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FellRiderFellPresenceBonus|1+CavalierLVL/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 573,
+    "record_key": "Fell Rider ~ Fell Presence"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oath of Vengeance ~ Powerful Justice",
+    "name": "Powerful Justice",
+    "class": "Oath of Vengeance",
+    "description": "You may spend one use of your smite evil ability to grant your allies within 10 feet the ability to smite evil, except they only gain your bonus to damage, not your smite's attack bonus or ability to bypass DR.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath of Vengeance ~ Powerful Justice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You may spend one use of your smite evil ability to grant your allies within 10 feet the ability to smite evil, except they only gain your bonus to damage, not your smite's attack bonus or ability to bypass DR."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1597,
+    "record_key": "Oath of Vengeance ~ Powerful Justice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

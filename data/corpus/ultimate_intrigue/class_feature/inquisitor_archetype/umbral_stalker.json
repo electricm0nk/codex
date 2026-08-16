@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Umbral Stalker",
+    "name": "Umbral Stalker",
+    "class": "Inquisitor Archetype",
+    "description": "As a consummate lurker in the shadows, an umbral stalker observes the enemies of her faith and strikes before the unfortunate victims even know she is skulking nearby.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Umbral Stalker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Umbral Stalker],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_ClassSkills=True,Inquisitor_Archetype_Domains=True,Inquisitor_Archetype_JudgmentJustice=True,Inquisitor_Archetype_SternGaze=True,Inquisitor_Archetype_ExploitWeakness=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "As a consummate lurker in the shadows, an umbral stalker observes the enemies of her faith and strikes before the unfortunate victims even know she is skulking nearby."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Umbral Stalker ~ Class Skills|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Umbral Stalker ~ Dark Descent|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Umbral Stalker ~ Judgment|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Judgment ~ Stalking|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Umbral Stalker ~ Swift and Silent|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Umbral Stalker ~ Deadly Efficiency|PRECLASS:1,Inquisitor=14"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_JudgmentJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_ExploitWeakness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_JudgmentJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SternGaze|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 443,
+    "record_key": "Inquisitor Archetype ~ Umbral Stalker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

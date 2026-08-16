@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Social Talent ~ Renown",
+    "name": "Renown",
+    "class": "Social Talent",
+    "description": "The vigilante becomes known for deeds and abilities regardless of his current identity. This renown grants him favorable treatment in civilized company and lends him an air of menace while facing down his enemies. While he is in his social identity, a vigilante can spend 1 week gaining renown among the locals of any community of no more than about 200 individuals (a village). This could be the entire community or a smaller neighborhood in a larger settlement. He must spend at least 4 hours each day socializing and making contacts. After spending 1 week doing this, whenever he is in his social identity, all NPCs in the community have a starting attitude toward him that is one category better, as long as each person's initial attitude would have at least been indifferent. While he gains renown in an area using his social identity, he also spreads rumors and tales about his vigilante identity. Once he has gained renown in a community, he gains a +4 circumstance bonus on Intimidate checks whenever he is in his vigilante identity. This bonus applies only while he is near the community in which he has gained renown; he must be within %1 miles. A vigilante can hold renown in a limited number of communities (normally one, with other social talents allowing two). If he gains renown in a new community, he must decide which one of his previous communities to lose. These effects are subject to GM approval. For example, the GM might rule that an NPC or monster has not heard any tales about the vigilante. Or, a foe may have a starting attitude toward him that's one category worse, rather than one category better.|VigilanteTalentLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ Renown"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante becomes known for deeds and abilities regardless of his current identity. This renown grants him favorable treatment in civilized company and lends him an air of menace while facing down his enemies. While he is in his social identity, a vigilante can spend 1 week gaining renown among the locals of any community of no more than about 200 individuals (a village). This could be the entire community or a smaller neighborhood in a larger settlement. He must spend at least 4 hours each day socializing and making contacts. After spending 1 week doing this, whenever he is in his social identity, all NPCs in the community have a starting attitude toward him that is one category better, as long as each person's initial attitude would have at least been indifferent. While he gains renown in an area using his social identity, he also spreads rumors and tales about his vigilante identity. Once he has gained renown in a community, he gains a +4 circumstance bonus on Intimidate checks whenever he is in his vigilante identity. This bonus applies only while he is near the community in which he has gained renown; he must be within %1 miles. A vigilante can hold renown in a limited number of communities (normally one, with other social talents allowing two). If he gains renown in a new community, he must decide which one of his previous communities to lose. These effects are subject to GM approval. For example, the GM might rule that an NPC or monster has not heard any tales about the vigilante. Or, a foe may have a starting attitude toward him that's one category worse, rather than one category better.|VigilanteTalentLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Intimidate=In Vigilante Identity|4|TYPE=Circumstance.STACK"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 64,
+    "record_key": "Social Talent ~ Renown"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

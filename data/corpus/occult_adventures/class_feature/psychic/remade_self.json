@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic ~ Remade Self",
+    "name": "Remade Self",
+    "class": "Psychic",
+    "description": "At 20th level, the psychic is affected by one of the following spells as a constant spell-like ability: arcane sight, fly, haste, heroism, nondetection, or tongues. This ability is chosen when the psychic reaches 20th level and can't be changed. While the psychic is under the effects of this spell-like ability, each time she casts a psychic spell, she can link one phrenic amplification or major amplification she knows that has a point cost of 1 to that spell without spending any points from her phrenic pool. This amplification is in addition to the normal maximum of one amplification per spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic ~ Remade Self"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, the psychic is affected by one of the following spells as a constant spell-like ability: arcane sight, fly, haste, heroism, nondetection, or tongues. This ability is chosen when the psychic reaches 20th level and can't be changed. While the psychic is under the effects of this spell-like ability, each time she casts a psychic spell, she can link one phrenic amplification or major amplification she knows that has a point cost of 1 to that spell without spending any points from her phrenic pool. This amplification is in addition to the normal maximum of one amplification per spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1162,
+    "record_key": "Psychic ~ Remade Self"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

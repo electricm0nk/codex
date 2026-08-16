@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk ~ Tongue of the Sun and Moon",
+    "name": "Tongue of the Sun and Moon",
+    "class": "Monk",
+    "description": "You can speak with any living creature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk ~ Tongue of the Sun and Moon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.Extraordinary.Communicate.Tongue of the Sun and Moon"
+      },
+      {
+        "key": "DESC",
+        "value": "You can speak with any living creature."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1111,
+    "record_key": "Monk ~ Tongue of the Sun and Moon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

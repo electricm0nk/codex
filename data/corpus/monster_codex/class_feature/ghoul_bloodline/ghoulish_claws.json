@@ -1,0 +1,163 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ghoul Bloodline ~ Ghoulish Claws",
+    "name": "Ghoulish Claws",
+    "class": "Ghoul Bloodline",
+    "description": "You can grow claws as a free action. These claws are treated as natural weapons, allowing you to make two claw attacks as a full attack using your full base attack bonus.|!PRERACE:1,Ghoul",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Bloodline ~ Ghoulish Claws"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Ghoul Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.Special Attack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Ghoul"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Ghoul_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ghoul_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ghoul_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_GhoulGhoulishClaws_DurationDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_GhoulGhoulishClaws_DurationDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_GhoulGhoulishClaws_DurationBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can grow claws as a free action. These claws are treated as natural weapons, allowing you to make two claw attacks as a full attack using your full base attack bonus.|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "DESC",
+        "value": "Each of these attacks deals 1d4 points of damage + your Strength modifier (1d3 if you are Small).|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "DESC",
+        "value": "Creatures damaged with your claw attack are paralyzed for|PREVARGTEQ:Sorcerer_Ghoul_BloodlinePower1LVL,5|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "DESC",
+        "value": "1 round,|PREVARGTEQ:Sorcerer_Ghoul_BloodlinePower1LVL,5|PREVARLT:Sorcerer_Ghoul_BloodlinePower1LVL,7|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "DESC",
+        "value": "1d4+1 rounds,|PREVARGTEQ:Sorcerer_Ghoul_BloodlinePower1LVL,7|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "DESC",
+        "value": "as the ghoul ability (Fortitude negates).|PREVARGTEQ:Sorcerer_Ghoul_BloodlinePower1LVL,5|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "DESC",
+        "value": "The claws are considered magic weapons for the purpose of overcoming DR.|PREVARGTEQ:Sorcerer_Ghoul_BloodlinePower1LVL,7|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your claws for %1 rounds per day. These rounds do not need to be consecutive.|Sorcerer_Ghoul_BloodlinePower1Times|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "DESC",
+        "value": "Your levels in sorcerer stack with your racial Hit Dice when determining the DC of your paralysis and disease special abilities.|PRERACE:1,Ghoul"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Universal Monster Rule ~ Paralysis (Supernatural)|PREVARGTEQ:Sorcerer_Ghoul_BloodlinePower1LVL,5|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_GhoulGhoulishClaws_DurationDice|1|PREVARGTEQ:Sorcerer_Ghoul_BloodlinePower1LVL,7|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_GhoulGhoulishClaws_DurationDieSize|4|PREVARGTEQ:Sorcerer_Ghoul_BloodlinePower1LVL,7|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_GhoulGhoulishClaws_DurationBonus|1|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Paralysis_DurationDice|Sorcerer_GhoulGhoulishClaws_DurationDice|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Paralysis_DurationDieSize|Sorcerer_GhoulGhoulishClaws_DurationDieSize|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Paralysis_DurationBonus|Sorcerer_GhoulGhoulishClaws_DurationBonus|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(2, 1d4+%1)|STR|PREVARLT:Sorcerer_Ghoul_BloodlinePower1LVL,5|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(2, 1d4+%1 plus paralysis)|STR|PREVARGTEQ:Sorcerer_Ghoul_BloodlinePower1LVL,5|PREVARLT:Sorcerer_Ghoul_BloodlinePower1LVL,7|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(2, 1d4+%1 plus paralysis, treated as magic weapons)|STR|PREVARGTEQ:Sorcerer_Ghoul_BloodlinePower1LVL,7|!PRERACE:1,Ghoul"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Ghoul_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|GhoulBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 141,
+    "record_key": "Ghoul Bloodline ~ Ghoulish Claws"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

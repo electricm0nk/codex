@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dark Tapestry Mystery ~ Cloak of Darkness",
+    "name": "Cloak of Darkness",
+    "class": "Dark Tapestry Mystery",
+    "description": "You conjure a cloak of shadowy darkness that grants you a +%1 armor bonus and a +%2 circumstance bonus on Stealth checks.  You can use this cloak for %3 hours per day.  The duration does not need to be consecutive, but it must be spent in 1-hour increments.|CloakOfDarknessArmorBonus|CloakOfDarknessStealthBonus|CloakOfDarknessTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dark Tapestry Mystery ~ Cloak of Darkness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.DarkTapestryRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CloakOfDarknessArmorBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CloakOfDarknessStealthBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CloakOfDarknessTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You conjure a cloak of shadowy darkness that grants you a +%1 armor bonus and a +%2 circumstance bonus on Stealth checks.  You can use this cloak for %3 hours per day.  The duration does not need to be consecutive, but it must be spent in 1-hour increments.|CloakOfDarknessArmorBonus|CloakOfDarknessStealthBonus|CloakOfDarknessTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CloakOfDarknessArmorBonus|4+2*max(0,floor((classlevel(\"Oracle\")-3)/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CloakOfDarknessStealthBonus|2+2*max(0,floor((classlevel(\"Oracle\")-3)/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CloakOfDarknessTimes|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|CloakOfDarknessArmorBonus|TYPE=Armor"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Stealth|CloakOfDarknessStealthBonus|TYPE=Circumstance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 467,
+    "record_key": "Dark Tapestry Mystery ~ Cloak of Darkness"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

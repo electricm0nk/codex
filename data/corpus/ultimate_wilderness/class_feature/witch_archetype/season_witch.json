@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Archetype ~ Season Witch",
+    "name": "Season Witch",
+    "class": "Witch Archetype",
+    "description": "Season witches gain their power from the cyclical and mystical exchange of energy passed from one season of nature to another. Often, season witches carry bitter grudges against their fellow witches, with many believing that the season prior to their chosen focus is inferior and the season that replaces their favored time is an usurper of time, but at other times season witches work together, understanding that all are a part of the cycle of the natural world.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Season Witch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Season Witch],[!PREFACT:1,ABILITIES,Witch_Archetype_PatronSpell=True,Witch_Archetype_Hex1=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Season witches gain their power from the cyclical and mystical exchange of energy passed from one season of nature to another. Often, season witches carry bitter grudges against their fellow witches, with many believing that the season prior to their chosen focus is inferior and the season that replaces their favored time is an usurper of time, but at other times season witches work together, understanding that all are a part of the cycle of the natural world."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Season Witch ~ Season of the Witch|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_PatronSpell|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex1|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1246,
+    "record_key": "Witch Archetype ~ Season Witch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

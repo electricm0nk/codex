@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Overwhelming Soul ~ Mind Over Matter",
+    "name": "Mind Over Matter",
+    "class": "Overwhelming Soul",
+    "description": "An overwhelming soul uses her Charisma modifier instead of her Constitution modifier to determine her damage with wild talents, the DCs of Constitution based wild talents, the duration of wild talents with a Constitution-based duration, her bonus on concentration checks for wild talents, and the other Constitutionbased effects of all her wild talents. She adds Bluff and Diplomacy to her list of kineticist class skills. This ability alters the kineticist's class skills and the key ability score of wild talents.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Overwhelming Soul ~ Mind Over Matter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Overwhelming Soul Class Feature.Kineticist Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An overwhelming soul uses her Charisma modifier instead of her Constitution modifier to determine her damage with wild talents, the DCs of Constitution based wild talents, the duration of wild talents with a Constitution-based duration, her bonus on concentration checks for wild talents, and the other Constitutionbased effects of all her wild talents. She adds Bluff and Diplomacy to her list of kineticist class skills. This ability alters the kineticist's class skills and the key ability score of wild talents."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildTalentDCStat|-CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildTalentDCStat|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1384,
+    "record_key": "Overwhelming Soul ~ Mind Over Matter"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "True Temptation ~ Pazuzu",
+    "name": "True Temptation",
+    "class": "True Temptation",
+    "description": "If any creature speaks Pazuzu's name aloud 3 times with a single breath, and that creature is within 60 feet of you, you can cast quickened charm monster on that creature as an immediate action. You can use this power 3/day. Creatures with fly speeds take a -4 penalty on saves against this effect. If a creature that fails its save against this effect has protection from evil or a similar effect activated, that effect is immediately and automatically dispelled. You can use this ability against a creature that has not invoked Pazuzu's name, but if you do so, it functions as a normal (non-quickened) charm monster spell that does not dispel protection from evil effects. This ability is the equivalent of a 9th-level spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "True Temptation ~ Pazuzu"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Charm Monster,19+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "If any creature speaks Pazuzu's name aloud 3 times with a single breath, and that creature is within 60 feet of you, you can cast quickened charm monster on that creature as an immediate action. You can use this power 3/day. Creatures with fly speeds take a -4 penalty on saves against this effect. If a creature that fails its save against this effect has protection from evil or a similar effect activated, that effect is immediately and automatically dispelled. You can use this ability against a creature that has not invoked Pazuzu's name, but if you do so, it functions as a normal (non-quickened) charm monster spell that does not dispel protection from evil effects. This ability is the equivalent of a 9th-level spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 174,
+    "record_key": "True Temptation ~ Pazuzu"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

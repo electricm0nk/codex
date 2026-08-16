@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skill Unlock ~ Read Aura",
+    "name": "Read Aura (Perception)",
+    "class": "Skill Unlock",
+    "description": "Your psychic sensitivity allows you to read the psychic and magical auras of creatures and objects. Check: Once per day, you can examine the natural aura of a creature or object to discern the subject's alignment, emotions, health, or magic. This requires 10 minutes of concentration, after which you attempt a Perception check. Each time, you must pick one of four auras to read: alignment, emotion, health, or magic. The result of the check applies only to the selected aura. You must be within 30 feet of the subject at all times during the reading. Objects typically have only magic auras, though some also have alignment auras (and intelligent items have emotion auras). You can still attempt to detect a type of aura an object doesn't have, but you get no results. The DC varies depending on the aura, as shown on the table. Read Alignment Aura: You attempt to read the alignment aura, learning the alignment and its strength. An alignment aura's strength depends on the creature's Hit Dice or item's caster level, as noted in the description of the detect evil spell. Read Emotion Aura: The colors within the target's aura reveal its emotional state. If successful, you learn the target's disposition and its attitude toward any creatures within 30 feet of it. For a number of rounds equal to the amount by which you exceeded the skill check's DC, you gain a +2 circumstance bonus on Bluff, Diplomacy, Intimidate, and Sense Motive checks against the target. Read Health Aura: Viewing the flow of vital force, you assess a creature's physical condition. You learn if the creature is unharmed or wounded, if it is poisoned or diseased, and whether it is affected by any of the following conditions: confused, disabled, dying, nauseated, panicked, staggered, stunned, and unconscious. You also learn the total number of points available in its ki pool, grit pool, or similar resource. Read Magic Aura: You attempt to determine the number and power of all magical auras on a target creature or object (see detect magic to determine a magic aura's power). If the check is successful, you can attempt Knowledge (arcana) or Spellcraft checks to determine the school or identify properties of a magic item, as normal. If the item is affected by magic aura or a similar spell, you can realize this and determine the actual properties of the item if your check result exceeds the DC by 5 or more. If the spell is of a higher level (such as aura alteration), increase this threshold DC by 2 for every spell level beyond 1st. Action: Reading an aura requires 10 minutes of study. Try Again: Yes. You can read a creature or object's aura more than once, whether you read the same aura or a different one. You can still attempt only one skill check to read an aura per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skill Unlock ~ Read Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SkillUnlock.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "Your psychic sensitivity allows you to read the psychic and magical auras of creatures and objects. Check: Once per day, you can examine the natural aura of a creature or object to discern the subject's alignment, emotions, health, or magic. This requires 10 minutes of concentration, after which you attempt a Perception check. Each time, you must pick one of four auras to read: alignment, emotion, health, or magic. The result of the check applies only to the selected aura. You must be within 30 feet of the subject at all times during the reading. Objects typically have only magic auras, though some also have alignment auras (and intelligent items have emotion auras). You can still attempt to detect a type of aura an object doesn't have, but you get no results. The DC varies depending on the aura, as shown on the table. Read Alignment Aura: You attempt to read the alignment aura, learning the alignment and its strength. An alignment aura's strength depends on the creature's Hit Dice or item's caster level, as noted in the description of the detect evil spell. Read Emotion Aura: The colors within the target's aura reveal its emotional state. If successful, you learn the target's disposition and its attitude toward any creatures within 30 feet of it. For a number of rounds equal to the amount by which you exceeded the skill check's DC, you gain a +2 circumstance bonus on Bluff, Diplomacy, Intimidate, and Sense Motive checks against the target. Read Health Aura: Viewing the flow of vital force, you assess a creature's physical condition. You learn if the creature is unharmed or wounded, if it is poisoned or diseased, and whether it is affected by any of the following conditions: confused, disabled, dying, nauseated, panicked, staggered, stunned, and unconscious. You also learn the total number of points available in its ki pool, grit pool, or similar resource. Read Magic Aura: You attempt to determine the number and power of all magical auras on a target creature or object (see detect magic to determine a magic aura's power). If the check is successful, you can attempt Knowledge (arcana) or Spellcraft checks to determine the school or identify properties of a magic item, as normal. If the item is affected by magic aura or a similar spell, you can realize this and determine the actual properties of the item if your check result exceeds the DC by 5 or more. If the spell is of a higher level (such as aura alteration), increase this threshold DC by 2 for every spell level beyond 1st. Action: Reading an aura requires 10 minutes of study. Try Again: Yes. You can read a creature or object's aura more than once, whether you read the same aura or a different one. You can still attempt only one skill check to read an aura per day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.197"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1955,
+    "record_key": "Skill Unlock ~ Read Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

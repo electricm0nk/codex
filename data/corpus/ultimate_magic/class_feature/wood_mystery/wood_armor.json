@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wood Mystery ~ Wood Armor",
+    "name": "Wood Armor",
+    "class": "Wood Mystery",
+    "description": "You can conjure wooden armor around yourself, which grants you a +%1 armor bonus.|WoodArmorBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wood Mystery ~ Wood Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.WoodRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoodArmorBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoodArmorDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can conjure wooden armor around yourself, which grants you a +%1 armor bonus.|WoodArmorBonus"
+      },
+      {
+        "key": "DESC",
+        "value": " This armor grants you DR 5/slashing.|PRECLASS:1,Oracle=13"
+      },
+      {
+        "key": "DESC",
+        "value": " You can use this armor for %1 hours per day. This duration does not need to be consecutive, but it must be spent in 1-hour increments. The armor vanishes if you remove it.|WoodArmorDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoodArmorDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoodArmorBonus|4+2*max(0,floor((classlevel(\"Oracle\")-3)/4))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|WoodArmorBonus|TYPE=Armor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 516,
+    "record_key": "Wood Mystery ~ Wood Armor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

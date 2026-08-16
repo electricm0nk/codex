@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Martyr ~ Stigmata",
+    "name": "Stigmata",
+    "class": "Martyr",
+    "description": "As a standard action,|!PRECLASS:1,Paladin=7",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Martyr ~ Stigmata"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.MartyrClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action,|!PRECLASS:1,Paladin=7"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action,|PRECLASS:1,Paladin=7|!PRECLASS:1,Paladin=13"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action,|PRECLASS:1,Paladin=13"
+      },
+      {
+        "key": "DESC",
+        "value": "the martyr can chant hymns of faith and cause bleeding stigmata to visibly appear on his body. He can use this ability %1 rounds per day. While his stigmata are active, he takes 1 point of bleed damage, which automatically ceases when he ends this ability but otherwise does not relent, even in the face of magical healing or Heal checks. His stigmata assist his allies, duplicating the effect of the countersong, distraction,|3+CHA+PaladinLVL"
+      },
+      {
+        "key": "DESC",
+        "value": "or inspire courage|!PRECLASS:1,Paladin=10"
+      },
+      {
+        "key": "DESC",
+        "value": "inspire courage, or inspire greatness|PRECLASS:1,Paladin=10|!PRECLASS:1,Paladin=16"
+      },
+      {
+        "key": "DESC",
+        "value": "inspire courage, inspire greatness, or inspire heroics|PRECLASS:1,Paladin=16"
+      },
+      {
+        "key": "DESC",
+        "value": "bardic performance of a bard of his paladin level, though both countersong and distraction use Heal skill checks instead of Perform skill checks."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 182,
+    "record_key": "Martyr ~ Stigmata"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

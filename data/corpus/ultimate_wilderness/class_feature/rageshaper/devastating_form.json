@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rageshaper ~ Devastating Form",
+    "name": "Devastating Form",
+    "class": "Rageshaper",
+    "description": "A rageshaper can enter a state of intense fury, transforming into a living engine of destruction. This ability functions as the barbarian's rage class feature, except entering this state of fury requires a full-round action that provokes attacks of opportunity and has additional effects as noted below. At the start of the rageshaper's next turn, he not only gains the benefit of rage but also grows one size category larger (though worn equipment and held items do not increase in size). Armor or clothing the rageshaper wears that doesn't accommodate his changing size immediately gains the broken condition. If insufficient room is available to accommodate this change, the rageshaper attains the maximum possible size for the available space and can attempt a Strength check (using his increased Strength) to burst any enclosures in the process. If the check fails, he is constrained but not harmed by the materials enclosing him. A rageshaper can remain in his devastating form for %1 rounds per day. He can dismiss devastating form only with a successful Will save (DC %2) made as a free action. On a failed save, the attempted remains in devastating form for an additional round. If the rageshaper does not successfully end his devastating form before he runs out of daily rounds, the next time he fails his Will save to revert, he flies into an uncontrollable frenzy as if affected by confusion, but he treats a roll of 26-50 as \"attacks nearest creature.\" Each round the rageshaper spends in an uncontrollable frenzy, the Will save DC to exit devastating form decreases by 2. When a rageshaper ends his devastating form ability, he is fatigued for a number of rounds equal to twice the number of rounds he spent in devastating form. A rageshaper cannot enter devastating form again while fatigued or exhausted. If a rageshaper falls unconscious, his devastating form ends immediately. At 10th level, the rageshaper can grow up to a maximum of two size categories larger with devastating form and his rage is now treated as greater rage. At 20th level, the rageshaper can grow up to a maximum of three size categories larger with devastating form and his rage is treated as mighty rage.|ShifterLVL|10+ShifterLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rageshaper ~ Devastating Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.RageshaperClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A rageshaper can enter a state of intense fury, transforming into a living engine of destruction. This ability functions as the barbarian's rage class feature, except entering this state of fury requires a full-round action that provokes attacks of opportunity and has additional effects as noted below. At the start of the rageshaper's next turn, he not only gains the benefit of rage but also grows one size category larger (though worn equipment and held items do not increase in size). Armor or clothing the rageshaper wears that doesn't accommodate his changing size immediately gains the broken condition. If insufficient room is available to accommodate this change, the rageshaper attains the maximum possible size for the available space and can attempt a Strength check (using his increased Strength) to burst any enclosures in the process. If the check fails, he is constrained but not harmed by the materials enclosing him. A rageshaper can remain in his devastating form for %1 rounds per day. He can dismiss devastating form only with a successful Will save (DC %2) made as a free action. On a failed save, the attempted remains in devastating form for an additional round. If the rageshaper does not successfully end his devastating form before he runs out of daily rounds, the next time he fails his Will save to revert, he flies into an uncontrollable frenzy as if affected by confusion, but he treats a roll of 26-50 as \"attacks nearest creature.\" Each round the rageshaper spends in an uncontrollable frenzy, the Will save DC to exit devastating form decreases by 2. When a rageshaper ends his devastating form ability, he is fatigued for a number of rounds equal to twice the number of rounds he spent in devastating form. A rageshaper cannot enter devastating form again while fatigued or exhausted. If a rageshaper falls unconscious, his devastating form ends immediately. At 10th level, the rageshaper can grow up to a maximum of two size categories larger with devastating form and his rage is now treated as greater rage. At 20th level, the rageshaper can grow up to a maximum of three size categories larger with devastating form and his rage is treated as mighty rage.|ShifterLVL|10+ShifterLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1094,
+    "record_key": "Rageshaper ~ Devastating Form"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

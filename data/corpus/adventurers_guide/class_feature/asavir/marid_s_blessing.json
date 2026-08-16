@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Asavir ~ Marid's Blessing",
+    "name": "Marid's Blessing",
+    "class": "Asavir",
+    "description": "An asavir's mount receives the blessing of the marids, making it an agile partner with a flowing pace. Anyone riding the mount does not need to attempt concentration checks normally required because of the mount's movement. The mount gains a +2 racial bonus on Reflex saves.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Asavir ~ Marid's Blessing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.AsavirClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "DESC",
+        "value": "An asavir's mount receives the blessing of the marids, making it an agile partner with a flowing pace. Anyone riding the mount does not need to attempt concentration checks normally required because of the mount's movement. The mount gains a +2 racial bonus on Reflex saves."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 49,
+    "record_key": "Asavir ~ Marid's Blessing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

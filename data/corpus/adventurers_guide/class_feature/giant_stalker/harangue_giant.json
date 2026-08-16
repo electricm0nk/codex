@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Giant Stalker ~ Harangue Giant",
+    "name": "Harangue Giant",
+    "class": "Giant Stalker",
+    "description": "While raging, a giant stalker can speak Giant. If the giant stalker already knows Giant, she gains a +2 bonus on Intimidate checks when speaking Giant while raging. This ability alters rage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Giant Stalker ~ Harangue Giant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Feature.GiantStalkerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, a giant stalker can speak Giant. If the giant stalker already knows Giant, she gains a +2 bonus on Intimidate checks when speaking Giant while raging. This ability alters rage."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 622,
+    "record_key": "Giant Stalker ~ Harangue Giant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

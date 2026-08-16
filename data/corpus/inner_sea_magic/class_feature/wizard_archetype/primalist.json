@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wizard Archetype ~ Primalist",
+    "name": "Primalist",
+    "class": "Wizard Archetype",
+    "description": "A primalist is a wizard who has spent a considerable amount of time studying the chaos that is primal magic-she seeks order in chaos, and hopes to master the raw power of primal magic to bolster her own abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wizard Archetype ~ Primalist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WizardArchetype.WizardArcaneBond.WizardBonusFeat5.WizardBonusFeat10"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Wizard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Primalist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WizardArcaneBond,TYPE.WizardBonusFeats,TYPE.WizardBonusFeat5,TYPE.WizardBonusFeat10]"
+      },
+      {
+        "key": "DESC",
+        "value": "A primalist is a wizard who has spent a considerable amount of time studying the chaos that is primal magic-she seeks order in chaos, and hopes to master the raw power of primal magic to bolster her own abilities."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Primalist ~ Primal Magic"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Primalist ~ Enhance Primal Magic Event|PRECLASS:1,Wizard=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Primalist ~ Primal Surge|PRECLASS:1,Wizard=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Wizard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 418,
+    "record_key": "Wizard Archetype ~ Primalist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Soul Sentinel ~ Sacred Soul",
+    "name": "Sacred Soul",
+    "class": "Soul Sentinel",
+    "description": "A sacred soul is immune to hexes and curse spells or abilities. Each ally within 10 feet of her gains a +4 morale bonus on saving throws against hexes or curses. This ability functions only while the paladin is conscious, not if she is unconscious or dead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soul Sentinel ~ Sacred Soul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.SoulSentinelClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "DESC",
+        "value": "A sacred soul is immune to hexes and curse spells or abilities. Each ally within 10 feet of her gains a +4 morale bonus on saving throws against hexes or curses. This ability functions only while the paladin is conscious, not if she is unconscious or dead."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 190,
+    "record_key": "Soul Sentinel ~ Sacred Soul"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

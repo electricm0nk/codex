@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Intercept Charge",
+    "name": "Intercept Charge",
+    "class": "Warpriest Bonus Feat",
+    "description": "When an opponent charges your ally with this feat, as an immediate action you can move up to your speed toward any square in the path of the charge. If you end your movement in the path of the charge, the opponent must stop when it becomes adjacent to you and then attack you instead of your ally. Your movement from using this feat counts toward your movement on your next turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Intercept Charge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Teamwork"
+      },
+      {
+        "key": "DESC",
+        "value": "When an opponent charges your ally with this feat, as an immediate action you can move up to your speed toward any square in the path of the charge. If you end your movement in the path of the charge, the opponent must stop when it becomes adjacent to you and then attack you instead of your ally. Your movement from using this feat counts toward your movement on your next turn."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Intercept Charge"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.151"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4165,
+    "record_key": "Warpriest Bonus Feat ~ Intercept Charge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

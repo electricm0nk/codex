@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Undead Savant Subschool ~ Bolster",
+    "name": "Bolster",
+    "class": "Undead Savant Subschool",
+    "description": "As a standard action, you can touch an undead creature and infuse it with negative energy. It gains a +%1 profane bonus on all attack rolls and saving throws, as well as 1 temporary hit point per Hit Die and a +2 bonus to its turn resistance. These bonuses last for %2 rounds. The bonuses and temporary hit points are immediately dispelled if the creature is within the area of a consecrate spell. You can use this ability %3 times per day.|ArcanistSavantSchoolLVL/5+1|max(ArcanistSavantSchoolLVL/2,1)|INT+3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead Savant Subschool ~ Bolster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.SpellLike.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can touch an undead creature and infuse it with negative energy. It gains a +%1 profane bonus on all attack rolls and saving throws, as well as 1 temporary hit point per Hit Die and a +2 bonus to its turn resistance. These bonuses last for %2 rounds. The bonuses and temporary hit points are immediately dispelled if the creature is within the area of a consecrate spell. You can use this ability %3 times per day.|ArcanistSavantSchoolLVL/5+1|max(ArcanistSavantSchoolLVL/2,1)|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2609,
+    "record_key": "Undead Savant Subschool ~ Bolster"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

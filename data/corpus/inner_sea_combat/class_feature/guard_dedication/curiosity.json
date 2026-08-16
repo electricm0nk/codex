@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Guard Dedication ~ Curiosity",
+    "name": "Curiosity",
+    "class": "Guard Dedication",
+    "description": "The Ulfen Guard's peculiar nature makes her an object of intrigue. Civilized people are fascinated by the \"tamed\" barbarian, while more barbaric cultures are fascinated by her choice to turn her back on her heritage. The Ulfen Guard gains a bonus equal to her class level on Diplomacy checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guard Dedication ~ Curiosity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Guard Dedication Choice.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The Ulfen Guard's peculiar nature makes her an object of intrigue. Civilized people are fascinated by the \"tamed\" barbarian, while more barbaric cultures are fascinated by her choice to turn her back on her heritage. The Ulfen Guard gains a bonus equal to her class level on Diplomacy checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy|Ulfen_GuardLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 565,
+    "record_key": "Guard Dedication ~ Curiosity"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

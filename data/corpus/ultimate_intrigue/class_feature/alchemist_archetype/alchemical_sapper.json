@@ -1,0 +1,131 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Alchemical Sapper",
+    "name": "Alchemical Sapper",
+    "class": "Alchemist Archetype",
+    "description": "Alchemical sappers are trained to create explosives.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Alchemical Sapper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Alchemical Sapper],[!PREFACT:1,ABILITIES,Alchemist_Archetype_ClassSkills=True,Alchemist_Archetype_Bomb=True,Alchemist_Archetype_Mutagen=True,Alchemist_Archetype_SwiftAlchemy=True,Alchemist_Archetype_Discovery6=True,Alchemist_Archetype_PoisonImmunity=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Alchemical sappers are trained to create explosives."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Alchemical Sapper ~ Class Skills|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Alchemical Sapper ~ Diminished Alchemy|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Alchemical Sapper ~ Demolition Bomb|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Alchemical Sapper ~ Delayed Bomb|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Alchemical Sapper ~ Master Engineer|PRECLASS:1,Alchemist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Alchemical Sapper ~ Camouflage Bomb|PRECLASS:1,Alchemist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Alchemical Sapper ~ Trip Mine|PRECLASS:1,Alchemist=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Alchemical Sapper ~ Selective Detonation|PRECLASS:1,Alchemist=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Bomb|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Discovery6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Discovery6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonImmunity|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 148,
+    "record_key": "Alchemist Archetype ~ Alchemical Sapper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

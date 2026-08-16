@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Feral Aspect ~ Bull",
+    "name": "Aspect of the Bull",
+    "class": "Feral Aspect",
+    "description": "The bull is a fierce charger and is adept at trampling its foes, pounding them to a bloody pulp. [Minor Form] You gain a +%1 enhancement bonus to your Strength score.|FeralBullAspectStrBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Aspect ~ Bull"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Feral Aspect.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeralBullAspectStrBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The bull is a fierce charger and is adept at trampling its foes, pounding them to a bloody pulp. [Minor Form] You gain a +%1 enhancement bonus to your Strength score.|FeralBullAspectStrBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralBullAspectStrBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralBullAspectStrBonus|2|PREVARGTEQ:FeralAspectLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralBullAspectStrBonus|2|PREVARGTEQ:FeralAspectLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 361,
+    "record_key": "Feral Aspect ~ Bull"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skald ~ Damage Reduction",
+    "name": "Damage Reduction",
+    "class": "Skald",
+    "description": "At 9th level, a skald gains damage reduction. Subtract 1 from the damage the skald takes each time she is dealt damage from a weapon or a natural attack. At 14th and 19th level this damage reduction rises by 1 point. Damage reduction can reduce damage to 0 but not below 0. The skald grants this DR to all allies affected by his raging song. The current DR is %1.|SkaldDamageReductionAmount",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald ~ Damage Reduction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SkaldDamageReduction.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SkaldDamageReductionAmount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a skald gains damage reduction. Subtract 1 from the damage the skald takes each time she is dealt damage from a weapon or a natural attack. At 14th and 19th level this damage reduction rises by 1 point. Damage reduction can reduce damage to 0 but not below 0. The skald grants this DR to all allies affected by his raging song. The current DR is %1.|SkaldDamageReductionAmount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SkaldDamageReductionAmount|min((SkaldLVL-4)/5,3)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BarbarianDRLVL|SkaldLVL"
+      },
+      {
+        "key": "DR",
+        "value": "SkaldDamageReductionAmount/-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1734,
+    "record_key": "Skald ~ Damage Reduction"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

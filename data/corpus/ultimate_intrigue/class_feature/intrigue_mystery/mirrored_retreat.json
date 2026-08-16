@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Intrigue Mystery ~ Mirrored Retreat",
+    "name": "Mirrored Retreat",
+    "class": "Intrigue Mystery",
+    "description": "%1/day as a full-round action, your form ripples and releases seven illusory duplicates, as mirror image, and then you can move up to your speed in any direction, while the duplicates move in seven other directions. The duplicates continue to retreat in their chosen direction, avoiding walls and other barriers but unable to open doors or interact with objects. The duplicates last for %2 minutes or until they take damage (they have the same AC as your touch AC and the same Reflex save as you, and they are immune to effects that allow a Fortitude or Will save). This is a figment effect.|(OracleLVL-3)/4|OracleLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intrigue Mystery ~ Mirrored Retreat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.Supernatural.PerDayOracleRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DESC",
+        "value": "%1/day as a full-round action, your form ripples and releases seven illusory duplicates, as mirror image, and then you can move up to your speed in any direction, while the duplicates move in seven other directions. The duplicates continue to retreat in their chosen direction, avoiding walls and other barriers but unable to open doors or interact with objects. The duplicates last for %2 minutes or until they take damage (they have the same AC as your touch AC and the same Reflex save as you, and they are immune to effects that allow a Fortitude or Will save). This is a figment effect.|(OracleLVL-3)/4|OracleLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 572,
+    "record_key": "Intrigue Mystery ~ Mirrored Retreat"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

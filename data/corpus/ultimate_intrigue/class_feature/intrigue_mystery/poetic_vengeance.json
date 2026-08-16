@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Intrigue Mystery ~ Poetic Vengeance",
+    "name": "Poetic Vengeance",
+    "class": "Intrigue Mystery",
+    "description": "You constantly plot and scheme to take your revenge against those who wrong you. %1/day as an immediate action, after an enemy successfully affects you with an attack (whether with a spell, a physical attack, or any other sort of attack), you can force the enemy to take half the effects of its own attack unless it succeeds on a Will save (DC %2). Any damage from the attack is halved, and non-damaging effects have a 50%% chance to apply. If the non-damaging effect has a DC, the enemy receives a saving throw against it, at either the DC of the original effect or the DC of this ability, whichever is lower.|1+OracleLVL/10|10+OracleLVL/2+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intrigue Mystery ~ Poetic Vengeance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.Supernatural.PerDayOracleRevelation"
+      },
+      {
+        "key": "DESC",
+        "value": "You constantly plot and scheme to take your revenge against those who wrong you. %1/day as an immediate action, after an enemy successfully affects you with an attack (whether with a spell, a physical attack, or any other sort of attack), you can force the enemy to take half the effects of its own attack unless it succeeds on a Will save (DC %2). Any damage from the attack is halved, and non-damaging effects have a 50%% chance to apply. If the non-damaging effect has a DC, the enemy receives a saving throw against it, at either the DC of the original effect or the DC of this ability, whichever is lower.|1+OracleLVL/10|10+OracleLVL/2+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 573,
+    "record_key": "Intrigue Mystery ~ Poetic Vengeance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

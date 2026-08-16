@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Aberrant Bloodrager Bloodline ~ Unusual Anatomy",
+    "name": "Unusual Anatomy",
+    "class": "Aberrant Bloodrager Bloodline",
+    "description": "Your internal anatomy shifts and changes, giving you a 50%% chance to ignore any critical hit or sneak attack scored against you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aberrant Bloodrager Bloodline ~ Unusual Anatomy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Aberrant Bloodrager Bloodline ~ Power LVL 12.Bloodrager Bloodline Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Aberrant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Aberrant_BloodlineProgressionLVL,12"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Aberrant_BloodlinePower12LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your internal anatomy shifts and changes, giving you a 50%% chance to ignore any critical hit or sneak attack scored against you."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AberrantBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 584,
+    "record_key": "Aberrant Bloodrager Bloodline ~ Unusual Anatomy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

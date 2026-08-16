@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Conjuration School ~ Dimensional Steps",
+    "name": "Dimensional Steps",
+    "class": "Conjuration School",
+    "description": "You can use this ability to teleport up to %1 feet per day as a standard action. This teleportation must be used in 5-foot increments and such movement does not provoke an attack of opportunity. You can bring other willing creatures with you, but you must expend an equal amount of distance for each creature brought with you.|ConjurationDimensionalSteps",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Conjuration School ~ Dimensional Steps"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.SpellLike.ArcaneSchoolPower.ModifyMovement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConjurationDimensionalSteps|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability to teleport up to %1 feet per day as a standard action. This teleportation must be used in 5-foot increments and such movement does not provoke an attack of opportunity. You can bring other willing creatures with you, but you must expend an equal amount of distance for each creature brought with you.|ConjurationDimensionalSteps"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConjurationDimensionalSteps|ConjurationSchoolLVL*30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ConjurationDimensionalSteps/5"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|5-ft. increments"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2646,
+    "record_key": "Conjuration School ~ Dimensional Steps"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

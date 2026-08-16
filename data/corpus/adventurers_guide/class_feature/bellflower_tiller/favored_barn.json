@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bellflower Tiller ~ Favored Barn",
+    "name": "Favored Barn",
+    "class": "Bellflower Tiller",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bellflower Tiller ~ Favored Barn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bellflower Tiller Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "DESC",
+        "value": "A Bellflower tiller grows familiar with and develops trusted contacts in a particular community. While inside the limits of this community, she gains a +2 bonus on initiative checks and Knowledge (local), Perception, Stealth, and Survival checks. Any ally designated as part of the Bellflower tiller's crop receives a bonus on these skills equal to half the tiller's bonus. A Bellflower tiller traveling through her favored community leaves no trail and cannot be tracked (although she can leave a trail if she so desires). Provided that she isn't in immediate danger (such as fleeing from pursuers right on her heels), a Bellflower tiller can always find a safe place for her and members of her crop to rest in her chosen community. At such a location, she and her allies are fed, clothed, and provided with basic medical attention (as if attended by a person with a Heal bonus of +10). At 7th level and 9th level, the Bellflower tiller can select an additional community in which to receive these bonuses. Each time she selects a new community, the skill bonus and initiative bonus in any one chosen community (including the one just selected, if so desired) increases by 2. For the purposes of this ability, a community can be any settlement of 100 or more individuals. Outlying farms, fields, and houses are considered part of a community."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 97,
+    "record_key": "Bellflower Tiller ~ Favored Barn"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

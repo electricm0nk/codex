@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dual-Cursed Oracle ~ Misfortune",
+    "name": "Misfortune",
+    "class": "Dual-Cursed Oracle",
+    "description": "As an immediate action, you can force a creature within 30 feet to reroll any one d20 roll that it has just made before the results of the roll are revealed. The creature must take the result of the reroll, even if it's worse than the original roll. Once a creature has suffered from your misfortune, it cannot be the target of this revelation again for 1 day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dual-Cursed Oracle ~ Misfortune"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.GeneralRevelation.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Oracle Archetype ~ Dual-Cursed Oracle"
+      },
+      {
+        "key": "DESC",
+        "value": "As an immediate action, you can force a creature within 30 feet to reroll any one d20 roll that it has just made before the results of the roll are revealed. The creature must take the result of the reroll, even if it's worse than the original roll. Once a creature has suffered from your misfortune, it cannot be the target of this revelation again for 1 day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1469,
+    "record_key": "Dual-Cursed Oracle ~ Misfortune"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

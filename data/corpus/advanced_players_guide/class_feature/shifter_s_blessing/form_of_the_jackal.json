@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter's Blessing ~ Form of the Jackal",
+    "name": "Form of the Jackal",
+    "class": "Shifter's Blessing",
+    "description": "The ranger becomes thin and hyperactive, his movements taking on a nervous spryness. While in this form, the ranger can spend a move action to move up to 1/2 his speed without provoking attacks of opportunity.|!PREABILITY:1,CATEGORY=Special Ability,Shapeshifter ~ Master Shifter",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter's Blessing ~ Form of the Jackal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.ShifterBlessing"
+      },
+      {
+        "key": "DESC",
+        "value": "The ranger becomes thin and hyperactive, his movements taking on a nervous spryness. While in this form, the ranger can spend a move action to move up to 1/2 his speed without provoking attacks of opportunity.|!PREABILITY:1,CATEGORY=Special Ability,Shapeshifter ~ Master Shifter"
+      },
+      {
+        "key": "DESC",
+        "value": "The ranger becomes thin and hyperactive, his movements taking on a nervous spryness. While in this form, the ranger does not provoke attacks of opportunity due to movement. Alternatively, the ranger can polymorph into the form of a jackal or other canine creature as if the caster of beast shape IV.|PREABILITY:1,CATEGORY=Special Ability,Shapeshifter ~ Master Shifter"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2830,
+    "record_key": "Shifter's Blessing ~ Form of the Jackal"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

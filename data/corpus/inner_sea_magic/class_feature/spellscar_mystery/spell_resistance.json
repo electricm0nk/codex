@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spellscar Mystery ~ Spell Resistance",
+    "name": "Spell Resistance",
+    "class": "Spellscar Mystery",
+    "description": "You gain SR equal to %1.|SpellscarSpellResistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellscar Mystery ~ Spell Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Extraordinary"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=11"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpellscarSpellResistance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain SR equal to %1.|SpellscarSpellResistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpellscarSpellResistance|OracleLVL+5"
+      },
+      {
+        "key": "SR",
+        "value": "SpellscarSpellResistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 106,
+    "record_key": "Spellscar Mystery ~ Spell Resistance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

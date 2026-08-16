@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Golden Legionnaire ~ Allied Retribution",
+    "name": "Allied Retribution",
+    "class": "Golden Legionnaire",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Golden Legionnaire ~ Allied Retribution"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Golden Legionnaire Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlliedRetributionBonus|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "DESC",
+        "value": "If a Golden Legionnaire sees a creature within 60 feet of him attack an ally or any friendly creature, including himself, he can select that attacker as a designated adversary. When a Golden Legionnaire does this, he gains a +%1 morale bonus on attack rolls and weapon damage rolls against the designated adversary for %2 rounds. A Golden Legionnaire can have %3 designated adversaries. If he already has his maximum number of designated adversaries selected, he can end the effects of his allied retribution against one of his previously designated adversaries and select a new one. The Golden Legionnaire can reselect a creature that is already a designated adversary if it attacks an ally or a friendly creature again, allowing him to restart the effect's duration.|AlliedRetributionBonus|GoldenLegionnaireLVL|GoldenLegionnaireLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlliedRetributionBonus|1+(GoldenLegionnaireLVL>=7)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 146,
+    "record_key": "Golden Legionnaire ~ Allied Retribution"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

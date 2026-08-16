@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Evangelist ~ Spontaneous Casting",
+    "name": "Spontaneous Casting",
+    "class": "Evangelist",
+    "description": "An evangelist does not gain the ability to spontaneously cast cure or inflict spells by sacrificing prepared spells. However, an evangelist can spontaneously cast command (1st), enthrall (2nd), tongues (3rd), suggestion (4th), greater command (5th), geas/quest (6th), mass suggestion (7th), sympathy (8th) and demand (9th) as a spell of listed level by sacrificing a prepared spell of the same level or higher.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist ~ Spontaneous Casting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An evangelist does not gain the ability to spontaneously cast cure or inflict spells by sacrificing prepared spells. However, an evangelist can spontaneously cast command (1st), enthrall (2nd), tongues (3rd), suggestion (4th), greater command (5th), geas/quest (6th), mass suggestion (7th), sympathy (8th) and demand (9th) as a spell of listed level by sacrificing a prepared spell of the same level or higher."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Command|Cleric=2|Enthrall|Cleric=3|Tongues|Cleric=4|Suggestion|Cleric=5|Command (Greater)|Cleric=6|Geas/Quest|Cleric=7|Suggestion (Mass)|Cleric=8|Sympathy|Cleric=9|Demand"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 585,
+    "record_key": "Evangelist ~ Spontaneous Casting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

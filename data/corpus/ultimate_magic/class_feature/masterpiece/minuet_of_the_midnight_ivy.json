@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Masterpiece ~ Minuet of the Midnight Ivy",
+    "name": "Minuet of the Midnight Ivy",
+    "class": "Masterpiece",
+    "description": "Your winding, twisting dance is helpful in dodging obstacles and climbing.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterpiece ~ Minuet of the Midnight Ivy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Masterpiece"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MinuetOfTheMidnightIvyTargets|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your winding, twisting dance is helpful in dodging obstacles and climbing."
+      },
+      {
+        "key": "DESC",
+        "value": " As ivy climbs walls and spills across even the rockiest and most uneven of terrain, so too does your dance propel you across broken stone and up walls. As long as you maintain the performance, whenever you move, you may move through 5 feet of difficult terrain each round as if it were normal terrain; this allows you to take a 5-foot step into difficult terrain. As long as you move laterally at least 10 feet, you may climb as if you had a climb speed equal to your base speed. You may spend the first round of this performance demonstrating the dance to up to %1 creatures; if these students succeed at a DC 15 Perform (dance) check, they also gain the benefits of this masterpiece as long as you maintain the performance.  Use: 1 bardic performance round per round.  Action: 1 full round.|MinuetOfTheMidnightIvyTargets"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MinuetOfTheMidnightIvyTargets|(MasterpieceLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 178,
+    "record_key": "Masterpiece ~ Minuet of the Midnight Ivy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

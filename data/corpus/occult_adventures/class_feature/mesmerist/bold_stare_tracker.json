@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mesmerist ~ Bold Stare",
+    "name": "Bold Stare Tracker",
+    "class": "Mesmerist",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist ~ Bold Stare"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BoldStaresKnown|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mesmerist ~ Bold Stare Output|PREVARGTEQ:BoldStareKnown,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Bold Stare Choice|BoldStaresKnown"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BoldStaresKnown|(MesmeristLVL+1)/4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 923,
+    "record_key": "Mesmerist ~ Bold Stare"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

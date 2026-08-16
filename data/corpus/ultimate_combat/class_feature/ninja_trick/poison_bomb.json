@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ninja Trick ~ Poison Bomb",
+    "name": "Poison Bomb",
+    "class": "Ninja Trick",
+    "description": "Whenever the ninja throws a smoke bomb, she can decide to include 1 dose of any inhaled poison she possesses. This poison affects all creatures in the smoke and lasts as long as the smoke lasts. She must pay for the poison normally. The ninja must have the smoke bomb ninja trick before selecting this trick.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Poison Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special ABility,Ninja Trick ~ Smoke Bomb"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the ninja throws a smoke bomb, she can decide to include 1 dose of any inhaled poison she possesses. This poison affects all creatures in the smoke and lasts as long as the smoke lasts. She must pay for the poison normally. The ninja must have the smoke bomb ninja trick before selecting this trick."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 139,
+    "record_key": "Ninja Trick ~ Poison Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

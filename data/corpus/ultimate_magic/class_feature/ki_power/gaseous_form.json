@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ki Power ~ Gaseous Form",
+    "name": "Gaseous Form",
+    "class": "Ki Power",
+    "description": "Spend 1 ki point to use gaseous form (self-only) as a spell-like ability (caster level %1).|classlevel(\"Monk\")",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ki Power ~ Gaseous Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.KiPower.SpellLike"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=6"
+      },
+      {
+        "key": "DESC",
+        "value": "Spend 1 ki point to use gaseous form (self-only) as a spell-like ability (caster level %1).|classlevel(\"Monk\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1371,
+    "record_key": "Ki Power ~ Gaseous Form"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

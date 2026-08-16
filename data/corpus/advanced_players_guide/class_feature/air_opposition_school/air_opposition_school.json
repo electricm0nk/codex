@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Air Opposition School",
+    "name": "Air Opposition School",
+    "class": null,
+    "description": "You have chosen air spells as an opposition school. Preparing an air spell takes up two spell slots of the same level. You take a -4 penalty on any skill checks made when crafting a magic item that has an air spell as a prerequisite.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneOppositionSchool"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Air School"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen air spells as an opposition school. Preparing an air spell takes up two spell slots of the same level. You take a -4 penalty on any skill checks made when crafting a magic item that has an air spell as a prerequisite."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3302,
+    "record_key": "Air Opposition School"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

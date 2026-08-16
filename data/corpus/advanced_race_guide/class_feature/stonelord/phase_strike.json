@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Stonelord ~ Phase Strike",
+    "name": "Phase Strike",
+    "class": "Stonelord",
+    "description": "A stonelord's stonestrike may pass through stone and metal as if they weren't there. By spending 2 uses of her stonestrike ability, she may ignore any cover less than total cover provided by stone or metal, and she ignores any AC bonus from stone or metal armor or shields as if wielding a brilliant energy weapon. A phase strike cannot damage constructs, objects, or creatures with the earth subtype, but unlike a brilliant energy weapon, it can harm undead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stonelord ~ Phase Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A stonelord's stonestrike may pass through stone and metal as if they weren't there. By spending 2 uses of her stonestrike ability, she may ignore any cover less than total cover provided by stone or metal, and she ignores any AC bonus from stone or metal armor or shields as if wielding a brilliant energy weapon. A phase strike cannot damage constructs, objects, or creatures with the earth subtype, but unlike a brilliant energy weapon, it can harm undead."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 99,
+    "record_key": "Stonelord ~ Phase Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

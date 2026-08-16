@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wilderness Warden ~ Smite Evil",
+    "name": "Smite Evil",
+    "class": "Wilderness Warden",
+    "description": "A wilderness warden gains this ability at 4th level, and it functions at her paladin level -3. She can expend a daily use of smite evil to gain an additional daily use of natural defense. She deals additional damage on her first successful attack when the target of her smite evil is an evil fey, humanoid (giant), magical beast, or monstrous humanoid, rather than an evil dragon, outsider (evil), or undead. This alters smite evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wilderness Warden ~ Smite Evil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Features.WildernessWardenClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A wilderness warden gains this ability at 4th level, and it functions at her paladin level -3. She can expend a daily use of smite evil to gain an additional daily use of natural defense. She deals additional damage on her first successful attack when the target of her smite evil is an evil fey, humanoid (giant), magical beast, or monstrous humanoid, rather than an evil dragon, outsider (evil), or undead. This alters smite evil."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Paladin ~ Smite Evil"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteEvilLVL|-3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 887,
+    "record_key": "Wilderness Warden ~ Smite Evil"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rivethun Emissary ~ Spirit Animal",
+    "name": "Spirit Animal",
+    "class": "Rivethun Emissary",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rivethun Emissary ~ Spirit Animal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Rivethun Emissary Class Feature.SpecialQuality.Extraordinary.Familiar"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanSpiritLVL|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      },
+      {
+        "key": "DESC",
+        "value": "A Rivethun emissary strengthens her bond to the spirit world by channeling additional divine power through her familiar or spirit animal."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanSpiritLVL|RivethunEmissaryLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|RivethunEmissaryLVL"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Rivethun Enhanced Familiar|Rivethun Enhanced Spirit Animal"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 439,
+    "record_key": "Rivethun Emissary ~ Spirit Animal"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

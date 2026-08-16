@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order Of The Eastern Star ~ Challenge",
+    "name": "Challenge",
+    "class": "Order Of The Eastern Star",
+    "description": "[not implemented]Whenever a cavalier of the order of the eastern star issues a challenge, he receives a +1 dodge bonus to AC and a +1 insight bonus on saves against the attacks and abilities of the target of his challenge. He must be wearing light armor and carrying no more than a light load to receive these bonuses. These bonuses increase by 1 for every 4 class levels the cavalier possesses.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order Of The Eastern Star ~ Challenge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Order Of The Eastern Star Class Feature.Cavalier Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[not implemented]Whenever a cavalier of the order of the eastern star issues a challenge, he receives a +1 dodge bonus to AC and a +1 insight bonus on saves against the attacks and abilities of the target of his challenge. He must be wearing light armor and carrying no more than a light load to receive these bonuses. These bonuses increase by 1 for every 4 class levels the cavalier possesses."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1706,
+    "record_key": "Order Of The Eastern Star ~ Challenge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

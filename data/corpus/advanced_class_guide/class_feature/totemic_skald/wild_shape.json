@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Totemic Skald ~ Wild Shape",
+    "name": "Wild Shape",
+    "class": "Totemic Skald",
+    "description": "A totemic skald gains the ability to wild shape into the form of a Small or Medium version of his totem animal, as the druid class feature. His effective druid level for this ability is equal to his skald level - 1. He can use this ability %1 times per day. This doesn't allow the skald to assume other forms, such as elementals, plants, or other kinds of animals. When in animal form, the skald is treated as able to speak normally for the purpose of using raging song, but not for using other abilities that require speech (such as spellcasting). The skald uses his class level as his druid level for the purpose of qualifying for feats that affect wild shape (such as Wild Speech).|min(3,floor((SkaldLVL+1)/6))",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Totemic Skald ~ Wild Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Totemic Skald Class Feature.Skald Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A totemic skald gains the ability to wild shape into the form of a Small or Medium version of his totem animal, as the druid class feature. His effective druid level for this ability is equal to his skald level - 1. He can use this ability %1 times per day. This doesn't allow the skald to assume other forms, such as elementals, plants, or other kinds of animals. When in animal form, the skald is treated as able to speak normally for the purpose of using raging song, but not for using other abilities that require speech (such as spellcasting). The skald uses his class level as his druid level for the purpose of qualifying for feats that affect wild shape (such as Wild Speech).|min(3,floor((SkaldLVL+1)/6))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3703,
+    "record_key": "Totemic Skald ~ Wild Shape"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

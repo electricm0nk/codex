@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order Domain ~ Mantle against Chaos",
+    "name": "Mantle against Chaos",
+    "class": "Order Domain",
+    "description": "You can use protection from chaos on yourself or another creature as a spell-like ability. You can use this ability %1 minutes per day. This duration does not need to be consecutive, but it must be used in 1 minute increments.|MantleAgainstChaosTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order Domain ~ Mantle against Chaos"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MantleAgainstChaosTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use protection from chaos on yourself or another creature as a spell-like ability. You can use this ability %1 minutes per day. This duration does not need to be consecutive, but it must be used in 1 minute increments.|MantleAgainstChaosTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MantleAgainstChaosTimes|DomainOrderLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 384,
+    "record_key": "Order Domain ~ Mantle against Chaos"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

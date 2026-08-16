@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Enveloping Void",
+    "name": "Enveloping Void",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman curses one creature with the dark void. As a standard action, the shaman can cause one enemy within 30 feet to treat the light level as two steps lower: bright light becomes dim light, normal light becomes darkness, and areas of dim light and darkness become supernaturally dark (like darkness, but even creatures with darkvision cannot see). This effect lasts for %1 rounds. A successful Will saving throw (DC %2) negates this effect. Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours.|ShamanEnvelopingVoidDuration|ShamanEnvelopingVoidDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Enveloping Void"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanHeavensHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Enveloping Void"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanHeavensSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanEnvelopingVoidDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanEnvelopingVoidDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman curses one creature with the dark void. As a standard action, the shaman can cause one enemy within 30 feet to treat the light level as two steps lower: bright light becomes dim light, normal light becomes darkness, and areas of dim light and darkness become supernaturally dark (like darkness, but even creatures with darkvision cannot see). This effect lasts for %1 rounds. A successful Will saving throw (DC %2) negates this effect. Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours.|ShamanEnvelopingVoidDuration|ShamanEnvelopingVoidDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanEnvelopingVoidDuration|ShamanSpiritLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanEnvelopingVoidDC|ShamanHexDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1567,
+    "record_key": "Shaman Spirit Hex ~ Enveloping Void"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

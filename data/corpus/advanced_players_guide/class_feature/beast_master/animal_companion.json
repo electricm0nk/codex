@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Beast Master ~ Animal Companion",
+    "name": "Animal Companion",
+    "class": "Beast Master",
+    "description": "A beast master forms a close bond with an animal companion. This ability functions like the druid animal companion ability except that the ranger's effective druid level is equal to his ranger level - 3. The ranger gains a +2 bonus on wild empathy and Handle Animal checks made regarding his animal companion. Unlike a normal ranger, a beast master's choice of animal companion is not limited to a subset of all possible animal companion choices-he may choose freely among all animal companion choices, just as a druid can. The beast master may have more than one animal companion, but he must divide up his effective druid level between his companions to determine the abilities of each companion. For example, a beast master with an effective druid level of 4 can have one 4th-level companion, two 2nd-level companions, or one 1st-level and one 3rd-level companion. Each time a beast master's effective druid level increases, he must decide how to allocate the increase among his animal companions (including the option of adding a new 1st-level companion). Once an effective druid level is allocated to a particular companion, it cannot be redistributed while that companion is in the ranger's service (he must release a companion or wait until a companion dies to allocate its levels to another companion). The share spells animal companion ability does not give the ranger the ability to cast a single spell so that it affects all of his animal companions. This ability replaces hunter's bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Beast Master ~ Animal Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.RangerHuntersBond.AnimalCompanion.Animal Companion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BeastmasterCompanionChoice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A beast master forms a close bond with an animal companion. This ability functions like the druid animal companion ability except that the ranger's effective druid level is equal to his ranger level - 3. The ranger gains a +2 bonus on wild empathy and Handle Animal checks made regarding his animal companion. Unlike a normal ranger, a beast master's choice of animal companion is not limited to a subset of all possible animal companion choices-he may choose freely among all animal companion choices, just as a druid can. The beast master may have more than one animal companion, but he must divide up his effective druid level between his companions to determine the abilities of each companion. For example, a beast master with an effective druid level of 4 can have one 4th-level companion, two 2nd-level companions, or one 1st-level and one 3rd-level companion. Each time a beast master's effective druid level increases, he must decide how to allocate the increase among his animal companions (including the option of adding a new 1st-level companion). Once an effective druid level is allocated to a particular companion, it cannot be redistributed while that companion is in the ranger's service (he must release a companion or wait until a companion dies to allocate its levels to another companion). The share spells animal companion ability does not give the ranger the ability to cast a single spell so that it affects all of his animal companions. This ability replaces hunter's bond."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Beastmaster Companion Choice|BeastmasterCompanionChoice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BeastmasterCompanionChoice|RangerLVL-3|PRECLASS:1,Ranger=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BeastmasterCompanionChoice|3|PRECLASS:1,Ranger=12"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2679,
+    "record_key": "Beast Master ~ Animal Companion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

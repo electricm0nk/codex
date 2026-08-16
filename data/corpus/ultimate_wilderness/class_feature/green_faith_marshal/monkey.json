@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Green Faith Marshal ~ Monkey Domain",
+    "name": "Monkey",
+    "class": "Green Faith Marshal",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Faith Marshal ~ Monkey Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GreenFaithMarshalDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMonkeyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMonkeyDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMonkeyTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMonkeyAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Monkey Domain ~ Familiar|PREVARGTEQ:DomainMonkeyAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Monkey Domain ~ Monkey Athletics"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Monkey Domain ~ Ranged Legerdemain|PREVARGTEQ:DomainMonkeyAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMonkeyLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMonkeyDC|10+(DomainMonkeyLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMonkeyTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMonkeyAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Inquisitor=1|Beguiling Gift|Inquisitor=2|Spider Climb|Inquisitor=3|Cacophonous Call|Inquisitor=4|Freedom of Movement|Inquisitor=5|Summon Nature's Ally V (Dire Ape or Girallon Only)|Inquisitor=6|Confusion"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 782,
+    "record_key": "Green Faith Marshal ~ Monkey Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

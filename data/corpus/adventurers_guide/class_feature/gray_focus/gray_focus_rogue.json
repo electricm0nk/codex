@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gray Focus ~ Rogue",
+    "name": "Gray Focus ~ Rogue",
+    "class": "Gray Focus",
+    "description": "You do not gain any benefit for your gray focus or gray boons. Once you gain at least 1 level in Rogue, you immediately gain the appropriate powers and boons due you from your Gray Corsair class levels.|!PRECLASS:1,Rogue=1",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.GrayCorsairFocus"
+      },
+      {
+        "key": "DESC",
+        "value": "You do not gain any benefit for your gray focus or gray boons. Once you gain at least 1 level in Rogue, you immediately gain the appropriate powers and boons due you from your Gray Corsair class levels.|!PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +1d6 sneak attack, as per the rogue class feature. This extra damage stacks with other sources of sneak attack damage.|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|1|PREMULT:2,[PRECLASS:1,Rogue=1],[PREVARGTEQ:GrayCorsairLVL,2]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|1|PREMULT:2,[PRECLASS:1,Rogue=1],[PREVARGTEQ:GrayCorsairLVL,4]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|1|PREMULT:2,[PRECLASS:1,Rogue=1],[PREVARGTEQ:GrayCorsairLVL,6]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|1|PREMULT:2,[PRECLASS:1,Rogue=1],[PREVARGTEQ:GrayCorsairLVL,8]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|1|PREMULT:2,[PRECLASS:1,Rogue=1],[PREVARGTEQ:GrayCorsairLVL,10]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sneak Attack"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 182,
+    "record_key": "Gray Focus ~ Rogue"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

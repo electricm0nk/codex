@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wildborn ~ Inexhaustible",
+    "name": "Inexhaustible",
+    "class": "Wildborn",
+    "description": "Wildborn live ruggedly and sleep lightly. A wildborn recovers nonlethal damage for each minute of rest as if an hour had passed. She applies twice her damage reduction gained from barbarian levels against nonlethal damage. This alters damage reduction.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildborn ~ Inexhaustible"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.WildbornClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Wildborn live ruggedly and sleep lightly. A wildborn recovers nonlethal damage for each minute of rest as if an hour had passed. She applies twice her damage reduction gained from barbarian levels against nonlethal damage. This alters damage reduction."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 227,
+    "record_key": "Wildborn ~ Inexhaustible"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Vigilant Defender",
+    "name": "Vigilant Defender",
+    "class": "Inquisitor Archetype",
+    "description": "Some inquisitors focus more on protecting those who share their faiths and their ideals than on actively hunting their enemies. These vigilant defenders often work alongside traveling clerics and paladins.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Vigilant Defender"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Vigilant Defender],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_Judgment=True,Inquisitor_Archetype_SternGaze=True,Inquisitor_Archetype_ExploitWeakness=True,Inquisitor_Archetype_TrueJudgment=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some inquisitors focus more on protecting those who share their faiths and their ideals than on actively hunting their enemies. These vigilant defenders often work alongside traveling clerics and paladins."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vigilant Defender ~ Shared Judgments|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vigilant Defender ~ Protect the Faithful|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vigilant Defender ~ Bolster the Wounded|PRECLASS:1,Inquisitor=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vigilant Defender ~ True Vengeance|PRECLASS:1,Inquisitor=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Judgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_ExploitWeakness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_TrueJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_ExploitWeakness|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 444,
+    "record_key": "Inquisitor Archetype ~ Vigilant Defender"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

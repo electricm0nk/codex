@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hidden Priest ~ False Arcanist",
+    "name": "False Arcanist",
+    "class": "Hidden Priest",
+    "description": "A hidden priest is able to disguise his cleric spellcasting, presenting it as arcane magic of some kind. A hidden priest adds half his class level (minimum +1) on all Bluff skill checks to send secret messages about religious matters, and on all Sense Motive checks to recognize similar messages. He also adds this bonus on Perception and Sense Motive checks relating to agents of the laws against his religion (including city guards in lands where these laws are in effect). This ability replaces one of the cleric's two 1st-level domain powers (her choice).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hidden Priest ~ False Arcanist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A hidden priest is able to disguise his cleric spellcasting, presenting it as arcane magic of some kind. A hidden priest adds half his class level (minimum +1) on all Bluff skill checks to send secret messages about religious matters, and on all Sense Motive checks to recognize similar messages. He also adds this bonus on Perception and Sense Motive checks relating to agents of the laws against his religion (including city guards in lands where these laws are in effect). This ability replaces one of the cleric's two 1st-level domain powers (her choice)."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hidden Priest Arcane Magic Choice|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 191,
+    "record_key": "Hidden Priest ~ False Arcanist"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

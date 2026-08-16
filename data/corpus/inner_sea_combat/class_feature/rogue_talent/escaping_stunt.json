@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Talent ~ Escaping Stunt",
+    "name": "Escaping Stunt",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent can, as an immediate action, attempt an Escape Artist check in place of a Reflex saving throw against any effect that would impose the entangled condition on her. Additionally, once per day when she is the target of a grapple combat maneuver, a rogue with this talent can attempt an Escape Artist check as an immediate action, using the result of the skill check in place of her CMD against that combat maneuver attempt. A rogue can use this second ability one additional time per day for every 5 rogue levels she possesses. A rogue must be trained in Escape Artist to select this talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Escaping Stunt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Escape Artist=1"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent can, as an immediate action, attempt an Escape Artist check in place of a Reflex saving throw against any effect that would impose the entangled condition on her. Additionally, once per day when she is the target of a grapple combat maneuver, a rogue with this talent can attempt an Escape Artist check as an immediate action, using the result of the skill check in place of her CMD against that combat maneuver attempt. A rogue can use this second ability one additional time per day for every 5 rogue levels she possesses. A rogue must be trained in Escape Artist to select this talent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 500,
+    "record_key": "Rogue Talent ~ Escaping Stunt"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

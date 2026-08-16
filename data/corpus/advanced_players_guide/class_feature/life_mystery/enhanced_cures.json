@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Life Mystery ~ Enhanced Cures",
+    "name": "Enhanced Cures",
+    "class": "Life Mystery",
+    "description": "Whenever you cast a cure spell, the maximum number of hit points healed is based on your oracle level, not the limit based on the spell. For example, casting cure light wounds heals 1d8+%1 hit points instead of the normal 1d8+5 maximum.|OracleEnhancedCuresMaxHP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Mystery ~ Enhanced Cures"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.LifeRevelation.Supernatural.RevelationTargetOneOnly"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleEnhancedCuresMaxHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a cure spell, the maximum number of hit points healed is based on your oracle level, not the limit based on the spell. For example, casting cure light wounds heals 1d8+%1 hit points instead of the normal 1d8+5 maximum.|OracleEnhancedCuresMaxHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleEnhancedCuresMaxHP|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 624,
+    "record_key": "Life Mystery ~ Enhanced Cures"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

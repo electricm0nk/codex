@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Darkness Bomb",
+    "name": "Darkness Bomb*",
+    "class": "Discovery",
+    "description": "When the alchemist creates a bomb, he can choose to have it suppress light sources on the target. This extinguishes nonmagical light sources carried by the target and dispels magical light sources for %1 rounds as deeper darkness.|AlchemistDiscoveryLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Darkness Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistBombModifier"
+      },
+      {
+        "key": "DESC",
+        "value": "When the alchemist creates a bomb, he can choose to have it suppress light sources on the target. This extinguishes nonmagical light sources carried by the target and dispels magical light sources for %1 rounds as deeper darkness.|AlchemistDiscoveryLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.205"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 977,
+    "record_key": "Discovery ~ Darkness Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

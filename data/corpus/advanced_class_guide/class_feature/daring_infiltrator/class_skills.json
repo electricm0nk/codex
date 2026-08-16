@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Daring Infiltrator ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Daring Infiltrator",
+    "description": "A daring infiltrator gains Disguise and Stealth as class skills, but does not gain Diplomacy, Perform, and Profession as class skills. This alters the swashbuckler's class skill list.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Daring Infiltrator ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Daring Infiltrator Class Feature.Swashbuckler Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A daring infiltrator gains Disguise and Stealth as class skills, but does not gain Diplomacy, Perform, and Profession as class skills. This alters the swashbuckler's class skill list."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Bluff|Climb|TYPE.Craft|Disguise|Escape Artist|Intimidate|Knowledge (Local)|Knowledge (Nobility)|Perception|Ride|Sense Motive|Sleight of Hand|Stealth|Swim"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3849,
+    "record_key": "Daring Infiltrator ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

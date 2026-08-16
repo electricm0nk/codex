@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Spellbreaker",
+    "name": "Spellbreaker",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can strike at enemy spellcasters who fail to cast defensively when you threaten them.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Spellbreaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Disruptive"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SpellBreakerQualify,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can strike at enemy spellcasters who fail to cast defensively when you threaten them."
+      },
+      {
+        "key": "DESC",
+        "value": " Enemies in your threatened area that fail their checks to cast spells defensively provoke attacks of opportunity from you."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Spellbreaker"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4285,
+    "record_key": "Warpriest Bonus Feat ~ Spellbreaker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Secret Lore ~ Dodge Trick",
+    "name": "Dodge Trick",
+    "class": "Secret Lore",
+    "description": "+1 dodge bonus to AC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Secret Lore ~ Dodge Trick"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LoremasterSecret"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "LoremasterSecretsLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "+1 dodge bonus to AC"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|1|TYPE=Dodge"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.387"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3034,
+    "record_key": "Secret Lore ~ Dodge Trick"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

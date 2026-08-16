@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Archetype ~ Winter Witch",
+    "name": "Winter Witch",
+    "class": "Witch Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Winter Witch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Winter Witch],[!PREFACT:1,ABILITIES,Witch_Archetype_Familiar=True,Witch_Archetype_Hex4=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The descendents of Baba Yaga rule the frozen realm of Irrisen, and possess a unique power stemming from their otherworldly origin and ties to cold magic. This power is partly magical, partly political, and partly cultural. Known as winter witches, these scions of Baba Yaga have not coveted or hidden their secrets, for they understand the truth that those who see winter witches work their frozen magic will simply assume the witch works for Irrisen. By opening their traditions to those who have no blood connection to Baba Yaga or the rulers of Irrisen, they spread the notoriety and infamy of their magic far beyond what they could accomplish on their own. While winter witches are most commonly encountered in Irrisen, they can and have been encountered throughout the Inner Sea region, working to spread their nation's notoriety with each frozen spell and manipulative hex."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Witch Class Feature|AUTOMATIC|Winter Witch ~ Familiar|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Witch Class Feature|AUTOMATIC|Winter Witch ~ Cantrips|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Witch Class Feature|AUTOMATIC|Winter Witch ~ Patron|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Witch Class Feature|AUTOMATIC|Winter Witch ~ Ice Magic|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Witch Class Feature|AUTOMATIC|Winter Witch ~ Cold Flesh|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Witch Class Feature|AUTOMATIC|Winter Witch ~ Hexes|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Familiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Familiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex4|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 388,
+    "record_key": "Witch Archetype ~ Winter Witch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

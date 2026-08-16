@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Heresy ~ Sifkesh",
+    "name": "Heresy",
+    "class": "Heresy",
+    "description": "1/day as a standard action, you can utter blasphemy or heresy against a single religion other than the worship of a demon lord. A worshiper of the targeted religion must be able to hear your utterance, or this ability fails. You gain SR %1 against spells cast by worshipers of the religion you spoke out against - this SR lasts until you use this ability again to blaspheme a different religion (as long as you continue your daily obedience, this SR persists until you select a different religion).|HD+11",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heresy ~ Sifkesh"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day as a standard action, you can utter blasphemy or heresy against a single religion other than the worship of a demon lord. A worshiper of the targeted religion must be able to hear your utterance, or this ability fails. You gain SR %1 against spells cast by worshipers of the religion you spoke out against - this SR lasts until you use this ability again to blaspheme a different religion (as long as you continue your daily obedience, this SR persists until you select a different religion).|HD+11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 182,
+    "record_key": "Heresy ~ Sifkesh"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Holy Tactician ~ Guide The Battle",
+    "name": "Guide the Battle",
+    "class": "Holy Tactician",
+    "description": "At 8th level, the paladin can direct her allies into an advantageous position once per round as a move action. Each ally (if physically able to) can move 5 feet without expending an action. This movement does not provoke attacks of opportunity. The allies must be able to see or hear the paladin in order to make this movement and cannot be flat-footed. At 15th level, her allies can make this 5-foot move and ignore difficult terrain. This ability replaces aura of resolve.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holy Tactician ~ Guide The Battle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, the paladin can direct her allies into an advantageous position once per round as a move action. Each ally (if physically able to) can move 5 feet without expending an action. This movement does not provoke attacks of opportunity. The allies must be able to see or hear the paladin in order to make this movement and cannot be flat-footed. At 15th level, her allies can make this 5-foot move and ignore difficult terrain. This ability replaces aura of resolve."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1486,
+    "record_key": "Holy Tactician ~ Guide The Battle"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

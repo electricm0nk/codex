@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ulfen Guard ~ Rage",
+    "name": "Rage",
+    "class": "Ulfen Guard",
+    "description": "An Ulfen Guard is trained to harness her brutish nature while in combat in the defense of her charge. This works as the barbarian ability of the same name. An Ulfen Guard's class levels stack with any other classes granting this ability for determining the effects of rage powers and the number of rounds per day the guard can rage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ulfen Guard ~ Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ulfen Guard Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An Ulfen Guard is trained to harness her brutish nature while in combat in the defense of her charge. This works as the barbarian ability of the same name. An Ulfen Guard's class levels stack with any other classes granting this ability for determining the effects of rage powers and the number of rounds per day the guard can rage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 553,
+    "record_key": "Ulfen Guard ~ Rage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Good Domain",
+    "name": "Good",
+    "class": "Forbidden Rites Domain",
+    "description": "You have pledged your life and soul to goodness and purity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Good Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.GoodDomainReplacement"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LG,NG,CG"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainGoodLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainGoodDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainGoodTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainGoodAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have pledged your life and soul to goodness and purity."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Touch of Good|PREDOMAIN:1,Good|PREVARGTEQ:DomainGoodAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Holy Lance|PREDOMAIN:1,Good|PREVARGTEQ:DomainGoodAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainGoodLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainGoodDC|10+(DomainGoodLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainGoodTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainGoodAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Protection from Evil|Cleric=2|Align Weapon (Good Only)|Cleric=3|Magic Circle against Evil|Cleric=4|Holy Smite|Cleric=5|Dispel Evil|Cleric=6|Blade Barrier|Cleric=7|Holy Word|Cleric=8|Holy Aura|Cleric=9|Summon Monster IX (Good Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1040,
+    "record_key": "Forbidden Rites Domain ~ Good Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

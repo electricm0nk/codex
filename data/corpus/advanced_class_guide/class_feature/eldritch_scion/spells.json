@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Eldritch Scion ~ Spells",
+    "name": "Spells",
+    "class": "Eldritch Scion",
+    "description": "An eldritch scion casts arcane spells drawn from the magus spell list. He can cast any spell he knows without preparing it ahead of time. To learn or cast a spell, an eldritch scion must have a Charisma score equal to at least 10 + the spell's level. The DC for a saving throw against an eldritch scion's spell is 10 + the spell's level + the eldritch scion's Charisma modifier. An eldritch scion can cast only a certain number of spells of each spell level per day. His base daily spell allotment is the same as a bard of the same level. In addition, he receives bonus spells per day if he has a high Charisma score. An eldritch scion's selection of spells is limited. He has the same number of spells known as a bard of the same level, and can choose new spells to replace old ones at 5th level and every 3 class levels after that, just as a bard does. See the bard (Core Rulebook 35) for more information on swapping spells known. This replaces the magus's spells class feature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eldritch Scion ~ Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Eldritch Scion Class Feature.Magus Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An eldritch scion casts arcane spells drawn from the magus spell list. He can cast any spell he knows without preparing it ahead of time. To learn or cast a spell, an eldritch scion must have a Charisma score equal to at least 10 + the spell's level. The DC for a saving throw against an eldritch scion's spell is 10 + the spell's level + the eldritch scion's Charisma modifier. An eldritch scion can cast only a certain number of spells of each spell level per day. His base daily spell allotment is the same as a bard of the same level. In addition, he receives bonus spells per day if he has a high Charisma score. An eldritch scion's selection of spells is limited. He has the same number of spells known as a bard of the same level, and can choose new spells to replace old ones at 5th level and every 3 class levels after that, just as a bard does. See the bard (Core Rulebook 35) for more information on swapping spells known. This replaces the magus's spells class feature."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLSTAT;Class=Magus|CHASCORE+(((CHASCORE-10)/2)-CHA)"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLSTAT;Class=Magus|-INTSCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLKNOWNSTAT;Class=Magus|-INTSCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLKNOWNSTAT;Class=Magus|CHASCORE+(((CHASCORE-10)/2)-CHA)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "FACT",
+        "value": "QualifiedForDragonDisciple|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3371,
+    "record_key": "Eldritch Scion ~ Spells"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

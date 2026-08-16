@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Archetype ~ Bouda",
+    "name": "Bouda",
+    "class": "Witch Archetype",
+    "description": "These strange and often solitary witches have a strong connection to curses, the evil eye, and hyenas.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Bouda"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Bouda],[!PREFACT:1,ABILITIES,Witch_Archetype_Familiar=True,Witch_Archetype_Hex1=True,Witch_Archetype_Hex10=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "These strange and often solitary witches have a strong connection to curses, the evil eye, and hyenas."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bouda ~ Fetish|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Witch Hex ~ Bouda's Eye|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bouda ~ Hyena Shape|PRECLASS:1,Witch=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Familiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Familiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex10|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 151,
+    "record_key": "Witch Archetype ~ Bouda"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

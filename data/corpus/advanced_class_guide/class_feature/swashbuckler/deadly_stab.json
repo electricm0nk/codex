@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Swashbuckler ~ Deadly Stab",
+    "name": "Deadly Stab",
+    "class": "Swashbuckler",
+    "description": "At 19th level, when the swashbuckler confirms a critical hit with a light or one-handed piercing melee weapon, she can spend 1 panache point to inflict a deadly stab. The target must succeed at a DC %1 Fortitude. On a failed saving throw, the target dies. This is a death attack. Performing this deed does not allow the swashbuckler to regain panache from confirming a critical hit or making a killing blow.|SwashbucklerDeadlyStabDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler ~ Deadly Stab"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL19"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Swashbuckler Deed.SwashbucklerDeedsLVL19.DeedHasCost.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SwashbucklerDeedQualifyLVL,19"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwashbucklerDeadlyStabDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwashbucklerDeadlyStabLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 19th level, when the swashbuckler confirms a critical hit with a light or one-handed piercing melee weapon, she can spend 1 panache point to inflict a deadly stab. The target must succeed at a DC %1 Fortitude. On a failed saving throw, the target dies. This is a death attack. Performing this deed does not allow the swashbuckler to regain panache from confirming a critical hit or making a killing blow.|SwashbucklerDeadlyStabDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwashbucklerDeadlyStabLVL|SwashbucklerDeedsLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwashbucklerDeadlyStabDC|SwashbucklerDeadlyStabLVL/2+10+DEX"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2097,
+    "record_key": "Swashbuckler ~ Deadly Stab"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

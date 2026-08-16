@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Stormwalker ~ Flash Step",
+    "name": "Flash Step",
+    "class": "Stormwalker",
+    "description": "A stormwalker can move across the battlefield like a bolt of lightning. As a full-round action, he can transform into lightning and move to any unoccupied square within 60 feet without provoking attacks of opportunity. He can make a single ranged attack before or after this movement.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stormwalker ~ Flash Step"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.StormwalkerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A stormwalker can move across the battlefield like a bolt of lightning. As a full-round action, he can transform into lightning and move to any unoccupied square within 60 feet without provoking attacks of opportunity. He can make a single ranged attack before or after this movement."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 917,
+    "record_key": "Stormwalker ~ Flash Step"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

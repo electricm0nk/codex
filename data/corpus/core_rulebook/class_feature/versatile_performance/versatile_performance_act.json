@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Versatile Performance ~ Act",
+    "name": "Versatile Performance (Act)",
+    "class": "Versatile Performance",
+    "description": "You can use your bonus in the Perform (Act) skill in place of your bonus in the Bluff or Disguise skills. When substituting in this way, you use your total Perform (Act) skill bonus, including class skill bonus, in place of your Bluff or Disguise skill bonus, whether or not you have ranks in that skill or if it is a class skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Versatile Performance ~ Act"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Extraordinary.VersatilePerformance"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your bonus in the Perform (Act) skill in place of your bonus in the Bluff or Disguise skills. When substituting in this way, you use your total Perform (Act) skill bonus, including class skill bonus, in place of your Bluff or Disguise skill bonus, whether or not you have ranks in that skill or if it is a class skill."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff (Perform (Act))|var(\"SKILL.Perform (Act).MISC\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disguise (Perform (Act))|var(\"SKILL.Perform (Act).MISC\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|Bluff (Perform (Act))|skillinfo(\"TOTALRANK\", \"Perform (Act)\")|TYPE=SkillGranted|PREABILITY:1,CATEGORY=Special Ability,Versatile Performance ~ Act"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|Disguise (Perform (Act))|skillinfo(\"TOTALRANK\", \"Perform (Act)\")|TYPE=SkillGranted|PREABILITY:1,CATEGORY=Special Ability,Versatile Performance ~ Act"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 549,
+    "record_key": "Versatile Performance ~ Act"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

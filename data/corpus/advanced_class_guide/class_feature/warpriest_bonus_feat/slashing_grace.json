@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Slashing Grace",
+    "name": "Slashing Grace",
+    "class": "Warpriest Bonus Feat",
+    "description": "Choose one kind of light or one-handed slashing weapon (such as the longsword). When wielding your chosen weapon one-handed, you can treat it as a one-handed piercing melee weapon for all feats and class abilities that require such a weapon (such as a swashbuckler's or a duelist's precise strike) and you can add your Dexterity modifier instead of your Strength modifier to that weapon's damage. The weapon must be one appropriate for your size.You do not gain this benefit while fighting with two weapons or using flurry of blows, or any time another hand is otherwise occupied.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Slashing Grace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "HasWeaponFinesseFeat,1"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Weapon Focus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose one kind of light or one-handed slashing weapon (such as the longsword). When wielding your chosen weapon one-handed, you can treat it as a one-handed piercing melee weapon for all feats and class abilities that require such a weapon (such as a swashbuckler's or a duelist's precise strike) and you can add your Dexterity modifier instead of your Strength modifier to that weapon's damage. The weapon must be one appropriate for your size.You do not gain this benefit while fighting with two weapons or using flurry of blows, or any time another hand is otherwise occupied."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "WEAPONPROFICIENCY|ABILITY=FEAT[Weapon Focus]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Slashing Grace (%LIST)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|When wielding your %1 one-handed, you can treat it as a one-handed piercing melee weapon for all feats and class abilities that require such a weapon and you can add your Dexterity modifier instead of your Strength modifier to that weapon's damage.|%LIST"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4186,
+    "record_key": "Warpriest Bonus Feat ~ Slashing Grace"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

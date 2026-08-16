@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunter Archetype ~ Verminous Hunter",
+    "name": "Verminous Hunter",
+    "class": "Hunter Archetype",
+    "description": "A verminous hunter calls on the ceaseless, single-minded dedication of vermin to hunt and overwhelm her prey. Where other hunters invoke the cunning, animalistic powers of the alpha predators, she calls on the powers of the lowest life forms, reaching out to the spider instead of the monkey, the mantis instead of the snake, or the moth instead of the owl.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Archetype ~ Verminous Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.HunterArchetype.HunterAnimalCompanion.HunterWildEmpathy.HunterAnimalFocus.HunterSecondAnimalFocus.HunterWoodlandStride.HunterMasterHunter"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Hunter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Verminous Hunter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.HunterAnimalCompanion,TYPE.HunterSecondAnimalFocus,TYPE.HunterWildEmpathy,TYPE.HunterAnimalFocus,TYPE.HunterWoodlandStride,TYPE.HunterMasterHunter]"
+      },
+      {
+        "key": "DESC",
+        "value": "A verminous hunter calls on the ceaseless, single-minded dedication of vermin to hunt and overwhelm her prey. Where other hunters invoke the cunning, animalistic powers of the alpha predators, she calls on the powers of the lowest life forms, reaching out to the spider instead of the monkey, the mantis instead of the snake, or the moth instead of the owl."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Verminous Hunter ~ Vermin Companion|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Verminous Hunter ~ Vermin Empathy|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Verminous Hunter ~ Vermin Focus|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Verminous Hunter ~ Swarm Stride|PRECLASS:1,Hunter=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Verminous Hunter ~ Second Vermin Focus|PRECLASS:1,Hunter=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Verminous Hunter ~ Master Hunter|PRECLASS:1,Hunter=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Hunter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3142,
+    "record_key": "Hunter Archetype ~ Verminous Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

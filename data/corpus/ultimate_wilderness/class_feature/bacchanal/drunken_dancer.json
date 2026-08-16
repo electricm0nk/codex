@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bacchanal ~ Drunken Dancer",
+    "name": "Drunken Dancer",
+    "class": "Bacchanal",
+    "description": "While maintaining a raging song, a bacchanal can consume a berry affected by goodberry, a potion, or a serving of alcohol as a move action that does not provoke attacks of opportunity. A berry affected by goodberry or a potion has its normal effect, while an alcoholic drink or a berry affected by goodberry via fermented fruit allows the skald to maintain his raging song that round without expending a round of raging song for the day (instead of the normal effects of the alcohol or fermented berry). For each alcoholic drink or fermented berry consumed while raging, the skald is nauseated for 1 round after his raging song ends. The internal fortitude rage power prevents this nauseated condition from occurring.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bacchanal ~ Drunken Dancer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.BacchanalClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "While maintaining a raging song, a bacchanal can consume a berry affected by goodberry, a potion, or a serving of alcohol as a move action that does not provoke attacks of opportunity. A berry affected by goodberry or a potion has its normal effect, while an alcoholic drink or a berry affected by goodberry via fermented fruit allows the skald to maintain his raging song that round without expending a round of raging song for the day (instead of the normal effects of the alcohol or fermented berry). For each alcoholic drink or fermented berry consumed while raging, the skald is nauseated for 1 round after his raging song ends. The internal fortitude rage power prevents this nauseated condition from occurring."
+      },
+      {
+        "key": "DESC",
+        "value": "When the bacchanal consumes an alcoholic drink or fermented berry while maintaining his rage song, he can gain the benefits of|PRECLASS:1,Skald=7"
+      },
+      {
+        "key": "DESC",
+        "value": "heroism,|PRECLASS:1,Skald=12"
+      },
+      {
+        "key": "DESC",
+        "value": "persistent vigor (ACG),|PRECLASS:1,Skald=17"
+      },
+      {
+        "key": "DESC",
+        "value": "cure light wounds or remove fear (for the duration of the raging song) at his caster level by spending 2 rounds of raging song.|PRECLASS:1,Skald=7"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1121,
+    "record_key": "Bacchanal ~ Drunken Dancer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

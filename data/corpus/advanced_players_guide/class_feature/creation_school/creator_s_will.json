@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Creation School ~ Creator's Will",
+    "name": "Creator's Will",
+    "class": "Creation School",
+    "description": "At 8th level, you can cast minor creation as a spell-like ability. You can have no more than one minor creation active at a time. If you cast the spell again, the previous casting immediately ends. At 12th level, this ability improves to major creation. You can use this ability %1 times per day.|CreationCreatorsWillTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Creation School ~ Creator's Will"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CreationCreatorsWillTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can cast minor creation as a spell-like ability. You can have no more than one minor creation active at a time. If you cast the spell again, the previous casting immediately ends. At 12th level, this ability improves to major creation. You can use this ability %1 times per day.|CreationCreatorsWillTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CreationCreatorsWillTimes|ConjurationSchoolLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|CreationCreatorsWillTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3350,
+    "record_key": "Creation School ~ Creator's Will"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dramaturgical Flourish ~ Heartening Song",
+    "name": "Heartening Song",
+    "class": "Dramaturgical Flourish",
+    "description": "An argent dramaturge's countersong functions against mind-affecting effects that rely on negative emotions (such as crushing despair, rage, or fear effects) as well as sonic and language-dependent effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dramaturgical Flourish ~ Heartening Song"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DramaturgicalFlourish"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bardic Performance ~ Countersong"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      },
+      {
+        "key": "DESC",
+        "value": "An argent dramaturge's countersong functions against mind-affecting effects that rely on negative emotions (such as crushing despair, rage, or fear effects) as well as sonic and language-dependent effects."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 31,
+    "record_key": "Dramaturgical Flourish ~ Heartening Song"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

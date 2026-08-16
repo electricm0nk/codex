@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Versatile Performance ~ Comedy",
+    "name": "Versatile Performance (Comedy)",
+    "class": "Versatile Performance",
+    "description": "You can use your bonus in the Perform (Comedy) skill in place of your bonus in the Bluff or Intimidate skills. When substituting in this way, you use your total Perform (Comedy) skill bonus, including class skill bonus, in place of your Bluff or Intimidate skill bonus, whether or not you have ranks in that skill or if it is a class skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Versatile Performance ~ Comedy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Extraordinary.VersatilePerformance"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your bonus in the Perform (Comedy) skill in place of your bonus in the Bluff or Intimidate skills. When substituting in this way, you use your total Perform (Comedy) skill bonus, including class skill bonus, in place of your Bluff or Intimidate skill bonus, whether or not you have ranks in that skill or if it is a class skill."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff (Perform (Comedy))|var(\"SKILL.Perform (Comedy).MISC\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate (Perform (Comedy))|var(\"SKILL.Perform (Comedy).MISC\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|Bluff (Perform (Comedy))|skillinfo(\"TOTALRANK\", \"Perform (Comedy)\")|TYPE=SkillGranted|PREABILITY:1,CATEGORY=Special Ability,Versatile Performance ~ Comedy"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|Intimidate (Perform (Comedy))|skillinfo(\"TOTALRANK\", \"Perform (Comedy)\")|TYPE=SkillGranted|PREABILITY:1,CATEGORY=Special Ability,Versatile Performance ~ Comedy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 550,
+    "record_key": "Versatile Performance ~ Comedy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

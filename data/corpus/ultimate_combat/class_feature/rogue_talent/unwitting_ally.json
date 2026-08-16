@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Talent ~ Unwitting Ally",
+    "name": "Unwitting Ally",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent can spend a swift action to attempt to make an opponent act like an ally for purposes of providing a flank until the beginning of the rogue's next turn. The opponent must be able to hear and see the rogue, and the rogue must succeed at a Bluff check opposed by the opponent's Sense Motive. If the check succeeds, the opponent acts as an ally for the purpose of providing a flank. Whether or not the check succeeds, the rogue cannot use this trick again on the same opponent for the next 24 hours. If the rogue fails the check by 5 or more, she cannot use the unwitting ally ability on any opponent within line of sight of the failed attempt for 24 hours.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Unwitting Ally"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent can spend a swift action to attempt to make an opponent act like an ally for purposes of providing a flank until the beginning of the rogue's next turn. The opponent must be able to hear and see the rogue, and the rogue must succeed at a Bluff check opposed by the opponent's Sense Motive. If the check succeeds, the opponent acts as an ally for the purpose of providing a flank. Whether or not the check succeeds, the rogue cannot use this trick again on the same opponent for the next 24 hours. If the rogue fails the check by 5 or more, she cannot use the unwitting ally ability on any opponent within line of sight of the failed attempt for 24 hours."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1622,
+    "record_key": "Rogue Talent ~ Unwitting Ally"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

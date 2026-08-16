@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Master Siege Engineer",
+    "name": "Master Siege Engineer",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are significantly faster at loading a siege engine, as well as a better shot.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Master Siege Engineer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Siege Weapon Engineer"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Knowledge (engineering)=10"
+      },
+      {
+        "key": "DESC",
+        "value": "You are significantly faster at loading a siege engine, as well as a better shot."
+      },
+      {
+        "key": "DESC",
+        "value": " If you are the crew lead on a siege engine, your crew can use move actions to load a siege engine. When you spend actions to aim a siege engine, you and your crew can use move actions instead of full-round actions to aim the siege engine (page 160). &nl; [Normal] Full-round actions are required to load and aim siege engines."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Master Siege Engineer"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4487,
+    "record_key": "Warpriest Bonus Feat ~ Master Siege Engineer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

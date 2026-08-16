@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Dazing Fist",
+    "name": "Dazing Fist",
+    "class": "Warpriest Bonus Feat",
+    "description": "Dazing Fist forces a foe damaged by your unarmed attack to attempt a DC %1 Fortitude saving throw, in addition to dealing damage normally. You must declare that you are using this feat before you make your attack roll-thus, a failed attack roll ruins the attempt. A defender who fails this saving throw is dazed for 1 round, until just before your next turn. You can use Dazing Fist %2 times per day, but no more than once per round. Constructs, incorporeal creatures, mindless creatures, plants, undead, and creatures that are immune to critical hits cannot be affected by this ability.|CL/2+10+WIS|DazingFistTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Dazing Fist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,WIS=13"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DazingFistTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Dazing Fist forces a foe damaged by your unarmed attack to attempt a DC %1 Fortitude saving throw, in addition to dealing damage normally. You must declare that you are using this feat before you make your attack roll-thus, a failed attack roll ruins the attempt. A defender who fails this saving throw is dazed for 1 round, until just before your next turn. You can use Dazing Fist %2 times per day, but no more than once per round. Constructs, incorporeal creatures, mindless creatures, plants, undead, and creatures that are immune to critical hits cannot be affected by this ability.|CL/2+10+WIS|DazingFistTimes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Dazing Fist"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DazingFistTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4148,
+    "record_key": "Warpriest Bonus Feat ~ Dazing Fist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

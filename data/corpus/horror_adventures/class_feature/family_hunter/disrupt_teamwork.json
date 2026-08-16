@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Family Hunter ~ Disrupt Teamwork",
+    "name": "Disrupt Teamwork",
+    "class": "Family Hunter",
+    "description": "A family hunter's studied target never counts as an ally to its allies for the purpose of flanking the family hunter or using teamwork feats or the aid another action against the family hunter.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Family Hunter ~ Disrupt Teamwork"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.FamilyHunterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "DESC",
+        "value": "A family hunter's studied target never counts as an ally to its allies for the purpose of flanking the family hunter or using teamwork feats or the aid another action against the family hunter."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 233,
+    "record_key": "Family Hunter ~ Disrupt Teamwork"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

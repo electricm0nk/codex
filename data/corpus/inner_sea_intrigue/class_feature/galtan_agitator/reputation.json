@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Galtan Agitator ~ Reputation",
+    "name": "Reputation",
+    "class": "Galtan Agitator",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Galtan Agitator ~ Reputation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.GaltanAgitatorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability functions as the renown vigilante social talent (Pathfinder RPG Ultimate Intrigue 12). In addition to improving attitudes, it also improves the Galtan agitator's starting influence (Ultimate Intrigue 102) and reputation with contacts (Pathfinder RPG Ultimate Campaign 148) in the area by one level or step. For the purpose of vigilante social talents, the Galtan agitator does not have a vigilante identity and is always considered to be in her social identity, unless she has another identity (such as from the vigilante class). If the Galtan agitator has another identity, she does not gain any benefits from renown while in that identity unless she has the renown social talent or a similar ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 246,
+    "record_key": "Galtan Agitator ~ Reputation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

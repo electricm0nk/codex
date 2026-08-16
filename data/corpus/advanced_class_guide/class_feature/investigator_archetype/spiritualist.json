@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator Archetype ~ Spiritualist",
+    "name": "Spiritualist",
+    "class": "Investigator Archetype",
+    "description": "While most investigators look to the physical world to gain their knowledge, there are those who seek out knowledge beyond the pale. Those who think that the dead tell no tales are quickly proven wrong by the spiritualist. Instead of toying with chemicals and reagents to find clues, he talks directly to the spirit world to uncover the ways and means of skullduggery and the desperate acts committed in the heat of dark passions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Spiritualist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype.InvestigatorAlchemy.InvestigatorPoisonLore.InvestigatorPoisonResistance.InvestigatorTrapSense.InvestigatorSwiftAlchemy.InvestigatorPoisonImmunity"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Spiritualist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InvestigatorAlchemy,TYPE.InvestigatorPoisonLore,TYPE.InvestigatorPoisonResistance,TYPE.InvestigatorTrapSense,TYPE.InvestigatorSwiftAlchemy,TYPE.InvestigatorPoisonImmunity]"
+      },
+      {
+        "key": "DESC",
+        "value": "While most investigators look to the physical world to gain their knowledge, there are those who seek out knowledge beyond the pale. Those who think that the dead tell no tales are quickly proven wrong by the spiritualist. Instead of toying with chemicals and reagents to find clues, he talks directly to the spirit world to uncover the ways and means of skullduggery and the desperate acts committed in the heat of dark passions."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Spiritualist ~ Commune with Spirits|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Spiritualist ~ Spirit Sense|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Spiritualist ~ Strong Life|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Spiritualist ~ Sixth Sense|PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Spiritualist ~ Whispering Spirits|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Spiritualist ~ Touched by the Beyond|PRECLASS:1,Investigator=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Investigator"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3309,
+    "record_key": "Investigator Archetype ~ Spiritualist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

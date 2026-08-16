@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Battle Mystery ~ Resiliency",
+    "name": "Resiliency",
+    "class": "Battle Mystery",
+    "description": "You are not disabled or staggered if you are reduced to 0 hit points.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Mystery ~ Resiliency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.BattleRevelation.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You are not disabled or staggered if you are reduced to 0 hit points."
+      },
+      {
+        "key": "DESC",
+        "value": " You do not lose a hit point when you take a standard action while disabled.|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Diehard|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 545,
+    "record_key": "Battle Mystery ~ Resiliency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

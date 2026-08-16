@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gunslinger ~ Nimble",
+    "name": "Nimble",
+    "class": "Gunslinger",
+    "description": "Starting at 2nd level, a gunslinger gains a +1 dodge bonus to AC while wearing light or no armor. Anything that causes the gunslinger to lose her Dexterity bonus to AC also causes the gunslinger to lose this dodge bonus. This bonus increases by +1 for every four levels beyond 2nd level (to a maximum of +5 at 20th level).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Nimble"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_2c"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GunslingerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GunslingerDodgeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 2nd level, a gunslinger gains a +1 dodge bonus to AC while wearing light or no armor. Anything that causes the gunslinger to lose her Dexterity bonus to AC also causes the gunslinger to lose this dodge bonus. This bonus increases by +1 for every four levels beyond 2nd level (to a maximum of +5 at 20th level)."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|GunslingerDodgeBonus|TYPE=Dodge|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.IS.MEDIUM]\"),1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GunslingerDodgeBonus|(GunslingerLVL+2)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 41,
+    "record_key": "Gunslinger ~ Nimble"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

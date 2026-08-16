@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mountain Domain ~ Thin Air",
+    "name": "Thin Air",
+    "class": "Mountain Domain",
+    "description": "As a free action, you can surround yourself with a %3-foot aura of supernaturally thin air that draws the breath from creatures adjacent to you. Creatures beginning their turn in the aura are fatigued (Fortitude DC %1 negates). A fatigued creature that begins its turn in the aura must save or suffer from altitude sickness, taking 1 point of ability damage to all ability scores (see page 430 of the Core Rulebook). At 16th level, the aura increases to 10 feet. Creatures that do not breathe are immune to this aura. You can use this ability for %2 rounds per day; the rounds need not be consecutive.|DomainMountainDC|ThinAirRounds|ThinAirRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mountain Domain ~ Thin Air"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Aura.Supernatural.DomainPower.Mountain Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThinAirRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThinAirRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, you can surround yourself with a %3-foot aura of supernaturally thin air that draws the breath from creatures adjacent to you. Creatures beginning their turn in the aura are fatigued (Fortitude DC %1 negates). A fatigued creature that begins its turn in the aura must save or suffer from altitude sickness, taking 1 point of ability damage to all ability scores (see page 430 of the Core Rulebook). At 16th level, the aura increases to 10 feet. Creatures that do not breathe are immune to this aura. You can use this ability for %2 rounds per day; the rounds need not be consecutive.|DomainMountainDC|ThinAirRounds|ThinAirRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThinAirRounds|DomainMountainLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThinAirRange|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThinAirRange|5|PREVARGTEQ:DomainMountainLVL,16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 301,
+    "record_key": "Mountain Domain ~ Thin Air"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

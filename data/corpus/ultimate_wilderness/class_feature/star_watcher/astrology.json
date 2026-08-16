@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Star Watcher ~ Astrology",
+    "name": "Astrology",
+    "class": "Star Watcher",
+    "description": "A star watcher studies a symbolic language of the heavens known as astrology. Equal parts art form and science, astrology can be used to read the future and affect it in subtle ways. Much like an alchemist or investigator, a star watcher collects formulae in a formula book. However, the formulae resemble star charts, and unlike alchemists or normal investigators, he uses these formulae along with personal details and astronomical measurements to make horoscopes-magical calculations stored much like scrolls-in which he can store spells. In many ways, the star watcher's horoscopes function like extracts, with the following exceptions. A star watcher's horoscope is always keyed to a specific creature that must be willing and present when the star watcher prepares the horoscope. Only the creature to which a horoscope is keyed can activate it and be affected by it. A horoscope is \"cast\" by reading it as a standard action, though a star watcher can draw and read a horoscope as a single standard action. A star watcher doesn't gain a competence bonus on Craft (alchemy) checks to create alchemical items, and he cannot identify potions with that skill. Furthermore, a star watcher cannot select alchemist discoveries as investigator talents. A star watcher can study a wizard's spellbook or alchemist's formula book to learn formulae, but a star watcher's formula book is too esoteric for anyone except another star watcher to learn spells from. This alters alchemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Star Watcher ~ Astrology"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.StarWatcherClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A star watcher studies a symbolic language of the heavens known as astrology. Equal parts art form and science, astrology can be used to read the future and affect it in subtle ways. Much like an alchemist or investigator, a star watcher collects formulae in a formula book. However, the formulae resemble star charts, and unlike alchemists or normal investigators, he uses these formulae along with personal details and astronomical measurements to make horoscopes-magical calculations stored much like scrolls-in which he can store spells. In many ways, the star watcher's horoscopes function like extracts, with the following exceptions. A star watcher's horoscope is always keyed to a specific creature that must be willing and present when the star watcher prepares the horoscope. Only the creature to which a horoscope is keyed can activate it and be affected by it. A horoscope is \"cast\" by reading it as a standard action, though a star watcher can draw and read a horoscope as a single standard action. A star watcher doesn't gain a competence bonus on Craft (alchemy) checks to create alchemical items, and he cannot identify potions with that skill. Furthermore, a star watcher cannot select alchemist discoveries as investigator talents. A star watcher can study a wizard's spellbook or alchemist's formula book to learn formulae, but a star watcher's formula book is too esoteric for anyone except another star watcher to learn spells from. This alters alchemy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 755,
+    "record_key": "Star Watcher ~ Astrology"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

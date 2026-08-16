@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rakshasa Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Rakshasa Bloodline",
+    "description": "Add +%1 to the Spellcraft DC for others to identify spells you cast. If their checks fail by 5 or more, they mistakenly believe you are casting an entirely different spell (selected by you when you begin casting).|Sorcerer_RakshasaBloodlineArcana_DCBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rakshasa Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_RakshasaBloodlineArcana_DCBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Add +%1 to the Spellcraft DC for others to identify spells you cast. If their checks fail by 5 or more, they mistakenly believe you are casting an entirely different spell (selected by you when you begin casting).|Sorcerer_RakshasaBloodlineArcana_DCBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_RakshasaBloodlineArcana_DCBonus|Sorcerer_Rakshasa_BloodlineLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+%1 DC to identify your spells)|Sorcerer_RakshasaBloodlineArcana_DCBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 662,
+    "record_key": "Rakshasa Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

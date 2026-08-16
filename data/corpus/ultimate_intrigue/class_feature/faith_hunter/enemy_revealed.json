@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Faith Hunter ~ Enemy Revealed",
+    "name": "Enemy Revealed",
+    "class": "Faith Hunter",
+    "description": "When a faith hunter uses her sworn enemy ability to identify a creature's alignment (typically on the third round of concentrating on an area including the creature), she can reveal that creature's alignment aura, causing it to glow for %1 rounds so that even creatures with regular vision can see the aura. This not only allows others to recognize the creature's alignment, potentially exposing its true nature, it also allows them to track its location easily by the glow. Even if such a creature is invisible, the telltale glow pinpoints the creature's square or squares. The faith hunter can use this ability %1 times per day, and it doesn't take any extra action on her part to do so; it is part of the same action as concentrating on her sworn enemy detect ability.|InquisitorLVL|max(1,WIS)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Faith Hunter ~ Enemy Revealed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.FaithHunterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When a faith hunter uses her sworn enemy ability to identify a creature's alignment (typically on the third round of concentrating on an area including the creature), she can reveal that creature's alignment aura, causing it to glow for %1 rounds so that even creatures with regular vision can see the aura. This not only allows others to recognize the creature's alignment, potentially exposing its true nature, it also allows them to track its location easily by the glow. Even if such a creature is invisible, the telltale glow pinpoints the creature's square or squares. The faith hunter can use this ability %1 times per day, and it doesn't take any extra action on her part to do so; it is part of the same action as concentrating on her sworn enemy detect ability.|InquisitorLVL|max(1,WIS)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 454,
+    "record_key": "Faith Hunter ~ Enemy Revealed"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

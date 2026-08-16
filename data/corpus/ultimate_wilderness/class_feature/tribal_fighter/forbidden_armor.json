@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tribal Fighter ~ Forbidden Armor",
+    "name": "Forbidden Armor",
+    "class": "Tribal Fighter",
+    "description": "A tribal fighter favors traditional armor and shields, avoiding other types out of spiritual devotion, superstitious suspicion, or respect for tradition. He can attain his battle focus (see page 51) only while using armaments of the appropriate types. Like a druid, a tribal fighter is prohibited from wearing metal armor and using metal shields. A tribal fighter who wears prohibited armor or uses a prohibited shield loses the benefits of the battle focus and tribal weapon training abilities while doing so and for 24 hours after removing the prohibited armor or shield.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tribal Fighter ~ Forbidden Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fighter Class Features.TribalFighterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A tribal fighter favors traditional armor and shields, avoiding other types out of spiritual devotion, superstitious suspicion, or respect for tradition. He can attain his battle focus (see page 51) only while using armaments of the appropriate types. Like a druid, a tribal fighter is prohibited from wearing metal armor and using metal shields. A tribal fighter who wears prohibited armor or uses a prohibited shield loses the benefits of the battle focus and tribal weapon training abilities while doing so and for 24 hours after removing the prohibited armor or shield."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 588,
+    "record_key": "Tribal Fighter ~ Forbidden Armor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

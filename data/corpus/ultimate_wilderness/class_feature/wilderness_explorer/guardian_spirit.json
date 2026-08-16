@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wilderness Explorer ~ Guardian Spirit",
+    "name": "Guardian Spirit",
+    "class": "Wilderness Explorer",
+    "description": "A wilderness explorer gains the aid of indigenous spirits, which favor him when he is defending himself against multiple foes that surround him. He gains improved uncanny dodge; this ability functions only while the ranger is within one of his favored terrains. This further alters favored terrain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wilderness Explorer ~ Guardian Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.WildernessExplorerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A wilderness explorer gains the aid of indigenous spirits, which favor him when he is defending himself against multiple foes that surround him. He gains improved uncanny dodge; this ability functions only while the ranger is within one of his favored terrains. This further alters favored terrain."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 948,
+    "record_key": "Wilderness Explorer ~ Guardian Spirit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

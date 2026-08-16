@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tidal Hunter ~ Wave Rush",
+    "name": "Wave Rush",
+    "class": "Tidal Hunter",
+    "description": "A tidal hunter gains a swim speed equal to his base speed. If he already has a swim speed, it increases by 10 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tidal Hunter ~ Wave Rush"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.TidalHunterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A tidal hunter gains a swim speed equal to his base speed. If he already has a swim speed, it increases by 10 feet."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Add Swim Speed|Increase Swim Speed"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 932,
+    "record_key": "Tidal Hunter ~ Wave Rush"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Synthesist ~ Shielded Meld",
+    "name": "Shielded Meld",
+    "class": "Synthesist",
+    "description": "Whenever the synthesist is fused with his eidolon, he gains a +2 shield bonus to his Armor Class and a +2 circumstance bonus on his saving throws.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Synthesist ~ Shielded Meld"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShieldedMeldBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the synthesist is fused with his eidolon, he gains a +2 shield bonus to his Armor Class and a +2 circumstance bonus on his saving throws."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|ShieldedMeldBonus|TYPE=Shield|PREVAREQ:FusedEidolonActive,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|ShieldedMeldBonus|TYPE=Circumstance|PREVAREQ:FusedEidolonActive,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShieldedMeldBonus|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1889,
+    "record_key": "Synthesist ~ Shielded Meld"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

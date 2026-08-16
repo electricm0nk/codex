@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Phantom Thief Talent ~ Mockingbird",
+    "name": "Mockingbird",
+    "class": "Phantom Thief Talent",
+    "description": "The phantom thief can mimic almost any sort of voice, or even animal calls and sound effects, and he can throw his voice at a distance. This functions similarly to a combination of the ghost sound, ventriloquism, and vocal alteration spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantom Thief Talent ~ Mockingbird"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Phantom Thief ~ Broad Education"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": "The phantom thief can mimic almost any sort of voice, or even animal calls and sound effects, and he can throw his voice at a distance. This functions similarly to a combination of the ghost sound, ventriloquism, and vocal alteration spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 877,
+    "record_key": "Phantom Thief Talent ~ Mockingbird"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

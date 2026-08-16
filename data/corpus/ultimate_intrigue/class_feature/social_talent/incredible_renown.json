@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Social Talent ~ Incredible Renown",
+    "name": "Incredible Renown",
+    "class": "Social Talent",
+    "description": "The vigilante is incredibly famous in both identities. He can gain renown in a single community of up to 25,000 individuals (a large city) or up to two smaller cities of no more than 10,000 individuals each (two small cities). The bonus while he is in his social identity remains unchanged, but the circumstance bonus to Intimidate from his great renown social talent while in he is in his vigilante identity increases to +8.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ Incredible Renown"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Social Talent ~ Great Renown"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante is incredibly famous in both identities. He can gain renown in a single community of up to 25,000 individuals (a large city) or up to two smaller cities of no more than 10,000 individuals each (two small cities). The bonus while he is in his social identity remains unchanged, but the circumstance bonus to Intimidate from his great renown social talent while in he is in his vigilante identity increases to +8."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Intimidate=In Vigilante Identity|2|TYPE=Circumstance.STACK"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 58,
+    "record_key": "Social Talent ~ Incredible Renown"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

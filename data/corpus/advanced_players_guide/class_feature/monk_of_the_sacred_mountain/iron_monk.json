@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk of the Sacred Mountain ~ Iron Monk",
+    "name": "Iron Monk",
+    "class": "Monk of the Sacred Mountain",
+    "description": "At 2nd level, a monk of the sacred mountain gains Toughness as a bonus feat. In addition, the monk gains a +1 natural armor bonus. This ability replaces evasion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk of the Sacred Mountain ~ Iron Monk"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.Extraordinary.MonkEvasion"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a monk of the sacred mountain gains Toughness as a bonus feat. In addition, the monk gains a +1 natural armor bonus. This ability replaces evasion."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Toughness"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|1|NaturalArmor.STACK"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.114"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2363,
+    "record_key": "Monk of the Sacred Mountain ~ Iron Monk"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

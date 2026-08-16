@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tatterdemalion ~ Sinister Stitching",
+    "name": "Sinister Stitching",
+    "class": "Tatterdemalion",
+    "description": "%1 times per day, a tatterdemalion can conjure enchanted threads to hinder a creature she can see (Fortitude negates). The tatterdemalion can choose to either sew shut the target's eyes (blinding it) or mouth (preventing speech, bite attacks, breath weapons, verbal components, command words, and the like). The target can end the effect with a successful Strength check (DC %2) as a standard action, or by slashing the stitches with a magic slashing weapon as a full-round action that provokes attacks of opportunity. Either way, the victim takes 1d4 points of bleed damage and either is dazzled (for stitched eyes) or takes a -2 penalty on bite attack and damage rolls and a 20%% chance of spell failure with verbal components (for a stitched mouth). Either residual effect lasts %3 minutes. Any creature can safely remove the enchanted threads with a minute of work and a successful DC 25 Heal check.|WitchLVL/4|15+WitchLVL/2|WitchLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tatterdemalion ~ Sinister Stitching"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.TatterdemalionClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_SinisterStitching|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times per day, a tatterdemalion can conjure enchanted threads to hinder a creature she can see (Fortitude negates). The tatterdemalion can choose to either sew shut the target's eyes (blinding it) or mouth (preventing speech, bite attacks, breath weapons, verbal components, command words, and the like). The target can end the effect with a successful Strength check (DC %2) as a standard action, or by slashing the stitches with a magic slashing weapon as a full-round action that provokes attacks of opportunity. Either way, the victim takes 1d4 points of bleed damage and either is dazzled (for stitched eyes) or takes a -2 penalty on bite attack and damage rolls and a 20%% chance of spell failure with verbal components (for a stitched mouth). Either residual effect lasts %3 minutes. Any creature can safely remove the enchanted threads with a minute of work and a successful DC 25 Heal check.|WitchLVL/4|15+WitchLVL/2|WitchLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_SinisterStitching|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_SinisterStitching|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Sinister Stitching)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 287,
+    "record_key": "Tatterdemalion ~ Sinister Stitching"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

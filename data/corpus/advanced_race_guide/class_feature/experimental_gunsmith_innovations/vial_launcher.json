@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Experimental Gunsmith Innovations ~ Vial Launcher",
+    "name": "Vial Launcher",
+    "class": "Experimental Gunsmith Innovations",
+    "description": "The Experimental Gunsmith adds a special tube onto her firearm that can hold 1 vial of alchemical material, such as alchemist's fire, a tanglefoot bag, or a thunderstone. A special trigger allows her to channel the force of black powder into this tube to launch the vial as a ranged attack with half the range increment of her firearm. The Experimental Gunsmith can take this action in place of any single ranged attack, and may use the same attack bonus that she can apply to the firearm. If the alchemical substance has a save DC, it becomes %1 when she launches the vial from her firearm. This increase only applies to the initial saving throw. If additional saving throws are called for, they are resolved as normal. Reloading the tube is a time-consuming process and requires two full-round actions. If the weapon misfires while loaded with an alchemical substance, it detonates with the Experimental Gunsmith (and the firearm) as the target.|10+GunslingerLVL/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Experimental Gunsmith Innovations ~ Vial Launcher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ExperimentalGunsmithInnovation"
+      },
+      {
+        "key": "DESC",
+        "value": "The Experimental Gunsmith adds a special tube onto her firearm that can hold 1 vial of alchemical material, such as alchemist's fire, a tanglefoot bag, or a thunderstone. A special trigger allows her to channel the force of black powder into this tube to launch the vial as a ranged attack with half the range increment of her firearm. The Experimental Gunsmith can take this action in place of any single ranged attack, and may use the same attack bonus that she can apply to the firearm. If the alchemical substance has a save DC, it becomes %1 when she launches the vial from her firearm. This increase only applies to the initial saving throw. If additional saving throws are called for, they are resolved as normal. Reloading the tube is a time-consuming process and requires two full-round actions. If the weapon misfires while loaded with an alchemical substance, it detonates with the Experimental Gunsmith (and the firearm) as the target.|10+GunslingerLVL/2+WIS"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 166,
+    "record_key": "Experimental Gunsmith Innovations ~ Vial Launcher"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

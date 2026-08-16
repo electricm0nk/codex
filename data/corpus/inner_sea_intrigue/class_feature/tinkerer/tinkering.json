@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tinkerer ~ Tinkering",
+    "name": "Tinkering",
+    "class": "Tinkerer",
+    "description": "A tinkerer can spend 1 hour working on her clockwork spy familiar to enhance it with one of the options from the list on page 47. At 5th level, the tinkerer can choose a second option from the list. The same option cannot be chosen twice. A tinkerer can change the enhancements applied to her familiar, but doing so takes 1 hour of work per enhancement she wishes to change.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tinkerer ~ Tinkering"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Features.TinkererClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClockworkSpyTinkering|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A tinkerer can spend 1 hour working on her clockwork spy familiar to enhance it with one of the options from the list on page 47. At 5th level, the tinkerer can choose a second option from the list. The same option cannot be chosen twice. A tinkerer can change the enhancements applied to her familiar, but doing so takes 1 hour of work per enhancement she wishes to change."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClockworkSpyTinkering|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClockworkSpyTinkering|1|PRECLASS:1,Alchemist=5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 15,
+    "record_key": "Tinkerer ~ Tinkering"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

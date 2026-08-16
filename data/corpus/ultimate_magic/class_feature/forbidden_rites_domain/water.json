@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Water Domain",
+    "name": "Water",
+    "class": "Forbidden Rites Domain",
+    "description": "You can manipulate water and mist and ice, conjure creatures of water, and resist cold.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Water Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.WaterDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manipulate water and mist and ice, conjure creatures of water, and resist cold."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Icicle|PREDOMAIN:1,Water|PREVARGTEQ:DomainWaterAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Cold Resistance|PREDOMAIN:1,Water|PREVARGTEQ:DomainWaterAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWaterLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWaterDC|10+(DomainWaterLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWaterTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWaterAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Obscuring Mist|Cleric=2|Fog Cloud|Cleric=3|Water Breathing|Cleric=4|Control Water|Cleric=5|Ice Storm|Cleric=6|Cone of Cold|Cleric=7|Elemental Body IV (Water Only)|Cleric=8|Horrid Wilting|Cleric=9|Elemental Swarm (Water Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1058,
+    "record_key": "Forbidden Rites Domain ~ Water Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

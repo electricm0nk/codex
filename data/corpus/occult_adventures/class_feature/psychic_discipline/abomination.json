@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Discipline ~ Abomination",
+    "name": "Abomination",
+    "class": "Psychic Discipline",
+    "description": "Your mind is impure, tainted by outside forces. These might be monstrous ancestors whose blood still flows within you, or powerful and unknowable psychic forces that intrude upon your mind. Like a psychic disease, this inf luence consumes part of your brain, creating a dark counterpart to your normal self. Every time you call forth a psychic spell, you're drawing on this dangerous forceand potentially giving it a greater hold on you. This malign inf luence might stem from creatures like rakshasas and aboleths, or perhaps malign entities that dwell in the voids between the stars. Phrenic Pool Ability: Charisma. Discipline Powers: Your powers allow the dark influences to take over, and it can be difficult to come back from the brink.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline ~ Abomination"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Discipline.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Your mind is impure, tainted by outside forces. These might be monstrous ancestors whose blood still flows within you, or powerful and unknowable psychic forces that intrude upon your mind. Like a psychic disease, this inf luence consumes part of your brain, creating a dark counterpart to your normal self. Every time you call forth a psychic spell, you're drawing on this dangerous forceand potentially giving it a greater hold on you. This malign inf luence might stem from creatures like rakshasas and aboleths, or perhaps malign entities that dwell in the voids between the stars. Phrenic Pool Ability: Charisma. Discipline Powers: Your powers allow the dark influences to take over, and it can be difficult to come back from the brink."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Abomination ~ Bonus Spells|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Abomination ~ Dark Half|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Abomination ~ Morphic Form|PRECLASS:1,Psychic=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Abomination ~ Psychic Safeguard|PRECLASS:1,Psychic=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhrenicPoolAbility|CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1188,
+    "record_key": "Psychic Discipline ~ Abomination"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

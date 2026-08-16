@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mixologist ~ Alcoholic Resistance",
+    "name": "Alcoholic Resistance",
+    "class": "Mixologist",
+    "description": "A mixologist's bonus on saving throws against poison also applies on saving throws to become less drunk and to avoid passing out. This doesn't allow a mixologist to become immune to alcohol. This alters poison resistance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mixologist ~ Alcoholic Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Feature.MixologistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "A mixologist's bonus on saving throws against poison also applies on saving throws to become less drunk and to avoid passing out. This doesn't allow a mixologist to become immune to alcohol. This alters poison resistance."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_abilities_class.lst",
+    "sha256": "1344b6dcf98ada3b51a62cd2169c486eb4896dda4078eee3f7abc062a7d957fa",
+    "line": 11,
+    "record_key": "Mixologist ~ Alcoholic Resistance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

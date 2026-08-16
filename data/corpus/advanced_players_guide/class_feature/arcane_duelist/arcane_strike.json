@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcane Duelist ~ Arcane Strike",
+    "name": "Arcane Strike",
+    "class": "Arcane Duelist",
+    "description": "Arcane duelists gain Arcane Strike as a bonus feat at 1st level. This ability replaces bardic knowledge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Duelist ~ Arcane Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.BardBardicKnowledge"
+      },
+      {
+        "key": "DESC",
+        "value": "Arcane duelists gain Arcane Strike as a bonus feat at 1st level. This ability replaces bardic knowledge."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Arcane Strike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1631,
+    "record_key": "Arcane Duelist ~ Arcane Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

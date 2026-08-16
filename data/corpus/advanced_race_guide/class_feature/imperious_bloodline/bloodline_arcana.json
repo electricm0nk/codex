@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Imperious Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Imperious Bloodline",
+    "description": "Whenever you cast a harmful spell, you gain a bonus equal to the spell's level on Intimidate checks made against any creature adversely effected by that spell until the end of your next turn. Adversely effected typically means damage, but it can also mean debilitating effects or conditions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Imperious Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a harmful spell, you gain a bonus equal to the spell's level on Intimidate checks made against any creature adversely effected by that spell until the end of your next turn. Adversely effected typically means damage, but it can also mean debilitating effects or conditions."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(add spell's level to Intimidate)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 19,
+    "record_key": "Imperious Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

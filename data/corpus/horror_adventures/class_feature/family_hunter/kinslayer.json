@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Family Hunter ~ Kinslayer",
+    "name": "Kinslayer",
+    "class": "Family Hunter",
+    "description": "A family hunter's sneak attack deals an additional 1d6 points of damage to any creature with a blood relation to the family line she seeks to cleanse. This ability alters sneak attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Family Hunter ~ Kinslayer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.FamilyHunterClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "DESC",
+        "value": "A family hunter's sneak attack deals an additional 1d6 points of damage to any creature with a blood relation to the family line she seeks to cleanse. This ability alters sneak attack."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 231,
+    "record_key": "Family Hunter ~ Kinslayer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

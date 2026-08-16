@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wave Warden ~ Aquatic Prowess Feat",
+    "name": "Aquatic Prowess Feat",
+    "class": "Wave Warden",
+    "description": "At 2nd level and every four levels thereafter, a wave warden selects a bonus feat that improves his prowess in aquatic environments. He can choose these feats even if he does not meet the prerequisites. Initially, he may choose from the following feats: Dodge, Mobility, Net Adept (Ultimate Combat), Net and Trident (Ultimate Combat), Net Maneuvering (Ultimate Combat), Precise Shot, Rapid Reload, Sea Hunter, and Two-Weapon Fighting. At 6th level, he adds Improved Two-Weapon Fighting, Net Trickery (Ultimate Combat), and Spring Attack to the list. At 10th level, he adds Greater Two-Weapon Fighting and Improved Precise Shot to the list. This ability otherwise functions like and replaces the standard ranger's combat style bonus feats, including the limitations on armor worn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wave Warden ~ Aquatic Prowess Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level and every four levels thereafter, a wave warden selects a bonus feat that improves his prowess in aquatic environments. He can choose these feats even if he does not meet the prerequisites. Initially, he may choose from the following feats: Dodge, Mobility, Net Adept (Ultimate Combat), Net and Trident (Ultimate Combat), Net Maneuvering (Ultimate Combat), Precise Shot, Rapid Reload, Sea Hunter, and Two-Weapon Fighting. At 6th level, he adds Improved Two-Weapon Fighting, Net Trickery (Ultimate Combat), and Spring Attack to the list. At 10th level, he adds Greater Two-Weapon Fighting and Improved Precise Shot to the list. This ability otherwise functions like and replaces the standard ranger's combat style bonus feats, including the limitations on armor worn."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Wave Warden Bonus Feat|(RangerLVL+2)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 887,
+    "record_key": "Wave Warden ~ Aquatic Prowess Feat"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

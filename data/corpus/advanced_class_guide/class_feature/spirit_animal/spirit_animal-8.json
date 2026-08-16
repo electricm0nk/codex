@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spirit Animal ~ Stone",
+    "name": "Spirit Animal",
+    "class": "Spirit Animal",
+    "description": "The spirit animal looks as though it's made out of earth and stone, with tiny gemstones embedded in its flesh.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Animal ~ Stone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The spirit animal looks as though it's made out of earth and stone, with tiny gemstones embedded in its flesh."
+      },
+      {
+        "key": "DR",
+        "value": "5/adamantine"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1403,
+    "record_key": "Spirit Animal ~ Stone"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

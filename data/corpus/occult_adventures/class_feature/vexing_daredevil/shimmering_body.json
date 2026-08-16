@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vexing Daredevil ~ Shimmering Body",
+    "name": "Shimmering Body",
+    "class": "Vexing Daredevil",
+    "description": "When a vexing daredevil moves in a round, until the beginning of her next turn, any target of her hypnotic stare sees her as a constantly shimmering form of light and treats her as if she were under a blur spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vexing Daredevil ~ Shimmering Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When a vexing daredevil moves in a round, until the beginning of her next turn, any target of her hypnotic stare sees her as a constantly shimmering form of light and treats her as if she were under a blur spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1506,
+    "record_key": "Vexing Daredevil ~ Shimmering Body"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

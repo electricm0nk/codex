@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Poison Bomb",
+    "name": "Poison Bomb*",
+    "class": "Discovery",
+    "description": "The effects of the smoke created by an alchemist's bomb duplicates the effects of cloudkill instead of fog cloud, filling an area equal to twice the bomb's splash radius for 1 round per level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Poison Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistBombModifier"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Discovery ~ Smoke Bomb"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "The effects of the smoke created by an alchemist's bomb duplicates the effects of cloudkill instead of fog cloud, filling an area equal to twice the bomb's splash radius for 1 round per level."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 144,
+    "record_key": "Discovery ~ Poison Bomb"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Feral Aspect ~ Falcon",
+    "name": "Aspect of the Falcon",
+    "class": "Feral Aspect",
+    "description": "The falcon senses all and has the speed to hunt down even the most elusive prey. Those who take this aspect gain enhanced abilities to perceive and reconnoiter the wilderness-little escapes this shifter's attention. [Minor Form] You gain a +%1 competence bonus on Perception checks.|FeralFalconAspectPerceptionBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Aspect ~ Falcon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Feral Aspect.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeralFalconAspectPerceptionBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The falcon senses all and has the speed to hunt down even the most elusive prey. Those who take this aspect gain enhanced abilities to perceive and reconnoiter the wilderness-little escapes this shifter's attention. [Minor Form] You gain a +%1 competence bonus on Perception checks.|FeralFalconAspectPerceptionBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralFalconAspectPerceptionBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralFalconAspectPerceptionBonus|2|PREVARGTEQ:FeralAspectLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralFalconAspectPerceptionBonus|2|PREVARGTEQ:FeralAspectLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 362,
+    "record_key": "Feral Aspect ~ Falcon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

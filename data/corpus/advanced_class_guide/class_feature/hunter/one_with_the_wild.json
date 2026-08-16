@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunter ~ One With The Wild",
+    "name": "One With The Wild",
+    "class": "Hunter",
+    "description": "At 17th level, the hunter and her animal companion are respected or even feared by other animals, so long as the animals are approximately of the same type as any of the hunter's current animal foci: bat for bats, tiger with felines, falcon for birds, snake for reptiles, and so on. No animal in this category (including dire varieties) willingly attacks the hunter or her companion unless magically compelled to or if the hunter or companion attacks it first. The hunter and her companion can attempt to demoralize animals in the appropriate category as a swift action, rolling 1d20 and adding the hunter's level and her Charisma modifier to determine the Intimidate check result.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter ~ One With The Wild"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.HunterOneWithTheWild.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 17th level, the hunter and her animal companion are respected or even feared by other animals, so long as the animals are approximately of the same type as any of the hunter's current animal foci: bat for bats, tiger with felines, falcon for birds, snake for reptiles, and so on. No animal in this category (including dire varieties) willingly attacks the hunter or her companion unless magically compelled to or if the hunter or companion attacks it first. The hunter and her companion can attempt to demoralize animals in the appropriate category as a swift action, rolling 1d20 and adding the hunter's level and her Charisma modifier to determine the Intimidate check result."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1188,
+    "record_key": "Hunter ~ One With The Wild"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

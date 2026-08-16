@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Unarmed Fighter ~ Weapon Training",
+    "name": "Weapon Training",
+    "class": "Unarmed Fighter",
+    "description": "You gain a +%1 bonus on attack and damage rolls with weapons in the monk and natural weapon groups.|UnarmedFighterWeaponTraining",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unarmed Fighter ~ Weapon Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnarmedFighterWeaponTraining|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on attack and damage rolls with weapons in the monk and natural weapon groups.|UnarmedFighterWeaponTraining"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Monk,DAMAGE.Monk,TOHIT.Natural,DAMAGE.Natural|UnarmedFighterWeaponTraining|TYPE=WeaponTraining"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnarmedFighterWeaponTraining|(classlevel(\"Fighter\")+1)/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Unarmed Strike|TOHIT,DAMAGE|UnarmedFighterWeaponTraining|TYPE=WeaponTraining"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 763,
+    "record_key": "Unarmed Fighter ~ Weapon Training"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

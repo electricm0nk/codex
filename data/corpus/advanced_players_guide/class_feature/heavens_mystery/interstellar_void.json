@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Heavens Mystery ~ Interstellar Void",
+    "name": "Interstellar Void",
+    "class": "Heavens Mystery",
+    "description": "You call upon the frigid depths of outer space to bring a terrible chill to your enemies. As a standard action, one target within 30 feet is cloaked in the void and takes %1d6 points of cold damage. A successful Fortitude save (DC %2) halves this damage. At 10th level, the interstellar void is so extreme that enemies who fail their saving throw are fatigued. At 15th level, creatures who fail their save are exhausted and stunned for 1 round. You can use this ability %3 time(s) per day.|OracleInterstellarVoidDamageDice|OracleRevelationDC|OracleInterstellarVoidTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heavens Mystery ~ Interstellar Void"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.HeavensRevelation.Supernatural.RevelationTargetOneOnly.PerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleInterstellarVoidDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleInterstellarVoidTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You call upon the frigid depths of outer space to bring a terrible chill to your enemies. As a standard action, one target within 30 feet is cloaked in the void and takes %1d6 points of cold damage. A successful Fortitude save (DC %2) halves this damage. At 10th level, the interstellar void is so extreme that enemies who fail their saving throw are fatigued. At 15th level, creatures who fail their save are exhausted and stunned for 1 round. You can use this ability %3 time(s) per day.|OracleInterstellarVoidDamageDice|OracleRevelationDC|OracleInterstellarVoidTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 610,
+    "record_key": "Heavens Mystery ~ Interstellar Void"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

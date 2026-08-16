@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Metal Curse",
+    "name": "Metal Curse",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman causes a creature within 30 feet to become slightly magnetic",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Metal Curse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanStoneHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Metal Curse"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanStoneSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanMetalCurseDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanMetalCursePenalty|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman causes a creature within 30 feet to become slightly magnetic"
+      },
+      {
+        "key": "DESC",
+        "value": "until the end of the shaman's next turn.|PREVARLT:ShamanSpiritLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "for %1 rounds.|ShamanMetalCurseDuration|PREVARGTEQ:ShamanSpiritLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the creature is attacked with a melee or ranged weapon constructed primarily of metal, it takes a %1 penalty to AC. Once affected, the creature cannot be the target of this hex again for 24 hours.|ShamanMetalCursePenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanMetalCurseDuration|1+min(2,ShamanSpiritLVL/8)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanMetalCursePenalty|-2-2*min(2,ShamanSpiritLVL/8)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1654,
+    "record_key": "Shaman Spirit Hex ~ Metal Curse"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

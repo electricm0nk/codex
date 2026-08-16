@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "PISTOLERO ~ Weapon Proficiency",
+    "name": "Weapon Proficiency",
+    "class": "PISTOLERO",
+    "description": "Instead of proficiency with all firearms, a pistolero only gains proficiency with one-handed firearms. She must take Exotic Weapon Proficiency (firearm) to gain proficiency with two-handed firearms and firearm siege engines.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "PISTOLERO ~ Weapon Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GunslingerClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Instead of proficiency with all firearms, a pistolero only gains proficiency with one-handed firearms. She must take Exotic Weapon Proficiency (firearm) to gain proficiency with two-handed firearms and firearm siege engines."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|TYPE=OneHandedFireArm"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Auto|Weapon Prof ~ Simple|TYPE=WeaponProfMartial|TYPE=ArmorProfLight"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 842,
+    "record_key": "PISTOLERO ~ Weapon Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rivethun Emissary ~ Enhanced Familiar",
+    "name": "Enhanced Familiar",
+    "class": "Rivethun Emissary",
+    "description": "She can select a single shaman spirit. Her familiar gains the spirit animal ability associated with that spirit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rivethun Emissary ~ Enhanced Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Rivethun Emissary Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarIsSpiritAnimal|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpiritAnimalLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      },
+      {
+        "key": "DESC",
+        "value": "She can select a single shaman spirit. Her familiar gains the spirit animal ability associated with that spirit."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Spirit|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarIsSpiritAnimal|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiritAnimalLVL|FamiliarMasterLVL*FamiliarIsSpiritAnimal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexStatMod|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexStatMod|WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_SpiritTrue|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Manifestation|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Hex|ShamanHexChoices"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 447,
+    "record_key": "Rivethun Emissary ~ Enhanced Familiar"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

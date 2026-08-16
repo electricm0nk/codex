@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Create Portal ~ Areshkagal",
+    "name": "Create Portal",
+    "class": "Create Portal",
+    "description": "1/day, you may use gate as a spell-like ability, but only to create a gate as a mode of planar travel, not as a method of calling creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Create Portal ~ Areshkagal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Gate,19+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, you may use gate as a spell-like ability, but only to create a gate as a mode of planar travel, not as a method of calling creatures."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 110,
+    "record_key": "Create Portal ~ Areshkagal"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

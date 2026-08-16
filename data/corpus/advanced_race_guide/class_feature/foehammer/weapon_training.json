@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Foehammer ~ Weapon Training",
+    "name": "Weapon Training",
+    "class": "Foehammer",
+    "description": "A foehammer must select hammers and does not gain weapon training with other groups, though his weapon training bonus improves by +1 every four levels after 5th.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Foehammer ~ Weapon Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Fighter ~ Weapon Training"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingHammers|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A foehammer must select hammers and does not gain weapon training with other groups, though his weapon training bonus improves by +1 every four levels after 5th."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Weapon Training 1 Hammers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingHammers|(FighterLVL-1)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 49,
+    "record_key": "Foehammer ~ Weapon Training"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

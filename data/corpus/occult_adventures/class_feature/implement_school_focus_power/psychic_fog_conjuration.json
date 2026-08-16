@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Implement School Focus Power ~ Psychic Fog",
+    "name": "Psychic Fog [Conjuration]",
+    "class": "Implement School Focus Power",
+    "description": "As a standard action, you can expend 1 point of mental focus to create a cloud of fog. This fog lasts for %1 minutes. It functions as fog cloud, except it can't be dispersed by wind.|OccultistLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Implement School Focus Power ~ Psychic Fog"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Implement School Focus Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,ABILITIES,OccultistSchool_Conjuration=true"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "OccultistLVL,3"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can expend 1 point of mental focus to create a cloud of fog. This fog lasts for %1 minutes. It functions as fog cloud, except it can't be dispersed by wind.|OccultistLVL"
+      },
+      {
+        "key": "DESC",
+        "value": " You can expend 1 additional point of mental focus when creating this fog, causing it to become more tangible and function as solid fog, except it doesn't slow down any creature that has psychic powers or that can cast psychic spells. When you create a solid fog in this way, its duration is reduced to %1 rounds.|OccultistLVL|PREVARGTEQ:OccultistLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": " You must be at least 3rd level to select this focus power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1038,
+    "record_key": "Implement School Focus Power ~ Psychic Fog"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

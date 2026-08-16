@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Trap ~ Poison Trap",
+    "name": "Poison Trap",
+    "class": "Ranger Trap",
+    "description": "The trap poisons the creature that triggers it. If it is a supernatural trap, the poison deals 1d2 Con damage per round for 6 rounds. If it is an extraordinary trap, you must provide 1 dose of contact, inhaled, or injury poison when setting the trap, and the trap uses that poison's effects and DC.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Trap ~ Poison Trap"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Trap Poison"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialAttack.RangerTrap.Extraordinary.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The trap poisons the creature that triggers it. If it is a supernatural trap, the poison deals 1d2 Con damage per round for 6 rounds. If it is an extraordinary trap, you must provide 1 dose of contact, inhaled, or injury poison when setting the trap, and the trap uses that poison's effects and DC."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1620,
+    "record_key": "Ranger Trap ~ Poison Trap"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Savant Void Elemental School ~ Reveal Weakness",
+    "name": "Reveal Weakness",
+    "class": "Savant Void Elemental School",
+    "description": "When you activate this school power as a standard action, you select a foe within 30 feet. That creature takes a -%1 penalty to its AC and on saving throws for 1 round. You can use this ability %2 times per day|RevealWeaknessPenalty|RevealWeaknessTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Void Elemental School ~ Reveal Weakness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RevealWeaknessPenalty|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RevealWeaknessTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you activate this school power as a standard action, you select a foe within 30 feet. That creature takes a -%1 penalty to its AC and on saving throws for 1 round. You can use this ability %2 times per day|RevealWeaknessPenalty|RevealWeaknessTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RevealWeaknessPenalty|max(ArcanistSavantSchoolLVL/2,1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RevealWeaknessTimes|3+INT"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(-%1, %2/day)|RevealWeaknessPenalty|RevealWeaknessTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|RevealWeaknessTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2624,
+    "record_key": "Savant Void Elemental School ~ Reveal Weakness"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

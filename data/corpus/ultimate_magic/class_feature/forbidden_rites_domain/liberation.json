@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Liberation Domain",
+    "name": "Liberation",
+    "class": "Forbidden Rites Domain",
+    "description": "You are a spirit of freedom and a staunch foe against all who would enslave and oppress.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Liberation Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.LiberationDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLiberationLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLiberationDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLiberationTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLiberationAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a spirit of freedom and a staunch foe against all who would enslave and oppress."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Liberation|PREDOMAIN:1,Liberation|PREVARGTEQ:DomainLiberationAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Freedom's Call|PREDOMAIN:1,Liberation|PREVARGTEQ:DomainLiberationAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLiberationLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLiberationDC|10+(DomainLiberationLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLiberationTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLiberationAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Remove Fear|Cleric=2|Remove Paralysis|Cleric=3|Remove Curse|Cleric=4|Freedom of Movement|Cleric=5|Break Enchantment|Cleric=6|Dispel Magic (Greater)|Cleric=7|Refuge|Cleric=8|Mind Blank|Cleric=9|Freedom"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1044,
+    "record_key": "Forbidden Rites Domain ~ Liberation Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

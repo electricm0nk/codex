@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Toxitician ~ Injection Improvement",
+    "name": "Injection Improvement",
+    "class": "Toxitician",
+    "description": "The toxitician can select %1 improvement(s) to add to his injections. The toxitician can't choose the same improvement more than once. The toxitician doesn't have to select the improvements when he prepares his injections at the start of the day; the choice is made as part of the swift action to activate the injection. The target can attempt a Fortitude saving throw to resist an injection with an improvement added to it. The DC is %2. On a successful save, the target still takes the penalty on its Will saving throws, but not the effects of the improvement. A toxitician can, as a free action, sacrifice one use of his injections to increase the DC of another injection by 2.|TImprovementsKnown",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Toxitician ~ Injection Improvement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TImprovementsKnown|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TImprovementEffect|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The toxitician can select %1 improvement(s) to add to his injections. The toxitician can't choose the same improvement more than once. The toxitician doesn't have to select the improvements when he prepares his injections at the start of the day; the choice is made as part of the swift action to activate the injection. The target can attempt a Fortitude saving throw to resist an injection with an improvement added to it. The DC is %2. On a successful save, the target still takes the penalty on its Will saving throws, but not the effects of the improvement. A toxitician can, as a free action, sacrifice one use of his injections to increase the DC of another injection by 2.|TImprovementsKnown"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Injection Improvement Choice|TImprovementsKnown"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TImprovementsKnown|(MesmeristLVL+1)/4|10+MesmeristLVL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TImprovementEffect|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TImprovementEffect|1|PREVARGTEQ:MesmeristLVL,11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1490,
+    "record_key": "Toxitician ~ Injection Improvement"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

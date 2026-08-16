@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Strategist ~ Drill Instructor",
+    "name": "Drill Instructor",
+    "class": "Strategist",
+    "description": "At 4th level, a strategist learns to train his fellow adventurers in the nuances of squad combat. By spending 10 minutes and expending 1 use of his challenge ability, the strategist can grant the use of a teamwork feat that he knows to up to four of his allies, similar to the tactician ability. As with tactician, allies need not meet the prerequisites of the granted feat, but they retain the use of this feat for 10 minutes plus 1 minute for every two levels the cavalier possesses, as long as the cavalier is visible and can be heard by his allies. If the cavalier falls unconscious or cannot be both seen and heard, his allies lose the benefit of the granted feat until the condition is remedied. This ability replaces expert trainer.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strategist ~ Drill Instructor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a strategist learns to train his fellow adventurers in the nuances of squad combat. By spending 10 minutes and expending 1 use of his challenge ability, the strategist can grant the use of a teamwork feat that he knows to up to four of his allies, similar to the tactician ability. As with tactician, allies need not meet the prerequisites of the granted feat, but they retain the use of this feat for 10 minutes plus 1 minute for every two levels the cavalier possesses, as long as the cavalier is visible and can be heard by his allies. If the cavalier falls unconscious or cannot be both seen and heard, his allies lose the benefit of the granted feat until the condition is remedied. This ability replaces expert trainer."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 521,
+    "record_key": "Strategist ~ Drill Instructor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

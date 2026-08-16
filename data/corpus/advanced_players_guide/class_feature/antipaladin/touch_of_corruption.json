@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Antipaladin ~ Touch of Corruption",
+    "name": "Touch of Corruption",
+    "class": "Antipaladin",
+    "description": "You surrounds your hand with a fiendish flame, causing terrible wounds to open on those you touch. You can use this ability %1 times per day. As a touch attack, you can cause %2d6 points of damage. Using this ability is a standard action that does not provoke attacks of opportunity. Alternatively, you can use this power to heal undead creatures, restoring %2d6 hit points. This ability is modified by any feat, spell, or effect that specifically works with the lay on hands paladin class feature.|LayOnHandsTimes|LayOnHandsDice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Antipaladin ~ Touch of Corruption"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AntipaladinClassFeatures.SpecialQuality.Supernatural.LayOnHands.Lay on Hands"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LayOnHandsTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LayOnHandsDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TouchOfCorruptionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LayOnHandsLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You surrounds your hand with a fiendish flame, causing terrible wounds to open on those you touch. You can use this ability %1 times per day. As a touch attack, you can cause %2d6 points of damage. Using this ability is a standard action that does not provoke attacks of opportunity. Alternatively, you can use this power to heal undead creatures, restoring %2d6 hit points. This ability is modified by any feat, spell, or effect that specifically works with the lay on hands paladin class feature.|LayOnHandsTimes|LayOnHandsDice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LayOnHandsTimes|(LayOnHandsLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LayOnHandsDice|LayOnHandsLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TouchOfCorruptionLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LayOnHandsLVL|TouchOfCorruptionLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120 ASPECT:CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|LayOnHandsTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 967,
+    "record_key": "Antipaladin ~ Touch of Corruption"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

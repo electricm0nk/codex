@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Packmaster ~ Teamwork Feat",
+    "name": "Teamwork Feat",
+    "class": "Packmaster",
+    "description": "At 3rd level or any level at which a packmaster would gain a bonus teamwork feat, she can instead increase the number of her animal companions that gain the benefits of her precise companion, woodland stride, and teamwork feats by 1. The current number of animal companions that can benefit from precise companion is %1. She can select this ability multiple times. This ability alters teamwork feats.|PackmasterPreciseCompanionAnimals",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Packmaster ~ Teamwork Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.ArchetypeAbility.Extraordinary.HunterTeamworkFeat"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PackmasterPreciseCompanionAnimals|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level or any level at which a packmaster would gain a bonus teamwork feat, she can instead increase the number of her animal companions that gain the benefits of her precise companion, woodland stride, and teamwork feats by 1. The current number of animal companions that can benefit from precise companion is %1. She can select this ability multiple times. This ability alters teamwork feats.|PackmasterPreciseCompanionAnimals"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Packmaster Teamwork Ability|1|PREMULT:1,[PRECLASS:1,Hunter=3],[!PREABILITY:1,CATEGORY=Archetype,TYPE.HunterTeamworkFeat3]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Packmaster Teamwork Ability|1|PREMULT:1,[PRECLASS:1,Hunter=6],[!PREABILITY:1,CATEGORY=Archetype,TYPE.HunterTeamworkFeat6]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Packmaster Teamwork Ability|1|PREMULT:1,[PRECLASS:1,Hunter=9],[!PREABILITY:1,CATEGORY=Archetype,TYPE.HunterTeamworkFeat9]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Packmaster Teamwork Ability|1|PREMULT:1,[PRECLASS:1,Hunter=12],[!PREABILITY:1,CATEGORY=Archetype,TYPE.HunterTeamworkFeat12]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Packmaster Teamwork Ability|1|PREMULT:1,[PRECLASS:1,Hunter=15],[!PREABILITY:1,CATEGORY=Archetype,TYPE.HunterTeamworkFeat15]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Packmaster Teamwork Ability|1|PREMULT:1,[PRECLASS:1,Hunter=18],[!PREABILITY:1,CATEGORY=Archetype,TYPE.HunterTeamworkFeat18]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PackmasterPreciseCompanionAnimals|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "P.96"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3160,
+    "record_key": "Packmaster ~ Teamwork Feat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

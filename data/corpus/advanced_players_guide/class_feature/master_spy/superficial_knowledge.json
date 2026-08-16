@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Master Spy ~ Superficial Knowledge",
+    "name": "Superficial Knowledge",
+    "class": "Master Spy",
+    "description": "A master spy gives the appearance of knowing more than she actually does. Starting at 3rd level, she can make untrained Knowledge and Profession checks pertaining to her cover or assumed identity as if she were trained and gains a bonus equal to half her level on these checks. For example, a master spy masquerading as a noblewoman can make untrained Knowledge (history) checks about the kingdom and Knowledge (nobility) checks about its noble and royal families as if she were trained, but she cannot make untrained Knowledge (nature) skill checks to identify herbs.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master Spy ~ Superficial Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A master spy gives the appearance of knowing more than she actually does. Starting at 3rd level, she can make untrained Knowledge and Profession checks pertaining to her cover or assumed identity as if she were trained and gains a bonus equal to half her level on these checks. For example, a master spy masquerading as a noblewoman can make untrained Knowledge (history) checks about the kingdom and Knowledge (nobility) checks about its noble and royal families as if she were trained, but she cannot make untrained Knowledge (nature) skill checks to identify herbs."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1408,
+    "record_key": "Master Spy ~ Superficial Knowledge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tome Eater ~ Devour Books and Scrolls",
+    "name": "Devour Books and Scrolls",
+    "class": "Tome Eater",
+    "description": "A tome eater can devour books and scrolls in order to gain various benefits. Devouring a book or scroll is a full-round action that provokes attacks of opportunity. A devoured book or scroll is absorbed into the tome eater's body and completely destroyed. At 4th level, once per day a tome eater can devour a spell scroll or a book to regain mental focus, which she can divide as she likes among her schools of magic, to a maximum of the amount of mental focus she assigned to that school at the beginning of the day. If she devours a scroll, a tome eater regains a number of points of mental focus equal to the spell level of the highest-level spell contained on the scroll. If she devours a nonmagical book that contains at least 100 pages of written text and is worth at least 25 gp, a tome eater regains 1 point of mental focus. If she devours a magical book, she regains a number of points of mental focus equal to half the caster level of the item. If the tome eater devours a spellbook with at least 50 pages of spells of 1st level or higher, she regains 4 points of mental focus. At 6th level, a tome eater can ready an action to devour an enemy's spell when an enemy within 30 feet attempts to cast a spell from a scroll. This ability works as the counterspell action as if the tome eater were using dispel magic, though the tome eater doesn't need to cast a spell to counter the enemy's spell. A tome eater can use this ability once per day at 6th level, plus one additional time per day for every 4 occultist levels beyond 6th. If a tome eater readies an action to use this ability and the readied action never triggers, she doesn't expend a daily use of this ability. At 16th level, the tome eater can use this ability as an immediate action without readying an action. At 8th level, a tome eater can devour a book or scroll as a standard action. Additionally, whenever a tome eater successfully uses this ability to counter a spell being cast from a scroll, she can devour the enemy's scroll without spending any additional actions if she hasn't devoured a scroll or book yet that day. At 12th level, a tome eater can devour a book or scroll as a move action. Additionally, whenever a tome eater successfully uses this ability to counter a spell being cast from a scroll, she can choose to turn the spell back on its caster (as spell turning) instead of devouring the scroll. She can do this whether or not she has devoured a scroll or book yet that day. This ability replaces shift focus, the implement gained at 6th level, magic circles, outside contact, binding circles, and fast circles.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tome Eater ~ Devour Books and Scrolls"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Tome Eater Class Feature.Occultist Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A tome eater can devour books and scrolls in order to gain various benefits. Devouring a book or scroll is a full-round action that provokes attacks of opportunity. A devoured book or scroll is absorbed into the tome eater's body and completely destroyed. At 4th level, once per day a tome eater can devour a spell scroll or a book to regain mental focus, which she can divide as she likes among her schools of magic, to a maximum of the amount of mental focus she assigned to that school at the beginning of the day. If she devours a scroll, a tome eater regains a number of points of mental focus equal to the spell level of the highest-level spell contained on the scroll. If she devours a nonmagical book that contains at least 100 pages of written text and is worth at least 25 gp, a tome eater regains 1 point of mental focus. If she devours a magical book, she regains a number of points of mental focus equal to half the caster level of the item. If the tome eater devours a spellbook with at least 50 pages of spells of 1st level or higher, she regains 4 points of mental focus. At 6th level, a tome eater can ready an action to devour an enemy's spell when an enemy within 30 feet attempts to cast a spell from a scroll. This ability works as the counterspell action as if the tome eater were using dispel magic, though the tome eater doesn't need to cast a spell to counter the enemy's spell. A tome eater can use this ability once per day at 6th level, plus one additional time per day for every 4 occultist levels beyond 6th. If a tome eater readies an action to use this ability and the readied action never triggers, she doesn't expend a daily use of this ability. At 16th level, the tome eater can use this ability as an immediate action without readying an action. At 8th level, a tome eater can devour a book or scroll as a standard action. Additionally, whenever a tome eater successfully uses this ability to counter a spell being cast from a scroll, she can devour the enemy's scroll without spending any additional actions if she hasn't devoured a scroll or book yet that day. At 12th level, a tome eater can devour a book or scroll as a move action. Additionally, whenever a tome eater successfully uses this ability to counter a spell being cast from a scroll, she can choose to turn the spell back on its caster (as spell turning) instead of devouring the scroll. She can do this whether or not she has devoured a scroll or book yet that day. This ability replaces shift focus, the implement gained at 6th level, magic circles, outside contact, binding circles, and fast circles."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1547,
+    "record_key": "Tome Eater ~ Devour Books and Scrolls"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

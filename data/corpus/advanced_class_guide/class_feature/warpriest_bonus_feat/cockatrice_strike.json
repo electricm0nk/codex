@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Cockatrice Strike",
+    "name": "Cockatrice Strike",
+    "class": "Warpriest Bonus Feat",
+    "description": "With a single strike, you transmute flesh to stone.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Cockatrice Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Improved Unarmed Strike,Gorgon's Fist,Medusa's Wrath"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:14],[PREVARGTEQ:WarpriestBonusFeatBAB,14]"
+      },
+      {
+        "key": "DESC",
+        "value": "With a single strike, you transmute flesh to stone."
+      },
+      {
+        "key": "DESC",
+        "value": " As a full-round action, you can make a single unarmed strike against a dazed, flat-footed, paralyzed, staggered, stunned, or unconscious foe. If that attack is a critical hit, the target is petrified unless it succeeds on a Fortitude saving throw with a DC of 10 + 1/2 your character level + your Wisdom modifier. This is a supernatural polymorph effect."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Cockatrice Strike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4316,
+    "record_key": "Warpriest Bonus Feat ~ Cockatrice Strike"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

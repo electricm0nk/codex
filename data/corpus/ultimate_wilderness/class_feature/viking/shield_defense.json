@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Viking ~ Shield Defense",
+    "name": "Shield Defense",
+    "class": "Viking",
+    "description": "A viking learns the art of fighting with a shield. Whenever she is wearing medium, light, or no armor and using a shield, the viking's shield bonus to AC increases by %1.|VikingACBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Viking ~ Shield Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fighter Class Features.VikingClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VikingACBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A viking learns the art of fighting with a shield. Whenever she is wearing medium, light, or no armor and using a shield, the viking's shield bonus to AC increases by %1.|VikingACBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|VikingACBonus|TYPE=Shield.STACK|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VikingACBonus|1+(FighterLVL>=7)+(FighterLVL>=11)+(FighterLVL>=15)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 594,
+    "record_key": "Viking ~ Shield Defense"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

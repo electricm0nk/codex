@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Ask the Spirits",
+    "name": "Ask the Spirits",
+    "class": "Medium",
+    "description": "A medium can send his consciousness to the Astral Plane any number of times per day to ask the spirits for advice, as if using contact other plane to contact the Astral Plane. The medium automatically succeeds at the Intelligence check to avoid the possible decrease to his Intelligence and Charisma.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Ask the Spirits"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Medium|TIMES=ATWILL|CASTERLEVEL=MediumLVL|Contact Other Plane,15+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "A medium can send his consciousness to the Astral Plane any number of times per day to ask the spirits for advice, as if using contact other plane to contact the Astral Plane. The medium automatically succeeds at the Intelligence check to avoid the possible decrease to his Intelligence and Charisma."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 821,
+    "record_key": "Medium ~ Ask the Spirits"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

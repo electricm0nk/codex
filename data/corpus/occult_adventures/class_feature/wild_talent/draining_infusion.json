@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Draining Infusion",
+    "name": "Draining Infusion",
+    "class": "Wild Talent",
+    "description": "Element universal; Type substance infusion; Level 1; Burn 1 Associated Blasts any simple Saving Throw Fortitude partial; see text You can drain elemental energy and matter from your foes to strengthen your next attack. When you use this infusion, your kinetic blast affects only creatures with a subtype matching your kinetic blast's element (for instance, a fire blast would damage only creatures of the fire subtype). Against such creatures, your blast targets touch AC (if it requires an attack roll) and always allows spell resistance. Because you are draining energy from the target, your blast doesn't apply your elemental overflow bonuses or Constitution modifier. The target can attempt a Fortitude save to take 1/4 the normal amount of damage. Draining infusion ignores any damage reduction, resistances, and immunities the creature might possess. If at least one creature fails its saving throw against your draining infusion, you can reduce the total burn cost of any one blast wild talent used before the end of your next turn by 1, or by 2 if you have the supercharge ability. If you use draining infusion again before applying this reduction, you still deal the damage from that draining infusion, but the burn reductions don't stack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Draining Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Universal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Base,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Element universal; Type substance infusion; Level 1; Burn 1 Associated Blasts any simple Saving Throw Fortitude partial; see text You can drain elemental energy and matter from your foes to strengthen your next attack. When you use this infusion, your kinetic blast affects only creatures with a subtype matching your kinetic blast's element (for instance, a fire blast would damage only creatures of the fire subtype). Against such creatures, your blast targets touch AC (if it requires an attack roll) and always allows spell resistance. Because you are draining energy from the target, your blast doesn't apply your elemental overflow bonuses or Constitution modifier. The target can attempt a Fortitude save to take 1/4 the normal amount of damage. Draining infusion ignores any damage reduction, resistances, and immunities the creature might possess. If at least one creature fails its saving throw against your draining infusion, you can reduce the total burn cost of any one blast wild talent used before the end of your next turn by 1, or by 2 if you have the supercharge ability. If you use draining infusion again before applying this reduction, you still deal the damage from that draining infusion, but the burn reductions don't stack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 688,
+    "record_key": "Wild Talent ~ Draining Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Deadly Excretions",
+    "name": "Deadly Excretions",
+    "class": "Discovery",
+    "description": "When using his toxic skin ability, the alchemist can choose to excrete a Constitution poison instead of a Dexterity poison. This poison works the same as the normal grippli toxic skin poison except that a failed save deals 1 point of Constitution damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Deadly Excretions"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Grippli ~ Toxic Skin"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "When using his toxic skin ability, the alchemist can choose to excrete a Constitution poison instead of a Dexterity poison. This poison works the same as the normal grippli toxic skin poison except that a failed save deals 1 point of Constitution damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.191"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 869,
+    "record_key": "Discovery ~ Deadly Excretions"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

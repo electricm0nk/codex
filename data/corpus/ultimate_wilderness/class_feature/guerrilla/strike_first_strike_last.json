@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Guerrilla ~ Strike First Strike Last",
+    "name": "Strike First, Strike Last",
+    "class": "Guerrilla",
+    "description": "A guerrilla adds half his level on Stealth checks when remaining motionless and reduces the penalty on Stealth checks when sniping by an equal amount. He also gains this bonus on his initiative checks in surprise rounds whenever he is aware of the surprise round and at least one enemy is unaware.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guerrilla ~ Strike First Strike Last"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Features.GuerrillaClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A guerrilla adds half his level on Stealth checks when remaining motionless and reduces the penalty on Stealth checks when sniping by an equal amount. He also gains this bonus on his initiative checks in surprise rounds whenever he is aware of the surprise round and at least one enemy is unaware."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=While still|SlayerLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1163,
+    "record_key": "Guerrilla ~ Strike First Strike Last"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

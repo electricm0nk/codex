@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elemental Defense ~ Flesh Of Stone",
+    "name": "Flesh Of Stone",
+    "class": "Elemental Defense",
+    "description": "Element earth; Type defense (Su); Level -; Burn 0 Your skin hardens like stone, dampening the impact of most attacks. You gain DR 1/adamantine. This DR increases by 1 for every 2 kineticist levels you possess beyond 2nd. By accepting 1 point of burn, you can increase the DR by 1 until the next time your burn is removed, to a maximum DR equal to your kineticist level. Whenever you accept burn while using an earth wild talent, the energy surging through you causes your damage reduction to change from DR/adamantine to DR/- for 1 round. You can dismiss and restore this effect as an immediate action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Defense ~ Flesh Of Stone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Defense Wild Talent"
+      },
+      {
+        "key": "DESC",
+        "value": "Element earth; Type defense (Su); Level -; Burn 0 Your skin hardens like stone, dampening the impact of most attacks. You gain DR 1/adamantine. This DR increases by 1 for every 2 kineticist levels you possess beyond 2nd. By accepting 1 point of burn, you can increase the DR by 1 until the next time your burn is removed, to a maximum DR equal to your kineticist level. Whenever you accept burn while using an earth wild talent, the energy surging through you causes your damage reduction to change from DR/adamantine to DR/- for 1 round. You can dismiss and restore this effect as an immediate action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 673,
+    "record_key": "Elemental Defense ~ Flesh Of Stone"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

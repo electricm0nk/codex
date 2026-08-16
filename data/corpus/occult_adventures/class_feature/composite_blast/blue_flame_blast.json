@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Composite Blast ~ Blue Flame Blast",
+    "name": "Blue Flame Blast",
+    "class": "Composite Blast",
+    "description": "Element fire; Type composite blast (Sp); Level -; Burn 2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Composite Blast ~ Blue Flame Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Composite Blast"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisites primary element (fire), expanded element (fire)"
+      },
+      {
+        "key": "DESC",
+        "value": "Element fire; Type composite blast (Sp); Level -; Burn 2"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Blast Type energy; Damage fire You unleash a concentrated blast of intense blue flame."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 659,
+    "record_key": "Composite Blast ~ Blue Flame Blast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

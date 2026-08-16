@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Fire Brand",
+    "name": "Fire Brand",
+    "class": "Discovery",
+    "description": "An alchemist with this discovery can expend one daily bomb use to apply the bomb reagents to his weapon as a swift action. A weapon treated this way deals fire damage as if it had the flaming weapon special ability. At 10th level, the weapon is treated as if it had the flaming burst weapon special ability. The bomb reagents continue burning for 1 minute or until extinguished by dousing the weapon in water. An alchemist can use this ability with natural weapons, but he takes 1d6 points of fire damage per round for each natural weapon treated.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Fire Brand"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery.Supernatural"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsGoblin=true"
+      },
+      {
+        "key": "DESC",
+        "value": "An alchemist with this discovery can expend one daily bomb use to apply the bomb reagents to his weapon as a swift action. A weapon treated this way deals fire damage as if it had the flaming weapon special ability. At 10th level, the weapon is treated as if it had the flaming burst weapon special ability. The bomb reagents continue burning for 1 minute or until extinguished by dousing the weapon in water. An alchemist can use this ability with natural weapons, but he takes 1d6 points of fire damage per round for each natural weapon treated."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 561,
+    "record_key": "Discovery ~ Fire Brand"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

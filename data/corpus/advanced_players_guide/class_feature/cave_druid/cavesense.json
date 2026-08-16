@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cave Druid ~ Cavesense",
+    "name": "Cavesense",
+    "class": "Cave Druid",
+    "description": "A underground druid adds Knowledge (dungeoneering) rather than Knowledge (geography) as a class skill and gains a +2 bonus on Knowledge (dungeoneering) and Survival skill checks. This ability replaces the nature sense ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cave Druid ~ Cavesense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DruidClassFeatures.ArchetypeCaveDruid.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A underground druid adds Knowledge (dungeoneering) rather than Knowledge (geography) as a class skill and gains a +2 bonus on Knowledge (dungeoneering) and Survival skill checks. This ability replaces the nature sense ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Dungeoneering),Survival|2"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (Dungeoneering)|Climb|TYPE=Craft|Fly|Handle Animal|Heal|Knowledge (Nature)|Perception|TYPE=Profession|Ride|Spellcraft|Survival|Swim"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1942,
+    "record_key": "Cave Druid ~ Cavesense"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

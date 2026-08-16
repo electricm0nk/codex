@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Viking ~ Berserker",
+    "name": "Berserker",
+    "class": "Viking",
+    "description": "A viking gains the rage ability as the barbarian class feature, but her barbarian level is considered to be her fighter level -3.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Viking ~ Berserker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fighter Class Features.VikingClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A viking gains the rage ability as the barbarian class feature, but her barbarian level is considered to be her fighter level -3."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageLVL|FighterLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 595,
+    "record_key": "Viking ~ Berserker"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Runeforger ~ Featherlight",
+    "name": "Featherlight",
+    "class": "Runeforger",
+    "description": "The inscribed item's weight is halved; a metal item's weight is reduced to 1/4 normal. If inscribed on a suit of armor, its armor check penalty for Acrobatics, Climb, and Jump checks is halved.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Runeforger ~ Featherlight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RuneforgerOption.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempBonus_Featherlight|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The inscribed item's weight is halved; a metal item's weight is reduced to 1/4 normal. If inscribed on a suit of armor, its armor check penalty for Acrobatics, Climb, and Jump checks is halved."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|VAR|TempBonus_Featherlight|1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SKILL|Acrobatics,Climb|%LIST"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=0|MAX=5|TITLE=Choose Half value of Armor Check Penalty of armor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 75,
+    "record_key": "Runeforger ~ Featherlight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

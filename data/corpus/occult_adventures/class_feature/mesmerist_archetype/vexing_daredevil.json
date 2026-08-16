@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mesmerist Archetype ~ Vexing Daredevil",
+    "name": "Vexing Daredevil",
+    "class": "Mesmerist Archetype",
+    "description": "Vexing daredevils train their psychic powers for combat, specializing in momentarily blinding and confusing their foes with sudden feints and tricks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Archetype ~ Vexing Daredevil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Mesmerist Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Mesmerist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Mesmerist Archetype ~ Vexing Daredevil],[!PREFACT:1,ABILITIES,Mesmerist_Archetype_ClassSkills=True,Mesmerist_Archetype_MesmeristTrick1=True,Mesmerist_Archetype_TouchTreatment=True,Mesmerist_Archetype_BoldStare=True,Mesmerist_Archetype_GlibLie=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Vexing daredevils train their psychic powers for combat, specializing in momentarily blinding and confusing their foes with sudden feints and tricks."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Class Feature|AUTOMATIC|Vexing Daredevil ~ Class Skills|PRECLASS:1,Mesmerist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Class Feature|AUTOMATIC|Vexing Daredevil ~ Bonus Feats|Vexing Daredevil ~ Dazzling Feint|PRECLASS:1,Mesmerist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Class Feature|AUTOMATIC|Vexing Daredevil ~ Shimmering Body|PRECLASS:1,Mesmerist=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vexing Daredevil Martial Weapon Proficiency|1|PRECLASS:1,Mesmerist=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Mesmerist"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_ClassSkills|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_MesmeristTrick1|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_TouchTreatment|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_BoldStare|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_GlibLie|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_MesmeristTrick1|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_TouchTreatment|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_BoldStare|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_GlibLie|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1462,
+    "record_key": "Mesmerist Archetype ~ Vexing Daredevil"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

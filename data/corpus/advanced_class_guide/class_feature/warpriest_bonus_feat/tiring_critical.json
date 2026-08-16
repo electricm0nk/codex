@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Tiring Critical",
+    "name": "Tiring Critical",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your critical hits cause opponents to become fatigued.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Tiring Critical"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Critical"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Critical Focus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:13],[PREVARGTEQ:WarpriestBonusFeatBAB,13],[PREVARGTEQ:CriticalFocusQualify,13]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your critical hits cause opponents to become fatigued."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever you score a critical hit, your opponent becomes fatigued. This feat has no additional effect on a fatigued or exhausted creature."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Tiring Critical"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4295,
+    "record_key": "Warpriest Bonus Feat ~ Tiring Critical"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

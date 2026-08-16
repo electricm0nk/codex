@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus Arcana ~ Familiar",
+    "name": "Familiar",
+    "class": "Magus Arcana",
+    "description": "You gain a familiar, using your magus level as your effective wizard level. This familiar follows the rules for familiars presented in the arcane bond wizard class feature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.MagusArcana"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "FamiliarNotAllowed,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a familiar, using your magus level as your effective wizard level. This familiar follows the rules for familiars presented in the arcane bond wizard class feature."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|MagusArcanaLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Standard Familiar List"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 88,
+    "record_key": "Magus Arcana ~ Familiar"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

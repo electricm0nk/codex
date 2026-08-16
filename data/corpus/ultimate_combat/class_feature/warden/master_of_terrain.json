@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warden ~ Master of TeRrain",
+    "name": "Master of Terrain",
+    "class": "Warden",
+    "description": "At 1st level, a warden selects his first favored terrain. He gains another one at 3rd level, and then every five levels thereafter (for a maximum of five favored terrains at 18th level). This ability replaces the ranger's first favored enemy ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warden ~ Master of TeRrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a warden selects his first favored terrain. He gains another one at 3rd level, and then every five levels thereafter (for a maximum of five favored terrains at 18th level). This ability replaces the ranger's first favored enemy ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPool|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1567,
+    "record_key": "Warden ~ Master of TeRrain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

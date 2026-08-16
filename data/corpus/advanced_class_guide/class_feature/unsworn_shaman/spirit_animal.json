@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Unsworn Shaman ~ Spirit Animal",
+    "name": "Spirit Animal",
+    "class": "Unsworn Shaman",
+    "description": "An unsworn shaman's spirit animal gains the spirit animal bonus from one of her wandering spirits (see below). This bonus can be changed each day when the shaman prepares spells, but it must correspond to one of the shaman's wandering spirits. This ability alters spirit animal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unsworn Shaman ~ Spirit Animal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unsworn Shaman Class Feature.Shaman Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An unsworn shaman's spirit animal gains the spirit animal bonus from one of her wandering spirits (see below). This bonus can be changed each day when the shaman prepares spells, but it must correspond to one of the shaman's wandering spirits. This ability alters spirit animal."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Shaman ~ Spirit Animal"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Unsworn Shaman Spirit Animal Bonus|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3650,
+    "record_key": "Unsworn Shaman ~ Spirit Animal"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

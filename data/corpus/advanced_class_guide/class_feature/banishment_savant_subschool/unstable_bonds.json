@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Banishment Savant Subschool ~ Unstable Bonds",
+    "name": "Unstable Bonds",
+    "class": "Banishment Savant Subschool",
+    "description": "Your touch can disrupt the bonds that hold a summoned or called creature on this plane. As a melee touch attack, you can cause a summoned or called creature to become shaken and staggered for %1 rounds. You can use this ability %2 times per day.|max(ArcanistSavantSchoolLVL/2,1)|INT+3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Banishment Savant Subschool ~ Unstable Bonds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DESC",
+        "value": "Your touch can disrupt the bonds that hold a summoned or called creature on this plane. As a melee touch attack, you can cause a summoned or called creature to become shaken and staggered for %1 rounds. You can use this ability %2 times per day.|max(ArcanistSavantSchoolLVL/2,1)|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2584,
+    "record_key": "Banishment Savant Subschool ~ Unstable Bonds"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

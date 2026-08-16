@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Noble Fencer ~ Incredible Aspirations",
+    "name": "Incredible Aspirations",
+    "class": "Noble Fencer",
+    "description": "At 7th level, a noble fencer strives for truly amazing results when he uses his derring-do and social panache deeds. As long as he has 1 panache point, the first time he rolls a natural 5 on the 1d6 for those deeds, he can roll another 1d6, subject to the other limitations of the respective deeds. He can still reroll as many rolls of 6 as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Noble Fencer ~ Incredible Aspirations"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL07"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SwashbucklerDeedsLVL7.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, a noble fencer strives for truly amazing results when he uses his derring-do and social panache deeds. As long as he has 1 panache point, the first time he rolls a natural 5 on the 1d6 for those deeds, he can roll another 1d6, subject to the other limitations of the respective deeds. He can still reroll as many rolls of 6 as normal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 954,
+    "record_key": "Noble Fencer ~ Incredible Aspirations"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

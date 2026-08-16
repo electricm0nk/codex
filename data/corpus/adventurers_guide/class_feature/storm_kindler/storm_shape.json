@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Storm Kindler ~ Storm Shape",
+    "name": "Storm Shape",
+    "class": "Storm Kindler",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Storm Kindler ~ Storm Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Storm Kindler Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StormShapeHeight|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.180"
+      },
+      {
+        "key": "DESC",
+        "value": "A Storm Kindler becomes a physical embodiment of the fury of the storm. As a standard action, she can transform herself into a whirlwind (as per the universal monster rule, Pathfinder RPG Bestiary 306) for %1 minutes per day. These minutes need not be consecutive, but must be spent in 1-minute increments. If the Storm Kindler is underwater when she uses this ability, she instead transforms into a vortex of the same size (this functions identically to the whirlwind ability, but can form only underwater and can't leave the water). The Storm Kindler can breathe water while in vortex form. If the Storm Kindler does not have a fly or swim speed, she gains one (as appropriate to her new form) equal to her base land speed while in storm shape. With a fly speed, she has average maneuverability. As a swift action, the Storm Kindler can change the height of her whirlwind form from a minimum of 10 feet tall to a maximum of %2 feet tall. The Storm Kindler can damage and trap|StormKindlerLVL|StormShapeHeight"
+      },
+      {
+        "key": "DESC",
+        "value": "Small|PREVARLT:StormKindlerLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "Medium|PREVARGTEQ:StormKindlerLVL,4|PREVARLT:StormKindlerLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Large|PREVARGTEQ:StormKindlerLVL,6|PREVARLT:StormKindlerLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "Huge|PREVARGTEQ:StormKindlerLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "or smaller creatures caught in her whirlwind, dealing lethal damage equal to her unarmed strike damage to each such creature that fails a Reflex save (DC %1) and lifting it into the air if it fails a second Reflex save.|10+StormKindlerLVL+STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StormShapeHeight|10*(1+min(5,StormKindlerLVL/2))"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 507,
+    "record_key": "Storm Kindler ~ Storm Shape"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

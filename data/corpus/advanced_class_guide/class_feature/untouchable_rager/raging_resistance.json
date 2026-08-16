@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Untouchable Rager ~ Raging Resistance",
+    "name": "Raging Resistance",
+    "class": "Untouchable Rager",
+    "description": "[Not implemented] At 4th level, instead of gaining spells, a bloodrager becomes resistant to spells. While bloodraging, he gains spell resistance equal to 8 + his bloodrager level. Unlike normal spell resistance, the untouchable rager's spell resistance cannot be voluntarily lowered. As long as the untouchable is bloodraging, the spell resistance is persistent, and can only be lowered by ending the bloodrage. At 7th, 10th, 13th, and 16th levels (when other bloodragers would gain bloodline spells), an untouchable rager's spell resistance from raging resistance is increased by 1. This ability replaces the spells, blood casting, eschew materials, and bloodline spells class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Untouchable Rager ~ Raging Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Untouchable Rager Class Feature.Bloodrager Class Feature.SpecialQuality.Extraordinary.BloodragerSpells.BloodragerBloodCasting.BloodragerEschewMaterials.BloodragerBloodline"
+      },
+      {
+        "key": "DESC",
+        "value": "[Not implemented] At 4th level, instead of gaining spells, a bloodrager becomes resistant to spells. While bloodraging, he gains spell resistance equal to 8 + his bloodrager level. Unlike normal spell resistance, the untouchable rager's spell resistance cannot be voluntarily lowered. As long as the untouchable is bloodraging, the spell resistance is persistent, and can only be lowered by ending the bloodrage. At 7th, 10th, 13th, and 16th levels (when other bloodragers would gain bloodline spells), an untouchable rager's spell resistance from raging resistance is increased by 1. This ability replaces the spells, blood casting, eschew materials, and bloodline spells class features."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2836,
+    "record_key": "Untouchable Rager ~ Raging Resistance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

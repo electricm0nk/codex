@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brawler ~ Close Combatant",
+    "name": "Close Combatant",
+    "class": "Brawler",
+    "description": "At 3rd level, a brawler gains a +1 bonus on attack rolls and a +3 bonus on damage rolls with weapons in the close weapon group. Both of these bonuses increase by +1 for every four levels beyond 3rd (to a maximum of +5 on attack rolls and +7 on damage rolls at 19th level). This ability replaces weapon training 1 and 2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler ~ Close Combatant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CloseCombatantAttackBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CloseCombatantDamageBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a brawler gains a +1 bonus on attack rolls and a +3 bonus on damage rolls with weapons in the close weapon group. Both of these bonuses increase by +1 for every four levels beyond 3rd (to a maximum of +5 on attack rolls and +7 on damage rolls at 19th level). This ability replaces weapon training 1 and 2."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CloseCombatantAttackBonus|(FighterLVL+1)/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CloseCombatantDamageBonus|2+((FighterLVL+1)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Weapon Group Close|TOHIT|CloseCombatantAttackBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Weapon Group Close|DAMAGE|CloseCombatantDamageBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 696,
+    "record_key": "Brawler ~ Close Combatant"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

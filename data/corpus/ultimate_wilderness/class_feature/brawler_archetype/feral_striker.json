@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brawler Archetype ~ Feral Striker",
+    "name": "Feral Striker",
+    "class": "Brawler Archetype",
+    "description": "A feral striker taps into a reservoir of druidic power hidden inside herself, allowing her to take animalistic characteristics.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler Archetype ~ Feral Striker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BrawlerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Brawler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Feral Striker],[!PREFACT:1,ABILITIES,Brawler_Archetype_MartialFlexibility=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A feral striker taps into a reservoir of druidic power hidden inside herself, allowing her to take animalistic characteristics."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Feral Striker ~ Feral Aspect|PRECLASS:1,Brawler=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_MartialFlexibility|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_MartialFlexibility|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 351,
+    "record_key": "Brawler Archetype ~ Feral Striker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

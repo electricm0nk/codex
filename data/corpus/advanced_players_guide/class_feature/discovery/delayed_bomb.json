@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Delayed Bomb",
+    "name": "Delayed Bomb",
+    "class": "Discovery",
+    "description": "The alchemist can place a bomb so that it explodes a number of rounds after the alchemist ceases contact with the bomb. This delay can be any number of rounds as chosen by the alchemist, up to a number of rounds equal to his level. If at any point the alchemist reclaims possession of the delayed bomb, he can end the timer and prevent the bomb's detonation. A delayed bomb detonates immediately if any other creature attempts to touch or move it, or if the bomb's contents are removed from the vial (such as if the vial breaks). The bomb deals damage as if it scored a direct hit to any creature in the square with the bomb when it detonates, and splash damage to all adjacent creatures as normal. An alchemist cannot have more than one delayed bomb at one time. If he creates another delayed bomb, the previous bomb becomes inert. Dispel magic can neutralize a delayed bomb, as can a successful Disable Device check (DC equals 10 + the alchemist's level + the alchemist's Intelligence modifier).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Delayed Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "The alchemist can place a bomb so that it explodes a number of rounds after the alchemist ceases contact with the bomb. This delay can be any number of rounds as chosen by the alchemist, up to a number of rounds equal to his level. If at any point the alchemist reclaims possession of the delayed bomb, he can end the timer and prevent the bomb's detonation. A delayed bomb detonates immediately if any other creature attempts to touch or move it, or if the bomb's contents are removed from the vial (such as if the vial breaks). The bomb deals damage as if it scored a direct hit to any creature in the square with the bomb when it detonates, and splash damage to all adjacent creatures as normal. An alchemist cannot have more than one delayed bomb at one time. If he creates another delayed bomb, the previous bomb becomes inert. Dispel magic can neutralize a delayed bomb, as can a successful Disable Device check (DC equals 10 + the alchemist's level + the alchemist's Intelligence modifier)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 126,
+    "record_key": "Discovery ~ Delayed Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

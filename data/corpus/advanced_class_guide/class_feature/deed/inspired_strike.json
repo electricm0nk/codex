@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Deed ~ Inspired Strike",
+    "name": "Inspired Strike",
+    "class": "Deed",
+    "description": "An inspired blade can spend 1 panache point when making an attack with a rapier to gain a +%1 insight bonus on that attack roll. When an inspired blade hits with an attack augmented by inspired strike, she can spend 1 additional panache point to make the hit a critical threat, though if she does so, she does not regain panache if she confirms that critical threat. The cost of this deed cannot be reduced by abilities such as Signature Deed.|max(INT,1)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deed ~ Inspired Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Feature.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An inspired blade can spend 1 panache point when making an attack with a rapier to gain a +%1 insight bonus on that attack roll. When an inspired blade hits with an attack augmented by inspired strike, she can spend 1 additional panache point to make the hit a critical threat, though if she does so, she does not regain panache if she confirms that critical threat. The cost of this deed cannot be reduced by abilities such as Signature Deed.|max(INT,1)"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|WEAPONPROF=Rapier|TOHIT|MAX(1,INT)|TYPE=Insight"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3893,
+    "record_key": "Deed ~ Inspired Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

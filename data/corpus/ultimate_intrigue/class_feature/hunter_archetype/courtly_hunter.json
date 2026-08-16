@@ -1,0 +1,131 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunter Archetype ~ Courtly Hunter",
+    "name": "Courtly Hunter",
+    "class": "Hunter Archetype",
+    "description": "While most hunters find themselves at ease in the wildest parts of the world, courtly hunters instead make their homes in cultured urban environments. They and their animal companions are more refined than typical hunters, using their skills to navigate the winding paths of courtly intrigue as surely as other hunters find trails in the wilderness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Archetype ~ Courtly Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.HunterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Hunter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Courtly Hunter],[!PREFACT:1,ABILITIES,Hunter_Archetype_ClassSkills=True,Hunter_Archetype_AnimalCompanion=True,Hunter_Archetype_AnimalFocus=True,Hunter_Archetype_PreciseCompanion=True,Hunter_Archetype_HunterTactics=True,Hunter_Archetype_TeamworkFeats=True,Hunter_Archetype_BonusTricks=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "While most hunters find themselves at ease in the wildest parts of the world, courtly hunters instead make their homes in cultured urban environments. They and their animal companions are more refined than typical hunters, using their skills to navigate the winding paths of courtly intrigue as surely as other hunters find trails in the wilderness."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Courtly Hunter ~ Class Skills|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Courtly Hunter ~ Courtly Companion|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Courtly Hunter ~ Refined Focus|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Courtly Hunter ~ Subtle Companion|PRECLASS:1,Hunter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Courtly Hunter ~ Skill Bond|PRECLASS:1,Hunter=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Courtly Hunter ~ Alternate Form|PRECLASS:1,Hunter=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_PreciseCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_HunterTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_TeamworkFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_BonusTricks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_PreciseCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_HunterTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_TeamworkFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_BonusTricks|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 388,
+    "record_key": "Hunter Archetype ~ Courtly Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

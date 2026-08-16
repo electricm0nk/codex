@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oath against Fiends ~ Holy Vessel",
+    "name": "Holy Vessel",
+    "class": "Oath against Fiends",
+    "description": "If your divine bond is with a weapon, you can also use your divine bond to augment your armor or shield with enhancement bonuses, or add any of the following armor or shield properties: bashing, fortification, and spell resistance. Adding these properties consumes an amount of bonus equal to the property's cost (see Tables 15-4 and 15-5 in the Core Rulebook). You can divide your bonuses from the divine bond ability among your weapon, armor, and shield as you sees fit. This ability has no effect for a paladin whose divine bond is with a mount.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against Fiends ~ Holy Vessel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If your divine bond is with a weapon, you can also use your divine bond to augment your armor or shield with enhancement bonuses, or add any of the following armor or shield properties: bashing, fortification, and spell resistance. Adding these properties consumes an amount of bonus equal to the property's cost (see Tables 15-4 and 15-5 in the Core Rulebook). You can divide your bonuses from the divine bond ability among your weapon, armor, and shield as you sees fit. This ability has no effect for a paladin whose divine bond is with a mount."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1544,
+    "record_key": "Oath against Fiends ~ Holy Vessel"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

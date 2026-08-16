@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Horizon Walker ~ Terrain Mastery",
+    "name": "Terrain Mastery",
+    "class": "Horizon Walker",
+    "description": "At 2nd level, a horizon walker selects a favored terrain to master. When within this terrain the horizon walker may, as a move action, grant a +2 bonus on Climb, Stealth, Perception and Survival checks made by all allies within 30 feet who can see and hear him. This bonus lasts for a number of rounds equal to the horizon walker's Wisdom modifier (minimum 1). The character masters one additional terrain at 4th, 6th, and 8th levels. Mastery of each terrain has additional benefits, outlined below; these benefits apply to the horizon walker at all times whether or not he is in the relevant terrain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Horizon Walker ~ Terrain Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a horizon walker selects a favored terrain to master. When within this terrain the horizon walker may, as a move action, grant a +2 bonus on Climb, Stealth, Perception and Survival checks made by all allies within 30 feet who can see and hear him. This bonus lasts for a number of rounds equal to the horizon walker's Wisdom modifier (minimum 1). The character masters one additional terrain at 4th, 6th, and 8th levels. Mastery of each terrain has additional benefits, outlined below; these benefits apply to the horizon walker at all times whether or not he is in the relevant terrain."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Terrain Mastery Selection|HorizonWalkerLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HorizonWalkerTerrainMasteryLVL|HorizonWalkerLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1313,
+    "record_key": "Horizon Walker ~ Terrain Mastery"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

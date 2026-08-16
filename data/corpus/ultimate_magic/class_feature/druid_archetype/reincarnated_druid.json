@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Druid Archetype ~ Reincarnated Druid",
+    "name": "Reincarnated Druid",
+    "class": "Druid Archetype",
+    "description": "Spun off into the endless circle of life, an incarnate druid is an embodiment of nature's eternal renewal. She lives many lives and wanders the world devoid of attachments, a stranger to all yet one with all life.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Reincarnated Druid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype.DruidWoodlandStride.DruidResistNaturesLure.DruidVenomImmunity.DruidTimelessBody"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Reincarnated Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidResistNaturesLure,TYPE.DruidVenomImmunity.TYPE.DruidTimelessBody]"
+      },
+      {
+        "key": "DESC",
+        "value": "Spun off into the endless circle of life, an incarnate druid is an embodiment of nature's eternal renewal. She lives many lives and wanders the world devoid of attachments, a stranger to all yet one with all life."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Reincarnated Druid ~ Mysterious Stranger|PRECLASS:1,Druid=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Reincarnated Druid ~ Resist Death's Touch|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Reincarnated Druid ~ Many Lives|PRECLASS:1,Druid=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Reincarnated Druid ~ Cheat Death|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Reincarnated Druid ~ Tongue of the Sun and Moon|PRECLASS:1,Druid=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidWildShape|-2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Druid"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1092,
+    "record_key": "Druid Archetype ~ Reincarnated Druid"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Trick Riding",
+    "name": "Trick Riding",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are not only skilled at controlling a horse in combat; you can make it look like art.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Trick Riding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Mounted Combat"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Ride=9"
+      },
+      {
+        "key": "DESC",
+        "value": "You are not only skilled at controlling a horse in combat; you can make it look like art."
+      },
+      {
+        "key": "DESC",
+        "value": " While wearing light or no armor, you do not need to make Ride skill checks for any task listed in the Ride skill with a DC of 15 or lower. You do not take a -5 penalty for riding a mount bareback. You can make a check using Mounted Combat to negate a hit on your mount twice per round instead of just once."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Trick Riding"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4386,
+    "record_key": "Warpriest Bonus Feat ~ Trick Riding"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

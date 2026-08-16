@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Swashbuckler ~ Swashbuckler Finesse",
+    "name": "Swashbuckler Finesse",
+    "class": "Swashbuckler",
+    "description": "A swashbuckler gains the benefits of the Weapon Finesse feat with light or one-handed piercing melee weapons, and she can use her Charisma score in place of Intelligence as a prerequisite for combat feats. This ability counts as having the Weapon Finesse feat for purposes of meeting feat prerequisites.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler ~ Swashbuckler Finesse"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_2b"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwashbucklerFinesseQualify|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatFeatIntRequirement|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A swashbuckler gains the benefits of the Weapon Finesse feat with light or one-handed piercing melee weapons, and she can use her Charisma score in place of Intelligence as a prerequisite for combat feats. This ability counts as having the Weapon Finesse feat for purposes of meeting feat prerequisites."
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=FEAT|Weapon Finesse"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatFeatIntRequirement|max(CHASCORE,INTSCORE)|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1955,
+    "record_key": "Swashbuckler ~ Swashbuckler Finesse"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

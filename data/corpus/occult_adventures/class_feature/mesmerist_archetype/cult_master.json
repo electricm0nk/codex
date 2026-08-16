@@ -1,0 +1,131 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mesmerist Archetype ~ Cult Master",
+    "name": "Cult Master",
+    "class": "Mesmerist Archetype",
+    "description": "The leaders of some cults are simply charlatans, bathing in the adulation of their followers. Others believe themselves to be truly in touch with an unknown power, bringing their unique messages to those willing to follow and obey them.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Archetype ~ Cult Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Mesmerist Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Mesmerist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Mesmerist Archetype ~ Cult Master],[!PREFACT:1,ABILITIES,Mesmerist_Archetype_ConsummateLiar=True,Mesmerist_Archetype_PainfulStare=True,Mesmerist_Archetype_MesmeristTricks=True,Mesmerist_Archetype_TouchTreatment=True,Mesmerist_Archetype_BoldStare7=True,Mesmerist_Archetype_MasterfulTricks=True,Mesmerist_Archetype_RuleMinds=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The leaders of some cults are simply charlatans, bathing in the adulation of their followers. Others believe themselves to be truly in touch with an unknown power, bringing their unique messages to those willing to follow and obey them."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Class Feature|AUTOMATIC|Cult Master ~ Insidious Personality|Cult Master ~ Fanatical Stare|PRECLASS:1,Mesmerist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Class Feature|AUTOMATIC|Cult Master ~ False Healing|PRECLASS:1,Mesmerist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Class Feature|AUTOMATIC|Cult Master ~ Faithful Followers|PRECLASS:1,Mesmerist=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Class Feature|AUTOMATIC|Cult Master ~ Fanatical Devotion|PRECLASS:1,Mesmerist=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Class Feature|AUTOMATIC|Cult Master ~ Reborn|PRECLASS:1,Mesmerist=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Mesmerist"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_ConsummateLiar|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_PainfulStare|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_MesmeristTricks|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_TouchTreatment|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_BoldStare7|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_MasterfulTricks|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_RuleMinds|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_ConsummateLiar|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_PainfulStare|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_TouchTreatment|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_BoldStare7|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_RuleMinds|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1459,
+    "record_key": "Mesmerist Archetype ~ Cult Master"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

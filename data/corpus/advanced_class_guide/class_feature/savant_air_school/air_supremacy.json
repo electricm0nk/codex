@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Savant Air School ~ Air Supremacy",
+    "name": "Air Supremacy",
+    "class": "Savant Air School",
+    "description": "You gain a +%1 enhancement bonus on Fly skill checks. In addition, you can cast feather fall on yourself at will. At 5th level, you can cast levitate on yourself at will. At 10th level, you can cast fly on yourself at will. At 20th level, whenever you make a Fly skill check, assume the roll resulted in a natural 20.|ArcanistSavantSchoolLVL/5+2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Air School ~ Air Supremacy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 enhancement bonus on Fly skill checks. In addition, you can cast feather fall on yourself at will. At 5th level, you can cast levitate on yourself at will. At 10th level, you can cast fly on yourself at will. At 20th level, whenever you make a Fly skill check, assume the roll resulted in a natural 20.|ArcanistSavantSchoolLVL/5+2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Fly|(ArcanistSavantSchoolLVL/5)+2|TYPE=Enhancement"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2610,
+    "record_key": "Savant Air School ~ Air Supremacy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

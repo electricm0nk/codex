@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Divination ~ Harrower",
+    "name": "Divination",
+    "class": "Divination",
+    "description": "You gain the ability to cast divination 1/day as a spell-like ability (CL %1).|HarrowerLvl",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divination ~ Harrower"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=(max(TL,1))|Divination,14+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the ability to cast divination 1/day as a spell-like ability (CL %1).|HarrowerLvl"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 47,
+    "record_key": "Divination ~ Harrower"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

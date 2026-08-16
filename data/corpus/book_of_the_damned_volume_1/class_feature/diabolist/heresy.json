@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Diabolist ~ Heresy",
+    "name": "Heresy",
+    "class": "Diabolist",
+    "description": "You gain a +%1 bonus on all checks made to research specific devils' true names or sigils.|DiabolistHeresyBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Diabolist ~ Heresy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DiabolistHeresyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DiabolistHeresyBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on all checks made to research specific devils' true names or sigils.|DiabolistHeresyBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DiabolistHeresyBonus|floor((DiabolistHeresyLVL+3)/6)*2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_class.lst",
+    "sha256": "a5a8d7ac42951ac0052504a8eda6087015e8f6147164243afe9515e7cac2f588",
+    "line": 12,
+    "record_key": "Diabolist ~ Heresy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

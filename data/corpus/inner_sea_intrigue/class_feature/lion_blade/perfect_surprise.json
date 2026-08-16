@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Lion Blade ~ Perfect Surprise",
+    "name": "Perfect Surprise",
+    "class": "Lion Blade",
+    "description": "A Lion Blade can deliver a devastating blow to anyone she catches unaware. Whenever she hits a foe with a sneak attack at the end of a charge or while using Spring Attack, she can make the blow a perfect surprise as an immediate action. The target must succeed at a Fortitude saving throw (DC %1) or fall unconscious for 1 round per Lion Blade level. Once targeted by this ability, a victim is immune to perfect surprise for 24 hours.|10+LionBladeLVL/2+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lion Blade ~ Perfect Surprise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A Lion Blade can deliver a devastating blow to anyone she catches unaware. Whenever she hits a foe with a sneak attack at the end of a charge or while using Spring Attack, she can make the blow a perfect surprise as an immediate action. The target must succeed at a Fortitude saving throw (DC %1) or fall unconscious for 1 round per Lion Blade level. Once targeted by this ability, a victim is immune to perfect surprise for 24 hours.|10+LionBladeLVL/2+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 166,
+    "record_key": "Lion Blade ~ Perfect Surprise"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

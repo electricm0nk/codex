@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Escapologist ~ Elusive",
+    "name": "Elusive",
+    "class": "Escapologist",
+    "description": "An escapologist adds 1/2 her rogue level (minimum +1) as a bonus on all Disable Device and Escape Artist checks. An escapologist can use Disable Device to disarm magical traps. This ability replaces trapfinding, but counts as trapfinding for the purposes of prerequisites and abilities that require trapfinding.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Escapologist ~ Elusive"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Escapologist Class Feature.Rogue Class Feature.SpecialQuality.Trapfinding"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rogue ~ Trapfinding"
+      },
+      {
+        "key": "DESC",
+        "value": "An escapologist adds 1/2 her rogue level (minimum +1) as a bonus on all Disable Device and Escape Artist checks. An escapologist can use Disable Device to disarm magical traps. This ability replaces trapfinding, but counts as trapfinding for the purposes of prerequisites and abilities that require trapfinding."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disable Device,Escape Artist|RogueLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1899,
+    "record_key": "Escapologist ~ Elusive"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

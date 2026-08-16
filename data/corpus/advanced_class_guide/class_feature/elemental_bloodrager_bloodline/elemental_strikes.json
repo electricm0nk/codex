@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elemental Bloodrager Bloodline ~ Elemental Strikes",
+    "name": "Elemental Strikes",
+    "class": "Elemental Bloodrager Bloodline",
+    "description": "As a swift action up to %1 times a day, you can imbue your melee attacks with elemental energy. For 1 round, your|Bloodrager_Elemental_ElementalStrikes_Times|PREVARLT:Bloodrager_Elemental_BloodlineLVL,20",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Bloodrager Bloodline ~ Elemental Strikes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Elemental Bloodrager Bloodline ~ Power LVL 01.Bloodrager Bloodline Power.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Elemental"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Elemental_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Elemental_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Elemental_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Elemental_ElementalStrikes_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action up to %1 times a day, you can imbue your melee attacks with elemental energy. For 1 round, your|Bloodrager_Elemental_ElementalStrikes_Times|PREVARLT:Bloodrager_Elemental_BloodlineLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": "Your|PREVARGTEQ:Bloodrager_Elemental_BloodlineLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": " melee attacks deal 1d6 extra"
+      },
+      {
+        "key": "DESC",
+        "value": " electricity damage.|PREVAREQ:BloodragerElementalBloodline_Air,1"
+      },
+      {
+        "key": "DESC",
+        "value": " acid damage.|PREVAREQ:BloodragerElementalBloodline_Earth,1"
+      },
+      {
+        "key": "DESC",
+        "value": " fire damage.|PREVAREQ:BloodragerElementalBloodline_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": " cold damage.|PREVAREQ:BloodragerElementalBloodline_Water,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Elemental_ElementalStrikes_Times|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Elemental_ElementalStrikes_Times|2|PREVARGTEQ:Bloodrager_Elemental_BloodlineLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Bloodrager_Elemental_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ElementalBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 776,
+    "record_key": "Elemental Bloodrager Bloodline ~ Elemental Strikes"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

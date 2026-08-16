@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent ~ Convincing Lie",
+    "name": "Convincing Lie",
+    "class": "Investigator",
+    "description": "When an investigator with this talent lies, she creates fabrications so convincing that others treat them as truth.  When an investigator with this talent successfully uses the Bluff skill to convince someone that what she is saying is true, if that individual is questioned later about the statement or story, that person uses the investigator's Bluff skill modifier to convince the questioner, rather than his own. If his Bluff skill modifier is better than the investigator's, the individual can use his own modifier and gain a +2 bonus on any check to convince others of the lie.  This effect lasts for %1 days.|InvestigatorConvincingLieBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent ~ Convincing Lie"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorRogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorConvincingLieBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When an investigator with this talent lies, she creates fabrications so convincing that others treat them as truth.  When an investigator with this talent successfully uses the Bluff skill to convince someone that what she is saying is true, if that individual is questioned later about the statement or story, that person uses the investigator's Bluff skill modifier to convince the questioner, rather than his own. If his Bluff skill modifier is better than the investigator's, the individual can use his own modifier and gain a +2 bonus on any check to convince others of the lie.  This effect lasts for %1 days.|InvestigatorConvincingLieBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorConvincingLieBonus|InvestigatorLVL/2+CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1341,
+    "record_key": "Investigator ~ Rogue Talent ~ Convincing Lie"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

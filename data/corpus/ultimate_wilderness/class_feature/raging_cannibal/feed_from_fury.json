@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Raging Cannibal ~ Feed from Fury",
+    "name": "Feed from Fury",
+    "class": "Raging Cannibal",
+    "description": "A raging cannibal is empowered by eating her enemies during combat. When a raging cannibal confirms a critical hit against a creature of the same creature type as herself with her bite attack while raging, she gains %1 temporary hit points. These temporary hit points stack with other temporary hit points gained from this ability but not with those from other sources. These temporary hit points fade after %2 minutes.|BarbarianLVL|BarbarianLVL*10",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Raging Cannibal ~ Feed from Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.RagingCannibalClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A raging cannibal is empowered by eating her enemies during combat. When a raging cannibal confirms a critical hit against a creature of the same creature type as herself with her bite attack while raging, she gains %1 temporary hit points. These temporary hit points stack with other temporary hit points gained from this ability but not with those from other sources. These temporary hit points fade after %2 minutes.|BarbarianLVL|BarbarianLVL*10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 213,
+    "record_key": "Raging Cannibal ~ Feed from Fury"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

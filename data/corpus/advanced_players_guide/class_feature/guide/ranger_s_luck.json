@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Guide ~ Ranger's Luck",
+    "name": "Ranger's Luck",
+    "class": "Guide",
+    "description": "Upon reaching 9th level, once per day the guide can either reroll one of his attack rolls or force an enemy who just hit him with an attack to reroll the attack roll. The ranger must take the result of the second roll even if it is worse. A ranger can use this ability once per day at 9th level, plus one additional time per day at 14th and 19th levels. This ability replaces evasion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guide ~ Ranger's Luck"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.RangerEvasion"
+      },
+      {
+        "key": "DESC",
+        "value": "Upon reaching 9th level, once per day the guide can either reroll one of his attack rolls or force an enemy who just hit him with an attack to reroll the attack roll. The ranger must take the result of the second roll even if it is worse. A ranger can use this ability once per day at 9th level, plus one additional time per day at 14th and 19th levels. This ability replaces evasion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2729,
+    "record_key": "Guide ~ Ranger's Luck"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

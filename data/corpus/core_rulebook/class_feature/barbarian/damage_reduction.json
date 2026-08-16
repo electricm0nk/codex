@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Barbarian ~ Damage Reduction",
+    "name": "Damage Reduction",
+    "class": "Barbarian",
+    "description": "You gain damage reduction. Subtract %1 from the damage you take each time you are dealt damage from a weapon or natural attack. Damage reduction can reduce damage to 0 but not below 0.|BarbarianDR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian ~ Damage Reduction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BarbarianDR|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BarbarianDRLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain damage reduction. Subtract %1 from the damage you take each time you are dealt damage from a weapon or natural attack. Damage reduction can reduce damage to 0 but not below 0.|BarbarianDR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassFeatureDR_ALL|BarbarianDR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BarbarianDR|(BarbarianDRLVL-4)/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BarbarianDRLVL|BarbarianLVL"
+      },
+      {
+        "key": "DR",
+        "value": "BarbarianDR/-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 424,
+    "record_key": "Barbarian ~ Damage Reduction"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:dr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

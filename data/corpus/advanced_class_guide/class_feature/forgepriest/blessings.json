@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forgepriest ~ Blessings",
+    "name": "Blessings",
+    "class": "Forgepriest",
+    "description": "A forgepriest selects only one blessing. This alters the blessings class feature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forgepriest ~ Blessings"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Forgepriest Class Feature.Warpriest Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A forgepriest selects only one blessing. This alters the blessings class feature."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Warpriest Blessings Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warpriest Blessing|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingLVL|WarpriestLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestMinorBlessingGrantedLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestMajorBlessingGrantedLVL|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingUses|(WarpriestBlessingLVL/2)+3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingDC|(WarpriestBlessingLVL/2)+10+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|WarpriestBlessingUses"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3992,
+    "record_key": "Forgepriest ~ Blessings"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

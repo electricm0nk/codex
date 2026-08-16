@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Archetype ~ Code Runner",
+    "name": "Code Runner",
+    "class": "Ranger Archetype",
+    "description": "A code runner specializes in the subtle and speedy transfer of secret messages. He performs long runs between distant lands, sometimes spanning continents and often traversing difficult terrain. He trains his mind both to memorize long messages and to resist any attempts to steal his covert communiques.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Code Runner"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Code Runner],[!PREFACT:1,ABILITIES,Ranger_Archetype_ClassSkills=True,Ranger_Archetype_WildEmpathy=True,Ranger_Archetype_HuntersBond=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A code runner specializes in the subtle and speedy transfer of secret messages. He performs long runs between distant lands, sometimes spanning continents and often traversing difficult terrain. He trains his mind both to memorize long messages and to resist any attempts to steal his covert communiques."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Code Runner ~ Class Skills|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Code Runner ~ Mnemonic Genius|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Code Runner ~ Resist Interrogation|PRECLASS:1,Ranger=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_HuntersBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_HuntersBond|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 635,
+    "record_key": "Ranger Archetype ~ Code Runner"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

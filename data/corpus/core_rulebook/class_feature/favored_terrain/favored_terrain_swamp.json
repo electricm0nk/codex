@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Favored Terrain ~ Swamp",
+    "name": "Favored Terrain (Swamp)",
+    "class": "Favored Terrain",
+    "description": "You gain a +%1 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks when using these skills in swamp terrain. Likewise, you get a +%1 bonus on initiative checks when in this terrain. If you desire, you leave no trail in this terrain and cannot be tracked.|FavoredTerrainSwamp",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Favored Terrain ~ Swamp"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialQuality.Extraordinary.FavoredTerrain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredTerrainSwamp|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks when using these skills in swamp terrain. Likewise, you get a +%1 bonus on initiative checks when in this terrain. If you desire, you leave no trail in this terrain and cannot be tracked.|FavoredTerrainSwamp"
+      },
+      {
+        "key": "MULT",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainSwamp|FavoredTerrainBaseBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|FavoredTerrainSwamp"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|You gain a +%1 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks, Initiative checks and cannot be tracked in swamp terrain|FavoredTerrainSwamp"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1593,
+    "record_key": "Favored Terrain ~ Swamp"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

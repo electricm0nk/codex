@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Archetype ~ Toxic Talon",
+    "name": "Toxic Talon",
+    "class": "Rogue Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ Toxic Talon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RogueArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "DESC",
+        "value": "Twilight Talons might pursue many tasks, from relatively passive information gathering to staging massive coups meant to depose tyrants. A toxic talon, however, is trained and deployed for one very specific purpose: to defeat foes with unusual and potent poisons. After adopting a profession to serve as a cover for his activities, a toxic talon spends resources and time combining easy-to-obtain materials into dangerous toxins to aid in the defense of Andoran. A toxic talon can use rare, complex, slow-release poisons to make a death look like it happened naturally, but sometimes the toxic talon will use specific poisons to cast suspicion on other organizations, stirring internal conflict that other Twilight Talons can use to their advantage."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Toxic Talon],[!PREFACT:1,ABILITIES,Rogue_Archetype_WeaponProficiencies=True,Rogue_Archetype_Trapfinding=True,Rogue_Archetype_TrapSense=True,Rogue_Archetype_UncannyDodge=True,Rogue_Archetype_ImprovedUncannyDodge=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Toxic Talon ~ Forceful Breath|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Toxic Talon ~ Poison Adept|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Toxic Talon ~ Toxin Resistance|PRECLASS:1,Rogue=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Toxic Talon ~ Catalyst|PRECLASS:1,Rogue=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Toxic Talon ~ Split Toxin|PRECLASS:1,Rogue=8"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1017,
+    "record_key": "Rogue Archetype ~ Toxic Talon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

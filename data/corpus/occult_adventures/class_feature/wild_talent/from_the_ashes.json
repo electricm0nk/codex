@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ From The Ashes",
+    "name": "From The Ashes",
+    "class": "Wild Talent",
+    "description": "Element fire; Type utility (Sp); Level 9; Burn 2 When you are about to fall unconscious or die from hit point damage, as an immediate action you can burst into flames that leave behind only ash, which cannot be appreciably affected by most attacks or effects, though a disintegrate spell or similar magic can annihilate it. At the start of your next turn, unless the ash has been completely destroyed, you arise in the square where the most ash is located, having taken the damage from the triggering effect but having also healed 5 points of damage per kineticist level you possess.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ From The Ashes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Fire"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Fire,18"
+      },
+      {
+        "key": "DESC",
+        "value": "Element fire; Type utility (Sp); Level 9; Burn 2 When you are about to fall unconscious or die from hit point damage, as an immediate action you can burst into flames that leave behind only ash, which cannot be appreciably affected by most attacks or effects, though a disintegrate spell or similar magic can annihilate it. At the start of your next turn, unless the ash has been completely destroyed, you arise in the square where the most ash is located, having taken the damage from the triggering effect but having also healed 5 points of damage per kineticist level you possess."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 755,
+    "record_key": "Wild Talent ~ From The Ashes"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

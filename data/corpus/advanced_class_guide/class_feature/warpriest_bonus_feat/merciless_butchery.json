@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Merciless Butchery",
+    "name": "Merciless Butchery",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your talent for slaughter lets you dispatch helpless opponents before they can recover.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Merciless Butchery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Dastardly Finish"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Slayer ~ Studied Target"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SneakAttackDice,5"
+      },
+      {
+        "key": "DESC",
+        "value": "Your talent for slaughter lets you dispatch helpless opponents before they can recover."
+      },
+      {
+        "key": "DESC",
+        "value": " As a standard action that does not provoke attacks of opportunity, you can attempt a coup de grace against a cowering, helpless, or stunned opponent that you have designated as your studied target."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Merciless Butchery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.152"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4171,
+    "record_key": "Warpriest Bonus Feat ~ Merciless Butchery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

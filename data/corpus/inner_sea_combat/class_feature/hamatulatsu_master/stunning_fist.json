@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hamatulatsu Master ~ Stunning Fist",
+    "name": "Stunning Fist",
+    "class": "Hamatulatsu Master",
+    "description": "A hamatulatsu master expands the conditions that she can apply to the target of her stunning fist beyond merely stunning her target. At 4th level, she can choose to make the target shaken for 1 minute. At 8th level, she can choose to deal 1d10 points of nonlethal bleed damage. At 12th level, she can choose to make the target frightened for id3 rounds. At 16th level, she can deal 2d12 points of nonlethal bleed damage. The shaken and frightened conditions allow the target to attempt a Will save to negate the effect instead of a Fortitude save. This ability otherwise functions as normal for a monk of her level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hamatulatsu Master ~ Stunning Fist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A hamatulatsu master expands the conditions that she can apply to the target of her stunning fist beyond merely stunning her target. At 4th level, she can choose to make the target shaken for 1 minute. At 8th level, she can choose to deal 1d10 points of nonlethal bleed damage. At 12th level, she can choose to make the target frightened for id3 rounds. At 16th level, she can deal 2d12 points of nonlethal bleed damage. The shaken and frightened conditions allow the target to attempt a Will save to negate the effect instead of a Fortitude save. This ability otherwise functions as normal for a monk of her level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 82,
+    "record_key": "Hamatulatsu Master ~ Stunning Fist"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

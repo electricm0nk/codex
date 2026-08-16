@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Focused Arcane School ~ Admixture School",
+    "name": "Admixture School",
+    "class": "Focused Arcane School",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Focused Arcane School ~ Admixture School"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Focused Arcane School.WizardEvocation.WizardForceMissile.WizardElementalWall"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Focused Arcane School ~ Admixture School],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardEvocation]"
+      },
+      {
+        "key": "PRESUBCLASS",
+        "value": "1,Evoker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Admixture School ~ Versatile Evocation"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Admixture School ~ Elemental Manipulation|PREVARGTEQ:EvocationSchoolLVL,8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ForceMissile|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ElementalWall|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3313,
+    "record_key": "Focused Arcane School ~ Admixture School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

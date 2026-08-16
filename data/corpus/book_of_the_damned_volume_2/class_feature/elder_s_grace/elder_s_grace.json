@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elder's Grace ~ Mestama",
+    "name": "Elder's Grace",
+    "class": "Elder's Grace",
+    "description": "You immediately age into the next age category, taking all of the appropriate bonuses to mental ability scores without any of the penalties to physical ability scores. If you are venerable when you achieve the boon, you die and become a ghost. Any illusion effect you create gains a +2 profane bonus to the save DC.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elder's Grace ~ Mestama"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You immediately age into the next age category, taking all of the appropriate bonuses to mental ability scores without any of the penalties to physical ability scores. If you are venerable when you achieve the boon, you die and become a ghost. Any illusion effect you create gains a +2 profane bonus to the save DC."
+      },
+      {
+        "key": "BONUS",
+        "value": "DC|SCHOOL.Illusion|2|TYPE=Profane"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 161,
+    "record_key": "Elder's Grace ~ Mestama"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

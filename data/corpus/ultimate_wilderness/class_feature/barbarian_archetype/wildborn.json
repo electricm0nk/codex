@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Wildborn",
+    "name": "Wildborn",
+    "class": "Barbarian Archetype",
+    "description": "Some barbarians are born or bred outside the reach of civilization. These wildborn fight and survive without ever seeing a forge or worked stone, and only dare a trip into the city when no other option is available.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Wildborn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Wildborn],[!PREFACT:1,ABILITIES,Barbarian_Archetype_Proficiencies=True,Barbarian_Archetype_TrapSense=True,Barbarian_Archetype_RagePowers=True,Barbarian_Archetype_DamageReduction=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some barbarians are born or bred outside the reach of civilization. These wildborn fight and survive without ever seeing a forge or worked stone, and only dare a trip into the city when no other option is available."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wildborn ~ Weapon and Armor Proficiencies|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wildborn ~ Illiteracy|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wildborn ~ Live Off the Land|PRECLASS:1,Barbarian=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wildborn ~ Bonus Feats|PRECLASS:1,Barbarian=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wildborn ~ Inexhaustible|PRECLASS:1,Barbarian=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePowers|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_DamageReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower16|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 187,
+    "record_key": "Barbarian Archetype ~ Wildborn"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

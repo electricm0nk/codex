@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kineticist ~ Burn",
+    "name": "Burn",
+    "class": "Kineticist",
+    "description": "At 1st level, a kineticist can overexert herself to channel more power than normal, pushing past the limit of what is safe for her body by accepting burn. Some of her wild talents allow her to accept burn in exchange for a greater effect, while others require her to accept a certain amount of burn to use that talent at all. For each point of burn she accepts, a kineticist takes 1 point of nonlethal damage per character level. This damage can't be healed by any means other than getting a full night's rest, which removes all burn and associated nonlethal damage. Nonlethal damage from burn can't be reduced or redirected, and a kineticist incapable of taking nonlethal damage can't accept burn. A kineticist can accept only 1 point of burn per round. This limit rises to 2 points of burn at 6th level, and rises by 1 additional point every 3 levels thereafter. A kineticist can't choose to accept burn if it would put her total number of points of burn higher than 3 + her Constitution modifier (though she can be forced to accept more burn from a source outside her control). A kineticist who has accepted burn never benefits from abilities that allow her to ignore or alter the effects she receives from nonlethal damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist ~ Burn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a kineticist can overexert herself to channel more power than normal, pushing past the limit of what is safe for her body by accepting burn. Some of her wild talents allow her to accept burn in exchange for a greater effect, while others require her to accept a certain amount of burn to use that talent at all. For each point of burn she accepts, a kineticist takes 1 point of nonlethal damage per character level. This damage can't be healed by any means other than getting a full night's rest, which removes all burn and associated nonlethal damage. Nonlethal damage from burn can't be reduced or redirected, and a kineticist incapable of taking nonlethal damage can't accept burn. A kineticist can accept only 1 point of burn per round. This limit rises to 2 points of burn at 6th level, and rises by 1 additional point every 3 levels thereafter. A kineticist can't choose to accept burn if it would put her total number of points of burn higher than 3 + her Constitution modifier (though she can be forced to accept more burn from a source outside her control). A kineticist who has accepted burn never benefits from abilities that allow her to ignore or alter the effects she receives from nonlethal damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 542,
+    "record_key": "Kineticist ~ Burn"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

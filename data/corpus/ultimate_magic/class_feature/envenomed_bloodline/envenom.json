@@ -1,0 +1,108 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Envenomed Bloodline ~ Envenom",
+    "name": "Envenom",
+    "class": "Envenomed Bloodline",
+    "description": "As a swift action, you can lick or bite a melee weapon to imbue it with 1 dose of black adder venom (see page 558 of the Core Rulebook). The poison's DC is %1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Envenomed Bloodline ~ Envenom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Envenomed Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wildblooded ~ Envenomed"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Serpentine_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Serpentine_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_EnvenomedEnvenom_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_EnvenomedEnvenom_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can lick or bite a melee weapon to imbue it with 1 dose of black adder venom (see page 558 of the Core Rulebook). The poison's DC is %1."
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this ability once per day.|PREVAREQ:Sorcerer_EnvenomedEnvenom_Times,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this ability twice per day.|PREVAREQ:Sorcerer_EnvenomedEnvenom_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this ability %1 times per day.|Sorcerer_EnvenomedEnvenom_Times|PREVARGTEQ:Sorcerer_EnvenomedEnvenom_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "The poison cannot be removed or stored, and the weapon loses the benefit of the poison after the first successful attack or 1 hour has passed. The bloodline power replaces serpentfriend.|Sorcerer_EnvenomedEnvenom_DC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_EnvenomedEnvenom_DC|10+(Sorcerer_EnvenomedEnvenom_DC/2)+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_EnvenomedEnvenom_Times|floor(Sorcerer_Serpentine_BloodlinePower3LVL/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (poison DC %1)|Sorcerer_EnvenomedEnvenom_DC|Sorcerer_EnvenomedEnvenom_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_EnvenomedEnvenom_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|SerpentineBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1681,
+    "record_key": "Envenomed Bloodline ~ Envenom"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

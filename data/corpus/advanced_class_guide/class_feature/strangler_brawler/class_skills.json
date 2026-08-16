@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Strangler Brawler ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Strangler Brawler",
+    "description": "A strangler gains Stealth as a class skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strangler Brawler ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Strangler Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A strangler gains Stealth as a class skill."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Stealth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2919,
+    "record_key": "Strangler Brawler ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

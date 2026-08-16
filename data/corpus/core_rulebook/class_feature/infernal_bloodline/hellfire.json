@@ -1,0 +1,128 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Infernal Bloodline ~ Hellfire",
+    "name": "Hellfire",
+    "class": "Infernal Bloodline",
+    "description": "You can call down a column of hellfire. This 10-foot-radius burst does %1d6 points of fire damage. Those caught in the area of your blast receive a Reflex save for half damage. Good creatures that fail their saves are shaken for %2 rounds. The DC of this save is %3.|Sorcerer_InfernalHellfire_Dice|Sorcerer_InfernalHellfire_Duration|Sorcerer_InfernalHellfire_DC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infernal Bloodline ~ Hellfire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Infernal Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Infernal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Infernal_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Infernal_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_InfernalHellfire_Dice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_InfernalHellfire_Duration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_InfernalHellfire_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_InfernalHellfire_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call down a column of hellfire. This 10-foot-radius burst does %1d6 points of fire damage. Those caught in the area of your blast receive a Reflex save for half damage. Good creatures that fail their saves are shaken for %2 rounds. The DC of this save is %3.|Sorcerer_InfernalHellfire_Dice|Sorcerer_InfernalHellfire_Duration|Sorcerer_InfernalHellfire_DC"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability once per day.|PREVAREQ:Sorcerer_InfernalHellfire_Times,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability twice per day.|PREVAREQ:Sorcerer_InfernalHellfire_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability three times per day.|PREVAREQ:Sorcerer_InfernalHellfire_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 times per day.|Sorcerer_InfernalHellfire_Times|PREVARGTEQ:Sorcerer_InfernalHellfire_Times,4"
+      },
+      {
+        "key": "DESC",
+        "value": "This power has a range of 60 feet."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_InfernalHellfire_Dice|Sorcerer_Infernal_BloodlinePower9LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_InfernalHellfire_Duration|Sorcerer_Infernal_BloodlinePower9LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_InfernalHellfire_DC|10+(Sorcerer_Infernal_BloodlinePower9LVL/2)+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_InfernalHellfire_Times|max(floor((Sorcerer_Infernal_BloodlinePower9LVL-11)/3),1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%3/day (%1d6 fire, DC %2)|Sorcerer_InfernalHellfire_Dice|Sorcerer_InfernalHellfire_DC|Sorcerer_InfernalHellfire_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_InfernalHellfire_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|InfernalBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2537,
+    "record_key": "Infernal Bloodline ~ Hellfire"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

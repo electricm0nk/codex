@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bardic Performance ~ Suggestion",
+    "name": "Suggestion",
+    "class": "Bardic Performance",
+    "description": "You use your performance to make a Suggestion (as per the spell) to a creature you have already fascinated. Using this ability does not disrupt the Fascinate effect, but it does require a standard action to activate (in addition to the free action to continue the Fascinate effect). You can use this ability more than once against an individual creature during an individual performance. Making a Suggestion does not count against your daily use of Bardic Performance. A Will saving throw (DC %1) negates the effect. This ability affects only a single creature. Suggestion is an enchantment (compulsion), mind affecting, language-dependent ability and relies on audible components.|SuggestionDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Suggestion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialAttack.SpellLike.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SuggestionDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You use your performance to make a Suggestion (as per the spell) to a creature you have already fascinated. Using this ability does not disrupt the Fascinate effect, but it does require a standard action to activate (in addition to the free action to continue the Fascinate effect). You can use this ability more than once against an individual creature during an individual performance. Making a Suggestion does not count against your daily use of Bardic Performance. A Will saving throw (DC %1) negates the effect. This ability affects only a single creature. Suggestion is an enchantment (compulsion), mind affecting, language-dependent ability and relies on audible components.|SuggestionDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SuggestionDC|10+(BardicPerformanceLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 526,
+    "record_key": "Bardic Performance ~ Suggestion"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

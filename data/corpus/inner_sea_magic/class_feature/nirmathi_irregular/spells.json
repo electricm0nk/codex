@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nirmathi Irregular ~ Spells",
+    "name": "Spells",
+    "class": "Nirmathi Irregular",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nirmathi Irregular ~ Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "A Nirmathi irregular increases his number of spells per day by +1 for every spell level. This means the irregular get at least 1 spell per day as soon as he gains access to a level of spells.&nl; A Nirmathi irregular also learns to draw upon druidic magic, perhaps from association with the druids of Crystalhurst or a natural connection to the magic of the Fangwood. Each day when the ranger prepares spells, he may choose one druid spell and prepare it as if it were on the ranger spell list as a ranger spell of its druid spell level."
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=2|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=3|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Ranger;LEVEL=4|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 330,
+    "record_key": "Nirmathi Irregular ~ Spells"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

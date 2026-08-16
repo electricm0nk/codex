@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Transmutation Savant School ~ Physical Enhancement",
+    "name": "Physical Enhancement",
+    "class": "Transmutation Savant School",
+    "description": "You gain a +%1 enhancement bonus to one physical ability score (Strength, Dexterity, or Constitution). You can change this bonus to a new ability score when you prepare spells.|TransmutationPhysicalEnhancementBonus|PREVARLT:ArcanistSavantSchoolLVL,20",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Transmutation Savant School ~ Physical Enhancement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransmutationPhysicalEnhancementBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransmutationPhysicalEnhancementProgression|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 enhancement bonus to one physical ability score (Strength, Dexterity, or Constitution). You can change this bonus to a new ability score when you prepare spells.|TransmutationPhysicalEnhancementBonus|PREVARLT:ArcanistSavantSchoolLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 enhancement bonus to two physical ability scores (Strength, Dexterity, or Constitution). You can change this bonus to new ability scores when you prepare spells.|TransmutationPhysicalEnhancementBonus|PREVAREQ:ArcanistSavantSchoolLVL,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Physical Enhancement ~ Constitution|Physical Enhancement ~ Dexterity|Physical Enhancement ~ Strength"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransmutationPhysicalEnhancementProgression|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransmutationPhysicalEnhancementProgression|1|PREVARGTEQ:ArcanistSavantSchoolLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransmutationPhysicalEnhancementBonus|min(5,(ArcanistSavantSchoolLVL/5)+1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2576,
+    "record_key": "Transmutation Savant School ~ Physical Enhancement"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

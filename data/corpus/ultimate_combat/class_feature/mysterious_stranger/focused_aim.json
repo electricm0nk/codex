@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "MYSTERIOUS STRANGER ~ Focused Aim",
+    "name": "Focused Aim",
+    "class": "MYSTERIOUS STRANGER",
+    "description": "At 1st level, as a swift action, the mysterious stranger can spend 1 grit point to gain a bonus on all firearm damage rolls equal to her Charisma modifier (minimum 1) with all firearm attacks she makes until the end of her turn. At 7th level, when she uses the dead shot deed, she multiplies this bonus by the number of hits she made while rolling the Dead Shot attack. This deed replaces the quick clear deed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "MYSTERIOUS STRANGER ~ Focused Aim"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_Deed_LVL01"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality.DeedHasCost"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, as a swift action, the mysterious stranger can spend 1 grit point to gain a bonus on all firearm damage rolls equal to her Charisma modifier (minimum 1) with all firearm attacks she makes until the end of her turn. At 7th level, when she uses the dead shot deed, she multiplies this bonus by the number of hits she made while rolling the Dead Shot attack. This deed replaces the quick clear deed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 836,
+    "record_key": "MYSTERIOUS STRANGER ~ Focused Aim"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

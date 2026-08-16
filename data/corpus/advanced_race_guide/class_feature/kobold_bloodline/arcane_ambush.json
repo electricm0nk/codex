@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kobold Bloodline ~ Arcane Ambush",
+    "name": "Arcane Ambush",
+    "class": "Kobold Bloodline",
+    "description": "As a swift action, you can expend a spell slot in order to grant you and your allies a bonus on attack and damage rolls. This bonus lasts 1 round, is equal to the level of the spell expended, and only applies to opponents your allies are flanking or opponents denied their Dexterity bonus against your allies. You grant this bonus to yourself plus %1 allies. The allies must be within 30 feet of you and you must have line of effect to each affected ally.|Sorcerer_KoboldArcaneAmbush_Allies",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kobold Bloodline ~ Arcane Ambush"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Kobold Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Kobold"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Kobold_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_KoboldArcaneAmbush_Allies|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can expend a spell slot in order to grant you and your allies a bonus on attack and damage rolls. This bonus lasts 1 round, is equal to the level of the spell expended, and only applies to opponents your allies are flanking or opponents denied their Dexterity bonus against your allies. You grant this bonus to yourself plus %1 allies. The allies must be within 30 feet of you and you must have line of effect to each affected ally.|Sorcerer_KoboldArcaneAmbush_Allies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_KoboldArcaneAmbush_Allies|floor(Sorcerer_Kobold_BloodlinePower9LVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|KoboldBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 642,
+    "record_key": "Kobold Bloodline ~ Arcane Ambush"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

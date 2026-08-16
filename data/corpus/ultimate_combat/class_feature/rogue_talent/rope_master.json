@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Talent ~ Rope Master",
+    "name": "Rope Master",
+    "class": "Rogue Talent",
+    "description": "A rogue with this ability can move at her normal speed when using rope on a Climb check, can take 10 when using Acrobatics to move over narrow surfaces even when in danger or distracted, and gains a +4 bonus when determining the DC to escape bonds when she ties up a creature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Rope Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RogueTalent"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this ability can move at her normal speed when using rope on a Climb check, can take 10 when using Acrobatics to move over narrow surfaces even when in danger or distracted, and gains a +4 bonus when determining the DC to escape bonds when she ties up a creature."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1608,
+    "record_key": "Rogue Talent ~ Rope Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

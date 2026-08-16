@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ringleader ~ Never Lose Face",
+    "name": "Never Lose Face",
+    "class": "Ringleader",
+    "description": "A ringleader is never outdone by her minions. She gains a +2 bonus on saving throws against effects that also target one or more of her allies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ringleader ~ Never Lose Face"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Feature.RingleaderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "DESC",
+        "value": "A ringleader is never outdone by her minions. She gains a +2 bonus on saving throws against effects that also target one or more of her allies."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 653,
+    "record_key": "Ringleader ~ Never Lose Face"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

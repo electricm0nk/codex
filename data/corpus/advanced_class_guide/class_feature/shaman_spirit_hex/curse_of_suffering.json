@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Curse of Suffering",
+    "name": "Curse of Suffering",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman causes a creature within 30 feet to take more damage from bleed effects and causes its wounds to heal at a slower rate. When the cursed creature takes bleed damage, it takes 1 additional point of bleed damage (even if the bleed is ability damage). Furthermore, when the target is subject to an effect that would restore its hit points, that effect restores only half the normal amount of hit points. This curse lasts %1 rounds. A creature affected by this hex cannot be affected by it again for 24 hours.|ShamanCurseOfSufferingDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Curse of Suffering"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Curse of Suffering"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanBattleSpirit+ShamanLifeSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanCurseOfSufferingDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman causes a creature within 30 feet to take more damage from bleed effects and causes its wounds to heal at a slower rate. When the cursed creature takes bleed damage, it takes 1 additional point of bleed damage (even if the bleed is ability damage). Furthermore, when the target is subject to an effect that would restore its hit points, that effect restores only half the normal amount of hit points. This curse lasts %1 rounds. A creature affected by this hex cannot be affected by it again for 24 hours.|ShamanCurseOfSufferingDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanCurseOfSufferingDuration|ShamanSpiritLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1505,
+    "record_key": "Shaman Spirit Hex ~ Curse of Suffering"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

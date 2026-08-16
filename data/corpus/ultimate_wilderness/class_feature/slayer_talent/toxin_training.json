@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Slayer Talent ~ Toxin Training",
+    "name": "Toxin Training",
+    "class": "Slayer Talent",
+    "description": "The slayer builds resistance to certain poisons over time. Each time he chooses this talent, he chooses one ability score. He gains a +4 bonus on saving throws against poisons that deal damage to the chosen ability score. The slayer can choose this talent multiple times. Each time he does, he chooses a new ability score and gains the bonus on saves against poisons that target that ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Talent ~ Toxin Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SlayerTalent.LesserSlayerTalent.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Slayer Talent ~ Poison Use"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SlayerTalentLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "The slayer builds resistance to certain poisons over time. Each time he chooses this talent, he chooses one ability score. He gains a +4 bonus on saving throws against poisons that deal damage to the chosen ability score. The slayer can choose this talent multiple times. Each time he does, he chooses a new ability score and gains the bonus on saves against poisons that target that ability."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Strength|Dexterity|Constitution|Intelligence|Wisdom|Charisma"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 bonus on saves vs. poisons that deal damage to %1|%LIST"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1180,
+    "record_key": "Slayer Talent ~ Toxin Training"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Formless Adept ~ Formless Master",
+    "name": "Formless Master",
+    "class": "Formless Adept",
+    "description": "At 20th level, a formless adept can assume any formless body as a swift action and change between formless body types as a standard action (without returning to his physical form first). He can use the formless spell phrenic amplification to cast any spell with a swiftaction casting time when assuming a formless body or any spell with a standard-action casting time while switching between formless bodies. The formless adept also adds his Charisma bonus as a deflection bonus to his AC while in a formless body. A formless adept can attempt a saving throw to bypass any spells that prevent entry of incorporeal creatures (such as anti-incorporeal shellACG), even if the spells don't normally allow one. This ability replaces remade self.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Formless Adept ~ Formless Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Formless Adept Class Feature.Psychic Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a formless adept can assume any formless body as a swift action and change between formless body types as a standard action (without returning to his physical form first). He can use the formless spell phrenic amplification to cast any spell with a swiftaction casting time when assuming a formless body or any spell with a standard-action casting time while switching between formless bodies. The formless adept also adds his Charisma bonus as a deflection bonus to his AC while in a formless body. A formless adept can attempt a saving throw to bypass any spells that prevent entry of incorporeal creatures (such as anti-incorporeal shellACG), even if the spells don't normally allow one. This ability replaces remade self."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1572,
+    "record_key": "Formless Adept ~ Formless Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

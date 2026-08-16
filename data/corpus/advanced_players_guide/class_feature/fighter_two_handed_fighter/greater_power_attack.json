@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fighter Two-Handed Fighter ~ Greater Power Attack",
+    "name": "Greater Power Attack",
+    "class": "Fighter Two-Handed Fighter",
+    "description": "At 15th level, when using Power Attack with a two-handed melee weapon, the bonus damage from Power Attack is doubled (+100%%) instead of increased by half (+50%%). This ability replaces armor training 4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Two-Handed Fighter ~ Greater Power Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterArmorTraining4"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, when using Power Attack with a two-handed melee weapon, the bonus damage from Power Attack is doubled (+100%%) instead of increased by half (+50%%). This ability replaces armor training 4."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2219,
+    "record_key": "Fighter Two-Handed Fighter ~ Greater Power Attack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sage Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Sage Bloodline",
+    "description": "Unlike most sorcerers, whose innate magic is powered by force of personality, you use your intellect to understand and master your mystic powers. You use your Intelligence, rather than your Charisma, to determine all class features and effects relating to your sorcerer class, such as bonus spells per day, the maximum spell level you can cast, the save DCs of your spells, and the number of daily uses of your bloodline powers. You gain a +2 bonus on all Knowledge (arcana) and Spellcraft checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sage Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "Unlike most sorcerers, whose innate magic is powered by force of personality, you use your intellect to understand and master your mystic powers. You use your Intelligence, rather than your Charisma, to determine all class features and effects relating to your sorcerer class, such as bonus spells per day, the maximum spell level you can cast, the save DCs of your spells, and the number of daily uses of your bloodline powers. You gain a +2 bonus on all Knowledge (arcana) and Spellcraft checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Arcana),Spellcraft|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLSTAT;Class=Sorcerer|INTSCORE+(((INTSCORE-10)/2)-INT)-CHASCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLKNOWNSTAT;Class=Sorcerer|INTSCORE+(((INTSCORE-10)/2)-INT)-CHASCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Spells_StatBonus|INT-CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(use Intelligence for sorcerer spells)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1750,
+    "record_key": "Sage Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Telekinetic Globe",
+    "name": "Telekinetic Globe",
+    "class": "Wild Talent",
+    "description": "Element aether; Type utility (Sp); Level 8; Burn 0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Telekinetic Globe"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Aether"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,Wild Talent ~ force barrier,Elemental Defense ~ Force Ward"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisites force barrier, force ward"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Aether,16"
+      },
+      {
+        "key": "DESC",
+        "value": "Element aether; Type utility (Sp); Level 8; Burn 0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;You can create a globe of force, as the telekinetic sphere spell, that lasts as long as you concentrate as a standard action, and you can move the globe as a move action. You can accept 1 point of burn to increase the duration to 1 minute per level and eliminate the need to concentrate to maintain the globe."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 784,
+    "record_key": "Wild Talent ~ Telekinetic Globe"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

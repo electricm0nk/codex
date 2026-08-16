@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Knacks",
+    "name": "Knacks",
+    "class": "Medium",
+    "description": "Mediums learn a number of knacks, or 0-level spells. These spells are cast like any other spell, but they don't consume slots and can be used again.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Knacks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Mediums learn a number of knacks, or 0-level spells. These spells are cast like any other spell, but they don't consume slots and can be used again."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 812,
+    "record_key": "Medium ~ Knacks"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

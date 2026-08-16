@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Mist's Shroud",
+    "name": "Mist's Shroud",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman touches a willing creature (including herself) and enshrouds that creature in mist. This grants the creature concealment as the blur spell. The mist dissipates after it causes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Mist's Shroud"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanWavesHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Mist's Shroud"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanWavesSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanMistsShroudTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman touches a willing creature (including herself) and enshrouds that creature in mist. This grants the creature concealment as the blur spell. The mist dissipates after it causes"
+      },
+      {
+        "key": "DESC",
+        "value": "an attack|PREVARLT:ShamanSpiritLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 attacks|ShamanMistsShroudTimes|PREVARGTEQ:ShamanSpiritLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "to miss because of concealment or after 1 minute, whichever comes first. A creature affected by this hex cannot be affected by it again for 24 hours."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanMistsShroudTimes|1+min(2,ShamanSpiritLVL/8)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1675,
+    "record_key": "Shaman Spirit Hex ~ Mist's Shroud"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

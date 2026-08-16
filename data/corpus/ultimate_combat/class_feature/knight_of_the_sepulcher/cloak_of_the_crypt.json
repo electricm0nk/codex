@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Knight Of The Sepulcher ~ Cloak Of The Crypt",
+    "name": "Cloak of the Crypt",
+    "class": "Knight Of The Sepulcher",
+    "description": "At 10th level, the knight of the sepulcher gains immunity to energy drain and harmful negative energy effects. His chance of ignoring critical hits and sneak attacks increases to 50%%, as though he were wearing armor of moderate fortification. This ability replaces the smite good use gained at 10th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Knight Of The Sepulcher ~ Cloak Of The Crypt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AntipaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, the knight of the sepulcher gains immunity to energy drain and harmful negative energy effects. His chance of ignoring critical hits and sneak attacks increases to 50%%, as though he were wearing armor of moderate fortification. This ability replaces the smite good use gained at 10th level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1493,
+    "record_key": "Knight Of The Sepulcher ~ Cloak Of The Crypt"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

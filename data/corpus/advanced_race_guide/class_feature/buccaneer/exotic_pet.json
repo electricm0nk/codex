@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Buccaneer ~ Exotic Pet",
+    "name": "Exotic Pet",
+    "class": "Buccaneer",
+    "description": "A buccaneer gains a familiar as a wizard of half the buccaneer's class level (though the exotic pet never gains the ability to deliver touch spells or share spells). This pet is typically a monkey or parrot (use the stats for a raven familiar). Such animals are useful scouts, even in the thick of combat. As long as the pet is within 30 feet of the buccaneer, the buccaneer also gains the benefit of evasion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Buccaneer ~ Exotic Pet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExoticPetLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A buccaneer gains a familiar as a wizard of half the buccaneer's class level (though the exotic pet never gains the ability to deliver touch spells or share spells). This pet is typically a monkey or parrot (use the stats for a raven familiar). Such animals are useful scouts, even in the thick of combat. As long as the pet is within 30 feet of the buccaneer, the buccaneer also gains the benefit of evasion."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExoticPetLVL|GunslingerLVL/2"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Exotic Pet|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Exotic Pet|Monkey,Familiar (Parrot)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 359,
+    "record_key": "Buccaneer ~ Exotic Pet"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

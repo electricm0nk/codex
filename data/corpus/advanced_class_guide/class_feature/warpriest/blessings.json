@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest ~ Blessings",
+    "name": "Blessings",
+    "class": "Warpriest",
+    "description": "You can call upon the power of your blessings %1 times per day. The DC for these blessings is %2|WarpriestBlessingUses|WarpriestBlessingDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest ~ Blessings"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call upon the power of your blessings %1 times per day. The DC for these blessings is %2|WarpriestBlessingUses|WarpriestBlessingDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Warpriest Blessings Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warpriest Blessing|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingLVL|WarpriestLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestMinorBlessingGrantedLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestMajorBlessingGrantedLVL|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingUses|(WarpriestBlessingLVL/2)+3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingDC|(WarpriestBlessingLVL/2)+10+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|WarpriestBlessingUses"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2146,
+    "record_key": "Warpriest ~ Blessings"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

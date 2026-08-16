@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Stone Stability",
+    "name": "Stone Stability",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman receives a +4 bonus to her CMD when resisting bull rush or trip attempts as long as she is standing on the ground.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Stone Stability"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanStoneHex.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Stone Stability"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanStoneSpirit,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman receives a +4 bonus to her CMD when resisting bull rush or trip attempts as long as she is standing on the ground."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Trip|PREVARGTEQ:ShamanSpiritLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Greater Trip|PREVARGTEQ:ShamanSpiritLVL,10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1655,
+    "record_key": "Shaman Spirit Hex ~ Stone Stability"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

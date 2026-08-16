@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Summon Devil V ~ HK",
+    "name": "Summon Devil",
+    "class": "Summon Devil V",
+    "description": "You may use summon monster V as a spell-like ability %1/day to summon 1 bearded devil.|HKDiscipline",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summon Devil V ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use summon monster V as a spell-like ability %1/day to summon 1 bearded devil.|HKDiscipline"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Hellknight|TIMES=HKDiscipline|CASTERLEVEL=TL|Summon Monster V,HKDisciplineDC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 212,
+    "record_key": "Summon Devil V ~ HK"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

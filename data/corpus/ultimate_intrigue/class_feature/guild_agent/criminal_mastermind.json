@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Guild Agent ~ Criminal Mastermind",
+    "name": "Criminal Mastermind",
+    "class": "Guild Agent",
+    "description": "At 20th level, except in an unusually powerful guild, a guild agent has become the true power behind the guild. The guild agent has built up a nearly worldwide reputation under a particular criminal epithet (such as \"The Silver Shadow\"), known by criminals and law enforcement officers everywhere. This works like the renown vigilante social talent (see page 12) except as follows. It applies in all towns and cities on the same continent as the guild agent's base of operations, without requiring him to select a particular settlement. He has only one identity, and only other criminals and members of the underworld treat their attitudes toward the guild agent as one step closer to helpful at all times (rather than while only in his social identity), while the bonus on Intimidate checks applies against everyone at all times (rather than while only in his vigilante identity).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guild Agent ~ Criminal Mastermind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.GuildAgentClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, except in an unusually powerful guild, a guild agent has become the true power behind the guild. The guild agent has built up a nearly worldwide reputation under a particular criminal epithet (such as \"The Silver Shadow\"), known by criminals and law enforcement officers everywhere. This works like the renown vigilante social talent (see page 12) except as follows. It applies in all towns and cities on the same continent as the guild agent's base of operations, without requiring him to select a particular settlement. He has only one identity, and only other criminals and members of the underworld treat their attitudes toward the guild agent as one step closer to helpful at all times (rather than while only in his social identity), while the bonus on Intimidate checks applies against everyone at all times (rather than while only in his vigilante identity)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 737,
+    "record_key": "Guild Agent ~ Criminal Mastermind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hussar ~ Maneuverable Mount",
+    "name": "Maneuverable Mount",
+    "class": "Hussar",
+    "description": "A hussar is able to maneuver his mount with exceptional grace and poise, even in areas that would normally be a difficult fit for such a creature. Any creature that the hussar is riding can squeeze into a space that is at least half as wide as its normal space without taking the normal penalties on attack rolls and AC for doing so, though it still moves at half speed. If the mount attempts to squeeze into a space less than half its space's width, it must use the Escape Artist skill to do so, and takes the normal penalties.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hussar ~ Maneuverable Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.HussarClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A hussar is able to maneuver his mount with exceptional grace and poise, even in areas that would normally be a difficult fit for such a creature. Any creature that the hussar is riding can squeeze into a space that is at least half as wide as its normal space without taking the normal penalties on attack rolls and AC for doing so, though it still moves at half speed. If the mount attempts to squeeze into a space less than half its space's width, it must use the Escape Artist skill to do so, and takes the normal penalties."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 306,
+    "record_key": "Hussar ~ Maneuverable Mount"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

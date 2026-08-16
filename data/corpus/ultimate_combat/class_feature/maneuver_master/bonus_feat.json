@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Maneuver Master ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class": "Maneuver Master",
+    "description": "In addition to normal monk bonus feats, a maneuver master may select any Improved combat maneuver feat (such as Improved Overrun) as a bonus feat. At 6th level and above, he may select any Greater combat maneuver feat (such as Greater Grapple) as a bonus feat. At 10th level and above, he may select any maneuver Strike feat (such as Tripping Strike) as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maneuver Master ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeatLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "In addition to normal monk bonus feats, a maneuver master may select any Improved combat maneuver feat (such as Improved Overrun) as a bonus feat. At 6th level and above, he may select any Greater combat maneuver feat (such as Greater Grapple) as a bonus feat. At 10th level and above, he may select any maneuver Strike feat (such as Tripping Strike) as a bonus feat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Monk Bonus Feat"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 976,
+    "record_key": "Maneuver Master ~ Bonus Feat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

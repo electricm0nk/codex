@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sorcerer ~ Spells",
+    "name": "Spells",
+    "class": "Sorcerer",
+    "description": "A sorcerer casts arcane spells drawn primarily from the sorcerer/wizard spell list. She can cast any spell she knows without preparing it ahead of time. To learn or cast a spell, a sorcerer must have a Charisma score equal to at least 10 + the spell level. The Difficulty Class for a saving throw against a sorcerer's spell is %1 + the spell level.|Sorcerer_Spells_SpellDCBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer ~ Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Spells_StatBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Spells_SpellDCBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A sorcerer casts arcane spells drawn primarily from the sorcerer/wizard spell list. She can cast any spell she knows without preparing it ahead of time. To learn or cast a spell, a sorcerer must have a Charisma score equal to at least 10 + the spell level. The Difficulty Class for a saving throw against a sorcerer's spell is %1 + the spell level.|Sorcerer_Spells_SpellDCBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Spells_StatBonus|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Spells_SpellDCBonus|10+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1697,
+    "record_key": "Sorcerer ~ Spells"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Deep Earth Bloodline ~ Crystal Shard",
+    "name": "Crystal Shard",
+    "class": "Deep Earth Bloodline",
+    "description": "You can touch a metal or stone weapon (or up to 50 pieces of ammunition) as a standard action, giving it the bane property against any creature with the earth subtype, oozes, or constructs made of stone or metal, for 1 minute.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep Earth Bloodline ~ Crystal Shard"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Deep Earth Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Deep Earth"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_DeepEarth_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DeepEarth_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DeepEarthCrystalShard_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch a metal or stone weapon (or up to 50 pieces of ammunition) as a standard action, giving it the bane property against any creature with the earth subtype, oozes, or constructs made of stone or metal, for 1 minute."
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability once per day.|PREVAREQ:Sorcerer_DeepEarthCrystalShard_Times,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability twice per day.|PREVAREQ:Sorcerer_DeepEarthCrystalShard_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability three times per day.|PREVAREQ:Sorcerer_DeepEarthCrystalShard_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 times per day.|Sorcerer_DeepEarthCrystalShard_Times|PREVARGTEQ:Sorcerer_DeepEarthCrystalShard_Times,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DeepEarthCrystalShard_Times|max(floor((Sorcerer_DeepEarth_BloodlinePower9LVL-11)/3),1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|Sorcerer_DeepEarthCrystalShard_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_DeepEarthCrystalShard_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DeepEarthBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3138,
+    "record_key": "Deep Earth Bloodline ~ Crystal Shard"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cutthroat ~ Street Stalker",
+    "name": "Street Stalker",
+    "class": "Cutthroat",
+    "description": "A cutthroat selects the Acrobatics, Climb, or Knowledge (local) skill. Once selected, this cannot be changed. When in urban environments, the cutthroat adds %1 to checks attempted with this skill.|max(1,floor(SlayerLVL/2))",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cutthroat ~ Street Stalker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cutthroat Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A cutthroat selects the Acrobatics, Climb, or Knowledge (local) skill. Once selected, this cannot be changed. When in urban environments, the cutthroat adds %1 to checks attempted with this skill.|max(1,floor(SlayerLVL/2))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3746,
+    "record_key": "Cutthroat ~ Street Stalker"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

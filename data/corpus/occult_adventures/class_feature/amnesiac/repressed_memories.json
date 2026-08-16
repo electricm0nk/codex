@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Amnesiac ~ Repressed Memories",
+    "name": "Repressed Memories",
+    "class": "Amnesiac",
+    "description": "All the amnesiac's older memories have been deeply hidden, as though she had been affected by multiple repress memory* spells. She isn't prevented from remembering things that happen over the course of a game, but might be forgetful. If the amnesiac's memories are ever restored, she loses this archetype and reverts to a standard psychic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Amnesiac ~ Repressed Memories"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Amnesiac Class Feature.Psychic Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "All the amnesiac's older memories have been deeply hidden, as though she had been affected by multiple repress memory* spells. She isn't prevented from remembering things that happen over the course of a game, but might be forgetful. If the amnesiac's memories are ever restored, she loses this archetype and reverts to a standard psychic."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1559,
+    "record_key": "Amnesiac ~ Repressed Memories"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

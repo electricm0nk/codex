@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunter's Bond ~ Animal Companion",
+    "name": "Animal Companion",
+    "class": "Hunter's Bond",
+    "description": "This is not Allowed with the Archetype you selected.|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerAnimalCompanion",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter's Bond ~ Animal Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialQuality.Extraordinary.HuntersBond.Animal Companion"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Archetype,TYPE.RangerAnimalCompanion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CompanionDisable_AnimalCompanion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CompanionMasterLVL_Ranger|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This is not Allowed with the Archetype you selected.|PREABILITY:1,CATEGORY=Archetype,TYPE.RangerAnimalCompanion"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Companion ~ Animal Companion|PREVAREQ:CompanionDisable_AnimalCompanion,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunters_Bond_Animal_Companion|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|CompanionMasterLVL_Ranger|PREVAREQ:CompanionDisable_AnimalCompanion,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CompanionMasterLVL_Ranger|RangerLVL-3"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Badger (Wolverine)),Companion (Bird (Eagle)),Companion (Bird (Hawk)),Companion (Bird (Owl)),Companion (Camel),Companion (Cat (Small (Cheetah))),Companion (Cat (Small (Leopard))),Companion (Dire Rat),Companion (Dog),Companion (Horse),Companion (Pony),Companion (Shark),Companion (Snake (Constrictor)),Companion (Snake (Viper)),Companion (Wolf)|!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerAnimalCompanion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1440,
+    "record_key": "Hunter's Bond ~ Animal Companion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

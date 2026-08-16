@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bone Mystery ~ Armor of Bones",
+    "name": "Armor of Bones",
+    "class": "Bone Mystery",
+    "description": "You can conjure armor made of bones that grants you a +%1 armor bonus.|OracleArmorofBonesBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bone Mystery ~ Armor of Bones"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.BoneRevelation.Supernatural.HoursPerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleArmorofBonesBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleArmorofBonesDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can conjure armor made of bones that grants you a +%1 armor bonus.|OracleArmorofBonesBonus"
+      },
+      {
+        "key": "DESC",
+        "value": " This armor also grants you DR 5/bludgeoning.|PRECLASS:1,Oracle=13"
+      },
+      {
+        "key": "DESC",
+        "value": " This armor lasts for %1 hour(s) per day and does not need to be consecutive.|OracleArmorofBonesDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleArmorofBonesBonus|4+2*max(0,floor((classlevel(\"Oracle\")-3)/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleArmorofBonesDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants an armor bonus to AC"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|OracleArmorofBonesBonus|TYPE=Armor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 578,
+    "record_key": "Bone Mystery ~ Armor of Bones"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

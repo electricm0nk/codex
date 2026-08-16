@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcane Bond ~ Familiar",
+    "name": "Familiar",
+    "class": "Arcane Bond",
+    "description": "A familiar is an animal chosen by a spellcaster to aid him in his study of magic. It retains the appearance, Hit Dice, base attack bonus, base save bonuses, skills, and feats of the normal animal it once was, but is now a magical beast for the purpose of effects that depend on its type. Only a normal, unmodified animal may become a familiar. An animal companion cannot also function as a familiar.&nl;A familiar grants special abilities to its master, as given on the table below. These special abilities apply only when the master and familiar are within 1 mile of each other.&nl;Levels of different classes that are entitled to familiars stack for the purpose of determining any familiar abilities that depend on the master's level.&nl;If a familiar is dismissed, lost, or dies, it can be replaced 1 week later through a specialized ritual that costs 200 gp per wizard level. The ritual takes 8 hours to complete.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Bond ~ Familiar"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Arcane Bond (Familiar)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Wizard Class Feature.ArcaneBond.SpecialQuality.Special Quality.Familiar"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "Wizard_CF_Familiar,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A familiar is an animal chosen by a spellcaster to aid him in his study of magic. It retains the appearance, Hit Dice, base attack bonus, base save bonuses, skills, and feats of the normal animal it once was, but is now a magical beast for the purpose of effects that depend on its type. Only a normal, unmodified animal may become a familiar. An animal companion cannot also function as a familiar.&nl;A familiar grants special abilities to its master, as given on the table below. These special abilities apply only when the master and familiar are within 1 mile of each other.&nl;Levels of different classes that are entitled to familiars stack for the purpose of determining any familiar abilities that depend on the master's level.&nl;If a familiar is dismissed, lost, or dies, it can be replaced 1 week later through a specialized ritual that costs 200 gp per wizard level. The ritual takes 8 hours to complete."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Standard Familiar List"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|ArcaneBondLVL|TYPE=Base"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2578,
+    "record_key": "Arcane Bond ~ Familiar"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

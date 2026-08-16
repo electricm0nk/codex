@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Aldori Swordlord ~ Display Weapon Prowess",
+    "name": "Display Weapon Prowess",
+    "class": "Aldori Swordlord",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aldori Swordlord ~ Display Weapon Prowess"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Aldori Swordlord Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "DESC",
+        "value": "An Aldori swordlord adds a +%1 bonus on Intimidate checks while using Dazzling Display with an Aldori dueling sword. He also gains an additional +1 bonus on these Intimidate checks for each of the following feats he has with the Aldori dueling sword: Greater Weapon Focus, Greater Weapon Specialization, Improved Critical, Weapon Focus, or Weapon Specialization. The bonuses stack with each other (the total bonus is considered a competence bonus). When involved in a duel, an Aldori swordlord's mastery of elaborate strikes and stances grants him a +%1 bonus on performance combat checks (Ultimate Combat 154). These tricks can also be of great help in countering an enemy during a duel, granting him a +%1 bonus on rolls to attempt a dueling parry or to use dueling resolve (Ultimate Combat 152).|AldoriSwordlordLVL/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 7,
+    "record_key": "Aldori Swordlord ~ Display Weapon Prowess"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

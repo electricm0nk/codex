@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inspired Discovery ~ Deafening Strike",
+    "name": "Deafening Strike",
+    "class": "Inspired Discovery",
+    "description": "When an investigator deals damage with studied strike, the opponent must succeed at a DC %1 Fortitude saving throw or be permanently deafened. A successful Fortitude saving throw reduces the duration of this effect to 1 round. This talent has no effect on deaf creatures. Deafness can be cured by heal, regeneration, remove blindness, or similar effects. An investigator must be at least 15th level to select this talent. * Only one of these talents can be applied to an individual attack.|InvestigatorDesfeningStrikeDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inspired Discovery ~ Deafening Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InspiredInvestigatorTalent.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Alchemist Archetype ~ Inspired Chemist"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AlchemistLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorDesfeningStrikeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When an investigator deals damage with studied strike, the opponent must succeed at a DC %1 Fortitude saving throw or be permanently deafened. A successful Fortitude saving throw reduces the duration of this effect to 1 round. This talent has no effect on deaf creatures. Deafness can be cured by heal, regeneration, remove blindness, or similar effects. An investigator must be at least 15th level to select this talent. * Only one of these talents can be applied to an individual attack.|InvestigatorDesfeningStrikeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorDesfeningStrikeDC|AlchemistLVL/2+INT+10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2338,
+    "record_key": "Inspired Discovery ~ Deafening Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

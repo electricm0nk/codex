@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Talent ~ Rumormonger",
+    "name": "Rumormonger",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent can attempt to spread a rumor though a small town or larger settlement by making a Bluff check. She can do so a number of times per week equal to her Charisma modifier (minimum 0). The DC is based on the size of the settlement, and it takes a week for the rumor to propagate through the settlement. If the check succeeds, the rumor is practically accepted as fact within the community; succeeding by 5 or more over the DC decreases the time it takes the rumor to propagate by 1d4 days. A failed check means the rumor failed to gain traction, while failing by 5 or more causes the opposite of the rumor or some other competing theory involving the rumor's subject to take hold.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Rumormonger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent can attempt to spread a rumor though a small town or larger settlement by making a Bluff check. She can do so a number of times per week equal to her Charisma modifier (minimum 0). The DC is based on the size of the settlement, and it takes a week for the rumor to propagate through the settlement. If the check succeeds, the rumor is practically accepted as fact within the community; succeeding by 5 or more over the DC decreases the time it takes the rumor to propagate by 1d4 days. A failed check means the rumor failed to gain traction, while failing by 5 or more causes the opposite of the rumor or some other competing theory involving the rumor's subject to take hold."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1621,
+    "record_key": "Rogue Talent ~ Rumormonger"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

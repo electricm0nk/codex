@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Animal Blessing ~ Animal Fury",
+    "name": "Animal Fury",
+    "class": "Animal Blessing",
+    "description": "You can touch one ally and grant it feral features. The ally gains 2 claw attacks that each deal 1d6 points of damage if the ally is Medium or 1d4 if it's Small, or 1 bite attack that deals 1d8 points of damage if the ally is Medium or 1d6 if it's Small. These are primary natural attacks that replace any similar primary natural attacks the ally might have. This effect lasts for 1 minute.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Blessing ~ Animal Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch one ally and grant it feral features. The ally gains 2 claw attacks that each deal 1d6 points of damage if the ally is Medium or 1d4 if it's Small, or 1 bite attack that deals 1d8 points of damage if the ally is Medium or 1d6 if it's Small. These are primary natural attacks that replace any similar primary natural attacks the ally might have. This effect lasts for 1 minute."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2227,
+    "record_key": "Animal Blessing ~ Animal Fury"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

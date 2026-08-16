@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gain Advanced ~ Zura",
+    "name": "Vampirism",
+    "class": "Gain Advanced",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gain Advanced ~ Zura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ZuraAdvancedApply|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Advanced Apply ~ Zura |PREVARGT:ZuraAdvancedApply,0"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|ZuraAdvancedApply|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 204,
+    "record_key": "Gain Advanced ~ Zura"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

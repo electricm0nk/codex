@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fighter Archetype ~ Dragoon",
+    "name": "Dragoon",
+    "class": "Fighter Archetype",
+    "description": "These gallant lancers serve in the vanguard of many armies or as knights-errant. They are born leaders and masters of the mounted charge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Dragoon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype.FighterTowerShieldProficiency.FighterBonusFeat1.FighterArmorTraining3.FighterArmorTraining2.FighterWeaponTraining_ALL.FighterArmorTraining4"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ DRAGOON],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterTowerShieldProficiency,TYPE.FighterBonusFeat1,TYPE.FighterArmorTraining3,TYPE.FighterArmorTraining2,TYPE.FighterWeaponTraining_ALL,TYPE.FighterArmorTraining4]"
+      },
+      {
+        "key": "DESC",
+        "value": "These gallant lancers serve in the vanguard of many armies or as knights-errant. They are born leaders and masters of the mounted charge."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Dragoon ~ Weapon and Armor Proficiency|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Dragoon ~ Skilled Rider|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Dragoon ~ Spear Training|PRECLASS:1,Fighter=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Dragoon ~ Spinning Lance|PRECLASS:1,Fighter=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Dragoon ~ Banner|PRECLASS:1,Fighter=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Dragoon ~ Piercing Lance|PRECLASS:1,Fighter=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Dragoon ~ Leaping Lance|PRECLASS:1,Fighter=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Dragoon ~ Weapon Mastery|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Fighter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 678,
+    "record_key": "Fighter Archetype ~ Dragoon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

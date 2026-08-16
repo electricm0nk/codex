@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Felling Escape",
+    "name": "Felling Escape",
+    "class": "Warpriest Bonus Feat",
+    "description": "Through the use of fluid contortions and manipulations of leverage, you can throw your opponent to the ground after escaping a grapple.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Felling Escape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Combat Expertise,Improved Trip"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRESTAT:1,INT=13],[PREVARGTEQ:CombatFeatIntRequirement,13]"
+      },
+      {
+        "key": "DESC",
+        "value": "Through the use of fluid contortions and manipulations of leverage, you can throw your opponent to the ground after escaping a grapple."
+      },
+      {
+        "key": "DESC",
+        "value": " When you break an opponent's grapple with a combat maneuver check or Escape Artist check, you can spend a swift action to make a trip attempt against that opponent."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Felling Escape"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.101"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4445,
+    "record_key": "Warpriest Bonus Feat ~ Felling Escape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

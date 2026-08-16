@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arctic Domain ~ Banish Flame",
+    "name": "Banish Flame",
+    "class": "Arctic Domain",
+    "description": "You may use your call cold ability to damage creatures with the fire subtype (as a cleric channeling negative energy) or to cause them to flee from you (as the Turn Undead feat). Alternatively",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arctic Domain ~ Banish Flame"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower.Arctic Domain"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use your call cold ability to damage creatures with the fire subtype (as a cleric channeling negative energy) or to cause them to flee from you (as the Turn Undead feat). Alternatively"
+      },
+      {
+        "key": "DESC",
+        "value": "you may use this ability to negate magical fire effects as if using a targeted dispel magic.|PREVARLT:DomainArcticLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "you may use this ability to negate magical fire effects as if using a targeted greater dispel magic.|PREVARGTEQ:DomainArcticLVL,12"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 270,
+    "record_key": "Arctic Domain ~ Banish Flame"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

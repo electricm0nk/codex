@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fearsome Defender ~ Intractable",
+    "name": "Intractable",
+    "class": "Fearsome Defender",
+    "description": "A combination of brainwashing and loyalty helps a fearsome defender resist pain and torture, enduring grueling combat or questioning without betraying her dark lord. A fearsome defender gains a +%1 bonus on saving throws against pain effects, and the DCs of checks to coerce her or demoralize her with Diplomacy or Intimidate increase by %1.|FearsomeDefenderIntractableBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fearsome Defender ~ Intractable"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Feature.FearsomeDefenderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FearsomeDefenderIntractableBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "DESC",
+        "value": "A combination of brainwashing and loyalty helps a fearsome defender resist pain and torture, enduring grueling combat or questioning without betraying her dark lord. A fearsome defender gains a +%1 bonus on saving throws against pain effects, and the DCs of checks to coerce her or demoralize her with Diplomacy or Intimidate increase by %1.|FearsomeDefenderIntractableBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FearsomeDefenderIntractableBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FearsomeDefenderIntractableBonus|2|PREABILITY:1,CATEGORY=Special Ability,Barbarian ~ Greater Rage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FearsomeDefenderIntractableBonus|2|PREABILITY:1,CATEGORY=Special Ability,Barbarian ~ Mighty Rage"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 on saves vs. pain effects|FearsomeDefenderIntractableBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 41,
+    "record_key": "Fearsome Defender ~ Intractable"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

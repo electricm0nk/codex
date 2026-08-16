@@ -1,0 +1,183 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Slayer Archetype ~ Bloody Jake",
+    "name": "Bloody Jake",
+    "class": "Slayer Archetype",
+    "description": "Bloody jakes are cruel backwoods folk who prey upon their country cousins while terrorizing civilized people who venture into their rural range.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Archetype ~ Bloody Jake"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SlayerArchetype"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "DESC",
+        "value": "Bloody jakes are cruel backwoods folk who prey upon their country cousins while terrorizing civilized people who venture into their rural range."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Slayer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Bloody Jake],[!PREFACT:1,ABILITIES,Slayer_Archetype_MediumArmorProficiency=True,Slayer_Archetype_ShieldProficiency=True,Slayer_Archetype_StudiedTarget=True,Slayer_Archetype_Talent4=True,Slayer_Archetype_Talent6=True,Slayer_Archetype_Talent8=True,Slayer_Archetype_Talent12=True,Slayer_Archetype_Talent16=True,Slayer_Archetype_SwiftTracker=True,Slayer_Archetype_SlayersAdvance=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Bloody Jake ~ Favored Terrain|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Bloody Jake ~ Cruel Tricks|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Bloody Jake ~ Distant Voices|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Bloody Jake ~ Lose Your Way|PRECLASS:1,Slayer=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Bloody Jake ~ Something's Not Right|PRECLASS:1,Slayer=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Bloody Jake ~ The Woods Have Eyes|PRECLASS:1,Slayer=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Bloody Jake ~ Poor Study|PRECLASS:1,Slayer=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Bloody Jake ~ Sadistic Snare|PRECLASS:1,Slayer=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Bloody Jake ~ Cruel Trick|PRECLASS:1,Slayer=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Bloody Jake ~ Woodland Shortcut|PRECLASS:1,Slayer=13"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_ShieldProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_StudiedTarget|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_SwiftTracker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_SlayersAdvance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_ShieldProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_StudiedTarget|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_SwiftTracker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_SlayersAdvance|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 205,
+    "record_key": "Slayer Archetype ~ Bloody Jake"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forest Preserver ~ Sacred Grove",
+    "name": "Sacred Grove",
+    "class": "Forest Preserver",
+    "description": "A forest preserver can expend two uses of her smite evil ability to consecrate a 20-foot-radius area that must contain a living tree. This fills the area with dense undergrowth, though it does not impede her allies' movement. In addition, animals, fey, and plants allied with the forest preserver gain a +1 sacred bonus on attack rolls, damage rolls, and saving throws, and animals, fey, and plants called or summoned within this area gain 1 hit point per Hit Die as long as the calling or summoning effect lasts or until the sacred grove effect ends (whichever comes first). If the area contains a shrine or hallowed area dedicated to a good-aligned deity (or at the GM's discretion, a place of natural magical power, such as a natural portal to the First World), these bonuses are doubled. When she uses this ability in her favored terrain, she can also imbue plants in the area with limited animation, allowing them to obscure vision and impede movement and attacks as if the area were affected by solid fog. A sacred grove remains enhanced in this way for %1 minutes.|PaladinLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forest Preserver ~ Sacred Grove"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Features.ForestPreserverClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A forest preserver can expend two uses of her smite evil ability to consecrate a 20-foot-radius area that must contain a living tree. This fills the area with dense undergrowth, though it does not impede her allies' movement. In addition, animals, fey, and plants allied with the forest preserver gain a +1 sacred bonus on attack rolls, damage rolls, and saving throws, and animals, fey, and plants called or summoned within this area gain 1 hit point per Hit Die as long as the calling or summoning effect lasts or until the sacred grove effect ends (whichever comes first). If the area contains a shrine or hallowed area dedicated to a good-aligned deity (or at the GM's discretion, a place of natural magical power, such as a natural portal to the First World), these bonuses are doubled. When she uses this ability in her favored terrain, she can also imbue plants in the area with limited animation, allowing them to obscure vision and impede movement and attacks as if the area were affected by solid fog. A sacred grove remains enhanced in this way for %1 minutes.|PaladinLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 873,
+    "record_key": "Forest Preserver ~ Sacred Grove"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

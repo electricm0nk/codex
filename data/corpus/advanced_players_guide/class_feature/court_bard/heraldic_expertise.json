@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Court Bard ~ Heraldic Expertise",
+    "name": "Heraldic Expertise",
+    "class": "Court Bard",
+    "description": "A court bard gains a bonus equal to half his bard level on Diplomacy, Knowledge (history), Knowledge (local), and Knowledge (nobility) checks [Bonus is %1] (minimum +1).%2/day, the court bard can also reroll a check against one of these skills, though he must take the result of the second roll even if it is worse. He can reroll one additional time per day at 5th level and every five levels thereafter. This ability replaces bardic knowledge.|BardLVL/2|(BardLVL/5)+1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Court Bard ~ Heraldic Expertise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardBardicKnowledge"
+      },
+      {
+        "key": "DESC",
+        "value": "A court bard gains a bonus equal to half his bard level on Diplomacy, Knowledge (history), Knowledge (local), and Knowledge (nobility) checks [Bonus is %1] (minimum +1).%2/day, the court bard can also reroll a check against one of these skills, though he must take the result of the second roll even if it is worse. He can reroll one additional time per day at 5th level and every five levels thereafter. This ability replaces bardic knowledge.|BardLVL/2|(BardLVL/5)+1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy,Knowledge (history),Knowledge (local),Knowledge (nobility)|max(1,BardLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1656,
+    "record_key": "Court Bard ~ Heraldic Expertise"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

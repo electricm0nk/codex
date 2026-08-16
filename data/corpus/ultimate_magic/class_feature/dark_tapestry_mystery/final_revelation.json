@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dark Tapestry Mystery ~ Final Revelation",
+    "name": "Final Revelation",
+    "class": "Dark Tapestry Mystery",
+    "description": "You become a truly alien and unnatural creature. You gain damage reduction 5/- and immunity to acid, critical hits, and sneak attacks. Once per day, you can cast shapechange as a spell-like ability without requiring a material component.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dark Tapestry Mystery ~ Final Revelation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.FinalRevelation"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=20|Shapechange"
+      },
+      {
+        "key": "DESC",
+        "value": "You become a truly alien and unnatural creature. You gain damage reduction 5/- and immunity to acid, critical hits, and sneak attacks. Once per day, you can cast shapechange as a spell-like ability without requiring a material component."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Acid|Immunity to Critical Hits|Immunity to Sneak Attacks"
+      },
+      {
+        "key": "DR",
+        "value": "5/-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 476,
+    "record_key": "Dark Tapestry Mystery ~ Final Revelation"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

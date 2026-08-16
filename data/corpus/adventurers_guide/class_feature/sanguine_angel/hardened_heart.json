@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sanguine Angel ~ Hardened Heart",
+    "name": "Hardened Heart",
+    "class": "Sanguine Angel",
+    "description": "A sanguine angel adds twice her class level to the DC of any attempt to Intimidate her.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sanguine Angel ~ Hardened Heart"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Sanguine Angel Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "DESC",
+        "value": "A sanguine angel adds twice her class level to the DC of any attempt to Intimidate her."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 454,
+    "record_key": "Sanguine Angel ~ Hardened Heart"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

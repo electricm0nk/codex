@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Positive Energy ~ Cleric",
+    "name": "Positive Energy ~ Cleric",
+    "class": "Positive Energy",
+    "description": "You can unleash a wave of positive energy. You must choose to deal %1d%2 points of positive energy damage to undead creatures or to heal living creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage.|ClericChannelPositiveEnergyDice|ClericChannelPositiveEnergyDieSize|ClericChannelPositiveEnergyDC",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.Channel Energy.Channel Positive Energy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelPositiveEnergyDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelPositiveEnergyDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelPositiveEnergyDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelPositiveEnergyLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of positive energy. You must choose to deal %1d%2 points of positive energy damage to undead creatures or to heal living creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage.|ClericChannelPositiveEnergyDice|ClericChannelPositiveEnergyDieSize|ClericChannelPositiveEnergyDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelPositiveEnergyDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelPositiveEnergyDice|(ClericChannelPositiveEnergyLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelPositiveEnergyDC|10+(ClericChannelPositiveEnergyLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelPositiveEnergyLVL|ClericChannelEnergyLVL-2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 821,
+    "record_key": "Positive Energy ~ Cleric"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

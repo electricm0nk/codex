@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Verdant Bloodrager Bloodline ~ Nature's Thorns",
+    "name": "Nature's Thorns",
+    "class": "Verdant Bloodrager Bloodline",
+    "description": "Creatures that hit you in melee (other than those using manufactured reach weapons) take 4d6 points of piercing damage. A creature takes this damage only on its first successful attack against you in a combat round, and not on subsequent attacks in that round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Bloodrager Bloodline ~ Nature's Thorns"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Verdant Bloodrager Bloodline ~ Power LVL 16.Bloodrager Bloodline Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Verdant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Verdant_BloodlineProgressionLVL,16"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Verdant_BloodlinePower16LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Creatures that hit you in melee (other than those using manufactured reach weapons) take 4d6 points of piercing damage. A creature takes this damage only on its first successful attack against you in a combat round, and not on subsequent attacks in that round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|VerdantBloodragerBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 311,
+    "record_key": "Verdant Bloodrager Bloodline ~ Nature's Thorns"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

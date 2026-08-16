@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nature Mystery ~ Erosion Touch",
+    "name": "Erosion Touch",
+    "class": "Nature Mystery",
+    "description": "As a melee touch attack, you can deal %1d6 points of damage to objects or constructs. If used against an object in another creature's possession, treat this attack as a sunder combat maneuver. You can use this ability %2 time(s) per day.|OracleErosionTouchDamageDice|OracleErosionTouchTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Mystery ~ Erosion Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.NatureRevelation.Supernatural.RevelationTargetOneOnly.PerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleErosionTouchDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleErosionTouchTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a melee touch attack, you can deal %1d6 points of damage to objects or constructs. If used against an object in another creature's possession, treat this attack as a sunder combat maneuver. You can use this ability %2 time(s) per day.|OracleErosionTouchDamageDice|OracleErosionTouchTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleErosionTouchDamageDice|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleErosionTouchTimes|1+classlevel(\"Oracle\")/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 653,
+    "record_key": "Nature Mystery ~ Erosion Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

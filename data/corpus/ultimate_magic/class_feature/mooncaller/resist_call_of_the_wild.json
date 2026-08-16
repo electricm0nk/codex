@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mooncaller ~ Resist Call of the Wild",
+    "name": "Resist Call of the Wild",
+    "class": "Mooncaller",
+    "description": "You gain a +4 bonus on saving throws to avoid confusion, daze, feeblemind, and insanity effects. You also gain a +4 bonus against the exceptional, spell-like, and supernatural abilities of creatures with the shapechanger subtype.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mooncaller ~ Resist Call of the Wild"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +4 bonus on saving throws to avoid confusion, daze, feeblemind, and insanity effects. You also gain a +4 bonus against the exceptional, spell-like, and supernatural abilities of creatures with the shapechanger subtype."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1127,
+    "record_key": "Mooncaller ~ Resist Call of the Wild"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

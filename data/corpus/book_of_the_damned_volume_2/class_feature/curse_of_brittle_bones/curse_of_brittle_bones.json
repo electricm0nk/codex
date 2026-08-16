@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Curse of Brittle Bones ~ Yhidothrus",
+    "name": "Curse of Brittle Bones",
+    "class": "Curse of Brittle Bones",
+    "description": "1/day, you can use a powerful bestow curse, heightened to a 7th-level spell. This special curse causes the creature cursed to suddenly grow to venerable age. This curse imparts a -6 penalty to Strength, Dexterity, and Constitution, but does not grant any bonus to Intelligence, Wisdom, or Charisma. This ability is the equivalent of a 7th-level spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Curse of Brittle Bones ~ Yhidothrus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Bestow Curse,17+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, you can use a powerful bestow curse, heightened to a 7th-level spell. This special curse causes the creature cursed to suddenly grow to venerable age. This curse imparts a -6 penalty to Strength, Dexterity, and Constitution, but does not grant any bonus to Intelligence, Wisdom, or Charisma. This ability is the equivalent of a 7th-level spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 194,
+    "record_key": "Curse of Brittle Bones ~ Yhidothrus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

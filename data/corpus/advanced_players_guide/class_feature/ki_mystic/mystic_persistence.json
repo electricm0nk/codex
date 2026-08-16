@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ki Mystic ~ Mystic Persistence",
+    "name": "Mystic Persistence",
+    "class": "Ki Mystic",
+    "description": "At 19th level, a ki mystic can create an aura once per day as a swift action at the cost of at least 2 points of ki. The aura emanates out to a 20-foot radius. The monk and all allies within the aura can roll two dice when making an attack roll or a saving throw and take the better result. The aura lasts for 1 round, plus an additional round for every 2 ki points spent when the monk created the aura. The monk can dismiss the aura at any time as a free action, but the ki points for the full duration of the aura are lost. This ability replaces empty body.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ki Mystic ~ Mystic Persistence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.Supernatural.MonkEmptyBody"
+      },
+      {
+        "key": "DESC",
+        "value": "At 19th level, a ki mystic can create an aura once per day as a swift action at the cost of at least 2 points of ki. The aura emanates out to a 20-foot radius. The monk and all allies within the aura can roll two dice when making an attack roll or a saving throw and take the better result. The aura lasts for 1 round, plus an additional round for every 2 ki points spent when the monk created the aura. The monk can dismiss the aura at any time as a free action, but the ki points for the full duration of the aura are lost. This ability replaces empty body."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2324,
+    "record_key": "Ki Mystic ~ Mystic Persistence"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

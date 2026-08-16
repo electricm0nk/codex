@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Argent Voice ~ Shattering Crescendo",
+    "name": "Shattering Crescendo",
+    "class": "Argent Voice",
+    "description": "The argent voice learns to sing at frequencies capable of shattering magical effects. As a full-round action, an argent voice can use 2 rounds of bardic performance to attempt to dispel a single evil spell or enchantment spell cast by an evil creature. This functions as per dispel magic, using the bard's level as his caster level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Argent Voice ~ Shattering Crescendo"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Feature.ArgentVoiceClassFeatures.SpecialQuality.SpellLike.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.174"
+      },
+      {
+        "key": "DESC",
+        "value": "The argent voice learns to sing at frequencies capable of shattering magical effects. As a full-round action, an argent voice can use 2 rounds of bardic performance to attempt to dispel a single evil spell or enchantment spell cast by an evil creature. This functions as per dispel magic, using the bard's level as his caster level."
+      },
+      {
+        "key": "DESC",
+        "value": "This ability can be used on effects that can be removed by the spell break enchantment.|PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "DESC",
+        "value": "The argent voice must use Perform (sing) with this performance."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 640,
+    "record_key": "Argent Voice ~ Shattering Crescendo"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

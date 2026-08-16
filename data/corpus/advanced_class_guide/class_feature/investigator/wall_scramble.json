@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent ~ Wall Scramble",
+    "name": "Wall Scramble",
+    "class": "Investigator",
+    "description": "An investigator with this talent rolls twice when making Climb checks and takes the better of the two rolls. If she already rolls twice while making a Climb check because of another ability or effect, she gains a +2 insight bonus on both of those rolls instead. If the investigator is under the effect of a spell or ability that forces her to roll two dice and take the worse result, she only needs to roll 1d20 while making Climb checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent ~ Wall Scramble"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorRogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An investigator with this talent rolls twice when making Climb checks and takes the better of the two rolls. If she already rolls twice while making a Climb check because of another ability or effect, she gains a +2 insight bonus on both of those rolls instead. If the investigator is under the effect of a spell or ability that forces her to roll two dice and take the worse result, she only needs to roll 1d20 while making Climb checks."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1374,
+    "record_key": "Investigator ~ Rogue Talent ~ Wall Scramble"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

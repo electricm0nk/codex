@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spell Dancer ~ Dance of Avoidance",
+    "name": "Dance of Avoidance",
+    "class": "Spell Dancer",
+    "description": "While wearing light armor or no armor, a spell dancer gains a +2 insight bonus to Armor Class.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spell Dancer ~ Dance of Avoidance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PRECLASSLEVELMAX",
+        "value": "1,Magus=12"
+      },
+      {
+        "key": "DESC",
+        "value": "While wearing light armor or no armor, a spell dancer gains a +2 insight bonus to Armor Class."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|2|TYPE=Insight|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.MEDIUM]\"),1,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 124,
+    "record_key": "Spell Dancer ~ Dance of Avoidance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

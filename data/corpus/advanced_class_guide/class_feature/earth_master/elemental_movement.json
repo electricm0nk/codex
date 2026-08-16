@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Earth Master ~ Elemental Movement",
+    "name": "Elemental Movement",
+    "class": "Earth Master",
+    "description": "Your land speed increases by 30 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Earth Master ~ Elemental Movement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.ArcanistArchetype.SpecialQuality.Supernatural.ArcanistExploit15"
+      },
+      {
+        "key": "DESC",
+        "value": "Your land speed increases by 30 feet."
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2470,
+    "record_key": "Earth Master ~ Elemental Movement"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

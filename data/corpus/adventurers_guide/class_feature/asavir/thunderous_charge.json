@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Asavir ~ Thunderous Charge",
+    "name": "Thunderous Charge",
+    "class": "Asavir",
+    "description": "%1 times per day, an asavir and her mount can make a charge that causes the ground to shake. This is a full-round action and works as a normal charge, except the asavir's mount can move only up to its move speed (not double its move speed, as in a normal charge). Creatures within a %2-foot radius of the charge's ending point must succeed at a Reflex save (DC = 10 + the asavir's class level + the mount's Strength modifier) or fall prone. For every asavir level above 2nd the character has, she can exclude one creature from the effects of her thunderous charge (one creature at 3rd level, up to a maximum of eight creatures at 10th level). The asavir can resolve her attack at the end of her charge either before or after determining which creatures fall prone.|AsavirLVL|AsavirThunderousChargeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Asavir ~ Thunderous Charge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.AsavirClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AsavirThunderousChargeBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times per day, an asavir and her mount can make a charge that causes the ground to shake. This is a full-round action and works as a normal charge, except the asavir's mount can move only up to its move speed (not double its move speed, as in a normal charge). Creatures within a %2-foot radius of the charge's ending point must succeed at a Reflex save (DC = 10 + the asavir's class level + the mount's Strength modifier) or fall prone. For every asavir level above 2nd the character has, she can exclude one creature from the effects of her thunderous charge (one creature at 3rd level, up to a maximum of eight creatures at 10th level). The asavir can resolve her attack at the end of her charge either before or after determining which creatures fall prone.|AsavirLVL|AsavirThunderousChargeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsavirThunderousChargeBonus|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsavirThunderousChargeBonus|5|PREVARGTEQ:AsavirLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsavirThunderousChargeBonus|10|PREVARGTEQ:AsavirLVL,10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 44,
+    "record_key": "Asavir ~ Thunderous Charge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

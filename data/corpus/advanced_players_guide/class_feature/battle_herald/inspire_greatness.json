@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Battle Herald ~ Inspire Greatness",
+    "name": "Inspire Greatness",
+    "class": "Battle Herald",
+    "description": "At 4th level, a battle herald may use her inspiring command ability to inspire greatness (as the 9th-level bardic performance ability). This ability affects one creature at 4th level, two at 7th, and three at 10th.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Herald ~ Inspire Greatness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a battle herald may use her inspiring command ability to inspire greatness (as the 9th-level bardic performance ability). This ability affects one creature at 4th level, two at 7th, and three at 10th."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1268,
+    "record_key": "Battle Herald ~ Inspire Greatness"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Battle Host ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Battle Host",
+    "description": "At 4th, 8th, 12th, and 16th levels, a battle host gains a bonus feat in addition to those gained from normal advancement. These bonus feats must be selected from those listed as combat feats. The battle host must meet the prerequisites of these bonus feats. This ability replaces shift focus, magic circles, binding circles, and fast circles.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Host ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Battle Host Class Feature.Occultist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th, 8th, 12th, and 16th levels, a battle host gains a bonus feat in addition to those gained from normal advancement. These bonus feats must be selected from those listed as combat feats. The battle host must meet the prerequisites of these bonus feats. This ability replaces shift focus, magic circles, binding circles, and fast circles."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_CombatFeat|(OccultistLVL>=4)+(OccultistLVL>=8)+(OccultistLVL>=12)+(OccultistLVL>=16)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1529,
+    "record_key": "Battle Host ~ Bonus Feats"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

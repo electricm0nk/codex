@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Power Over Undead ~ Turn Undead",
+    "name": "Power Over Undead ~ Turn Undead",
+    "class": "Power Over Undead",
+    "description": "You can channel energy %1 times per day to turn undead. The DC of the will save for your Turn Undead attempts is %2.|PowerOverUndeadTimes|PowerOverUndeadTurnDC",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialAttack.Supernatural.NecromancerChanneling"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Channel Positive Energy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PowerOverUndeadTurnDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can channel energy %1 times per day to turn undead. The DC of the will save for your Turn Undead attempts is %2.|PowerOverUndeadTimes|PowerOverUndeadTurnDC"
+      },
+      {
+        "key": "DESC",
+        "value": "Undead cannot add their channel resistance to the save against your Turn ability.|PREVARGTEQ:PowerOverUndeadLVL,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Turn Undead"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerOverUndeadTurnDC|10+PowerOverUndeadLVL/2+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2681,
+    "record_key": "Power Over Undead ~ Turn Undead"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

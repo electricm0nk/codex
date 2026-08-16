@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wind Mystery ~ Touch of Electricity",
+    "name": "Touch of Electricity",
+    "class": "Wind Mystery",
+    "description": "As a standard action, you can perform a melee touch attack that deals 1d6+%1 points of electricity damage. You can use this ability %2 times per day. At 11th level, any weapon that you wield is treated as a shock weapon.|OracleTouchofElectricityDamageBonus|OracleTouchofElectricityTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wind Mystery ~ Touch of Electricity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.WindRevelation.Supernatural.RevelationTargetOneOnly.PerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleTouchofElectricityDamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleTouchofElectricityTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can perform a melee touch attack that deals 1d6+%1 points of electricity damage. You can use this ability %2 times per day. At 11th level, any weapon that you wield is treated as a shock weapon.|OracleTouchofElectricityDamageBonus|OracleTouchofElectricityTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleTouchofElectricityDamageBonus|classlevel(\"Oracle\")/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleTouchofElectricityTimes|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 704,
+    "record_key": "Wind Mystery ~ Touch of Electricity"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

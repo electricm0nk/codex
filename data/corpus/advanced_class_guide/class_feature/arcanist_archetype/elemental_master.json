@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcanist Archetype ~ Elemental Master",
+    "name": "Elemental Master",
+    "class": "Arcanist Archetype",
+    "description": "Arcanists with an affinity for elemental forces sometimes focus on one and display its power in everything they do.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcanist Archetype ~ Elemental Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ArcanistArchetype.ArcanistExploit1.ArcanistExploit3.ArcanistExploit9.ArcanistExploit11.ArcanistExploit15"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Arcanist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Arcanist Archetype ~ Elemental Master],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ArcanistExploit1,TYPE.ArcanistExploit3,TYPE.ArcanistExploit9,TYPE.ArcanistExploit11,TYPE.ArcanistExploit15]"
+      },
+      {
+        "key": "DESC",
+        "value": "Arcanists with an affinity for elemental forces sometimes focus on one and display its power in everything they do."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Elemental Master Type|1|PRECLASS:1,Arcanist=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Arcanist"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2377,
+    "record_key": "Arcanist Archetype ~ Elemental Master"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

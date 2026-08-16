@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Eidetic Recollection",
+    "name": "Eidetic Recollection",
+    "class": "Investigator",
+    "description": "An investigator can always choose to take 10 on any of his Knowledge checks, even if he's in immediate danger or distracted. An investigator may expend one use of inspiration to take 20 on a Knowledge skill check even if he's in immediate danger or distracted.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Eidetic Recollection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.InvestigatorTalent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "InvestigatorTalentLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "An investigator can always choose to take 10 on any of his Knowledge checks, even if he's in immediate danger or distracted. An investigator may expend one use of inspiration to take 20 on a Knowledge skill check even if he's in immediate danger or distracted."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1288,
+    "record_key": "Investigator ~ Eidetic Recollection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

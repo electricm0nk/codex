@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forester ~ Animal Focus",
+    "name": "Animal Focus",
+    "class": "Forester",
+    "description": "As a forester has no animal companion, the aspects granted by this ability always apply to the forester herself, just as if a normal hunter's companion were dead. This alters animal focus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forester ~ Animal Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.ForesterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a forester has no animal companion, the aspects granted by this ability always apply to the forester herself, just as if a normal hunter's companion were dead. This alters animal focus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 658,
+    "record_key": "Forester ~ Animal Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

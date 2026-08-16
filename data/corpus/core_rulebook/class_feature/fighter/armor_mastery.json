@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fighter ~ Armor Mastery",
+    "name": "Armor Mastery",
+    "class": "Fighter",
+    "description": "You gain DR 5/-- whenever you are wearing armor or using a shield.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter ~ Armor Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain DR 5/-- whenever you are wearing armor or using a shield."
+      },
+      {
+        "key": "DR",
+        "value": "5/-|PREEQUIP:1,TYPE=Armor,TYPE=Shield"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 891,
+    "record_key": "Fighter ~ Armor Mastery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

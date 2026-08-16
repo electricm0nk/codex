@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spirit Guide ~ Bonded Spirit",
+    "name": "Bonded Spirit",
+    "class": "Spirit Guide",
+    "description": "[NOT IMPLEMENTED] A spirit guide can form a temporary bond with a spirit, as the shaman's wandering spirit class feature (see page 37). She must make this selection each day when she refreshes her spells. A spirit guide cannot bond with a spirit that is incompatible with her alignment, ethos, or mystery (GM's discretion). A spirit guide gains one hex of her choice from the list of hexes available from that spirit. She uses her oracle level as her shaman level, and she switches Wisdom for Charisma and vice versa for the purpose of determining the hex's effects. At 4th level, she adds the bonded spirit's spirit magic spells to her oracle spells known for that day, but only of spell levels she can cast. At 7th level, she gains the spirit ability of her current bonded spirit. At 15th level, she gains the greater spirit ability of her current bonded spirit. This ability replaces the revelations gained at 3rd, 7th, and 15th levels.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Guide ~ Bonded Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spirit Guide Class Feature.Oracle Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] A spirit guide can form a temporary bond with a spirit, as the shaman's wandering spirit class feature (see page 37). She must make this selection each day when she refreshes her spells. A spirit guide cannot bond with a spirit that is incompatible with her alignment, ethos, or mystery (GM's discretion). A spirit guide gains one hex of her choice from the list of hexes available from that spirit. She uses her oracle level as her shaman level, and she switches Wisdom for Charisma and vice versa for the purpose of determining the hex's effects. At 4th level, she adds the bonded spirit's spirit magic spells to her oracle spells known for that day, but only of spell levels she can cast. At 7th level, she gains the spirit ability of her current bonded spirit. At 15th level, she gains the greater spirit ability of her current bonded spirit. This ability replaces the revelations gained at 3rd, 7th, and 15th levels."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Spirit|1|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3505,
+    "record_key": "Spirit Guide ~ Bonded Spirit"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

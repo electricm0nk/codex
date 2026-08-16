@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Aspis Agent ~ Sneak Attack",
+    "name": "Sneak Attack",
+    "class": "Aspis Agent",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aspis Agent ~ Sneak Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Aspis Agent Class Feature.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SneakAttackDice|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "DESC",
+        "value": "An Aspis agent gains sneak attack as per the rogue ability. Initially, the extra damage dealt is 1d6, and it increases by 1d6 at 6th level and at 9th level. If an Aspis agent gains a sneak attack bonus from another source, the bonuses on damage stack."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|1|PREVARGTEQ:AspisAgentLVL,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sneak Attack"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 72,
+    "record_key": "Aspis Agent ~ Sneak Attack"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bard Archetype ~ Sorrowsoul",
+    "name": "Sorrowsoul",
+    "class": "Bard Archetype",
+    "description": "It isn't uncommon for a bard to, on occasion, sing mournful tunes or craft elegies that depict the deepest sadness or the most profound suffering. But while most bards who do so create such performances for fame or wealth, the sorrowsoul has known tragedy and loss on a level so intimate, he has bound it to his soul.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Sorrowsoul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Sorrowsoul],[!PREFACT:1,ABILITIES,Bard_Archetype_BardicPerformance=True,Bard_Archetype_SoothingPerformance=True,Bard_Archetype_VersatilePerformance=True,Bard_Archetype_WellVersed=True,Bard_Archetype_LoreMaster=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "It isn't uncommon for a bard to, on occasion, sing mournful tunes or craft elegies that depict the deepest sadness or the most profound suffering. But while most bards who do so create such performances for fame or wealth, the sorrowsoul has known tragedy and loss on a level so intimate, he has bound it to his soul."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sorrowsoul ~ Lyric Sorrow|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sorrowsoul ~ Darkness Denied|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sorrowsoul ~ Spurn Harm|PRECLASS:1,Bard=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_BardicPerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_SoothingPerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_SoothingPerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_LoreMaster|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 223,
+    "record_key": "Bard Archetype ~ Sorrowsoul"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

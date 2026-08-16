@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tidal Hunter ~ Keen Scent",
+    "name": "Keen Scent",
+    "class": "Tidal Hunter",
+    "description": "A tidal hunter gains scent, as per the universal monster rule.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tidal Hunter ~ Keen Scent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.TidalHunterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A tidal hunter gains scent, as per the universal monster rule."
+      },
+      {
+        "key": "DESC",
+        "value": "While in water, the tidal hunter can detect particularly strong or distinct odors (such as blood) up to 1 mile away.|PRECLASS:1,Ranger=12"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 930,
+    "record_key": "Tidal Hunter ~ Keen Scent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

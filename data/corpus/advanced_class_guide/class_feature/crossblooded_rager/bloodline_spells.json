@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Crossblooded Rager ~ Bloodline Spells",
+    "name": "Bloodline Spells",
+    "class": "Crossblooded Rager",
+    "description": "A crossblooded rager can select his bloodline spells from either of his bloodlines. He can also learn a lower-level bloodline spell he did not choose in place of a higher-level bloodline spell he would normally gain. Lower-level bloodline spells learned in this manner are always the spell level that they would be if the crossblooded rager had learned them with the appropriate bloodline spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crossblooded Rager ~ Bloodline Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature.Crossblooded Rager Class Feature"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CrossbloodedRager_BloodlineSpells_BonusSpell|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A crossblooded rager can select his bloodline spells from either of his bloodlines. He can also learn a lower-level bloodline spell he did not choose in place of a higher-level bloodline spell he would normally gain. Lower-level bloodline spells learned in this manner are always the spell level that they would be if the crossblooded rager had learned them with the appropriate bloodline spell."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Bloodrager Bloodline Bonus Spell|CrossbloodedRager_BloodlineSpells_BonusSpell"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrossbloodedRager_BloodlineSpells_BonusSpell|1|PREVARGTEQ:BloodragerBloodlineProgressionLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrossbloodedRager_BloodlineSpells_BonusSpell|1|PREVARGTEQ:BloodragerBloodlineProgressionLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrossbloodedRager_BloodlineSpells_BonusSpell|1|PREVARGTEQ:BloodragerBloodlineProgressionLVL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrossbloodedRager_BloodlineSpells_BonusSpell|1|PREVARGTEQ:BloodragerBloodlineProgressionLVL,16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2746,
+    "record_key": "Crossblooded Rager ~ Bloodline Spells"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

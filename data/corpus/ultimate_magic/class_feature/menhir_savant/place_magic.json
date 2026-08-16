@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Menhir Savant ~ Place Magic",
+    "name": "Place Magic",
+    "class": "Menhir Savant",
+    "description": "You can identify and tap into ley lines in different types of terrain. As a free action, you can tap into the magic of a nearby ley line and increase your caster level by +1 for 1 round. You can use this ability %1 times per day.|PlaceMagicTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Menhir Savant ~ Place Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PlaceMagicTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can identify and tap into ley lines in different types of terrain. As a free action, you can tap into the magic of a nearby ley line and increase your caster level by +1 for 1 round. You can use this ability %1 times per day.|PlaceMagicTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlaceMagicTimes|3+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1117,
+    "record_key": "Menhir Savant ~ Place Magic"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

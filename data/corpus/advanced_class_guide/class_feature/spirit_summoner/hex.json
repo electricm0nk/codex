@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spirit Summoner ~ Hex",
+    "name": "Hex",
+    "class": "Spirit Summoner",
+    "description": "A spirit summoner can select a shaman hex that is appropriate to his spirit, chosen from the general list of shaman hexes or the specific hexes allowed by his spirit. This otherwise functions as a shaman's hex, and uses his summoner level as his shaman level. Like a shaman, a spirit summoner uses his Wisdom modifier to determine hex DCs. At 8th, 10th, and 16th levels, the summoner can select another hex.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Summoner ~ Hex"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spirit Summoner Class Feature.Summoner Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexStatMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexChoices|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexAbilityLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A spirit summoner can select a shaman hex that is appropriate to his spirit, chosen from the general list of shaman hexes or the specific hexes allowed by his spirit. This otherwise functions as a shaman's hex, and uses his summoner level as his shaman level. Like a shaman, a spirit summoner uses his Wisdom modifier to determine hex DCs. At 8th, 10th, and 16th levels, the summoner can select another hex."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Hex|ShamanHexChoices"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexLVL|SorcererLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexDC|10+(ShamanLVL/2)+ShamanHexStatMod"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexStatMod|WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexAbilityLVL|SummonerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3834,
+    "record_key": "Spirit Summoner ~ Hex"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcane Duelist ~ Rallying Cry",
+    "name": "Rallying Cry",
+    "class": "Arcane Duelist",
+    "description": "At 1st level, an arcane duelist can use performance to rally dispirited allies. Each round he makes an Intimidate check. Any ally (including the bard) within 30 feet may use this check in place of his own saving throw against fear and despair effects. Those already under a fear or despair effect can attempt a new save each round using the bard's Intimidate check. Rallying cry does not work on effects that don't allow saves. This is a mind-affecting ability that uses audible components. This performance replaces countersong.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Duelist ~ Rallying Cry"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Supernatural.BardCountersong"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, an arcane duelist can use performance to rally dispirited allies. Each round he makes an Intimidate check. Any ally (including the bard) within 30 feet may use this check in place of his own saving throw against fear and despair effects. Those already under a fear or despair effect can attempt a new save each round using the bard's Intimidate check. Rallying cry does not work on effects that don't allow saves. This is a mind-affecting ability that uses audible components. This performance replaces countersong."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1632,
+    "record_key": "Arcane Duelist ~ Rallying Cry"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

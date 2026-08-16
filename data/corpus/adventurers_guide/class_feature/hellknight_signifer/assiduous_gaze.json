@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hellknight Signifer ~ Assiduous Gaze",
+    "name": "Assiduous Gaze",
+    "class": "Hellknight Signifer",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hellknight Signifer ~ Assiduous Gaze"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Hellknight Signifer Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level and again at 7th level, a Hellknight signifer gains an assiduous gaze ability chosen from the list below. A Hellknight signifer can use each assiduous gaze ability he has for %1 rounds per day. These rounds need not be consecutive. A Hellknight signifer can activate an assiduous gaze ability as a swift action to examine a single creature, object, or 5-foot square within 30 feet. A Hellknight signifer must be wearing his signifer mask to use these abilities, and his caster level while using the ability is equal to his character level.|HellknightSigniferLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Assiduous Gaze Ability|1+(HellknightSigniferLVL>=7)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 290,
+    "record_key": "Hellknight Signifer ~ Assiduous Gaze"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brawler Archetype ~ Exemplar",
+    "name": "Exemplar",
+    "class": "Brawler Archetype",
+    "description": "A versatile soldier who inspires her companions with her fighting prowess, an exemplar is at home on the front lines of battles anywhere.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler Archetype ~ Exemplar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BrawlerArchetype.BrawlerUnarmedStrike.BrawlerManeuverTraining.BrawlerACBonus.BrawlerBrawlersStrike.BrawlerCloseWeaponMastery"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Brawler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Exemplar],[!PREABILITY:1,CATEGORY=Archetype,TYPE.Brawler,TYPE.BrawlerUnarmedStrike,TYPE.BrawlerACBonus,TYPE.BrawlerManeuverTraining,TYPE.BrawlerBrawlersStrike,TYPE.BrawlerCloseWeaponMastery]"
+      },
+      {
+        "key": "DESC",
+        "value": "A versatile soldier who inspires her companions with her fighting prowess, an exemplar is at home on the front lines of battles anywhere."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exemplar Brawler ~ Call to Arms|PRECLASS:1,Brawler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exemplar Brawler ~ Inspiring Prowess|PRECLASS:1,Brawler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exemplar Brawler ~ Field Instruction|PRECLASS:1,Brawler=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Brawler"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2845,
+    "record_key": "Brawler Archetype ~ Exemplar"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

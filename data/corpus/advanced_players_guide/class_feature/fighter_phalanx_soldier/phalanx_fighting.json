@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fighter Phalanx Soldier ~ Phalanx Fighting",
+    "name": "Phalanx Fighting",
+    "class": "Fighter Phalanx Soldier",
+    "description": "At 3rd level, when a phalanx soldier wields a shield, he can use any polearm or spear of his size as a one-handed weapon. This ability replaces armor training 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Phalanx Soldier ~ Phalanx Fighting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterArmorTraining1"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, when a phalanx soldier wields a shield, he can use any polearm or spear of his size as a one-handed weapon. This ability replaces armor training 1."
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Polearm|WIELDCATEGORY|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Spear|WIELDCATEGORY|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Longspear|WIELDCATEGORY|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2170,
+    "record_key": "Fighter Phalanx Soldier ~ Phalanx Fighting"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

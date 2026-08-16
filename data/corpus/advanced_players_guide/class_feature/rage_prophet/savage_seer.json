@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Prophet ~ Savage Seer",
+    "name": "Savage Seer",
+    "class": "Rage Prophet",
+    "description": "A rage prophet's class level stacks with barbarian levels for determining the effect of his rage powers, oracle revelations, and his oracle's curse. This does not grant additional abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Prophet ~ Savage Seer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Rage ProphetClassFeatures.SpecialQuality.Extra"
+      },
+      {
+        "key": "DESC",
+        "value": "A rage prophet's class level stacks with barbarian levels for determining the effect of his rage powers, oracle revelations, and his oracle's curse. This does not grant additional abilities."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1438,
+    "record_key": "Rage Prophet ~ Savage Seer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Archetype ~ Visionary",
+    "name": "Visionary",
+    "class": "Shaman Archetype",
+    "description": "The visionary is a master at divination, drawing upon her intimate relationship with the spirit world to ferret out all manner of secrets and insights about the world around her and beyond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Archetype ~ Visionary"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ShamanArchetype.ShamanWanderingSpirit.ShamanWanderingHex6.ShamanWanderingSpiritGreater.ShamanWanderingSpiritTrue"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shaman=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shaman Archetype ~ Visionary],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ShamanWanderingSpirit,TYPE.ShamanWanderingHex6,TYPE.ShamanWanderingSpiritGreater,TYPE.ShamanWanderingSpiritTrue]"
+      },
+      {
+        "key": "DESC",
+        "value": "The visionary is a master at divination, drawing upon her intimate relationship with the spirit world to ferret out all manner of secrets and insights about the world around her and beyond."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Visionary ~ Bonus Feat|PRECLASS:1,Shaman=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Visionary ~ Discern Magical Expertise|PRECLASS:1,Shaman=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Visionary ~ Vision Spirit Magic|PRECLASS:1,Shaman=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Visionary ~ Improved Divination|PRECLASS:1,Shaman=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Visionary ~ Wandering Spirit|PRECLASS:1,Shaman=12"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Shaman"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3591,
+    "record_key": "Shaman Archetype ~ Visionary"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

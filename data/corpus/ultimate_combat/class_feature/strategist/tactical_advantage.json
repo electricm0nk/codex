@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Strategist ~ Tactical Advantage",
+    "name": "Tactical Advantage",
+    "class": "Strategist",
+    "description": "At 14th level, whenever a strategist uses his tactician ability to grant the use of a teamwork feat to his allies, he can move up to his speed as a free action either before or after granting the feat. This movement provokes attacks of opportunity normally. This ability replaces greater banner.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strategist ~ Tactical Advantage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 14th level, whenever a strategist uses his tactician ability to grant the use of a teamwork feat to his allies, he can move up to his speed as a free action either before or after granting the feat. This movement provokes attacks of opportunity normally. This ability replaces greater banner."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 522,
+    "record_key": "Strategist ~ Tactical Advantage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

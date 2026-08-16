@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order Of The Eastern Star ~ Edicts",
+    "name": "Edicts",
+    "class": "Order Of The Eastern Star",
+    "description": "The cavalier must preserve the secrets of his order while acting to protect civilization against occult threats. He must thwart the schemes of otherworldly horrors and must give his order a full accounting of any potential threats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order Of The Eastern Star ~ Edicts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Order Of The Eastern Star Class Feature.Cavalier Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The cavalier must preserve the secrets of his order while acting to protect civilization against occult threats. He must thwart the schemes of otherworldly horrors and must give his order a full accounting of any potential threats."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1705,
+    "record_key": "Order Of The Eastern Star ~ Edicts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

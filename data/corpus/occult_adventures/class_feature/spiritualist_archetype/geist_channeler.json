@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spiritualist Archetype ~ Geist Channeler",
+    "name": "Geist Channeler",
+    "class": "Spiritualist Archetype",
+    "description": "Some phantoms retain less of their personalities and memories than others. Though most phantoms maintain some semblance of their former selves, others of their kind, known as geists, came close to being lost forever before they became phantoms. Incapable of manifesting in ectoplasmic form and devoid of human emotions, these strange entities are much closer to ghosts than most other phantoms. The spiritualists who work with them, known as geist channelers, are able to call on them in unique ways.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist Archetype ~ Geist Channeler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpiritualistArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Spiritualist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Spiritualist Archetype ~ Geist Channeler],[!PREFACT:1,ABILITIES,Spiritualist_Archetype_Phantom=true,Spiritualist_Archetype_BondedManifestation=true,Spiritualist_Archetype_PhantomsEmotionalFocus=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some phantoms retain less of their personalities and memories than others. Though most phantoms maintain some semblance of their former selves, others of their kind, known as geists, came close to being lost forever before they became phantoms. Incapable of manifesting in ectoplasmic form and devoid of human emotions, these strange entities are much closer to ghosts than most other phantoms. The spiritualists who work with them, known as geist channelers, are able to call on them in unique ways."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Geist Channeler ~ Geistform Phantom|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Geist Channeler ~ Emotionless|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Geist Channeler ~ Unnerving Touch|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Geist Channeler ~ Poltergeist's Knack|PRECLASS:1,Spiritualist=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Geist Channeler ~ Spectral Protection|PRECLASS:1,Spiritualist=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Geist Channeler ~ Malevolent Possession|PRECLASS:1,Spiritualist=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Geist Channeler ~ Spiritual Manifestation|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_Phantom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_BondedManifestation|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_PhantomsEmotionalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_PhantomsEmotionalFocus|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1613,
+    "record_key": "Spiritualist Archetype ~ Geist Channeler"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

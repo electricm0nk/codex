@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Feral Gnasher",
+    "name": "Feral Gnasher",
+    "class": "Barbarian Archetype",
+    "description": "Feral gnashers grow up in the wild, either raised by animals or scraping by on their own, and soon learn to fend for themselves. These barbarians often utilize pieced-together armor and fight with their sharp teeth and whatever improvised weapons are within reach.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Feral Gnasher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype.BarbarianProficiencies.BarbarianFastMovement.BarbarianRagePower2.BarbarianTrapSense1.BarbarianTrapSense2.BarbarianTrapSense3.BarbarianTrapSense4.BarbarianImprovedUncannyDodge"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Feral Gnasher],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianWeaponProficiencies,TYPE.BarbarianArmorProficiencies,TYPE.BarbarianFastMovement,TYPE.BarbarianTrapSense1,TYPE.BarbarianTrapSense2,TYPE.BarbarianTrapSense3,TYPE.BarbarianTrapSense4,TYPE.BarbarianImprovedUncannyDodge]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsGoblin=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Feral gnashers grow up in the wild, either raised by animals or scraping by on their own, and soon learn to fend for themselves. These barbarians often utilize pieced-together armor and fight with their sharp teeth and whatever improvised weapons are within reach."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Feral Gnasher ~ Weapon and Armor Proficiency|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Feral Gnasher ~ Savage Bite|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Feral Gnasher ~ Impromptu Armament|PRECLASS:1,Barbarian=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Feral Gnasher ~ Lockjaw|PRECLASS:1,Barbarian=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Feral Gnasher ~ Improvised Weapon Mastery|PRECLASS:1,Barbarian=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Feral Gnasher ~ Improved Lockjaw|PRECLASS:1,Barbarian=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Feral Gnasher ~ Greater Lockjaw|PRECLASS:1,Barbarian=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Feral Gnasher ~ Wicked Improvisation|PRECLASS:1,Barbarian=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Feral Gnasher ~ Rage Powers|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Feral Gnasher"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 529,
+    "record_key": "Barbarian Archetype ~ Feral Gnasher"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

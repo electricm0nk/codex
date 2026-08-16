@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fighter Weapon Master ~ Reliable Strike",
+    "name": "Reliable Strike",
+    "class": "Fighter Weapon Master",
+    "description": "You may reroll an attack roll, critical hit confirmation roll, miss chance check, or damage roll as an immediate action. You must accept the second roll even if it is worse.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Weapon Master ~ Reliable Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterWeaponTraining1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponMasterReliableStrikeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You may reroll an attack roll, critical hit confirmation roll, miss chance check, or damage roll as an immediate action. You must accept the second roll even if it is worse."
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability once per day.|PREVAREQ:WeaponMasterReliableStrikeTimes,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 times per day.|WeaponMasterReliableStrikeTimes|PREVARGT:WeaponMasterReliableStrikeTimes,1"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability replaces weapon training 1."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponMasterReliableStrikeTimes|FighterLVL/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2235,
+    "record_key": "Fighter Weapon Master ~ Reliable Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

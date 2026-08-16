@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Occultist ~ Binding Circles",
+    "name": "Binding Circles",
+    "class": "Occultist",
+    "description": "Whenever the occultist creates a magic circle he can expend 1 additional point of mental focus to make it a binding circle. A binding circle is invisible and counts as a trap. If a living creature of the corresponding alignment steps inside it, the trap triggers and binds the creature inside the circle. While it can move freely within the circle, it can't leave the circle, make attacks against targets outside the circle, cast spells that cross the circle's boundary (the circle blocks line of effect from the inside), or use any ability that would allow it to leave the circle or disturb the circle in any way. When the circle traps a creature in this way, the creature can attempt a Reflex save to dive out of the circle before the magic takes hold (DC %1). A creature that can see the circle gains a +4 bonus on this save. If it fails its save, the creature must remain in the circle, although it can attempt a Will save at the same DC at the end of each hour of imprisonment to escape. A binding circle can be spotted with a successful Perception check (DC %2). It can also be disarmed using Disable Device, with the same DC. Anything crossing the boundary of the circle from the outside, such as a weapon, spell effect, or special ability, immediately breaks the circle and frees the creature trapped inside.|OccultistCircleDC|25+OccultistLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist ~ Binding Circles"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistCircleDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the occultist creates a magic circle he can expend 1 additional point of mental focus to make it a binding circle. A binding circle is invisible and counts as a trap. If a living creature of the corresponding alignment steps inside it, the trap triggers and binds the creature inside the circle. While it can move freely within the circle, it can't leave the circle, make attacks against targets outside the circle, cast spells that cross the circle's boundary (the circle blocks line of effect from the inside), or use any ability that would allow it to leave the circle or disturb the circle in any way. When the circle traps a creature in this way, the creature can attempt a Reflex save to dive out of the circle before the magic takes hold (DC %1). A creature that can see the circle gains a +4 bonus on this save. If it fails its save, the creature must remain in the circle, although it can attempt a Will save at the same DC at the end of each hour of imprisonment to escape. A binding circle can be spotted with a successful Perception check (DC %2). It can also be disarmed using Disable Device, with the same DC. Anything crossing the boundary of the circle from the outside, such as a weapon, spell effect, or special ability, immediately breaks the circle and frees the creature trapped inside.|OccultistCircleDC|25+OccultistLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistCircleDC|10+OccultistLVL/2+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 992,
+    "record_key": "Occultist ~ Binding Circles"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

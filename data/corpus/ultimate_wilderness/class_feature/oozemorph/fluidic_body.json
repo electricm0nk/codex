@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oozemorph ~ Fluidic Body",
+    "name": "Fluidic Body",
+    "class": "Oozemorph",
+    "description": "An oozemorph's base form is not that of her race but rather that of a protoplasmic blob that has the same volume and weight. An oozemorph treats her creature type as both ooze and her base creature type from her race for the purposes of effects targeting creatures by type (such as bane weapons and a ranger's favored enemy). In this form, the oozemorph is immune to critical hits and precision damage and can't be flanked. However, she has no magic item slots and she cannot benefit from armor; cast spells; hold objects; speak; or use any magic item that requires activation, is held, or is worn on the body. An oozemorph reverts to this formless state whenever she is unconscious or in an area of antimagic. This is treated as a polymorph effect. %1 times per day, an oozemorph can assume a humanoid form as a move action. This transformation is identical to alter self, except the oozemorph can maintain the form for %2 hours. Each hour after this duration, the oozemorph must succeed at a DC 15 Fortitude save or revert back to her fluidic body until she rests for at least 8 hours. This save DC increases by 1 for each additional hour spent maintaining the form.|max(1,ShifterLVL/2)|ShifterLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oozemorph ~ Fluidic Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.OozemorphClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An oozemorph's base form is not that of her race but rather that of a protoplasmic blob that has the same volume and weight. An oozemorph treats her creature type as both ooze and her base creature type from her race for the purposes of effects targeting creatures by type (such as bane weapons and a ranger's favored enemy). In this form, the oozemorph is immune to critical hits and precision damage and can't be flanked. However, she has no magic item slots and she cannot benefit from armor; cast spells; hold objects; speak; or use any magic item that requires activation, is held, or is worn on the body. An oozemorph reverts to this formless state whenever she is unconscious or in an area of antimagic. This is treated as a polymorph effect. %1 times per day, an oozemorph can assume a humanoid form as a move action. This transformation is identical to alter self, except the oozemorph can maintain the form for %2 hours. Each hour after this duration, the oozemorph must succeed at a DC 15 Fortitude save or revert back to her fluidic body until she rests for at least 8 hours. This save DC increases by 1 for each additional hour spent maintaining the form.|max(1,ShifterLVL/2)|ShifterLVL"
+      },
+      {
+        "key": "DESC",
+        "value": "The oozemorph can treat this ability as beast shape|PRECLASS:1,Shifter=8"
+      },
+      {
+        "key": "DESC",
+        "value": "I, beast shape II, or giant shape|PRECLASS:1,Shifter=15"
+      },
+      {
+        "key": "DESC",
+        "value": "I. Ending this transformation at any time reverts the oozemorph back to her ooze form and renders her fatigued for a number of minutes equal to the number of hours she maintained the form."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1086,
+    "record_key": "Oozemorph ~ Fluidic Body"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

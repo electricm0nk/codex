@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shadowdancer ~ Defensive Roll",
+    "name": "Defensive Roll",
+    "class": "Shadowdancer",
+    "description": "Starting at 5th level, once per day, a shadowdancer can attempt to avoid a lethal blow. This functions as the rogue's advanced talent of the same name.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadowdancer ~ Defensive Roll"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShadowdancerClassFeatures.SpecialQuality.Extraordinary.Defensive"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 5th level, once per day, a shadowdancer can attempt to avoid a lethal blow. This functions as the rogue's advanced talent of the same name."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rogue Talent ~ Defensive Roll"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.393"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3073,
+    "record_key": "Shadowdancer ~ Defensive Roll"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

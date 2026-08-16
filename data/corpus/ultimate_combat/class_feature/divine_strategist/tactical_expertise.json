@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Divine Strategist ~ Tactical Expertise",
+    "name": "Tactical Expertise",
+    "class": "Divine Strategist",
+    "description": "A divine strategist knows how to take best advantage of tactical opportunities. Whenever she is flanking or makes an attack of opportunity, she may add her Intelligence bonus (if any) as a bonus on the attack roll. In addition, %1 times per day as a swift action she may add her Intelligence modifier as a bonus on any single d20 roll made as part of a readied action.|1+(MAX(0,classlevel(\"Cleric\")-8)/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Strategist ~ Tactical Expertise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A divine strategist knows how to take best advantage of tactical opportunities. Whenever she is flanking or makes an attack of opportunity, she may add her Intelligence bonus (if any) as a bonus on the attack roll. In addition, %1 times per day as a swift action she may add her Intelligence modifier as a bonus on any single d20 roll made as part of a readied action.|1+(MAX(0,classlevel(\"Cleric\")-8)/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 575,
+    "record_key": "Divine Strategist ~ Tactical Expertise"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

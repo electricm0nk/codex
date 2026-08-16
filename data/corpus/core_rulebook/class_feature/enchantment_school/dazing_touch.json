@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Enchantment School ~ Dazing Touch",
+    "name": "Dazing Touch",
+    "class": "Enchantment School",
+    "description": "You can cause a living creature to become dazed for 1 round as a melee touch attack. Creatures with more than %1 hit dice are unaffected. You may use this ability %2 times per day.|EnchantmentDazingTouchLimit|EnchantmentDazingTouchTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enchantment School ~ Dazing Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialAttack.SpellLike.ArcaneSchoolPower.ArcaneSchoolPowerLVL1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnchantmentDazingTouchLimit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnchantmentDazingTouchTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause a living creature to become dazed for 1 round as a melee touch attack. Creatures with more than %1 hit dice are unaffected. You may use this ability %2 times per day.|EnchantmentDazingTouchLimit|EnchantmentDazingTouchTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnchantmentDazingTouchLimit|EnchantmentSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnchantmentDazingTouchTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|EnchantmentDazingTouchTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2657,
+    "record_key": "Enchantment School ~ Dazing Touch"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

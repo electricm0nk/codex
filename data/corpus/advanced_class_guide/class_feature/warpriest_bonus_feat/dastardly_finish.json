@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Dastardly Finish",
+    "name": "Dastardly Finish",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can take advantage of an enemy's debilitated state to attempt a coup de grace.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Dastardly Finish"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SneakAttackDice,5"
+      },
+      {
+        "key": "DESC",
+        "value": "You can take advantage of an enemy's debilitated state to attempt a coup de grace."
+      },
+      {
+        "key": "DESC",
+        "value": " You can deliver a coup de grace to cowering or stunned targets."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Dastardly Finish"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4323,
+    "record_key": "Warpriest Bonus Feat ~ Dastardly Finish"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cruoromancer ~ Blood Command",
+    "name": "Blood Command",
+    "class": "Cruoromancer",
+    "description": "The cruoromancer can control up to %1 Hit Dice worth of undead creatures when casting the animate dead spell.|WizardLVL*5",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cruoromancer ~ Blood Command"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The cruoromancer can control up to %1 Hit Dice worth of undead creatures when casting the animate dead spell.|WizardLVL*5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 462,
+    "record_key": "Cruoromancer ~ Blood Command"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

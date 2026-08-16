@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Battle Scout ~ Superior Tactics",
+    "name": "Superior Tactics",
+    "class": "Battle Scout",
+    "description": "At 15th level, once per day, after a battle scout and his allies roll initiative, the battle scout can arrange his and his allies' initiative rolls any way he wishes. If he has already taken 3 rounds to scout out the terrain with his advantageous terrain ability and both he and his allies are within the effect area, they gain a +2 bonus to initiative checks. Using this ability is not an action. This ability replaces the ranger's fourth favored enemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Scout ~ Superior Tactics"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, once per day, after a battle scout and his allies roll initiative, the battle scout can arrange his and his allies' initiative rolls any way he wishes. If he has already taken 3 rounds to scout out the terrain with his advantageous terrain ability and both he and his allies are within the effect area, they gain a +2 bonus to initiative checks. Using this ability is not an action. This ability replaces the ranger's fourth favored enemy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1524,
+    "record_key": "Battle Scout ~ Superior Tactics"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

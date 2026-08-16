@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sorcerer Archetype ~ Tattooed Sorcerer",
+    "name": "Tattooed Sorcerer",
+    "class": "Sorcerer Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Archetype ~ Tattooed Sorcerer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Sorcerer Archetype.SorcererBloodlinePowerLvl1.SorcererBloodlinePowerLvl9.SorcererBloodlineFeatLvl7.SorcererEschewMaterials"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Sorcerer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Sorcerer Archetype ~ Tattooed Sorcerer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SorcererBloodlinePowerLvl1,TYPE.SorcererBloodlinePowerLvl9,TYPE.SorcererBloodlineFeatLvl7,TYPE.SorcererEschewMaterials]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "The tattooed sorcerer has embraced the ancient traditions of Varisian spellcasting, and uses colorful and intricate tattoos to enhance her magical powers."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tattooed Sorcerer ~ Familiar Tattoo"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tattooed Sorcerer ~ Varisian Tattoo"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tattooed Sorcerer ~ Bloodline Tattoo"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tattooed Sorcerer ~ Create Spell Tattoo|PRECLASS:1,Sorcerer=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tattooed Sorcerer ~ Enhanced Varisian Tattoo|PREVARGTEQ:BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Sorcerer"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 336,
+    "record_key": "Sorcerer Archetype ~ Tattooed Sorcerer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

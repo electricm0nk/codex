@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Samurai ~ Unstoppable",
+    "name": "Unstoppable",
+    "class": "Samurai",
+    "description": "When the samurai is reduced to fewer than 0 hit points but not slain, he can spend one use of his resolve as an immediate action to instantly stabilize and remain conscious. He is staggered, but he does not fall unconscious and begin dying if he takes a standard action. He does fall unconscious if he takes additional damage from any source.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samurai ~ Unstoppable"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Resolve"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SamuraiResolve"
+      },
+      {
+        "key": "DESC",
+        "value": "When the samurai is reduced to fewer than 0 hit points but not slain, he can spend one use of his resolve as an immediate action to instantly stabilize and remain conscious. He is staggered, but he does not fall unconscious and begin dying if he takes a standard action. He does fall unconscious if he takes additional damage from any source."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 195,
+    "record_key": "Samurai ~ Unstoppable"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunter Animal Focus ~ Owl",
+    "name": "Owl",
+    "class": "Hunter Animal Focus",
+    "description": "Get +%1 competence bonus to Stealth|HunterAnimalFocusOwlBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Animal Focus ~ Owl"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HunterAnimalFocusAbility"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterAnimalFocusOwlBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Get +%1 competence bonus to Stealth|HunterAnimalFocusOwlBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|HunterAnimalFocusOwlBonus|TYPE=Competence"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusOwlBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusOwlBonus|2|PREVARGTEQ:HunterAnimalFocusLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusOwlBonus|2|PREVARGTEQ:HunterAnimalFocusLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1221,
+    "record_key": "Hunter Animal Focus ~ Owl"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

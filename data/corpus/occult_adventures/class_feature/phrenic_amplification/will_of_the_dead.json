@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Phrenic Amplification ~ Will of the Dead",
+    "name": "Will of the Dead",
+    "class": "Phrenic Amplification",
+    "description": "Even undead creatures can be affected by the psychic's mind-affecting spells. The psychic can spend 2 points from her phrenic pool to overcome an undead creature's immunity to mind-affecting effects for the purposes of the linked spell. This ability functions even on mindless undead, but has no effect on creatures that aren't undead. This amplification can be linked only to spells that have the mind-affecting descriptor. # Major Amplifications",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phrenic Amplification ~ Will of the Dead"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Even undead creatures can be affected by the psychic's mind-affecting spells. The psychic can spend 2 points from her phrenic pool to overcome an undead creature's immunity to mind-affecting effects for the purposes of the linked spell. This ability functions even on mindless undead, but has no effect on creatures that aren't undead. This amplification can be linked only to spells that have the mind-affecting descriptor. # Major Amplifications"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1176,
+    "record_key": "Phrenic Amplification ~ Will of the Dead"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

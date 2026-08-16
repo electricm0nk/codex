@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Binding Touch ~ Shivaska",
+    "name": "Binding Touch",
+    "class": "Binding Touch",
+    "description": "1/day, you can use binding, but only at a range of touch. You need not expend any material components to use this ability, nor can assistance aid you in its casting. You can only have 1 creature affected by this ability at any one time. If you successfully use this ability on a second creature, the previously bound creature is immediately freed. This ability is the equivalent of a 7th-level spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Binding Touch ~ Shivaska"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Binding,17+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, you can use binding, but only at a range of touch. You need not expend any material components to use this ability, nor can assistance aid you in its casting. You can only have 1 creature affected by this ability at any one time. If you successfully use this ability on a second creature, the previously bound creature is immediately freed. This ability is the equivalent of a 7th-level spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 179,
+    "record_key": "Binding Touch ~ Shivaska"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

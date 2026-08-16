@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Treesinger ~ Wild Shape",
+    "name": "Wild Shape",
+    "class": "Treesinger",
+    "description": "The treesinger gains the ability to wild shape. This ability functions at her actual druid level. A treesinger cannot use wild shape to adopt an animal or elemental form. Instead, when she gains this ability, she can assume the form of a Small or Medium plant. This functions as plant shape I, except the treesinger does not yet gain access to the constrict or poison abilities of the plant form assumed. At 8th level, the treesinger's wild shape gains the full range of abilities available from plant shape I. At 10th level, a treesinger can assume the form of a Large or Tiny plant. Her wild shape ability now functions like plant shape II. At 12th level, a treesinger can assume the form of a Huge plant. Her wild shape ability now functions like plant shape III. This ability replaces, and otherwise functions like, the normal druid wild shape ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Treesinger ~ Wild Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The treesinger gains the ability to wild shape. This ability functions at her actual druid level. A treesinger cannot use wild shape to adopt an animal or elemental form. Instead, when she gains this ability, she can assume the form of a Small or Medium plant. This functions as plant shape I, except the treesinger does not yet gain access to the constrict or poison abilities of the plant form assumed. At 8th level, the treesinger's wild shape gains the full range of abilities available from plant shape I. At 10th level, a treesinger can assume the form of a Large or Tiny plant. Her wild shape ability now functions like plant shape II. At 12th level, a treesinger can assume the form of a Huge plant. Her wild shape ability now functions like plant shape III. This ability replaces, and otherwise functions like, the normal druid wild shape ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 141,
+    "record_key": "Treesinger ~ Wild Shape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

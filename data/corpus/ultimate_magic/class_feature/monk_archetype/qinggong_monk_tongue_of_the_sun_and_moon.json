@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk Archetype ~ Qinggong Monk Tongue of the Sun and Moon",
+    "name": "Qinggong Monk (Tongue of the Sun and Moon)",
+    "class": "Monk Archetype",
+    "description": "Swap Tongue of the Sun and Moon for a ki power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Qinggong Monk Tongue of the Sun and Moon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkTongueOfTheSunAndMoon"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Qinggong Monk Tongue of the Sun and Moon],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkTongueOfTheSunAndMoon]"
+      },
+      {
+        "key": "DESC",
+        "value": "Swap Tongue of the Sun and Moon for a ki power."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ki Power|1|PRECLASS:1,Monk=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1346,
+    "record_key": "Monk Archetype ~ Qinggong Monk Tongue of the Sun and Moon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

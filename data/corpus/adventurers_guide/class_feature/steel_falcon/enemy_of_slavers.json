@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Steel Falcon ~ Enemy of Slavers",
+    "name": "Enemy of Slavers",
+    "class": "Steel Falcon",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Steel Falcon ~ Enemy of Slavers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Steel Falcon Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnemyOfSlavers|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "DESC",
+        "value": "From the start, the Steel Falcon focuses much of her training on how to interact with slavers, both in combat and in diplomatic confrontations. A Steel Falcon gains a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against slavers and slave owners. Likewise, she gains a +%1 bonus on weapon attack and damage rolls against them. This is treated as a favored enemy bonus. If the Steel Falcon has a favored enemy bonus from another class and her target is a slaver as well as a favored enemy of another type, the bonuses do not stack, and she simply uses whichever bonus is higher.|EnemyOfSlavers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnemyOfSlavers|2*(1+(SteelFalconLVL>=5)+(SteelFalconLVL>=9))"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 479,
+    "record_key": "Steel Falcon ~ Enemy of Slavers"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

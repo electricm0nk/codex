@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gulch Gunner ~ Deeds",
+    "name": "Deeds",
+    "class": "Gulch Gunner",
+    "description": "A gulch gunner has some unique deeds, which replace some of the standard gunslinger deeds as listed in each entry. These deeds follow all the general rules and restrictions of gunslinger deeds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gulch Gunner ~ Deeds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A gulch gunner has some unique deeds, which replace some of the standard gunslinger deeds as listed in each entry. These deeds follow all the general rules and restrictions of gunslinger deeds."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.152"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 703,
+    "record_key": "Gulch Gunner ~ Deeds"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

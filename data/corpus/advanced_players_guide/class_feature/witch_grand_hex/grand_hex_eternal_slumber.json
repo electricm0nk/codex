@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Grand Hex ~ Eternal Slumber",
+    "name": "Grand Hex - Eternal Slumber",
+    "class": "Witch Grand Hex",
+    "description": "DC %1 |WitchHexDC_EternalSlumber",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Grand Hex ~ Eternal Slumber"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.GrandHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchGrandHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,18]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_EternalSlumber|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_EternalSlumber"
+      },
+      {
+        "key": "DESC",
+        "value": "If the creature fails a Will save, it falls asleep and cannot be woken. The effect can only be removed with a wish or similar magic, although slaying the witch ends the effect. The witch can use this ability to poison food or drink, causing those who ingest it to make a save or fall into an eternal slumber."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Eternal Slumber"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_EternalSlumber|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_EternalSlumber|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Eternal Slumber)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 910,
+    "record_key": "Witch Grand Hex ~ Eternal Slumber"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

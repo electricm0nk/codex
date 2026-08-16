@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mantis Zealot ~ Aspect of the Mantis",
+    "name": "Aspect of the Mantis",
+    "class": "Mantis Zealot",
+    "description": "When using aspect of war, instead of moving at full speed regardless of his armor or encumbrance, a mantis zealot deals %1 points of bleed damage on each attack.|DEX",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mantis Zealot ~ Aspect of the Mantis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Features.MantisZealotClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "DESC",
+        "value": "When using aspect of war, instead of moving at full speed regardless of his armor or encumbrance, a mantis zealot deals %1 points of bleed damage on each attack.|DEX"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1124,
+    "record_key": "Mantis Zealot ~ Aspect of the Mantis"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

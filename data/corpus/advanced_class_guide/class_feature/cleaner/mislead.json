@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cleaner ~ Mislead",
+    "name": "Mislead",
+    "class": "Cleaner",
+    "description": "A cleaner can cast misdirection on himself at will. This lasts until the cleaner uses the ability again or ends the effect as a standard action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleaner ~ Mislead"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cleaner Class Feature.Slayer Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=SlayerLVL|Misdirection"
+      },
+      {
+        "key": "DESC",
+        "value": "A cleaner can cast misdirection on himself at will. This lasts until the cleaner uses the ability again or ends the effect as a standard action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3742,
+    "record_key": "Cleaner ~ Mislead"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

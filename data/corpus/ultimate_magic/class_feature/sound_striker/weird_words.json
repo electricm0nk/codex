@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sound Striker ~ Weird Words",
+    "name": "Weird Words",
+    "class": "Sound Striker",
+    "description": "You can start a performance as a standard action, lashing out with %1 potent sounds, each sound affecting one target within 30 feet. These are ranged touch attacks. Each weird word deals 1d8+%2 points of damage (Fortitude DC %3 half), and the bard chooses whether it deals bludgeoning, piercing, or slashing damage for each word.|WeirdWordsAMount|WeirdWordsBonusDamage|WeirdWordsDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sound Striker ~ Weird Words"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialAttack.Supernatural.BardicPerformance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeirdWordsAmount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeirdWordsBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeirdWordsDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can start a performance as a standard action, lashing out with %1 potent sounds, each sound affecting one target within 30 feet. These are ranged touch attacks. Each weird word deals 1d8+%2 points of damage (Fortitude DC %3 half), and the bard chooses whether it deals bludgeoning, piercing, or slashing damage for each word.|WeirdWordsAMount|WeirdWordsBonusDamage|WeirdWordsDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Weird Words"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeirdWordsAmount|min(10,classlevel(\"Bard\"))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeirdWordsBonusDamage|CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeirdWordsDC|10+CHA+classlevel(\"Bard\")/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeirdWordsDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Weird Words)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 996,
+    "record_key": "Sound Striker ~ Weird Words"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

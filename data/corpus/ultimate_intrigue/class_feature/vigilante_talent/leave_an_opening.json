@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Leave an Opening",
+    "name": "Leave an Opening*",
+    "class": "Vigilante Talent",
+    "description": "The vigilante's hidden strike leaves an unbalancing opening in a foe's defenses, setting up the foe to be attacked again. At the beginning of the foe's next turn, if the vigilante threatens the foe, the foe provokes an attack of opportunity from the vigilante. Multiple attacks against the same foe don't create multiple attacks of opportunity in the same round (but attacks against several foes can cause each to provoke one attack of opportunity).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Leave an Opening"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Leave an Opening"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsStalker,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante's hidden strike leaves an unbalancing opening in a foe's defenses, setting up the foe to be attacked again. At the beginning of the foe's next turn, if the vigilante threatens the foe, the foe provokes an attack of opportunity from the vigilante. Multiple attacks against the same foe don't create multiple attacks of opportunity in the same round (but attacks against several foes can cause each to provoke one attack of opportunity)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 88,
+    "record_key": "Vigilante Talent ~ Leave an Opening"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

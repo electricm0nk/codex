@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mooncursed Form (Huge)",
+    "name": "Mooncursed Form (Huge)",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR|6"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|DEX|-4"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|AC_Natural_Armor|6"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|Raging|1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|MooncursedRageHuge|1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SIZEMOD|NUMBER|3|PRESIZEGTEQ:S"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SIZEMOD|NUMBER|2|PRESIZEGTEQ:M"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SIZEMOD|NUMBER|1|PRESIZEGTEQ:L"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 61,
+    "record_key": "Mooncursed Form (Huge)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

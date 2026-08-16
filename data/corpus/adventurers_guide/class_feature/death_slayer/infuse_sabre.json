@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Death Slayer ~ Infuse Sabre",
+    "name": "Infuse Sabre",
+    "class": "Death Slayer",
+    "description": "Once|PREVARLT:DeathSlayerLVL,7",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Death Slayer ~ Infuse Sabre"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Death Slayer Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "DESC",
+        "value": "Once|PREVARLT:DeathSlayerLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "Twice|PREVARGTEQ:DeathSlayerLVL,7|PREVARLT:DeathSlayerLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times|PREVARGTEQ:DeathSlayerLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "per day, a death slayer can infuse a wielded sawtooth sabre with positive energy as a swift action. This infusion of energy lasts for 3 rounds. When brandishing an infused sabre, a death slayer's channeled energy damage increases by half (+50%%), and undead take a -2 penalty on all saving throws against her channeled energy and against any spell she casts."
+      },
+      {
+        "key": "DESC",
+        "value": "She can have only one infused sabre at a time.|PREVARGTEQ:DeathSlayerLVL,7"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 132,
+    "record_key": "Death Slayer ~ Infuse Sabre"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

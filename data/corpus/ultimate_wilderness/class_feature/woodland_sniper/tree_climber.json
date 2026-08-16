@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Woodland Sniper ~ Tree Climber",
+    "name": "Tree Climber",
+    "class": "Woodland Sniper",
+    "description": "A woodland sniper adds half his level to Acrobatics and Climb checks to move between, through, or up trees. With a successful DC 15 Acrobatics check, he can make ranged attacks with bows while balancing on branches.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Woodland Sniper ~ Tree Climber"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Features.WoodlandSniperClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A woodland sniper adds half his level to Acrobatics and Climb checks to move between, through, or up trees. With a successful DC 15 Acrobatics check, he can make ranged attacks with bows while balancing on branches."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Acrobatics=Move between/through trees,Climb=Up trees|SlayerLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1168,
+    "record_key": "Woodland Sniper ~ Tree Climber"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

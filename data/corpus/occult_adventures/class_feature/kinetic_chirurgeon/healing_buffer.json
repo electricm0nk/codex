@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kinetic Chirurgeon ~ Healing Buffer",
+    "name": "Healing Buffer",
+    "class": "Kinetic Chirurgeon",
+    "description": "At 6th level, a kinetic chirurgeon's internal buffer has double the usual maximum size, and she can use it only when she would accept points of burn for the kinetic healer wild talent. This ability alters internal buffer.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kinetic Chirurgeon ~ Healing Buffer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kinetic Chirurgeon Class Feature.Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, a kinetic chirurgeon's internal buffer has double the usual maximum size, and she can use it only when she would accept points of burn for the kinetic healer wild talent. This ability alters internal buffer."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1381,
+    "record_key": "Kinetic Chirurgeon ~ Healing Buffer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

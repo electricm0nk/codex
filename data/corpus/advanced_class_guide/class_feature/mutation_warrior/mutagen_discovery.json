@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mutation Warrior ~ Mutagen Discovery",
+    "name": "Mutagen Discovery",
+    "class": "Mutation Warrior",
+    "description": "At 7th level and every 4 levels thereafter, the mutation warrior can choose one of the following alchemist discoveries to augment his abilities: feral mutagen, grand mutagen, greater mutagen, infuse mutagen, nauseating flesh, preserve organs, rag doll mutagen, spontaneous healing, tentacle, vestigial arm, wings. The mutagen warrior uses his fighter level as his effective alchemist level for the purpose of whether he qualifies for these discoveries.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutation Warrior ~ Mutagen Discovery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mutation Warrior Class Feature.Fighter Class Feature.SpecialQuality.Supernatural.FighterArmorTraining2.FighterArmorTraining3.FighterArmorTraining4.FighterArmorMastery"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutationWarriorDiscoveryLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level and every 4 levels thereafter, the mutation warrior can choose one of the following alchemist discoveries to augment his abilities: feral mutagen, grand mutagen, greater mutagen, infuse mutagen, nauseating flesh, preserve organs, rag doll mutagen, spontaneous healing, tentacle, vestigial arm, wings. The mutagen warrior uses his fighter level as his effective alchemist level for the purpose of whether he qualifies for these discoveries."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mutation Warrior Discovery|MutationWarriorDiscoveryLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutationWarriorDiscoveryLVL|floor((FighterLVL-3)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3068,
+    "record_key": "Mutation Warrior ~ Mutagen Discovery"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Divine Hunter ~ Otherworldly Companion",
+    "name": "Otherworldly Companion",
+    "class": "Divine Hunter",
+    "description": "A hunter's companion takes on otherworldly features. If the divine hunter is good (or worships a good deity), the animal companion gains the celestial template. If the hunter is evil (or worships an evil deity), the animal companion gains the fiendish template. If the hunter is neutral and worships a neutral deity, she must choose either the celestial or fiendish template; once this choice is made, it cannot be changed. The companion's CR is considered to be equal to its Hit Dice for the purpose of the celestial or fiendish template.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Hunter ~ Otherworldly Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.ArchetypeAbility.Supernatural.HunterHunterTactics"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivineHunterCelestialCompanion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivineHunterFiendishCompanion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HasAnimalDomain|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A hunter's companion takes on otherworldly features. If the divine hunter is good (or worships a good deity), the animal companion gains the celestial template. If the hunter is evil (or worships an evil deity), the animal companion gains the fiendish template. If the hunter is neutral and worships a neutral deity, she must choose either the celestial or fiendish template; once this choice is made, it cannot be changed. The companion's CR is considered to be equal to its Hit Dice for the purpose of the celestial or fiendish template."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Divine Hunter Companion Template|1|PREMULT:2,[PREDEITYALIGN:LN,TN,CN],[PREALIGN:LN,TN,CN]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivineHunterCelestialCompanion|1|PREMULT:1,[PREDEITYALIGN:LG,NG,CG],[PREALIGN:LG,NG,CG]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivineHunterFiendishCompanion|1|PREMULT:1,[PREDEITYALIGN:LE,NE,CE],[PREALIGN:LE,NE,CE]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasAnimalDomain|1|PREDOMAIN:1,Animal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3147,
+    "record_key": "Divine Hunter ~ Otherworldly Companion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

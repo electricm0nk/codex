@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Undead Bloodrager Bloodline ~ Incorporeal Bloodrager",
+    "name": "Incorporeal Bloodrager",
+    "class": "Undead Bloodrager Bloodline",
+    "description": "Once per day you can choose to become incorporeal. You only take half damage from corporeal sources as long as they are magic (you take no damage from non-magic weapons and objects). Your attacks deal normal damage due to your ghost strike bloodrage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead Bloodrager Bloodline ~ Incorporeal Bloodrager"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Undead Bloodrager Bloodline ~ Power LVL 16.Bloodrager Bloodline Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Undead"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Undead_BloodlineProgressionLVL,16"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Undead_BloodlinePower16LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day you can choose to become incorporeal. You only take half damage from corporeal sources as long as they are magic (you take no damage from non-magic weapons and objects). Your attacks deal normal damage due to your ghost strike bloodrage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|UndeadBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 881,
+    "record_key": "Undead Bloodrager Bloodline ~ Incorporeal Bloodrager"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

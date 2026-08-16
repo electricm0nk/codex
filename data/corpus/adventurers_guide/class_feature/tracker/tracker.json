@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tracker ~ HK",
+    "name": "Tracker",
+    "class": "Tracker",
+    "description": "You can summon a creature to aid you %1/day, either in battle or to track an enemy, as if using a summon monster spell, save that the summoned creature lingers for 1 hour before vanishing. You can summon either an eagle, a riding dog, a wolf, or a leopard.|HKDiscipline|PREVARLT:HellknightLvl,9",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tracker ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.HKAbility.HKOAny"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon a creature to aid you %1/day, either in battle or to track an enemy, as if using a summon monster spell, save that the summoned creature lingers for 1 hour before vanishing. You can summon either an eagle, a riding dog, a wolf, or a leopard.|HKDiscipline|PREVARLT:HellknightLvl,9"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon a creature to aid you %1/day, either in battle or to track an enemy, as if using a summon monster spell, save that the summoned creature lingers for 1 hour before vanishing. You can summon either a dire wolf, a hell hound, an eagle, a riding dog, a wolf, or a leopard.|HKDiscipline|PREVARGTEQ:HellknightLvl,9"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|HKDiscipline"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 215,
+    "record_key": "Tracker ~ HK"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus Arcana ~ Energy Reflection",
+    "name": "Energy Reflection",
+    "class": "Magus Arcana",
+    "description": "This functions like the reflection magus arcana, except it only works on spells that deal acid, cold, electricity, or fire damage. As long as the elemental knight spends at least 1 point from her arcane pool to activate this arcana, he may expend rounds of elemental assault as if they were arcane pool points. For example, the knight could spend 1 arcane pool point and 3 rounds of elemental assault to reflect a spell of 4th-level or lower.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Energy Reflection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.MagusArcana"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Elemental Knight ~ Elemental Arcana"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=12"
+      },
+      {
+        "key": "DESC",
+        "value": "This functions like the reflection magus arcana, except it only works on spells that deal acid, cold, electricity, or fire damage. As long as the elemental knight spends at least 1 point from her arcane pool to activate this arcana, he may expend rounds of elemental assault as if they were arcane pool points. For example, the knight could spend 1 arcane pool point and 3 rounds of elemental assault to reflect a spell of 4th-level or lower."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.203"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 966,
+    "record_key": "Magus Arcana ~ Energy Reflection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

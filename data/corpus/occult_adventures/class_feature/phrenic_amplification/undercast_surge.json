@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Phrenic Amplification ~ Undercast Surge",
+    "name": "Undercast Surge",
+    "class": "Phrenic Amplification",
+    "description": "When the psychic undercasts a spell (see page 144), she can spend points from her phrenic pool to increase the spell's effective level, essentially using up a lower-level spell slot to cast a higher-level version of the spell. This costs 2 points per spell level increased. She can't use this ability to cast a version higher than the version she knows. For instance, a psychic who knows mind thrust III but not mind thrust IV could cast mind thrust II and spend 2 points to treat it as mind thrust III, but couldn't spend 4 points to treat it as mind thrust IV. This amplification can be linked only to spells that can be undercast.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phrenic Amplification ~ Undercast Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When the psychic undercasts a spell (see page 144), she can spend points from her phrenic pool to increase the spell's effective level, essentially using up a lower-level spell slot to cast a higher-level version of the spell. This costs 2 points per spell level increased. She can't use this ability to cast a version higher than the version she knows. For instance, a psychic who knows mind thrust III but not mind thrust IV could cast mind thrust II and spend 2 points to treat it as mind thrust III, but couldn't spend 4 points to treat it as mind thrust IV. This amplification can be linked only to spells that can be undercast."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1175,
+    "record_key": "Phrenic Amplification ~ Undercast Surge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

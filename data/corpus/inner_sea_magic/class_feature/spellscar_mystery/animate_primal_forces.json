@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spellscar Mystery ~ Animate Primal Forces",
+    "name": "Animate Primal Forces",
+    "class": "Spellscar Mystery",
+    "description": "As a standard action, you can summon a single Small",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellscar Mystery ~ Animate Primal Forces"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Supernatural"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimatePrimalForcesDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimatePrimalForcesTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can summon a single Small"
+      },
+      {
+        "key": "DESC",
+        "value": "or Medium|PREVARGTEQ:OracleLVL,7|PREVARLT:OracleLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": ",Medium, or Large|PREVARGTEQ:OracleLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "air, earth, fire, or water elemental to serve you. It remains for %1 rounds. You can use this ability %2 times once per day. You must be at least 3rd level to select this revelation.|AnimatePrimalForcesDuration|AnimatePrimalForcesTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimatePrimalForcesDuration|CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimatePrimalForcesTimes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimatePrimalForcesTimes|1|PREVARGTEQ:OracleLVL,10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|AnimatePrimalForcesTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 97,
+    "record_key": "Spellscar Mystery ~ Animate Primal Forces"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

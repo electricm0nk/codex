@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Archmage Spirit",
+    "name": "Archmage Spirit",
+    "class": "Medium",
+    "description": "An archmage spirit is a font of knowledge and arcane power.&nl;",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Archmage Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.MediumSpirit"
+      },
+      {
+        "key": "DESC",
+        "value": "An archmage spirit is a font of knowledge and arcane power.&nl;"
+      },
+      {
+        "key": "DESC",
+        "value": "Favored Locations: Arcane redoubts, areas of unusual magic, libraries, schools.&nl; |PREVARLT:SpiritHideLocation,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Influence Penalty: Your body begins to respond as if you were a frail, aged scholar. You take a -%1 penalty on Strength checks, Strength-based skill checks, Constitution checks, attack rolls, and non-spell damage rolls.&nl; Taboos: Choose one: You eschew all faith in the divine, so you must not be the willing target of divine spells or abilities and you must attempt a Will saving throw against even harmless divine spells and abilities; you must not pass up the opportunity to learn something new and significant (a nontrivial piece of information with a Knowledge check of DC 20 or higher) when that opportunity is directly present; You must use your own magical solution to a challenge if you can, even if a mundane solution that would require fewer resources is available.|SpiritBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Archmage Spirit Bonus|!PREFACT:1,ABILITIES,Medium_CF_SpiritBonus=True"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Archmage Seance Boon|Medium ~ Archmage Arcana"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Archmage Surge|PREVARGTEQ:MediumLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Wild Arcana|PREVARGTEQ:MediumLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Legendary Archmage|PREVARGTEQ:MediumLVL,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 829,
+    "record_key": "Medium ~ Archmage Spirit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

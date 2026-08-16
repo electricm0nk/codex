@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk of the Empty Hand ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class": "Monk of the Empty Hand",
+    "description": "A monk of the empty hand adds the following feats to his list of bonus feats at 6th level: Improved Dirty Trick*, Improved Steal*, and Improvised Weapon Mastery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk of the Empty Hand ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeatLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A monk of the empty hand adds the following feats to his list of bonus feats at 6th level: Improved Dirty Trick*, Improved Steal*, and Improvised Weapon Mastery."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeatLVL|MonkLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2329,
+    "record_key": "Monk of the Empty Hand ~ Bonus Feat"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

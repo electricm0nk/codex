@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gun Scavenger ~ Arbitrary Aim",
+    "name": "Arbitrary Aim",
+    "class": "Gun Scavenger",
+    "description": "Starting at 2nd level, a gun scavenger's attacks with firearms are difficult to predict. When shooting a firearm at a creature that has a dodge or insight bonus to its Armor Class, the gun scavenger treats the combined bonus as if it were 1 lower. This value increases by 1 for every 4 levels beyond 2nd level (to a maximum of 5 at 20th level). This ability replaces nimble.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gun Scavenger ~ Arbitrary Aim"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Gunslinger Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 2nd level, a gun scavenger's attacks with firearms are difficult to predict. When shooting a firearm at a creature that has a dodge or insight bonus to its Armor Class, the gun scavenger treats the combined bonus as if it were 1 lower. This value increases by 1 for every 4 levels beyond 2nd level (to a maximum of 5 at 20th level). This ability replaces nimble."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 76,
+    "record_key": "Gun Scavenger ~ Arbitrary Aim"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

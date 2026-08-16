@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Favored Maneuver",
+    "name": "Favored Maneuver",
+    "class": "Vigilante Talent",
+    "description": "The vigilante selects one type of combat maneuver to be a favored maneuver. He gains the Improved feat corresponding to that combat maneuver (if one exists). He gains a +2 circumstance bonus on combat maneuver checks with that combat maneuver against a foe that is unaware of the vigilante's presence at the start of his combat maneuver. A vigilante can select this talent more than once. Each time, it applies to a different combat maneuver.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Favored Maneuver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante selects one type of combat maneuver to be a favored maneuver. He gains the Improved feat corresponding to that combat maneuver (if one exists). He gains a +2 circumstance bonus on combat maneuver checks with that combat maneuver against a foe that is unaware of the vigilante's presence at the start of his combat maneuver. A vigilante can select this talent more than once. Each time, it applies to a different combat maneuver."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Favored Maneuver|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 82,
+    "record_key": "Vigilante Talent ~ Favored Maneuver"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

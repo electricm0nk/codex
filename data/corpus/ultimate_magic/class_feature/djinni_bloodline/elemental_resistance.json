@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Djinni Bloodline ~ Elemental Resistance",
+    "name": "Elemental Resistance",
+    "class": "Djinni Bloodline",
+    "description": "You gain electricity resistance %1.|Sorcerer_DjinniElementalResistance_ResistanceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Djinni Bloodline ~ Elemental Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Djinni Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Djinni"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Djinni_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Djinni_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DjinniElementalResistance_ResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain electricity resistance %1.|Sorcerer_DjinniElementalResistance_ResistanceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DjinniElementalResistance_ResistanceBonus|min(floor((Sorcerer_Djinni_BloodlinePower3LVL+3)/6),2)*10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|Sorcerer_DjinniElementalResistance_ResistanceBonus|TYPE=Resistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DjinniBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 594,
+    "record_key": "Djinni Bloodline ~ Elemental Resistance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

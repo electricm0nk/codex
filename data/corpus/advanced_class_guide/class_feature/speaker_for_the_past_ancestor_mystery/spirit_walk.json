@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Speaker for the Past Ancestor Mystery ~ Spirit Walk",
+    "name": "Spirit Walk",
+    "class": "Speaker for the Past Ancestor Mystery",
+    "description": "You can become incorporeal and invisible. While in this form, you can move in any direction and pass through solid objects (see page 301 of the Pathfinder RPG Bestiary). You can take no action other than to move while in this form. You remain in this form for %1 rounds, but you can end this effect prematurely as a standard action. You can use this ability %2/day.|SpiritWalkDuration|SpiritWalkTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Speaker for the Past Ancestor Mystery ~ Spirit Walk"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "speaker for the past revelation.SpecialQuality.Supernatural.AncestorRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shaman=11"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpiritWalkDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpiritWalkTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can become incorporeal and invisible. While in this form, you can move in any direction and pass through solid objects (see page 301 of the Pathfinder RPG Bestiary). You can take no action other than to move while in this form. You remain in this form for %1 rounds, but you can end this effect prematurely as a standard action. You can use this ability %2/day.|SpiritWalkDuration|SpiritWalkTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiritWalkTimes|1|PRECLASS:1,Shaman=15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3622,
+    "record_key": "Speaker for the Past Ancestor Mystery ~ Spirit Walk"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

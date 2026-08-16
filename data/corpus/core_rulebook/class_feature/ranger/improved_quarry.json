@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger ~ Improved Quarry",
+    "name": "Improved Quarry",
+    "class": "Ranger",
+    "description": "You can, as a free action, denote one target within your line of sight as your quarry. Whenever you are following the tracks of your quarry, you can take 20 on Survival skill checks while moving at normal speed, without penalty. In addition, you receive a +4 insight bonus on attack rolls made against your quarry and all critical threats are automatically confirmed. You can have no more than one quarry at a time and the creature's type must correspond to one of your favored enemy types. You can end this effect at any time as a free action, but you cannot select a new quarry for 24 hours. If your quarry is killed, you can select a new quarry after waiting 10 minutes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger ~ Improved Quarry"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialQuality.Extraordinary.AttackOption"
+      },
+      {
+        "key": "DESC",
+        "value": "You can, as a free action, denote one target within your line of sight as your quarry. Whenever you are following the tracks of your quarry, you can take 20 on Survival skill checks while moving at normal speed, without penalty. In addition, you receive a +4 insight bonus on attack rolls made against your quarry and all critical threats are automatically confirmed. You can have no more than one quarry at a time and the creature's type must correspond to one of your favored enemy types. You can end this effect at any time as a free action, but you cannot select a new quarry for 24 hours. If your quarry is killed, you can select a new quarry after waiting 10 minutes."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1426,
+    "record_key": "Ranger ~ Improved Quarry"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

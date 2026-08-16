@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tempest Druid ~ Eyes of the Storm",
+    "name": "Eyes of the Storm",
+    "class": "Tempest Druid",
+    "description": "A tempest druid can see through %1 feet of magical fog, mist, rain, wind, or similar inclement weather conditions, ignoring any concealment such conditions might grant.|TempestDruidStormSight",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tempest Druid ~ Eyes of the Storm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.TempestDruidClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempestDruidStormSight|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.183"
+      },
+      {
+        "key": "DESC",
+        "value": "A tempest druid can see through %1 feet of magical fog, mist, rain, wind, or similar inclement weather conditions, ignoring any concealment such conditions might grant.|TempestDruidStormSight"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TempestDruidStormSight|5+(5*(DruidLVL/4))"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 814,
+    "record_key": "Tempest Druid ~ Eyes of the Storm"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

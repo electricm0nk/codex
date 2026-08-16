@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Two-Weapon Defense",
+    "name": "Two-Weapon Defense",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are skilled at defending yourself while fighting with two weapons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Two-Weapon Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.ModifyAC"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Two-Weapon Fighting"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,15],[PREVARGTEQ:FeatDexRequirement,15]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TwoWeaponShield|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are skilled at defending yourself while fighting with two weapons."
+      },
+      {
+        "key": "DESC",
+        "value": " When wielding a double weapon or two weapons (not including natural weapons or unarmed strikes), you gain a +1 shield bonus to your AC. When you are fighting defensively or using the total defense action, this shield bonus increases to +2."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Two-Weapon Defense"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4298,
+    "record_key": "Warpriest Bonus Feat ~ Two-Weapon Defense"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Politics Domain ~ Heart's Desire",
+    "name": "Heart's Desire",
+    "class": "Politics Domain",
+    "description": "You receive divine guidance on the goals of your political allies and rivals. Once per day, you can use commune as a spell-like ability using your inquisitor level as your caster level, but only to ask questions about others' goals.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Politics Domain ~ Heart's Desire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "You receive divine guidance on the goals of your political allies and rivals. Once per day, you can use commune as a spell-like ability using your inquisitor level as your caster level, but only to ask questions about others' goals."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 90,
+    "record_key": "Politics Domain ~ Heart's Desire"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

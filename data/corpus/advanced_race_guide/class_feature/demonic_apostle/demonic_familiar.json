@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Demonic Apostle ~ Demonic Familiar",
+    "name": "Demonic Familiar",
+    "class": "Demonic Apostle",
+    "description": "The demonic apostle gains a familiar as a wizard equal to her cleric level, or if she already has a familiar, her cleric levels stack to determine the familiar's abilities. At 3rd level, her familiar gains the fiendish template (Bestiary 294). At 7th level, the demonic apostle exchanges her familiar for a quasit without the need to take the Improved Familiar feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Demonic Apostle ~ Demonic Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The demonic apostle gains a familiar as a wizard equal to her cleric level, or if she already has a familiar, her cleric levels stack to determine the familiar's abilities. At 3rd level, her familiar gains the fiendish template (Bestiary 294). At 7th level, the demonic apostle exchanges her familiar for a quasit without the need to take the Improved Familiar feat."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|ClericLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Standard Familiar List|PREVARLT:FamiliarLVL,7"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Familiar|Demon (Quasit)|PREVARGTEQ:FamiliarLVL,7"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 511,
+    "record_key": "Demonic Apostle ~ Demonic Familiar"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

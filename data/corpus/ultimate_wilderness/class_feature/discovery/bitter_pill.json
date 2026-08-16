@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Bitter Pill",
+    "name": "Bitter Pill",
+    "class": "Discovery",
+    "description": "The alchemist becomes bitter in flavor. Any creature that hits the bitter alchemist with a bite attack gains the sickened condition for 1 round unless it succeeds at a Fortitude save (DC %1). Any creature that swallows the alchemist whole gains the nauseated condition for 1 round unless it succeeds at a Fortitude save (same DC as above). If the alchemist is trapped in the creature's gullet and it becomes nauseated, the creature vomits him back out immediately as a free action at the start of the creature's turn; the alchemist lands prone adjacent to the creature.|10+AlchemistDiscoveryLVL/2+CON",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Bitter Pill"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.AlchemistDiscovery.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The alchemist becomes bitter in flavor. Any creature that hits the bitter alchemist with a bite attack gains the sickened condition for 1 round unless it succeeds at a Fortitude save (DC %1). Any creature that swallows the alchemist whole gains the nauseated condition for 1 round unless it succeeds at a Fortitude save (same DC as above). If the alchemist is trapped in the creature's gullet and it becomes nauseated, the creature vomits him back out immediately as a free action at the start of the creature's turn; the alchemist lands prone adjacent to the creature.|10+AlchemistDiscoveryLVL/2+CON"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 109,
+    "record_key": "Discovery ~ Bitter Pill"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch ~ Channel Positive Energy",
+    "name": "Channel Positive Energy",
+    "class": "Witch",
+    "description": "You can unleash a wave of positive energy. You must choose to deal %1d%2 points of positive energy damage to undead creatures or to heal living creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|WitchChannelPositiveEnergyDice|WitchChannelPositiveEnergyDieSize|WitchChannelPositiveEnergyDC|WitchChannelEnergyTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch ~ Channel Positive Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.Supernatural.SpecialAttack.WitchChannelEnergySelection.ChannelEnergy.Channel Energy.Channel Energy Positive.Channel Positive Energy"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LG,NG,CG,LN,TN,CN"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchChannelPositiveEnergyDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchChannelPositiveEnergyDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchChannelPositiveEnergyDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchChannelPositiveEnergyLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of positive energy. You must choose to deal %1d%2 points of positive energy damage to undead creatures or to heal living creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|WitchChannelPositiveEnergyDice|WitchChannelPositiveEnergyDieSize|WitchChannelPositiveEnergyDC|WitchChannelEnergyTimes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Positive Energy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchChannelPositiveEnergyDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchChannelPositiveEnergyDice|(WitchChannelPositiveEnergyLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchChannelPositiveEnergyDC|10+(WitchChannelPositiveEnergyLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchChannelPositiveEnergyLVL|WitchChannelEnergyLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2, DC %3, %4/day)|WitchChannelPositiveEnergyDice|WitchChannelPositiveEnergyDieSize|WitchChannelPositiveEnergyDC|WitchChannelEnergyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|WitchChannelEnergyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4022,
+    "record_key": "Witch ~ Channel Positive Energy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

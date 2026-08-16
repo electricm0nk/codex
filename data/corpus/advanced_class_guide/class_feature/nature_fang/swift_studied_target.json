@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nature Fang ~ Swift Studied Target",
+    "name": "Swift Studied Target",
+    "class": "Nature Fang",
+    "description": "A nature fang can study an opponent as a move or swift action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Fang ~ Swift Studied Target"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Nature Fang Class Feature.Druid Class Feature.SpecialQuality.DruidVenomImmunity"
+      },
+      {
+        "key": "DESC",
+        "value": "A nature fang can study an opponent as a move or swift action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3033,
+    "record_key": "Nature Fang ~ Swift Studied Target"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

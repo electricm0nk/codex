@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Augmented Form ~ Venomous Bite",
+    "name": "Venomous Bite",
+    "class": "Augmented Form",
+    "description": "The naga form's bite attack becomes poisonous. Bite-injury; save Fortitude DC %1; frequency 1/ round for 6 rounds; effect 1 Constitution damage, cure 1 save.|10+DruidLVL/2+CON",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Augmented Form ~ Venomous Bite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary.AugmentedFormSelection"
+      },
+      {
+        "key": "DESC",
+        "value": "The naga form's bite attack becomes poisonous. Bite-injury; save Fortitude DC %1; frequency 1/ round for 6 rounds; effect 1 Constitution damage, cure 1 save.|10+DruidLVL/2+CON"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.197"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 933,
+    "record_key": "Augmented Form ~ Venomous Bite"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

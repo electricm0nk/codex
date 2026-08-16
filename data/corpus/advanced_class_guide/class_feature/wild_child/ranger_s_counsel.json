@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Child ~ Ranger's Counsel",
+    "name": "Ranger's Counsel",
+    "class": "Wild Child",
+    "description": "As a swift action, the wild child can grant all allies within 30 feet that are within line of sight and can hear him a +2 bonus on skill checks with a single skill of his choice. The wild child must have at least one rank in the chosen skill. This bonus lasts for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Child ~ Ranger's Counsel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Wild Child Class Feature.SpecialQuality.Extraordinary.WildChildTrickChoice"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, the wild child can grant all allies within 30 feet that are within line of sight and can hear him a +2 bonus on skill checks with a single skill of his choice. The wild child must have at least one rank in the chosen skill. This bonus lasts for 1 round."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2948,
+    "record_key": "Wild Child ~ Ranger's Counsel"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

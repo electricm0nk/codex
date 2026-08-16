@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Terrain Mastery ~ Plane (Fire)",
+    "name": "Terrain Mastery (Plane of Fire)",
+    "class": "Terrain Mastery",
+    "description": "The horizon walker gains fire resistance 10.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terrain Mastery ~ Plane (Fire)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.TerrainMastery"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Favored Terrain ~ Plane (Fire)"
+      },
+      {
+        "key": "DESC",
+        "value": "The horizon walker gains fire resistance 10."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance To Fire"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|10|TYPE=Resistance|!PREABILITY:1,CATEGORY=Special Ability,Terrain Dominance ~ Plane (Fire)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1328,
+    "record_key": "Terrain Mastery ~ Plane (Fire)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

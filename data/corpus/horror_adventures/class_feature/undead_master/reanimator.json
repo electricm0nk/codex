@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Undead Master ~ Reanimator",
+    "name": "Reanimator",
+    "class": "Undead Master",
+    "description": "An undead master adds the following spells to his spellbook at the given wizard levels: 1st-repair undead; 3rd-lesser animate dead; 5th-animate dead; 7th-undead anatomy I; 9th-create undead; 11th-undeath to death; 13th-create greater undead; 15th-undead anatomy IV; 17th-cursed earth. He can spontaneously cast any of these spells by sacrificing a prepared spell of the same level or higher. The undead master can cast lesser animate dead, animate dead, create undead, and create greater undead as if they were 1 level lower than their normal wizard spell level; this does not alter their level for the purpose of item crafting and the like.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead Master ~ Reanimator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wizard Class Feature.UndeadMasterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "DESC",
+        "value": "An undead master adds the following spells to his spellbook at the given wizard levels: 1st-repair undead; 3rd-lesser animate dead; 5th-animate dead; 7th-undead anatomy I; 9th-create undead; 11th-undeath to death; 13th-create greater undead; 15th-undead anatomy IV; 17th-cursed earth. He can spontaneously cast any of these spells by sacrificing a prepared spell of the same level or higher. The undead master can cast lesser animate dead, animate dead, create undead, and create greater undead as if they were 1 level lower than their normal wizard spell level; this does not alter their level for the purpose of item crafting and the like."
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Wizard=1|Repair Undead"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Wizard=2|Animate Dead (Lesser)|PRECLASS:1,Wizard=3"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Wizard=3|Animate Dead|PRECLASS:1,Wizard=5"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Wizard=4|Undead Anatomy I|PRECLASS:1,Wizard=7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Wizard=5|Create Undead|PRECLASS:1,Wizard=9"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Wizard=6|Undeath to Death|PRECLASS:1,Wizard=11"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Wizard=7|Create Greater Undead|PRECLASS:1,Wizard=13"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Wizard=8|Undead Anatomy IV|PRECLASS:1,Wizard=15"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Wizard=9|Cursed Earth|PRECLASS:1,Wizard=17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 323,
+    "record_key": "Undead Master ~ Reanimator"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

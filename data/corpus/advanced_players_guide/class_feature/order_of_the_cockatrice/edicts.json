@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Cockatrice ~ Edicts",
+    "name": "Edicts",
+    "class": "Order of the Cockatrice",
+    "description": "The cavalier must keep his own interests and aims above those of all others. He must always accept payment when it is due, rewards when earned, and an even (or greater) share of loot. The cavalier must take every opportunity to increase his own stature, prestige, and power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Cockatrice ~ Edicts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The cavalier must keep his own interests and aims above those of all others. He must always accept payment when it is due, rewards when earned, and an even (or greater) share of loot. The cavalier must take every opportunity to increase his own stature, prestige, and power."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 237,
+    "record_key": "Order of the Cockatrice ~ Edicts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

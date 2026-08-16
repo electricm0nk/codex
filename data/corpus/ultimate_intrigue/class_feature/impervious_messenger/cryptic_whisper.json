@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Impervious Messenger ~ Cryptic Whisper",
+    "name": "Cryptic Whisper",
+    "class": "Impervious Messenger",
+    "description": "The impervious messenger internalizes his understanding of language and ciphers, and filters them through his bardic abilities. He adds half his bard level to all Linguistics checks and Bluff checks to deliver secret messages, and he gains a +4 bonus on saving throws against glyph spells, symbol spells, and language-dependent effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Impervious Messenger ~ Cryptic Whisper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.ImperviousMessengerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The impervious messenger internalizes his understanding of language and ciphers, and filters them through his bardic abilities. He adds half his bard level to all Linguistics checks and Bluff checks to deliver secret messages, and he gains a +4 bonus on saving throws against glyph spells, symbol spells, and language-dependent effects."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Bluff=Pass Hidden Message|BardLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Linguistics|BardLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 on saves vs. glyphs, symbols, and language-dependent effects."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 227,
+    "record_key": "Impervious Messenger ~ Cryptic Whisper"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

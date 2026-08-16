@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bone Mystery ~ Resist Life",
+    "name": "Resist Life",
+    "class": "Bone Mystery",
+    "description": "You are treated as an undead creature when you are targeted by positive or negative energy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bone Mystery ~ Resist Life"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.BoneRevelation.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You are treated as an undead creature when you are targeted by positive or negative energy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 583,
+    "record_key": "Bone Mystery ~ Resist Life"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

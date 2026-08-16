@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bellflower Harvester ~ Tend the Garden",
+    "name": "Tend the Garden",
+    "class": "Bellflower Harvester",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bellflower Harvester ~ Tend the Garden"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.BellflowerHarvesterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "DESC",
+        "value": "A Bellflower harvester gains the ability to coordinate the members of his Bellflower crop to improve their performance in battle. He gains Stealth Synergy as a bonus feat. As a standard action, a Bellflower harvester can grant any one teamwork feat he has to all members of his Bellflower crop who can see and hear him. Members of his Bellflower crop retain this feat for %1 rounds. A Bellflower harvester can share only one teamwork feat at a time in this manner.|1+(VigilanteLVL-2)/5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Stealth Synergy"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1106,
+    "record_key": "Bellflower Harvester ~ Tend the Garden"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

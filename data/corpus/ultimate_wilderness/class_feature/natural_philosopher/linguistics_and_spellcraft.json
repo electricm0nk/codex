@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Natural Philosopher ~ Linguistics and Spellcraft",
+    "name": "Linguistics and Spellcraft",
+    "class": "Natural Philosopher",
+    "description": "A natural philosopher can use inspiration on Linguistics and Spellcraft checks without expending a use of inspiration, provided he is trained in the skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Natural Philosopher ~ Linguistics and Spellcraft"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.InvestigatorTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Natural Philosopher ~ Inspiration"
+      },
+      {
+        "key": "DESC",
+        "value": "A natural philosopher can use inspiration on Linguistics and Spellcraft checks without expending a use of inspiration, provided he is trained in the skill."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 751,
+    "record_key": "Natural Philosopher ~ Linguistics and Spellcraft"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spellbreaker ~ Defense Against Magic",
+    "name": "Defense against Magic",
+    "class": "Spellbreaker",
+    "description": "At 3rd level, a spellbreaker picks a single wizard school. She gains a +1 bonus on saving throws against arcane spells of that school. Every four levels beyond 3rd, the spellbreaker picks a new school and gains this bonus against arcane spells of that school (to a maximum of five schools of magic at 19th level). Furthermore, each time the spellbreaker picks a new school, the bonuses for the schools she has already chosen increase by 1. This ability replaces all bonus teamwork feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellbreaker ~ Defense Against Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a spellbreaker picks a single wizard school. She gains a +1 bonus on saving throws against arcane spells of that school. Every four levels beyond 3rd, the spellbreaker picks a new school and gains this bonus against arcane spells of that school (to a maximum of five schools of magic at 19th level). Furthermore, each time the spellbreaker picks a new school, the bonuses for the schools she has already chosen increase by 1. This ability replaces all bonus teamwork feats."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|SPELLBREAKER Arcane Defense|(InquisitorLvl+1)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 884,
+    "record_key": "Spellbreaker ~ Defense Against Magic"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

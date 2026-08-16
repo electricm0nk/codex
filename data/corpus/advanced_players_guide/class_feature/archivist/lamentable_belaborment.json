@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Archivist ~ Lamentable Belaborment",
+    "name": "Lamentable Belaborment",
+    "class": "Archivist",
+    "description": "At 6th level, an archivist can bewilder a creature already fascinated by his performance. Using this ability does not disrupt the fascinate effect, but it does require a standard action to activate (in addition to the free action to continue the fascinate effect). The target must make a Will save DC %1 (DC 10 + 1/2 the bard's level + the bard's Cha modifier). Success renders the target immune to this power for 24 hours, but failure leaves the target either dazed or confused (archivist's choice) for as long as the performance continues. If the target takes damage, this effect ends immediately. This mind-affecting ability relies on audible components. This ability replaces suggestion.|10+(BardLVL/2)+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Archivist ~ Lamentable Belaborment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardInspireGreatness"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, an archivist can bewilder a creature already fascinated by his performance. Using this ability does not disrupt the fascinate effect, but it does require a standard action to activate (in addition to the free action to continue the fascinate effect). The target must make a Will save DC %1 (DC 10 + 1/2 the bard's level + the bard's Cha modifier). Success renders the target immune to this power for 24 hours, but failure leaves the target either dazed or confused (archivist's choice) for as long as the performance continues. If the target takes damage, this effect ends immediately. This mind-affecting ability relies on audible components. This ability replaces suggestion.|10+(BardLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1643,
+    "record_key": "Archivist ~ Lamentable Belaborment"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

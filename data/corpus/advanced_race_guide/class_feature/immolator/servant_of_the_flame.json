@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Immolator ~ Servant of the Flame",
+    "name": "Servant of the Flame",
+    "class": "Immolator",
+    "description": "An immolator must worship a deity whose portfolio includes the Fire domain. An immolator who selects the Fire domain (or one of its associated subdomains, if available) uses her domain powers at +1 caster level (this stacks with the ifrit's fire affinity racial trait).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Immolator ~ Servant of the Flame"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "PREDOMAIN",
+        "value": "1,Fire"
+      },
+      {
+        "key": "DESC",
+        "value": "An immolator must worship a deity whose portfolio includes the Fire domain. An immolator who selects the Fire domain (or one of its associated subdomains, if available) uses her domain powers at +1 caster level (this stacks with the ifrit's fire affinity racial trait)."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainFireLVL|1|PREVARGTEQ:DomainFireLVL,0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 602,
+    "record_key": "Immolator ~ Servant of the Flame"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

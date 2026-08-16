@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Outer Rifts Mystery ~ Planar Infusion",
+    "name": "Planar Infusion",
+    "class": "Outer Rifts Mystery",
+    "description": "As a standard action once per day, you can cause a 20-foot-spread to gain either the",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Outer Rifts Mystery ~ Planar Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "CG,CN,LE,NE,CE"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PlanarInfusionTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action once per day, you can cause a 20-foot-spread to gain either the"
+      },
+      {
+        "key": "DESC",
+        "value": "mildly chaotic-aligned or mildly|PREVARLT:OracleLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "strongly chaotic-aligned or strongly|PREVARGTEQ:OracleLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "evil-aligned planar trait for %1 rounds. Lawful creatures in a chaotic-aligned area take a|PlanarInfusionTimes"
+      },
+      {
+        "key": "DESC",
+        "value": "-2 circumstance penalty on all Charisma-based checks,|PREVARLT:OracleLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "-4 circumstance penalty on all Charisma-based checks and a -2 circumstance penalty on all Intelligence- and Wisdom-based checks,|PREVARGTEQ:OracleLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "as do good creatures in an evil-aligned area. You can only infuse an area with an alignment that matches a component of your own alignment."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlanarInfusionTimes|OracleLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 115,
+    "record_key": "Outer Rifts Mystery ~ Planar Infusion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

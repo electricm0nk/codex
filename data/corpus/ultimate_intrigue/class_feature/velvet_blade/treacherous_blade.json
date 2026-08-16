@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Velvet Blade ~ Treacherous Blade",
+    "name": "Treacherous Blade",
+    "class": "Velvet Blade",
+    "description": "A velvet blade can capitalize on how others underestimate her and allow her close to them, assuming she is harmless. She gains the Betrayer feat as a bonus feat, whether or not she meets the prerequisites. Additionally, when making her first attack against a studied target that believes her to be harmless or to be an ally, the attack counts as a sneak attack, even if the target isn't flanked or denied its Dexterity bonus to AC, and the velvet blade gains +%1d6 sneak attack damage. Even if she immediately attacks the target again (such as by continuing a full attack), only the first attack gains these benefits, since the target immediately realizes the velvet blade is something more than she seemed.|1+SlayerLVL/5",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Velvet Blade ~ Treacherous Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Features.VelvetBladeClassFeatures.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A velvet blade can capitalize on how others underestimate her and allow her close to them, assuming she is harmless. She gains the Betrayer feat as a bonus feat, whether or not she meets the prerequisites. Additionally, when making her first attack against a studied target that believes her to be harmless or to be an ally, the attack counts as a sneak attack, even if the target isn't flanked or denied its Dexterity bonus to AC, and the velvet blade gains +%1d6 sneak attack damage. Even if she immediately attacks the target again (such as by continuing a full attack), only the first attack gains these benefits, since the target immediately realizes the velvet blade is something more than she seemed.|1+SlayerLVL/5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Betrayer"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 935,
+    "record_key": "Velvet Blade ~ Treacherous Blade"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pathfinder Delver ~ Guardbreaker",
+    "name": "Guardbreaker",
+    "class": "Pathfinder Delver",
+    "description": "Your familiarity with the strange guardians often left in tombs allows you to attack them more effectively. You may treat your trap sense bonus as if it were a favored enemy bonus against constructs, oozes, and undead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Delver ~ Guardbreaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder Delver Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "DESC",
+        "value": "Your familiarity with the strange guardians often left in tombs allows you to attack them more effectively. You may treat your trap sense bonus as if it were a favored enemy bonus against constructs, oozes, and undead."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|PaDFE Construct|!PREABILITY:1,CATEGORY=Special Ability,Favored Enemy (Construct)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|PaDFE Ooze|!PREABILITY:1,CATEGORY=Special Ability,Favored Enemy (Ooze)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|PaDFE Undead|!PREABILITY:1,CATEGORY=Special Ability,Favored Enemy (Undead)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredConstruct,FavoredOoze,FavoredUndead|TrapSenseBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 382,
+    "record_key": "Pathfinder Delver ~ Guardbreaker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

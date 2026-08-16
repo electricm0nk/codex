@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Intrigue Mystery ~ Forgotten Presence",
+    "name": "Forgotten Presence",
+    "class": "Intrigue Mystery",
+    "description": "Once|!PRECLASS:1,Oracle=15",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intrigue Mystery ~ Forgotten Presence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.SpellLike.PerDayOracleRevelation.RevelationTargetOneOnly"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DESC",
+        "value": "Once|!PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "DESC",
+        "value": "Twice|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "DESC",
+        "value": " per day as an immediate action, you can cause a creature to forget that you were present for the last %1 minutes, including forgetting all actions you took during that time, unless it succeeds at a Will save (DC %2). Effects such as modify memory can restore the lost memories.|OracleLVL|10+OracleLVL/2+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 569,
+    "record_key": "Intrigue Mystery ~ Forgotten Presence"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

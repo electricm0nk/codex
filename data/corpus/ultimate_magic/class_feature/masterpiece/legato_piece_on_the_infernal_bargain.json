@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Masterpiece ~ Legato Piece on the Infernal Bargain",
+    "name": "Legato Piece on the Infernal Bargain",
+    "class": "Masterpiece",
+    "description": "Your skilled playing can conjure up supernatural servants.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterpiece ~ Legato Piece on the Infernal Bargain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Masterpiece"
+      },
+      {
+        "key": "DESC",
+        "value": "Your skilled playing can conjure up supernatural servants."
+      },
+      {
+        "key": "DESC",
+        "value": " This fast-paced tune harmonizes with the magical frequencies of another plane, allowing you to draw an extraplanar creature to you and bargain for its service. When you complete this performance, you call one or more outsiders as if using planar ally. Unlike with planar ally, the creature is not necessarily associated with your deity, and has an initial attitude of \"indifferent\" toward you. Because it is intrigued by your performance, it remains for up to 1 minute to hear the service you are requesting and the payment you are offering. If you succeed at an opposed Charisma check against the creature (with a +0 to +6 bonus on your roll based on the nature of the service and the offered reward), it agrees to perform the service. This ability otherwise works like planar ally. Though the best-known version of this masterpiece refers to an infernal bargain, it can be used to conjure any sort of extraplanar creature (such as an archon, elemental, or protean). Other versions and arrangements of this masterpiece may have different names but otherwise identical effects.  Use: 10 bardic performance rounds.  Action: 10 minutes."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 176,
+    "record_key": "Masterpiece ~ Legato Piece on the Infernal Bargain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

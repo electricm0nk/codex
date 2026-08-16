@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Possession ~ Pazuzu",
+    "name": "Possession",
+    "class": "Possession",
+    "description": "You can cast magic jar 1/day as a spell-like ability. You can use a holy symbol of Pazuzu or a statue of Pazuzu as your receptacle - if you do so, you can determine the exact creature type and position of all potential life force you're capable of possessing. This ability is the equivalent of a 7th-level spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Possession ~ Pazuzu"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Magic Jar,17+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast magic jar 1/day as a spell-like ability. You can use a holy symbol of Pazuzu or a statue of Pazuzu as your receptacle - if you do so, you can determine the exact creature type and position of all potential life force you're capable of possessing. This ability is the equivalent of a 7th-level spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 173,
+    "record_key": "Possession ~ Pazuzu"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

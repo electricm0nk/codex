@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cavern Sniper ~ Weapon Mastery",
+    "name": "Weapon Mastery",
+    "class": "Cavern Sniper",
+    "description": "Any attacks made by a bow or crossbow automatically confirm all critical threats and have their damage multiplier increased by 1. In addition, you cannot be disarmed while wielding a weapon of this type.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavern Sniper ~ Weapon Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Any attacks made by a bow or crossbow automatically confirm all critical threats and have their damage multiplier increased by 1. In addition, you cannot be disarmed while wielding a weapon of this type."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 501,
+    "record_key": "Cavern Sniper ~ Weapon Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Domain Power ~ Gentle Rest",
+    "name": "Gentle Rest",
+    "class": "Domain Power",
+    "description": "Your touch can fill a creature with lethargy, causing a living creature to become staggered for 1 round as a melee touch attack. If you touch a staggered living creatures, that creature falls asleep for 1 round instead. Undead creatures touched by you are staggered for %1 rounds. You can use this ability %2 times per day.|WIS|GentleRestTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Gentle Rest"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialAttack.SpellLike.DomainPower.Repose Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GentleRestTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your touch can fill a creature with lethargy, causing a living creature to become staggered for 1 round as a melee touch attack. If you touch a staggered living creatures, that creature falls asleep for 1 round instead. Undead creatures touched by you are staggered for %1 rounds. You can use this ability %2 times per day.|WIS|GentleRestTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GentleRestTimes|DomainReposeTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|GentleRestTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|GentleRestTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 735,
+    "record_key": "Domain Power ~ Gentle Rest"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

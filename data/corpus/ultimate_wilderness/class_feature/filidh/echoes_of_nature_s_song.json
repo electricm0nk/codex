@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Filidh ~ Echoes of Nature's Song",
+    "name": "Echoes of Nature's Song",
+    "class": "Filidh",
+    "description": "A filidh can use his bardic performance to imbue his allies with subconscious knowledge of their own futures, improving their reflexes and ability to avoid danger. An affected ally receives a +%1 insight bonus on Reflex saving throws and to AC. This performance is a mind-affecting ability and relies on audible components. |min(4,(BardLVL+1)/6)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Filidh ~ Echoes of Nature's Song"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.FilidhClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A filidh can use his bardic performance to imbue his allies with subconscious knowledge of their own futures, improving their reflexes and ability to avoid danger. An affected ally receives a +%1 insight bonus on Reflex saving throws and to AC. This performance is a mind-affecting ability and relies on audible components. |min(4,(BardLVL+1)/6)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 268,
+    "record_key": "Filidh ~ Echoes of Nature's Song"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

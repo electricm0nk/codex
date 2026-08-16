@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter Aspect ~ Wolverine ~ Minor",
+    "name": "Minor Aspect of the Wolverine",
+    "class": "Shifter Aspect",
+    "description": "You gain %1 additional hit points, and treat your Constitution score as %2 points higher than it is for the purpose of determining when you die at negative hit points.|TL|WolverineAspectConBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Wolverine ~ Minor"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Wolverine_2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WolverineAspectConBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain %1 additional hit points, and treat your Constitution score as %2 points higher than it is for the purpose of determining when you die at negative hit points.|TL|WolverineAspectConBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Diehard as a bonus feat.|PREVARGTEQ:ShifterWolverineAspectLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WolverineAspectConBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WolverineAspectConBonus|4|PREVARGTEQ:ShifterWolverineAspectLVL,15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 102,
+    "record_key": "Shifter Aspect ~ Wolverine ~ Minor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

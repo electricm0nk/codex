@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cabalist ~ Spellbook",
+    "name": "Spellbook",
+    "class": "Cabalist",
+    "description": "A cabalist has a spellbook that functions in the same way as a magus's spellbook but uses the 6th-level and lower spells from the witch spell list.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cabalist ~ Spellbook"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.CabalistClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A cabalist has a spellbook that functions in the same way as a magus's spellbook but uses the 6th-level and lower spells from the witch spell list."
+      },
+      {
+        "key": "ADD",
+        "value": "EQUIP|1|Spellbook"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 997,
+    "record_key": "Cabalist ~ Spellbook"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

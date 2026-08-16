@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunt Caller ~ Song of the Senses",
+    "name": "Song of the Senses",
+    "class": "Hunt Caller",
+    "description": "The hunt caller's raging song unlocks animalistic senses in her allies. By spending 1 round of raging song, the hunt caller can affect all allies within 60 feet for 1 hour. The allies gain low-light vision and a +2 competence bonus on Perception and Survival checks. If an ally already has low-light vision, the range doubles. The skald must continue to perform the song for the remainder of the hour; otherwise, its effects end, but only 1 round of raging song is expended for that hour.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunt Caller ~ Song of the Senses"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.HuntCallerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The hunt caller's raging song unlocks animalistic senses in her allies. By spending 1 round of raging song, the hunt caller can affect all allies within 60 feet for 1 hour. The allies gain low-light vision and a +2 competence bonus on Perception and Survival checks. If an ally already has low-light vision, the range doubles. The skald must continue to perform the song for the remainder of the hour; otherwise, its effects end, but only 1 round of raging song is expended for that hour."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1134,
+    "record_key": "Hunt Caller ~ Song of the Senses"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

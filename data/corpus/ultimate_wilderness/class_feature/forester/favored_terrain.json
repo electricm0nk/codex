@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forester ~ Favored Terrain",
+    "name": "Favored Terrain",
+    "class": "Forester",
+    "description": "A forester gains the ranger's favored terrain ability. She gains her first favored terrain at 5th level and a new favored terrain every 4 levels thereafter. In addition, at each such interval, the bonuses on initiative checks and skill checks in one favored terrain (including the one just selected, if so desired) increase by 2. Starting at 5th level, a forester adds half her favored terrain bonus on damage rolls while in her favored terrain and fighting a creature native to that terrain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forester ~ Favored Terrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.ForesterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ForesterFavoredTerrainLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A forester gains the ranger's favored terrain ability. She gains her first favored terrain at 5th level and a new favored terrain every 4 levels thereafter. In addition, at each such interval, the bonuses on initiative checks and skill checks in one favored terrain (including the one just selected, if so desired) increase by 2. Starting at 5th level, a forester adds half her favored terrain bonus on damage rolls while in her favored terrain and fighting a creature native to that terrain."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Common Favored Terrain"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Basic Favored Terrain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPool|(ForesterFavoredTerrainLVL-1)/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ForesterFavoredTerrainLVL|HunterLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 659,
+    "record_key": "Forester ~ Favored Terrain"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

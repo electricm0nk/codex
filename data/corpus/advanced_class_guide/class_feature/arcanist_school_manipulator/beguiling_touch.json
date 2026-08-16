@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcanist School Manipulator ~ Beguiling Touch",
+    "name": "Beguiling Touch",
+    "class": "Arcanist School Manipulator",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcanist School Manipulator ~ Beguiling Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistSchoolChoice"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Arcanist School ~ Manipulator"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistSchoolBoost_BeguilingTouch|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Manipulator School ~ Beguiling Touch|!PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistSchoolBoost_BeguilingTouch|-1|!PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Beguiling Touch (Arcanist Boost Only)|!PRECLASS:1,Wizard=1|PREVARGTEQ:ArcanistSchoolBoost_BeguilingTouch,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 288,
+    "record_key": "Arcanist School Manipulator ~ Beguiling Touch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

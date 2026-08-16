@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Chronicler's Insight ~ Nature",
+    "name": "Nature",
+    "class": "Investigator",
+    "description": "When performing a studied strike, the investigator's attack overcomes damage reduction as if it were a weapon with the cold iron property. He also gains a +1 insight bonus on saving throws against animals, fey, monstrous humanoids, plants, and vermin.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Chronicler's Insight ~ Nature"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ChroniclersInsight.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "DESC",
+        "value": "When performing a studied strike, the investigator's attack overcomes damage reduction as if it were a weapon with the cold iron property. He also gains a +1 insight bonus on saving throws against animals, fey, monstrous humanoids, plants, and vermin."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1159,
+    "record_key": "Investigator ~ Chronicler's Insight ~ Nature"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

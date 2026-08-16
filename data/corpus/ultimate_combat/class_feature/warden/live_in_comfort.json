@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warden ~ Live in ComfOrt",
+    "name": "Live in Comfort",
+    "class": "Warden",
+    "description": "At 2nd level, a warden is truly at home within his favored terrains. He knows all the signs of the wilderness. He rarely gets lost. He can easily live off the land in comfort, and can provide for companions. The warden can take 10 on any Survival check involving any of his favored terrains, even when in immediate danger and distracted. If the warden is not in immediate danger and distracted, he can take 20 even if the check has a penalty for failure. This ability replaces all combat style feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warden ~ Live in ComfOrt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a warden is truly at home within his favored terrains. He knows all the signs of the wilderness. He rarely gets lost. He can easily live off the land in comfort, and can provide for companions. The warden can take 10 on any Survival check involving any of his favored terrains, even when in immediate danger and distracted. If the warden is not in immediate danger and distracted, he can take 20 even if the check has a penalty for failure. This ability replaces all combat style feats."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1568,
+    "record_key": "Warden ~ Live in ComfOrt"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mammoth Rider ~ Steed",
+    "name": "Steed",
+    "class": "Mammoth Rider",
+    "description": "A mammoth rider can choose from among specific animal companions to serve as her loyal steed. A GM might expand this list to include other possible steeds. This steed functions as a druid's animal companion, replacing any animal companion or mount gained from another class. The mammoth rider's class levels stack with other classes that grant an animal companion to determine her effective druid level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mammoth Rider ~ Steed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mammoth Rider Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      },
+      {
+        "key": "DESC",
+        "value": "A mammoth rider can choose from among specific animal companions to serve as her loyal steed. A GM might expand this list to include other possible steeds. This steed functions as a druid's animal companion, replacing any animal companion or mount gained from another class. The mammoth rider's class levels stack with other classes that grant an animal companion to determine her effective druid level."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CompanionBondLVL|MammothRiderLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|MammothRiderLVL"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Megafauna (Arsinoitherium)),Companion (Herd Animal (Aurochs)),Companion (Baluchitherium),Companion (Camel),Companion (Cat (Big (Lion))),Companion (Cat (Big (Tiger))),Companion (Elk),Companion (Horse),Companion (Elephant (Mastodon)),Companion (Megafauna (Megaloceros)),Companion (Rhinoceros),Companion (Dinosaur (Triceratops)),Companion (Wolf),Companion (Amargasaurus),Companion (Brontotherium),Companion (Deinotherium),Companion (Elasmotherium),Companion (Kentrosaurus),Companion (Polar Bear (Dire)),Companion (Moa),Companion (Uintatherium),Companion (Dinosaur (Styracosaurus)),Companion (Baluchitherium),Companion (Saber-Toothed Cat)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 354,
+    "record_key": "Mammoth Rider ~ Steed"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

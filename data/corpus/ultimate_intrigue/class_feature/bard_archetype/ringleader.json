@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bard Archetype ~ Ringleader",
+    "name": "Ringleader",
+    "class": "Bard Archetype",
+    "description": "Ringleaders are adept in getting the most out of their allies, and they excel at planning for unexpected complications in advance. Often the masterminds behind elaborate heists and infiltrations, ringleaders use their organizational abilities to make sure the plan goes without a hitch, even when the team is split up and unable to communicate with each other on the spot.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Ringleader"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Ringleader],[!PREFACT:1,ABILITIES,Bard_Archetype_InspireCompetence=True,Bard_Archetype_DirgeOfDoom=True,Bard_Archetype_FrighteningTune=True,Bard_Archetype_VersatilePerformance=True,Bard_Archetype_WellVersed=True,Bard_Archetype_LoreMaster=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Ringleaders are adept in getting the most out of their allies, and they excel at planning for unexpected complications in advance. Often the masterminds behind elaborate heists and infiltrations, ringleaders use their organizational abilities to make sure the plan goes without a hitch, even when the team is split up and unable to communicate with each other on the spot."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ringleader ~ Inspired Plan|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ringleader ~ Hidden Plans|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ringleader ~ Inspire Competence|PRECLASS:1,Bard=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ringleader ~ Prepared|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCompetence|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_FrighteningTune|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_FrighteningTune|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_LoreMaster|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 222,
+    "record_key": "Bard Archetype ~ Ringleader"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

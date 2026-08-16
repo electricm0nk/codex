@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magician ~ Metamagic Mastery",
+    "name": "Metamagic Mastery",
+    "class": "Magician",
+    "description": "At 14th level, a magician can use performance to apply a metamagic feat to a spell he is about to cast without increasing the casting time. The bard must still expend a higher-level slot to cast this spell. This causes the performance to immediately end. This ability requires audible components. This performance replaces frightening tune.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magician ~ Metamagic Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardFrighteningTune"
+      },
+      {
+        "key": "DESC",
+        "value": "At 14th level, a magician can use performance to apply a metamagic feat to a spell he is about to cast without increasing the casting time. The bard must still expend a higher-level slot to cast this spell. This causes the performance to immediately end. This ability requires audible components. This performance replaces frightening tune."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1688,
+    "record_key": "Magician ~ Metamagic Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

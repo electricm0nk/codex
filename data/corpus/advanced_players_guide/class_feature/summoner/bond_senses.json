@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Summoner ~ Bond Senses",
+    "name": "Bond Senses",
+    "class": "Summoner",
+    "description": "As a standard action, share the senses of your eidolon, hearing, seeing, smelling, tasting, and touching everything your eidolon does. You can use this ability %1 rounds per day. There is no range to this effect, but your eidolon and you must be on the same plane. You can end this effect as a free action.|BondSensesRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner ~ Bond Senses"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.Supernatural.Bond Senses"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BondSensesRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, share the senses of your eidolon, hearing, seeing, smelling, tasting, and touching everything your eidolon does. You can use this ability %1 rounds per day. There is no range to this effect, but your eidolon and you must be on the same plane. You can end this effect as a free action.|BondSensesRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BondSensesRounds|classlevel(\"Summoner\")"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 798,
+    "record_key": "Summoner ~ Bond Senses"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

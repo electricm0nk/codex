@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Siege Gunner ~ Targeted Blast",
+    "name": "Targeted Blast",
+    "class": "Siege Gunner",
+    "description": "At 1st level, when using a firearm or siege engine that targets an area rather than a specific creature, the siege gunner can spend I grit point to focus the brunt of the blast on a single creature within the target area. The target creature takes I additional point of damage for each level the siege gunner possesses. This is precision damage and is not multiplied on a critical hit. At 5th level and for every 5 levels the siege gunner possesses beyond that, she can select an additional creature to target with this bonus damage. Targets must be selected before any attack rolls or saving throws are made. This ability replaces deadeye.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Siege Gunner ~ Targeted Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Gunslinger Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, when using a firearm or siege engine that targets an area rather than a specific creature, the siege gunner can spend I grit point to focus the brunt of the blast on a single creature within the target area. The target creature takes I additional point of damage for each level the siege gunner possesses. This is precision damage and is not multiplied on a critical hit. At 5th level and for every 5 levels the siege gunner possesses beyond that, she can select an additional creature to target with this bonus damage. Targets must be selected before any attack rolls or saving throws are made. This ability replaces deadeye."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 206,
+    "record_key": "Siege Gunner ~ Targeted Blast"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

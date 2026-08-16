@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Treetop Monk ~ Freedom of Movement",
+    "name": "Freedom of Movement",
+    "class": "Treetop Monk",
+    "description": "A treetop monk may expend 1 point from his ki pool as a swift action to gain the effects of freedom of movement for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Treetop Monk ~ Freedom of Movement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A treetop monk may expend 1 point from his ki pool as a swift action to gain the effects of freedom of movement for 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 986,
+    "record_key": "Treetop Monk ~ Freedom of Movement"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

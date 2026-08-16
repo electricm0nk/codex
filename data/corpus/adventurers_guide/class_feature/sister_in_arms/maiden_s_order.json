@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sister-in-Arms ~ Maiden's Order",
+    "name": "Maiden's Order",
+    "class": "Sister-in-Arms",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sister-in-Arms ~ Maiden's Order"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Feature.SisterInArmsClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OrderAbilityLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OrderChallengeBonus|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "DESC",
+        "value": "All sisters-in-arms share a talent for aiding and inspiring their fellow Gray Maidens, strengthened by training and the bond of sisterhood. Generally, those loyal to Queen Ileosa refer to their pledge as the order of the fanged crown, while those who have forsaken the cruel queen call it the order of the scarlet rose. In either case, the benefits are the same. A sister-in-arms does not choose an order. Instead, she is considered to belong to both the order of the dragon and the order of the lion, and she gains all of the benefits of both orders (including additional class skills and conditional skill bonuses, additional challenge benefits, and order abilities) at the appropriate levels. At 1st level, a sister-in-arms chooses which order's edicts she must follow; generally, those of the fanged crown choose the order of the lion's edicts, while those of the scarlet rose choose the order of the dragon's edicts. This ability alters order."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OrderAbilityLVL|CavalierLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OrderChallengeBonus|CavalierLVL/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Sister-in-Arms Edict Choice|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Sister-in-Arms ~ Order of the Dragon"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Sister-in-Arms ~ Order of the Lion"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 758,
+    "record_key": "Sister-in-Arms ~ Maiden's Order"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

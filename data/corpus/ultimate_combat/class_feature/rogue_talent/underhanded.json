@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Talent ~ Underhanded",
+    "name": "Underhanded*",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent gains a +4 circumstance bonus on all Sleight of Hand checks made to conceal a weapon. Furthermore, if she makes a sneak attack during the surprise round using a concealed weapon that her opponent didn't know about, she does not have to roll sneak attack damage, and the sneak attack deals maximum damage. A rogue can only use the underhanded talent a number of times per day equal to her Charisma modifier (minimum 0).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Underhanded"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RogueTalent"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent gains a +4 circumstance bonus on all Sleight of Hand checks made to conceal a weapon. Furthermore, if she makes a sneak attack during the surprise round using a concealed weapon that her opponent didn't know about, she does not have to roll sneak attack damage, and the sneak attack deals maximum damage. A rogue can only use the underhanded talent a number of times per day equal to her Charisma modifier (minimum 0)."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Sleight of Hand=Conceal Weapon|4|TYPE=Circumstance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1611,
+    "record_key": "Rogue Talent ~ Underhanded"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

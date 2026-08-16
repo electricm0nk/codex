@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Serpentine Bloodline ~ Serpentfriend",
+    "name": "Serpentfriend",
+    "class": "Serpentine Bloodline",
+    "description": "You can use speak with animals at will with reptilian animals (including various forms of dinosaurs, lizards, and other cold-blooded creatures), and you gain a viper familiar using your sorcerer level -2 as your effective wizard level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serpentine Bloodline ~ Serpentfriend"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Serpentine Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Serpentine"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Serpentine_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Serpentine_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_SerpentineSerpentfriend_FamiliarLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use speak with animals at will with reptilian animals (including various forms of dinosaurs, lizards, and other cold-blooded creatures), and you gain a viper familiar using your sorcerer level -2 as your effective wizard level."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_SerpentineSerpentfriend_FamiliarLVL|Sorcerer_Serpentine_BloodlineProgressionLVL-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarLVL|Sorcerer_SerpentineSerpentfriend_FamiliarLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Familiar|Viper"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|SerpentineBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3191,
+    "record_key": "Serpentine Bloodline ~ Serpentfriend"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

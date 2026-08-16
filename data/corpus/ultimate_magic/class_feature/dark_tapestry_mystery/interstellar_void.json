@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dark Tapestry Mystery ~ Interstellar Void",
+    "name": "Interstellar Void",
+    "class": "Dark Tapestry Mystery",
+    "description": "You call upon the frigid depths of outer space to bring a terrible chill to your enemies. As a standard action",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dark Tapestry Mystery ~ Interstellar Void"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.DarkTapestryRevelation.Supernatural.RevelationTargetOneOnly"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InterstellarVoidDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InterstellarVoidDieType|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InterstellarVoidDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InterstellarVoidTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You call upon the frigid depths of outer space to bring a terrible chill to your enemies. As a standard action"
+      },
+      {
+        "key": "DESC",
+        "value": " one target within 30 feet is cloaked in the void and takes %1d%2 points of cold damage. A successful Fortitude save (DC %3) halves this damage. You can use this ability %4/day.|InterstellarVoidDice|InterstellarVoidDieType|InterstellarVoidDC|InterstellarVoidTimes|!PRECLASS:1,Oracle=10"
+      },
+      {
+        "key": "DESC",
+        "value": " one target within 30 feet is cloaked in the void and takes %1d%2 points of cold damage and is fatigued. A successful Fortitude save (DC %3) halves this damage. You can use this ability %4/day.|InterstellarVoidDice|InterstellarVoidDieType|InterstellarVoidDC|InterstellarVoidTimes|PREMULT:2,[!PRECLASS:1,Oracle=15],[PRECLASS:1,Oracle=10]"
+      },
+      {
+        "key": "DESC",
+        "value": " one target within 30 feet is cloaked in the void and takes %1d%2 points of cold damage and is exhausted and stunned for 1 round. A successful Fortitude save (DC %3) halves this damage. You can use this ability %4/day.|InterstellarVoidDice|InterstellarVoidDieType|InterstellarVoidDC|InterstellarVoidTimes|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InterstellarVoidDice|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InterstellarVoidDieType|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InterstellarVoidDC|10+classlevel(\"Oracle\")/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InterstellarVoidTimes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InterstellarVoidTimes|1|PRECLASS:1,Oracle=10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 470,
+    "record_key": "Dark Tapestry Mystery ~ Interstellar Void"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Enlightened Bloodrager ~ Enlightened Spellcasting ~ AG",
+    "name": "Enlightened Spellcasting",
+    "class": "Enlightened Bloodrager",
+    "description": "An enlightened bloodrager's unusually sophisticated outlook on the relationship between magic and emotional outbursts allows her to cast an expanded array of spells. She gains the ability to know and cast 0-level spells, which are cast like any other spells, but don't consume spell slots and can be used again. She gains a number of 0-level spells known equal to those of a bard whose level is 3 lower than her bloodrager level. She selects these 0-level spells from the druid's list of 0-level spells. The enlightened bloodrager gains one 1st-level druid spell as a bonus spell known.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enlightened Bloodrager ~ Enlightened Spellcasting ~ AG"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bloodrager Class Feature.EnlightenedBloodragerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnlightenedSpellcastingCount|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "DESC",
+        "value": "An enlightened bloodrager's unusually sophisticated outlook on the relationship between magic and emotional outbursts allows her to cast an expanded array of spells. She gains the ability to know and cast 0-level spells, which are cast like any other spells, but don't consume spell slots and can be used again. She gains a number of 0-level spells known equal to those of a bard whose level is 3 lower than her bloodrager level. She selects these 0-level spells from the druid's list of 0-level spells. The enlightened bloodrager gains one 1st-level druid spell as a bonus spell known."
+      },
+      {
+        "key": "DESC",
+        "value": "She gains one 2nd-level druid spell as a bonus spell known.|PRECLASS:1,Bloodrager=7"
+      },
+      {
+        "key": "DESC",
+        "value": "She gains one 3rd-level druid spell as a bonus spell known.|PRECLASS:1,Bloodrager=10"
+      },
+      {
+        "key": "DESC",
+        "value": "She gains one 4th-level druid spell as a bonus spell known.|PRECLASS:1,Bloodrager=13"
+      },
+      {
+        "key": "DESC",
+        "value": "The bloodrager treats any druid spells she takes with this ability as bloodrager spells for the purposes of other abilities, and adds them to her bloodrager class spell list. At 8th level and every 3 spell levels thereafter, she can swap out these spells using the normal rules for swapping out at a spell. If she chooses to swap out one of her bonus druid spells, she must replace it with a druid spell of the same level. Any swapped-out spells are removed from her bloodrager class spell list. This ability alters the bloodrager's spellcasting, and replaces all bonus spells gained as part of a bloodline."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineCasterLVL|-BloodragerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnlightenedSpellcastingCount|4+(BloodragerLVL>=5)+(BloodragerLVL>=6)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Enlightened Spellcasting Level 0|BloodragerLVL>=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Enlightened Spellcasting Level 1|BloodragerLVL>=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Enlightened Spellcasting Level 2|BloodragerLVL>=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Enlightened Spellcasting Level 3|BloodragerLVL>=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Enlightened Spellcasting Level 4|BloodragerLVL>=13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 700,
+    "record_key": "Enlightened Bloodrager ~ Enlightened Spellcasting ~ AG"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

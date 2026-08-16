@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Secondary Shaman Wandering Spirit ~ Flame",
+    "name": "Flame (Wandering Spirit)",
+    "class": "Secondary Shaman Wandering Spirit",
+    "description": "Spirit Magic Spells: burning hands (1st), resist energy (2nd), fireball (3rd), wall of fire (4th), summon monster V (fire elementals only, 5th), fire seeds (6th), fire storm (7th), incendiary cloud (8th), fiery body (9th)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Secondary Shaman Wandering Spirit ~ Flame"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SecondaryShamanWanderingSpirit.SpecialQuality"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Shaman Wandering Spirit ~ Flame"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: burning hands (1st), resist energy (2nd), fireball (3rd), wall of fire (4th), summon monster V (fire elementals only, 5th), fire seeds (6th), fire storm (7th), incendiary cloud (8th), fiery body (9th)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flame Spirit ~ Touch of Flame|PREVARGTEQ:SecondaryShamanWanderingSpiritBase,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flame Spirit ~ Fiery Soul|PREVARGTEQ:SecondaryShamanWanderingSpiritGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flame Spirit ~ Elemental Form|PREVARGTEQ:SecondaryShamanWanderingSpiritTrue,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Flame Wandering Hex|ShamanWanderingHexUses"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1485,
+    "record_key": "Secondary Shaman Wandering Spirit ~ Flame"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Hex ~ Lodestone",
+    "name": "Lodestone",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_Lodestone",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Lodestone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Witch Archetype ~ Mountain Witch"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_Lodestone|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MountainWitchLodestoneDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MountainWitchLodestoneDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_Lodestone"
+      },
+      {
+        "key": "DESC",
+        "value": "The mountain witch causes one creature within 30 feet to become heavy and lethargic. The creature is treated as if it were carrying a medium load. If the creature is already carrying a medium load, it is instead treated as if it were carrying a heavy load. If the creature is carrying a heavy load, its maximum Dexterity bonus to AC is reduced to +0, it takes a -9 armor check penalty, and its movement is reduced to 5 feet. The effect lasts for %1 rounds. A successful Will saving throw (DC %2) negates this effect. Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours.|MountainWitchLodestoneDuration|MountainWitchLodestoneDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Lodestone"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Lodestone|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Lodestone|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Lodestone)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MountainWitchLodestoneDuration|WitchLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MountainWitchLodestoneDC|WitchHexDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4030,
+    "record_key": "Witch Hex ~ Lodestone"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

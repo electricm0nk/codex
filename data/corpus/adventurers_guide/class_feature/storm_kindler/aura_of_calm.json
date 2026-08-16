@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Storm Kindler ~ Aura of Calm",
+    "name": "Aura of Calm",
+    "class": "Storm Kindler",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Storm Kindler ~ Aura of Calm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Storm Kindler Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StormKindlerAuraRadius|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StormKindlerAuraBonus|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.180"
+      },
+      {
+        "key": "DESC",
+        "value": "Allies within %1 feet of a Storm Kindler (including herself) are treated as|StormKindlerAuraRadius"
+      },
+      {
+        "key": "DESC",
+        "value": "one size category|PREVARLT:StormKindlerLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "two size categories|PREVARGTEQ:StormKindlerLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "larger for the purpose of wind effects (this stacks with the bonus from Storm-Lashed), and they gain a +%1 competence bonus on all saving throws to resist spells and effects with the air or water descriptors.|StormKindlerAuraBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StormKindlerAuraRadius|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StormKindlerAuraRadius|5|PREVARGTEQ:StormKindlerLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StormKindlerAuraRadius|5|PREVARGTEQ:StormKindlerLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StormKindlerAuraRadius|5|PREVARGTEQ:StormKindlerLVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StormKindlerAuraBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StormKindlerAuraBonus|2|PREVARGTEQ:StormKindlerLVL,7"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 508,
+    "record_key": "Storm Kindler ~ Aura of Calm"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

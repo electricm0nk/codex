@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Emissary ~ Mounted Acrobatics",
+    "name": "Mounted Acrobatics",
+    "class": "Emissary",
+    "description": "At 9th level, an emissary is even more adept at hopping on and off his steed, and even dropping alongside its flanks mid-gallop. He gains Trick Riding as a bonus feat, even if he does not meet the prerequisites. The emissary can employ this feat even when wearing medium armor. This ability replaces greater tactician.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emissary ~ Mounted Acrobatics"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, an emissary is even more adept at hopping on and off his steed, and even dropping alongside its flanks mid-gallop. He gains Trick Riding as a bonus feat, even if he does not meet the prerequisites. The emissary can employ this feat even when wearing medium armor. This ability replaces greater tactician."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Trick Riding"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 488,
+    "record_key": "Emissary ~ Mounted Acrobatics"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

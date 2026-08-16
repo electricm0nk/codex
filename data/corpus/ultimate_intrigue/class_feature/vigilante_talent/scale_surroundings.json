@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Scale Surroundings",
+    "name": "Scale Surroundings",
+    "class": "Vigilante Talent",
+    "description": "Instead of letting physical barriers stop him, the brute can simply climb over them. He gains a climb speed of 30 feet when he is in his vigilante identity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Scale Surroundings"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Scale Surroundings"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsBrute,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "Instead of letting physical barriers stop him, the brute can simply climb over them. He gains a climb speed of 30 feet when he is in his vigilante identity."
+      },
+      {
+        "key": "MOVE",
+        "value": "Climb,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Climb|30|PREVARLT:PREVAREQ:ActivateBruteForm,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 986,
+    "record_key": "Vigilante Talent ~ Scale Surroundings"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

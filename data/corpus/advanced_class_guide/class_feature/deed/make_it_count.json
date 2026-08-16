@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Deed ~ Make It Count",
+    "name": "Make It Count",
+    "class": "Deed",
+    "description": "When a sleuth uses studied strike, he can spend 1 luck point to apply an investigator talent that he doesn't already know and which affects studied strike to his studied strike. He must be able to fulfill that talent's prerequisites.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deed ~ Make It Count"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sleuth Class Feature.Investigator Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When a sleuth uses studied strike, he can spend 1 luck point to apply an investigator talent that he doesn't already know and which affects studied strike to his studied strike. He must be able to fulfill that talent's prerequisites."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3335,
+    "record_key": "Deed ~ Make It Count"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

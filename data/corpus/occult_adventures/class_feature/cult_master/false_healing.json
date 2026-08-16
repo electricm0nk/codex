@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cult Master ~ False Healing",
+    "name": "False Healing",
+    "class": "Cult Master",
+    "description": "A cult master can provide temporary healing by using his psychic powers to trick the mind %1 times per day. Using the ability is a standard action (or a swift action if the cult master uses it on himself), and the cult master must be able to touch his target. The cult master |CMFalseHealingUses",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cult Master ~ False Healing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMFalseHealingUses|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A cult master can provide temporary healing by using his psychic powers to trick the mind %1 times per day. Using the ability is a standard action (or a swift action if the cult master uses it on himself), and the cult master must be able to touch his target. The cult master |CMFalseHealingUses"
+      },
+      {
+        "key": "DESC",
+        "value": "grants 1d8+%1 temporary hit points to the target.|CHA|PREVARLT:MesmeristLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "can either grant 2d8+%1 temporary hit points to the target or temporarily remove 1d4 points of ability damage.|CHA|PREVARGTEQ:MesmeristLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature can receive the effect of the false healing only once per day. The temporary hit points"
+      },
+      {
+        "key": "DESC",
+        "value": "or reduction in ability damage |PREVARGTEQ:MesmeristLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "lasts %1 hours.|MesmeristLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMFalseHealingUses|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|False Healing per day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|CMFalseHealingUses"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Cult Master ~ False Healing"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1468,
+    "record_key": "Cult Master ~ False Healing"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue ~ Master Strike",
+    "name": "Master Strike",
+    "class": "Rogue",
+    "description": "You are incredibly deadly when dealing sneak attack damage. Each time you deal sneak attack damage, you can choose one of the following three effects: the target can be put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain. Regardless of the effect chosen, the target receives a Fortitude save to negate the additional effect. The DC of this save is %1. Once a creature has been the target of a master strike, regardless of whether or not the save is made, that creature is immune to your master strike for 24 hours. Creatures that are immune to sneak attack damage are also immune to this ability.|MasterStrikeDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue ~ Master Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialAttack.Extraordinary.AttackOption"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterStrikeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterStrikeLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are incredibly deadly when dealing sneak attack damage. Each time you deal sneak attack damage, you can choose one of the following three effects: the target can be put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain. Regardless of the effect chosen, the target receives a Fortitude save to negate the additional effect. The DC of this save is %1. Once a creature has been the target of a master strike, regardless of whether or not the save is made, that creature is immune to your master strike for 24 hours. Creatures that are immune to sneak attack damage are also immune to this ability.|MasterStrikeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterStrikeDC|10+(MasterStrikeLVL/2)+INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterStrikeLVL|RogueLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1619,
+    "record_key": "Rogue ~ Master Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

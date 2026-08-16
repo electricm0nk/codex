@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bushwhacker ~ Trembling Grit",
+    "name": "Trembling Grit",
+    "class": "Bushwhacker",
+    "description": "In addition to all the ways any gunslinger can regain grit, a bushwhacker who reduces a helpless or unaware opponent to 0 hit points or fewer also regains 1 grit point. This expands the way in which the bushwhacker gains grit points, so a bushwhacker who gains grit points in this way only gains 1 grit point for reducing a helpless or unaware opponent, not 2 grit points.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bushwhacker ~ Trembling Grit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "In addition to all the ways any gunslinger can regain grit, a bushwhacker who reduces a helpless or unaware opponent to 0 hit points or fewer also regains 1 grit point. This expands the way in which the bushwhacker gains grit points, so a bushwhacker who gains grit points in this way only gains 1 grit point for reducing a helpless or unaware opponent, not 2 grit points."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Grit"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GritPoints|-1|PREVARGT:GritPoints,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 621,
+    "record_key": "Bushwhacker ~ Trembling Grit"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

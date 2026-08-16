@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Student of War ~ Mind Over Metal",
+    "name": "Mind Over Metal",
+    "class": "Student of War",
+    "description": "You are skilled at taking blows such that your armor or shield deflect them harmlessly. When using armor or shield, you can use your Intelligence modifier in place of your Dexterity modifier for determining your Armor Class. The armor's normal maximum Dexterity bonus still applies (limiting how much of the character's Intelligence bonus she can apply to her AC).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of War ~ Mind Over Metal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Student of War Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "DESC",
+        "value": "You are skilled at taking blows such that your armor or shield deflect them harmlessly. When using armor or shield, you can use your Intelligence modifier in place of your Dexterity modifier for determining your Armor Class. The armor's normal maximum Dexterity bonus still applies (limiting how much of the character's Intelligence bonus she can apply to her AC)."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|INT-DEX|TYPE=Ability.STACK|PREMULT:2,[PREEQUIP:1,TYPE=Armor,TYPE=Shield],[PREVARGT:INT,DEX]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 523,
+    "record_key": "Student of War ~ Mind Over Metal"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

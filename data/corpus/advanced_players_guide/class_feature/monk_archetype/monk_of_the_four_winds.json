@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk Archetype ~ Monk of the Four Winds",
+    "name": "Monk of the Four Winds",
+    "class": "Monk Archetype",
+    "description": "The monk of the four winds is connected to the natural world in a way few other creatures-even other monks- can hope to match. He can call upon the elements and the spirits of the world in times of need, and as he nears his goal of perfection, he gains the ability to slow down time and even defeat death itself. A monk of the four winds has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Monk of the Four Winds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkStunningFist.MonkAbundantStep.MonkPerfectSelf.MonkTimelessBody"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Monk of the Four Winds],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStunningFist,TYPE.MonkAbundantStep,TYPE.MonkPerfectSelf,TYPE.MonkTimelessBody]"
+      },
+      {
+        "key": "DESC",
+        "value": "The monk of the four winds is connected to the natural world in a way few other creatures-even other monks- can hope to match. He can call upon the elements and the spirits of the world in times of need, and as he nears his goal of perfection, he gains the ability to slow down time and even defeat death itself. A monk of the four winds has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Four Winds ~ Elemental Fist|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Four Winds ~ Slow Time|PRECLASS:1,Monk=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Four Winds ~ Aspect Master|PRECLASS:1,Monk=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Four Winds ~ Immortality|PRECLASS:1,Monk=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2294,
+    "record_key": "Monk Archetype ~ Monk of the Four Winds"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

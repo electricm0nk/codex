@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Necroccultist ~ Necromantic Bond",
+    "name": "Necromantic Bond",
+    "class": "Necroccultist",
+    "description": "[not enforced]At 1st level, a necroccultist gains access to only the necromancy school of implements. He must select necromancy for his implement mastery. Each time he gains an occultist level, a necroccultist can add one necromancy spell from the wizard spell list to his occultist spell list and his list of spells known. The necroccultist can't choose a spell of a higher level than he is able to cast, and he adds the spell at the same spell level it appears on the wizard spell list. At 14th level, he doesn't gain an additional school of implements. Instead, at 14th level, the DCs of saving throws to resist a necroccultist's necromancy spells and necromancy focus powers increase by 2. This ability alters implements and implement mastery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Necroccultist ~ Necromantic Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Necroccultist Class Feature.Occultist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "[not enforced]At 1st level, a necroccultist gains access to only the necromancy school of implements. He must select necromancy for his implement mastery. Each time he gains an occultist level, a necroccultist can add one necromancy spell from the wizard spell list to his occultist spell list and his list of spells known. The necroccultist can't choose a spell of a higher level than he is able to cast, and he adds the spell at the same spell level it appears on the wizard spell list. At 14th level, he doesn't gain an additional school of implements. Instead, at 14th level, the DCs of saving throws to resist a necroccultist's necromancy spells and necromancy focus powers increase by 2. This ability alters implements and implement mastery."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1534,
+    "record_key": "Necroccultist ~ Necromantic Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

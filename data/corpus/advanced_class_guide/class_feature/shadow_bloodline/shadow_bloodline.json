@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shadow Bloodline",
+    "name": "Shadow Bloodline",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Arcanist Bloodline Development"
+      },
+      {
+        "key": "TYPE",
+        "value": "SorcererBloodlineChoice"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Shadow Bloodline ~ Power LVL 01"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sorcerer Bloodline ~ Shadow"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Shadow_BloodlineLVL|1|!PREABILITY:1,CATEGORY=Sorcerer Bloodline,Shadow Bloodline|!PREABILITY:1,CATEGORY=Crossblooded Bloodline,Shadow Bloodline"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Shadow_BloodlineLVL|ArcanistLVL|PREMULT:1,[PREABILITY:1,CATEGORY=Sorcerer Bloodline,Shadow Bloodline],[PREABILITY:1,CATEGORY=Crossblooded Bloodline,Shadow Bloodline]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Shadow_BloodlinePower1LVL|1|!PREABILITY:1,CATEGORY=Sorcerer Bloodline,Shadow Bloodline|!PREABILITY:1,CATEGORY=Crossblooded Bloodline,Shadow Bloodline"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 173,
+    "record_key": "Shadow Bloodline"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

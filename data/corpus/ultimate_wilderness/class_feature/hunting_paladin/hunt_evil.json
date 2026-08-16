@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunting Paladin ~ Hunt Evil",
+    "name": "Hunt Evil",
+    "class": "Hunting Paladin",
+    "description": "Once per day, a hunting paladin can designate a single evil creature within her sight or one that she has determined to be evil by declaring it the target of her hunt and following its tracks; this allows her to add her Charisma modifier as a bonus on Survival checks to follow that creature's tracks and on Perception and Stealth checks opposed by the target of her hunt. She can sense her target's presence and location, which lets her pinpoint her target's location when within 10 feet; if the target has concealment, she can roll twice and use the better result on rolls to determine whether she misses due to the concealment. She gains uncanny dodge as per the barbarian class feature against her target. If the hunting paladin targets a nonevil creature with hunt evil, the ability fails and it is wasted. This ability ends after 24 hours (unless she spends the next day's use of this ability to continue hunting the same target), after the hunting paladin or the target is killed or when she designates a new target for her hunt.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunting Paladin ~ Hunt Evil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Features.HuntingPaladinClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a hunting paladin can designate a single evil creature within her sight or one that she has determined to be evil by declaring it the target of her hunt and following its tracks; this allows her to add her Charisma modifier as a bonus on Survival checks to follow that creature's tracks and on Perception and Stealth checks opposed by the target of her hunt. She can sense her target's presence and location, which lets her pinpoint her target's location when within 10 feet; if the target has concealment, she can roll twice and use the better result on rolls to determine whether she misses due to the concealment. She gains uncanny dodge as per the barbarian class feature against her target. If the hunting paladin targets a nonevil creature with hunt evil, the ability fails and it is wasted. This ability ends after 24 hours (unless she spends the next day's use of this ability to continue hunting the same target), after the hunting paladin or the target is killed or when she designates a new target for her hunt."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 878,
+    "record_key": "Hunting Paladin ~ Hunt Evil"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

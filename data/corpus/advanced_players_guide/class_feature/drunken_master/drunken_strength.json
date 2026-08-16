@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Drunken Master ~ Drunken Strength",
+    "name": "Drunken Strength",
+    "class": "Drunken Master",
+    "description": "At 5th level, a drunken master can spend 1 point of ki as a swift action to inflict 1d6 extra points of damage on a single successful melee attack. The monk can choose to apply the damage after the attack roll is made. At 10th level, the monk may spend 2 drunken ki points to increase the extra damage to 2d6. At 15th level, the monk may spend 3 drunken ki points to increase the extra damage to 3d6. At 20th level, the monk may spend 4 drunken ki points to increase the extra damage to 4d6. The monk must have at least 1 drunken ki point to use this ability. This ability replaces purity of body.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Drunken Master ~ Drunken Strength"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.Supernatural.MonkPurityOfBody"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a drunken master can spend 1 point of ki as a swift action to inflict 1d6 extra points of damage on a single successful melee attack. The monk can choose to apply the damage after the attack roll is made. At 10th level, the monk may spend 2 drunken ki points to increase the extra damage to 2d6. At 15th level, the monk may spend 3 drunken ki points to increase the extra damage to 3d6. At 20th level, the monk may spend 4 drunken ki points to increase the extra damage to 4d6. The monk must have at least 1 drunken ki point to use this ability. This ability replaces purity of body."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2305,
+    "record_key": "Drunken Master ~ Drunken Strength"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

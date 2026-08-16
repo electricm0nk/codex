@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Taboo",
+    "name": "Taboo",
+    "class": "Medium",
+    "description": "During his daily seance, a medium can accept a taboo in order to appease his spirit. Each spirit lists example taboos, and the GM may allow additional taboos as well. Accepting a taboo allows the medium to use his spirit surge ability twice without incurring influence. The medium can select only a single taboo. The medium is not magically prevented from breaking his taboo, but if he breaks the taboo for any reason, he takes a -2 penalty on attack rolls, damage rolls, ability checks, skill checks, and saving throws for 1 hour and his spirit gains 1 point of influence over him. If the medium continues violating the taboo while taking the penalty, the duration of the penalty extends, but the spirit doesn't gain additional influence over the medium. If a spirit attains 5 points of influence because of a violated taboo, instead of possessing the medium, the spirit leaves the medium's body entirely, and the medium loses access to his spirit powers, spirit bonus, and spirit surge abilities until the next time he can perform a seance. Banishing a spirit in this way damages the medium's connection to that spirit's legend; the medium cannot channel spirits of that legend for 1 week, and the next time the medium channels a spirit of that legend, it starts with 2 points of influence over him instead of 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Taboo"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "During his daily seance, a medium can accept a taboo in order to appease his spirit. Each spirit lists example taboos, and the GM may allow additional taboos as well. Accepting a taboo allows the medium to use his spirit surge ability twice without incurring influence. The medium can select only a single taboo. The medium is not magically prevented from breaking his taboo, but if he breaks the taboo for any reason, he takes a -2 penalty on attack rolls, damage rolls, ability checks, skill checks, and saving throws for 1 hour and his spirit gains 1 point of influence over him. If the medium continues violating the taboo while taking the penalty, the duration of the penalty extends, but the spirit doesn't gain additional influence over the medium. If a spirit attains 5 points of influence because of a violated taboo, instead of possessing the medium, the spirit leaves the medium's body entirely, and the medium loses access to his spirit powers, spirit bonus, and spirit surge abilities until the next time he can perform a seance. Banishing a spirit in this way damages the medium's connection to that spirit's legend; the medium cannot channel spirits of that legend for 1 week, and the next time the medium channels a spirit of that legend, it starts with 2 points of influence over him instead of 1."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 816,
+    "record_key": "Medium ~ Taboo"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

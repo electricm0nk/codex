@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Environment Weapon ~ Desert",
+    "name": "Environment Weapon (Desert)",
+    "class": "Environment Weapon",
+    "description": "You gain the benefit of the Environmental Weapon trick while in desert terrain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Environment Weapon ~ Desert"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EnvironmentWeaponTerrain"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Environment Weapon ~ Desert"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the benefit of the Environmental Weapon trick while in desert terrain."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 122,
+    "record_key": "Environment Weapon ~ Desert"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

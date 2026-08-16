@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Divine Scion ~ Divine Awe",
+    "name": "Divine Awe",
+    "class": "Divine Scion",
+    "description": "A divine scion's spells can stagger creatures that match the alignment subtypes of the divine scion's opposition alignment. When such a creature is affected by a divine scion's spell, it is staggered for 1 round if it fails its save against the spell. If the creature makes its save (or if the spell doesn't allow a saving throw), this ability has no effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Scion ~ Divine Awe"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DivineScionClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A divine scion's spells can stagger creatures that match the alignment subtypes of the divine scion's opposition alignment. When such a creature is affected by a divine scion's spell, it is staggered for 1 round if it fails its save against the spell. If the creature makes its save (or if the spell doesn't allow a saving throw), this ability has no effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 33,
+    "record_key": "Divine Scion ~ Divine Awe"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

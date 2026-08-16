@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Coordinated Charge",
+    "name": "Coordinated Charge",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are an expert at leading your allies into the fray.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Coordinated Charge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Teamwork"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,TYPE=Teamwork"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:10],[PREVARGTEQ:WarpriestBonusFeatBAB,10]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are an expert at leading your allies into the fray."
+      },
+      {
+        "key": "DESC",
+        "value": " When an ally with this feat charges a creature that is no further away from you than your speed, you can, as an immediate action, charge that creature. You must be able to follow all of the normal charge rules."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Coordinated Charge"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4414,
+    "record_key": "Warpriest Bonus Feat ~ Coordinated Charge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

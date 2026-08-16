@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Hunter ~ Animal Focus",
+    "name": "Animal Focus",
+    "class": "Wild Hunter",
+    "description": "As a swift action, a wild hunter can take on the aspect of an animal, gaining a bonus or special ability based on the type of animal emulated. This functions as the hunter's animal focus class feature (see page 27), though this only applies to the wild hunter and not an animal companion. The wild hunter can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments. He can only emulate one animal at a time.|HunterAnimalFocusMinutes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Hunter ~ Animal Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wild Hunter Class Feature.Ranger Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterAnimalFocusMinutes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterAnimalFocusLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, a wild hunter can take on the aspect of an animal, gaining a bonus or special ability based on the type of animal emulated. This functions as the hunter's animal focus class feature (see page 27), though this only applies to the wild hunter and not an animal companion. The wild hunter can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments. He can only emulate one animal at a time.|HunterAnimalFocusMinutes"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Animal Focus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusMinutes|RangerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusLVL|RangerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3550,
+    "record_key": "Wild Hunter ~ Animal Focus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

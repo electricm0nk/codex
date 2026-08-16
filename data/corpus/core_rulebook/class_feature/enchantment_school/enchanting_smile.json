@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Enchantment School ~ Enchanting Smile",
+    "name": "Enchanting Smile",
+    "class": "Enchantment School",
+    "description": "You gain a +%1 enhancement bonus on Bluff, Diplomacy, and Intimidate skill checks.|EnchantmentEnchantingSmileBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enchantment School ~ Enchanting Smile"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural.ArcaneSchoolPower.ArcaneSchoolPowerLVL1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnchantmentEnchantingSmileBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 enhancement bonus on Bluff, Diplomacy, and Intimidate skill checks.|EnchantmentEnchantingSmileBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you succeed at a saving throw against a spell of the enchantment school, that spell is reflected back at its caster, as per Spell Turning.|PREVARGTEQ:EnchantmentProgressionSchoolLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Diplomacy,Intimidate|EnchantmentEnchantingSmileBonus|TYPE=Enhancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnchantmentEnchantingSmileBonus|min(6,EnchantmentSchoolLVL/5+2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2656,
+    "record_key": "Enchantment School ~ Enchanting Smile"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

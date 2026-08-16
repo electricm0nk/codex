@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Underfoot Adept ~ Underfoot Trip",
+    "name": "Underfoot Trip",
+    "class": "Underfoot Adept",
+    "description": "An underfoot adept learns a number of maneuvers and grabs that can cause even the largest opponents to stumble and fall. He gains Improved Trip as a bonus feat, even if he does not meet the requirements. He acts as if he is %1 sizes larger for the purposes of determining the maximum size of creatures he can trip and when determining his CMB and CMD for purposes of a trip combat maneuver.|MonkLVL/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Underfoot Adept ~ Underfoot Trip"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An underfoot adept learns a number of maneuvers and grabs that can cause even the largest opponents to stumble and fall. He gains Improved Trip as a bonus feat, even if he does not meet the requirements. He acts as if he is %1 sizes larger for the purposes of determining the maximum size of creatures he can trip and when determining his CMB and CMD for purposes of a trip combat maneuver.|MonkLVL/4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Trip"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 338,
+    "record_key": "Underfoot Adept ~ Underfoot Trip"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

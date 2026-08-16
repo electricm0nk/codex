@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forbidden Ki Power ~ Shifting Form",
+    "name": "Shifting Form",
+    "class": "Forbidden Ki Power",
+    "description": "As an immediate action, a black asp can spend 1 ki point to make his outline shift and waver for 1 round. This ability otherwise functions as per the spell blur.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Ki Power ~ Shifting Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.Forbidden Ki Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As an immediate action, a black asp can spend 1 ki point to make his outline shift and waver for 1 round. This ability otherwise functions as per the spell blur."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 552,
+    "record_key": "Forbidden Ki Power ~ Shifting Form"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

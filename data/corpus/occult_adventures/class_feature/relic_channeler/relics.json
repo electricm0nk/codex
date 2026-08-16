@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Relic Channeler ~ Relics",
+    "name": "Relics",
+    "class": "Relic Channeler",
+    "description": "A relic channeler begins with one relic for each of the six spirit legends. Each relic corresponds to a specific spirit, and could be any type of psychically resonant item-from a runestone with a symbol related to that spirit to a bone remnant from a legendary hero. Once a relic channeler selects a choice for taboos and spirit powers (such as archmage arcana and legendary champion), those choices remain in effect every time she channels that legend; unlike normal mediums, she can't select a different option each time. A relic channeler can't choose to channel a weaker spirit to reduce her influence from spirit surge. She doesn't need to find an appropriate location to channel her spirits, since she can simply use her relics. If she loses one of her relics, she is incapable of channeling that legend until she recovers the relic. If the relic is destroyed, the relic channeler can use her strong bond with the spirit of that relic to forge a new relic for that spirit from her own essence. The process takes 1 week of intense seances and 500 gp per medium level she possesses. This ability alters spirit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Relic Channeler ~ Relics"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A relic channeler begins with one relic for each of the six spirit legends. Each relic corresponds to a specific spirit, and could be any type of psychically resonant item-from a runestone with a symbol related to that spirit to a bone remnant from a legendary hero. Once a relic channeler selects a choice for taboos and spirit powers (such as archmage arcana and legendary champion), those choices remain in effect every time she channels that legend; unlike normal mediums, she can't select a different option each time. A relic channeler can't choose to channel a weaker spirit to reduce her influence from spirit surge. She doesn't need to find an appropriate location to channel her spirits, since she can simply use her relics. If she loses one of her relics, she is incapable of channeling that legend until she recovers the relic. If the relic is destroyed, the relic channeler can use her strong bond with the spirit of that relic to forge a new relic for that spirit from her own essence. The process takes 1 week of intense seances and 500 gp per medium level she possesses. This ability alters spirit."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1421,
+    "record_key": "Relic Channeler ~ Relics"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

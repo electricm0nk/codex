@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Speaker for the Past Ancestor Mystery ~ Ancestral Weapon",
+    "name": "Ancestral Weapon",
+    "class": "Speaker for the Past Ancestor Mystery",
+    "description": "You can summon a simple or martial weapon from your family's history that is appropriate for your current size. You are considered proficient with this weapon. You can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be used in 1-minute increments. The weapon disappears after 1 round if it leaves your grasp.|AncestralWeaponDuration|!PRECLASS:1,Shaman=3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Speaker for the Past Ancestor Mystery ~ Ancestral Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.AncestorRevelation.speaker for the past revelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AncestralWeaponEnhancement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AncestralWeaponDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon a simple or martial weapon from your family's history that is appropriate for your current size. You are considered proficient with this weapon. You can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be used in 1-minute increments. The weapon disappears after 1 round if it leaves your grasp.|AncestralWeaponDuration|!PRECLASS:1,Shaman=3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon a simple or martial masterwork weapon from your family's history that is appropriate for your current size. You are considered proficient with this weapon. You can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be used in 1-minute increments. The weapon disappears after 1 round if it leaves your grasp.|AncestralWeaponDuration|PREMULT:2,[PRECLASS:1,Shaman=3],[!PRECLASS:1,Shaman=7]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon a simple or martial +%2 weapon from your family's history that is appropriate for your current size. You are considered proficient with this weapon. You can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be used in 1-minute increments. The weapon disappears after 1 round if it leaves your grasp.|AncestralWeaponDuration|AncestralWeaponEnhancement|PREMULT:2,[PRECLASS:1,Shaman=7],[!PRECLASS:1,Shaman=11]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon a simple or martial +%2 ghost touch weapon from your family's history that is appropriate for your current size. You are considered proficient with this weapon. You can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be used in 1-minute increments. The weapon disappears after 1 round if it leaves your grasp.|AncestralWeaponDuration|AncestralWeaponEnhancement|PRECLASS:1,Shaman=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AncestralWeaponDuration|classlevel(\"Shaman\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AncestralWeaponEnhancement|1|PRECLASS:1,Shaman=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AncestralWeaponEnhancement|1|PRECLASS:1,Shaman=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AncestralWeaponEnhancement|1|PRECLASS:1,Shaman=19"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3616,
+    "record_key": "Speaker for the Past Ancestor Mystery ~ Ancestral Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,139 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk Archetype ~ Brazen Disciple",
+    "name": "Brazen Disciple",
+    "class": "Monk Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Brazen Disciple"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=CLASS,Monk ~ Unchained Class"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "DESC",
+        "value": "Of the three monasteries, the Monastery of Unblinking Flame has been the most successful in developing a specific and unique fighting style that sets its disciples apart from other monks. In order to be admitted into the Monastery of Unblinking Flame and become one of these disciples, a supplicant must prove his worth by outwitting an efreeti. Those who succeed often become monks known as the brazen disciples. Brazen disciples believe that the best way to prepare for this test is to emulate the efreeti's own duplicitous ways. By studying genie contracts, brazen disciples learn how to take advantage of loopholes, and by pondering riddles, they learn how to obfuscate truth. They use deception in their fighting style, and many go a step further, incorporating fire and smoke both mundane and magical. Though most brazen disciples focus on joining the Houses of Perfection, some become enamored with the efreet and instead seek out genie masters."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Brazen Disciple],[!PREFACT:1,ABILITIES,Monk_Archetype_ClassSkills=True,Monk_Archetype_BonusFeats=True,Monk_Archetype_StillMind=True,Monk_Archetype_PerfectSelf=True,Monk_Archetype_AbundantStep=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brazen Disciple ~ Class Skills|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brazen Disciple ~ Feinting Flurry|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brazen Disciple ~ Bonus Feat|PRECLASS:1,Monk=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brazen Disciple ~ Efreeti's Guile|PRECLASS:1,Monk=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brazen Disciple ~ Confounding Koan|PRECLASS:1,Monk=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brazen Disciple ~ Genie Apotheosis|PRECLASS:1,Monk=20"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeat1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_PerfectSelf|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_AbundantStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_PerfectSelf|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_AbundantStep|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 925,
+    "record_key": "Monk Archetype ~ Brazen Disciple"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

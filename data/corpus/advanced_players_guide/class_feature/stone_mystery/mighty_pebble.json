@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Stone Mystery ~ Mighty Pebble",
+    "name": "Mighty Pebble",
+    "class": "Stone Mystery",
+    "description": "As a standard action, you can charge and throw a pebble (or other stone of similar size) that detonates when it strikes a target as a ranged attack. The pebble has a range increment of 20 feet and has a +%1 enhancement bonus to attack and damage. Any creature struck by the pebble takes %2d6 points of bludgeoning damage. Creatures in squares adjacent to the target take half damage, or no damage if they make a Reflex saving throw (DC %3). If the attack roll misses, treat the pebble as a thrown splash weapon to determine where it lands. You can use this ability %4 time(s) per day.|OracleMightyPebbleBonus|OracleMightyPebbleDamageDice|OracleRevelationDC|OracleMightyPebbleTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stone Mystery ~ Mighty Pebble"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.StoneRevelation.Supernatural.PerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleMightyPebbleBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleMightyPebbleDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleMightyPebbleTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can charge and throw a pebble (or other stone of similar size) that detonates when it strikes a target as a ranged attack. The pebble has a range increment of 20 feet and has a +%1 enhancement bonus to attack and damage. Any creature struck by the pebble takes %2d6 points of bludgeoning damage. Creatures in squares adjacent to the target take half damage, or no damage if they make a Reflex saving throw (DC %3). If the attack roll misses, treat the pebble as a thrown splash weapon to determine where it lands. You can use this ability %4 time(s) per day.|OracleMightyPebbleBonus|OracleMightyPebbleDamageDice|OracleRevelationDC|OracleMightyPebbleTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMightyPebbleBonus|max(1,classlevel(\"Oracle\")/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMightyPebbleDamageDice|max(1,classlevel(\"Oracle\")/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMightyPebbleTimes|1+classlevel(\"Oracle\")/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 673,
+    "record_key": "Stone Mystery ~ Mighty Pebble"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

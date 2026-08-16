@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fell Rider ~ Dread Rider",
+    "name": "Dread Rider",
+    "class": "Fell Rider",
+    "description": "The fell rider gains a bonus equal to 1/2 his level on Intimidate checks made while mounted. Once per round as a free action, he can make an Intimidate check to demoralize a foe he has trampled or charged while mounted.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fell Rider ~ Dread Rider"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The fell rider gains a bonus equal to 1/2 his level on Intimidate checks made while mounted. Once per round as a free action, he can make an Intimidate check to demoralize a foe he has trampled or charged while mounted."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Intimidate=Mounted|CavalierLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 572,
+    "record_key": "Fell Rider ~ Dread Rider"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

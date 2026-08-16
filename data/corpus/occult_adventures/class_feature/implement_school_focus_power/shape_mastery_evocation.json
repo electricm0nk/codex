@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Implement School Focus Power ~ Shape Mastery",
+    "name": "Shape Mastery [Evocation]",
+    "class": "Implement School Focus Power",
+    "description": "As part of casting an evocation spell with an area of effect, you can expend up to %1 points of mental focus to exclude an equal number of squares from the area.|INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Implement School Focus Power ~ Shape Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Implement School Focus Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,ABILITIES,OccultistSchool_Evocation=true"
+      },
+      {
+        "key": "DESC",
+        "value": "As part of casting an evocation spell with an area of effect, you can expend up to %1 points of mental focus to exclude an equal number of squares from the area.|INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1084,
+    "record_key": "Implement School Focus Power ~ Shape Mastery"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

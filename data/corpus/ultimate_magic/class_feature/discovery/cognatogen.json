@@ -1,0 +1,140 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Cognatogen",
+    "name": "Cognatogen",
+    "class": "Discovery",
+    "description": "You gain the ability to create a cognatogen, a mutagen-like mixture that heightens one mental ability score at the expense of a physical ability score.  If the cognatogen enhances your Intelligence, it applies a penalty to your Strength. If it enhances your Wisdom, it applies a penalty to your Dexterity. If it enhances your Charisma, it applies a penalty to your Constitution. Otherwise, this ability works just like the mutagen ability (including the natural armor bonus). Anytime you would prepare a mutagen, you may instead prepare a cognatogen. All limitations of mutagens apply to cognatogens as if they were the same substance-you can only maintain one mutagen or cognatogen at a time, a cognatogen that is not in your possession becomes inert, drinking a cognatogen makes a non-alchemist sick, and so on. When the effect of the cognatogen ends, you take 2 points of ability damage to the ability score penalized by the cognatogen. The infuse mutagen discovery and the persistent mutagen class ability apply to cognatogens.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Cognatogen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery.Supernatural.AlchemistMutagenMod"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistCognatogenLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistCognatogenDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistCognatogenDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CognatogenNormal|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CognatogenStatBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CognatogenStatPenalty|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CognatogenACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CognatogenTierLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SecondCognatogenStatBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThirdCognatogenStatBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the ability to create a cognatogen, a mutagen-like mixture that heightens one mental ability score at the expense of a physical ability score.  If the cognatogen enhances your Intelligence, it applies a penalty to your Strength. If it enhances your Wisdom, it applies a penalty to your Dexterity. If it enhances your Charisma, it applies a penalty to your Constitution. Otherwise, this ability works just like the mutagen ability (including the natural armor bonus). Anytime you would prepare a mutagen, you may instead prepare a cognatogen. All limitations of mutagens apply to cognatogens as if they were the same substance-you can only maintain one mutagen or cognatogen at a time, a cognatogen that is not in your possession becomes inert, drinking a cognatogen makes a non-alchemist sick, and so on. When the effect of the cognatogen ends, you take 2 points of ability damage to the ability score penalized by the cognatogen. The infuse mutagen discovery and the persistent mutagen class ability apply to cognatogens."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cognatogen ~ Stat Selection First|PREMULT:2,[PREVARGTEQ:CognatogenTierLVL,1],[PREVARLTEQ:CognatogenTierLVL,3]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cognatogen ~ Stat Selection Second|PREMULT:2,[PREVARGTEQ:CognatogenTierLVL,1],[PREVARLTEQ:CognatogenTierLVL,3]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cognatogen ~ Stat Selection Third|PREMULT:2,[PREVARGTEQ:CognatogenTierLVL,1],[PREVARLTEQ:CognatogenTierLVL,3]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cognatogen ~ Stat Selection Final|PREVARGTEQ:CognatogenTierLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CognatogenNormal|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistCognatogenDuration|AlchemistCognatogenLVL*10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistCognatogenDC|10+(AlchemistCognatogenLVL/2)+INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CognatogenStatPenalty|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CognatogenACBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CognatogenStatBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CognatogenTierLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SecondCognatogenStatBonus|CognatogenStatBonus-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThirdCognatogenStatBonus|CognatogenStatBonus-4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 128,
+    "record_key": "Discovery ~ Cognatogen"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

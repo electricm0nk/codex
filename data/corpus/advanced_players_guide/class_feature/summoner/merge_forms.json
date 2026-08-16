@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Summoner ~ Merge Forms",
+    "name": "Merge Forms",
+    "class": "Summoner",
+    "description": "As a full-round action, you can touch your eidolon to merge forms. This transformation includes all of your gear. While merged in this way, you are protected from harm and cannot be the target of spells or effects. All effects and spells currently targeting you are suspended until you emerge from your eidolon (although durations continue to expire).  You can cast spells while inside your eidolon by taking control of your eidolon for the duration of the casting. Any material components used for these spells are taken from your gear, even though they are otherwise inaccessible. You can direct all of your eidolon's actions while merged, can perceive through its senses, and can speak through its voice. You can use this ability for %1 rounds per day. You can end this effect at any time as a swift action. You emerge in a square adjacent to your eidolon if able. If your eidolon is returned to its home plane while you are merged with it, you are immediately ejected, taking 4d6 points of damage, and are stunned for 1 round.|MergeFormsRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner ~ Merge Forms"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.Supernatural.Merge Forms"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MergeFormsRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, you can touch your eidolon to merge forms. This transformation includes all of your gear. While merged in this way, you are protected from harm and cannot be the target of spells or effects. All effects and spells currently targeting you are suspended until you emerge from your eidolon (although durations continue to expire).  You can cast spells while inside your eidolon by taking control of your eidolon for the duration of the casting. Any material components used for these spells are taken from your gear, even though they are otherwise inaccessible. You can direct all of your eidolon's actions while merged, can perceive through its senses, and can speak through its voice. You can use this ability for %1 rounds per day. You can end this effect at any time as a swift action. You emerge in a square adjacent to your eidolon if able. If your eidolon is returned to its home plane while you are merged with it, you are immediately ejected, taking 4d6 points of damage, and are stunned for 1 round.|MergeFormsRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MergeFormsRounds|classlevel(\"Summoner\")"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 805,
+    "record_key": "Summoner ~ Merge Forms"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

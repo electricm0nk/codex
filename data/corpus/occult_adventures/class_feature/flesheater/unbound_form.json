@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Flesheater ~ Unbound Form",
+    "name": "Unbound Form",
+    "class": "Flesheater",
+    "description": "At 20th level, a flesheater can use her one flesh ability to assume the shape of a valid consumed creature. This ability functions as alter self, beast shape IV, form of the dragon III, or giant form II, as appropriate. This is a polymorph effect. This ability replaces mighty rage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flesheater ~ Unbound Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Flesheater Class Feature.Barbarian Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a flesheater can use her one flesh ability to assume the shape of a valid consumed creature. This ability functions as alter self, beast shape IV, form of the dragon III, or giant form II, as appropriate. This is a polymorph effect. This ability replaces mighty rage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.114"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1674,
+    "record_key": "Flesheater ~ Unbound Form"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

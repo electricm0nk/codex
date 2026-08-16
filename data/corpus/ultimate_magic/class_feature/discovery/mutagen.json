@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Mutagen",
+    "name": "Mutagen",
+    "class": "Discovery",
+    "description": "You gain the mutagen class ability, as described in the Advanced Player's Guide.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery.Supernatural.AlchemistMutagenMod"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the mutagen class ability, as described in the Advanced Player's Guide."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Alchemist ~ Mutagen"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 155,
+    "record_key": "Discovery ~ Mutagen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

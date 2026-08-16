@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Totemic Skald ~ Song of the Beast",
+    "name": "Song of the Beast",
+    "class": "Totemic Skald",
+    "description": "The totemic skald grants the animal focus abilities of his totem animal (as the hunter's animal focus ability) to all allies affected by his raging song. He treats his skald level as his hunter level for determining the abilities of the animal focus (such as the improvements gained at 8th and 15th level). This ability replaces the rage power gained at 3rd level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Totemic Skald ~ Song of the Beast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Totemic Skald Class Feature.Skald Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The totemic skald grants the animal focus abilities of his totem animal (as the hunter's animal focus ability) to all allies affected by his raging song. He treats his skald level as his hunter level for determining the abilities of the animal focus (such as the improvements gained at 8th and 15th level). This ability replaces the rage power gained at 3rd level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3701,
+    "record_key": "Totemic Skald ~ Song of the Beast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

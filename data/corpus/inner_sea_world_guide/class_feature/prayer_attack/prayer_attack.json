@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Prayer Attack",
+    "name": "Prayer Attack",
+    "class": null,
+    "description": "As a standard action, you can cause a victim within 30 ft. who can see you to be fascinated (Will save DC%1, +2 if wielding two sawtooth sabres). After 3 rounds of concentrating, you can make a coup de grace attack against your victim.|10+RedMantisLvl+CHA",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.SpecialAttack"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can cause a victim within 30 ft. who can see you to be fascinated (Will save DC%1, +2 if wielding two sawtooth sabres). After 3 rounds of concentrating, you can make a coup de grace attack against your victim.|10+RedMantisLvl+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.282"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 156,
+    "record_key": "Prayer Attack"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

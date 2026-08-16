@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tempest Druid ~ Nature Bond",
+    "name": "Nature Bond",
+    "class": "Tempest Druid",
+    "description": "A tempest druid may not choose an animal companion, and must instead select a domain when she gains the Nature Bond ability. A tempest druid must choose the Air or Weather domain, the Cloud, Storm, or Wind subdomain, or the Aquatic or Swamp domain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tempest Druid ~ Nature Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.SpecialQuality.Extraordinary.NatureBond.DruidDomain.CF_Domain"
+      },
+      {
+        "key": "DESC",
+        "value": "A tempest druid may not choose an animal companion, and must instead select a domain when she gains the Nature Bond ability. A tempest druid must choose the Air or Weather domain, the Cloud, Storm, or Wind subdomain, or the Aquatic or Swamp domain."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domains"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Tempest Druid Domain Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1|PREABILITY:1,CATEGORY=Special Ability,TYPE.DruidDomainSelection"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLVL|DruidLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 239,
+    "record_key": "Tempest Druid ~ Nature Bond"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

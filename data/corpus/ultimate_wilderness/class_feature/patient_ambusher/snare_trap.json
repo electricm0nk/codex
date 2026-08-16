@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Patient Ambusher ~ Snare Trap",
+    "name": "Snare Trap",
+    "class": "Patient Ambusher",
+    "description": "A patient ambusher learns how to create a snare trap. The patient ambusher can use this and other learned traps a total of %1 times per day. This snare trap otherwise functions the same as the ranger snare trap detailed in Pathfinder RPG Ultimate Magic (DC %2).|TrapTimes|TrapDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Patient Ambusher ~ Snare Trap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.PatientAmbusherClassFeatures.SpecialAttack.Extraordinary.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerTrapLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NumberOfTraps|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A patient ambusher learns how to create a snare trap. The patient ambusher can use this and other learned traps a total of %1 times per day. This snare trap otherwise functions the same as the ranger snare trap detailed in Pathfinder RPG Ultimate Magic (DC %2).|TrapTimes|TrapDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ranger Trap ~ Snare Trap"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerTrapLVL|HunterLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NumberOfTraps|HunterLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapTimes|WIS+HunterLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapDC|10+HunterLVL/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 671,
+    "record_key": "Patient Ambusher ~ Snare Trap"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

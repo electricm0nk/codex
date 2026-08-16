@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Swashbuckler Archetype ~ Musketeer",
+    "name": "Musketeer",
+    "class": "Swashbuckler Archetype",
+    "description": "A number of organizations and kingdoms search for warriors who are brave (or foolish) enough to wield firearms on the battlefield. The daring nature of swashbucklers often makes them ideal candidates for such service.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler Archetype ~ Musketeer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SwashbucklerArchetype.SwashbucklerFinesse.SwashbucklerWeaponProficiencies.DeedDodgingPanache"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Swashbuckler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Musketeer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerFinesse,TYPE.DeedDodgingPanache]"
+      },
+      {
+        "key": "DESC",
+        "value": "A number of organizations and kingdoms search for warriors who are brave (or foolish) enough to wield firearms on the battlefield. The daring nature of swashbucklers often makes them ideal candidates for such service."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Musketeer ~ Weapon Proficiency|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Musketeer ~ Musketeer Instruction|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Musketeer ~ Quick Clear|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Swashbuckler"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3844,
+    "record_key": "Swashbuckler Archetype ~ Musketeer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

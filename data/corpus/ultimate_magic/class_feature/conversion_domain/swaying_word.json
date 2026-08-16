@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Conversion Domain ~ Swaying Word",
+    "name": "Swaying Word",
+    "class": "Conversion Domain",
+    "description": "Once per day you may speak a word of divinely inspired wisdom that causes a single creature to switch its alliance to you. The target must be within line of sight and able to hear you. If he fails his Will save (DC %1), he is affected by dominate person, except the duration is only 1 minute.|SwayingWordDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Conversion Domain ~ Swaying Word"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwayingWordDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day you may speak a word of divinely inspired wisdom that causes a single creature to switch its alliance to you. The target must be within line of sight and able to hear you. If he fails his Will save (DC %1), he is affected by dominate person, except the duration is only 1 minute.|SwayingWordDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Swaying Word"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwayingWordDC|DomainConversionDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainConversionDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Swaying Word)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 352,
+    "record_key": "Conversion Domain ~ Swaying Word"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

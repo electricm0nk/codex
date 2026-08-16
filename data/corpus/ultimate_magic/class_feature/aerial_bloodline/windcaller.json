@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Aerial Bloodline ~ Windcaller",
+    "name": "Windcaller",
+    "class": "Aerial Bloodline",
+    "description": "You can call the winds to obey your commands for %1 minutes. This functions like control winds, except that you may choose to be immune to any increased wind effects you create. The ability's duration does not need to be consecutive, but it must be used in 1-minute increments. This bloodline power replaces thunderbolt.|Sorcerer_AerialWindcaller_Duration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aerial Bloodline ~ Windcaller"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Aerial Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wildblooded ~ Aerial"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Stormborn_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Stormborn_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AerialWindcaller_Duration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call the winds to obey your commands for %1 minutes. This functions like control winds, except that you may choose to be immune to any increased wind effects you create. The ability's duration does not need to be consecutive, but it must be used in 1-minute increments. This bloodline power replaces thunderbolt.|Sorcerer_AerialWindcaller_Duration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AerialWindcaller_Duration|Sorcerer_Stormborn_BloodlinePower9LVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 minutes/day)|Sorcerer_AerialWindcaller_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_AerialWindcaller_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Minutes per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|StormbornBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1646,
+    "record_key": "Aerial Bloodline ~ Windcaller"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

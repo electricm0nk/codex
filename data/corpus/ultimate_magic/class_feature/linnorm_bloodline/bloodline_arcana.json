@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Linnorm Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Linnorm Bloodline",
+    "description": "Whenever you cast a spell with the",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Linnorm Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Acid|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Cold|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Electricity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Fire|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a spell with the"
+      },
+      {
+        "key": "DESC",
+        "value": "acid|PREVARGTEQ:Sorcerer_DraconicDamageType_Acid,1"
+      },
+      {
+        "key": "DESC",
+        "value": "cold|PREVARGTEQ:Sorcerer_DraconicDamageType_Cold,1"
+      },
+      {
+        "key": "DESC",
+        "value": "electricity|PREVARGTEQ:Sorcerer_DraconicDamageType_Electricity,1"
+      },
+      {
+        "key": "DESC",
+        "value": "fire|PREVARGTEQ:Sorcerer_DraconicDamageType_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "descriptor, you gain a natural armor bonus equal to the spell's level for 1d4 rounds."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(acid spells grant natural armor)|PREVARGTEQ:Sorcerer_DraconicDamageType_Acid,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(cold spells grant natural armor)|PREVARGTEQ:Sorcerer_DraconicDamageType_Cold,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(electricity spells grant natural armor)|PREVARGTEQ:Sorcerer_DraconicDamageType_Electricity,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(fire spells grant natural armor)|PREVARGTEQ:Sorcerer_DraconicDamageType_Fire,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1702,
+    "record_key": "Linnorm Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

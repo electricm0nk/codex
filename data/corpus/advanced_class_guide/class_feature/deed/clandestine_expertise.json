@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Deed ~ Clandestine Expertise",
+    "name": "Clandestine Expertise",
+    "class": "Deed",
+    "description": "A daring infiltrator with at least 1 panache point gains a +2 bonus on Disguise and Stealth checks. Also, as long as she has at least 1 panache point, when she successfully aids another with a Disguise or Stealth check, she grants the subject a +4 bonus on the skill check instead of the normal +2. This deed replaces swashbuckler initiative.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deed ~ Clandestine Expertise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Daring Infiltrator Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A daring infiltrator with at least 1 panache point gains a +2 bonus on Disguise and Stealth checks. Also, as long as she has at least 1 panache point, when she successfully aids another with a Disguise or Stealth check, she grants the subject a +4 bonus on the skill check instead of the normal +2. This deed replaces swashbuckler initiative."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3854,
+    "record_key": "Deed ~ Clandestine Expertise"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

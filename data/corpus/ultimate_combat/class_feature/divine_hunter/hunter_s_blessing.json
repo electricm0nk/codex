@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Divine Hunter ~ Hunter's Blessing",
+    "name": "Hunter's Blessing",
+    "class": "Divine Hunter",
+    "description": "At 11th level, a divine hunter can expend a use of her smite evil ability as a swift action to grant herself and all allies within 10 feet the Deadly Aim, Precise Shot, and Improved Precise Shot feats, even if they lack the prerequisites. The effects last for 1 minute. Evil creatures gain no benefit from this ability. This ability replaces aura of justice.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Hunter ~ Hunter's Blessing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, a divine hunter can expend a use of her smite evil ability as a swift action to grant herself and all allies within 10 feet the Deadly Aim, Precise Shot, and Improved Precise Shot feats, even if they lack the prerequisites. The effects last for 1 minute. Evil creatures gain no benefit from this ability. This ability replaces aura of justice."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1456,
+    "record_key": "Divine Hunter ~ Hunter's Blessing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

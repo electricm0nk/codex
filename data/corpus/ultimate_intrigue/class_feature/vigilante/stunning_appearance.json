@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante ~ Stunning Appearance",
+    "name": "Stunning Appearance",
+    "class": "Vigilante",
+    "description": "A vigilante can leave his foes unable to respond when he appears. Whenever a vigilante with this ability makes a successful attack against a foe that is unaware of the vigilante's presence, the foe must make a successful Will save (DC %1) or be stunned until the end of the vigilante's next turn. If the creature has more than %2 HD, it receives a +4 circumstance bonus on this save. This ability is in addition to the effects of startling appearance and frightening appearance. Once a creature has been the target of this ability (regardless of whether or not the saving throw is successful), it is immune to that vigilante's stunning appearance for 24 hours. This is a mind-affecting fear effect.|10+VigilanteLVL/2+CHA|VigilanteLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante ~ Stunning Appearance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A vigilante can leave his foes unable to respond when he appears. Whenever a vigilante with this ability makes a successful attack against a foe that is unaware of the vigilante's presence, the foe must make a successful Will save (DC %1) or be stunned until the end of the vigilante's next turn. If the creature has more than %2 HD, it receives a +4 circumstance bonus on this save. This ability is in addition to the effects of startling appearance and frightening appearance. Once a creature has been the target of this ability (regardless of whether or not the saving throw is successful), it is immune to that vigilante's stunning appearance for 24 hours. This is a mind-affecting fear effect.|10+VigilanteLVL/2+CHA|VigilanteLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 37,
+    "record_key": "Vigilante ~ Stunning Appearance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

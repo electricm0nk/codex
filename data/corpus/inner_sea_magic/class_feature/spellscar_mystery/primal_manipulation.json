@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spellscar Mystery ~ Primal Manipulation",
+    "name": "Primal Manipulation",
+    "class": "Spellscar Mystery",
+    "description": "Whenever you cast a spell that deals acid, cold, electricity, or fire damage, you may change it to deal one of the other listed damage types. You may use this ability %1 times per day.|PrimalManipulationTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellscar Mystery ~ Primal Manipulation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Supernatural"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PrimalManipulationTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a spell that deals acid, cold, electricity, or fire damage, you may change it to deal one of the other listed damage types. You may use this ability %1 times per day.|PrimalManipulationTimes"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change a spell to deal sonic damage, though the damage is halved.|PREVARGTEQ:OracleLVL,15|PREVARLT:OracleLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change a spell to deal sonic or force damage, though the damage is halved.|PREVARGTEQ:OracleLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PrimalManipulationTimes|1+floor(OracleLVL/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|PrimalManipulationTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 103,
+    "record_key": "Spellscar Mystery ~ Primal Manipulation"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

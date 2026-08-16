@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bardic Performance ~ Exaggerated Pose",
+    "name": "Exaggerated Pose",
+    "class": "Bardic Performance",
+    "description": "A masked performer can enhance her own physical and social abilities by simply altering her posture. When she starts this performance, the masked performer chooses a Strength-, Dexterity-, or Charisma-based skill and gains a +%1 competence bonus on checks with that skill as long as she maintains this performance. The masked performer can change the chosen skill as a swift action. Exaggerated pose is an emotion effect and relies on visual components.|ExaggeratedPoseBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Exaggerated Pose"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MaskedPerformerClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExaggeratedPoseBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A masked performer can enhance her own physical and social abilities by simply altering her posture. When she starts this performance, the masked performer chooses a Strength-, Dexterity-, or Charisma-based skill and gains a +%1 competence bonus on checks with that skill as long as she maintains this performance. The masked performer can change the chosen skill as a swift action. Exaggerated pose is an emotion effect and relies on visual components.|ExaggeratedPoseBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExaggeratedPoseBonus|(BardLVL+5)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 239,
+    "record_key": "Bardic Performance ~ Exaggerated Pose"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

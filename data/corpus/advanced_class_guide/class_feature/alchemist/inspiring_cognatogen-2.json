@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Alchemist ~ Output ~ Inspiring Cognatogen Main Output",
+    "name": "Inspiring Cognatogen",
+    "class": "Alchemist",
+    "description": "You have learned how to make an inspiring cognatogen, a mutagen-like mixture that grants you inspiration (as the investigator's class feature) at the expense of Strength and Constitution.  Upon drinking the inspiring cognatogen, you gain a pool of %1 uses of inspiration. You also gain a +%2 dodge bonus to AC and |AlchemistCognatogenInspiration|AlchemistInspiringCognatogenBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist ~ Output ~ Inspiring Cognatogen Main Output"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Discovery ~ Inspiring Cognatogen 4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistCognatogenInspiration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistInspiringCognatogenBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistInspiringCognatogenPenalty|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned how to make an inspiring cognatogen, a mutagen-like mixture that grants you inspiration (as the investigator's class feature) at the expense of Strength and Constitution.  Upon drinking the inspiring cognatogen, you gain a pool of %1 uses of inspiration. You also gain a +%2 dodge bonus to AC and |AlchemistCognatogenInspiration|AlchemistInspiringCognatogenBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "take a -%1 penalty to both Strength and Constitution. &nl; |AlchemistInspiringCognatogenPenalty|PREVAREQ:AlchemistInspiringCognatogenPenalty,2"
+      },
+      {
+        "key": "DESC",
+        "value": "a +%1 bonus to Reflex saving throws; a -%2 penalty to Strength and Constitution; and the effect of having the amazing inspiration, eidetic recollection, |AlchemistInspiringCognatogenBonus |AlchemistInspiringCognatogenPenalty |PREVARGTEQ:AlchemistInspiringCognatogenPenalty,4"
+      },
+      {
+        "key": "DESC",
+        "value": "and expanded inspiration investigator talents. &nl; |PREMULT:2,[PREVARGTEQ:AlchemistInspiringCognatogenPenalty,4],[PREVARLT:AlchemistInspiringCognatogenPenalty,6]"
+      },
+      {
+        "key": "DESC",
+        "value": "expanded inspiration, item lore, tenacious inspiration, and underworld inspiration investigator talents. &nl; |PREVARGTEQ:AlchemistInspiringCognatogenPenalty,6"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, you can add 1d6 to the result of an ability or skill check (including any you take 10 or 20 on) by expending one use of inspiration.  This ability works exactly like the investigator's inspiration ability, except that you gain the pool of inspiration upon drinking the inspiring cognatogen, and any unspent inspiration is lost at the end of the cognatogen's duration. If you already have access to inspiration, the inspiration added by the inspiring cognatogen is added to your inspiration pool, but each time you expend at least one use of inspiration while this ability is active, you must succeed at a DC 20 Will saving throw or become dazed for 1 round. You cannot use inspiration to augment this saving throw. &nl; All limitations of mutagens apply to an inspiring cognatogen as if they were the same substance-an alchemist can only maintain one mutagen or cognatogen (either the standard cognatogen from Pathfinder RPG Ultimate Magic or the inspired cognatogen) at a time, a cognatogen not in an alchemist's possession becomes inert, drinking a cognatogen makes non-alchemists sick, and so on. When the effect of an inspiring cognatogen ends, you take 2 points of ability damage to Strength and Dexterity.  The infuse mutagen discovery and the persistent mutagen class ability apply to an inspiring cognatogen."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistCognatogenInspiration|max(1,AlchemistAlchemyLVL/2+INT)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistInspiringCognatogenBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistInspiringCognatogenPenalty|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|AlchemistCognatogenInspiration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2301,
+    "record_key": "Alchemist ~ Output ~ Inspiring Cognatogen Main Output"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

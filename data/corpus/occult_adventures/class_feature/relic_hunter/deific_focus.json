@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Relic Hunter ~ Deific Focus",
+    "name": "Deific Focus",
+    "class": "Relic Hunter",
+    "description": "At 1st level, a relic hunter learns to invest divine power into her chosen relics. This acts like the occultist's focus powers and mental focus class features (see pages 47 and 48, respectively), with the following adjustments. Each day, a relic hunter has a number of points of deific focus equal to her inquisitor level + her Wisdom modifier, and she must spend 1 hour in prayer with her relics to invest them with divine power. These points refresh at the start of each day. At 1st level, the relic hunter learns the two base focus powers from her chosen relic schools and can select one more focus power from the list of those made available by her chosen schools. Whenever she gains a new relic school, she gains the base focus power of that school. In addition, at 4th level and every 4 levels thereafter, she learns a new focus power selected from all of the powers granted by all of the relic schools she knows. She can use these focus powers only by expending points of deif ic focus. Unless otherwise noted, the DC for any saving throws against a focus power is equal to 10 + 1/2 the inquisitor's class level + the inquisitor's Wisdom modif ier. She cannot select a focus power more than once. She uses her inquisitor level in place of an occultist level to qualify for focus powers. This ability replaces domain, bane, greater bane, second judgment, and third judgment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Relic Hunter ~ Deific Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Relic Hunter Class Feature.Inquisitor Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a relic hunter learns to invest divine power into her chosen relics. This acts like the occultist's focus powers and mental focus class features (see pages 47 and 48, respectively), with the following adjustments. Each day, a relic hunter has a number of points of deific focus equal to her inquisitor level + her Wisdom modifier, and she must spend 1 hour in prayer with her relics to invest them with divine power. These points refresh at the start of each day. At 1st level, the relic hunter learns the two base focus powers from her chosen relic schools and can select one more focus power from the list of those made available by her chosen schools. Whenever she gains a new relic school, she gains the base focus power of that school. In addition, at 4th level and every 4 levels thereafter, she learns a new focus power selected from all of the powers granted by all of the relic schools she knows. She can use these focus powers only by expending points of deif ic focus. Unless otherwise noted, the DC for any saving throws against a focus power is equal to 10 + 1/2 the inquisitor's class level + the inquisitor's Wisdom modif ier. She cannot select a focus power more than once. She uses her inquisitor level in place of an occultist level to qualify for focus powers. This ability replaces domain, bane, greater bane, second judgment, and third judgment."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1753,
+    "record_key": "Relic Hunter ~ Deific Focus"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

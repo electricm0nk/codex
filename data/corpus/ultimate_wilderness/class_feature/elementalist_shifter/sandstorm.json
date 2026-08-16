@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elementalist Shifter ~ Sandstorm",
+    "name": "Sandstorm",
+    "class": "Elementalist Shifter",
+    "description": "Combining the high winds of air and fine particulates of earth produces a sandstorm that extends out to a radius of 20 feet from the elementalist shifter. All light levels in the area diminish by one step, and creatures caught in the effect take 1d6 points of nonlethal damage each round they remain within the sandstorm.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elementalist Shifter ~ Sandstorm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Combining the high winds of air and fine particulates of earth produces a sandstorm that extends out to a radius of 20 feet from the elementalist shifter. All light levels in the area diminish by one step, and creatures caught in the effect take 1d6 points of nonlethal damage each round they remain within the sandstorm."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1057,
+    "record_key": "Elementalist Shifter ~ Sandstorm"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

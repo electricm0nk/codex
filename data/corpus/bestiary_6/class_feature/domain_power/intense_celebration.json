@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Domain Power ~ Intense Celebration",
+    "name": "Intense Celebration",
+    "class": "Domain Power",
+    "description": "At 8th level, any spells you cast that confer a morale effect upon you or your allies are automatically affected as if by the Extend Spell metamagic feat, with no increase in spell level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Intense Celebration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, any spells you cast that confer a morale effect upon you or your allies are automatically affected as if by the Extend Spell metamagic feat, with no increase in spell level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_class.lst",
+    "sha256": "fb3031a343dcd1408f50cd61a32f97516e73409d8cd79ead3a1e36efd1d756de",
+    "line": 17,
+    "record_key": "Domain Power ~ Intense Celebration"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

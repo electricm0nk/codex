@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Reincarnated Oracle ~ Oracle's Curse",
+    "name": "Oracle's Curse",
+    "class": "Reincarnated Oracle",
+    "description": "A reincarnated oracle must choose the haunted or tongues curse at 1st level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reincarnated Oracle ~ Oracle's Curse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A reincarnated oracle must choose the haunted or tongues curse at 1st level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 939,
+    "record_key": "Reincarnated Oracle ~ Oracle's Curse"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

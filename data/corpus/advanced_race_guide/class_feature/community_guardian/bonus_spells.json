@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Community Guardian ~ Bonus Spells",
+    "name": "Bonus Spells",
+    "class": "Community Guardian",
+    "description": "bless water (2nd), consecrate (4th), remove disease (6th), hallow (10th), heroes' feast (12th). These bonus spells replace the oracle's mystery bonus spells from these levels.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Community Guardian ~ Bonus Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "bless water (2nd), consecrate (4th), remove disease (6th), hallow (10th), heroes' feast (12th). These bonus spells replace the oracle's mystery bonus spells from these levels."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=1|Bless Water|PRECLASS:1,Oracle=2"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=2|Consecrate|PRECLASS:1,Oracle=4"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=3|Remove Disease|PRECLASS:1,Oracle=6"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=4|Hallow|PRECLASS:1,Oracle=10"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=5|Heroes' Feast|PRECLASS:1,Oracle=12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 302,
+    "record_key": "Community Guardian ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

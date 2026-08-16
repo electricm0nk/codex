@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wind Spirit ~ Spark Soul",
+    "name": "Spark Soul",
+    "class": "Wind Spirit",
+    "description": "The shaman gains electricity resistance 10. In addition, as a standard action she can unleash a 20-foot line of sparks from her fingertips, dealing %1d4 points of electricity damage. A successful Reflex saving throw (DC %2) halves this damage. The shaman can use this ability three times per day, but she must wait 1d4 rounds between each use.|ShamanSparkSoulDice|ShamanSparkSoulDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wind Spirit ~ Spark Soul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanSparkSoulDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanSparkSoulDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman gains electricity resistance 10. In addition, as a standard action she can unleash a 20-foot line of sparks from her fingertips, dealing %1d4 points of electricity damage. A successful Reflex saving throw (DC %2) halves this damage. The shaman can use this ability three times per day, but she must wait 1d4 rounds between each use.|ShamanSparkSoulDice|ShamanSparkSoulDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanSparkSoulDice|ShamanSpiritLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanSparkSoulDC|ShamanHexDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1705,
+    "record_key": "Wind Spirit ~ Spark Soul"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

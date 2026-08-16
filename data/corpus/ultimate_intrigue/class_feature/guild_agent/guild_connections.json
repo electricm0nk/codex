@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Guild Agent ~ Guild Connections",
+    "name": "Guild Connections",
+    "class": "Guild Agent",
+    "description": "A guild agent gains the black market connections rogue talent. Furthermore, he can ask his guild for tips about the local scene, granting him a bonus equal to half his rogue level on Knowledge (local) checks and Diplomacy checks to gather information, as long as the information in question pertains to the guild agent's base of operations.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guild Agent ~ Guild Connections"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.GuildAgentClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A guild agent gains the black market connections rogue talent. Furthermore, he can ask his guild for tips about the local scene, granting him a bonus equal to half his rogue level on Knowledge (local) checks and Diplomacy checks to gather information, as long as the information in question pertains to the guild agent's base of operations."
+      },
+      {
+        "key": "DESC",
+        "value": " The guild agent also gains the gossip collector vigilante social talent, and his base of operations counts as his area of renown for the purpose of determining the effects of gossip collector.|PRECLASS:1,Rogue=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rogue Talent ~ Black Market Connections"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Social Talent ~ Gossip Collector|PRECLASS:1,Rogue=4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 735,
+    "record_key": "Guild Agent ~ Guild Connections"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

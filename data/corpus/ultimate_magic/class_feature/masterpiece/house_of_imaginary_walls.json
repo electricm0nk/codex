@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Masterpiece ~ House of Imaginary Walls",
+    "name": "House of Imaginary Walls",
+    "class": "Masterpiece",
+    "description": "You can trap opponents with the power of your acting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterpiece ~ House of Imaginary Walls"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "The House of Imaginary Walls"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Masterpiece"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HouseOfImaginaryWallsDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can trap opponents with the power of your acting."
+      },
+      {
+        "key": "DESC",
+        "value": " You silently mime building an invisible wall, flattening your hands along linear planes to indicate its location and orientation. This \"wall\" is only real for creatures that see you perform this masterpiece (Will negates, DC %1); you and your allies may automatically fail your saves if you want to treat the wall as real (for example, if you want to use the wall as a bridge to cross a chasm). For creatures who believe the wall is real, it has hardness 8, 90 hit points, and a break DC of 30 (multiple believing creatures can attack the walls, breaking through it more quickly as if they were all attacking a real wall rather than each attacking separate mental constructs). This is an illusion (phantasm) effect. Because the wall is a mental image, it blocks incorporeal creatures that fail their saves (because they perceive it as a magical barrier that excludes them), though they can still go around the wall or through the floor or ceiling to bypass it. It does not affect objects or creatures immune to mental effects (which can result in situations like an archer firing through the wall but unable to physically cross it). You can create one 10-foot-square wall per use of this ability; over several rounds you can extend this square or create other walls, all of which persist until you stop using bardic performance rounds to sustain them. The wall is immobile once created. Part of the wall must be in or along the edge of your space, and you cannot create a wall that extends beyond your natural reach (though you can create a wall, move, and create another by using this ability again). Once created, the wall exists until you end your performance or affected creatures \"break\" it. Abilities that extend the duration of a bardic performance (such as Lingering Performance; see page 164 of the Advanced Player's Guide) affect this masterpiece.  Use: 1 bardic performance round per round.  Action: 1 standard action per 10-foot square.|HouseOfImaginaryWallsDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HouseOfImaginaryWallsDC|10+(MasterpieceLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 175,
+    "record_key": "Masterpiece ~ House of Imaginary Walls"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

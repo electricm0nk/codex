@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Wandering Hex ~ Phantom Stampede",
+    "name": "Phantom Stampede",
+    "class": "Shaman Wandering Hex",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Wandering Hex ~ Phantom Stampede"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanMammothHex"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Phantom Stampede"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Special Ability,Shaman Spirit Hex ~ Phantom Stampede],[PREABILITY:1,CATEGORY=Special Ability,Shaman Wandering Hex ~ Phantom Stampede]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shaman Spirit Hex ~ Phantom Stampede"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1214,
+    "record_key": "Shaman Wandering Hex ~ Phantom Stampede"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

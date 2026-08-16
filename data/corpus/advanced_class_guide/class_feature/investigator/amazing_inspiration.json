@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Amazing Inspiration",
+    "name": "Amazing Inspiration",
+    "class": "Investigator",
+    "description": "You roll d8 instead of d6 for inspiration.|PREVARLTEQ:InvestigatorLVL,19",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Amazing Inspiration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.InvestigatorTalent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "InvestigatorTalentLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "You roll d8 instead of d6 for inspiration.|PREVARLTEQ:InvestigatorLVL,19"
+      },
+      {
+        "key": "DESC",
+        "value": "You roll 2d8 instead of 1d6 for inspiration.|PREVARGTEQ:InvestigatorLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorInspirationDice|1|PREVARGTEQ:InvestigatorLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorInspirationDieSize|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1281,
+    "record_key": "Investigator ~ Amazing Inspiration"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Boreal Bloodline ~ Child of Ancient Winters",
+    "name": "Child of Ancient Winters",
+    "class": "Boreal Bloodline",
+    "description": "You gain the cold subtype and you become immune to fatigue and exhaustion. In addition, you gain immunity to sneak attacks and critical hits. This power causes you to gain vulnerability to fire.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Boreal Bloodline ~ Child of Ancient Winters"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Boreal Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Boreal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Boreal_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the cold subtype and you become immune to fatigue and exhaustion. In addition, you gain immunity to sneak attacks and critical hits. This power causes you to gain vulnerability to fire."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Cold"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Critical Hits|Immunity to Exhaustion|Immunity to Fatigue|Immunity to Sneak Attacks"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|BorealBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3122,
+    "record_key": "Boreal Bloodline ~ Child of Ancient Winters"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

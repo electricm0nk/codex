@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Daring General ~ Follower ~ Honor Guard",
+    "name": "Honor Guard",
+    "class": "Daring General",
+    "description": "The follower gains a +2 bonus to her AC and on saving throws, but takes a -2 penalty on attack and damage rolls. An honor guard unit gains a +2 bonus to its DV and takes a -2 penalty to its OM in mass combat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Daring General ~ Follower ~ Honor Guard"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.DaringGeneralClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The follower gains a +2 bonus to her AC and on saving throws, but takes a -2 penalty on attack and damage rolls. An honor guard unit gains a +2 bonus to its DV and takes a -2 penalty to its OM in mass combat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 300,
+    "record_key": "Daring General ~ Follower ~ Honor Guard"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

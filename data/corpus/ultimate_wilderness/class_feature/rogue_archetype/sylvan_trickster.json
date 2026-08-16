@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Archetype ~ Sylvan Trickster",
+    "name": "Sylvan Trickster",
+    "class": "Rogue Archetype",
+    "description": "Sylvan tricksters are rogues who model themselves after the mischievous fey of legend. Though not spellcasters, sylvan tricksters learn minor magical abilities reminiscent of those favored by fey creatures. The journey for many sylvan tricksters began in childhood, learning at an elder's knee the stories of the fey and the secrets of how to resist their tricks. Sylvan tricksters often live in areas where the boundary with the First World is thin, and a few have even been there-voluntarily or not.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ Sylvan Trickster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RogueArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Sylvan Trickster],[!PREFACT:1,ABILITIES,Rogue_Archetype_ClassSkills=True,Rogue_Archetype_Trapfinding=True,Rogue_Archetype_RogueTalents=True,Rogue_Archetype_UncannyDodge=True,Rogue_Archetype_ImprovedUncannyDodge=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Sylvan tricksters are rogues who model themselves after the mischievous fey of legend. Though not spellcasters, sylvan tricksters learn minor magical abilities reminiscent of those favored by fey creatures. The journey for many sylvan tricksters began in childhood, learning at an elder's knee the stories of the fey and the secrets of how to resist their tricks. Sylvan tricksters often live in areas where the boundary with the First World is thin, and a few have even been there-voluntarily or not."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Sylvan Trickster ~ Class Skills|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sylvan Trickster ~ Wild Empathy|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sylvan Trickster ~ Fey Tricks|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sylvan Trickster ~ Resist Nature's Lure|PRECLASS:1,Rogue=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sylvan Trickster ~ Fey Resistance|PRECLASS:1,Rogue=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalents|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_ImprovedUncannyDodge|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 967,
+    "record_key": "Rogue Archetype ~ Sylvan Trickster"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

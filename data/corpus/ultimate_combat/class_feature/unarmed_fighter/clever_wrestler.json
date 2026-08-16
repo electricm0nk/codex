@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Unarmed Fighter ~ Clever Wrestler",
+    "name": "Clever Wrestler",
+    "class": "Unarmed Fighter",
+    "description": "You take no penalties to Dexterity or on attack rolls while grappled, and retains your Dexterity bonus to AC while pinning an opponent. You can make attacks of opportunity even when grappled and even against creatures attempting to grapple you if the opponent has the Improved Grapple feat or the grab ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unarmed Fighter ~ Clever Wrestler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You take no penalties to Dexterity or on attack rolls while grappled, and retains your Dexterity bonus to AC while pinning an opponent. You can make attacks of opportunity even when grappled and even against creatures attempting to grapple you if the opponent has the Improved Grapple feat or the grab ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 764,
+    "record_key": "Unarmed Fighter ~ Clever Wrestler"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

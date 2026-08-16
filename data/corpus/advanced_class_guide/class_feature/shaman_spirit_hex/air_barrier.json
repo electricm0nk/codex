@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Air Barrier",
+    "name": "Air Barrier",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman creates an invisible shell of air that grants her a +%1 armor bonus to AC.|ShamanAirBarrierBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Air Barrier"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanWindHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Air Barrier"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanWindSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanAirBarrierBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanAirBarrierHours|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman creates an invisible shell of air that grants her a +%1 armor bonus to AC.|ShamanAirBarrierBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "This barrier causes incoming arrows, rays, and other ranged attacks requiring an attack roll against her to suffer a 50%% miss chance.|PREVARGTEQ:ShamanSpiritLVL,13"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can use this barrier for %1 hours. This duration does not need to be consecutive, but it must be spent in 1-hour increments.|ShamanAirBarrierHours"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanAirBarrierBonus|4+2*max(0,(ShamanSpiritLVL-3)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanAirBarrierHours|ShamanSpiritLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|ShamanAirBarrierBonus|TYPE=Armor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1692,
+    "record_key": "Shaman Spirit Hex ~ Air Barrier"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

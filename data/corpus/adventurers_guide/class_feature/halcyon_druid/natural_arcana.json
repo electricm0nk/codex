@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Halcyon Druid ~ Natural Arcana",
+    "name": "Natural Arcana",
+    "class": "Halcyon Druid",
+    "description": "At 4th level and every 2 levels thereafter, a halcyon druid chooses two spells from the wizard/sorcerer spell list and adds them to her druid spell list. The chosen spells must be at least 1 level lower than the highest level spell she can currently cast. At 20th level, the halcyon druid can choose wizard/sorcerer spells of any level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halcyon Druid ~ Natural Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.HalcyonDruidClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level and every 2 levels thereafter, a halcyon druid chooses two spells from the wizard/sorcerer spell list and adds them to her druid spell list. The chosen spells must be at least 1 level lower than the highest level spell she can currently cast. At 20th level, the halcyon druid can choose wizard/sorcerer spells of any level."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Natural Arcana Spells|min(16,2*((DruidLVL-2)/2))"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Natural Arcana Lvl 20|DruidLVL>=20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 792,
+    "record_key": "Halcyon Druid ~ Natural Arcana"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

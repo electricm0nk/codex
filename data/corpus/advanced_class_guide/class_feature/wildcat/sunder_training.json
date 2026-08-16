@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wildcat ~ Sunder Training 2",
+    "name": "Sunder Training",
+    "class": "Wildcat",
+    "description": "You have had additional training in the Sunder combat maneuver. You gain a +%1 bonus on combat maneuver checks when attempting this combat maneuver and a +%1 bonus to your CMD when defending against this maneuver.|WildcatSunderBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildcat ~ Sunder Training 2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wildcat Maneuver Training 2.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WildcatSunderBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have had additional training in the Sunder combat maneuver. You gain a +%1 bonus on combat maneuver checks when attempting this combat maneuver and a +%1 bonus to your CMD when defending against this maneuver.|WildcatSunderBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildcatSunderBonus|1|PREVARGTEQ:MonkLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildcatSunderBonus|1|PREVARGTEQ:MonkLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildcatSunderBonus|1|PREVARGTEQ:MonkLVL,16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3462,
+    "record_key": "Wildcat ~ Sunder Training 2"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

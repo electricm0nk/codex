@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Blood Conduit ~ Reflexive Conduit",
+    "name": "Reflexive Conduit",
+    "class": "Blood Conduit",
+    "description": "At 14th level, a blood conduit can discharge his power into foes that attempt bodily contact with him. While wearing light or no armor, when the blood conduit is subject to a combat maneuver check made to bull rush, grapple, pin, reposition, or trip him, as an immediate action he can target his attacker with a bloodrager spell that has a range of touch. If the spell would normally require a touch attack, a blood conduit can attempt a combat maneuver check for this attack instead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blood Conduit ~ Reflexive Conduit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bloodrager Class Feature.SpecialQuality.Extraordinary.BloodragerIndomitableWill"
+      },
+      {
+        "key": "DESC",
+        "value": "At 14th level, a blood conduit can discharge his power into foes that attempt bodily contact with him. While wearing light or no armor, when the blood conduit is subject to a combat maneuver check made to bull rush, grapple, pin, reposition, or trip him, as an immediate action he can target his attacker with a bloodrager spell that has a range of touch. If the spell would normally require a touch attack, a blood conduit can attempt a combat maneuver check for this attack instead."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2721,
+    "record_key": "Blood Conduit ~ Reflexive Conduit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

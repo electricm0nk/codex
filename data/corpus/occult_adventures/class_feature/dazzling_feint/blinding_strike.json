@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dazzling Feint ~ Blinding Strike",
+    "name": "Blinding Strike",
+    "class": "Dazzling Feint",
+    "description": "The vexing daredevil's weapon emits a bright flash of light into the opponent's eyes. If the vexing daredevil's next attack hits, the target must succeed at a Fortitude saving throw or be blinded for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dazzling Feint ~ Blinding Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DazzlingFeint.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The vexing daredevil's weapon emits a bright flash of light into the opponent's eyes. If the vexing daredevil's next attack hits, the target must succeed at a Fortitude saving throw or be blinded for 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1508,
+    "record_key": "Dazzling Feint ~ Blinding Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,135 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Druid Archetype ~ River Druid",
+    "name": "River Druid",
+    "class": "Druid Archetype",
+    "description": "These druids are the guardians of rivers and the creatures that depend on them. Just as rivers pour from mountains to seas, river druids adapt to many environments and cultures. They can be found wherever water flows, even among underground rivers or sewer systems.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ River Druid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ River Druid],[!PREFACT:1,ABILITIES,Druid_Archetype_ClassSkills=True,Druid_Archetype_NatureSense=True,Druid_Archetype_WoodlandStride=True,Druid_Archetype_TracklessStep=True,Druid_Archetype_ResistNaturesLure=True,Druid_Archetype_WildShape=True,Druid_Archetype_TimelessBody=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "These druids are the guardians of rivers and the creatures that depend on them. Just as rivers pour from mountains to seas, river druids adapt to many environments and cultures. They can be found wherever water flows, even among underground rivers or sewer systems."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|River Druid ~ Ferrier|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|River Druid ~ Read the Currents|PRECLASS:1,Druid=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|River Druid ~ Countercurrent|PRECLASS:1,Druid=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|River Druid ~ Deep Breath|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|River Druid ~ Wild Shape|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|River Druid ~ Tongue of the Sun and Moon|PRECLASS:1,Druid=15"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_NatureSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_TracklessStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_TimelessBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_NatureSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_TracklessStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_TimelessBody|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 497,
+    "record_key": "Druid Archetype ~ River Druid"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spire Defender ~ Weapon Proficiency",
+    "name": "Weapon Proficiency",
+    "class": "Spire Defender",
+    "description": "A spire defender is proficient with all light and one-handed simple and martial weapons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spire Defender ~ Weapon Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialQuality.MagusWeaponProficiency"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Feat|Martial Weapon Proficiency|Simple Weapon Proficiency"
+      },
+      {
+        "key": "DESC",
+        "value": "A spire defender is proficient with all light and one-handed simple and martial weapons."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|TYPE=Light.Simple|TYPE=OneHanded.Simple|TYPE=Light.Martial|TYPE=Martial.OneHanded"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Spire Defender Exotic Weapon Proficiency|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 281,
+    "record_key": "Spire Defender ~ Weapon Proficiency"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

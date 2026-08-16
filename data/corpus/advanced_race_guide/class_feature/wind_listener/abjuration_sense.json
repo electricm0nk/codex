@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wind Listener ~ Abjuration Sense",
+    "name": "Abjuration Sense",
+    "class": "Wind Listener",
+    "description": "A wind listener develops a sixth sense for spotting spells designed to guard against his investigations. He gains a +%1 bonus on Perception checks to notice spells of the abjuration school and on Spellcraft checks to identify abjuration effects, spells, and magic items.|WizardLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wind Listener ~ Abjuration Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wind listener develops a sixth sense for spotting spells designed to guard against his investigations. He gains a +%1 bonus on Perception checks to notice spells of the abjuration school and on Spellcraft checks to identify abjuration effects, spells, and magic items.|WizardLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 741,
+    "record_key": "Wind Listener ~ Abjuration Sense"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

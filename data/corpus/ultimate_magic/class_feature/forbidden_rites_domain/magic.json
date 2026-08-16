@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Magic Domain",
+    "name": "Magic",
+    "class": "Forbidden Rites Domain",
+    "description": "You are a true student of all things mystical, and see divinity in the purity of magic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Magic Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.MagicDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMagicLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMagicDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMagicTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMagicAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a true student of all things mystical, and see divinity in the purity of magic."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Hand of the Acolyte|PREDOMAIN:1,Magic|PREVARGTEQ:DomainMagicAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Dispelling Touch|PREDOMAIN:1,Magic|PREVARGTEQ:DomainMagicAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMagicLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMagicDC|10+(DomainMagicLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMagicTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMagicAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Identify|Cleric=2|Magic Mouth|Cleric=3|Dispel Magic|Cleric=4|Imbue with Spell Ability|Cleric=5|Spell Resistance|Cleric=6|Antimagic Field|Cleric=7|Spell Turning|Cleric=8|Protection from Spells|Cleric=9|Mage's Disjunction"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1047,
+    "record_key": "Forbidden Rites Domain ~ Magic Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

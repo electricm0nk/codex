@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nimble Guardian ~ Nimble Reflexes",
+    "name": "Nimble Reflexes",
+    "class": "Nimble Guardian",
+    "description": "The nimble guardian gains a +2 bonus on all Reflex saving throws.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nimble Guardian ~ Nimble Reflexes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The nimble guardian gains a +2 bonus on all Reflex saving throws."
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Reflex|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 451,
+    "record_key": "Nimble Guardian ~ Nimble Reflexes"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

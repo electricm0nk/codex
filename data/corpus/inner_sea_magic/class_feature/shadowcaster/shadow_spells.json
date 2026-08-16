@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shadowcaster ~ Shadow Spells",
+    "name": "Shadow Spells",
+    "class": "Shadowcaster",
+    "description": "A shadowcaster uses his shadow to prepare additional spells. He must spend his entire period of spell preparation in dim illumination to use this ability. He may prepare a number of additional spell levels of spells equal to the level of the highest-level wizard spell he can cast. For example, if he can cast 6th-level wizard spells, he could prepare six 1st-level spells, two 3rd-level spells, or any similar combination that adds up to a total of six spell levels. These spells are stored in his shadow. He can only cast these spells when he is in an area of normal light or dim light. He gains Shadowtongue as a bonus language.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadowcaster ~ Shadow Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural.WizardArcaneBond"
+      },
+      {
+        "key": "DESC",
+        "value": "A shadowcaster uses his shadow to prepare additional spells. He must spend his entire period of spell preparation in dim illumination to use this ability. He may prepare a number of additional spell levels of spells equal to the level of the highest-level wizard spell he can cast. For example, if he can cast 6th-level wizard spells, he could prepare six 1st-level spells, two 3rd-level spells, or any similar combination that adds up to a total of six spell levels. These spells are stored in his shadow. He can only cast these spells when he is in an area of normal light or dim light. He gains Shadowtongue as a bonus language."
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Shadowtongue"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 429,
+    "record_key": "Shadowcaster ~ Shadow Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

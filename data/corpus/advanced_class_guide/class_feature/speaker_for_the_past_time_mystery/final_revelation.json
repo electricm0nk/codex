@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Speaker for the Past Time Mystery ~ Final Revelation",
+    "name": "Final Revelation",
+    "class": "Speaker for the Past Time Mystery",
+    "description": "You become a true master of time and stop aging. You cannot be magically aged and no longer take penalties to your ability scores for aging. Age bonuses still accrue, and any aging penalties that you have already accrued remain in place. You cannot die of old age, but you can be killed or die through accident, disease, poison, or other external effects. In addition, you can cast time stop once per day as a spell-like ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Speaker for the Past Time Mystery ~ Final Revelation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "speaker for the past revelation.SpecialQuality.FinalTimeRevelation"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=20|Time Stop"
+      },
+      {
+        "key": "DESC",
+        "value": "You become a true master of time and stop aging. You cannot be magically aged and no longer take penalties to your ability scores for aging. Age bonuses still accrue, and any aging penalties that you have already accrued remain in place. You cannot die of old age, but you can be killed or die through accident, disease, poison, or other external effects. In addition, you can cast time stop once per day as a spell-like ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3639,
+    "record_key": "Speaker for the Past Time Mystery ~ Final Revelation"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Imperious Bloodline ~ Student of Humanity",
+    "name": "Student of Humanity",
+    "class": "Imperious Bloodline",
+    "description": "You gain Diplomacy, Knowledge (history), Knowledge (local), Knowledge (nobility), and Linguistics as class skills. In addition, when using these skills to learn, study, or gather information about humans, you add a +%1 insight bonus on such checks.|Sorcerer_ImperiousStudentOfHumanity_SkillBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Imperious Bloodline ~ Student of Humanity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Imperious Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Imperious"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Imperious_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Imperious_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Imperious_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_ImperiousStudentOfHumanity_SkillBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Diplomacy, Knowledge (history), Knowledge (local), Knowledge (nobility), and Linguistics as class skills. In addition, when using these skills to learn, study, or gather information about humans, you add a +%1 insight bonus on such checks.|Sorcerer_ImperiousStudentOfHumanity_SkillBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|Diplomacy|Knowledge (History)|Knowledge (Local)|Knowledge (Nobility)|Linguistics"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_ImperiousStudentOfHumanity_SkillBonus|Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+%1 insight bonus)|Sorcerer_ImperiousStudentOfHumanity_SkillBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+%1 insight bonus to Diplomacy, Knowledge (history), Knowledge (local), Knowledge (nobility), and Linguistics when using these skills to learn, study, or gather information about humans.|Sorcerer_ImperiousStudentOfHumanity_SkillBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ImperiousBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 22,
+    "record_key": "Imperious Bloodline ~ Student of Humanity"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

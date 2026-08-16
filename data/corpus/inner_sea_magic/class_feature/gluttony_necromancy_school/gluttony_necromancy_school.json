@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gluttony (Necromancy) School",
+    "name": "Gluttony (Necromancy) School",
+    "class": null,
+    "description": "You have chosen to specialize in Gluttony, magic that manipulates the physical body to provide for an unending hunger for life.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecromancySchoolLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to specialize in Gluttony, magic that manipulates the physical body to provide for an unending hunger for life."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Necromancy School ~ Power Over Undead|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardPowerOverUndead|PREVARGTEQ:NecromancySchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Necromancy School ~ Grave Touch|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardGraveTouch|PREVARGTEQ:NecromancySchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Necromancy School ~ Life Sight|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardLifeSight|PREVARGTEQ:NecromancySchoolLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecromancySchoolLVL|ArcaneSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisallowWizardArcaneSchoolArchetype|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OppositionalSchool|-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 127,
+    "record_key": "Gluttony (Necromancy) School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

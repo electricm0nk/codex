@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Masterful Trick ~ Avenge Me",
+    "name": "Avenge Me",
+    "class": "Masterful Trick",
+    "description": "The cult master creates a compulsion for one of his followers to avenge him. Whenever the cult master takes hit point damage from an attack, he can trigger this trick as long as he is within 60 feet of the subject. The subject is immediately affected as if by the rage spell for %1 rounds. This trick can be implanted only in a cohort or follower of the cult master. (Masterful Trick)|MesmeristLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterful Trick ~ Avenge Me"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristTrick.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=ARCHETYPE,Mesmerist ~ Masterful Tricks,Mesmerist Archetype ~ Cult Master"
+      },
+      {
+        "key": "DESC",
+        "value": "The cult master creates a compulsion for one of his followers to avenge him. Whenever the cult master takes hit point damage from an attack, he can trigger this trick as long as he is within 60 feet of the subject. The subject is immediately affected as if by the rage spell for %1 rounds. This trick can be implanted only in a cohort or follower of the cult master. (Masterful Trick)|MesmeristLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1476,
+    "record_key": "Masterful Trick ~ Avenge Me"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

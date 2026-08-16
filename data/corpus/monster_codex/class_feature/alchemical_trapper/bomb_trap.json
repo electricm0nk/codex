@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Alchemical Trapper ~ Bomb Trap",
+    "name": "Bomb Trap",
+    "class": "Alchemical Trapper",
+    "description": "An alchemical trapper can use one of her bombs to make a trap. Setting a bomb trap is a full-round action that provokes attacks of opportunity. A bomb trap fills a single 5-foot square and cannot be placed in the same area as any other trap. The alchemical trapper needs the same materials required for making a bomb. The DCs for Perception checks to notice the trap, Disable Device checks to disable it, and saving throws to avoid it are equal to the DC for the alchemical trapper's bombs. All bomb traps have location triggers and do not reset. The alchemical trapper can use any one discovery that applies to a bomb when making a bomb trap. The bomb trap lasts %1 minutes. If the bomb trap is not disabled or exploded within that time frame, the trap becomes inert. Creating a bomb trap uses one of the alchemical trapper's bombs per day.|10*AlchemistLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemical Trapper ~ Bomb Trap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Features.AlchemicalTrapperClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An alchemical trapper can use one of her bombs to make a trap. Setting a bomb trap is a full-round action that provokes attacks of opportunity. A bomb trap fills a single 5-foot square and cannot be placed in the same area as any other trap. The alchemical trapper needs the same materials required for making a bomb. The DCs for Perception checks to notice the trap, Disable Device checks to disable it, and saving throws to avoid it are equal to the DC for the alchemical trapper's bombs. All bomb traps have location triggers and do not reset. The alchemical trapper can use any one discovery that applies to a bomb when making a bomb trap. The bomb trap lasts %1 minutes. If the bomb trap is not disabled or exploded within that time frame, the trap becomes inert. Creating a bomb trap uses one of the alchemical trapper's bombs per day.|10*AlchemistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 25,
+    "record_key": "Alchemical Trapper ~ Bomb Trap"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

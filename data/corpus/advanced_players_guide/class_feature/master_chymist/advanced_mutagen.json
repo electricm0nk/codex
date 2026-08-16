@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Master Chymist ~ Advanced Mutagen",
+    "name": "Advanced Mutagen",
+    "class": "Master Chymist",
+    "description": "At 2nd level, the mutagenic form of the master chymist continues to evolve and develop as she grows in power. The master chymist selects an advanced mutagen, a power that changes how her mutagen form works or can only be accessed in her mutagenic form. She gains additional advanced mutagens at 4th, 6th, 8th, and 10th level. The chymist cannot select the same advanced mutagen more than once.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master Chymist ~ Advanced Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Master Chymist Class Feature.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_AdvancedMutagen_LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, the mutagenic form of the master chymist continues to evolve and develop as she grows in power. The master chymist selects an advanced mutagen, a power that changes how her mutagen form works or can only be accessed in her mutagenic form. She gains additional advanced mutagens at 4th, 6th, 8th, and 10th level. The chymist cannot select the same advanced mutagen more than once."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Master Chymist Advanced Mutagen|MasterChymist_AdvancedMutagen_LVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterChymist_AdvancedMutagen_LVL|MasterChymistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.268"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Master Chymist Advanced Mutagen"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1366,
+    "record_key": "Master Chymist ~ Advanced Mutagen"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

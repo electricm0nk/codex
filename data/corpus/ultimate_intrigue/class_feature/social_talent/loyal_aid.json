@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Social Talent ~ Loyal Aid",
+    "name": "Loyal Aid",
+    "class": "Social Talent",
+    "description": "The vigilante gains the service of a number of loyal allies who can help him gather information, cover for his two identities, or perform minor tasks. Inside his area of renown, a vigilante with this talent gains a +%1 bonus on Diplomacy checks to gather information. In addition, if the vigilante wants, he can task his friends to help cover for him by spreading false tales of his location and activities to others. This has the effect of increasing the DC of Diplomacy checks to gather information about the vigilante and Survival checks to track him by %2. This lasts for 1 day, and can be used only once per week. Finally, once per day, the vigilante can ask his allies to perform a minor task for him. This usually involves delivering a message, purchasing a piece of mundane gear worth 100 gp or less (which the vigilante must pay for), or retrieving an object owned by the vigilante (that would be easily accessible by the ally). This task might take other forms as well, subject to GM discretion, but can never involve combat or danger.|VigilanteTalentLVL/2|VigilanteTalentLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ Loyal Aid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Social Talent ~ Renown"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,3"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante gains the service of a number of loyal allies who can help him gather information, cover for his two identities, or perform minor tasks. Inside his area of renown, a vigilante with this talent gains a +%1 bonus on Diplomacy checks to gather information. In addition, if the vigilante wants, he can task his friends to help cover for him by spreading false tales of his location and activities to others. This has the effect of increasing the DC of Diplomacy checks to gather information about the vigilante and Survival checks to track him by %2. This lasts for 1 day, and can be used only once per week. Finally, once per day, the vigilante can ask his allies to perform a minor task for him. This usually involves delivering a message, purchasing a piece of mundane gear worth 100 gp or less (which the vigilante must pay for), or retrieving an object owned by the vigilante (that would be easily accessible by the ally). This task might take other forms as well, subject to GM discretion, but can never involve combat or danger.|VigilanteTalentLVL/2|VigilanteTalentLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Diplomacy=to gather information|VigilanteTalentLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 60,
+    "record_key": "Social Talent ~ Loyal Aid"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

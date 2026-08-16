@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rostland Bravo ~ Terror of the Great Wyrm",
+    "name": "Terror of the Great Wyrm",
+    "class": "Rostland Bravo",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rostland Bravo ~ Terror of the Great Wyrm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Feature.RostlandBravoClassFeatures.SpecialQuality.SwashbucklerDeedsLVL15.Extraordinary"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL15"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "DESC",
+        "value": "The Rostland bravo can use her inevitable victory deed as part of a full attack or dragon's rage. If a creature demoralized in this way would be shaken for 3 or more rounds, the Rostland bravo can make the target frightened for 1 round before becoming shaken for the appropriate duration."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1092,
+    "record_key": "Rostland Bravo ~ Terror of the Great Wyrm"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

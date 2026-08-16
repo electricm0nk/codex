@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Two-Weapon Rend",
+    "name": "Two-Weapon Rend",
+    "class": "Warpriest Bonus Feat",
+    "description": "Striking with both your weapons simultanoeusly, you can use them to deliver devastating wounds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Two-Weapon Rend"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Double Slice,Improved Two-Weapon Fighting,Two-Weapon Fighting"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:11],[PREVARGTEQ:WarpriestBonusFeatBAB,11]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,17],[PREVARGTEQ:FeatDexRequirement,17]"
+      },
+      {
+        "key": "DESC",
+        "value": "Striking with both your weapons simultanoeusly, you can use them to deliver devastating wounds."
+      },
+      {
+        "key": "DESC",
+        "value": " If you hit an opponent with both your primary hand and your off-hand weapon, you deal an additional 1d10 points of damage plus %1. You can only deal this additional damage once each round.|1.5*STR"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Two-Weapon Rend"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4300,
+    "record_key": "Warpriest Bonus Feat ~ Two-Weapon Rend"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

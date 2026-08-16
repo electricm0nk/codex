@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Metamagic Rager ~ Meta-Rage",
+    "name": "Meta-Rage",
+    "class": "Metamagic Rager",
+    "description": "[NOT IMPLEMENTED] A metamagic rager can sacrifice additional rounds of bloodrage to apply a metamagic feat he knows to a bloodrager spell. This costs a number of rounds of bloodrage equal to twice what the spell's adjusted level would normally be with the metamagic feat applied (minimum 2 rounds). The metamagic rager does not have to be bloodraging to use this ability. The metamagic effect is applied without increasing the level of the spell slot expended, though the casting time is increased as normal. The metamagic rager can apply only one metamagic feat he knows in this manner with each casting. Additionally, when the metamagic rager takes a bloodline feat, he can choose to take a metamagic feat instead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metamagic Rager ~ Meta-Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Metamagic Rager Class Feature.Bloodrager Class Feature.SpecialQuality.Supernatural.BloodragerImprovedUncannyDodge"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] A metamagic rager can sacrifice additional rounds of bloodrage to apply a metamagic feat he knows to a bloodrager spell. This costs a number of rounds of bloodrage equal to twice what the spell's adjusted level would normally be with the metamagic feat applied (minimum 2 rounds). The metamagic rager does not have to be bloodraging to use this ability. The metamagic effect is applied without increasing the level of the spell slot expended, though the casting time is increased as normal. The metamagic rager can apply only one metamagic feat he knows in this manner with each casting. Additionally, when the metamagic rager takes a bloodline feat, he can choose to take a metamagic feat instead."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_EmpowerSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_EnlargeSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_ExtendSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_HeightenSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_MaximizeSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_QuickenSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_SilentSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_StillSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_WidenSpell|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2772,
+    "record_key": "Metamagic Rager ~ Meta-Rage"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oracle Archetype ~ Spirit Guide",
+    "name": "Spirit Guide",
+    "class": "Oracle Archetype",
+    "description": "Through her exploration of the universe's mysteries, a spirit guide opens connections to the spirit world and forms bonds with the entities that inhabit it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle Archetype ~ Spirit Guide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.OracleArchetype.OracleMysteryClassSkills.OracleRevelation3.OracleRevelation7.OracleRevelation15"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Spirit Guide],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleMysteryClassSkills,TYPE.OracleRevelation3,TYPE.OracleRevelation7,TYPE.OracleRevelation15]"
+      },
+      {
+        "key": "DESC",
+        "value": "Through her exploration of the universe's mysteries, a spirit guide opens connections to the spirit world and forms bonds with the entities that inhabit it."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Oracle Class Feature|AUTOMATIC|Spirit Guide ~ Class Skills|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Oracle Class Feature|AUTOMATIC|Spirit Guide ~ Bonded Spirit|PRECLASS:1,Oracle=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Oracle"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3494,
+    "record_key": "Oracle Archetype ~ Spirit Guide"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

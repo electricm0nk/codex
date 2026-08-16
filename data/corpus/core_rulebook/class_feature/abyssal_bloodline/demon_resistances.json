@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Abyssal Bloodline ~ Demon Resistances",
+    "name": "Demon Resistances",
+    "class": "Abyssal Bloodline",
+    "description": "You gain resist electricity %1 and a +%2 bonus on saving throws made against poison.|Sorcerer_AbyssalDemonResistances_ResistanceBonus|Sorcerer_AbyssalDemonResistances_SaveBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Abyssal Bloodline ~ Demon Resistances"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Abyssal Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Abyssal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Abyssal_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Abyssal_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AbyssalDemonResistances_ResistanceBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AbyssalDemonResistances_SaveBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain resist electricity %1 and a +%2 bonus on saving throws made against poison.|Sorcerer_AbyssalDemonResistances_ResistanceBonus|Sorcerer_AbyssalDemonResistances_SaveBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AbyssalDemonResistances_ResistanceBonus|min(floor((Sorcerer_Abyssal_BloodlinePower3LVL+3)/6),2)*5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AbyssalDemonResistances_SaveBonus|min(floor((Sorcerer_Abyssal_BloodlinePower3LVL+3)/6),2)*2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|Sorcerer_AbyssalDemonResistances_ResistanceBonus|TYPE=Resistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 vs. poison|Sorcerer_AbyssalDemonResistances_SaveBonus|!PREABILITY:1,CATEGORY=Special Ability,Immunity to Poison"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AbyssalBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2362,
+    "record_key": "Abyssal Bloodline ~ Demon Resistances"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

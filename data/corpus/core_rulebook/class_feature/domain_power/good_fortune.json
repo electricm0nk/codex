@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Domain Power ~ Good Fortune",
+    "name": "Good Fortune",
+    "class": "Domain Power",
+    "description": "As an immediate action, you can reroll any one d20 roll that you have just made before the results of the roll are revealed. You must take the result of the reroll, even if it's worse than the original roll. You can use this ability %1 times per day.|GoodFortuneTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Good Fortune"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Extraordinary.DomainPower.Defensive.Luck Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GoodFortuneTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As an immediate action, you can reroll any one d20 roll that you have just made before the results of the roll are revealed. You must take the result of the reroll, even if it's worse than the original roll. You can use this ability %1 times per day.|GoodFortuneTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GoodFortuneTimes|DomainLuckLVL/6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|GoodFortuneTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|GoodFortuneTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 724,
+    "record_key": "Domain Power ~ Good Fortune"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

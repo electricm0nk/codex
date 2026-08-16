@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gladiator ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Gladiator",
+    "description": "A gladiator may choose to take combat or performance feats as bonus feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gladiator ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A gladiator may choose to take combat or performance feats as bonus feats."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Gladiator Bonus Feat|FighterLvl/2+1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 730,
+    "record_key": "Gladiator ~ Bonus Feats"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ancestor Mystery ~ Storm of Souls",
+    "name": "Storm of Souls",
+    "class": "Ancestor Mystery",
+    "description": "You can summon the spirits of your ancestors to attack in a ghostly barrage - their fury creates physical wounds on creatures in the area. The storm has a range of 100 feet and is a 20-foot-radius burst. Objects and creatures in the area take %1d8 hit points of damage. Undead creatures in the area take %2d8 points of damage. A successful Fortitude save (DC %3) reduces the damage to half. You can use this ability %4/day.|StormOfSoulsDice|StormOfSoulsUndeadDice|StormOfSoulsDC|StormOfSoulsTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancestor Mystery ~ Storm of Souls"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.AncestorRevelation.Supernatural"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StormOfSoulsDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StormOfSoulsUndeadDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StormOfSoulsDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StormOfSoulsTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon the spirits of your ancestors to attack in a ghostly barrage - their fury creates physical wounds on creatures in the area. The storm has a range of 100 feet and is a 20-foot-radius burst. Objects and creatures in the area take %1d8 hit points of damage. Undead creatures in the area take %2d8 points of damage. A successful Fortitude save (DC %3) reduces the damage to half. You can use this ability %4/day.|StormOfSoulsDice|StormOfSoulsUndeadDice|StormOfSoulsDC|StormOfSoulsTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiritWalkDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiritWalkTimes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StormOfSoulsDice|classlevel(\"Oracle\")/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StormOfSoulsUndeadDice|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StormOfSoulsDC|10+floor(classlevel(\"Oracle\")/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StormOfSoulsTimes|(classlevel(\"Oracle\")-3)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 460,
+    "record_key": "Ancestor Mystery ~ Storm of Souls"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

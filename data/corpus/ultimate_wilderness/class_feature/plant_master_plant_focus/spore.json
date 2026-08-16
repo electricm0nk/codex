@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Plant Master Plant Focus ~ Spore",
+    "name": "Spore",
+    "class": "Plant Master Plant Focus",
+    "description": "Get +%1 competence bonus on Fly checks.|PlantFocusSporeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plant Master Plant Focus ~ Spore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PlantMasterPlantFocusAbility"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PlantFocusSporeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Get +%1 competence bonus on Fly checks.|PlantFocusSporeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Fly|PlantFocusSporeBonus|TYPE=Competence"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantFocusSporeBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantFocusSporeBonus|2|PREVARGTEQ:PlantMasterPlantFocusLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantFocusSporeBonus|2|PREVARGTEQ:PlantMasterPlantFocusLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 689,
+    "record_key": "Plant Master Plant Focus ~ Spore"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Grand Chameleon Mutagen",
+    "name": "Grand Chameleon Mutagen",
+    "class": "Discovery",
+    "description": "The saboteur's chameleon mutagen now grants him a circumstance bonus on Stealth checks equal to his alchemist level, as well as granting him a climb speed equal to his normal movement speed. The saboteur must possess the greater chameleon mutagen discovery and be at least 16th level to select this discovery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Grand Chameleon Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistDiscovery.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Saboteur ~ Saboteur Discoveries"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Discovery ~ Greater Chameleon Mutagen"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "The saboteur's chameleon mutagen now grants him a circumstance bonus on Stealth checks equal to his alchemist level, as well as granting him a climb speed equal to his normal movement speed. The saboteur must possess the greater chameleon mutagen discovery and be at least 16th level to select this discovery."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 189,
+    "record_key": "Discovery ~ Grand Chameleon Mutagen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

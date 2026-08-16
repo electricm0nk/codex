@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Greenrager ~ Summoning Rager",
+    "name": "Summoning Rager",
+    "class": "Greenrager",
+    "description": "A greenrager's magic unlocks the secrets of summoning allies from nature. He adds summon nature's ally I to his list of 1st-level bloodrager spells known as a bonus spell, as if it were a bonus bloodrager spell. At 7th level, he adds summon nature's ally II as a bonus 2nd-level bloodrager spell, at 10th level he adds summon nature's ally III as a bonus 3rd level bloodrager spell, and at 13th level he adds summon nature's ally IV as a bonus 4th-level bloodrager spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Greenrager ~ Summoning Rager"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Greenrager Class Feature.Bloodrager Class Feature.SpecialQuality.SpellLike.BloodragerBloodlineFeat6"
+      },
+      {
+        "key": "DESC",
+        "value": "A greenrager's magic unlocks the secrets of summoning allies from nature. He adds summon nature's ally I to his list of 1st-level bloodrager spells known as a bonus spell, as if it were a bonus bloodrager spell. At 7th level, he adds summon nature's ally II as a bonus 2nd-level bloodrager spell, at 10th level he adds summon nature's ally III as a bonus 3rd level bloodrager spell, and at 13th level he adds summon nature's ally IV as a bonus 4th-level bloodrager spell."
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Bloodrager;LEVEL=1|1|PREVARGTEQ:BloodragerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Bloodrager;LEVEL=2|1|PREVARGTEQ:BloodragerLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Bloodrager;LEVEL=3|1|PREVARGTEQ:BloodragerLVL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Bloodrager;LEVEL=4|1|PREVARGTEQ:BloodragerLVL,13"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=1|Summon Nature's Ally I|PREVARGTEQ:BloodragerLVL,6"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=2|Summon Nature's Ally II|PREVARGTEQ:BloodragerLVL,7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=3|Summon Nature's Ally III|PREVARGTEQ:BloodragerLVL,11"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=4|Summon Nature's Ally IV|PREVARGTEQ:BloodragerLVL,13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2767,
+    "record_key": "Greenrager ~ Summoning Rager"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sanguine Angel Discipline ~ Furious Huntress",
+    "name": "Furious Huntress",
+    "class": "Sanguine Angel Discipline",
+    "description": "The sanguine angel adds her Strength bonus, rather than her Dexterity bonus, to attack rolls made with bows.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sanguine Angel Discipline ~ Furious Huntress"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SanguineAngelDiscipline.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "DESC",
+        "value": "The sanguine angel adds her Strength bonus, rather than her Dexterity bonus, to attack rolls made with bows."
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Bow|TOHIT|max(0,STR-DEX)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 466,
+    "record_key": "Sanguine Angel Discipline ~ Furious Huntress"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

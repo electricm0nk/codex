@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Flowing Monk ~ Ki Throw",
+    "name": "Ki Throw",
+    "class": "Flowing Monk",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flowing Monk ~ Ki Throw"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.FlowingMonkBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Ki Throw"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Ki Throw"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 964,
+    "record_key": "Flowing Monk ~ Ki Throw"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

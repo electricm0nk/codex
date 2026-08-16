@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Raging Cannibal ~ Consume Vigor",
+    "name": "Consume Vigor",
+    "class": "Raging Cannibal",
+    "description": "When a raging cannibal reduces a creature of the same creature type as herself to 0 or fewer hit points with her bite attack during combat while raging, she can consume a chunk of its body to gain a portion of its power. If the creature's CR equals or exceeds her barbarian level, the raging cannibal gains %1 additional round of rage. She can never consume the same creature's vigor more than once.|(BarbarianLVL+1)/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Raging Cannibal ~ Consume Vigor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.RagingCannibalClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When a raging cannibal reduces a creature of the same creature type as herself to 0 or fewer hit points with her bite attack during combat while raging, she can consume a chunk of its body to gain a portion of its power. If the creature's CR equals or exceeds her barbarian level, the raging cannibal gains %1 additional round of rage. She can never consume the same creature's vigor more than once.|(BarbarianLVL+1)/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 211,
+    "record_key": "Raging Cannibal ~ Consume Vigor"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

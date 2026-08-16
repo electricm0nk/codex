@@ -1,0 +1,108 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dreamspun Bloodline ~ Dreamshaper",
+    "name": "Dreamshaper",
+    "class": "Dreamspun Bloodline",
+    "description": "You can manipulate the dreamscape of others, drawing forth or tampering with their subconscious minds. This power allows you to tamper with the target's memories as if using modify memory, or you may ask questions as if using speak with dead upon a corpse. A successful Will save negates the effect. The DC of this save is %1, with further modifiers as the nightmare spell.|Sorcerer_DreamspunDreamshaper_DC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dreamspun Bloodline ~ Dreamshaper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Dreamspun Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Dreamspun"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Dreamspun_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DreamspunDreamshaper_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DreamspunDreamshaper_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manipulate the dreamscape of others, drawing forth or tampering with their subconscious minds. This power allows you to tamper with the target's memories as if using modify memory, or you may ask questions as if using speak with dead upon a corpse. A successful Will save negates the effect. The DC of this save is %1, with further modifiers as the nightmare spell.|Sorcerer_DreamspunDreamshaper_DC"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability once per day.|PREVAREQ:Sorcerer_DreamspunDreamshaper_Times,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability twice per day.|PREVAREQ:Sorcerer_DreamspunDreamshaper_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability three times per day.|PREVAREQ:Sorcerer_DreamspunDreamshaper_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 times per day.|Sorcerer_DreamspunDreamshaper_Times|PREVARGTEQ:Sorcerer_DreamspunDreamshaper_Times,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DreamspunDreamshaper_DC|10+Sorcerer_Dreamspun_BloodlinePower9LVL/2+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DreamspunDreamshaper_Times|max(floor((Sorcerer_Dreamspun_BloodlinePower9LVL-11)/3),1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.138"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (DC %1)|Sorcerer_DreamspunDreamshaper_DC|Sorcerer_DreamspunDreamshaper_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_DreamspunDreamshaper_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DreamspunBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3156,
+    "record_key": "Dreamspun Bloodline ~ Dreamshaper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

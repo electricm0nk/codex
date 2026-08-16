@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Saurian Champion ~ Wild Warrior",
+    "name": "Wild Warrior",
+    "class": "Saurian Champion",
+    "description": "A saurian champion hails from primeval lands where the civilized orders hold little sway. He does not select an order or gain any order-related benefits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Saurian Champion ~ Wild Warrior"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.SaurianChampionClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A saurian champion hails from primeval lands where the civilized orders hold little sway. He does not select an order or gain any order-related benefits."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 436,
+    "record_key": "Saurian Champion ~ Wild Warrior"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oenopion Researcher ~ Acid Resistance",
+    "name": "Acid Resistance",
+    "class": "Oenopion Researcher",
+    "description": "An Oenopion researcher gains acid resistance 5.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oenopion Researcher ~ Acid Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.Extraordinary.AlchemistSwiftAlchemy"
+      },
+      {
+        "key": "DESC",
+        "value": "An Oenopion researcher gains acid resistance 5."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Acid"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 155,
+    "record_key": "Oenopion Researcher ~ Acid Resistance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

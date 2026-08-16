@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Superstition",
+    "name": "Superstition",
+    "class": "Rage Power",
+    "description": "You gain a +%1 morale bonus on saving throws made to resist spells, supernatural abilities, and spell-like abilities. While raging, you cannot be a willing target of any spell and must make saving throws to resist all spells, even those cast by allies.|SuperstitionSaveBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Superstition"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SuperstitionSaveBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 morale bonus on saving throws made to resist spells, supernatural abilities, and spell-like abilities. While raging, you cannot be a willing target of any spell and must make saving throws to resist all spells, even those cast by allies.|SuperstitionSaveBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SuperstitionSaveBonus|2+RagePowersLVL/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 493,
+    "record_key": "Rage Power ~ Superstition"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

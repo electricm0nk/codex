@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Champion of the Faith ~ Detect Alignment",
+    "name": "Detect Alignment",
+    "class": "Champion of the Faith",
+    "description": "A champion of the faith can detect his opposed alignment. As a move action, the champion of the faith can focus on a single item or creature within 60 feet and determine whether it",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Champion of the Faith ~ Detect Alignment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Champion of the Faith Class Feature.Warpriest Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A champion of the faith can detect his opposed alignment. As a move action, the champion of the faith can focus on a single item or creature within 60 feet and determine whether it"
+      },
+      {
+        "key": "DESC",
+        "value": "possesses law, as detect law,|PREVARGTEQ:ChampionOfTheFaithChaos,1"
+      },
+      {
+        "key": "DESC",
+        "value": "possesses good, as detect good,|PREVARGTEQ:ChampionOfTheFaithEvil,1"
+      },
+      {
+        "key": "DESC",
+        "value": "possesses evil, as detect evil,|PREVARGTEQ:ChampionOfTheFaithGood,1"
+      },
+      {
+        "key": "DESC",
+        "value": "possesses chaos, as detect chaos,|PREVARGTEQ:ChampionOfTheFaithLaw,1"
+      },
+      {
+        "key": "DESC",
+        "value": " learning the strength of the aura as if he had studied it for 3 rounds. The champion of the faith does not detect alignment in any other object or creature when using this ability in this way."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3941,
+    "record_key": "Champion of the Faith ~ Detect Alignment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Exemplar Brawler ~ Call to Arms",
+    "name": "Call to Arms",
+    "class": "Exemplar Brawler",
+    "description": "An exemplar can expend a use of martial flexibility to rouse her allies into action. All allies within 30 feet are no longer flat-footed, even if they are surprised.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exemplar Brawler ~ Call to Arms"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Exemplar Class Feature.Brawler Class Feature.SpecialQuality.Extraordinary.BrawlerUnarmedStrike.BrawlerCloseWeaponMastery"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CalltoArmsProgression|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An exemplar can expend a use of martial flexibility to rouse her allies into action. All allies within 30 feet are no longer flat-footed, even if they are surprised."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CalltoArmsProgression|BrawlerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2854,
+    "record_key": "Exemplar Brawler ~ Call to Arms"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

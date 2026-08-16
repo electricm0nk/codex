@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Toxic Talon ~ Toxin Resistance",
+    "name": "Toxin Resistance",
+    "class": "Toxic Talon",
+    "description": "A toxic talon's constant exposure to varied poisons grants him increasing resistance to them. A toxic talon gains a +%1 bonus on saving throws against diseases and poisons, and he gains a +1 bonus on Heal checks to treat diseases and poisons. He also gains a +%1 bonus on caster level checks (including when he activates a magic item) to treat or remove poisons and diseases, such as when using remove disease or neutralize poison. Finally, he gains a +%1 bonus on Perception checks to identify traps that utilize diseases or poisons.|RogueLVL/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Toxic Talon ~ Toxin Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Feature.ToxicTalonClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "DESC",
+        "value": "A toxic talon's constant exposure to varied poisons grants him increasing resistance to them. A toxic talon gains a +%1 bonus on saving throws against diseases and poisons, and he gains a +1 bonus on Heal checks to treat diseases and poisons. He also gains a +%1 bonus on caster level checks (including when he activates a magic item) to treat or remove poisons and diseases, such as when using remove disease or neutralize poison. Finally, he gains a +%1 bonus on Perception checks to identify traps that utilize diseases or poisons.|RogueLVL/3"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 on saves vs. diseases and poisons|RogueLVL/3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1028,
+    "record_key": "Toxic Talon ~ Toxin Resistance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

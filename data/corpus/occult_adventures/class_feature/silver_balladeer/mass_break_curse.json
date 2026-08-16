@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Silver Balladeer ~ Mass Break Curse",
+    "name": "Mass Break Curse",
+    "class": "Silver Balladeer",
+    "description": "At 18th level, a silver balladeer can suppress all curses among any number of allies within 30 feet when using break curse. Every 4 consecutive rounds of using this performance, the silver balladeer can attempt a caster level check to remove a single curse on a single ally affected by this performance, as if she had cast remove curse. This ability replaces mass suggestion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Silver Balladeer ~ Mass Break Curse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Silver Balladeer Class Feature.Bard Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 18th level, a silver balladeer can suppress all curses among any number of allies within 30 feet when using break curse. Every 4 consecutive rounds of using this performance, the silver balladeer can attempt a caster level check to remove a single curse on a single ally affected by this performance, as if she had cast remove curse. This ability replaces mass suggestion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1693,
+    "record_key": "Silver Balladeer ~ Mass Break Curse"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

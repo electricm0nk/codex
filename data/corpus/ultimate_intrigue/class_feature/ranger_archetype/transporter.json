@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Archetype ~ Transporter",
+    "name": "Transporter",
+    "class": "Ranger Archetype",
+    "description": "Transporters specialize in smuggling people as efficiently as possible through harsh and difficult environments. Individuals such as escaped political exiles, refugees fleeing danger, and various criminals all seek the transporter's services. While some transporters actively work to serve justice or a political cause, others are wily opportunists filling a need and profiting from the high price that desperate people are willing to pay for safe, discrete passage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Transporter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Transporter],[!PREFACT:1,ABILITIES,Ranger_Archetype_WildEmpathy=True,Ranger_Archetype_FavoredTerrain=True,Ranger_Archetype_HuntersBond=True,Ranger_Archetype_WoodlandStride=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Transporters specialize in smuggling people as efficiently as possible through harsh and difficult environments. Individuals such as escaped political exiles, refugees fleeing danger, and various criminals all seek the transporter's services. While some transporters actively work to serve justice or a political cause, others are wily opportunists filling a need and profiting from the high price that desperate people are willing to pay for safe, discrete passage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Transporter ~ Trailbreaker|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Transporter ~ Plot Course|PRECLASS:1,Ranger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Transporter ~ Smuggler's Bond|PRECLASS:1,Ranger=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Transporter ~ Hideaway|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_HuntersBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WoodlandStride|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 639,
+    "record_key": "Ranger Archetype ~ Transporter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

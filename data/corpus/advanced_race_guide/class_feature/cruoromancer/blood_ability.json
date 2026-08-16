@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cruoromancer ~ Blood Ability",
+    "name": "Blood Ability",
+    "class": "Cruoromancer",
+    "description": "The cruoromancer can choose to scry through a single undead creature he created with a spell modified by a commanding infusion. The undead creature is treated as if imbued with an arcane eye spell (caster level %1).|CruoromancerBloodAbilityCastLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cruoromancer ~ Blood Ability"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CruoromancerBloodAbilityCastLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The cruoromancer can choose to scry through a single undead creature he created with a spell modified by a commanding infusion. The undead creature is treated as if imbued with an arcane eye spell (caster level %1).|CruoromancerBloodAbilityCastLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CruoromancerBloodAbilityCastLVL|WizardLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 466,
+    "record_key": "Cruoromancer ~ Blood Ability"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

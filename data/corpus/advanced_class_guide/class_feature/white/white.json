@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "White",
+    "name": "White",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Bloodrager Draconic Bloodline"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bloodrager Draconic Bloodline Choice"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerDraconicBloodline_White|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerDraconicBloodline_White|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerDraconicBloodline_BW_Cone|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerDraconicBloodline_Cold|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 736,
+    "record_key": "White"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

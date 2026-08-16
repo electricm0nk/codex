@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Luring Cavalier ~ Far Challenge",
+    "name": "Far Challenge",
+    "class": "Luring Cavalier",
+    "description": "Once per day, a luring cavalier can use his far challenge ability as a swift action. When he does, the luring cavalier chooses one target within sight to challenge. The luring cavalier's ranged attacks deal extra damage whenever the attacks are made against the target of his challenge. This extra damage is equal to the luring cavalier's level. The luring cavalier can use this ability once per day at 1st level, plus one additional time per day for every three levels beyond 1st, to a maximum of seven times per day at 19th level. Furthermore, once per day, the luring cavalier may spend a use of his far challenge ability to double the potential extra damage of his ranged attack. Before making the attack roll, he can choose to spend a use of his challenge to deal twice his cavalier level in extra damage on a successful hit instead of just his cavalier level in extra damage. If the attack misses, the use of the challenge is wasted. Challenging a foe requires subtle deceits and strategies. The cavalier must make it look like he is a soft target. The subject of the far challenge gains a +4 bonus on attack rolls made against him. This challenge remains in effect until the target is dead or unconscious, until the target hits the luring cavalier with a melee attack, or until the combat ends. If this challenge ends because the target hits the luring cavalier with a melee attack, this challenge changes to the effects of the normal cavalier challenge, and gains any order benefit the luring cavalier has. Far challenge replaces the challenge ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Luring Cavalier ~ Far Challenge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a luring cavalier can use his far challenge ability as a swift action. When he does, the luring cavalier chooses one target within sight to challenge. The luring cavalier's ranged attacks deal extra damage whenever the attacks are made against the target of his challenge. This extra damage is equal to the luring cavalier's level. The luring cavalier can use this ability once per day at 1st level, plus one additional time per day for every three levels beyond 1st, to a maximum of seven times per day at 19th level. Furthermore, once per day, the luring cavalier may spend a use of his far challenge ability to double the potential extra damage of his ranged attack. Before making the attack roll, he can choose to spend a use of his challenge to deal twice his cavalier level in extra damage on a successful hit instead of just his cavalier level in extra damage. If the attack misses, the use of the challenge is wasted. Challenging a foe requires subtle deceits and strategies. The cavalier must make it look like he is a soft target. The subject of the far challenge gains a +4 bonus on attack rolls made against him. This challenge remains in effect until the target is dead or unconscious, until the target hits the luring cavalier with a melee attack, or until the combat ends. If this challenge ends because the target hits the luring cavalier with a melee attack, this challenge changes to the effects of the normal cavalier challenge, and gains any order benefit the luring cavalier has. Far challenge replaces the challenge ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 502,
+    "record_key": "Luring Cavalier ~ Far Challenge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

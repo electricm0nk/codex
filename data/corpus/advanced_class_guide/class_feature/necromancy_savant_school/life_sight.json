@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Necromancy Savant School ~ Life Sight",
+    "name": "Life Sight",
+    "class": "Necromancy Savant School",
+    "description": "You gain blindsight to a range of %1 feet for %2 rounds per day. This ability only allows you to detect living creatures and undead creatures. This sight also tells you whether a creature is living or undead. These rounds do not need to be consecutive.|NecromancyLifeSightRange|NecromancyLifeSightRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Necromancy Savant School ~ Life Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.Sense.ArcanistExploit7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecromancyLifeSightRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecromancyLifeSightRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain blindsight to a range of %1 feet for %2 rounds per day. This ability only allows you to detect living creatures and undead creatures. This sight also tells you whether a creature is living or undead. These rounds do not need to be consecutive.|NecromancyLifeSightRange|NecromancyLifeSightRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecromancyLifeSightRange|10+10*((ArcanistSavantSchoolLVL-8)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecromancyLifeSightRounds|ArcanistSavantSchoolLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|NecromancyLifeSightRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2573,
+    "record_key": "Necromancy Savant School ~ Life Sight"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

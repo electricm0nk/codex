@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bardic Performance ~ Dirge of Misfortune",
+    "name": "Dirge of Misfortune",
+    "class": "Bardic Performance",
+    "description": "A Lion Blade of 5th level or higher can use her performance to break the concentration of her enemies, causing them to fail even at simple tasks. Once per round as an immediate action, as long as the Lion Blade continues performing, she can force a creature within 30 feet to reroll any d20 roll it just made before the effects are applied. The opponent must use the result of the reroll, which has a -2 penalty. Dirge of misfortune is a mind-affecting ability that relies on audible and visual components.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Dirge of Misfortune"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DESC",
+        "value": "A Lion Blade of 5th level or higher can use her performance to break the concentration of her enemies, causing them to fail even at simple tasks. Once per round as an immediate action, as long as the Lion Blade continues performing, she can force a creature within 30 feet to reroll any d20 roll it just made before the effects are applied. The opponent must use the result of the reroll, which has a -2 penalty. Dirge of misfortune is a mind-affecting ability that relies on audible and visual components."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 175,
+    "record_key": "Bardic Performance ~ Dirge of Misfortune"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

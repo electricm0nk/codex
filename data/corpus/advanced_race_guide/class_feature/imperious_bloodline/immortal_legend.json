@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Imperious Bloodline ~ Immortal Legend",
+    "name": "Immortal Legend",
+    "class": "Imperious Bloodline",
+    "description": "You cease aging; no longer need to eat, drink, or sleep; and gain immunity to death effects and energy drain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Imperious Bloodline ~ Immortal Legend"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Imperious Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Imperious"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Imperious_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Imperious_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You cease aging; no longer need to eat, drink, or sleep; and gain immunity to death effects and energy drain."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Death Effects|Immunity to Energy Drain"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Rules ~ Use Age Rules (Negate Penalties)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ImperiousBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 26,
+    "record_key": "Imperious Bloodline ~ Immortal Legend"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

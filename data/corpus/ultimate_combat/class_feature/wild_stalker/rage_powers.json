@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Stalker ~ Rage Powers",
+    "name": "Rage Powers",
+    "class": "Wild Stalker",
+    "description": "At 5th level, a wild stalker ranger gains a single rage power, as the barbarian class feature. He gains another rage power each five levels after 5th (to a maximum of four rage powers at 20th level). This ability replaces the ranger's second, third, fourth, and fifth favored enemy abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Stalker ~ Rage Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a wild stalker ranger gains a single rage power, as the barbarian class feature. He gains another rage power each five levels after 5th (to a maximum of four rage powers at 20th level). This ability replaces the ranger's second, third, fourth, and fifth favored enemy abilities."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rage Power|RangerLvl/5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RagePowersPrereqLVL|RangerLvl-3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1577,
+    "record_key": "Wild Stalker ~ Rage Powers"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

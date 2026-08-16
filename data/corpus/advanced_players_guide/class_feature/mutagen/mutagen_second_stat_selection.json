@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mutagen ~ Stat Selection Second",
+    "name": "Mutagen (Second Stat Selection)",
+    "class": "Mutagen",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutagen ~ Stat Selection Second"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Mutagen_2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Display"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutagenSecondAbility|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Alchemist ~ Mutagen Strength (Second)|PREVAREQ:MutagenSecondAbility,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Alchemist ~ Mutagen Dexterity (Second)|PREVAREQ:MutagenSecondAbility,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Alchemist ~ Mutagen Constitution (Second)|PREVAREQ:MutagenSecondAbility,3"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|MutagenSecondAbility|%CHOICE"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=3|TITLE=Str is 1, Dex is 2, Con is 3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 78,
+    "record_key": "Mutagen ~ Stat Selection Second"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nature Warden ~ Companion Soul",
+    "name": "Companion Soul",
+    "class": "Nature Warden",
+    "description": "At 10th level, a nature warden's bond with her animal companion is so strong that it transcends distance and even death. The companion's devotion ability increases to a +8 morale bonus on Will saves against enchantment spells and effects. The warden may scry on her animal companion once per day as if using the scrying spell, except she needs no focus or divine focus. She may view the area around her companion or see through its eyes. If her companion dies, she can revive it with an 8-hour ritual; this has the same effect as raise dead, except it doesn't require a material component and the companion does not gain any negative levels from the ordeal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Warden ~ Companion Soul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, a nature warden's bond with her animal companion is so strong that it transcends distance and even death. The companion's devotion ability increases to a +8 morale bonus on Will saves against enchantment spells and effects. The warden may scry on her animal companion once per day as if using the scrying spell, except she needs no focus or divine focus. She may view the area around her companion or see through its eyes. If her companion dies, she can revive it with an 8-hour ritual; this has the same effect as raise dead, except it doesn't require a material component and the companion does not gain any negative levels from the ordeal."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1435,
+    "record_key": "Nature Warden ~ Companion Soul"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

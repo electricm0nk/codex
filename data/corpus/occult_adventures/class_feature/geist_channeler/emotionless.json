@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Geist Channeler ~ Emotionless",
+    "name": "Emotionless",
+    "class": "Geist Channeler",
+    "description": "A geist channeler's phantom doesn't have an emotional focus; instead, it is cold and devoid of emotions. The phantom gains a number of ranks in Knowledge (arcana) and Knowledge (religion) equal to its Hit Dice. While confined in the geist channeler's consciousness, the phantom grants the geist channeler Skill Focus in each of these skills. The phantom has good Reflex and Will saves, and gains Iron Will as a bonus feat, as well as the following abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Geist Channeler ~ Emotionless"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Geist Channeler Class Feature.Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A geist channeler's phantom doesn't have an emotional focus; instead, it is cold and devoid of emotions. The phantom gains a number of ranks in Knowledge (arcana) and Knowledge (religion) equal to its Hit Dice. While confined in the geist channeler's consciousness, the phantom grants the geist channeler Skill Focus in each of these skills. The phantom has good Reflex and Will saves, and gains Iron Will as a bonus feat, as well as the following abilities."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1628,
+    "record_key": "Geist Channeler ~ Emotionless"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

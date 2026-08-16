@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Stunning Fist",
+    "name": "Stunning Fist",
+    "class": "Warpriest Bonus Feat",
+    "description": "You know just where to strike to temporarily stun a foe. %1/day (DC %2)|StunningFistAttack|StunningFistDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Stunning Fist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.AttackOption"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:8],[PREVARGTEQ:WarpriestBonusFeatBAB,8]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,WIS=13"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StunningFistMonkLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StunningFistAttack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StunningFistDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You know just where to strike to temporarily stun a foe. %1/day (DC %2)|StunningFistAttack|StunningFistDC"
+      },
+      {
+        "key": "DESC",
+        "value": " You must declare that you are using this feat before you make your attack roll (thus, a failed attack roll ruins the attempt). Stunning Fist forces a foe damaged by your unarmed attack to make a Fortitude saving throw (DC %1), in addition to dealing damage normally. A defender who fails this saving throw is stunned for 1 round (until just before your next turn). A stunned character drops everything held, can't take actions, loses any Dexterity bonus to AC, and takes a -2 penalty to AC. You may attempt a stunning attack once per day for every four levels you have attained (but see Special), and no more than once per round. Constructs, oozes, plants, undead, incorporeal creatures, and creatures immune to critical hits cannot be stunned.|StunningFistDC"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Stunning Fist"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Stunning Fist"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4293,
+    "record_key": "Warpriest Bonus Feat ~ Stunning Fist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

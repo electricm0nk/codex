@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bolt Ace ~ Crossbow Maven",
+    "name": "Crossbow Maven",
+    "class": "Bolt Ace",
+    "description": "A bolt ace is proficient with all crossbows instead of all firearms and begins play with a masterwork crossbow of her choice. This ability alters the gunslinger's weapon proficiencies and replaces gunsmith.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bolt Ace ~ Crossbow Maven"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bolt Ace Class Feature.Gunslinger Class Feature.SpecialQuality.GunslingerGunsmith"
+      },
+      {
+        "key": "DESC",
+        "value": "A bolt ace is proficient with all crossbows instead of all firearms and begins play with a masterwork crossbow of her choice. This ability alters the gunslinger's weapon proficiencies and replaces gunsmith."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|TYPE=Crossbow"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=WeaponProfMartial|TYPE=ArmorProfLight"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3105,
+    "record_key": "Bolt Ace ~ Crossbow Maven"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wildblooded ~ Groveborn",
+    "name": "Groveborn",
+    "class": "Wildblooded",
+    "description": "Some plant magic is more green, while some is more brown, like hardwood.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildblooded ~ Groveborn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wildblooded Bloodline"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Verdant"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Some plant magic is more green, while some is more brown, like hardwood."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Groveborn Bloodline ~ Bloodline Arcana|Groveborn Bloodline ~ Bloodline Powers"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Groveborn Bloodline ~ Lush Summoning|PREVARGTEQ:Sorcerer_Verdant_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Verdant_Description|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlinePower3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlinePower3|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1683,
+    "record_key": "Wildblooded ~ Groveborn"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

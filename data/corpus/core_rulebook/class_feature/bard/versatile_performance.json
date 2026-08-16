@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bard ~ Versatile Performance",
+    "name": "Versatile Performance",
+    "class": "Bard",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard ~ Versatile Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VersatilePerformanceLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Versatile Performance|(VersatilePerformanceLVL+2)/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VersatilePerformanceLVL|BardLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 507,
+    "record_key": "Bard ~ Versatile Performance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

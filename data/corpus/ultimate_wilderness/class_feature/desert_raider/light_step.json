@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Desert Raider ~ Light Step",
+    "name": "Light Step",
+    "class": "Desert Raider",
+    "description": "The DC of Survival checks to track the desert raider increase by %1. In addition, she gains a +%2 bonus on Perception checks to avoid being surprised by a foe.|DesertRaiderLightStepBonus+2|DesertRaiderLightStepBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Desert Raider ~ Light Step"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.DesertRaiderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DesertRaiderLightStepBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The DC of Survival checks to track the desert raider increase by %1. In addition, she gains a +%2 bonus on Perception checks to avoid being surprised by a foe.|DesertRaiderLightStepBonus+2|DesertRaiderLightStepBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DesertRaiderLightStepBonus|min(6,RogueLVL/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 973,
+    "record_key": "Desert Raider ~ Light Step"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

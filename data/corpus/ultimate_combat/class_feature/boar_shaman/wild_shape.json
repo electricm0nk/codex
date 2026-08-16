@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Boar Shaman ~ Wild Shape",
+    "name": "Wild Shape",
+    "class": "Boar Shaman",
+    "description": "At 6th level, a boar shaman's wild shape ability functions at her druid level -2. If she takes on the form of a boar, she instead uses her druid level +2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Boar Shaman ~ Wild Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, a boar shaman's wild shape ability functions at her druid level -2. If she takes on the form of a boar, she instead uses her druid level +2."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 654,
+    "record_key": "Boar Shaman ~ Wild Shape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

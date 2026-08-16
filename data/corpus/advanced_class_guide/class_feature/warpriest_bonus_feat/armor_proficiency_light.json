@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Armor Proficiency (Light)",
+    "name": "Armor Proficiency (Light)",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are skilled at wearing light armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Armor Proficiency (Light)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Armor Proficiency, Light"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "DESC",
+        "value": "You are skilled at wearing light armor."
+      },
+      {
+        "key": "DESC",
+        "value": " When you wear a type of armor with which you are proficient, the armor check penalty for that armor applies only to Dexterity- and Strength-based skill checks."
+      },
+      {
+        "key": "AUTO",
+        "value": "ARMORPROF|ARMORTYPE=ArmorProfLight"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Armor Proficiency (Light)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4204,
+    "record_key": "Warpriest Bonus Feat ~ Armor Proficiency (Light)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fey Prankster ~ Treacherous Plants",
+    "name": "Treacherous Plants",
+    "class": "Fey Prankster",
+    "description": "The fey prankster can cause plants to distract nearby creatures. To use this ability, the fey prankster attempts a Bluff check to create a distraction to hide as a swift action or to feint against an adjacent opponent as a move action, so long as the target is adjacent to plants. He gains a +%1 bonus on this check.|max(1,RogueLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Prankster ~ Treacherous Plants"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.FeyPranksterClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "The fey prankster can cause plants to distract nearby creatures. To use this ability, the fey prankster attempts a Bluff check to create a distraction to hide as a swift action or to feint against an adjacent opponent as a move action, so long as the target is adjacent to plants. He gains a +%1 bonus on this check.|max(1,RogueLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 976,
+    "record_key": "Fey Prankster ~ Treacherous Plants"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

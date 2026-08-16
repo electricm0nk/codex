@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Net Trickery",
+    "name": "Net Trickery",
+    "class": "Warpriest Bonus Feat",
+    "description": "You have become very proficient at using your net to hinder your enemies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Net Trickery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Net Adept,Net Maneuvering"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "PREWEAPONPROF",
+        "value": "1,Net"
+      },
+      {
+        "key": "DESC",
+        "value": "You have become very proficient at using your net to hinder your enemies."
+      },
+      {
+        "key": "DESC",
+        "value": " In place of one of your melee attacks, you can use your net to attempt a dirty trick combat maneuver to blind an opponent (Advance Player's Guide 320). If you have an opponent entangled in your net, you can attempt to trip that opponent as long as he is within your net's reach or you control the trailing rope on your net. You also gain a +2 bonus on drag and reposition combat maneuver checks you make using your net."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Net Trickery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4498,
+    "record_key": "Warpriest Bonus Feat ~ Net Trickery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

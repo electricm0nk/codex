@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Silver Balladeer ~ Pure Heart",
+    "name": "Pure Heart",
+    "class": "Silver Balladeer",
+    "description": "At 2nd level, a silver balladeer gains a +4 bonus on saving throws against curses, hexes, and charm effects. This ability replaces well-versed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Silver Balladeer ~ Pure Heart"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Silver Balladeer Class Feature.Bard Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a silver balladeer gains a +4 bonus on saving throws against curses, hexes, and charm effects. This ability replaces well-versed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1694,
+    "record_key": "Silver Balladeer ~ Pure Heart"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

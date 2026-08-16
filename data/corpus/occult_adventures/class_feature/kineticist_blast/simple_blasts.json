@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kineticist Blast ~ Simple Blasts",
+    "name": "Simple Blasts",
+    "class": "Kineticist Blast",
+    "description": "A kineticist gains a simple blast from her primary element at 1st level-some elements offer more than one option. When a kineticist gains a new element via the expanded element class feature, she gains a simple blast from that element as well. Each simple blast is either a physical blast or an energy blast. Physical blasts are ranged attacks that deal an amount of damage equal to 1d6+1 + the kineticist's Constitution modifier, increasing by 1d6+1 for every 2 kineticist levels beyond 1st. Spell resistance doesn't apply against physical blasts. Energy blasts are ranged touch attacks that deal an amount of damage equal to 1d6 + 1/2 the kineticist's Constitution modifier, increasing by 1d6 for every 2 kineticist levels beyond 1st.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Blast ~ Simple Blasts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.KB_Simple.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A kineticist gains a simple blast from her primary element at 1st level-some elements offer more than one option. When a kineticist gains a new element via the expanded element class feature, she gains a simple blast from that element as well. Each simple blast is either a physical blast or an energy blast. Physical blasts are ranged attacks that deal an amount of damage equal to 1d6+1 + the kineticist's Constitution modifier, increasing by 1d6+1 for every 2 kineticist levels beyond 1st. Spell resistance doesn't apply against physical blasts. Energy blasts are ranged touch attacks that deal an amount of damage equal to 1d6 + 1/2 the kineticist's Constitution modifier, increasing by 1d6 for every 2 kineticist levels beyond 1st."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 604,
+    "record_key": "Kineticist Blast ~ Simple Blasts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

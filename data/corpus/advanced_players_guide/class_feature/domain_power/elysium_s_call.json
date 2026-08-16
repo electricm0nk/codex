@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Domain Power ~ Elysium's Call",
+    "name": "Elysium's Call",
+    "class": "Domain Power",
+    "description": "With a touch, you can imbue creatures with the spirit of Elysium, lifting their spirits and freeing them from bonds. The creatures touched can immediately reroll any failed saving throws against spells and spell-like abilities of the enchantment (charm) and enchantment (compulsion) subschools. In addition, targets receive a +2 sacred bonus on such saving throws and a +2 sacred bonus on CMB checks to escape a grapple. Finally, targets can ignore up to 5 feet of difficult terrain each round, as if they had the Nimble Moves feat. These bonuses last for %1 rounds, although the saving throw reroll only applies when the creature is touched. You can use this ability %2 rounds per day.|max(DomainLVL/2,1)|DomainGoodTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Elysium's Call"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "With a touch, you can imbue creatures with the spirit of Elysium, lifting their spirits and freeing them from bonds. The creatures touched can immediately reroll any failed saving throws against spells and spell-like abilities of the enchantment (charm) and enchantment (compulsion) subschools. In addition, targets receive a +2 sacred bonus on such saving throws and a +2 sacred bonus on CMB checks to escape a grapple. Finally, targets can ignore up to 5 feet of difficult terrain each round, as if they had the Nimble Moves feat. These bonuses last for %1 rounds, although the saving throw reroll only applies when the creature is touched. You can use this ability %2 rounds per day.|max(DomainLVL/2,1)|DomainGoodTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainGoodTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1819,
+    "record_key": "Domain Power ~ Elysium's Call"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

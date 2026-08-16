@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Penetrating Infusion",
+    "name": "Penetrating Infusion",
+    "class": "Wild Talent",
+    "description": "Element air, fire, or water; Type substance infusion; Level 2; Burn 2;Associated Blasts blue flame, cold, electric, fire; Saving Throw none The intensity of your blasts allows you to break through your foes’ resistances. Treat your foe’s cold, electricity, or fire resistance as if it were 5 lower for the purpose of determining the infused blast’s damage; this doesn’t stack with the reduction from searing flame. You can increase the burn cost of this infusion to further reduce the foe’s resistance against the infused blast by 5 per additional point of burn accepted. This has no effect on creatures with immunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Penetrating Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Air.Infusion Wild Talent Fire.Infusion Wild Talent Water"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:KineticistLVL_Air,4],[PREVARGTEQ:KineticistLVL_Fire,4],[PREVARGTEQ:KineticistLVL_Water,4]"
+      },
+      {
+        "key": "DESC",
+        "value": "Element air, fire, or water; Type substance infusion; Level 2; Burn 2;Associated Blasts blue flame, cold, electric, fire; Saving Throw none The intensity of your blasts allows you to break through your foes’ resistances. Treat your foe’s cold, electricity, or fire resistance as if it were 5 lower for the purpose of determining the infused blast’s damage; this doesn’t stack with the reduction from searing flame. You can increase the burn cost of this infusion to further reduce the foe’s resistance against the infused blast by 5 per additional point of burn accepted. This has no effect on creatures with immunity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 711,
+    "record_key": "Wild Talent ~ Penetrating Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

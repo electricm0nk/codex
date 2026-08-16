@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Force Bomb",
+    "name": "Force Bomb*",
+    "class": "Discovery",
+    "description": "When the alchemist creates a bomb, he can choose to have it inflict force damage. Force bombs deal %1d%2 points of force damage instead of the normal damage for a bomb. Creatures that take a direct hit from a force bomb are knocked prone unless they succeed on a Reflex save.|AlchemistBombAdditionalDice+1|ForceBombDieSize",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Force Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistBombModifier"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ForceBombDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When the alchemist creates a bomb, he can choose to have it inflict force damage. Force bombs deal %1d%2 points of force damage instead of the normal damage for a bomb. Creatures that take a direct hit from a force bomb are knocked prone unless they succeed on a Reflex save.|AlchemistBombAdditionalDice+1|ForceBombDieSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ForceBombDieSize|3|PREVAREQ:Alchemist_CF_BombReduction,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ForceBombDieSize|4|PREVAREQ:Alchemist_CF_BombReduction,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 136,
+    "record_key": "Discovery ~ Force Bomb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

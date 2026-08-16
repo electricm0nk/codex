@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Secondary Shaman Wandering Spirit ~ Heavens",
+    "name": "Heavens (Wandering Spirit)",
+    "class": "Secondary Shaman Wandering Spirit",
+    "description": "Spirit Magic Spells: color spray (1st), hypnotic pattern (2nd), daylight (3rd), rainbow pattern (4th), overland flight (5th), chain lightning (6th), prismatic spray (7th), sunburst (8th), meteor swarm (9th)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Secondary Shaman Wandering Spirit ~ Heavens"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SecondaryShamanWanderingSpirit.SpecialQuality"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Shaman Wandering Spirit ~ Heavens"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: color spray (1st), hypnotic pattern (2nd), daylight (3rd), rainbow pattern (4th), overland flight (5th), chain lightning (6th), prismatic spray (7th), sunburst (8th), meteor swarm (9th)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heavens Spirit ~ Stardust|PREVARGTEQ:SecondaryShamanWanderingSpiritBase,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heavens Spirit ~ Void Adaptation|PREVARGTEQ:SecondaryShamanWanderingSpiritGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heavens Spirit ~ Phantasmagoric Display|PREVARGTEQ:SecondaryShamanWanderingSpiritTrue,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Heavens Wandering Hex|ShamanWanderingHexUses"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1486,
+    "record_key": "Secondary Shaman Wandering Spirit ~ Heavens"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

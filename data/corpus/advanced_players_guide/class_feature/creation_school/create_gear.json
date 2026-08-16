@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Creation School ~ Create Gear",
+    "name": "Create Gear",
+    "class": "Creation School",
+    "description": "At 1st level, you can create any object that weighs no more than %1 pounds. Creating an object in this way is a standard action. The item remains for 1 minute before fading away, although it disappears after one round if it leaves your possession. Creating an item to an exact specification might require a Craft skill check, subject to GM discretion. The object must be made of simple materials, such as wood, stone, glass, or metal, and cannot contain any moving parts. You could use this ability to create a dagger, but not a vial of alchemist's fire. You can use this ability %2 times per day.|ConjurationSchoolLVL|CreationCreateGearTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Creation School ~ Create Gear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CreationCreateGearTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, you can create any object that weighs no more than %1 pounds. Creating an object in this way is a standard action. The item remains for 1 minute before fading away, although it disappears after one round if it leaves your possession. Creating an item to an exact specification might require a Craft skill check, subject to GM discretion. The object must be made of simple materials, such as wood, stone, glass, or metal, and cannot contain any moving parts. You could use this ability to create a dagger, but not a vial of alchemist's fire. You can use this ability %2 times per day.|ConjurationSchoolLVL|CreationCreateGearTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CreationCreateGearTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|CreationCreateGearTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3349,
+    "record_key": "Creation School ~ Create Gear"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

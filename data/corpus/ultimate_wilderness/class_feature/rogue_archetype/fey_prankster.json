@@ -1,0 +1,139 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Archetype ~ Fey Prankster",
+    "name": "Fey Prankster",
+    "class": "Rogue Archetype",
+    "description": "Fey pranksters specialize in tricking others to teach a lesson or for their own entertainment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ Fey Prankster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RogueArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Fey Prankster],[!PREFACT:1,ABILITIES,Rogue_Archetype_Trapfinding=True,Rogue_Archetype_RogueTalent2=True,Rogue_Archetype_UncannyDodge=True,Rogue_Archetype_ImprovedUncannyDodge=True,Rogue_Archetype_RogueTalent6=True,Rogue_Archetype_RogueTalent8=True,Rogue_Archetype_RogueTalent12=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Fey pranksters specialize in tricking others to teach a lesson or for their own entertainment."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey Prankster ~ Treacherous Plants|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey Prankster ~ Improved Dirty Trick|PRECLASS:1,Rogue=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey Prankster ~ Steal Appearance|PRECLASS:1,Rogue=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey Prankster ~ Greater Dirty Trick|PRECLASS:1,Rogue=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey Prankster ~ Plant Traps|PRECLASS:1,Rogue=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey Prankster ~ Unseen Trickster|PRECLASS:1,Rogue=12"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent12|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 964,
+    "record_key": "Rogue Archetype ~ Fey Prankster"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

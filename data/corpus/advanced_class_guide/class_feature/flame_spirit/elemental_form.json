@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Flame Spirit ~ Elemental Form",
+    "name": "Elemental Form",
+    "class": "Flame Spirit",
+    "description": "As a standard action, the shaman assumes the form of a Huge (or smaller) fire elemental, as if using elemental body IV with a duration of %1 hours. The shaman can use this ability once per day.|ShamanFlameElementalFormDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flame Spirit ~ Elemental Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanFlameElementalFormDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the shaman assumes the form of a Huge (or smaller) fire elemental, as if using elemental body IV with a duration of %1 hours. The shaman can use this ability once per day.|ShamanFlameElementalFormDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanFlameElementalFormDuration|ShamanSpiritLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1561,
+    "record_key": "Flame Spirit ~ Elemental Form"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

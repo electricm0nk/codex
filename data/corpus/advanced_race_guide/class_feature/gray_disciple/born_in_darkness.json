@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gray Disciple ~ Born in Darkness",
+    "name": "Born in Darkness",
+    "class": "Gray Disciple",
+    "description": "As a standard action, the gray disciple can radiate darkness (as the spell, except originating from the disciple's person) for %1 rounds by spending 1 ki point.|MonkLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gray Disciple ~ Born in Darkness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the gray disciple can radiate darkness (as the spell, except originating from the disciple's person) for %1 rounds by spending 1 ki point.|MonkLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 836,
+    "record_key": "Gray Disciple ~ Born in Darkness"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

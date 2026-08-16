@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dual-Cursed Oracle ~ Infested",
+    "name": "Infested",
+    "class": "Dual-Cursed Oracle",
+    "description": "Insects, spiders, grubs, and other vermin plague you constantly. They crawl in your hair, fill your clothes, and fly or crawl into your mouth, nose, and ears. You take a -4 penalty on Diplomacy checks, and when you first meet someone, the person's initial attitude toward you starts one level lower than normal. Animals shy away from you-you take a -4 penalty on Handle Animal checks. You gain a +%1 bonus on Fortitude saves versus poisons from insects, scorpions, and spiders, as well as the distraction ability of swarms of such creatures.|OracleInfestedBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dual-Cursed Oracle ~ Infested"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleSecondCurse"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleInfestedBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Insects, spiders, grubs, and other vermin plague you constantly. They crawl in your hair, fill your clothes, and fly or crawl into your mouth, nose, and ears. You take a -4 penalty on Diplomacy checks, and when you first meet someone, the person's initial attitude toward you starts one level lower than normal. Animals shy away from you-you take a -4 penalty on Handle Animal checks. You gain a +%1 bonus on Fortitude saves versus poisons from insects, scorpions, and spiders, as well as the distraction ability of swarms of such creatures.|OracleInfestedBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy,Handle Animal|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleInfestedBonus|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 on Fort saves vs. poisons from insects, scorpions, and spiders, and distraction ability of swarms of such creatures."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 86,
+    "record_key": "Dual-Cursed Oracle ~ Infested"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

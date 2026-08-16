@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ectochymist ~ Ghost Trap",
+    "name": "Ghost Trap",
+    "class": "Ectochymist",
+    "description": "At 8th level, an ectochymist can throw a trap to capture an incorporeal creature of up to 1 Hit Die per alchemist level he possesses. As a standard action, the ectochymist can expend a use of ectoplasmic blanche to coat the inside of a container with his blanche and throw it at an incorporeal creature as a ranged touch attack. If he hits, the creature receives a Will save to escape the trap (DC = 10 + 1/2 his alchemist level + his Intelligence modifier). If the creature fails its save, it is sealed within the vessel until someone breaks or opens that vessel. The ghost trap automatically survives being thrown at the incorporeal creature, but otherwise is only as durable as the vessel (normally hardness 5, 1 hp for a glass bottle).This ability replaces the 8th-level alchemist discovery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ectochymist ~ Ghost Trap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ectochymist Class Feature.Alchemist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, an ectochymist can throw a trap to capture an incorporeal creature of up to 1 Hit Die per alchemist level he possesses. As a standard action, the ectochymist can expend a use of ectoplasmic blanche to coat the inside of a container with his blanche and throw it at an incorporeal creature as a ranged touch attack. If he hits, the creature receives a Will save to escape the trap (DC = 10 + 1/2 his alchemist level + his Intelligence modifier). If the creature fails its save, it is sealed within the vessel until someone breaks or opens that vessel. The ghost trap automatically survives being thrown at the incorporeal creature, but otherwise is only as durable as the vessel (normally hardness 5, 1 hp for a glass bottle).This ability replaces the 8th-level alchemist discovery."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1657,
+    "record_key": "Ectochymist ~ Ghost Trap"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

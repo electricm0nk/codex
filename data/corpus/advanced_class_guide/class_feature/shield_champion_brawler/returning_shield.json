@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shield Champion Brawler ~ Returning Shield",
+    "name": "Returning Shield",
+    "class": "Shield Champion Brawler",
+    "description": "A shield champion can throw a shield so it ricochets off her target (and possibly other solid objects) to return to her at the end of her turn. This ability functions whether or not the shield champion hits her opponent or moves on her turn. The shield deals no damage to targets it bounces off other than the original target of the shield champion's attack. Other circumstances can prevent the shield from returning to the shield champion, such as an opponent using a readied action to catch the shield, or the shield sticking to a mimic's adhesive. The shield champion can opt to not have a thrown shield return to her, in which case it falls to the ground as it normally would. If the shield has the returning weapon special ability, she can use either that or this ability. If a shield champion has additional attacks from a high base attack bonus, these additional attacks can be ricochets off an earlier target. The distance to each additional target adds to the total range of the shield, and range penalties apply, but there are no additional penalties for attacking in this manner. Because ricocheting attacks are treated as separate attacks, effects and modifiers that only apply to one attack roll (such as true strike) only apply to the first attack and not to the others. A shield champion can throw a shield as part of a brawler's flurry.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shield Champion Brawler ~ Returning Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Shield Champion Class Feature.SpecialQuality.Extraordinary.SpecialAttack.BrawlerBrawlersStrike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ReturningShieldProgression|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A shield champion can throw a shield so it ricochets off her target (and possibly other solid objects) to return to her at the end of her turn. This ability functions whether or not the shield champion hits her opponent or moves on her turn. The shield deals no damage to targets it bounces off other than the original target of the shield champion's attack. Other circumstances can prevent the shield from returning to the shield champion, such as an opponent using a readied action to catch the shield, or the shield sticking to a mimic's adhesive. The shield champion can opt to not have a thrown shield return to her, in which case it falls to the ground as it normally would. If the shield has the returning weapon special ability, she can use either that or this ability. If a shield champion has additional attacks from a high base attack bonus, these additional attacks can be ricochets off an earlier target. The distance to each additional target adds to the total range of the shield, and range penalties apply, but there are no additional penalties for attacking in this manner. Because ricocheting attacks are treated as separate attacks, effects and modifiers that only apply to one attack roll (such as true strike) only apply to the first attack and not to the others. A shield champion can throw a shield as part of a brawler's flurry."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ReturningShieldProgression|1+(BrawlerLVL>8)+(BrawlerLVL>11)+(BrawlerLVL>16)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2896,
+    "record_key": "Shield Champion Brawler ~ Returning Shield"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

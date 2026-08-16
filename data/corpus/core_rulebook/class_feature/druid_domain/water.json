@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Druid Domain ~ Water",
+    "name": "Water",
+    "class": "Druid Domain",
+    "description": "You can manipulate water and mist and ice, conjure creatures of water, and resist cold.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Domain ~ Water"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Domain ~ Base"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "DruidWaterAllowed,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manipulate water and mist and ice, conjure creatures of water, and resist cold."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Druid=1|Obscuring Mist|Druid=2|Fog Cloud|Druid=3|Water Breathing|Druid=4|Control Water|Druid=5|Ice Storm|Druid=6|Cone of Cold|Druid=7|Elemental Body IV (Water Only)|Druid=8|Horrid Wilting|Druid=9|Elemental Swarm (Water Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 790,
+    "record_key": "Druid Domain ~ Water"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

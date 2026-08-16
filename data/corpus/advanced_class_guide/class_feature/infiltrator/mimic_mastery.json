@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Infiltrator ~ Mimic Mastery",
+    "name": "Mimic Mastery",
+    "class": "Infiltrator",
+    "description": "At 2nd level, when an infiltrator uses disguise self or any polymorph extracts on himself, he is treated as 2 investigator levels higher for the purpose of determining the duration of that extract's effect. He can use these extracts to take the appearance of specific individuals of the type of form he chooses, gaining a +10 to Disguise checks even if that extract does not typically grant such a bonus. Furthermore, these extracts grant the infiltrator a +10 bonus to Disguise checks made as part of his voice mimicry ability. This ability replaces poison resistance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infiltrator ~ Mimic Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Infiltrator Class Feature.Investigator Class Feature.SpecialQuality.Supernatural.InvestigatorTrapfinding"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, when an infiltrator uses disguise self or any polymorph extracts on himself, he is treated as 2 investigator levels higher for the purpose of determining the duration of that extract's effect. He can use these extracts to take the appearance of specific individuals of the type of form he chooses, gaining a +10 to Disguise checks even if that extract does not typically grant such a bonus. Furthermore, these extracts grant the infiltrator a +10 bonus to Disguise checks made as part of his voice mimicry ability. This ability replaces poison resistance."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3320,
+    "record_key": "Infiltrator ~ Mimic Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Occultist ~ Focus Powers",
+    "name": "Focus Powers",
+    "class": "Occultist",
+    "description": "An occultist learns the base focus power from each of his implement schools and can select %1 more focus power(s) from the list of those available to him through those schools. Whenever the occultist learns a new implement school, he gains the base power of that school. The occultist can use focus powers only by expending mental focus (see Mental Focus). Unless otherwise noted, the DC for any saving throw against a focus power equals %2. The occultist can't select a focus power more than once. Some focus powers require him to reach a specific occultist level before he can choose them.|OccultistFocusPower|OccultistFocusPowerDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist ~ Focus Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistFocusPower|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistFocusPowerDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An occultist learns the base focus power from each of his implement schools and can select %1 more focus power(s) from the list of those available to him through those schools. Whenever the occultist learns a new implement school, he gains the base power of that school. The occultist can use focus powers only by expending mental focus (see Mental Focus). Unless otherwise noted, the DC for any saving throw against a focus power equals %2. The occultist can't select a focus power more than once. Some focus powers require him to reach a specific occultist level before he can choose them.|OccultistFocusPower|OccultistFocusPowerDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistFocusPower|(OccultistLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistFocusPowerDC|10+OccultistLVL/2+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 981,
+    "record_key": "Occultist ~ Focus Powers"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

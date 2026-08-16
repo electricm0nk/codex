@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elder Mythos Cultist ~ Maddening Gaze",
+    "name": "Maddening Gaze",
+    "class": "Elder Mythos Cultist",
+    "description": "As a standard action, an Elder Mythos cultist can focus his gaze on a single living creature within 30 feet and inundate the creature's mind with visions of alien horror. The target takes 2 points of Wisdom damage and becomes confused and sickened for 1d4 rounds. A successful Will save (DC %1) negates the Wisdom damage and the confusion effect, though the target is sickened for 1 round. This gaze attack is a mind-affecting effect. An Elder Mythos cultist can use this ability %2 times per day.|10+ClericLVL/2+CHA|(ClericLVL-2)/3|!PRECLASS:1,Cleric=11",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elder Mythos Cultist ~ Maddening Gaze"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cleric Class Feature.ElderMythosCultistClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, an Elder Mythos cultist can focus his gaze on a single living creature within 30 feet and inundate the creature's mind with visions of alien horror. The target takes 2 points of Wisdom damage and becomes confused and sickened for 1d4 rounds. A successful Will save (DC %1) negates the Wisdom damage and the confusion effect, though the target is sickened for 1 round. This gaze attack is a mind-affecting effect. An Elder Mythos cultist can use this ability %2 times per day.|10+ClericLVL/2+CHA|(ClericLVL-2)/3|!PRECLASS:1,Cleric=11"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, an Elder Mythos cultist can focus his gaze on a single living creature within 30 feet and inundate the creature's mind with visions of alien horror. The target takes 1d6+1 points of Wisdom damage and is rendered permanently confused and sickened. Only greater restoration, heal, limited wish, miracle,or wish can remove the confused and sickened conditions. A successful Will save (DC %1) reduces the Wisdom damage to 1 point, and the target is instead sickened for 1d6 rounds. An Elder Mythos cultist can use this ability %2 times per day.|10+ClericLVL/2+CHA|(ClericLVL-2)/3|!PRECLASS:1,Cleric=19|PRECLASS:1,Cleric=11"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, an Elder Mythos cultist can focus his gaze on a single living creature within 30 feet and inundate the creature's mind with visions of alien horror. The target takes 2d6 points of Wisdom damage and is confused and sickened for 2d4 rounds. A successful Will save (DC %1) halves the Wisdom damage, and the target is instead sickened for 2d6 rounds. An Elder Mythos cultist can use this ability %2 times per day.|10+ClericLVL/2+CHA|(ClericLVL-2)/3|PRECLASS:1,Cleric=19"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElderMythosCultistChannelEnergyDice|-1|PRECLASS:1,Cleric=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElderMythosCultistChannelEnergyDice|-1|PRECLASS:1,Cleric=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElderMythosCultistChannelEnergyDice|-1|PRECLASS:1,Cleric=19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 76,
+    "record_key": "Elder Mythos Cultist ~ Maddening Gaze"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

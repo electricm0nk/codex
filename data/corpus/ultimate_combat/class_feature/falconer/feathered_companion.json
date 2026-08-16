@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Falconer ~ Feathered Companion",
+    "name": "Feathered Companion",
+    "class": "Falconer",
+    "description": "At 1st level, a falconer earns the trust and companionship of a bird of prey. The bird can be of any type of large hunting or scavenging bird (even a vulture). This ability functions like the druid animal companion ability (which is part of the nature bond class feature), but the falconer must take the bird animal companion, and that companion has only half the normal hit points. The falconer cannot teach the bird of prey the work trick, but can teach it either the roam or distract trick for free. Whichever trick the falconer does not pick then can be picked as a trick later. Roam (DC 15) - The falconer can let his animal companion loose to roam and forage. He must let it roam for no more than a week. When the falconer lets it roam, it agrees to return to the place he let it loose within the time period he designates. Distract (DC 20; bird only) - The animal companion flutters wildly around any enemy it would normally attack with the attack trick. It makes an attack roll against that enemy. On a hit, the enemy is shaken for 1 round. This ability replaces wild empathy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Falconer ~ Feathered Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality.Animal Companion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeatheredCompanionLvl|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a falconer earns the trust and companionship of a bird of prey. The bird can be of any type of large hunting or scavenging bird (even a vulture). This ability functions like the druid animal companion ability (which is part of the nature bond class feature), but the falconer must take the bird animal companion, and that companion has only half the normal hit points. The falconer cannot teach the bird of prey the work trick, but can teach it either the roam or distract trick for free. Whichever trick the falconer does not pick then can be picked as a trick later. Roam (DC 15) - The falconer can let his animal companion loose to roam and forage. He must let it roam for no more than a week. When the falconer lets it roam, it agrees to return to the place he let it loose within the time period he designates. Distract (DC 20; bird only) - The animal companion flutters wildly around any enemy it would normally attack with the attack trick. It makes an attack roll against that enemy. On a hit, the enemy is shaken for 1 round. This ability replaces wild empathy."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeatheredCompanionLvl|RangerLvl"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Animal Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|RACESUBTYPE=FeatheredCompanion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1554,
+    "record_key": "Falconer ~ Feathered Companion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

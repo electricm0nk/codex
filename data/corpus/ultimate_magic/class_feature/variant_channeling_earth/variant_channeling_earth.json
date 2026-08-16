@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Variant Channeling - Earth",
+    "name": "Variant Channeling - Earth",
+    "class": null,
+    "description": "Heal - Creatures gain a DR 1/adamantine until the end of your next turn. This DR improves by 1 at 5th level and every 5 levels thereafter. This does not allow recipients to overcome DR/adamantine with their own attacks. Harm - All squares in the area are treated as diff icult terrain for 1 minute.|ChannelModifier",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VariantChanneling"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChannelModifier|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Heal - Creatures gain a DR 1/adamantine until the end of your next turn. This DR improves by 1 at 5th level and every 5 levels thereafter. This does not allow recipients to overcome DR/adamantine with their own attacks. Harm - All squares in the area are treated as diff icult terrain for 1 minute.|ChannelModifier"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelModifier|min(5,1+floor(ClericChannelEnergyLVL/5))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 207,
+    "record_key": "Variant Channeling - Earth"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Domain Power ~ Chastisement",
+    "name": "Chastisement",
+    "class": "Domain Power",
+    "description": "As a standard action, you can cast a strengthened spell against a creature that damaged you since your last turn. This spell must target the creature that damaged you, and is cast at +1 caster level. Area of effect spells cannot be used in conjunction with this ability, but other spells that target multiple creatures may be. You can use this ability %1 times per day.|DomainLawLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Chastisement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can cast a strengthened spell against a creature that damaged you since your last turn. This spell must target the creature that damaged you, and is cast at +1 caster level. Area of effect spells cannot be used in conjunction with this ability, but other spells that target multiple creatures may be. You can use this ability %1 times per day.|DomainLawLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainLawLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_class.lst",
+    "sha256": "fb3031a343dcd1408f50cd61a32f97516e73409d8cd79ead3a1e36efd1d756de",
+    "line": 11,
+    "record_key": "Domain Power ~ Chastisement"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

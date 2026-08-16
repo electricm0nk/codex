@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sister-in-Arms ~ Dedicated Commander",
+    "name": "Dedicated Commander",
+    "class": "Sister-in-Arms",
+    "description": "A sister-in-arms can inspire and direct allies with great efficiency. The sister-in-arms can use lion's call or strategy order as a move action, rather than as a standard action.|!PRECLASS:1,Cavalier=20",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sister-in-Arms ~ Dedicated Commander"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Feature.SisterInArmsClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "DESC",
+        "value": "A sister-in-arms can inspire and direct allies with great efficiency. The sister-in-arms can use lion's call or strategy order as a move action, rather than as a standard action.|!PRECLASS:1,Cavalier=20"
+      },
+      {
+        "key": "DESC",
+        "value": "A sister-in-arms can inspire and direct allies with great efficiency. The sister-in-arms can use act as one, lion's call, or strategy order as a swift or move action.|PRECLASS:1,Cavalier=20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 761,
+    "record_key": "Sister-in-Arms ~ Dedicated Commander"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

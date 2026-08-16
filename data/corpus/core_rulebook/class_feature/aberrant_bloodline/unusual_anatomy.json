@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Aberrant Bloodline ~ Unusual Anatomy",
+    "name": "Unusual Anatomy",
+    "class": "Aberrant Bloodline",
+    "description": "Your anatomy changes, giving you a %1%% chance to ignore any critical hit or sneak attack scored against you, treating it as a normal hit instead.|Sorcerer_UnusualAnatomy_PercentChance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aberrant Bloodline ~ Unusual Anatomy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Aberrant Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Extraordinary.Defensive"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Aberrant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Aberrant_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Aberrant_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_UnusualAnatomy_PercentChance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your anatomy changes, giving you a %1%% chance to ignore any critical hit or sneak attack scored against you, treating it as a normal hit instead.|Sorcerer_UnusualAnatomy_PercentChance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_UnusualAnatomy_PercentChance|25"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_UnusualAnatomy_PercentChance|25|PREVARGTEQ:Sorcerer_Aberrant_BloodlinePower9LVL,13"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|You have a %1%% chance to ignore critical hits and sneak attacks.|Sorcerer_UnusualAnatomy_PercentChance|!PREABILITY:2,CATEGORY=Special Ability,Immunity to Critical Hits,Immunity to Sneak Attacks"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1%%)|Sorcerer_UnusualAnatomy_PercentChance|!PREABILITY:2,CATEGORY=Special Ability,Immunity to Critical Hits,Immunity to Sneak Attacks"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AberrantBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2345,
+    "record_key": "Aberrant Bloodline ~ Unusual Anatomy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Battle Spirit ~ Battle Spirit",
+    "name": "Battle Spirit",
+    "class": "Battle Spirit",
+    "description": "A shaman surrounds herself with the spirit of battle. Allies within 30 feet of the shaman (including the shaman) receive a +%1 morale bonus on attack rolls and weapon damage rolls. The shaman can use this ability %2 rounds/day. These rounds do not need to be consecutive.|ShamanBattleSpiritBonus|ShamanBattleSpiritRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Spirit ~ Battle Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanBattleSpiritBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanBattleSpiritRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A shaman surrounds herself with the spirit of battle. Allies within 30 feet of the shaman (including the shaman) receive a +%1 morale bonus on attack rolls and weapon damage rolls. The shaman can use this ability %2 rounds/day. These rounds do not need to be consecutive.|ShamanBattleSpiritBonus|ShamanBattleSpiritRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanBattleSpiritBonus|1+min(2,ShamanSpiritLVL/8)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanBattleSpiritRounds|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1519,
+    "record_key": "Battle Spirit ~ Battle Spirit"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

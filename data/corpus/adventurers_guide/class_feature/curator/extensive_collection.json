@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Curator ~ Extensive Collection",
+    "name": "Extensive Collection",
+    "class": "Curator",
+    "description": "[NOT IMPLEMENTED] A curator acquires a collection of esoteric relics that function as occultist implements associated with two schools of magic; he must select these schools and their associated spells when he gains this feature. As a move action, the curator can empower a single piece of his collection, choosing one of the two selected schools, gaining that school's focus power, and accessing the selected spells for 10 minutes. The curator can empower only a single relic at a time in this way, and activating this ability a second time ends any other relic's ongoing benefits. A curator's relic collection has a number of points of mental focus equal to his Intelligence modifier. Empowered relics are automatically invested with these mental focus points; expending a relic's mental focus reduces this total for the day. A curator can use this ability once per day. He can use it an additional time per day at 2nd level and every 4 levels thereafter. At 6th level and again at 14th level, a curator chooses two additional schools of magic-in addition to their spells-and adds them to his collection.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Curator ~ Extensive Collection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.CuratorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] A curator acquires a collection of esoteric relics that function as occultist implements associated with two schools of magic; he must select these schools and their associated spells when he gains this feature. As a move action, the curator can empower a single piece of his collection, choosing one of the two selected schools, gaining that school's focus power, and accessing the selected spells for 10 minutes. The curator can empower only a single relic at a time in this way, and activating this ability a second time ends any other relic's ongoing benefits. A curator's relic collection has a number of points of mental focus equal to his Intelligence modifier. Empowered relics are automatically invested with these mental focus points; expending a relic's mental focus reduces this total for the day. A curator can use this ability once per day. He can use it an additional time per day at 2nd level and every 4 levels thereafter. At 6th level and again at 14th level, a curator chooses two additional schools of magic-in addition to their spells-and adds them to his collection."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistImplementSchool|-1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 957,
+    "record_key": "Curator ~ Extensive Collection"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

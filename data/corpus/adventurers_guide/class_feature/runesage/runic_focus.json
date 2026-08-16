@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Runesage ~ Runic Focus",
+    "name": "Runic Focus",
+    "class": "Runesage",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Runesage ~ Runic Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wizard Class Feature.RunesageClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "A runesage can use her knowledge of runes to create a runic focus, a small, semiprecious stone engraved with Thassilonian runes that she manipulates to alter her spellcasting abilities. In function, a runic focus behaves like an ioun stone. To activate a runic focus, the runesage must meditate on it as she prepares her spells. Following spell preparation, she tosses the gemstone into the air, after which it orbits around her head. A runic focus remains in orbit until the next time the runesage prepares her spells. A runic focus automatically functions as a runesage's bonded object. A runesage does not have the option to specialize in an arcane school-all runesages must be universalists. However, when a runesage creates a runic focus, she must choose one Thassilonian school of magic (see page 63). When she prepares her spells, she is treated as a Thassilonian magic specialist of her runic focus's school for the purposes of determining what spells she can prepare (including gaining two additional spell slots per spell level of her school, and being unable to prepare spells from her runic focus's two opposition schools). She does not gain the corresponding powers of that school, however, and always functions as a universalist wizard in this regard. A runic focus allows the runesage to augment spells of a single arcane school to which the runic focus is aligned. As long as a runic focus remains activated, the runesage doesn't require material components for any spell she casts from the runic focus's aligned arcane school, provided the component's cost never exceeds %1 gp. If the spell requires a material component that surpasses the cost limit, the runesage must have the material component on hand to cast the spell, as normal. A runic focus has an AC of 24, 10 hit points, and hardness 5, as per an ioun stone. While the first runic focus a runesage creates is free, replacement runic foci can be created using the standard rules for replacing a bonded object for a wizard's arcane bond. When a runesage creates a new runic focus, she can focus it on a different school of Thassilonian magic than her previous focus as long as the new school is not one that was an oppositional school from her previous focus. For example, a runesage with a runic focus on necromancy could abandon that focus and replace it with a new focus on any school other than abjuration and enchantment (as these two schools are opposition schools to Thassilonian necromancy). A runic focus cannot be enchanted. It orbits the wearer's head like an ioun stone, but cannot be socketed in a wayfinder, implanted, or otherwise removed from orbit. This ability alters arcane bond and replaces arcane school.|WizardLVL*10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Universal School"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Runic Focus School|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=1|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=2|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=3|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=4|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=5|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=6|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=7|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=8|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=9|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1132,
+    "record_key": "Runesage ~ Runic Focus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

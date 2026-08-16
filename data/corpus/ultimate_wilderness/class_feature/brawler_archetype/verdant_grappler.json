@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brawler Archetype ~ Verdant Grappler",
+    "name": "Verdant Grappler",
+    "class": "Brawler Archetype",
+    "description": "By accepting spirits of nature into her soul, a verdant grappler can entangle her foes with tangled undergrowth.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler Archetype ~ Verdant Grappler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BrawlerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Brawler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Verdant Grappler],[!PREFACT:1,ABILITIES,Brawler_Archetype_BonusFeat2=True,Brawler_Archetype_ManeuverTraining=True,Brawler_Archetype_CloseWeaponMastery=True,Brawler_Archetype_BonusFeat11=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "By accepting spirits of nature into her soul, a verdant grappler can entangle her foes with tangled undergrowth."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Verdant Grappler ~ Green Grasp|PRECLASS:1,Brawler=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Verdant Grappler ~ Thorny Embrace|PRECLASS:1,Brawler=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Verdant Grappler ~ Phytological Anatomy|PRECLASS:1,Brawler=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ManeuverTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_CloseWeaponMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BonusFeat11|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_CloseWeaponMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BonusFeat11|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 355,
+    "record_key": "Brawler Archetype ~ Verdant Grappler"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

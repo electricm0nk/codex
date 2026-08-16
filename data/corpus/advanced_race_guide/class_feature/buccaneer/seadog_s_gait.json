@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Buccaneer ~ Seadog's Gait",
+    "name": "Seadog's Gait",
+    "class": "Buccaneer",
+    "description": "The buccaneer gains Sea Legs as a bonus feat. If she spends 1 grit point, she can ignore difficult terrain until the end of her turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Buccaneer ~ Seadog's Gait"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The buccaneer gains Sea Legs as a bonus feat. If she spends 1 grit point, she can ignore difficult terrain until the end of her turn."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Sea Legs"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 351,
+    "record_key": "Buccaneer ~ Seadog's Gait"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

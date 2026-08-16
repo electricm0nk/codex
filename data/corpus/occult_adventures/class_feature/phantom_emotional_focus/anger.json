@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Phantom Emotional Focus ~ Anger",
+    "name": "Anger",
+    "class": "Phantom Emotional Focus",
+    "description": "Phantoms with this emotional focus are filled with seething anger from events in their past lives. Phantoms with this focus often take the form of hulking brutes with furrowed brows or of frenzied creatures that always seem ready to strike down those who come too near. Many times, these phantoms exude a bright red aura, especially when they are engaged in combat, or they seem to breathe a red mist in shallow pants from behind clenched, phantasmal teeth.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantom Emotional Focus ~ Anger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phantom Emotional Focus"
+      },
+      {
+        "key": "DESC",
+        "value": "Phantoms with this emotional focus are filled with seething anger from events in their past lives. Phantoms with this focus often take the form of hulking brutes with furrowed brows or of frenzied creatures that always seem ready to strike down those who come too near. Many times, these phantoms exude a bright red aura, especially when they are engaged in combat, or they seem to breathe a red mist in shallow pants from behind clenched, phantasmal teeth."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Skill Focus (Intimidate)|Skill Focus (Survival)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhantomEmotionalFocus_Anger|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1296,
+    "record_key": "Phantom Emotional Focus ~ Anger"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

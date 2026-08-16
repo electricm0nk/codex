@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Luring Cavalier ~ Careful Aim",
+    "name": "Careful Aim",
+    "class": "Luring Cavalier",
+    "description": "At 3rd level, when a luring cavalier makes a ranged attack with his highest base attack bonus, he can ignore the penalties for firing up to three range increments away. If he is using a firearm, he can target touch AC up to two range increments away. This effect stacks with effects that allow the cavalier to make ranged attacks farther without penalty or that allow him to target touch AC with a firearm beyond the first range increment. This ability replaces cavalier's charge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Luring Cavalier ~ Careful Aim"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, when a luring cavalier makes a ranged attack with his highest base attack bonus, he can ignore the penalties for firing up to three range increments away. If he is using a firearm, he can target touch AC up to two range increments away. This effect stacks with effects that allow the cavalier to make ranged attacks farther without penalty or that allow him to target touch AC with a firearm beyond the first range increment. This ability replaces cavalier's charge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 503,
+    "record_key": "Luring Cavalier ~ Careful Aim"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

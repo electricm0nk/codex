@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Composite Blast ~ Plasma Blast",
+    "name": "Plasma Blast",
+    "class": "Composite Blast",
+    "description": "Elements air and fire; Type composite blast (Sp); Level -; Burn 2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Composite Blast ~ Plasma Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Composite Blast"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisites air blast, fire blast"
+      },
+      {
+        "key": "DESC",
+        "value": "Elements air and fire; Type composite blast (Sp); Level -; Burn 2"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Blast Type physical; Damage half bludgeoning, half fire You launch a gust of air and then use your fire to superheat the gust into plasma just as it strikes a single foe."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 666,
+    "record_key": "Composite Blast ~ Plasma Blast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

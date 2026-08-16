@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Maneuver Mastery ~ Steal",
+    "name": "Maneuver Mastery (Steal)",
+    "class": "Maneuver Mastery",
+    "description": "You use your Oracle level as your Base Attack Bonus when determining your Combat Maneuver Bonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maneuver Mastery ~ Steal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleManeuverMastery"
+      },
+      {
+        "key": "DESC",
+        "value": "You use your Oracle level as your Base Attack Bonus when determining your Combat Maneuver Bonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Steal|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Greater Steal|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Steal|classlevel(\"Oracle\")-BAB"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 561,
+    "record_key": "Maneuver Mastery ~ Steal"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

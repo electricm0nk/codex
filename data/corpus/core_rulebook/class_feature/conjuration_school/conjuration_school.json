@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Conjuration School",
+    "name": "Conjuration School",
+    "class": null,
+    "description": "You have chosen to specialize in conjuration spells.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConjurationSchoolLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConjurationProgressionSchoolLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to specialize in conjuration spells."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Conjuration School ~ Summoner's Charm|PREVAREQ:Wizard_CF_SummonersCharm,0|PREVARGTEQ:ConjurationProgressionSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Conjuration School ~ Acid Dart|PREVAREQ:Wizard_CF_AcidDart,0|PREVARGTEQ:ConjurationProgressionSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Conjuration School ~ Dimensional Steps|PREVAREQ:Wizard_CF_DimensionalSteps,0|PREVARGTEQ:ConjurationProgressionSchoolLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_ArcaneOppositionSchool|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OppositionalSchool|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Conjurer;LEVEL=1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Conjurer;LEVEL=2|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Conjurer;LEVEL=3|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Conjurer;LEVEL=4|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Conjurer;LEVEL=5|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Conjurer;LEVEL=6|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Conjurer;LEVEL=7|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Conjurer;LEVEL=8|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Conjurer;LEVEL=9|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConjurationSchoolLVL|ArcaneSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConjurationProgressionSchoolLVL|ArcaneSchoolProgressionLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisallowWizardArcaneSchoolArchetype|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2598,
+    "record_key": "Conjuration School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

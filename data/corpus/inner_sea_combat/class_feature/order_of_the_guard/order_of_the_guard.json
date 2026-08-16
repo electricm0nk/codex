@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Guard",
+    "name": "Order of the Guard",
+    "class": null,
+    "description": "Cavaliers who join the order of the guard dedicate themselves to the staunch and unyielding protection of a specific person or object—generally one they have been hired to protect. Members of the order of the guard are often mercenaries, offering their valuable services for a fee to those who wish to protect their investments. An order of the guard cavalier can offer his services to a cause in which he believes without accepting a monetary payment, though the cavalier’s protection must come at some price, be it a favor, the release of knowledge, or other intangible trade. A tenet of the order is that the high level of protection the order strives for is only obtainable if the protector invests something of himself in the task and stands to lose something valuable should he fail.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.CavalierOrder.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OrderChallengeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Cavaliers who join the order of the guard dedicate themselves to the staunch and unyielding protection of a specific person or object—generally one they have been hired to protect. Members of the order of the guard are often mercenaries, offering their valuable services for a fee to those who wish to protect their investments. An order of the guard cavalier can offer his services to a cause in which he believes without accepting a monetary payment, though the cavalier’s protection must come at some price, be it a favor, the release of knowledge, or other intangible trade. A tenet of the order is that the high level of protection the order strives for is only obtainable if the protector invests something of himself in the task and stands to lose something valuable should he fail."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Guard ~ Edicts"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Guard ~ Skills"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Guard ~ Prepared for the Journey|PREVARGTEQ:OrderAbilityLVL,2|PREVAREQ:OrderAbility2,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Guard ~ Close at Hand|PREVARGTEQ:OrderAbilityLVL,8|PREVAREQ:OrderAbility8,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Guard ~ Quick Retort|PREVARGTEQ:OrderAbilityLVL,15|PREVAREQ:OrderAbility15,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OrderChallengeBonus|CavalierLVL/4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 518,
+    "record_key": "Order of the Guard"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gray Corsair ~ Gray Focus",
+    "name": "Gray Focus",
+    "class": "Gray Corsair",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gray Corsair ~ Gray Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Gray Corsair Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      },
+      {
+        "key": "DESC",
+        "value": "Gray Corsair training works best when synergizing with the powers and talents of a limited range of classes that are particularly well-suited to the seaborne life of rescuing slaves and defeating slavers. When a character gains his first level as a Gray Corsair, he must choose one of the following classes as his gray focus: bard, cleric, fighter, gunslinger, inquisitor, investigator, magus, mesmerist, psychic, rogue, swashbuckler, sorcerer, or wizard."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 164,
+    "record_key": "Gray Corsair ~ Gray Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

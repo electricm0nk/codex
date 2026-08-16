@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Herbalist ~ Herbalism",
+    "name": "Herbalism",
+    "class": "Herbalist",
+    "description": "An herbalist's studies allow him a unique method of creating alchemical discoveries. He can attempt Profession (herbalist) checks in place of Craft (alchemy) checks for all purposes, and he gains a competence bonus equal to half his alchemist level on Profession (herbalist) checks to create alchemical items and to forage for and process herbs (see page 152). [NOT IMPLEMENTED] An herbalist uses his Wisdom score instead of his Intelligence score for all alchemist class abilities. This alters alchemy and the alchemist's key ability score.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Herbalist ~ Herbalism"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Features.HerbalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An herbalist's studies allow him a unique method of creating alchemical discoveries. He can attempt Profession (herbalist) checks in place of Craft (alchemy) checks for all purposes, and he gains a competence bonus equal to half his alchemist level on Profession (herbalist) checks to create alchemical items and to forage for and process herbs (see page 152). [NOT IMPLEMENTED] An herbalist uses his Wisdom score instead of his Intelligence score for all alchemist class abilities. This alters alchemy and the alchemist's key ability score."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Herbalist)|AlchemistLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 125,
+    "record_key": "Herbalist ~ Herbalism"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

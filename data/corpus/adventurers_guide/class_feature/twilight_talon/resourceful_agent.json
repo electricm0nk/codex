@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Twilight Talon ~ Resourceful Agent",
+    "name": "Resourceful Agent",
+    "class": "Twilight Talon",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Twilight Talon ~ Resourceful Agent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Twilight Talon Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "DESC",
+        "value": "A Twilight Talon often can't risk carrying traditional weapons, as doing so would seem out of place for many of the covers that she employs. Instead, she becomes a master at maximizing the potential in everyday objects used as improvised weapons. A  Twilight Talon increases the amount of damage she deals with improvised weapons by one step (for example, 1d4 becomes 1d6)."
+      },
+      {
+        "key": "DESC",
+        "value": "All improvised weapons used by a Twilight Talon have a base critical threat range of 19-20, and she gains Critical Focus as a bonus feat.|PREVARGTEQ:TwilightTalonLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": "a Twilight Talon gains Staggering Critical as a bonus feat.|PREVARGTEQ:TwilightTalonLVL,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Critical Focus|PREVARGTEQ:TwilightTalonLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Staggering Critical|PREVARGTEQ:TwilightTalonLVL,9"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 543,
+    "record_key": "Twilight Talon ~ Resourceful Agent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

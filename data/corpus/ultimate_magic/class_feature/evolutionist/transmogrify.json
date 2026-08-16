@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Evolutionist ~ Transmogrify",
+    "name": "Transmogrify",
+    "class": "Evolutionist",
+    "description": "You can cast transmogrify as a spell-like ability once per day without the need for a material component. This ability has a casting time of 1 minute.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolutionist ~ Transmogrify"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=12|Transmogrify"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast transmogrify as a spell-like ability once per day without the need for a material component. This ability has a casting time of 1 minute."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1876,
+    "record_key": "Evolutionist ~ Transmogrify"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

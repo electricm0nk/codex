@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ninja Trick ~ Forgotten Trick",
+    "name": "Forgotten Trick",
+    "class": "Ninja Trick",
+    "description": "A ninja with this ability can recall one trick taught to her by her ancient masters. When she uses this ability, she selects one ninja trick (not a master trick or rogue talent) that she does not know and can use that ninja trick for a number of rounds equal to her level. She must pay any ki costs associated with the trick as normal. Using this ability expends 2 ki point from her ki pool, plus the ki cost of the trick she chooses.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Forgotten Trick"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_Temp_Ninja_Trick|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A ninja with this ability can recall one trick taught to her by her ancient masters. When she uses this ability, she selects one ninja trick (not a master trick or rogue talent) that she does not know and can use that ninja trick for a number of rounds equal to her level. She must pay any ki costs associated with the trick as normal. Using this ability expends 2 ki point from her ki pool, plus the ki cost of the trick she chooses."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|Pool_Temp_Ninja_Trick|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 134,
+    "record_key": "Ninja Trick ~ Forgotten Trick"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

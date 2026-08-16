@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Duelist ~ No Retreat",
+    "name": "No Retreat",
+    "class": "Duelist",
+    "description": "At 9th level, enemies adjacent to the duelist that take a withdraw action provoke an attack of opportunity from the duelist.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Duelist ~ No Retreat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DuelistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, enemies adjacent to the duelist that take a withdraw action provoke an attack of opportunity from the duelist."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.384"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3000,
+    "record_key": "Duelist ~ No Retreat"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

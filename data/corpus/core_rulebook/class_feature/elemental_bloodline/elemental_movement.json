@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elemental Bloodline ~ Elemental Movement",
+    "name": "Elemental Movement",
+    "class": "Elemental Bloodline",
+    "description": "You gain a fly speed of 60 feet with average maneuverability.|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Air,1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Bloodline ~ Elemental Movement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Elemental Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Elemental"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Elemental_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Elemental_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a fly speed of 60 feet with average maneuverability.|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Air,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a burrow speed of 30 feet.|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Earth,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +30 foot bonus to your base movement speed.|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a swim speed of 60 feet.|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Water,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Elemental Bloodline ~ Elemental Movement (Air)|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Air,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Elemental Bloodline ~ Elemental Movement (Earth)|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Earth,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Elemental Bloodline ~ Elemental Movement (Fire)|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Fire,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Elemental Bloodline ~ Elemental Movement (Water)|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Water,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ElementalBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2488,
+    "record_key": "Elemental Bloodline ~ Elemental Movement"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Druid Domain ~ Vermin",
+    "name": "Vermin",
+    "class": "Druid Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Domain ~ Vermin"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Domain ~ Animal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidDomainSelection.DruidAnimalTerrainDomain.DruidAnimalDomain.SpecialQuality"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "DruidVerminAllowed,1"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "DruidAnimalTerrainDomainNotAllowed,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVerminLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVerminDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVerminTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVerminAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Druid=1|Ant Haul|Druid=2|Summon Swarm|Druid=3|Vermin Shape I|Druid=4|Vermin Shape II|Druid=5|Insect Plague|Druid=6|Swarm Skin|Druid=7|Creeping Doom|Druid=8|Verminous Transformation|Druid=9|Summon Nature's Ally IX (1d3 purple worms only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 481,
+    "record_key": "Druid Domain ~ Vermin"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

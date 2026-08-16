@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forgepriest ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Forgepriest",
+    "description": "A forgepriest can select item creation feats in addition to combat feats when he gains a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forgepriest ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Forgepriest Class Feature.Warpriest Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestBonusFeatBAB|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestBonusFeatLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A forgepriest can select item creation feats in addition to combat feats when he gains a bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=FighterWeaponQualify"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Forgepriest Bonus Feat Type|(WarpriestLvl-6)/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBonusFeatBAB|WarpriestLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBonusFeatLVL|WarpriestLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBonusFeatLVL|FighterLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FighterWeaponQualifyLVL|WarpriestLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3995,
+    "record_key": "Forgepriest ~ Bonus Feats"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

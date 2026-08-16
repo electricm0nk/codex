@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Earth",
+    "name": "Earth",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Bloodrager Elemental Bloodline"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bloodrager Elemental Bloodline Choice"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerElementalBloodline_Earth|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerElementalBloodline_Earth|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 794,
+    "record_key": "Earth"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

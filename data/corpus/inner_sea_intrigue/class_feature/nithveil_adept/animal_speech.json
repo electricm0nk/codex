@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nithveil Adept ~ Animal Speech",
+    "name": "Animal Speech",
+    "class": "Nithveil Adept",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nithveil Adept ~ Animal Speech"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.NithveilAdeptClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "A Nithveil adept can imbue normal animals with the ability to speak for a brief period. %1 times per day as a standard action, the Nithveil adept can touch an animal to grant it the ability to speak any language the druid knows for %2 minutes. This does not increase the animal's Intelligence or improve its attitude, and the animal behaves as though communicating with someone under the effects of a speak with animals spell, save that it can speak with anyone who understands the language the Nithveil adept grants it.|1+DruidLVL/4|DruidLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 48,
+    "record_key": "Nithveil Adept ~ Animal Speech"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

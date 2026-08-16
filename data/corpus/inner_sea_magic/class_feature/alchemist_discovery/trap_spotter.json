@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Alchemist Discovery ~ Trap Spotter",
+    "name": "Trap Spotter",
+    "class": "Alchemist Discovery",
+    "description": "Whenever you come within %1 feet of a trap, you receive an immediate Perception skill check to notice the trap. This check should be made in secret by the GM.|TrapSpotterDistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Discovery ~ Trap Spotter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.Extraordinary.AlchemistDiscovery"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Alchemist Archetype ~ Crypt Breaker"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapSpotterDistance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you come within %1 feet of a trap, you receive an immediate Perception skill check to notice the trap. This check should be made in secret by the GM.|TrapSpotterDistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapSpotterDistance|10"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 150,
+    "record_key": "Alchemist Discovery ~ Trap Spotter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

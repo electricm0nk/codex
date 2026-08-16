@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dead Calm Temp Bonus",
+    "name": "Dead Calm",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dead Calm Temp Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rage.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeadCalmStrBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeadCalmConBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeadCalmSaveBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeadCalmStrBonus,DeadCalmConBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeadCalmSaveBonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeadCalmStrBonus,DeadCalmConBonus|1|PREABILITY:1,CATEGORY=Special Ability,Barbarian ~ Greater Rage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeadCalmSaveBonus|1|PREABILITY:1,CATEGORY=Special Ability,Barbarian ~ Mighty Rage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeadCalmStrBonus,DeadCalmConBonus|1|PREABILITY:1,CATEGORY=Special Ability,Barbarian ~ Mighty Rage"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|Will|DeadCalmSaveBonus"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR|DeadCalmStrBonus"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|CON|DeadCalmConBonus"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|Raging|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 38,
+    "record_key": "Dead Calm Temp Bonus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Mammoth's Hide",
+    "name": "Mammoth's Hide",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman can touch a willing ally and cause its skin to thicken and sprout thick, shaggy fur. The creature gains a +%1 enhancement bonus to natural armor and resistance 5 to cold for 10 minutes. The shaman can use this ability %3 times per day.|ShamanMammothsHideArmor|ShamanMammothsHideResistance|CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Mammoth's Hide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanMammothHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanMammothsHideArmor|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanMammothsHideResistance|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can touch a willing ally and cause its skin to thicken and sprout thick, shaggy fur. The creature gains a +%1 enhancement bonus to natural armor and resistance 5 to cold for 10 minutes. The shaman can use this ability %3 times per day.|ShamanMammothsHideArmor|ShamanMammothsHideResistance|CHA"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Mammoth's Hide"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanMammothSpirit,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanMammothsHideArmor|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanMammothsHideArmor|1|PRECLASS:1,Shaman=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanMammothsHideArmor|1|PRECLASS:1,Shaman=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanMammothsHideResistance|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanMammothsHideResistance|5|PRECLASS:1,Shaman=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanMammothsHideResistance|5|PRECLASS:1,Shaman=15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1207,
+    "record_key": "Shaman Spirit Hex ~ Mammoth's Hide"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

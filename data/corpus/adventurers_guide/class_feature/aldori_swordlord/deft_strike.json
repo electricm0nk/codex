@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Aldori Swordlord ~ Deft Strike",
+    "name": "Deft Strike",
+    "class": "Aldori Swordlord",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aldori Swordlord ~ Deft Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Aldori Swordlord Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "DESC",
+        "value": "An Aldori swordlord can add his Dexterity bonus (if any) to damage rolls made with an Aldori dueling sword instead of his Strength bonus. This bonus on damage rolls applies whether the swordlord is wielding an Aldori dueling sword one-handed or two-handed. An Aldori swordlord cannot use this ability if he is wielding a shield or using an off-hand weapon (including armor spikes, unarmed strikes, or natural weapons)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 5,
+    "record_key": "Aldori Swordlord ~ Deft Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Discipline Psychedelia ~ Hallucinogenic Aura",
+    "name": "Hallucinogenic Aura",
+    "class": "Psychic Discipline Psychedelia",
+    "description": "At 13th level, a mental field emanates from you, touching the minds of those nearby. Any creature within 30 feet of you must succeed at a Will save or be confused for 1d4 rounds. A creature that succeeds at its saving throw is immune to your hallucinogenic aura for 24 hours. A creature that fails its save doesn't need to continue making saves while it's confused by this aura, and becomes immune for 24 hours once its confusion ends. This is a mind-affecting effect. You're immune to your own hallucinogenic aura, as well as that of any other psychic. You can brew an antidote that protects the imbiber from your aura. Brewing 1 dose requires 1 hour and a successful DC 15 Craft (alchemy) check. One dose's effects last for 1 month.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Psychedelia ~ Hallucinogenic Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 13th level, a mental field emanates from you, touching the minds of those nearby. Any creature within 30 feet of you must succeed at a Will save or be confused for 1d4 rounds. A creature that succeeds at its saving throw is immune to your hallucinogenic aura for 24 hours. A creature that fails its save doesn't need to continue making saves while it's confused by this aura, and becomes immune for 24 hours once its confusion ends. This is a mind-affecting effect. You're immune to your own hallucinogenic aura, as well as that of any other psychic. You can brew an antidote that protects the imbiber from your aura. Brewing 1 dose requires 1 hour and a successful DC 15 Craft (alchemy) check. One dose's effects last for 1 month."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1238,
+    "record_key": "Psychic Discipline Psychedelia ~ Hallucinogenic Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

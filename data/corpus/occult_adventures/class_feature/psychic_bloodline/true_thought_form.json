@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Bloodline ~ True Thought-Form",
+    "name": "True Thought-Form",
+    "class": "Psychic Bloodline",
+    "description": "You can shed the restrictions of the flesh and become a thought-form--a being that exists independently of its substance. Whenever a creature would kill you, you can attempt to use mind swap against that creature as an immediate action just before dying.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Bloodline ~ True Thought-Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Psychic Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialAttack.Special Attack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Psychic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Psychic_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can shed the restrictions of the flesh and become a thought-form--a being that exists independently of its substance. Whenever a creature would kill you, you can attempt to use mind swap against that creature as an immediate action just before dying."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|PsychicBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1885,
+    "record_key": "Psychic Bloodline ~ True Thought-Form"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

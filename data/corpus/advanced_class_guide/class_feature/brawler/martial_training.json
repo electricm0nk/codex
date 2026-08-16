@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brawler ~ Martial Training",
+    "name": "Martial Training",
+    "class": "Brawler",
+    "description": "A brawler counts her total brawler levels as both fighter levels and monk levels for the purpose of qualifying for feats. She also counts as both a fighter and a monk for feats and magic items that have different effects based on whether the character has levels in those classes (such as Stunning Fist and a monk's robe). This ability does not automatically grant feats normally granted to fighters and monks based on class level, namely Stunning Fist.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler ~ Martial Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkFeatQualify|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler counts her total brawler levels as both fighter levels and monk levels for the purpose of qualifying for feats. She also counts as both a fighter and a monk for feats and magic items that have different effects based on whether the character has levels in those classes (such as Stunning Fist and a monk's robe). This ability does not automatically grant feats normally granted to fighters and monks based on class level, namely Stunning Fist."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=FighterWeaponQualify"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FighterWeaponQualifyLVL|BrawlerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkFeatQualify|BrawlerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkLVL|BrawlerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 902,
+    "record_key": "Brawler ~ Martial Training"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

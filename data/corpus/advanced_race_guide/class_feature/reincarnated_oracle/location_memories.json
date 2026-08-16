@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Reincarnated Oracle ~ Location Memories",
+    "name": "Location Memories",
+    "class": "Reincarnated Oracle",
+    "description": "As a swift action, you may search your past lives for memories of or insight about your current location. This grants you the scent ability, low-light vision, and a +2 insight bonus on Perception and Survival checks for 1 minute. You can use this ability %1 times per day. You must take this revelation at 1st level or 3rd level.|3+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reincarnated Oracle ~ Location Memories"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural.ReincarnatedOracleRevelation"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you may search your past lives for memories of or insight about your current location. This grants you the scent ability, low-light vision, and a +2 insight bonus on Perception and Survival checks for 1 minute. You can use this ability %1 times per day. You must take this revelation at 1st level or 3rd level.|3+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMysteryLevel|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 943,
+    "record_key": "Reincarnated Oracle ~ Location Memories"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

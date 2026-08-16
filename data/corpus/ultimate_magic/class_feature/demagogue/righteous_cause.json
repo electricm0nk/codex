@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Demagogue ~ Righteous Cause",
+    "name": "Righteous Cause",
+    "class": "Demagogue",
+    "description": "You can lift a crowd's emotions and turn them toward a common purpose. First, you must fascinate the crowd, and then use incite violence without designating a target, at which point you can use righteous cause. Instead of driving the crowd with anger, you fill them with purpose. Fascinated creatures must make Will saves (DC %1) to resist. Those who fail are affected by mass suggestion of a plausible idea that lingers with them for one day. Typical uses of this ability are to spark rebellion, overthrow a king, build a beneficial structure such as an orphanage, or donate money to a cause.|RighteousCauseDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Demagogue ~ Righteous Cause"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Extraordinary.BardicPerformance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RighteousCauseDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can lift a crowd's emotions and turn them toward a common purpose. First, you must fascinate the crowd, and then use incite violence without designating a target, at which point you can use righteous cause. Instead of driving the crowd with anger, you fill them with purpose. Fascinated creatures must make Will saves (DC %1) to resist. Those who fail are affected by mass suggestion of a plausible idea that lingers with them for one day. Typical uses of this ability are to spark rebellion, overthrow a king, build a beneficial structure such as an orphanage, or donate money to a cause.|RighteousCauseDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Righteous Cause"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RighteousCauseDC|10+CHA+classlevel(\"Bard\")/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RighteousCauseDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Righteous Cause)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 963,
+    "record_key": "Demagogue ~ Righteous Cause"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Silver Balladeer ~ Alignment",
+    "name": "Alignment",
+    "class": "Silver Balladeer",
+    "description": "A silver balladeer must have a good alignment. This ability alters alignment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Silver Balladeer ~ Alignment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Silver Balladeer Class Feature.Bard Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A silver balladeer must have a good alignment. This ability alters alignment."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1689,
+    "record_key": "Silver Balladeer ~ Alignment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

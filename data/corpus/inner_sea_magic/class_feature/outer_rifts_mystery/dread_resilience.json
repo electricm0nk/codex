@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Outer Rifts Mystery ~ Dread Resilience",
+    "name": "Dread Resilience",
+    "class": "Outer Rifts Mystery",
+    "description": "You have been hardened by exposure to the otherwordly energies of the Outer Rifts, and you just keep getting tougher. You gain a +%1 inherent bonus to Constitution.|DreadResilienceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Outer Rifts Mystery ~ Dread Resilience"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Extraordinary"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DreadResilienceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have been hardened by exposure to the otherwordly energies of the Outer Rifts, and you just keep getting tougher. You gain a +%1 inherent bonus to Constitution.|DreadResilienceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|DreadResilienceBonus|TYPE=Inherent"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DreadResilienceBonus|1+(OracleLVL-9)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 113,
+    "record_key": "Outer Rifts Mystery ~ Dread Resilience"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

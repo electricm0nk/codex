@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Flame Dancer ~ Fan the Flames",
+    "name": "Fan the Flames",
+    "class": "Flame Dancer",
+    "description": "A fire dancer adds burning hands, flaming sphere, and fireball to his list of bard spells known (as 1st-, 2nd-, and 3rd-level spells, respectively).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flame Dancer ~ Fan the Flames"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Flame Dancer Class Feature.Bard Class Feature.SpecialQuality.Supernatural.BardDirgeOfDoom"
+      },
+      {
+        "key": "DESC",
+        "value": "A fire dancer adds burning hands, flaming sphere, and fireball to his list of bard spells known (as 1st-, 2nd-, and 3rd-level spells, respectively)."
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Bard;LEVEL=1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Bard;LEVEL=2|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Bard;LEVEL=3|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=1|Burning Hands"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=2|Flaming Sphere"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=3|Fireball"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2691,
+    "record_key": "Flame Dancer ~ Fan the Flames"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

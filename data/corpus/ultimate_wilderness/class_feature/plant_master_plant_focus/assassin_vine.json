@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Plant Master Plant Focus ~ Assassin Vine",
+    "name": "Assassin Vine",
+    "class": "Plant Master Plant Focus",
+    "description": "Get +%1 bonus on combat maneuver checks to grapple.|PlantFocusAssassinVineBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plant Master Plant Focus ~ Assassin Vine"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PlantMasterPlantFocusAbility"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PlantFocusAssassinVineBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Get +%1 bonus on combat maneuver checks to grapple.|PlantFocusAssassinVineBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Grapple|PlantFocusAssassinVineBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantFocusAssassinVineBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantFocusAssassinVineBonus|1|PREVARGTEQ:PlantMasterPlantFocusLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantFocusAssassinVineBonus|1|PREVARGTEQ:PlantMasterPlantFocusLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 682,
+    "record_key": "Plant Master Plant Focus ~ Assassin Vine"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

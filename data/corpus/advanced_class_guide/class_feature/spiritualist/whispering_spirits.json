@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spiritualist ~ Whispering Spirits",
+    "name": "Whispering Spirits",
+    "class": "Spiritualist",
+    "description": "The spiritualist can open a conduit with the spirit world that can aid him in combat for a short time. He can expend one use of his commune with spirits ability in order to gain a +%1 insight bonus to both AC and saving throws for 1 minute.|max(1,WIS)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Whispering Spirits"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.Investigator Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The spiritualist can open a conduit with the spirit world that can aid him in combat for a short time. He can expend one use of his commune with spirits ability in order to gain a +%1 insight bonus to both AC and saving throws for 1 minute.|max(1,WIS)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3343,
+    "record_key": "Spiritualist ~ Whispering Spirits"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

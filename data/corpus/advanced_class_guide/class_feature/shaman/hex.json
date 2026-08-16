@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman ~ Hex",
+    "name": "Hex",
+    "class": "Shaman",
+    "description": "A shaman learns a number of magical tricks, called hexes, which grant her powers or weaken foes. Using a hex is a standard action that doesn't provoke an attack of opportunity unless otherwise noted. The saving throw DC to resist a hex is %1.|ShamanHexDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman ~ Hex"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.WitchHex"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexStatMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexChoices|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHexAbilityLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A shaman learns a number of magical tricks, called hexes, which grant her powers or weaken foes. Using a hex is a standard action that doesn't provoke an attack of opportunity unless otherwise noted. The saving throw DC to resist a hex is %1.|ShamanHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Hex|ShamanHexChoices"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexDC|10+(ShamanLVL/2)+ShamanHexStatMod"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexStatMod|WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexAbilityLVL|ShamanLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexLVL|ShamanLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1389,
+    "record_key": "Shaman ~ Hex"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

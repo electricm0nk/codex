@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunter ~ Speak With Master",
+    "name": "Speak With Master",
+    "class": "Hunter",
+    "description": "At 11th level, a hunter and her animal companion can communicate verbally, as if they were using a common language. Other creatures cannot understand the communication without magical aid.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter ~ Speak With Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.HunterSpeakWithMaster.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, a hunter and her animal companion can communicate verbally, as if they were using a common language. Other creatures cannot understand the communication without magical aid."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1186,
+    "record_key": "Hunter ~ Speak With Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

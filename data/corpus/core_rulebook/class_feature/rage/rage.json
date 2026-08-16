@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage",
+    "name": "Rage",
+    "class": null,
+    "description": "You can call upon inner reserves of strength and ferocity, granting you additional combat prowess. You can rage for %1 rounds per day. You can enter rage as a free action. The total number of rounds of rage per day is renewed after resting for 8 hours, although these hours do not need to be consecutive. While in rage, you gain a +%2 morale bonus to your Strength and a +%3 morale bonus to Constitution, as well as a +%4 morale bonus on Will saves. In addition, you take a -2 penalty to Armor Class. The increase to Constitution grants you %5 hit points, but these disappear when the rage ends and are not lost first like temporary hit points. While in rage, you cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration. You can end your rage as a free action and are fatigued after rage for a number of rounds equal to 2 times the number of rounds spent in the rage. You cannot enter a new rage while fatigued or exhausted but can otherwise enter rage multiple times during a single encounter or combat. If you fall unconscious, your rage immediately ends, placing you in peril of death.|RageDuration|RageStrBonus|RageConBonus|RageSaveBonus|(RageConBonus/2)*TL|PREABILITY:1,CATEGORY=Special Ability,Standard Rage",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.SpecialQuality.Extraordinary.Rage.AttackOption"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Raging|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call upon inner reserves of strength and ferocity, granting you additional combat prowess. You can rage for %1 rounds per day. You can enter rage as a free action. The total number of rounds of rage per day is renewed after resting for 8 hours, although these hours do not need to be consecutive. While in rage, you gain a +%2 morale bonus to your Strength and a +%3 morale bonus to Constitution, as well as a +%4 morale bonus on Will saves. In addition, you take a -2 penalty to Armor Class. The increase to Constitution grants you %5 hit points, but these disappear when the rage ends and are not lost first like temporary hit points. While in rage, you cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration. You can end your rage as a free action and are fatigued after rage for a number of rounds equal to 2 times the number of rounds spent in the rage. You cannot enter a new rage while fatigued or exhausted but can otherwise enter rage multiple times during a single encounter or combat. If you fall unconscious, your rage immediately ends, placing you in peril of death.|RageDuration|RageStrBonus|RageConBonus|RageSaveBonus|(RageConBonus/2)*TL|PREABILITY:1,CATEGORY=Special Ability,Standard Rage"
+      },
+      {
+        "key": "DESC",
+        "value": "You are using an alternative raging method.|PREABILITY:1,CATEGORY=Special Ability,TYPE.RageSelectionAlt"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Standard Rage"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|RageDuration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 412,
+    "record_key": "Rage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:prose_formula_segment",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

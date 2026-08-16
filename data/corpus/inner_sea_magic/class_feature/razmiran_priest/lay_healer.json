@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Razmiran Priest ~ Lay Healer",
+    "name": "Lay Healer",
+    "class": "Razmiran Priest",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Razmiran Priest ~ Lay Healer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Class Feature.SpecialQuality.Supernatural.SorcererBloodlineSpellLvl3.SorcererBloodlineSpellLvl5"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "The Razmiran priest adds aid to his list of spells known as a 2nd-level spell."
+      },
+      {
+        "key": "DESC",
+        "value": "He adds remove disease to his list of spells known as a 3rd-level spell.|PRECLASS:1,Sorcerer=5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=2|Aid"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=3|Remove Disease|PRECLASS:1,Sorcerer=5"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlineSpell2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlineSpell3|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 342,
+    "record_key": "Razmiran Priest ~ Lay Healer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

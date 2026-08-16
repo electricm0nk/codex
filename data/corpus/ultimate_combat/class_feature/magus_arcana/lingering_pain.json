@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus Arcana ~ Lingering Pain",
+    "name": "Lingering Pain",
+    "class": "Magus Arcana",
+    "description": "The magus can expend 1 point from his arcane pool as an immediate action after hitting a target with a weapon attack. All damage from that attack (including damage from a spell cast using the spellstrike ability) is considered continuous damage for the purposes of any concentration checks made by the target prior to the beginning of the magus's next turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Lingering Pain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.MagusArcana.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The magus can expend 1 point from his arcane pool as an immediate action after hitting a target with a weapon attack. All damage from that attack (including damage from a spell cast using the spellstrike ability) is considered continuous damage for the purposes of any concentration checks made by the target prior to the beginning of the magus's next turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 912,
+    "record_key": "Magus Arcana ~ Lingering Pain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Infiltrator ~ Adaptation",
+    "name": "Adaptation",
+    "class": "Infiltrator",
+    "description": "At 3rd level, an infiltrator learns how to copy the unusual abilities of his prey. He chooses one type of creature he has selected as a favored enemy, such as aberrations. The ranger selects one ability or feat from the adaptation list for that type (see below). A ranger can use adaptations for 10 minutes per day per ranger level he possesses. This duration does not need to be consecutive, but it must be used in 10-minute increments. If the adaptation requires the ranger to make a more specific choice (such as what skill to use with Skill Focus), this choice is permanent and cannot be changed. At 8th, 13th, and 15th-level, the ranger chooses another one of his favored enemy types and selects one adaptation from that type's list, as well as an additional adaptation from any one list of a creature type he's selected (including the one just chosen, if so desired). The infiltrator can only use one adaptation at a time. This class ability replaces favored terrain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infiltrator ~ Adaptation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.RangerFavoredTerrain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AdaptationCreaturesKnown|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, an infiltrator learns how to copy the unusual abilities of his prey. He chooses one type of creature he has selected as a favored enemy, such as aberrations. The ranger selects one ability or feat from the adaptation list for that type (see below). A ranger can use adaptations for 10 minutes per day per ranger level he possesses. This duration does not need to be consecutive, but it must be used in 10-minute increments. If the adaptation requires the ranger to make a more specific choice (such as what skill to use with Skill Focus), this choice is permanent and cannot be changed. At 8th, 13th, and 15th-level, the ranger chooses another one of his favored enemy types and selects one adaptation from that type's list, as well as an additional adaptation from any one list of a creature type he's selected (including the one just chosen, if so desired). The infiltrator can only use one adaptation at a time. This class ability replaces favored terrain."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Adaptation Ability Selection|var(\"AdaptationCreaturesKnown\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Adaptation Creature Selection|var(\"AdaptationCreaturesKnown\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AdaptationCreaturesKnown|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AdaptationCreaturesKnown|1|PRECLASS:1,Ranger=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AdaptationCreaturesKnown|1|PRECLASS:1,Ranger=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AdaptationCreaturesKnown|1|PRECLASS:1,Ranger=15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2741,
+    "record_key": "Infiltrator ~ Adaptation"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

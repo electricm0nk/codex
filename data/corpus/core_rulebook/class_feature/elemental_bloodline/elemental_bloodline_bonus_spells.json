@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elemental Bloodline ~ Bonus Spells",
+    "name": "Elemental Bloodline ~ Bonus Spells",
+    "class": "Elemental Bloodline",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=1|Burning Hands|PREVAREQ:Sorcerer_CF_BloodlineSpell1,0|PREVARGTEQ:BloodlineCasterLVL,3|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Fire,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=1|Burning Hands (Acid)|PREVAREQ:Sorcerer_CF_BloodlineSpell1,0|PREVARGTEQ:BloodlineCasterLVL,3|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Earth,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=1|Burning Hands (Cold)|PREVAREQ:Sorcerer_CF_BloodlineSpell1,0|PREVARGTEQ:BloodlineCasterLVL,3|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Water,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=1|Burning Hands (Electricity)|PREVAREQ:Sorcerer_CF_BloodlineSpell1,0|PREVARGTEQ:BloodlineCasterLVL,3|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Air,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=2|Scorching Ray|PREVAREQ:Sorcerer_CF_BloodlineSpell2,0|PREVARGTEQ:BloodlineCasterLVL,5|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Fire,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=2|Scorching Ray (Acid)|PREVAREQ:Sorcerer_CF_BloodlineSpell2,0|PREVARGTEQ:BloodlineCasterLVL,5|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Earth,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=2|Scorching Ray (Cold)|PREVAREQ:Sorcerer_CF_BloodlineSpell2,0|PREVARGTEQ:BloodlineCasterLVL,5|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Water,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=2|Scorching Ray (Electricity)|PREVAREQ:Sorcerer_CF_BloodlineSpell2,0|PREVARGTEQ:BloodlineCasterLVL,5|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Air,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=3|Protection from Energy|PREVAREQ:Sorcerer_CF_BloodlineSpell3,0|PREVARGTEQ:BloodlineCasterLVL,7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=4|Elemental Body I|PREVAREQ:Sorcerer_CF_BloodlineSpell4,0|PREVARGTEQ:BloodlineCasterLVL,9"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=5|Elemental Body II|PREVAREQ:Sorcerer_CF_BloodlineSpell5,0|PREVARGTEQ:BloodlineCasterLVL,11"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=6|Elemental Body III|PREVAREQ:Sorcerer_CF_BloodlineSpell6,0|PREVARGTEQ:BloodlineCasterLVL,13"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=7|Elemental Body IV|PREVAREQ:Sorcerer_CF_BloodlineSpell7,0|PREVARGTEQ:BloodlineCasterLVL,15"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=8|Summon Monster VIII (Elementals Only)|PREVAREQ:Sorcerer_CF_BloodlineSpell8,0|PREVARGTEQ:BloodlineCasterLVL,17"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=9|Elemental Swarm|PREVAREQ:Sorcerer_CF_BloodlineSpell9,0|PREVARGTEQ:BloodlineCasterLVL,19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2480,
+    "record_key": "Elemental Bloodline ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

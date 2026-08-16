@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nexian Spellspy ~ Infiltrating Vessel",
+    "name": "Infiltrating Vessel",
+    "class": "Nexian Spellspy",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nexian Spellspy ~ Infiltrating Vessel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Features.NexianSpellspyClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "A Nexian spellspy cannot use her familiar to deliver touch spells for her. Instead, the Nexian spellspy can cast divination spells through her familiar. When the Nexian spellspy does this, she casts the spell as normal, but she treats her familiar's location as hers for purpose of determining the spell's area of effect or range. The Nexian spellspy receives the spell's results as normal. This ability does not allow her to see through her familiar's eyes; for example, the Nexian spellspy would know about a powerful magic item detected through her familiar, but she would not know its exact location or exactly what the item looked like. Whenever a familiar would be able to deliver a hex, the Nexian spellspy can use the familiar as a vessel for her divinations in this way. This alters the witch's familiar."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 339,
+    "record_key": "Nexian Spellspy ~ Infiltrating Vessel"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

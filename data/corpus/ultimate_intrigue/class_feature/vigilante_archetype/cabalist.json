@@ -1,0 +1,196 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Archetype ~ Cabalist",
+    "name": "Cabalist",
+    "class": "Vigilante Archetype",
+    "description": "Appearing to be an upstanding member of society, the cabalist clandestinely follows the tenets of a secret society. Practice with blood sacrifices, necromancy, and shadow magic gives a cabalist a reputation as a sinister and dangerous vigilante.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Archetype ~ Cabalist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VigilanteArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vigilante=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vigilante Archetype ~ Cabalist],[!PREFACT:1,ABILITIES,Vigilante_Archetype_ClassSkills=True,Vigilante_Archetype_SkillRanks=True,Vigilante_Archetype_ArmorProficiencies=True,Vigilante_Archetype_VigilanteTalent4=True,Vigilante_Archetype_VigilanteTalent8=True,Vigilante_Archetype_VigilanteTalent10=True,Vigilante_Archetype_VigilanteTalent14=True,Vigilante_Archetype_VigilanteTalent16=True,Vigilante_Archetype_VigilanteSpecialization=True,Vigilante_Archetype_StartlingAppearance=True,Vigilante_Archetype_StunningAppearance=True,Vigilante_Archetype_VigilanteTalent=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Appearing to be an upstanding member of society, the cabalist clandestinely follows the tenets of a secret society. Practice with blood sacrifices, necromancy, and shadow magic gives a cabalist a reputation as a sinister and dangerous vigilante."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Cabalist ~ Class Skills|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Cabalist ~ Skill Ranks per Level|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cabalist ~ Weapon and Armor Proficiencies|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cabalist ~ Spellcasting|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cabalist ~ Spellbook|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cabalist ~ Spill Blood|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cabalist ~ Bloodbound Spell|PRECLASS:1,Vigilante=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cabalist ~ Bloody Horror|PRECLASS:1,Vigilante=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cabalist ~ Shadowy Appearance|PRECLASS:1,Vigilante=17"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|VCabalist"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|VCabalist|VigilanteLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|VCabalist|var(\"VigilanteLVL\")-1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SkillRanks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_StartlingAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_StunningAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_StartlingAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_StunningAppearance|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 970,
+    "record_key": "Vigilante Archetype ~ Cabalist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

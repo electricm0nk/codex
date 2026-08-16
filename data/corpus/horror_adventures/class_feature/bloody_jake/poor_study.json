@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bloody Jake ~ Poor Study",
+    "name": "Poor Study",
+    "class": "Bloody Jake",
+    "description": "A bloody jake gains studied target at 5th level rather than 1st level, beginning with a bonus of +1 at 5th level and increasing by 1 for every 5 slayer levels thereafter. A bloody jake must be 11th level to study an opponent as a move or swift action. This ability alters studied target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloody Jake ~ Poor Study"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "DESC",
+        "value": "A bloody jake gains studied target at 5th level rather than 1st level, beginning with a bonus of +1 at 5th level and increasing by 1 for every 5 slayer levels thereafter. A bloody jake must be 11th level to study an opponent as a move or swift action. This ability alters studied target."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Slayer ~ Studied Target"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerStudiedTargetBonus|-1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 216,
+    "record_key": "Bloody Jake ~ Poor Study"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

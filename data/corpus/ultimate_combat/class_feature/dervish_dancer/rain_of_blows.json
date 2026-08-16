@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dervish Dancer ~ Rain Of Blows",
+    "name": "Rain of Blows",
+    "class": "Dervish Dancer",
+    "description": "At 6th level, a dervish dancer can use his battle dance to speed up his attacks. When making a full attack action, he may make one extra attack with any weapon he is holding, as though under the effects of a haste spell. He also gains a +1 bonus on attack rolls and a +1 dodge bonus to AC and on Reflex saves. At 9th level, and every three bard levels thereafter, these bonuses increase by +1, to a maximum of +5 at 18th level. These bonuses do not stack with the haste spell. This ability replaces suggestion and mass suggestion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dervish Dancer ~ Rain Of Blows"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, a dervish dancer can use his battle dance to speed up his attacks. When making a full attack action, he may make one extra attack with any weapon he is holding, as though under the effects of a haste spell. He also gains a +1 bonus on attack rolls and a +1 dodge bonus to AC and on Reflex saves. At 9th level, and every three bard levels thereafter, these bonuses increase by +1, to a maximum of +5 at 18th level. These bonuses do not stack with the haste spell. This ability replaces suggestion and mass suggestion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 422,
+    "record_key": "Dervish Dancer ~ Rain Of Blows"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

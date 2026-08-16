@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Falconine Natural Course ~ Take to the Air",
+    "name": "Take to the Air",
+    "class": "Falconine Natural Course",
+    "description": "A falconine wildsoul can harness the flight inherent in his blood. While in his vigilante identity, he has feathery wings that grant him a fly speed of 40 feet (with good maneuverability).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Falconine Natural Course ~ Take to the Air"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A falconine wildsoul can harness the flight inherent in his blood. While in his vigilante identity, he has feathery wings that grant him a fly speed of 40 feet (with good maneuverability)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 1059,
+    "record_key": "Falconine Natural Course ~ Take to the Air"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

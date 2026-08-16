@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sabre Fighting",
+    "name": "Sabre Fighting",
+    "class": null,
+    "description": "You gain Weapon Specialization (Sawtooth Sabre) as a bonus feat.|PREVARLT:SabreFightingLvl,5",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SabreFightingLvl|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Weapon Specialization (Sawtooth Sabre) as a bonus feat.|PREVARLT:SabreFightingLvl,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Weapon Specialization (Sawtooth Sabre)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.282"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 153,
+    "record_key": "Sabre Fighting"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

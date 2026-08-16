@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gingerbread Witch ~ Confection Conjuring",
+    "name": "Confection Conjuring",
+    "class": "Gingerbread Witch",
+    "description": "A gingerbread witch can use shadow conjuration as a spell-like ability. Items and creatures she conjures appear to be made of fanciful foodstuffs, and because of this, sentient creatures gain a +2 bonus on Will saves to disbelieve the illusion. However, they otherwise function as described for the shadow conjuration spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gingerbread Witch ~ Confection Conjuring"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.GingerbreadWitchClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "DESC",
+        "value": "A gingerbread witch can use shadow conjuration as a spell-like ability. Items and creatures she conjures appear to be made of fanciful foodstuffs, and because of this, sentient creatures gain a +2 bonus on Will saves to disbelieve the illusion. However, they otherwise function as described for the shadow conjuration spell."
+      },
+      {
+        "key": "DESC",
+        "value": "The gingerbread witch can duplicate conjuration (creation) and conjuration (summoning) spells of up to 4th level (though they are still only 20%% real).|PRECLASS:1,Witch=11|!PRECLASS:1,Witch=14"
+      },
+      {
+        "key": "DESC",
+        "value": "The gingerbread witch can duplicate conjuration (creation) and conjuration (summoning) spells of up to 5th level (though they are still only 20%% real).|PRECLASS:1,Witch=14|!PRECLASS:1,Witch=17"
+      },
+      {
+        "key": "DESC",
+        "value": "The gingerbread witch can duplicate conjuration (creation) and conjuration (summoning) spells of up to 6th level (though they are still only 20%% real).|PRECLASS:1,Witch=17|!PRECLASS:1,Witch=20"
+      },
+      {
+        "key": "DESC",
+        "value": "The gingerbread witch can duplicate conjuration (creation) and conjuration (summoning) spells of up to 7th level (though they are still only 20%% real).|PRECLASS:1,Witch=20"
+      },
+      {
+        "key": "DESC",
+        "value": "The witch can use this ability %1 times per day.|WitchLVL/4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 273,
+    "record_key": "Gingerbread Witch ~ Confection Conjuring"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

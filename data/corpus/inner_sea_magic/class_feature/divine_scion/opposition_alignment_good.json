@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Divine Scion ~ Good Opposition Alignment",
+    "name": "Opposition Alignment (Good)",
+    "class": "Divine Scion",
+    "description": "A divine scion gains a +1 bonus on caster level checks made to overcome spell resistance of good creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Scion ~ Good Opposition Alignment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DivineScionClassFeatures.SpecialQuality.Extraordinary.OppositionAlign"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "LG,NG,CG"
+      },
+      {
+        "key": "DESC",
+        "value": "A divine scion gains a +1 bonus on caster level checks made to overcome spell resistance of good creatures."
+      },
+      {
+        "key": "DR",
+        "value": "DeificDefenseBonus/good|PREABILITY:1,CATEGORY=Special Ability,Divine Scion ~ Deific Defense"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 39,
+    "record_key": "Divine Scion ~ Good Opposition Alignment"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:dr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

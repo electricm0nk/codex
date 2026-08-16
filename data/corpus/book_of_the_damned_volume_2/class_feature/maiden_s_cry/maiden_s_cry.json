@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Maiden's Cry ~ Shivaska",
+    "name": "Maiden's Cry",
+    "class": "Maiden's Cry",
+    "description": "Lesser confusion 3/day, hold person 2/day, or ray of exhaustion 1/day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maiden's Cry ~ Shivaska"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=3|CASTERLEVEL=TL|Confusion (Lesser),11+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=2|CASTERLEVEL=TL|Hold Person,12+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Ray of Exhaustion,13+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "Lesser confusion 3/day, hold person 2/day, or ray of exhaustion 1/day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 178,
+    "record_key": "Maiden's Cry ~ Shivaska"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

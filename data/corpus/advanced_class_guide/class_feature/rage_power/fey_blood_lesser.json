@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Fey Blood (Lesser)",
+    "name": "Fey Blood, Lesser",
+    "class": "Rage Power",
+    "description": "While raging, each time the barbarian confirms a critical hit, the target must succeed at a Will saving throw (DC %1) or be confused for one round. This is a mind-affecting compulsion effect.|10+floor(BarbarianLVL/2)+CON",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Fey Blood (Lesser)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialQuality.Supernatural.BloodRageLesser"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Special Ability,TYPE.BloodRageLesser],[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ Fey Blood (Lesser)]"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, each time the barbarian confirms a critical hit, the target must succeed at a Will saving throw (DC %1) or be confused for one round. This is a mind-affecting compulsion effect.|10+floor(BarbarianLVL/2)+CON"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2672,
+    "record_key": "Rage Power ~ Fey Blood (Lesser)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

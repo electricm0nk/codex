@@ -1,0 +1,112 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Divine Bond ~ Special Mount",
+    "name": "Special Mount",
+    "class": "Divine Bond",
+    "description": "Your divine bond allows you to gain the service of an unusually intelligent, strong, and loyal steed to serve you in your crusade against evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Bond ~ Special Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.SpellLike.DivineBond.Divine Bond.Special Mount.Divine Bond Mount"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "Paladin_CF_BondedMount,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpecialMountLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpecialMountSpellLevel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpecialMountSR|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Divine_Bond_Mount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CompanionDisable_PaladinMount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CompanionMasterLVL_Paladin|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your divine bond allows you to gain the service of an unusually intelligent, strong, and loyal steed to serve you in your crusade against evil."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Mount Choice|AUTOMATIC|Special Mount ~ Standard Choices|!PREABILITY:1,CATEGORY=Internal,TYPE.SpecialMountAlternate|PREABILITY:1,CATEGORY=Special Ability,TYPE.Special Mount"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Companion ~ Special Mount|PREVAREQ:CompanionDisable_PaladinMount,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpecialMountSpellLevel|DivineBondLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpecialMountSR|DivineBondLVL+11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Divine_Bond_Mount|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpecialMountLVL|CompanionMasterLVL_Paladin|PREVAREQ:CompanionDisable_PaladinMount,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CompanionMasterLVL_Paladin|DivineBondLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DivineBondTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1387,
+    "record_key": "Divine Bond ~ Special Mount"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

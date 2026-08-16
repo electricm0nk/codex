@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hunter Animal Focus ~ Bat",
+    "name": "Bat",
+    "class": "Hunter Animal Focus",
+    "description": "Get darkvision to range %1 feet|HunterAnimalFocusBatSight",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Animal Focus ~ Bat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HunterAnimalFocusAbility"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterAnimalFocusBatSight|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Get darkvision to range %1 feet|HunterAnimalFocusBatSight"
+      },
+      {
+        "key": "DESC",
+        "value": "and blindsense to 10 feet|PREVARGTEQ:HunterAnimalFocusLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blindsense|PREVARGTEQ:HunterAnimalFocusLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Darkvision"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusBatSight|60"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusBatSight|30|PREVARGTEQ:HunterAnimalFocusLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|HunterAnimalFocusBatSight|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|10|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1214,
+    "record_key": "Hunter Animal Focus ~ Bat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

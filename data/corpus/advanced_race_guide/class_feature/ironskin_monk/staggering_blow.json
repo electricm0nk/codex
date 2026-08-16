@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ironskin Monk ~ Staggering Blow",
+    "name": "Staggering Blow",
+    "class": "Ironskin Monk",
+    "description": "An ironskin monk attacking with an unarmed strike can spend 1 point from his ki pool as a free action after a successful critical hit to stagger the creature struck for 1 round (Fort DC %1 negates).|IronskinMonkStaggeringBlowSave",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ironskin Monk ~ Staggering Blow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IronskinMonkStaggeringBlowSave|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An ironskin monk attacking with an unarmed strike can spend 1 point from his ki pool as a free action after a successful critical hit to stagger the creature struck for 1 round (Fort DC %1 negates).|IronskinMonkStaggeringBlowSave"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IronskinMonkStaggeringBlowSave|10+MonkLVL/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 584,
+    "record_key": "Ironskin Monk ~ Staggering Blow"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Child ~ Rattling Strike",
+    "name": "Rattling Strike",
+    "class": "Wild Child",
+    "description": "The wild child can use this trick as a free action before he makes a melee attack. If the attack hits, the target is shaken for 1d4 rounds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Child ~ Rattling Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Wild Child Class Feature.SpecialQuality.Extraordinary.WildChildTrickChoice"
+      },
+      {
+        "key": "DESC",
+        "value": "The wild child can use this trick as a free action before he makes a melee attack. If the attack hits, the target is shaken for 1d4 rounds."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2949,
+    "record_key": "Wild Child ~ Rattling Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

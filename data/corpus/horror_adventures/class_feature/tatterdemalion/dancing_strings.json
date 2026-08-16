@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tatterdemalion ~ Dancing Strings",
+    "name": "Dancing Strings",
+    "class": "Tatterdemalion",
+    "description": "A tatterdemalion adds animate rope to her class spell list and spells her familiar knows. She can control her clothing and cloth, rope, or woven fabric she wears in a manner otherwise identical to the prehensile hair (UM) hex.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tatterdemalion ~ Dancing Strings"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.TatterdemalionClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "DESC",
+        "value": "A tatterdemalion adds animate rope to her class spell list and spells her familiar knows. She can control her clothing and cloth, rope, or woven fabric she wears in a manner otherwise identical to the prehensile hair (UM) hex."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Witch=1|Animate Rope"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 284,
+    "record_key": "Tatterdemalion ~ Dancing Strings"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

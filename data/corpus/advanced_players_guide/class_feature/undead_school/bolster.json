@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Undead School ~ Bolster",
+    "name": "Bolster",
+    "class": "Undead School",
+    "description": "As a standard action, you can touch an undead creature and infuse it with negative energy. It gains a + %1 profane bonus on all attack rolls and saving throws, as well as 1 temporary hit point per Hit Die and a +2 bonus to its turn resistance. These bonuses last for %2 rounds. The bonuses and temporary hit points are immediately dispelled if the creature is within the area of a consecrate spell. You can use this ability %3 times per day.|UndeadBolsterBonus|UndeadBolsterRounds|UndeadBolsterTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead School ~ Bolster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UndeadBolsterBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UndeadBolsterRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UndeadBolsterTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can touch an undead creature and infuse it with negative energy. It gains a + %1 profane bonus on all attack rolls and saving throws, as well as 1 temporary hit point per Hit Die and a +2 bonus to its turn resistance. These bonuses last for %2 rounds. The bonuses and temporary hit points are immediately dispelled if the creature is within the area of a consecrate spell. You can use this ability %3 times per day.|UndeadBolsterBonus|UndeadBolsterRounds|UndeadBolsterTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UndeadBolsterBonus|NecromancySchoolLVL/5+1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UndeadBolsterRounds|max(NecromancySchoolLVL/2,1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UndeadBolsterTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.147"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|UndeadBolsterTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3390,
+    "record_key": "Undead School ~ Bolster"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

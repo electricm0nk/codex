@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Samurai ~ Weapon Expertise",
+    "name": "Weapon Expertise",
+    "class": "Samurai",
+    "description": "At 3rd level, a samurai gains an unparalleled expertise with his chosen weapons. At 3rd level, the samurai selects either the katana, longbow, naginata, or wakizashi. The samurai can draw the selected weapon as a free action as if he had the Quick Draw feat. In addition, whenever he threatens a critical hit with the selected weapon, he gains a +2 bonus on the confirmation roll. Finally, his samurai levels stack with any fighter levels he possesses for the purposes of meeting the prerequisites for feats that specifically select his chosen weapon, such as Weapon Specialization.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samurai ~ Weapon Expertise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SamuraiClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a samurai gains an unparalleled expertise with his chosen weapons. At 3rd level, the samurai selects either the katana, longbow, naginata, or wakizashi. The samurai can draw the selected weapon as a free action as if he had the Quick Draw feat. In addition, whenever he threatens a critical hit with the selected weapon, he gains a +2 bonus on the confirmation roll. Finally, his samurai levels stack with any fighter levels he possesses for the purposes of meeting the prerequisites for feats that specifically select his chosen weapon, such as Weapon Specialization."
+      },
+      {
+        "key": "DESC",
+        "value": "[Selected Weapon - Katana]|PREABILITY:1,CATEGORY=Special Ability,Samurai Expertise Selection (Katana)"
+      },
+      {
+        "key": "DESC",
+        "value": "[Selected Weapon - Longbow]|PREABILITY:1,CATEGORY=Special Ability,Samurai Expertise Selection (Longbow)"
+      },
+      {
+        "key": "DESC",
+        "value": "[Selected Weapon - Naginata]|PREABILITY:1,CATEGORY=Special Ability,Samurai Expertise Selection (Naginata)"
+      },
+      {
+        "key": "DESC",
+        "value": "[Selected Weapon - Wakizashi]|PREABILITY:1,CATEGORY=Special Ability,Samurai Expertise Selection (Wakizashi)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Samurai Expertise|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 197,
+    "record_key": "Samurai ~ Weapon Expertise"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

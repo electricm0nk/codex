@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Apocalypse Mystery ~ Final Revelation",
+    "name": "Final Revelation",
+    "class": "Apocalypse Mystery",
+    "description": "Upon reaching 20th level, you become a herald of the apocalypse and wield the awesome power to fulfill such prophecy. Anytime you successfully cast a spell or use an ability that bestows 1 or more negative levels, the effect bestows 1d4 additional negative levels. Whenever you confirm a critical hit against a creature (including with a melee, ranged, or spell attack), as a swift action you can curse the target of your attack, as the bestow curse spell, except the target doesn't receive a Will saving throw to negate the effects and spell resistance does not apply against this ability",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Apocalypse Mystery ~ Final Revelation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.FinalRevelation"
+      },
+      {
+        "key": "DESC",
+        "value": "Upon reaching 20th level, you become a herald of the apocalypse and wield the awesome power to fulfill such prophecy. Anytime you successfully cast a spell or use an ability that bestows 1 or more negative levels, the effect bestows 1d4 additional negative levels. Whenever you confirm a critical hit against a creature (including with a melee, ranged, or spell attack), as a swift action you can curse the target of your attack, as the bestow curse spell, except the target doesn't receive a Will saving throw to negate the effects and spell resistance does not apply against this ability"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 106,
+    "record_key": "Apocalypse Mystery ~ Final Revelation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

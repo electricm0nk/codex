@@ -1,0 +1,148 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bloodrager ~ Bloodrage",
+    "name": "Bloodrage",
+    "class": "Bloodrager",
+    "description": "The bloodrager's source of internal power grants him the ability to bloodrage. A bloodrager can bloodrage for %1 rounds per day. Temporary increases to Constitution (such as those gained from bloodraging or spells like bear's endurance) don't increase the total number of rounds that a bloodrager can bloodrage per day. The total number of rounds of bloodrage per day is renewed after resting for 8 hours, although these hours don't need to be consecutive.&nl;A bloodrager can enter a bloodrage as a free action. While in a bloodrage, a bloodrager gains a +%2 morale bonus to his Strength and a +%3 morale bonus to his Constitution, as well as a +%4 morale bonus on Will saves. In addition, he takes a %5 penalty to Armor Class. The increase to Constitution grants the bloodrager %6 hit points, but these disappear when the bloodrage ends and are not lost first like temporary hit points. While bloodraging, a bloodrager cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration.&nl;A bloodrager can end his bloodrage as a free action. When the bloodrage ends, he's fatigued for a number of rounds equal to twice the number of rounds spent in the bloodrage. A bloodrager cannot enter a new bloodrage while fatigued or exhausted, but can otherwise enter a bloodrage multiple times during a single encounter or combat. If a bloodrager falls unconscious, his bloodrage immediately ends, placing him in peril of death.&nl;Bloodrage counts as the barbarian's rage class feature for the purpose of feat prerequisites, feat abilities, magic item abilities, and spell effects.|BloodrageDuration|BloodrageStrBonus|BloodrageConBonus|BloodrageSaveBonus|BloodrageACPenalty|(BloodrageConBonus/2)*TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager ~ Bloodrage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature.SpecialQuality.Supernatural.Rage.Bloodrage"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodrageLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodrageDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Raging|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodrageStrBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodrageConBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodrageSaveBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodrageACPenalty|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodrageStage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The bloodrager's source of internal power grants him the ability to bloodrage. A bloodrager can bloodrage for %1 rounds per day. Temporary increases to Constitution (such as those gained from bloodraging or spells like bear's endurance) don't increase the total number of rounds that a bloodrager can bloodrage per day. The total number of rounds of bloodrage per day is renewed after resting for 8 hours, although these hours don't need to be consecutive.&nl;A bloodrager can enter a bloodrage as a free action. While in a bloodrage, a bloodrager gains a +%2 morale bonus to his Strength and a +%3 morale bonus to his Constitution, as well as a +%4 morale bonus on Will saves. In addition, he takes a %5 penalty to Armor Class. The increase to Constitution grants the bloodrager %6 hit points, but these disappear when the bloodrage ends and are not lost first like temporary hit points. While bloodraging, a bloodrager cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration.&nl;A bloodrager can end his bloodrage as a free action. When the bloodrage ends, he's fatigued for a number of rounds equal to twice the number of rounds spent in the bloodrage. A bloodrager cannot enter a new bloodrage while fatigued or exhausted, but can otherwise enter a bloodrage multiple times during a single encounter or combat. If a bloodrager falls unconscious, his bloodrage immediately ends, placing him in peril of death.&nl;Bloodrage counts as the barbarian's rage class feature for the purpose of feat prerequisites, feat abilities, magic item abilities, and spell effects.|BloodrageDuration|BloodrageStrBonus|BloodrageConBonus|BloodrageSaveBonus|BloodrageACPenalty|(BloodrageConBonus/2)*TL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageStrBonus,BloodrageConBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageACPenalty|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageSaveBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageDuration|2+var(\"STAT.2.MOD.NOTEMP\")+(2*BloodrageLVL)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageDuration|-BloodrageConBonus|PREVAREQ:Raging,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|BloodrageDuration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds/day)|BloodrageDuration"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|Will|BloodrageSaveBonus|TYPE=Rage"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|BloodrageACPenalty"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR|BloodrageStrBonus"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|CON|BloodrageConBonus"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|Raging|1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|CMD|BloodrageACPenalty"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodrageActive|0"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|BloodrageActive|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 333,
+    "record_key": "Bloodrager ~ Bloodrage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:prose_formula_segment",
+    "derived:tempbonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

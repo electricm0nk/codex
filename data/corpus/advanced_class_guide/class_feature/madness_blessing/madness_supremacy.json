@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Madness Blessing ~ Madness Supremacy",
+    "name": "Madness Supremacy",
+    "class": "Madness Blessing",
+    "description": "As a swift action you can target a creature within 30 feet that has the cowering, frightened, panicked, or paralyzed condition. That condition is suspended for 1 round, and the chosen creature gains the confused condition instead. The confused creature rerolls any result other than \"attack self\" or \"attack nearest creature.\" The round spent confused counts toward the duration of the suspended effect. At the end of the confused round, the suspended condition resumes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Madness Blessing ~ Madness Supremacy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action you can target a creature within 30 feet that has the cowering, frightened, panicked, or paralyzed condition. That condition is suspended for 1 round, and the chosen creature gains the confused condition instead. The confused creature rerolls any result other than \"attack self\" or \"attack nearest creature.\" The round spent confused counts toward the duration of the suspended effect. At the end of the confused round, the suspended condition resumes."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2263,
+    "record_key": "Madness Blessing ~ Madness Supremacy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skald ~ Weapon and Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Skald",
+    "description": "A skald is proficient with all simple and martial weapons, light and medium armor, and shields (except tower shields). A skald can cast skald spells while wearing light or medium armor and use a shield without incurring the normal arcane spell failure chance. Like other arcane spellcasters, a skald wearing medium or heavy armor incurs a chance of arcane spell failure if the spell in question has somatic components. A multiclass skald still incurs the normal arcane spell failure chance for arcane spells received from other classes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald ~ Weapon and Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A skald is proficient with all simple and martial weapons, light and medium armor, and shields (except tower shields). A skald can cast skald spells while wearing light or medium armor and use a shield without incurring the normal arcane spell failure chance. Like other arcane spellcasters, a skald wearing medium or heavy armor incurs a chance of arcane spell failure if the spell in question has somatic components. A multiclass skald still incurs the normal arcane spell failure chance for arcane spells received from other classes."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Auto|Weapon Prof ~ Martial|Weapon Prof ~ Simple|PREVAREQ:Skald_CF_WeaponProficiencies,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shield Prof|TYPE=ArmorProfMedium|PREVAREQ:Skald_CF_ArmorProficiencies,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1719,
+    "record_key": "Skald ~ Weapon and Armor Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magaambyan Arcanist ~ Halcyon Magic",
+    "name": "Halcyon Magic",
+    "class": "Magaambyan Arcanist",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magaambyan Arcanist ~ Halcyon Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Lantern Bearer Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED]At each class level, a Magaambyan arcanist chooses a spell from the druid spell list and treats it as if it were on the spell list of one of her arcane spellcasting classes. A Magaambyan arcanist must choose a druid spell at least 2 levels lower than the highest-level spell she can currently cast. The spell's type becomes arcane and its save DC functions as normal for the arcane spellcasting class list she adds it to. The Magaambyan arcanist automatically learns this spell, adding it to her spellbook or familiar as appropriate for the class of the spell list to which she added the spell."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 338,
+    "record_key": "Magaambyan Arcanist ~ Halcyon Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

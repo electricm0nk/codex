@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wishcrafter ~ Expanded Wishcraft",
+    "name": "Expanded Wishcraft",
+    "class": "Wishcrafter",
+    "description": "The wishcrafter grows more adept at altering reality to fit the whims of others. She may add an additional spell selected from the sorcerer/wizard spell list to her list of spells known. This spell must be one level lower than the highest-level spell she can cast. A wishcrafter can only use these spells in conjunction with her wishbound arcana ability. For example, if she used this ability to learn cat's grace, she can only cast it when another creature wishes for it, and can't cast it on herself because it is a targeted spell. She cannot use these spells to craft or recharge magic items.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wishcrafter ~ Expanded Wishcraft"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The wishcrafter grows more adept at altering reality to fit the whims of others. She may add an additional spell selected from the sorcerer/wizard spell list to her list of spells known. This spell must be one level lower than the highest-level spell she can cast. A wishcrafter can only use these spells in conjunction with her wishbound arcana ability. For example, if she used this ability to learn cat's grace, she can only cast it when another creature wishes for it, and can't cast it on herself because it is a targeted spell. She cannot use these spells to craft or recharge magic items."
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Sorcerer;LEVEL=(SorcererLVL/2-1)|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 613,
+    "record_key": "Wishcrafter ~ Expanded Wishcraft"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

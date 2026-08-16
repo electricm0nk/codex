@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest ~ Focus Weapon",
+    "name": "Focus Weapon",
+    "class": "Warpriest",
+    "description": "At 1st level, a warpriest receives Weapon Focus as a bonus feat (he can choose any weapon, not just his deity's favored weapon).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest ~ Focus Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a warpriest receives Weapon Focus as a bonus feat (he can choose any weapon, not just his deity's favored weapon)."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warpriest Focus Weapon Choice|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2147,
+    "record_key": "Warpriest ~ Focus Weapon"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

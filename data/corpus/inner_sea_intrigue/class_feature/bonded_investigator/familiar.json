@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bonded Investigator ~ Familiar",
+    "name": "Familiar",
+    "class": "Bonded Investigator",
+    "description": "A bonded investigator gains a familiar to aid him. This familiar functions as the wizard arcane bond class feature, using the bonded investigator's class level to determine the familiar's special abilities. The bonded investigator's extracts are considered spells for the purposes of familiar abilities like share spell and deliver touch spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bonded Investigator ~ Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.BondedInvestigatorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarMasterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A bonded investigator gains a familiar to aid him. This familiar functions as the wizard arcane bond class feature, using the bonded investigator's class level to determine the familiar's special abilities. The bonded investigator's extracts are considered spells for the purposes of familiar abilities like share spell and deliver touch spells."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|InvestigatorLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Standard Familiar List"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 130,
+    "record_key": "Bonded Investigator ~ Familiar"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

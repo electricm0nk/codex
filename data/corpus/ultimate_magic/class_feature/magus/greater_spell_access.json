@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus ~ Greater Spell Access",
+    "name": "Greater Spell Access",
+    "class": "Magus",
+    "description": "You gain access to an expanded spell list. You learn and place 14 spells from the wizard's spell list into your spellbook as magus spells of their wizard level. You gain two of each of the following wizard spells not on the magus spell list: 0-level, 1st-level, 2nd-level, 3rd-level, 4th-level, 5th-level, and 6th-level. You can ignore the somatic component of these spells, casting them without the normal chance of spell failure.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus ~ Greater Spell Access"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain access to an expanded spell list. You learn and place 14 spells from the wizard's spell list into your spellbook as magus spells of their wizard level. You gain two of each of the following wizard spells not on the magus spell list: 0-level, 1st-level, 2nd-level, 3rd-level, 4th-level, 5th-level, and 6th-level. You can ignore the somatic component of these spells, casting them without the normal chance of spell failure."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 58,
+    "record_key": "Magus ~ Greater Spell Access"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

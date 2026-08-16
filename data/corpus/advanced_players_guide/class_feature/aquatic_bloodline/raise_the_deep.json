@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Aquatic Bloodline ~ Raise the Deep",
+    "name": "Raise the Deep",
+    "class": "Aquatic Bloodline",
+    "description": "You raise water as per control water, but no water need be present.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aquatic Bloodline ~ Raise the Deep"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Aquatic Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Aquatic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Aquatic_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Aquatic_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AquaticRaiseTheDeep_Duration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AquaticRaiseTheDeep_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You raise water as per control water, but no water need be present."
+      },
+      {
+        "key": "DESC",
+        "value": "The dimensions of the effect are doubled.|PREVARGTEQ:Sorcerer_Aquatic_BloodlinePower15LVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": "This created water is stationary and does not flow out of the area where you create it; it lasts %1 rounds and then disappears.You may use this ability once per day.|Sorcerer_AquaticRaiseTheDeep_Duration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AquaticRaiseTheDeep_Duration|Sorcerer_Aquatic_BloodlinePower15LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AquaticRaiseTheDeep_Times|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds)|Sorcerer_AquaticRaiseTheDeep_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_AquaticRaiseTheDeep_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AquaticBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3101,
+    "record_key": "Aquatic Bloodline ~ Raise the Deep"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

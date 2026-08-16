@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Masterful Display",
+    "name": "Masterful Display",
+    "class": "Warpriest Bonus Feat",
+    "description": "You craft a special victory performance that causes the crowd to go wild.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Masterful Display"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Performance.MasterfulDisplay"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Dazzling Display"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,TYPE=Performance"
+      },
+      {
+        "key": "DESC",
+        "value": "You craft a special victory performance that causes the crowd to go wild."
+      },
+      {
+        "key": "DESC",
+        "value": " Choose the effects of any two performance feats you have. When you make a performance combat check, you gain the benefits of those two feats, but you only gain a +2 bonus on the performance combat check."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITY|FEAT|PC[!TYPE=MasterfulDisplay,TYPE=Performance]"
+      },
+      {
+        "key": "SELECT",
+        "value": "2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Masterful Display (%LIST)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4488,
+    "record_key": "Warpriest Bonus Feat ~ Masterful Display"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

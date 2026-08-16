@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Toxic Talon ~ Catalyst",
+    "name": "Catalyst",
+    "class": "Toxic Talon",
+    "description": "A toxic talon can use secret alchemical techniques to enhance a poison as he applies it to a weapon, increasing the save DC of the poison by %1. This increase to the save DC lasts for 1 minute or until the poison is used up, whichever comes first. A toxic talon can use catalyst once per hour.|ToxicTalonCatalystBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Toxic Talon ~ Catalyst"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Feature.ToxicTalonClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ToxicTalonCatalystBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "DESC",
+        "value": "A toxic talon can use secret alchemical techniques to enhance a poison as he applies it to a weapon, increasing the save DC of the poison by %1. This increase to the save DC lasts for 1 minute or until the poison is used up, whichever comes first. A toxic talon can use catalyst once per hour.|ToxicTalonCatalystBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ToxicTalonCatalystBonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ToxicTalonCatalystBonus|1|PRECLASS:1,Rogue=12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1029,
+    "record_key": "Toxic Talon ~ Catalyst"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

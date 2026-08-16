@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Star Watcher ~ Horoscopic Scrolls",
+    "name": "Horoscopic Scrolls",
+    "class": "Star Watcher",
+    "description": "The star watcher gains Scribe Scroll as a bonus feat. He can use the feat to create an arcane scroll of any formula he knows. Unlike horoscopes created with the astrology ability, anyone capable of using arcane scrolls can cast a spell from these scrolls. Additionally, the star watcher can use scrolls as if he were an arcane spellcaster. He can use Knowledge (geography) to identify scrolls as if using detect magic. He must hold the scroll for 1 round to attempt such a check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Star Watcher ~ Horoscopic Scrolls"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.InvestigatorTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Investigator Archetype ~ Star Watcher"
+      },
+      {
+        "key": "DESC",
+        "value": "The star watcher gains Scribe Scroll as a bonus feat. He can use the feat to create an arcane scroll of any formula he knows. Unlike horoscopes created with the astrology ability, anyone capable of using arcane scrolls can cast a spell from these scrolls. Additionally, the star watcher can use scrolls as if he were an arcane spellcaster. He can use Knowledge (geography) to identify scrolls as if using detect magic. He must hold the scroll for 1 round to attempt such a check."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Scribe Scroll"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 758,
+    "record_key": "Star Watcher ~ Horoscopic Scrolls"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

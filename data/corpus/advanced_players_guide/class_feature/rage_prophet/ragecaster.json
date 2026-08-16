@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Prophet ~ Ragecaster",
+    "name": "Ragecaster",
+    "class": "Rage Prophet",
+    "description": "Starting at 4th level, a rage prophet's spells grow more potent when he rages. When using moment of clarity, he adds his barbarian level to his caster level. At 7th level, he adds his Constitution bonus to the save DC of any spells cast while raging.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Prophet ~ Ragecaster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Rage ProphetClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RagecasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 4th level, a rage prophet's spells grow more potent when he rages. When using moment of clarity, he adds his barbarian level to his caster level. At 7th level, he adds his Constitution bonus to the save DC of any spells cast while raging."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RagecasterLVL|RageProphetLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1443,
+    "record_key": "Rage Prophet ~ Ragecaster"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

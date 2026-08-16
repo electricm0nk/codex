@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Enchanting Courtesan ~ Overwhelming Touch",
+    "name": "Overwhelming Touch",
+    "class": "Enchanting Courtesan",
+    "description": "An enchanting courtesan's touch is deceptively and overwhelmingly entrancing. The enchanting courtesan's target must roll twice and take the worse result on saving throws against spells delivered via enchanting touch.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enchanting Courtesan ~ Overwhelming Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An enchanting courtesan's touch is deceptively and overwhelmingly entrancing. The enchanting courtesan's target must roll twice and take the worse result on saving throws against spells delivered via enchanting touch."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 66,
+    "record_key": "Enchanting Courtesan ~ Overwhelming Touch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

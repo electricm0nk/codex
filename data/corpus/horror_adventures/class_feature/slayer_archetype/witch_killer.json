@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Slayer Archetype ~ Witch Killer",
+    "name": "Witch Killer",
+    "class": "Slayer Archetype",
+    "description": "Born into cultures where magic users are hated and feared, witch killers devote their lives to purge the arcane taint from the world.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Archetype ~ Witch Killer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SlayerArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "DESC",
+        "value": "Born into cultures where magic users are hated and feared, witch killers devote their lives to purge the arcane taint from the world."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Slayer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Witch Killer],[!PREFACT:1,ABILITIES,Slayer_Archetype_ClassSkills=True,Slayer_Archetype_StudiedTarget=True,Slayer_Archetype_Talent4=True,Slayer_Archetype_Talent10=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Witch Killer ~ Class Skills|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Witch Killer ~ Studied Witch|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Witch Killer ~ Superstitious|PRECLASS:1,Slayer=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Witch Killer ~ Lingering Thrust|PRECLASS:1,Slayer=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Witch Killer ~ Scent Magic|PRECLASS:1,Slayer=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Witch Killer ~ Burn the Witch|PRECLASS:1,Slayer=10"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_StudiedTarget|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent10|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 207,
+    "record_key": "Slayer Archetype ~ Witch Killer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

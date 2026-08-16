@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Celebrity ~ Famous",
+    "name": "Famous",
+    "class": "Celebrity",
+    "description": "You may choose a region where you are famous, and within that region, the locals are more likely to react favorably toward you. You gain a +%1 bonus on Diplomacy and Intimidate checks in that area and to influence people from that area|FamousModifier",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Celebrity ~ Famous"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamousModifier|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamousPopulation|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You may choose a region where you are famous, and within that region, the locals are more likely to react favorably toward you. You gain a +%1 bonus on Diplomacy and Intimidate checks in that area and to influence people from that area|FamousModifier"
+      },
+      {
+        "key": "DESC",
+        "value": "and the region can contain up to %1 people.|FamousPopulation*1000|PREVARLTEQ:FamousPopulation,1000"
+      },
+      {
+        "key": "DESC",
+        "value": "and the region can contain an unlimited number of people.|PREVARGT:FamousPopulation,1000"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamousModifier|min(5,(classlevel(\"Bard\")+3)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamousPopulation|1|PREVARGTEQ:classlevel(\"Bard\"),1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamousPopulation|4|PREVARGTEQ:classlevel(\"Bard\"),5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamousPopulation|20|PREVARGTEQ:classlevel(\"Bard\"),9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamousPopulation|75|PREVARGTEQ:classlevel(\"Bard\"),13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamousPopulation|1000|PREVARGTEQ:classlevel(\"Bard\"),17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 953,
+    "record_key": "Celebrity ~ Famous"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elementalist Shifter ~ Elemental Aspect",
+    "name": "Elemental Aspect",
+    "class": "Elementalist Shifter",
+    "description": "At 1st level, an elementalist shifter chooses one elemental aspect rather than a shifter aspect. This ability otherwise functions as shifter aspect. As the elementalist shifter gains levels, she gains more elemental aspects: a second aspect at 5th level, a third at 10th, and a fourth at 15th. This alters shifter aspect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elementalist Shifter ~ Elemental Aspect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.ElementalistShifterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, an elementalist shifter chooses one elemental aspect rather than a shifter aspect. This ability otherwise functions as shifter aspect. As the elementalist shifter gains levels, she gains more elemental aspects: a second aspect at 5th level, a third at 10th, and a fourth at 15th. This alters shifter aspect."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shifter Aspect Choice|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shifter Aspect Choice|-1|PRECLASS:1,Shifter=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shifter Aspect Choice|-1|PRECLASS:1,Shifter=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shifter Aspect Choice|-1|PRECLASS:1,Shifter=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Elementalist Shifter Aspect Choice|ShifterAspectCount"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1043,
+    "record_key": "Elementalist Shifter ~ Elemental Aspect"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

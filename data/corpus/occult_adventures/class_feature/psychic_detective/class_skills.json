@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Detective ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Psychic Detective",
+    "description": "The psychic detective does not receive Acrobatics, Climb, or Perform as class skills. This alters the investigator's class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Detective ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Detective Class Feature.Investigator Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The psychic detective does not receive Acrobatics, Climb, or Perform as class skills. This alters the investigator's class skills."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Appraise|Bluff|TYPE=Craft|Diplomacy|Disable Device|Disguise|Escape Artist|Heal|Intimidate|TYPE=Knowledge|Linguistics|Perception|TYPE=Profession|Sense Motive|Sleight of Hand|Spellcraft|Stealth|Use Magic Device"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1758,
+    "record_key": "Psychic Detective ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Weapon Adept ~ Way of the Weapon Master",
+    "name": "Way of the Weapon Master",
+    "class": "Weapon Adept",
+    "description": "At 2nd level, a weapon adept gains Weapon Focus as a bonus feat with one of his monk weapons. At 6th level, the monk gains Weapon Specialization with the same weapon as a bonus feat, even if he does not meet the prerequisites. This ability replaces evasion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Weapon Adept ~ Way of the Weapon Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.Extraordinary.MonkEvasion"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a weapon adept gains Weapon Focus as a bonus feat with one of his monk weapons. At 6th level, the monk gains Weapon Specialization with the same weapon as a bonus feat, even if he does not meet the prerequisites. This ability replaces evasion."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Adept Monk Weapon Focus Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Adept Monk Weapon Specialization Choice|1|PRECLASS:1,Monk=6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2371,
+    "record_key": "Weapon Adept ~ Way of the Weapon Master"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

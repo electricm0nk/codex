@@ -1,0 +1,179 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cavalier Archetype ~ Saurian Champion",
+    "name": "Saurian Champion",
+    "class": "Cavalier Archetype",
+    "description": "These primeval cavaliers idolize dinosaurs as apex predators and value them as powerful, oversized mounts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Archetype ~ Saurian Champion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CavalierArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cavalier=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Saurian Champion],[!PREFACT:1,ABILITIES,Cavalier_Archetype_ClassSkills=True,Cavalier_Archetype_MediumArmorProficiency=True,Cavalier_Archetype_HeavyArmorProficiency=True,Cavalier_Archetype_Challenge=True,Cavalier_Archetype_Order=True,Cavalier_Archetype_Mount=True,Cavalier_Archetype_Tactician=True,Cavalier_Archetype_GreaterTactician=True,Cavalier_Archetype_MasterTactician=True,Cavalier_Archetype_Banner=True,Cavalier_Archetype_GreaterBanner=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "These primeval cavaliers idolize dinosaurs as apex predators and value them as powerful, oversized mounts."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Saurian Champion ~ Class Skills|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Saurian Champion ~ Savage Combatant|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Saurian Champion ~ Titanic Challenge|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Saurian Champion ~ Wild Warrior|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Saurian Champion ~ Dinosaur Mount|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Saurian Champion ~ Mount|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Saurian Champion ~ Nimble Rider|PRECLASS:1,Cavalier=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Saurian Champion ~ Fierce Devotion|PRECLASS:1,Cavalier=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Saurian Champion ~ Quick Rider|PRECLASS:1,Cavalier=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Saurian Champion ~ Titanic Mount|PRECLASS:1,Cavalier=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Saurian Champion ~ Primeval Devotion|PRECLASS:1,Cavalier=14"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Challenge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Order|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Mount|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Tactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_GreaterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_MasterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Banner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_GreaterBanner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Order|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Tactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_GreaterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_MasterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Banner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_GreaterBanner|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 419,
+    "record_key": "Cavalier Archetype ~ Saurian Champion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

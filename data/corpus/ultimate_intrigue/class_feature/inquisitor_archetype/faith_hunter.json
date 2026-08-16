@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Faith Hunter",
+    "name": "Faith Hunter",
+    "class": "Inquisitor Archetype",
+    "description": "Certain relentless inquisitors burn with special hatred for an enemy of specific convictions, and they stop at nothing when obsessively hunting these foes down.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Faith Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Faith Hunter],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_Domains=True,Inquisitor_Archetype_JudgmentJustice=True,Inquisitor_Archetype_JudgmentDestruction=True,Inquisitor_Archetype_DetectAlignment=True,Inquisitor_Archetype_Bane=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Certain relentless inquisitors burn with special hatred for an enemy of specific convictions, and they stop at nothing when obsessively hunting these foes down."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Faith Hunter ~ Sworn Enemy|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Faith Hunter ~ Enemy Revealed|PRECLASS:1,Inquisitor=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Faith Hunter ~ Hateful Bane|PRECLASS:1,Inquisitor=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_JudgmentJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_JudgmentDestruction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_DetectAlignment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Bane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_JudgmentJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_JudgmentDestruction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_DetectAlignment|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 440,
+    "record_key": "Inquisitor Archetype ~ Faith Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

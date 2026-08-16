@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Abyssal Bloodrager Bloodline ~ Bloodline Powers",
+    "name": "Bloodline Powers",
+    "class": "Abyssal Bloodrager Bloodline",
+    "description": "The power of the Abyss courses through your veins, causing horrific transformations during your bloodrage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Abyssal Bloodrager Bloodline ~ Bloodline Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Special Attack"
+      },
+      {
+        "key": "DESC",
+        "value": "The power of the Abyss courses through your veins, causing horrific transformations during your bloodrage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|AbyssalBloodragerBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 606,
+    "record_key": "Abyssal Bloodrager Bloodline ~ Bloodline Powers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

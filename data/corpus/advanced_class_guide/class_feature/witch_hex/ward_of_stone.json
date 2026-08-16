@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Hex ~ Ward of Stone",
+    "name": "Ward of Stone",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_WardofStone",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Ward of Stone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Witch Archetype ~ Mountain Witch"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_WardofStone|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MountainWitchWardOfStoneTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_WardofStone"
+      },
+      {
+        "key": "DESC",
+        "value": "The mountain witch touches a willing creature (including herself) and grants a ward of stone. The next"
+      },
+      {
+        "key": "DESC",
+        "value": "time|PREVARLT:WitchLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times|MountainWitchWardOfStoneTimes|PREVARGTEQ:WitchLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "the warded creature is struck with a melee attack, it is treated as if it has DR 5/adamantine. This ward lasts for 1 minute, after which it fades away if not already expended. A creature affected by this hex cannot be affected by it again for 24 hours."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Ward of Stone"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_WardofStone|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_WardofStone|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Ward of Stone)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MountainWitchWardOfStoneTimes|1+min(2,WitchLVL/8)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4033,
+    "record_key": "Witch Hex ~ Ward of Stone"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

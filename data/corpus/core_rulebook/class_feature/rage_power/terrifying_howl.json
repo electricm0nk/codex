@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Terrifying Howl",
+    "name": "Terrifying Howl",
+    "class": "Rage Power",
+    "description": "You unleash a terrifying howl as a standard action. All shaken enemies within 30 feet must make a Will save (DC %1) or be panicked for 1d4+1 rounds. Once an enemy has made a save versus Terrifying Howl (successful or not), it is immune to this power for 24 hours.|TerrifyingHowlDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Terrifying Howl"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Intimidating Glare"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TerrifyingHowlDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You unleash a terrifying howl as a standard action. All shaken enemies within 30 feet must make a Will save (DC %1) or be panicked for 1d4+1 rounds. Once an enemy has made a save versus Terrifying Howl (successful or not), it is immune to this power for 24 hours.|TerrifyingHowlDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TerrifyingHowlDC|10+(RagePowersLVL/2)+STR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 496,
+    "record_key": "Rage Power ~ Terrifying Howl"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

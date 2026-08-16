@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ninja Trick ~ Unbound Steps",
+    "name": "Unbound Steps",
+    "class": "Ninja Trick",
+    "description": "This trick allows a ninja to use her ki to walk through the air. Whenever the ninja uses the light steps class feature, she can walk on air, rising or descending as she desires. She must end her move on a solid surface. Each use of this ability uses up 1 ki point.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Unbound Steps"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Extraordinary.AdvancedNinjaTrick"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:NinjaTrickLVL,10],[PREVARGTEQ:RogueTalentLVL,10]"
+      },
+      {
+        "key": "DESC",
+        "value": "This trick allows a ninja to use her ki to walk through the air. Whenever the ninja uses the light steps class feature, she can walk on air, rising or descending as she desires. She must end her move on a solid surface. Each use of this ability uses up 1 ki point."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 172,
+    "record_key": "Ninja Trick ~ Unbound Steps"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

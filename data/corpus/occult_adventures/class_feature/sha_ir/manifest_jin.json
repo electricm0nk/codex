@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sha'ir ~ Manifest Jin",
+    "name": "Manifest Jin",
+    "class": "Sha'ir",
+    "description": "At 7th level, the sha'ir can designate one of her jin and manifest its powers, allowing it to count as a Small elemental at all times, as if using augment jin to augment it to a Small elemental but with a permanent duration. By concentrating for 1 full round, she can change which of her jin she manifests in this way. This ability replaces aura sight.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sha'ir ~ Manifest Jin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sha'ir Class Feature.Occultist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, the sha'ir can designate one of her jin and manifest its powers, allowing it to count as a Small elemental at all times, as if using augment jin to augment it to a Small elemental but with a permanent duration. By concentrating for 1 full round, she can change which of her jin she manifests in this way. This ability replaces aura sight."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1542,
+    "record_key": "Sha'ir ~ Manifest Jin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

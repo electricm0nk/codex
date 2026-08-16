@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Paladin Archetype ~ Tranquil Guardian",
+    "name": "Tranquil Guardian",
+    "class": "Paladin Archetype",
+    "description": "A tranquil guardian is a missionary of peace and tranquility, a soothing voice of succor in a violent and dangerous world.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Tranquil Guardian"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype.PaladinSmiteEvil.PaladinAuraOfCourage.PaladinAuraOfResolve.PaladinAuraOfJustice.PaladinHolyChampion"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Tranquil Guardian],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinSmiteEvil,TYPE.PaladinAuraOfCourage,TYPE.PaladinAuraOfResolve,TYPE.PaladinAuraOfJustice,TYPE.PaladinHolyChampion]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsAasimar=true"
+      },
+      {
+        "key": "DESC",
+        "value": "A tranquil guardian is a missionary of peace and tranquility, a soothing voice of succor in a violent and dangerous world."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tranquil Guardian ~ Touch of Serenity|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tranquil Guardian ~ Serene Strike|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tranquil Guardian ~ Divine Bond|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tranquil Guardian ~ Aura of Calm|PRECLASS:1,Paladin=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tranquil Guardian ~ Waves of Peace|PRECLASS:1,Paladin=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tranquil Guardian ~ Apostle of Peace|PRECLASS:1,Paladin=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Paladin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 423,
+    "record_key": "Paladin Archetype ~ Tranquil Guardian"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Horticulturist ~ Herbal Bombs",
+    "name": "Herbal Bombs",
+    "class": "Horticulturist",
+    "description": "A horticulturist's bombs lack the power of a traditional alchemist's but can be fine-tuned in ways normal alchemist explosives cannot. The horticulturist's bombs deal 1d4 points of damage (instead of 1d6), plus 1d4 points of damage for every 2 alchemist levels beyond 1st. When the horticulturist creates a bomb, he can formulate it to affect plants and other creatures normally, affect only plant creatures, or affect only creatures not of the plant type. This alters the bomb class feature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Horticulturist ~ Herbal Bombs"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Features.HorticulturistClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A horticulturist's bombs lack the power of a traditional alchemist's but can be fine-tuned in ways normal alchemist explosives cannot. The horticulturist's bombs deal 1d4 points of damage (instead of 1d6), plus 1d4 points of damage for every 2 alchemist levels beyond 1st. When the horticulturist creates a bomb, he can formulate it to affect plants and other creatures normally, affect only plant creatures, or affect only creatures not of the plant type. This alters the bomb class feature."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 131,
+    "record_key": "Horticulturist ~ Herbal Bombs"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

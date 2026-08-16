@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magician ~ Spell Suppression",
+    "name": "Spell Suppression",
+    "class": "Magician",
+    "description": "A 8th level, a magician can use performance to counter the spells of his foes. Once the bard begins using this performance, he tracks the number of rounds it has been in use. While performing, as an immediate action, he can attempt to counter any spell that he can identify using Spellcraft, so long as that spell's level is equal or less than the total number of rounds he has been performing spell suppression. The attempt to counter the spell is made as if using dispel magic, using the bard's level as the caster level. If successful, the bardic performance immediately ends. This ability requires audible components. This performance replaces dirge of doom.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magician ~ Spell Suppression"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Supernatural.BardDirgeOfDoom"
+      },
+      {
+        "key": "DESC",
+        "value": "A 8th level, a magician can use performance to counter the spells of his foes. Once the bard begins using this performance, he tracks the number of rounds it has been in use. While performing, as an immediate action, he can attempt to counter any spell that he can identify using Spellcraft, so long as that spell's level is equal or less than the total number of rounds he has been performing spell suppression. The attempt to counter the spell is made as if using dispel magic, using the bard's level as the caster level. If successful, the bardic performance immediately ends. This ability requires audible components. This performance replaces dirge of doom."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1687,
+    "record_key": "Magician ~ Spell Suppression"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

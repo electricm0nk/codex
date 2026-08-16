@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Slayer Talent ~ Deadly Sneak",
+    "name": "Deadly Sneak**",
+    "class": "Slayer Talent",
+    "description": "Whenever a slayer with this talent uses the powerful sneak slayer talent, she treats all 1s and 2s on the sneak attack damage dice as 3s. A slayer must have the powerful sneak slayer talent before choosing this talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Talent ~ Deadly Sneak"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SlayerTalent.SlayerAdvancedTalent.Extraordinary.SpecialAttack.AttackOption"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Slayer Talent ~ Powerful Sneak"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SlayerTalentLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a slayer with this talent uses the powerful sneak slayer talent, she treats all 1s and 2s on the sneak attack damage dice as 3s. A slayer must have the powerful sneak slayer talent before choosing this talent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1865,
+    "record_key": "Slayer Talent ~ Deadly Sneak"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

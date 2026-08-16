@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Metal Mystery ~ Rusting Grasp",
+    "name": "Rusting Grasp",
+    "class": "Metal Mystery",
+    "description": "As a standard action, %1/day, you can perform a melee touch attack that rusts iron, as the rusting grasp spell.|RustingGraspTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metal Mystery ~ Rusting Grasp"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.MetalRevelation.SpellLike.RevelationTargetOneOnly"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RustingGraspTimes|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=RustingGraspTimes|CASTERLEVEL=7|Rusting Grasp"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, %1/day, you can perform a melee touch attack that rusts iron, as the rusting grasp spell.|RustingGraspTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RustingGraspTimes|(classlevel(\"Oracle\")-3)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 487,
+    "record_key": "Metal Mystery ~ Rusting Grasp"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mutation Warrior ~ Mutagen 1 STR",
+    "name": "Mutagen Strength/Primary",
+    "class": "Mutation Warrior",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutation Warrior ~ Mutagen 1 STR"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Special Ability,TYPE.MutationWarriorMutagen1],[PREABILITY:1,CATEGORY=Special Ability,Mutation Warrior ~ Mutagen 1 STR],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.Mutagen STR]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mutation Warrior Mutagen Selection.Mutagen STR.MutationWarriorMutagen1.Fighter Class Feature.Mutation Warrior Class Feature.Internal"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3071,
+    "record_key": "Mutation Warrior ~ Mutagen 1 STR"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ninja Trick ~ Hidden Weapons",
+    "name": "Hidden Weapons",
+    "class": "Ninja Trick",
+    "description": "A ninja with this ability can easily conceal weapons on her body. The ninja adds her level on opposed Sleight of Hand checks made to conceal a weapon. In addition, she can draw hidden weapons as a move action, instead of as a standard action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Hidden Weapons"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "A ninja with this ability can easily conceal weapons on her body. The ninja adds her level on opposed Sleight of Hand checks made to conceal a weapon. In addition, she can draw hidden weapons as a move action, instead of as a standard action."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Sleight of Hands=Conceal Weapon|NinjaTrickLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 135,
+    "record_key": "Ninja Trick ~ Hidden Weapons"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bard ~ Jack of All Trades",
+    "name": "Jack of All Trades",
+    "class": "Bard",
+    "description": "You can use any skill, even if the skill normally requires you to be trained.|PREVARLT:JackOfAllTradesLVL,16",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard ~ Jack of All Trades"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "JackOfAllTradesLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use any skill, even if the skill normally requires you to be trained.|PREVARLT:JackOfAllTradesLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use any skill, even if the skill normally requires you to be trained. You considers all skills to be class skills.|PREVARGTEQ:JackOfAllTradesLVL,16|PREVARLT:JackOfAllTradesLVL,19"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use any skill, even if the skill normally requires you to be trained. You considers all skills to be class skills. You can take 10 on any skill check, even if it is not normally allowed.|PREVARGTEQ:JackOfAllTradesLVL,19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Jack of All Trades ~ Class Skills|PREVARGTEQ:JackOfAllTradesLVL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|JackOfAllTradesLVL|BardLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 510,
+    "record_key": "Bard ~ Jack of All Trades"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

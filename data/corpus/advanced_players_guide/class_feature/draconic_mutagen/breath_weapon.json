@@ -1,0 +1,139 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Draconic Mutagen ~ Breath Weapon",
+    "name": "Breath Weapon",
+    "class": "Draconic Mutagen",
+    "description": "You gain a breath weapon. This breath weapon deals 8d8 points of",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Mutagen ~ Breath Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Special Attack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_DraconicDamageType_Cold|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_DraconicDamageType_Fire|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_DraconicDamageType_Electricity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_DraconicDamageType_Acid|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_DraconicBreathWeapon_Line|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_DraconicBreathWeapon_Cone|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_DraconicMutagen_BreathWeaponDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a breath weapon. This breath weapon deals 8d8 points of"
+      },
+      {
+        "key": "DESC",
+        "value": "acid|PREVARGTEQ:MasterChymist_DraconicDamageType_Acid,1"
+      },
+      {
+        "key": "DESC",
+        "value": "cold|PREVARGTEQ:MasterChymist_DraconicDamageType_Cold,1"
+      },
+      {
+        "key": "DESC",
+        "value": "electricity|PREVARGTEQ:MasterChymist_DraconicDamageType_Electricity,1"
+      },
+      {
+        "key": "DESC",
+        "value": "fire|PREVARGTEQ:MasterChymist_DraconicDamageType_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "damage. Those caught in the area of the breath receive a Reflex save for half damage. The DC of this save is %1.|MasterChymist_DraconicMutagen_BreathWeaponDC"
+      },
+      {
+        "key": "DESC",
+        "value": "The shape of the breath weapon is a"
+      },
+      {
+        "key": "DESC",
+        "value": "line.|PREVARGTEQ:MasterChymist_DraconicBreathWeapon_Line,1"
+      },
+      {
+        "key": "DESC",
+        "value": "cone.|PREVARGTEQ:MasterChymist_DraconicBreathWeapon_Cone,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60 ft. line, 8d8 acid, DC %1)|MasterChymist_DraconicMutagen_BreathWeaponDC|PREVARGTEQ:MasterChymist_DraconicBreathWeapon_Line,1|PREVARGTEQ:MasterChymist_DraconicDamageType_Acid,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60 ft. line, 8d8 cold, DC %1)|MasterChymist_DraconicMutagen_BreathWeaponDC|PREVARGTEQ:MasterChymist_DraconicBreathWeapon_Line,1|PREVARGTEQ:MasterChymist_DraconicDamageType_Cold,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60 ft. line, 8d8 electricity, DC %1)|MasterChymist_DraconicMutagen_BreathWeaponDC|PREVARGTEQ:MasterChymist_DraconicBreathWeapon_Line,1|PREVARGTEQ:MasterChymist_DraconicDamageType_Electricity,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60 ft. line, 8d8 fire, DC %1)|MasterChymist_DraconicMutagen_BreathWeaponDC|PREVARGTEQ:MasterChymist_DraconicBreathWeapon_Line,1|PREVARGTEQ:MasterChymist_DraconicDamageType_Fire,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft. cone, 8d8 acid, DC %1)|MasterChymist_DraconicMutagen_BreathWeaponDC|PREVARGTEQ:MasterChymist_DraconicBreathWeapon_Cone,1|PREVARGTEQ:MasterChymist_DraconicDamageType_Acid,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft. cone, 8d8 cold, DC %1)|MasterChymist_DraconicMutagen_BreathWeaponDC|PREVARGTEQ:MasterChymist_DraconicBreathWeapon_Cone,1|PREVARGTEQ:MasterChymist_DraconicDamageType_Cold,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft. cone, 8d8 electricity, DC %1)|MasterChymist_DraconicMutagen_BreathWeaponDC|PREVARGTEQ:MasterChymist_DraconicBreathWeapon_Cone,1|PREVARGTEQ:MasterChymist_DraconicDamageType_Electricity,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft. cone, 8d8 fire, DC %1)|MasterChymist_DraconicMutagen_BreathWeaponDC|PREVARGTEQ:MasterChymist_DraconicBreathWeapon_Cone,1|PREVARGTEQ:MasterChymist_DraconicDamageType_Fire,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1399,
+    "record_key": "Draconic Mutagen ~ Breath Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

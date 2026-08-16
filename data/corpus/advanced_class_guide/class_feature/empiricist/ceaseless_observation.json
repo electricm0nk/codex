@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Empiricist ~ Ceaseless Observation",
+    "name": "Ceaseless Observation",
+    "class": "Empiricist",
+    "description": "An empiricist's ability to notice the minutiae of almost everything that happens around him allows him to make shrewd and insightful calculations about people and even inanimate objects. At 2nd level, an empiricist uses his Intelligence modifier instead of the skill's typical ability for all Disable Device, Perception, Sense Motive, and Use Magic Device checks. He can also use his Intelligence modifier instead of Charisma on any Diplomacy checks made to gather information. This ability replaces poison lore and poison resistance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Empiricist ~ Ceaseless Observation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Empiricist Class Feature.Investigator Class Feature.SpecialQuality.Extraordinary.InvestigatorPoisonLore.InvestigatorPoisonResistance"
+      },
+      {
+        "key": "DESC",
+        "value": "An empiricist's ability to notice the minutiae of almost everything that happens around him allows him to make shrewd and insightful calculations about people and even inanimate objects. At 2nd level, an empiricist uses his Intelligence modifier instead of the skill's typical ability for all Disable Device, Perception, Sense Motive, and Use Magic Device checks. He can also use his Intelligence modifier instead of Charisma on any Diplomacy checks made to gather information. This ability replaces poison lore and poison resistance."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Diplomacy=Gather information|max(CHA,INT)-CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disable Device|max(DEX,INT)-DEX"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Sense Motive|max(WIS,INT)-WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Use Magic Device|max(CHA,INT)-CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3313,
+    "record_key": "Empiricist ~ Ceaseless Observation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Masterpiece ~ Cat-Step",
+    "name": "Cat-Step",
+    "class": "Masterpiece",
+    "description": "Your agile dancing allows you and others to fall safely and land gracefully.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterpiece ~ Cat-Step"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "The Cat-Step"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Masterpiece"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CatStepDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CatStepDistance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CatStepTargets|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your agile dancing allows you and others to fall safely and land gracefully."
+      },
+      {
+        "key": "DESC",
+        "value": " This quick dance is a series of small steps culminating in a series of leaps. When you complete the performance, for the next 10 minutes you treat any distance fallen as if it were %2 feet shorter. You may spend the first minute of this effect demonstrating the dance to up to %3 creatures; if these students succeed at a DC 15 Perform (dance) check, they also gain the benefits of this masterpiece for the remainder of its duration.  Use: 4 bardic performance rounds.  Action: 4 full rounds.|CatStepDC|CatStepDistance|CatStepTargets"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CatStepTargets|floor(MasterpieceLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CatStepDC|10+(MasterpieceLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CatStepDistance|5*floor(MasterpieceLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 171,
+    "record_key": "Masterpiece ~ Cat-Step"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

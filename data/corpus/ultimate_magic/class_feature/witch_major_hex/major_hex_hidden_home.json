@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Major Hex ~ Hidden Home",
+    "name": "Major Hex - Hidden Home",
+    "class": "Witch Major Hex",
+    "description": "DC %1 |WitchHexDC_HiddenHome",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Major Hex ~ Hidden Home"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Spelllike.WitchHex.MajorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMajorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,10]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_HiddenHome|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_HiddenHome"
+      },
+      {
+        "key": "DESC",
+        "value": "You can conceal or disguise your home and the area around it as if using mirage arcana. Before using the hex, you must spend 1 day pacing out the border of an area that measures roughly 40,000 square feet (approximately 200 feet by 200 feet) to define your home territory. Thereafter, you can use the hex to change the appearance of that area as a standard action as long as you are within the area. The illusion persists until you change or dismiss it. For the purpose of this ability, you can only have one \"home\" at a time."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Hidden Home"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_HiddenHome|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_HiddenHome|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Hidden Home)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 726,
+    "record_key": "Witch Major Hex ~ Hidden Home"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

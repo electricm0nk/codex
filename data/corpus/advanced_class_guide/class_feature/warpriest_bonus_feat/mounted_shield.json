@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Mounted Shield",
+    "name": "Mounted Shield",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your defensive tactics defend both you and your mount.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Mounted Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Mounted Combat,Shield Focus"
+      },
+      {
+        "key": "DESC",
+        "value": "Your defensive tactics defend both you and your mount."
+      },
+      {
+        "key": "DESC",
+        "value": " You may add your base shield bonus (including the bonus from Shield Focus but not including enhancement bonuses) to your mount's AC. In addition, you may add this bonus when making a Ride check to negate a hit against your mount using the Mounted Combat feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Mounted Shield"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.165"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4355,
+    "record_key": "Warpriest Bonus Feat ~ Mounted Shield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Asavir ~ Efreeti's Blessing ~ Mount",
+    "name": "Efreeti's Blessing",
+    "class": "Asavir",
+    "description": "Your hoof attacks deal an additional 1d6 points of fire damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Asavir ~ Efreeti's Blessing ~ Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Your hoof attacks deal an additional 1d6 points of fire damage."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|5|TYPE=Resistance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 60,
+    "record_key": "Asavir ~ Efreeti's Blessing ~ Mount"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

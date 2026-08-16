@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Winter Witch ~ Hexes",
+    "name": "Hexes",
+    "class": "Winter Witch",
+    "description": "The following hexes complement the winter witch archetype: beast eye*, blight, cook people*, evil eye, feral speech*, hag's eye, hoarfrost*, ice tomb*, witch's hut.* An asterisk (*) indicates a hex detailed in Ultimate Magic.&nl;A winter witch can select the following hexes: Frostfoot and Frozen Caress.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Winter Witch ~ Hexes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Witch Class Feature.Winter Witch Class Feature"
+      },
+      {
+        "key": "DESC",
+        "value": "The following hexes complement the winter witch archetype: beast eye*, blight, cook people*, evil eye, feral speech*, hag's eye, hoarfrost*, ice tomb*, witch's hut.* An asterisk (*) indicates a hex detailed in Ultimate Magic.&nl;A winter witch can select the following hexes: Frostfoot and Frozen Caress."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 395,
+    "record_key": "Winter Witch ~ Hexes"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

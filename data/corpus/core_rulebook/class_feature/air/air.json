@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Air Domain",
+    "name": "Air",
+    "class": null,
+    "description": "You can manipulate lightning, mist, and wind, traffic with air creatures, and are resistant to electricity damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Air Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manipulate lightning, mist, and wind, traffic with air creatures, and are resistant to electricity damage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Lightning Arc|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Air)|PREVARGTEQ:DomainAirAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Electricity Resistance|PREVARGTEQ:DomainAirAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAirLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAirAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAirDC|10+(DomainAirLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAirTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Air=1|Obscuring Mist|Air=2|Wind Wall|Air=3|Gaseous Form|Air=4|Air Walk|Air=5|Control Winds|Air=6|Chain Lightning|Air=7|Elemental Body IV (Air Only)|Air=8|Whirlwind|Air=9|Elemental Swarm (Air Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 651,
+    "record_key": "Air Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

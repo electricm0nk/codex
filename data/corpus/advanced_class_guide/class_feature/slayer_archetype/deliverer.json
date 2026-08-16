@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Slayer Archetype ~ Deliverer",
+    "name": "Deliverer",
+    "class": "Slayer Archetype",
+    "description": "Also known as a divine assassin, god's blade, or wrath-bringer, a deliverer is a weapon chosen by a god to punish those who have committed an affront to that deity. Evil deities are more likely to use assassins than deliverers, but some good deities use deliverers to deal with problems of a subtler nature than a cleric, inquisitor, paladin, or warpriest can typically handle.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Archetype ~ Deliverer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SlayerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Slayer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Deliverer],[!PREFACT:1,ABILITIES,Slayer_Archetype_Proficiencies=true,Slayer_Archetype_Talent2=true,Slayer_Archetype_Talent6=true,Slayer_Archetype_Talent10=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Also known as a divine assassin, god's blade, or wrath-bringer, a deliverer is a weapon chosen by a god to punish those who have committed an affront to that deity. Evil deities are more likely to use assassins than deliverers, but some good deities use deliverers to deal with problems of a subtler nature than a cleric, inquisitor, paladin, or warpriest can typically handle."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Deliverer ~ Weapon and Armor Proficiency|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Deliverer ~ Determined Zeal|PRECLASS:1,Slayer=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Deliverer ~ True Believer|PRECLASS:1,Slayer=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Deliverer ~ Divine Anathema|PRECLASS:1,Slayer=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Slayer"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent10|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3727,
+    "record_key": "Slayer Archetype ~ Deliverer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

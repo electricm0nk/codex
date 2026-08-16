@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Archetype ~ Gunmaster",
+    "name": "Gunmaster",
+    "class": "Vigilante Archetype",
+    "description": "Firearms can be potent tools for striking fear into the hearts of enemies, and canny vigilantes use this to their advantage. Gunmasters brandish firearms like extensions of their will, taking down their foes with deadly accuracy and skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Archetype ~ Gunmaster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VigilanteArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vigilante=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vigilante Archetype ~ Gunmaster],[!PREFACT:1,ABILITIES,Vigilante_Archetype_WeaponProficiencies=True,Vigilante_Archetype_ArmorProficiencies=True,Vigilante_Archetype_VigilanteSpecialization=True,Vigilante_Archetype_VigilanteTalent=True,Vigilante_Archetype_Unshakable=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Firearms can be potent tools for striking fear into the hearts of enemies, and canny vigilantes use this to their advantage. Gunmasters brandish firearms like extensions of their will, taking down their foes with deadly accuracy and skill."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunmaster ~ Weapon and Armor Proficiencies|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunmaster ~ Gunmaster|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunmaster ~ Nimble|PRECLASS:1,Vigilante=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_Unshakable|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_Unshakable|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 971,
+    "record_key": "Vigilante Archetype ~ Gunmaster"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

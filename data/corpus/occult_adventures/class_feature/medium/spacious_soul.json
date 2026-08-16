@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Spacious Soul",
+    "name": "Spacious Soul",
+    "class": "Medium",
+    "description": "A medium's soul is spacious enough to provide a foothold for his fallen allies, if he so chooses. If one of the allies who participated in the medium's seance that day dies within line of effect and line of sight of the medium, the medium can spend an immediate action to accept that ally's spirit within him. Since the ally inhabits the portion of the medium's soul normally reserved for a spirit, this suppresses the medium's spirit, spirit bonus, and spirit surge abilities as long as the medium maintains this ability. The ally's spirit and the medium share the medium's body and can decide each round on the medium's turn which of them will take the medium's actions for that round. If they don't agree on who should act, they attempt opposed Charisma checks to determine who is dominant for the next hour, and the dominant character decides who acts on each round. The ally's spirit has all the spells and limited use abilities (such as uses of channel energy, ki, and panache) that it possessed at the time of death, but it is incapable of regaining any abilities, points, spells, or uses of abilities it expends. When the ally's spirit acts, it uses the ally's base attack bonus, caster level, and special abilities (such as weapon proficiency), but uses the medium's physical ability scores. If the ally returns to life, this ability immediately ends. Otherwise, the medium can maintain this ability indefinitely. The medium can end this effect as a standard action, though if the ally is unwilling to depart, the medium must succeed at a Will saving throw (DC = 10 + 1/2 the ally's hit dice + the ally's Charisma modifier) or the attempt fails and the ally becomes dominant for 24 hours.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Spacious Soul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A medium's soul is spacious enough to provide a foothold for his fallen allies, if he so chooses. If one of the allies who participated in the medium's seance that day dies within line of effect and line of sight of the medium, the medium can spend an immediate action to accept that ally's spirit within him. Since the ally inhabits the portion of the medium's soul normally reserved for a spirit, this suppresses the medium's spirit, spirit bonus, and spirit surge abilities as long as the medium maintains this ability. The ally's spirit and the medium share the medium's body and can decide each round on the medium's turn which of them will take the medium's actions for that round. If they don't agree on who should act, they attempt opposed Charisma checks to determine who is dominant for the next hour, and the dominant character decides who acts on each round. The ally's spirit has all the spells and limited use abilities (such as uses of channel energy, ki, and panache) that it possessed at the time of death, but it is incapable of regaining any abilities, points, spells, or uses of abilities it expends. When the ally's spirit acts, it uses the ally's base attack bonus, caster level, and special abilities (such as weapon proficiency), but uses the medium's physical ability scores. If the ally returns to life, this ability immediately ends. Otherwise, the medium can maintain this ability indefinitely. The medium can end this effect as a standard action, though if the ally is unwilling to depart, the medium must succeed at a Will saving throw (DC = 10 + 1/2 the ally's hit dice + the ally's Charisma modifier) or the attempt fails and the ally becomes dominant for 24 hours."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 824,
+    "record_key": "Medium ~ Spacious Soul"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

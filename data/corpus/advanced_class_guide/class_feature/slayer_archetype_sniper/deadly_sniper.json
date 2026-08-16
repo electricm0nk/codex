@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Slayer Archetype Sniper ~ Deadly Sniper",
+    "name": "Deadly Sniper",
+    "class": "Slayer Archetype Sniper",
+    "description": "When the sniper makes an attack against a target who is within his weapon's first range increment and completly unaware of his presence, that attack ingnores the 30 foot range limit on ranged sneak attacks, and if it is a sneak attack, he adds his sniper level as a bonus on his sneak attack damage roll. After this first attack, the target is aware of the sniper's presence.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Archetype Sniper ~ Deadly Sniper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sniper Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When the sniper makes an attack against a target who is within his weapon's first range increment and completly unaware of his presence, that attack ingnores the 30 foot range limit on ranged sneak attacks, and if it is a sneak attack, he adds his sniper level as a bonus on his sneak attack damage roll. After this first attack, the target is aware of the sniper's presence."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3763,
+    "record_key": "Slayer Archetype Sniper ~ Deadly Sniper"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

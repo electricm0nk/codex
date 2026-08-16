@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Signature Weapon",
+    "name": "Signature Weapon",
+    "class": "Vigilante Talent",
+    "description": "The vigilante must select one type of weapon (such as longsword or crossbow) when he gains this talent. He gains Weapon Focus as a bonus feat for his selected weapon type. If he already has the Weapon Focus feat with the selected weapon, he can immediately swap it for another feat for which he qualified at the level he chose Weapon Focus in the selected weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Signature Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Signature Weapon"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsAvenger,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante must select one type of weapon (such as longsword or crossbow) when he gains this talent. He gains Weapon Focus as a bonus feat for his selected weapon type. If he already has the Weapon Focus feat with the selected weapon, he can immediately swap it for another feat for which he qualified at the level he chose Weapon Focus in the selected weapon."
+      },
+      {
+        "key": "DESC",
+        "value": " He also gains Weapon Specialization as a bonus feat for his selected weapon. He doesn't have to meet any of the prerequisites for these feats.|PREVARGTEQ:VigilanteTalentLVL,8"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "WEAPONPROFICIENCY|ANY"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Weapon Focus (%LIST)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Weapon Specialization (%LIST)|PREVARGTEQ:VigilanteTalentLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 104,
+    "record_key": "Vigilante Talent ~ Signature Weapon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

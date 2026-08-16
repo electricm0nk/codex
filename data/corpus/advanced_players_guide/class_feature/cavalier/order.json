@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cavalier ~ Order",
+    "name": "Order",
+    "class": "Cavalier",
+    "description": "A cavalier must pledge himself to a specific order. The order grants the cavalier a number of bonuses, class skills, and special abilities. In addition, each order includes a number of edicts that the cavalier must follow. If he violates any of these edicts, he loses the benefits from his order's challenge ability for 24 hours. The violation of an edict is subject to GM interpretation. A cavalier cannot change his order without undertaking a lengthy process to dedicate himself to a new cause. When this choice is made, he immediately loses all of the benefits from his old order. He must then follow the edicts of his new order for one entire level without gaining any benefits from that order. Once accomplished, he gains all of the bonuses from his new order. Note that the names of these orders might vary depending upon the campaign setting or GM's preference.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier ~ Order"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OrderAbilityLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A cavalier must pledge himself to a specific order. The order grants the cavalier a number of bonuses, class skills, and special abilities. In addition, each order includes a number of edicts that the cavalier must follow. If he violates any of these edicts, he loses the benefits from his order's challenge ability for 24 hours. The violation of an edict is subject to GM interpretation. A cavalier cannot change his order without undertaking a lengthy process to dedicate himself to a new cause. When this choice is made, he immediately loses all of the benefits from his old order. He must then follow the edicts of his new order for one entire level without gaining any benefits from that order. Once accomplished, he gains all of the bonuses from his new order. Note that the names of these orders might vary depending upon the campaign setting or GM's preference."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cavalier Order|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OrderAbilityLVL|CavalierLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 195,
+    "record_key": "Cavalier ~ Order"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

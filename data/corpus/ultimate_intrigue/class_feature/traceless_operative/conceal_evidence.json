@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Traceless Operative ~ Conceal Evidence",
+    "name": "Conceal Evidence",
+    "class": "Traceless Operative",
+    "description": "A traceless operative knows how to clean up and obscure the evidence of foul play. It takes her 1d3 x 10 minutes to conceal or alter evidence in a 10-foot-by-10-foot area. She uses Disguise to alter evidence or Stealth to conceal it, though bonuses and penalties based on her abilities or effects that disguise or hide her own body (such as from disguise self, a cloak of elvenkind, or the size modifier on Stealth checks) do not apply. A creature attempting to investigate the scene using Perception must succeed at the original Perception DC or a DC equal to the traceless operative's check, whichever is higher, in order to discover the true evidence. A creature who fails against a traceless operative's Disguise check potentially also derives the false evidence planted by the traceless operative.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Traceless Operative ~ Conceal Evidence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.TracelessOperativeClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A traceless operative knows how to clean up and obscure the evidence of foul play. It takes her 1d3 x 10 minutes to conceal or alter evidence in a 10-foot-by-10-foot area. She uses Disguise to alter evidence or Stealth to conceal it, though bonuses and penalties based on her abilities or effects that disguise or hide her own body (such as from disguise self, a cloak of elvenkind, or the size modifier on Stealth checks) do not apply. A creature attempting to investigate the scene using Perception must succeed at the original Perception DC or a DC equal to the traceless operative's check, whichever is higher, in order to discover the true evidence. A creature who fails against a traceless operative's Disguise check potentially also derives the false evidence planted by the traceless operative."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeFlankingLevel|CL|TYPE=EachClass.STACK"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 472,
+    "record_key": "Traceless Operative ~ Conceal Evidence"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Hex ~ Tongues",
+    "name": "Tongues",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_Tongues",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Tongues"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMinorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_Tongues|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_Tongues"
+      },
+      {
+        "key": "DESC",
+        "value": "A witch with this hex can understand any spoken language for %1 minutes per day (in 1-minute increments), as per comprehend languages.|WitchHexAbilityLVL|PREVARLT:WitchHexAbilityLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": "A witch with this hex can speak any language for %1 minutes per day (in 1-minute increments), as per tongues.|WitchHexAbilityLVL|PREVARGTEQ:WitchHexAbilityLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Tongues"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Tongues|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Tongues|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Tongues)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 897,
+    "record_key": "Witch Hex ~ Tongues"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

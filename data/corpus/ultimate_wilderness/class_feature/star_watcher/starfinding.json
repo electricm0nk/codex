@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Star Watcher ~ Starfinding",
+    "name": "Starfinding",
+    "class": "Star Watcher",
+    "description": "A star watcher adds a %1 bonus on Knowledge (geography) checks. He can also use astrological methods to read people. By checking his star charts, he can use Knowledge (geography) in place of Sense Motive checks.|max(1,InvestigatorLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Star Watcher ~ Starfinding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.StarWatcherClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A star watcher adds a %1 bonus on Knowledge (geography) checks. He can also use astrological methods to read people. By checking his star charts, he can use Knowledge (geography) in place of Sense Motive checks.|max(1,InvestigatorLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (geography)|max(1,InvestigatorLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 756,
+    "record_key": "Star Watcher ~ Starfinding"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Transporter ~ Trailbreaker",
+    "name": "Trailbreaker",
+    "class": "Transporter",
+    "description": "A transporter constantly works to obscure his trail. He increases the Survival DC to track him, or a group of which he is a part, by %1. This does not stack with similar abilities, such as a traceless operative's trackless ability (see page 30).|max(1,RangerLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Transporter ~ Trailbreaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.TransporterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A transporter constantly works to obscure his trail. He increases the Survival DC to track him, or a group of which he is a part, by %1. This does not stack with similar abilities, such as a traceless operative's trackless ability (see page 30).|max(1,RangerLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 685,
+    "record_key": "Transporter ~ Trailbreaker"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

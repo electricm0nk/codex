@@ -1,0 +1,111 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium Archetype ~ Storm Dreamer",
+    "name": "Storm Dreamer",
+    "class": "Medium Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium Archetype ~ Storm Dreamer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MediumArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.182"
+      },
+      {
+        "key": "DESC",
+        "value": "Storm dreamers serve the Storm Kindlers by communing with their mystical predecessors. They serve as spiritual advisors for the organization, and are valued for the lore and wisdom they gain during their trances. During such a trance, a single storm dreamer can easily protect and defend a temple-or at the very least, provide suitably threatening defensive displays. Mediums who become storm dreamers select their spirits normally, but the spirits with which they bond are supernatural remnants of the first Storm Kindlers-those reckless explorers who established the tradition but succumbed to their own arrogance and were consumed by the Eye of Abendego."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Medium=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Storm Dreamer],[!PREFACT:1,ABILITIES,Medium_Archetype_SpiritSurge=True,Medium_Archetype_HauntChanneler=True,Medium_Archetype_LocationChannel=True,Medium_Archetype_ConnectionChannel=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Storm Dreamer ~ Gozreh's Domain|PRECLASS:1,Medium=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Storm Dreamer ~ Storm Trance|PRECLASS:1,Medium=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Storm Dreamer ~ Dream Storm|PRECLASS:1,Medium=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Storm Dreamer ~ Storm Seer|PRECLASS:1,Medium=7"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_SpiritSurge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_HauntChanneler|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_LocationChannel|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_ConnectionChannel|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_SpiritSurge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_HauntChanneler|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_LocationChannel|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_ConnectionChannel|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 908,
+    "record_key": "Medium Archetype ~ Storm Dreamer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

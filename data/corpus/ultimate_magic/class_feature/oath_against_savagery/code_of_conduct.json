@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oath against Savagery ~ Code of Conduct",
+    "name": "Code of Conduct",
+    "class": "Oath against Savagery",
+    "description": "Always heed the call of a community in danger from savages. Be the first in line to defend a settlement and the last to retreat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against Savagery ~ Code of Conduct"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Always heed the call of a community in danger from savages. Be the first in line to defend a settlement and the last to retreat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1552,
+    "record_key": "Oath against Savagery ~ Code of Conduct"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,143 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Paladin Archetype ~ Forest Preserver",
+    "name": "Forest Preserver",
+    "class": "Paladin Archetype",
+    "description": "Forest preservers are sacred defenders of the woodlands and of the wild creatures and natural beauty within them.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Forest Preserver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Forest Preserver],[!PREFACT:1,ABILITIES,Paladin_Archetype_ClassSkills=True,Paladin_Archetype_AuraOfCourage=True,Paladin_Archetype_DivineHealth=True,Paladin_Archetype_ChannelPositiveEnergy=True,Paladin_Archetype_AuraOfResolve=True,Paladin_Archetype_AuraOfJustice=True,Paladin_Archetype_AuraOfFaith=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Forest preservers are sacred defenders of the woodlands and of the wild creatures and natural beauty within them."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Forest Preserver ~ Class Skills|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forest Preserver ~ Favored Terrain|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forest Preserver ~ Woodland Stride|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forest Preserver ~ Sacred Botany|PRECLASS:1,Paladin=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forest Preserver ~ Fireproof Aura|PRECLASS:1,Paladin=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forest Preserver ~ Sacred Grove|PRECLASS:1,Paladin=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forest Preserver ~ Aura of Preservation|PRECLASS:1,Paladin=14"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineHealth|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_ChannelPositiveEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfResolve|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfFaith|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineHealth|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_ChannelPositiveEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfResolve|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfFaith|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 863,
+    "record_key": "Paladin Archetype ~ Forest Preserver"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

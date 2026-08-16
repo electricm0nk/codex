@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pattern ~ HKFow3",
+    "name": "Force of Will 3 (Pattern)",
+    "class": "Pattern",
+    "description": "You gain a +2 bonus on Will saves against spells with the pattern descriptor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pattern ~ HKFow3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HKFoW3"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Pattern ~ HKFow1,Pattern ~ HKFoW2"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +2 bonus on Will saves against spells with the pattern descriptor."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.279"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 Will vs. pattern spells"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 126,
+    "record_key": "Pattern ~ HKFow3"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

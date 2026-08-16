@@ -1,0 +1,97 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Giant Stalker ~ Giant Baiter",
+    "name": "Giant Baiter",
+    "class": "Giant Stalker",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Giant Stalker ~ Giant Baiter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Feature.GiantStalkerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiantBaiterACBonus|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      },
+      {
+        "key": "DESC",
+        "value": "A raging giant stalker can take a"
+      },
+      {
+        "key": "DESC",
+        "value": "move|!PRECLASS:1,Barbarian=9"
+      },
+      {
+        "key": "DESC",
+        "value": "swift|PRECLASS:1,Barbarian=9|!PRECLASS:1,Barbarian=15"
+      },
+      {
+        "key": "DESC",
+        "value": "free|PRECLASS:1,Barbarian=15"
+      },
+      {
+        "key": "DESC",
+        "value": "action to erupt into a violent or vulgar display directed at"
+      },
+      {
+        "key": "DESC",
+        "value": "a single giant|!PRECLASS:1,Barbarian=6"
+      },
+      {
+        "key": "DESC",
+        "value": "up to two giants|PRECLASS:1,Barbarian=6|!PRECLASS:1,Barbarian=9"
+      },
+      {
+        "key": "DESC",
+        "value": "up to three giants|PRECLASS:1,Barbarian=9|!PRECLASS:1,Barbarian=12"
+      },
+      {
+        "key": "DESC",
+        "value": "up to %1 giants|3+CON|PRECLASS:1,Barbarian=12|!PRECLASS:1,Barbarian=18"
+      },
+      {
+        "key": "DESC",
+        "value": "within 60 feet. This display is infused with secret magical traditions that draw upon the Mammoth Lords' ancestral enmities toward giants. A targeted giant must succeed at a Will save (DC %1) or be compelled to focus its attacks on the giant stalker; this ability can also affect non-giant creatures that are Large or larger, though such creatures gain a +4 bonus on the Will save to resist the effect. This compulsion ends if the giant stalker is out of sight or inaccessible to the giant's attacks. While baited, a giant is distracted and enraged by the insults-a giant stalker gains a +1 dodge bonus to her AC against any giant she has successfully baited. Once baited, a giant remains baited for %3 rounds, or until the giant stalker's rage ends (whichever comes first). If the giant stalker baits a different giant, any previously baited giant is no longer baited. A giant that successfully saves against baiting is immune to that giant stalker's giant baiter ability for 24 hours. This is a language-dependent mind affecting effect.|10+BarbarianLVL/2+CON|GiantBaiterACBonus|CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantBaiterACBonus|BarbarianLVL/3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 624,
+    "record_key": "Giant Stalker ~ Giant Baiter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

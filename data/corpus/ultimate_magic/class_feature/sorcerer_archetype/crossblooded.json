@@ -1,0 +1,171 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sorcerer Archetype ~ Crossblooded",
+    "name": "Crossblooded",
+    "class": "Sorcerer Archetype",
+    "description": "A crossblooded bloodline combines the powers of two distinct heritages. In most cases, sorcerers with this bloodline are the offspring of two sorcerers from different ancestries, but occasionally a crossblooded sorcerer arises from the conjunction of other powers. A crossblooded sorcerer always takes a -2 penalty on Will saves.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Archetype ~ Crossblooded"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Sorcerer Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Sorcerer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Sorcerer Archetype ~ Crossblooded],[!PREFACT:1,ABILITIES,Sorcerer_Archetype_Spells=True,Sorcerer_Archetype_Bloodline=True,Sorcerer_Archetype_BloodlineClassSkill=True,Sorcerer_Archetype_BloodlineArcana=True,Sorcerer_Archetype_BloodlineSpells=True,Sorcerer_Archetype_BloodlineSpell1=True,Sorcerer_Archetype_BloodlineSpell2=True,Sorcerer_Archetype_BloodlineSpell3=True,Sorcerer_Archetype_BloodlineSpell4=True,Sorcerer_Archetype_BloodlineSpell5=True,Sorcerer_Archetype_BloodlineSpell6=True,Sorcerer_Archetype_BloodlineSpell7=True,Sorcerer_Archetype_BloodlineSpell8=True,Sorcerer_Archetype_BloodlineSpell9=True,Sorcerer_Archetype_BloodlineFeats=True,Sorcerer_Archetype_BloodlineBonusFeat7=True,Sorcerer_Archetype_BloodlineBonusFeat13=True,Sorcerer_Archetype_BloodlineBonusFeat19=True,Sorcerer_Archetype_BloodlinePowers=True,Sorcerer_Archetype_BloodlinePower1=True,Sorcerer_Archetype_BloodlinePower3=True,Sorcerer_Archetype_BloodlinePower9=True,Sorcerer_Archetype_BloodlinePower15=True,Sorcerer_Archetype_BloodlinePower20=True,Sorcerer_Archetype_Cantrips=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A crossblooded bloodline combines the powers of two distinct heritages. In most cases, sorcerers with this bloodline are the offspring of two sorcerers from different ancestries, but occasionally a crossblooded sorcerer arises from the conjunction of other powers. A crossblooded sorcerer always takes a -2 penalty on Will saves."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Crossblooded ~ Crossblooded Bloodline|PRECLASS:1,Sorcerer=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Sorcerer"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_Bloodline|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_Bloodline|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineClassSkill|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineArcana|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineSpells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineSpell1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineSpell2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineSpell3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineSpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineSpell5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineSpell6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineSpell7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineSpell8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineSpell9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineBonusFeat7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineBonusFeat13|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineBonusFeat19|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlinePowers|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlinePower1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlinePower3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlinePower9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlinePower15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlinePower20|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_Cantrips|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 2040,
+    "record_key": "Sorcerer Archetype ~ Crossblooded"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

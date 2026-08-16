@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Filidh ~ Song of the Cycle",
+    "name": "Song of the Cycle",
+    "class": "Filidh",
+    "description": "A filidh can grant awe-inspiring glimpses into the future with his magic. All allies who can see and hear the filidh are affected as though by the personal version of foresight for the duration of the performance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Filidh ~ Song of the Cycle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.FilidhClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A filidh can grant awe-inspiring glimpses into the future with his magic. All allies who can see and hear the filidh are affected as though by the personal version of foresight for the duration of the performance."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 272,
+    "record_key": "Filidh ~ Song of the Cycle"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

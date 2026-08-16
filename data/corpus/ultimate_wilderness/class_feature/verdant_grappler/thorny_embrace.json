@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Verdant Grappler ~ Thorny Embrace",
+    "name": "Thorny Embrace",
+    "class": "Verdant Grappler",
+    "description": "When a verdant grappler uses green grasp to tie up a creature, she can have the roots and vines grow vicious thorns that automatically damage the tied-up creature each round at the start of the verdant grappler's turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Grappler ~ Thorny Embrace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.VerdantGrapplerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When a verdant grappler uses green grasp to tie up a creature, she can have the roots and vines grow vicious thorns that automatically damage the tied-up creature each round at the start of the verdant grappler's turn."
+      },
+      {
+        "key": "DESC",
+        "value": "The thorns deal 1d6 damage.|!PRECLASS:1,Brawler=8"
+      },
+      {
+        "key": "DESC",
+        "value": "The thorns deal 1d8 damage.|PRECLASS:1,Brawler=8|!PRECLASS:1,Brawler=12"
+      },
+      {
+        "key": "DESC",
+        "value": "The thorns deal 1d10 damage.|PRECLASS:1,Brawler=12|!PRECLASS:1,Brawler=16"
+      },
+      {
+        "key": "DESC",
+        "value": "The thorns deal 2d6 damage.|PRECLASS:1,Brawler=16|!PRECLASS:1,Brawler=20"
+      },
+      {
+        "key": "DESC",
+        "value": "The thorns deal 2d8 damage.|PRECLASS:1,Brawler=20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 411,
+    "record_key": "Verdant Grappler ~ Thorny Embrace"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

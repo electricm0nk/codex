@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Duelist ~ Manifestation Amplifications",
+    "name": "Manifestation Amplifications",
+    "class": "Psychic Duelist",
+    "description": "[not implemented]At 7th level, a psychic duelist gains a manifestation amplification instead of a phrenic amplification; thereafter, whenever the psychic duelist gains a phrenic amplification, she can select either a phrenic amplification or a manifestation amplification. A manifestation amplification functions for a manifestation as a phrenic amplification does for a spell, with the same restrictions. The manifestation being amplified is called the linked manifestation. Phrenic pool points spent toward manifestation amplifications are separate from points sacrificed to generate manifestation points. For example, a psychic duelist capable of casting 4th-level spells (with a maximum of 4 MP per manifestation) could turn 4 points from her phrenic pool into MP and spend 2 points on a manifestation amplification, expending a total of 6 points from her phrenic pool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Duelist ~ Manifestation Amplifications"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Duelist Class Feature.Psychic Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[not implemented]At 7th level, a psychic duelist gains a manifestation amplification instead of a phrenic amplification; thereafter, whenever the psychic duelist gains a phrenic amplification, she can select either a phrenic amplification or a manifestation amplification. A manifestation amplification functions for a manifestation as a phrenic amplification does for a spell, with the same restrictions. The manifestation being amplified is called the linked manifestation. Phrenic pool points spent toward manifestation amplifications are separate from points sacrificed to generate manifestation points. For example, a psychic duelist capable of casting 4th-level spells (with a maximum of 4 MP per manifestation) could turn 4 points from her phrenic pool into MP and spend 2 points on a manifestation amplification, expending a total of 6 points from her phrenic pool."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1602,
+    "record_key": "Psychic Duelist ~ Manifestation Amplifications"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

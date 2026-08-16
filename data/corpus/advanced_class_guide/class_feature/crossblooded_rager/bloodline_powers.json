@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Crossblooded Rager ~ Bloodline Powers",
+    "name": "Bloodline Powers",
+    "class": "Crossblooded Rager",
+    "description": "At 1st, 4th, 8th, 12th, 16th, and 20th levels, a crossblooded rager gains one of the two new bloodline powers available to him at that level. He can instead select a lower-level bloodline power he did not choose in place of one of these high-level powers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crossblooded Rager ~ Bloodline Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature.Crossblooded Rager Class Feature.Special Attack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CrossbloodedRager_BloodlinePowers_Powers|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st, 4th, 8th, 12th, 16th, and 20th levels, a crossblooded rager gains one of the two new bloodline powers available to him at that level. He can instead select a lower-level bloodline power he did not choose in place of one of these high-level powers."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Bloodrager Bloodline Power|CrossbloodedRager_BloodlinePowers_Powers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrossbloodedRager_BloodlinePowers_Powers|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrossbloodedRager_BloodlinePowers_Powers|1|PREVARGTEQ:BloodragerBloodlineProgressionLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrossbloodedRager_BloodlinePowers_Powers|1|PREVARGTEQ:BloodragerBloodlineProgressionLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrossbloodedRager_BloodlinePowers_Powers|1|PREVARGTEQ:BloodragerBloodlineProgressionLVL,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrossbloodedRager_BloodlinePowers_Powers|1|PREVARGTEQ:BloodragerBloodlineProgressionLVL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrossbloodedRager_BloodlinePowers_Powers|1|PREVARGTEQ:BloodragerBloodlineProgressionLVL,20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|CrossbloodedRagerBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2747,
+    "record_key": "Crossblooded Rager ~ Bloodline Powers"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

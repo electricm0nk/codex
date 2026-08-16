@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Sparking Aura",
+    "name": "Sparking Aura",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman causes a creature within 30 feet to spark and shimmer with electrical energy. Though this does not harm the creature, it does cause the creature to emit light like a torch, preventing it from gaining any benefit from concealment or invisibility. Furthermore, while the aura lasts, whenever the target is hit with a metal melee weapon, it also takes %1 electricity damage. The sparking aura lasts %2 rounds. A creature affected by this hex cannot be affected by it again for 24 hours.|ShamanSparkingAuraDamage|ShamanSparkingAuraDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Sparking Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanWindHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Sparking Aura"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanWindSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanSparkingAuraDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanSparkingAuraDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman causes a creature within 30 feet to spark and shimmer with electrical energy. Though this does not harm the creature, it does cause the creature to emit light like a torch, preventing it from gaining any benefit from concealment or invisibility. Furthermore, while the aura lasts, whenever the target is hit with a metal melee weapon, it also takes %1 electricity damage. The sparking aura lasts %2 rounds. A creature affected by this hex cannot be affected by it again for 24 hours.|ShamanSparkingAuraDamage|ShamanSparkingAuraDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanSparkingAuraDamage|CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanSparkingAuraDuration|ShamanSpiritLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1693,
+    "record_key": "Shaman Spirit Hex ~ Sparking Aura"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

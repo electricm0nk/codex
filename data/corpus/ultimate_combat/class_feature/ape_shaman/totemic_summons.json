@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ape Shaman ~ Totemic Summons",
+    "name": "Totemic Summons",
+    "class": "Ape Shaman",
+    "description": "At 5th level, an ape shaman may cast summon nature's ally as a standard action when summoning primates, and these summoned creatures gain temporary hit points equal to her druid level. She can apply the young template to any primate to reduce the level of the summoning spell required by one. She can also increase the level of summoning required by one in order to apply either the advanced or the giant template, or increase it by two to apply both the advanced and giant templates. This ability replaces a thousand faces.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ape Shaman ~ Totemic Summons"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, an ape shaman may cast summon nature's ally as a standard action when summoning primates, and these summoned creatures gain temporary hit points equal to her druid level. She can apply the young template to any primate to reduce the level of the summoning spell required by one. She can also increase the level of summoning required by one in order to apply either the advanced or the giant template, or increase it by two to apply both the advanced and giant templates. This ability replaces a thousand faces."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 626,
+    "record_key": "Ape Shaman ~ Totemic Summons"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Discipline Pain ~ Live On",
+    "name": "Live On",
+    "class": "Psychic Discipline Pain",
+    "description": "At 5th level, you can use lay on hands as though you were a paladin of 3 levels lower than your psychic level. You also gain access to mercies as though you were a paladin of 3 levels lower than your psychic level. You can target only yourself with lay on hands or mercies gained from this discipline. This stacks with lay on hands abilities gained from other sources.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Pain ~ Live On"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, you can use lay on hands as though you were a paladin of 3 levels lower than your psychic level. You also gain access to mercies as though you were a paladin of 3 levels lower than your psychic level. You can target only yourself with lay on hands or mercies gained from this discipline. This stacks with lay on hands abilities gained from other sources."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Paladin ~ Lay on Hands|Paladin ~ Mercy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MercyLVL|PsychicLVL-3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LayOnHandsLVL|PsychicLVL-3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1230,
+    "record_key": "Psychic Discipline Pain ~ Live On"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

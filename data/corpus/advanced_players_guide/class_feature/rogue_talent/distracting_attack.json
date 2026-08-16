@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Talent ~ Distracting Attack",
+    "name": "Distracting Attack",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent can make sneak attacks with subtle flourishes that disorient and distract her enemy. When she hits a creature with a melee attack that deals sneak attack damage, she can forgo the additional damage to cause the creature to become flat-footed against one target of her choosing until the beginning of her next turn. The rogue cannot designate herself as the creature gaining the benefit of this talent. Creatures with uncanny dodge are immune to distracting attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Distracting Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueTalent.SpecialAttack.Extraordinary.AttackOption"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent can make sneak attacks with subtle flourishes that disorient and distract her enemy. When she hits a creature with a melee attack that deals sneak attack damage, she can forgo the additional damage to cause the creature to become flat-footed against one target of her choosing until the beginning of her next turn. The rogue cannot designate herself as the creature gaining the benefit of this talent. Creatures with uncanny dodge are immune to distracting attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2899,
+    "record_key": "Rogue Talent ~ Distracting Attack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Stygian Slayer ~ Spell Use",
+    "name": "Spell Use",
+    "class": "Stygian Slayer",
+    "description": "A stygian slayer is able to use spell completion and spell trigger items as if he were an arcane caster with these spells on his spell list: darkness, forced quiet, modify memory, nondetection, obscuring mist, phantom steed, shadow walk, and wizard spells of the illusion school of spell level 0 through 4th. The slayer's uses his class level as his caster level for this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stygian Slayer ~ Spell Use"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Stygian Slayer Class Feature.Slayer Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A stygian slayer is able to use spell completion and spell trigger items as if he were an arcane caster with these spells on his spell list: darkness, forced quiet, modify memory, nondetection, obscuring mist, phantom steed, shadow walk, and wizard spells of the illusion school of spell level 0 through 4th. The slayer's uses his class level as his caster level for this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3768,
+    "record_key": "Stygian Slayer ~ Spell Use"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shapechange School ~ Battleshaping",
+    "name": "Battleshaping",
+    "class": "Shapechange School",
+    "description": "As a swift action, you grow a single natural weapon. The natural weapon lasts for 1 round and has a +%1 enhancement bonus on attack and damage rolls. You can grow a claw, a bite, or a gore attack. These attacks deal the normal damage for a creature of your size (see page 302 of the Pathfinder RPG Bestiary). At 11th level, you can shape two natural weapons. You may not grow additional limbs or a tail with this ability. You can use this ability %2 times per day.|ShapechangeBattleshapingBonus|ShapechangeBattleshapingTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shapechange School ~ Battleshaping"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShapechangeBattleshapingBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShapechangeBattleshapingTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you grow a single natural weapon. The natural weapon lasts for 1 round and has a +%1 enhancement bonus on attack and damage rolls. You can grow a claw, a bite, or a gore attack. These attacks deal the normal damage for a creature of your size (see page 302 of the Pathfinder RPG Bestiary). At 11th level, you can shape two natural weapons. You may not grow additional limbs or a tail with this ability. You can use this ability %2 times per day.|ShapechangeBattleshapingBonus|ShapechangeBattleshapingTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShapechangeBattleshapingBonus|TransmutationSchoolLVL/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShapechangeBattleshapingTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.147"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ShapechangeBattleshapingTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3384,
+    "record_key": "Shapechange School ~ Battleshaping"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

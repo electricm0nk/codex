@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Implement School Focus Power ~ Mind Steed",
+    "name": "Mind Steed [Conjuration]",
+    "class": "Implement School Focus Power",
+    "description": "As a standard action, you can expend 1 point of mental focus to conjure a spectral horse. This horse can be either Medium or Large, but it otherwise functions as mount",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Implement School Focus Power ~ Mind Steed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Implement School Focus Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,ABILITIES,OccultistSchool_Conjuration=true"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can expend 1 point of mental focus to conjure a spectral horse. This horse can be either Medium or Large, but it otherwise functions as mount"
+      },
+      {
+        "key": "DESC",
+        "value": " with a base land speed increased by 20 feet|PREVARGTEQ:OccultistLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": ". The horse lasts for %1 minutes.|10*OccultistLVL"
+      },
+      {
+        "key": "DESC",
+        "value": " If expend 1 additional point of mental focus, the mount can fly at a speed of 60 feet with good maneuverability, but doing so reduces the mount's duration to %1 minutes.|OccultistLVL|PREVARGTEQ:OccultistLVL,9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1037,
+    "record_key": "Implement School Focus Power ~ Mind Steed"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

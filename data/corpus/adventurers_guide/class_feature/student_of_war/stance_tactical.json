@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Student of War ~ Tactical Stance",
+    "name": "Stance / Tactical",
+    "class": "Student of War",
+    "description": "+%1 insight bonus on CMB and CMD when initiating or defending against bull rush, disarm, grapple, overrun and trip combat maneuvers.|SoWKnowEnemy|PREVARLT:SoWLvl,8",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of War ~ Tactical Stance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "DESC",
+        "value": "+%1 insight bonus on CMB and CMD when initiating or defending against bull rush, disarm, grapple, overrun and trip combat maneuvers.|SoWKnowEnemy|PREVARLT:SoWLvl,8"
+      },
+      {
+        "key": "DESC",
+        "value": "+%1 insight bonus on CMB and CMD when initiating or defending against bull rush, disarm, grapple, overrun and trip combat maneuvers. You do not provoke attacks of opportunity from the studied foe when attempting these maneuvers against it.|SoWKnowEnemy|PREVARGTEQ:SoWLvl,8"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 532,
+    "record_key": "Student of War ~ Tactical Stance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

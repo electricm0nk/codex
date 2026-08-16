@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mesmerist ~ Mesmerist Tricks Output",
+    "name": "Mesmerist Tricks",
+    "class": "Mesmerist",
+    "description": "A mesmerist can create hypnotic bonds with his allies, implanting magical suggestions in their minds that he can later activate. Each day, he can implant %1 of these tricks. He can have only one trick implanted at a given time, and implanting a new trick ends the previous one (the mesmerist still loses the use of this ability he spent on the previous trick).&nl; To implant a trick, the mesmerist must take a standard action and either touch a willing creature or implant the trick in himself. A creature can be the subject of only one mesmerist trick at a time. The mesmerist can activate the trick as a free action when a triggering condition is met (as defined in the trick's description), even if it isn't his turn. The subject must be within medium range (%2 feet) for the mesmerist to trigger the trick. The mesmerist monitors for the trick's triggering condition through a subtle telepathic connection, so he doesn't need line of sight to trigger it-but anything that blocks telepathic contact prevents him from triggering tricks. An implanted trick lasts until the next time the mesmerist regains his spells.&nl; Once triggered, a trick is no longer implanted, and can't be triggered again until the mesmerist implants the trick again. The duration of the effect caused by triggering a trick is either instantaneous or appears in the trick's entry. The DC for any mesmerist trick or masterful trick that requires a saving throw or skill check is %3.&nl; The mesmerist knows %4 trick(s). Each daily use of mesmerist tricks can be used to implant any trick the mesmerist knows. Unless specifically noted in the mesmerist trick's description, a mesmerist can't choose a particular trick more than once.|MesmeristTricksUses|MesmeristTrickRange|MesmeristTrickDC|MesmeristTricksKnown",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist ~ Mesmerist Tricks Output"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A mesmerist can create hypnotic bonds with his allies, implanting magical suggestions in their minds that he can later activate. Each day, he can implant %1 of these tricks. He can have only one trick implanted at a given time, and implanting a new trick ends the previous one (the mesmerist still loses the use of this ability he spent on the previous trick).&nl; To implant a trick, the mesmerist must take a standard action and either touch a willing creature or implant the trick in himself. A creature can be the subject of only one mesmerist trick at a time. The mesmerist can activate the trick as a free action when a triggering condition is met (as defined in the trick's description), even if it isn't his turn. The subject must be within medium range (%2 feet) for the mesmerist to trigger the trick. The mesmerist monitors for the trick's triggering condition through a subtle telepathic connection, so he doesn't need line of sight to trigger it-but anything that blocks telepathic contact prevents him from triggering tricks. An implanted trick lasts until the next time the mesmerist regains his spells.&nl; Once triggered, a trick is no longer implanted, and can't be triggered again until the mesmerist implants the trick again. The duration of the effect caused by triggering a trick is either instantaneous or appears in the trick's entry. The DC for any mesmerist trick or masterful trick that requires a saving throw or skill check is %3.&nl; The mesmerist knows %4 trick(s). Each daily use of mesmerist tricks can be used to implant any trick the mesmerist knows. Unless specifically noted in the mesmerist trick's description, a mesmerist can't choose a particular trick more than once.|MesmeristTricksUses|MesmeristTrickRange|MesmeristTrickDC|MesmeristTricksKnown"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Tricks per day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|MesmeristTricksUses"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Mesmerist ~ Mesmerist Tricks"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 920,
+    "record_key": "Mesmerist ~ Mesmerist Tricks Output"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

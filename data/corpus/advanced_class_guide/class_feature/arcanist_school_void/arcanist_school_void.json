@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcanist School Void",
+    "name": "Arcanist School Void",
+    "class": null,
+    "description": "The void is a complex idea considered by some to be a fifth element - one that comprises thought, space, spiritualism, and insight. Wizards who tap into its mysterious powers gain control over energies that bind the earth to the heavens and the planes to their mysterious and eternal alignments, as well as the powers that stitch living beings to their spirits. The void elemental school presented here is an additional arcane school for the wizard class.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.WizardClassFeatures.ClassSpecialization.ArcaneSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VoidElementalSchoolLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VoidElementalSchoolProgressionLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The void is a complex idea considered by some to be a fifth element - one that comprises thought, space, spiritualism, and insight. Wizards who tap into its mysterious powers gain control over energies that bind the earth to the heavens and the planes to their mysterious and eternal alignments, as well as the powers that stitch living beings to their spirits. The void elemental school presented here is an additional arcane school for the wizard class."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcanist School Void ~ Reveal Weakness|Arcanist School Void ~ Void Awareness|Arcanist School Void ~ Void Magic"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcanist School Void ~ Aura of Prescience|PREVARGTEQ:VoidElementalSchoolProgressionLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OppositionalSchool|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_ArcaneOppositionSchool|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VoidElementalSchoolLVL|WizardSchoolLvl"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VoidElementalSchoolProgressionLVL|ArcaneSchoolProgressionLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 230,
+    "record_key": "Arcanist School Void"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

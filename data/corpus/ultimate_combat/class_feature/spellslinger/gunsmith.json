@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spellslinger ~ Gunsmith",
+    "name": "Gunsmith",
+    "class": "Spellslinger",
+    "description": "The spellslinger gains the Gunsmithing feat and a battered gun that is identical to the gun a Gunslinger (see page 9) gains at first level. If the spellslinger chooses the ability to attune two arcane guns, he still only starts out with one gun. Like a Gunslinger, a spellslinger can use the Gunsmithing feat to restore his battered gun.&nl; This ability replaces Scribe Scroll.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellslinger ~ Gunsmith"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The spellslinger gains the Gunsmithing feat and a battered gun that is identical to the gun a Gunslinger (see page 9) gains at first level. If the spellslinger chooses the ability to attune two arcane guns, he still only starts out with one gun. Like a Gunslinger, a spellslinger can use the Gunsmithing feat to restore his battered gun.&nl; This ability replaces Scribe Scroll."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Gunsmithing"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Gunslinger Battered Gun|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1760,
+    "record_key": "Spellslinger ~ Gunsmith"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

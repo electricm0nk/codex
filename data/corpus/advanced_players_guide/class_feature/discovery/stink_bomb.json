@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Stink Bomb",
+    "name": "Stink Bomb*",
+    "class": "Discovery",
+    "description": "The effects of the smoke created by an alchemist's bomb can duplicate the effects of stinking cloud instead of fog cloud, filling an area equal to twice the bomb's splash radius for 1 round. An alchemist must possess the smoke bomb discovery before selecting this discovery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Stink Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistBombModifier"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Discovery ~ Smoke Bomb"
+      },
+      {
+        "key": "DESC",
+        "value": "The effects of the smoke created by an alchemist's bomb can duplicate the effects of stinking cloud instead of fog cloud, filling an area equal to twice the bomb's splash radius for 1 round. An alchemist must possess the smoke bomb discovery before selecting this discovery."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 150,
+    "record_key": "Discovery ~ Stink Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

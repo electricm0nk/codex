@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order Domain ~ Commanding Order",
+    "name": "Commanding Order",
+    "class": "Order Domain",
+    "description": "You can use greater command (DC %2), except it only affects a single target.  You can use this ability %1 times per day.|DomainOrderTimes|CommandingOrderDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order Domain ~ Commanding Order"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CommandingOrderDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use greater command (DC %2), except it only affects a single target.  You can use this ability %1 times per day.|DomainOrderTimes|CommandingOrderDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Commanding Order"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CommandingOrderDC|DomainOrderDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CommandingOrderDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Commanding Order)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 385,
+    "record_key": "Order Domain ~ Commanding Order"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

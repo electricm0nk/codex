@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Greed (Transmutation) School",
+    "name": "Greed (Transmutation) School",
+    "class": null,
+    "description": "You have chosen to specialize in Greed, magically transforming things into objects of greater value or utility, and enhancing the physical self.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransmutationSchoolLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to specialize in Greed, magically transforming things into objects of greater value or utility, and enhancing the physical self."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Transmutation School ~ Physical Enhancement|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardPhysicalEnhancement|PREVARGTEQ:TransmutationSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Transmutation School ~ Telekinetic Fist|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardTelekineticFist|PREVARGTEQ:TransmutationSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Transmutation School ~ Change Shape|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardChangeShape|PREVARGTEQ:TransmutationSchoolLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransmutationSchoolLVL|ArcaneSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisallowWizardArcaneSchoolArchetype|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OppositionalSchool|-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 128,
+    "record_key": "Greed (Transmutation) School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

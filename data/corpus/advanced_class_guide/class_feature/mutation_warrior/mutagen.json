@@ -1,0 +1,142 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mutation Warrior ~ Mutagen",
+    "name": "Mutagen",
+    "class": "Mutation Warrior",
+    "description": "A mutation warrior discovers how to create a mutagen that he can imbibe in order to heighten his physical prowess at the cost of his personality. This ability functions as the alchemist's mutagen ability (APG p.28), using his fighter level as his alchemist level. This ability replaces armor training 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutation Warrior ~ Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mutation Warrior Class Feature.Fighter Class Feature.SpecialQuality.Supernatural.FighterArmorTraining1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutationWarriorMutagenLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutationWarriorMutagenDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutationWarriorMutagenDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutationWarriorMutagenNormal|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutationWarriorMutagenStatBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutationWarriorMutagenStatPenalty|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutationWarriorMutagenACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutationWarriorDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutationWarriorMutagenTierLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutationWarriorSecondMutagenStatBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutationWarriorThirdMutagenStatBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A mutation warrior discovers how to create a mutagen that he can imbibe in order to heighten his physical prowess at the cost of his personality. This ability functions as the alchemist's mutagen ability (APG p.28), using his fighter level as his alchemist level. This ability replaces armor training 1."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mutation Warrior Mutagen Selection|MutationWarriorMutagenTierLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutationWarriorMutagenLVL|FighterLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutationWarriorMutagenDuration|MutationWarriorMutagenLVL*10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutationWarriorMutagenDC|10+(MutationWarriorMutagenLVL/2)+INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutationWarriorMutagenStatPenalty|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutationWarriorMutagenACBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutationWarriorMutagenStatBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutationWarriorMutagenTierLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutationWarriorSecondMutagenStatBonus|MutationWarriorMutagenStatBonus-2|PREVARGTEQ:MutationWarriorMutagenTierLVL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutationWarriorThirdMutagenStatBonus|MutationWarriorMutagenStatBonus-4|PREVARGTEQ:MutationWarriorMutagenTierLVL,3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|MutationWarriorMutagenActive|1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutationWarriorMutagenActive|0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3051,
+    "record_key": "Mutation Warrior ~ Mutagen"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

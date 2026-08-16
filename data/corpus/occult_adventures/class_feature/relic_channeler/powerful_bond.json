@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Relic Channeler ~ Powerful Bond",
+    "name": "Powerful Bond",
+    "class": "Relic Channeler",
+    "description": "Because of habitually channeling the same spirits and possessing physical links to the spirits' former lives and legends, a relic channeler possesses a strong bond with her spirits. She receives the benefit of the Alertness feat whenever she is suffering a spirit's influence penalty. She chooses two spells of each level with the archmage arcana and divine surge spirit powers instead of one, two exotic weapon proficiencies with champion's prowess instead of one, three combat feats with legendary champion instead of two, and three skills with trickster's edge instead of two. This ability alters spirit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Relic Channeler ~ Powerful Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Because of habitually channeling the same spirits and possessing physical links to the spirits' former lives and legends, a relic channeler possesses a strong bond with her spirits. She receives the benefit of the Alertness feat whenever she is suffering a spirit's influence penalty. She chooses two spells of each level with the archmage arcana and divine surge spirit powers instead of one, two exotic weapon proficiencies with champion's prowess instead of one, three combat feats with legendary champion instead of two, and three skills with trickster's edge instead of two. This ability alters spirit."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1422,
+    "record_key": "Relic Channeler ~ Powerful Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

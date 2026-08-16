@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Plant Domain",
+    "name": "Plant",
+    "class": "Forbidden Rites Domain",
+    "description": "You find solace in the green, can grow defensive thorns, and can communicate with plants.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Plant Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.PlantDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlantLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlantDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlantTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlantAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You find solace in the green, can grow defensive thorns, and can communicate with plants."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Wooden Fist|PREDOMAIN:1,Plant|PREVARGTEQ:DomainPlantAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Bramble Armor|PREDOMAIN:1,Plant|PREVARGTEQ:DomainPlantAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPlantLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPlantDC|10+(DomainPlantLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPlantTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPlantAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Entangle|Cleric=2|Barkskin|Cleric=3|Plant Growth|Cleric=4|Command Plants|Cleric=5|Wall of Thorns|Cleric=6|Repel Wood|Cleric=7|Animate Plants|Cleric=8|Control Plants|Cleric=9|Shambler"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1049,
+    "record_key": "Forbidden Rites Domain ~ Plant Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

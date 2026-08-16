@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Living Grimoire ~ Blessed Script",
+    "name": "Blessed Script",
+    "class": "Living Grimoire",
+    "description": "A living grimoire can permanently tattoo one spell of 2nd level or lower from his holy book onto his body. The tattooed spell cannot have an expensive material component or focus. The living grimoire can prepare any tattooed spell without needing his holy book, and can cast his tattooed spells as a spell-like ability once per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Living Grimoire ~ Blessed Script"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.LivingGrimoireClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "DESC",
+        "value": "A living grimoire can permanently tattoo one spell of 2nd level or lower from his holy book onto his body. The tattooed spell cannot have an expensive material component or focus. The living grimoire can prepare any tattooed spell without needing his holy book, and can cast his tattooed spells as a spell-like ability once per day."
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, the living grimoire can tattoo one additional spell of 3rd level or lower upon himself.|PRECLASS:1,Inquisitor=8"
+      },
+      {
+        "key": "DESC",
+        "value": "At 12th level, he can tattoo one additional spell of 4th level or lower upon himself.|PRECLASS:1,Inquisitor=12"
+      },
+      {
+        "key": "DESC",
+        "value": "At 16th level he can tattoo a final additional spell of any level upon himself.|PRECLASS:1,Inquisitor=16"
+      },
+      {
+        "key": "DESC",
+        "value": "When the living grimoire uses these spell-like abilities, the tattooed holy script associated with the spell-like ability glows as per light for a number of rounds equal to the spell's level."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 146,
+    "record_key": "Living Grimoire ~ Blessed Script"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

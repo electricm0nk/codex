@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Umbral Stalker ~ Swift and Silent",
+    "name": "Swift and Silent",
+    "class": "Umbral Stalker",
+    "description": "Umbral stalkers often descend upon their prey with deadly grace and efficiency. An umbral stalker gains a morale bonus on all Acrobatics and Stealth checks equal to half her inquisitor level (minimum +1).|UmbralStalkerSwiftAndSilentBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Umbral Stalker ~ Swift and Silent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.UmbralStalkerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UmbralStalkerSwiftAndSilentBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Umbral stalkers often descend upon their prey with deadly grace and efficiency. An umbral stalker gains a morale bonus on all Acrobatics and Stealth checks equal to half her inquisitor level (minimum +1).|UmbralStalkerSwiftAndSilentBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics,Stealth|UmbralStalkerSwiftAndSilentBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UmbralStalkerSwiftAndSilentBonus|max(1,InquisitorLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 481,
+    "record_key": "Umbral Stalker ~ Swift and Silent"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

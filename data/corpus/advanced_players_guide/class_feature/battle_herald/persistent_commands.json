@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Battle Herald ~ Persistent Commands",
+    "name": "Persistent Commands",
+    "class": "Battle Herald",
+    "description": "At 8th level, a battle herald may allow her inspiring commands to persist even if she is incapacitated and unable to maintain them. If the player chooses, the effects of the battle herald's inspiring commands persist for a number of rounds equal to her Charisma bonus (these count toward her number of rounds per day limit). This ability does not apply if the battle herald intentionally stops maintaining an inspiring command-only if she is dazed, held, stunned, killed, and so on, and is unable to maintain them. If the battle herald recovers from incapacity while an inspiring command is ongoing, she may resume maintaining it as a free action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Herald ~ Persistent Commands"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, a battle herald may allow her inspiring commands to persist even if she is incapacitated and unable to maintain them. If the player chooses, the effects of the battle herald's inspiring commands persist for a number of rounds equal to her Charisma bonus (these count toward her number of rounds per day limit). This ability does not apply if the battle herald intentionally stops maintaining an inspiring command-only if she is dazed, held, stunned, killed, and so on, and is unable to maintain them. If the battle herald recovers from incapacity while an inspiring command is ongoing, she may resume maintaining it as a free action."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1272,
+    "record_key": "Battle Herald ~ Persistent Commands"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brutish Swamper ~ Stubborn",
+    "name": "Stubborn",
+    "class": "Brutish Swamper",
+    "description": "A brutish swamper resists any attempts to change her attitude or compel her to action. Diplomacy and Intimidate checks against her take a -%1 penalty, and no result can shift her attitude more than one step in a 24-hour period.|BrutishSwamperStubbornPenalty",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brutish Swamper ~ Stubborn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.BrutishSwamperClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrutishSwamperStubbornPenalty|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A brutish swamper resists any attempts to change her attitude or compel her to action. Diplomacy and Intimidate checks against her take a -%1 penalty, and no result can shift her attitude more than one step in a 24-hour period.|BrutishSwamperStubbornPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|2*(BrutishSwamperStubbornPenalty|BarbarianLVL/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 193,
+    "record_key": "Brutish Swamper ~ Stubborn"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Savant Fire School ~ Fire Supremacy",
+    "name": "Fire Supremacy",
+    "class": "Savant Fire School",
+    "description": "You gain resistance 5 to fire. At 10th level, this resistance increases to 10. At 20th level, you gain immunity to fire damage. In addition, whenever you are within 5 feet of a source of flame at least as large as a campfire, you can draw the fire around you for 1 round as a swift action. Anyone striking you with a melee weapon or unarmed strike takes %1 fire damage. Weapons with reach avoid this damage.|max(ArcanistSavantSchoolLVL/2,1)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Fire School ~ Fire Supremacy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain resistance 5 to fire. At 10th level, this resistance increases to 10. At 20th level, you gain immunity to fire damage. In addition, whenever you are within 5 feet of a source of flame at least as large as a campfire, you can draw the fire around you for 1 round as a swift action. Anyone striking you with a melee weapon or unarmed strike takes %1 fire damage. Weapons with reach avoid this damage.|max(ArcanistSavantSchoolLVL/2,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2616,
+    "record_key": "Savant Fire School ~ Fire Supremacy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

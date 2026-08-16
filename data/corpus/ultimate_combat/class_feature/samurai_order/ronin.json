@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Samurai Order ~ Ronin",
+    "name": "Ronin",
+    "class": "Samurai Order",
+    "description": "While most samurai belong to the order of the warrior, dedicating their considerable skills to the service of a lord, land, and people, some find themselves without a master, either as a result of disgrace or death, or occasionally by choice. Known as ronin, these samurai wander the lands, serving their own code of ideals. While ronin are significantly freer to do as they please, they do not receive the same respect and support that a more dedicated samurai can count on. Note that cavaliers can select this order, but they are typically called knights errant instead of ronin. A ronin adds Knowledge (local) and Survival to his list of class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samurai Order ~ Ronin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SamuraiOrder.CavalierOrder"
+      },
+      {
+        "key": "DESC",
+        "value": "While most samurai belong to the order of the warrior, dedicating their considerable skills to the service of a lord, land, and people, some find themselves without a master, either as a result of disgrace or death, or occasionally by choice. Known as ronin, these samurai wander the lands, serving their own code of ideals. While ronin are significantly freer to do as they please, they do not receive the same respect and support that a more dedicated samurai can count on. Note that cavaliers can select this order, but they are typically called knights errant instead of ronin. A ronin adds Knowledge (local) and Survival to his list of class skills."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ronin ~ Edicts|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ronin ~ Self Reliant|PREVARGTEQ:OrderAbilityLVL,2|PREVAREQ:OrderAbility2,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ronin ~ Without Master|PREVARGTEQ:OrderAbilityLVL,8|PREVAREQ:OrderAbility8,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ronin ~ Chosen Destiny|PREVARGTEQ:OrderAbilityLVL,15|PREVAREQ:OrderAbility15,0"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (Local)|Survival"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 224,
+    "record_key": "Samurai Order ~ Ronin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

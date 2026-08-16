@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dreamweaver ~ Dream Thief",
+    "name": "Dream Thief",
+    "class": "Dreamweaver",
+    "description": "A dreamweaver can alter the sleeping mind of any creature that is sleeping because of her slumber hex or a spell she cast. She can reshape one of the target's memories as if using modify memory. Alternatively, she may insert herself into the dreaming memories of the target, prompting the target's mind to show her some specific information; the dreamer's subconscious may resist, or try to deceive her with out-ofcontext memories, similar to the way a corpse can resist when questioned with speak with dead. A Will save negates either effect (DC equal to that of the witch's hex). Whether or not the save is successful, a creature cannot be the target of this hex again for 1 day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dreamweaver ~ Dream Thief"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A dreamweaver can alter the sleeping mind of any creature that is sleeping because of her slumber hex or a spell she cast. She can reshape one of the target's memories as if using modify memory. Alternatively, she may insert herself into the dreaming memories of the target, prompting the target's mind to show her some specific information; the dreamer's subconscious may resist, or try to deceive her with out-ofcontext memories, similar to the way a corpse can resist when questioned with speak with dead. A Will save negates either effect (DC equal to that of the witch's hex). Whether or not the save is successful, a creature cannot be the target of this hex again for 1 day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.185"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 825,
+    "record_key": "Dreamweaver ~ Dream Thief"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

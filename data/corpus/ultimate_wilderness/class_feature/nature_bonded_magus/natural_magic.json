@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nature-Bonded Magus ~ Natural Magic",
+    "name": "Natural Magic",
+    "class": "Nature-Bonded Magus",
+    "description": "[NOT IMPLEMENTED] A nature-bonded magus adds one 0-level and one 1st-level spell from the druid spell list to the magus spell list and his spellbook. Each time a nature-bonded magus gains the ability to cast a new level of spells, he can add one spell of that level from the druid spell list to both the magus spell list and his spellbook.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature-Bonded Magus ~ Natural Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magus Class Features.NatureBondedMagusClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] A nature-bonded magus adds one 0-level and one 1st-level spell from the druid spell list to the magus spell list and his spellbook. Each time a nature-bonded magus gains the ability to cast a new level of spells, he can add one spell of that level from the druid spell list to both the magus spell list and his spellbook."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 797,
+    "record_key": "Nature-Bonded Magus ~ Natural Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

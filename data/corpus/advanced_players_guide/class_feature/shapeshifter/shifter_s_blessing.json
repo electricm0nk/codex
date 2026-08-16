@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shapeshifter ~ Shifter's Blessing",
+    "name": "Shifter's Blessing",
+    "class": "Shapeshifter",
+    "description": "At 3rd level, the shapeshifter can take on the aspects of a wild creature once per day as a swift action. He can remain in this form for a number of rounds equal to his ranger level + his Wisdom modifier. While in one of his shifter's blessing forms, the ranger gains the shapeshifter subtype. The shapeshifter must choose one of the following forms. Once this choice is made, it cannot be changed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shapeshifter ~ Shifter's Blessing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterAdditional|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, the shapeshifter can take on the aspects of a wild creature once per day as a swift action. He can remain in this form for a number of rounds equal to his ranger level + his Wisdom modifier. While in one of his shifter's blessing forms, the ranger gains the shapeshifter subtype. The shapeshifter must choose one of the following forms. Once this choice is made, it cannot be changed."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shifter's Blessing Selection|1+var(\"ShifterAdditional\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterAdditional|(RangerLVL-3)/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2820,
+    "record_key": "Shapeshifter ~ Shifter's Blessing"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

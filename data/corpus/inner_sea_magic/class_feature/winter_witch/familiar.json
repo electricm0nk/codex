@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Winter Witch ~ Familiar",
+    "name": "Familiar",
+    "class": "Winter Witch",
+    "description": "Winter witches must choose a familiar that is native to the frozen north, even when they themselves operate in other regions. Traditionally, this limits winter witch familiar choices to bat, cat, fox, hawk, owl, rat, raven, or weasel. A winter witch who gains the Improved Familiar feat can select any familiar she desires, save for familiars with the fire subtype.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Winter Witch ~ Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Witch Class Feature.Winter Witch Class Feature"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Witch ~ Familiar"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Winter witches must choose a familiar that is native to the frozen north, even when they themselves operate in other regions. Traditionally, this limits winter witch familiar choices to bat, cat, fox, hawk, owl, rat, raven, or weasel. A winter witch who gains the Improved Familiar feat can select any familiar she desires, save for familiars with the fire subtype."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|WitchLVL|TYPE=Base"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Familiar|Bat,Cat,Familiar (Fox),Hawk,Owl,Rat,Raven,Weasel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 389,
+    "record_key": "Winter Witch ~ Familiar"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

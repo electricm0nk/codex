@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Hex ~ Flight",
+    "name": "Flight",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_Flight",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Flight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMinorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_Flight|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=WitchHexAbilityLVL|Feather Fall,11+WitchHexStat"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=WitchHexAbilityLVL|Levitate,12+WitchHexStat|PREVARGTEQ:WitchHexAbilityLVL,3"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_Flight"
+      },
+      {
+        "key": "DESC",
+        "value": "The witch grow lighter as you gain power, eventually gaining the ability to fly. The witch can use feather fall on herself at will and gain a +4 racial bonus on Swim checks."
+      },
+      {
+        "key": "DESC",
+        "value": "She can cast levitate on herself once per day.|PREVARGTEQ:WitchHexAbilityLVL,3"
+      },
+      {
+        "key": "DESC",
+        "value": "The witch may fly, as per the spell, for %1 minutes per day. These minutes do not need to be consecutive, but they must be spent in 1-minute increments.|WitchHexAbilityLVL|PREVARGTEQ:WitchHexAbilityLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Flight"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Flight|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Flight|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Flight)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 892,
+    "record_key": "Witch Hex ~ Flight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

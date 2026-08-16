@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Formless Adept ~ Blurred Body",
+    "name": "Blurred Body",
+    "class": "Formless Adept",
+    "description": "At 1st level, a formless adept can act under the effect of a blur spell. At 5th level, the formless adept can use this ability for a number of minutes per day instead of rounds per day. These minutes don't have to be used consecutively, but must be used in 1-minute increments.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Formless Adept ~ Blurred Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Formless Adept Class Feature.Psychic Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a formless adept can act under the effect of a blur spell. At 5th level, the formless adept can use this ability for a number of minutes per day instead of rounds per day. These minutes don't have to be used consecutively, but must be used in 1-minute increments."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1566,
+    "record_key": "Formless Adept ~ Blurred Body"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

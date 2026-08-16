@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ringleader ~ Countless Contingencies",
+    "name": "Countless Contingencies",
+    "class": "Ringleader",
+    "description": "Whenever a ringleader creates a plan using her cunning plan ability, she can choose two different bardic performances. When she triggers the plan, she chooses which of the two performances takes effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ringleader ~ Countless Contingencies"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Feature.RingleaderClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a ringleader creates a plan using her cunning plan ability, she can choose two different bardic performances. When she triggers the plan, she chooses which of the two performances takes effect."
+      },
+      {
+        "key": "DESC",
+        "value": "A ringleader can spend a standard action and 2 rounds of bardic performance to extend the duration of a triggered plan by 1d4 rounds.|PRECLASS:1,Bard=12"
+      },
+      {
+        "key": "DESC",
+        "value": "The ringleader can choose three different bardic performances when using her cunning plan ability.|PRECLASS:1,Bard=18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 655,
+    "record_key": "Ringleader ~ Countless Contingencies"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

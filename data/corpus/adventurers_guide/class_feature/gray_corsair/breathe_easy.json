@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gray Corsair ~ Breathe Easy",
+    "name": "Breathe Easy",
+    "class": "Gray Corsair",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gray Corsair ~ Breathe Easy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Gray Corsair Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "DESC",
+        "value": "Desperate slavers sometimes throw their living cargo overboard, so a Gray Corsair must help slaves stay alive until they can be plucked from the waves."
+      },
+      {
+        "key": "DESC",
+        "value": "A Gray Corsair can cast water breathing once per day|PREVARLT:GrayCorsairLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "A Gray Corsair can cast water breathing twice per day|PREVARGTEQ:GrayCorsairLVL,7|PREVARLT:GrayCorsairLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "A Gray Corsair can cast water breathing three per day|PREVARGTEQ:GrayCorsairLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": " as a spell-like ability (CL %1). The Gray Corsair can use this ability as a move action or an immediate action if he so chooses. When used as a move action, the ability can affect only one creature, but can do so at a range of 120 feet. When used as an immediate action, the ability can affect only one creature, but can do so at a range of 60 feet, and its duration is reduced to %1 minutes.|GrayCorsairLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 168,
+    "record_key": "Gray Corsair ~ Breathe Easy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

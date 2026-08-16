@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Martial Master ~ Martial Flexibility",
+    "name": "Martial Flexibility",
+    "class": "Martial Master",
+    "description": "The martial master can use a move action to gain the benefit of a combat feat he doesn't possess. The martial master must otherwise meet all the feat's prerequisites. |PREVARLT:FighterLVL,9",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Martial Master ~ Martial Flexibility"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Martial Master Class Feature.Fighter Class Feature.SpecialQuality.Extraordinary.FighterWeaponTraining.FighterWeaponMastery"
+      },
+      {
+        "key": "DESC",
+        "value": "The martial master can use a move action to gain the benefit of a combat feat he doesn't possess. The martial master must otherwise meet all the feat's prerequisites. |PREVARLT:FighterLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "The martial master can gain the benefit of two combat feats he doesn't possess. He can select one feat as a swift action or two feats as a move action. The martial master must otherwise meet all the prerequisites for both feats. |PREVARGTEQ:FighterLVL,9|PREVARLT:FighterLVL,14"
+      },
+      {
+        "key": "DESC",
+        "value": "The martial master can use this ability to gain the benefit of three combat feats at the same time. He can select one feat as a free action, two feats as a swift action, or three feats as a move action. |PREVARGTEQ:FighterLVL,14|PREVARLT:FighterLVL,17"
+      },
+      {
+        "key": "DESC",
+        "value": "The martial master can use this ability to gain the benefit of one combat feat as an immediate action or three combat feats as a swift action. |PREVARGTEQ:FighterLVL,17|PREVARLT:FighterLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": "The martial master can use this ability to gain the benefit of any number of combat feats as a swift action. |PREVARGTEQ:FighterLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": "This effect lasts for 1 minute. He can use this ability %1 times per day. The martial master can use this ability again before the duration expires in order to replace a previous combat feat with another choice. If a combat feat has a daily use limitation (such as Stunning Fist), any uses of that combat feat while using this ability count toward that feat's daily limit. |3+floor(FighterLVL/2)"
+      },
+      {
+        "key": "DESC",
+        "value": "The martial master can use those feats to meet the prerequisites of other feats he gains with this ability. Doing so means he cannot replace a feat currently fulfilling another's prerequisite without also replacing those feats that require it. Each individual feat selected counts toward his daily uses of this ability. |PREVARGTEQ:FighterLVL,9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|Pool_Temp_Combat_Feat|1+(FighterLVL>=9)+(FighterLVL>=14)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3048,
+    "record_key": "Martial Master ~ Martial Flexibility"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:prose_formula_segment",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,175 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oracle Archetype ~ Tree Soul",
+    "name": "Tree Soul",
+    "class": "Oracle Archetype",
+    "description": "Tree souls develop an affinity not just with trees but also with objects carved from them, feeling the essence of the tree's spirit living within. By bonding to trees, they learn to manipulate the trees' power to produce divine energy. The type of tree a tree soul oracle bonds to often seems to influence the oracle's personality. A tree soul who is bound to a towering redwood may value traditions and be slow to anger, while a tree soul bound to a smaller pine tree might be quick to react and have a somewhat prickly personality. Regardless of the trees they form their metaphysical attachment to, tree soul oracles tend to be steadfast and stubborn, having an aura of timelessness even as the world changes around them.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle Archetype ~ Tree Soul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.OracleArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Tree Soul],[!PREFACT:1,ABILITIES,Oracle_Archetype_MysterySkills=True,Oracle_Archetype_MysterySpell2=True,Oracle_Archetype_MysterySpell10=True,Oracle_Archetype_MysterySpell12=True,Oracle_Archetype_MysterySpell14=True,Oracle_Archetype_MysterySpell16=True,Oracle_Archetype_MysterySpell18=True,Oracle_Archetype_OraclesCurse=True,Oracle_Archetype_Revelation1=True,Oracle_Archetype_Revelation11=True,Oracle_Archetype_FinalRevelation=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Tree souls develop an affinity not just with trees but also with objects carved from them, feeling the essence of the tree's spirit living within. By bonding to trees, they learn to manipulate the trees' power to produce divine energy. The type of tree a tree soul oracle bonds to often seems to influence the oracle's personality. A tree soul who is bound to a towering redwood may value traditions and be slow to anger, while a tree soul bound to a smaller pine tree might be quick to react and have a somewhat prickly personality. Regardless of the trees they form their metaphysical attachment to, tree soul oracles tend to be steadfast and stubborn, having an aura of timelessness even as the world changes around them."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Tree Soul ~ Class Skills|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Tree Soul ~ Bonus Spells|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tree Soul ~ Armor Proficiency|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tree Soul ~ Tree Bound Curse|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tree Soul ~ Transform Wood|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tree Soul ~ Living Steel Dolls|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tree Soul ~ Tree Soul Revelation|PRECLASS:1,Oracle=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_OraclesCurse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_Revelation1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_Revelation11|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_FinalRevelation|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_OraclesCurse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation11|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_FinalRevelation|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 829,
+    "record_key": "Oracle Archetype ~ Tree Soul"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

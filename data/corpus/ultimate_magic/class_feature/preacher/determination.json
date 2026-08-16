@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Preacher ~ Determination",
+    "name": "Determination",
+    "class": "Preacher",
+    "description": "You are a person of few words on the battlefield, but those words hold great power and authority. You can use this ability to create one of the following effects %1/day. Each is a free action to use. Aggression: You may reroll an attack roll that you just made before the results of the roll are revealed. You must take the result of the reroll, even if it's worse than the original roll.  Defense: When you would be hit by a melee or ranged attack, as an immediate action you may add a +4 insight bonus to your Armor Class against that attack, and if this makes your AC higher than the opponent's attack roll, the attack misses.  Warning: When your ally within line of sight would be hit by a melee or ranged attack, you may call out a warning to that ally, and the attacker must reroll the attack and use the results of the second roll. The ally must be able to hear you and must not be helpless for this ability to have any effect.  Whenever you could select a bonus teamwork feat (at 3rd, 6th, 9th, 12th, 15th, and 18th level), you can instead choose to increase your number of uses per day of this ability by one.|DeterminationTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Preacher ~ Determination"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeterminationTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a person of few words on the battlefield, but those words hold great power and authority. You can use this ability to create one of the following effects %1/day. Each is a free action to use. Aggression: You may reroll an attack roll that you just made before the results of the roll are revealed. You must take the result of the reroll, even if it's worse than the original roll.  Defense: When you would be hit by a melee or ranged attack, as an immediate action you may add a +4 insight bonus to your Armor Class against that attack, and if this makes your AC higher than the opponent's attack roll, the attack misses.  Warning: When your ally within line of sight would be hit by a melee or ranged attack, you may call out a warning to that ally, and the attacker must reroll the attack and use the results of the second roll. The ally must be able to hear you and must not be helpless for this ability to have any effect.  Whenever you could select a bonus teamwork feat (at 3rd, 6th, 9th, 12th, 15th, and 18th level), you can instead choose to increase your number of uses per day of this ability by one.|DeterminationTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeterminationTimes|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1276,
+    "record_key": "Preacher ~ Determination"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mutation Warrior Discovery ~ Greater Mutagen",
+    "name": "Greater Mutagen",
+    "class": "Mutation Warrior Discovery",
+    "description": "The mutation warrior's mutagen now grants a +4 natural armor bonus, a +6 alchemical bonus to one physical ability score (Strength, Dexterity, or Constitution), and a +4 alchemical bonus to a second physical ability score. The mutation warrior takes a -2 penalty on both associated mental ability scores as long as the mutagen persists.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutation Warrior Discovery ~ Greater Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mutation Warrior Discovery.SpecialAttack"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "FighterLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "The mutation warrior's mutagen now grants a +4 natural armor bonus, a +6 alchemical bonus to one physical ability score (Strength, Dexterity, or Constitution), and a +4 alchemical bonus to a second physical ability score. The mutation warrior takes a -2 penalty on both associated mental ability scores as long as the mutagen persists."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutationWarriorMutagenTierLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutationWarriorMutagenACBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutationWarriorMutagenStatBonus|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3084,
+    "record_key": "Mutation Warrior Discovery ~ Greater Mutagen"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

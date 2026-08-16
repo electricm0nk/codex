@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Druid Domain ~ Animal",
+    "name": "Animal",
+    "class": "Druid Domain",
+    "description": "You can speak with and befriend animals with ease. In addition, you treat Knowledge (Nature) as a class skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Domain ~ Animal"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Domain ~ Base"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "DruidAnimalAllowed,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can speak with and befriend animals with ease. In addition, you treat Knowledge (Nature) as a class skill."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Druid=1|Calm Animals|Druid=2|Hold Animal|Druid=3|Dominate Animal|Druid=4|Summon Nature's Ally IV (Animals Only)|Druid=5|Beast Shape III (Animals Only)|Druid=6|Antilife Shell|Druid=7|Animal Shapes|Druid=8|Summon Nature's Ally VIII (Animals Only)|Druid=9|Shapechange"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 786,
+    "record_key": "Druid Domain ~ Animal"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

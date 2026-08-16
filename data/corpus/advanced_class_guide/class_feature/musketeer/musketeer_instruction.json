@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Musketeer ~ Musketeer Instruction",
+    "name": "Musketeer Instruction",
+    "class": "Musketeer",
+    "description": "A musketeer gains the benefits of the Weapon Finesse feature with the rapier (this counts as having the Weapon Finesse feat for purposes of meeting feat prerequisites), as well as both Rapid Reload (musket) and Gunsmithing feats as bonus feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Musketeer ~ Musketeer Instruction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Musketeer Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "HasWeaponFinesseFeat,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A musketeer gains the benefits of the Weapon Finesse feature with the rapier (this counts as having the Weapon Finesse feat for purposes of meeting feat prerequisites), as well as both Rapid Reload (musket) and Gunsmithing feats as bonus feats."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Rapid Reload (Musket)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Gunsmithing"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rapier|TOHIT|((max(STR,DEX)-STR)+SHIELDACCHECK)|TYPE=NotRanged"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3904,
+    "record_key": "Musketeer ~ Musketeer Instruction"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

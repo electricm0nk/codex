@@ -1,0 +1,131 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fighter Archetype ~ Skirmisher",
+    "name": "Skirmisher",
+    "class": "Fighter Archetype",
+    "description": "Not all battles are fought between armies; sometimes, a settlement or nation faces a threat too dire to fight in the open. In order to repel a much larger enemy force, some soldiers must abandon equipment and tactics designed for open-field warfare and instead rely on ambushes, hit-and-run tactics, and sabotage to whittle down their enemies' strength and morale. Skirmishers use harsh weather and unforgiving terrain to their advantage, attacking isolated groups of enemies that cannot flee or fight back effectively. Many tribal warriors also employ small-unit tactics because it is part of their warrior culture, because they cannot field a large army, or simply because they refuse to fight on the enemy's terms.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Skirmisher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Skirmisher],[!PREFACT:1,ABILITIES,Fighter_Archetype_MediumArmorProficiency=True,Fighter_Archetype_TowerShieldProficiency=True,Fighter_Archetype_ClassSkills=True,Fighter_Archetype_BonusFeat2=True,Fighter_Archetype_Bravery=True,Fighter_Archetype_ArmorTraining=True,Fighter_Archetype_ArmorMastery=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Not all battles are fought between armies; sometimes, a settlement or nation faces a threat too dire to fight in the open. In order to repel a much larger enemy force, some soldiers must abandon equipment and tactics designed for open-field warfare and instead rely on ambushes, hit-and-run tactics, and sabotage to whittle down their enemies' strength and morale. Skirmishers use harsh weather and unforgiving terrain to their advantage, attacking isolated groups of enemies that cannot flee or fight back effectively. Many tribal warriors also employ small-unit tactics because it is part of their warrior culture, because they cannot field a large army, or simply because they refuse to fight on the enemy's terms."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skirmisher ~ Wilderness Training|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skirmisher ~ Conditioning|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skirmisher ~ Reconnaissance Training|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skirmisher ~ Mobility Training|PRECLASS:1,Fighter=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skirmisher ~ Mobile Mastery|PRECLASS:1,Fighter=19"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_TowerShieldProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_TowerShieldProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorMastery|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 571,
+    "record_key": "Fighter Archetype ~ Skirmisher"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

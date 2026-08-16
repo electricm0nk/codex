@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus Arcana ~ Devoted Blade",
+    "name": "Devoted Blade",
+    "class": "Magus Arcana",
+    "description": "Whenever the magus enhances his weapon using his arcane pool, he may spend 1 additional point from his arcane pool to add either the anarchic, axiomatic, holy, or unholy special ability to the list of available options. A magus may only add one of these abilities if it matches his own alignment. The magus must be at least 12th level before selecting this arcana.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Devoted Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.MagusArcana.SpecialQuality"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ArcanaQualifyLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the magus enhances his weapon using his arcane pool, he may spend 1 additional point from his arcane pool to add either the anarchic, axiomatic, holy, or unholy special ability to the list of available options. A magus may only add one of these abilities if it matches his own alignment. The magus must be at least 12th level before selecting this arcana."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 908,
+    "record_key": "Magus Arcana ~ Devoted Blade"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

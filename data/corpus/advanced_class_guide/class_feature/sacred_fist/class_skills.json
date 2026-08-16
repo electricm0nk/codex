@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sacred Fist ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Sacred Fist",
+    "description": "The sacred fist's class skills are Acrobatics (Dex), Climb (Str), Craft (Int), Diplomacy (Cha), Escape Artist (Dex), Heal (Wis), Intimidate (Cha), Knowledge (history) (Int), Knowledge (religion) (Int), Perception (Wis), Profession (Wis), Sense Motive (Wis), Ride (Dex), Sense Motive (Wis), Spellcraft (Int), Stealth (Dex), and Swim (Str). These skills replace the warpriest's class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Fist ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sacred Fist Class Feature.Warpriest Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The sacred fist's class skills are Acrobatics (Dex), Climb (Str), Craft (Int), Diplomacy (Cha), Escape Artist (Dex), Heal (Wis), Intimidate (Cha), Knowledge (history) (Int), Knowledge (religion) (Int), Perception (Wis), Profession (Wis), Sense Motive (Wis), Ride (Dex), Sense Motive (Wis), Spellcraft (Int), Stealth (Dex), and Swim (Str). These skills replace the warpriest's class skills."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Climb|TYPE=Craft|Diplomacy|Escape Artist|Heal|Intimidate|Knowledge (History)|Knowledge (Religion)|Perception|TYPE=Profession|Sense Motive|Ride|Sense Motive|Spellcraft|Stealth|Swim"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4003,
+    "record_key": "Sacred Fist ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

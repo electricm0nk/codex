@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Daredevil ~ Scoundrel's Fortune",
+    "name": "Scoundrel's Fortune",
+    "class": "Daredevil",
+    "description": "At 5th level, once per day a daredevil can choose to roll two dice instead of one for any skill check, keeping the best result. She can use this ability one additional time per day for every three levels she possesses beyond 5th, to a maximum of eight times per day at 20th level. This ability replaces lore master.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Daredevil ~ Scoundrel's Fortune"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, once per day a daredevil can choose to roll two dice instead of one for any skill check, keeping the best result. She can use this ability one additional time per day for every three levels she possesses beyond 5th, to a maximum of eight times per day at 20th level. This ability replaces lore master."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 405,
+    "record_key": "Daredevil ~ Scoundrel's Fortune"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

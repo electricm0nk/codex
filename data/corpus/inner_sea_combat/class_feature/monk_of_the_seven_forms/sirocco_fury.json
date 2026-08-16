@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk of the Seven Forms ~ Sirocco Fury",
+    "name": "Sirocco Fury",
+    "class": "Monk of the Seven Forms",
+    "description": "At 11th level, a monk of the seven forms can spend 2 ki points as a full-round action to enter a meditative trance that replicates the spell dance of a hundred cuts (Path.finder RPG Ultimate Ma13ic 215), using his monk level as his caster level. Unlike the spell, a monk of the seven forms must both move 10 feet and make a melee attack each round after he begins this trance to prevent the effect from ending. At 15th level, he can instead spend 3 ki points when using this ability to make his trance replicate dance ef a thousand cuts (Ultimate Ma13ic 216) with the same limitations. This ability replaces abundant step and quivering palm.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk of the Seven Forms ~ Sirocco Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, a monk of the seven forms can spend 2 ki points as a full-round action to enter a meditative trance that replicates the spell dance of a hundred cuts (Path.finder RPG Ultimate Ma13ic 215), using his monk level as his caster level. Unlike the spell, a monk of the seven forms must both move 10 feet and make a melee attack each round after he begins this trance to prevent the effect from ending. At 15th level, he can instead spend 3 ki points when using this ability to make his trance replicate dance ef a thousand cuts (Ultimate Ma13ic 216) with the same limitations. This ability replaces abundant step and quivering palm."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 149,
+    "record_key": "Monk of the Seven Forms ~ Sirocco Fury"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

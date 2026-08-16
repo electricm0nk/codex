@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inquisitor ~ Sacred Judgment",
+    "name": "Judgment (Sacred)",
+    "class": "Inquisitor",
+    "description": "An inquisitor can pronounce judgment upon her foes as a swift action. Starting when the judgment is made, the inquisitor receives a bonus or special ability based on the type of judgment made. An inquisitor can use this ability %1 times per day. Once activated, this ability lasts until the combat ends, at which point all of the bonuses immediately end. The inquisitor must participate in the combat to gain these bonuses. If she is frightened, panicked, paralyzed, stunned, unconscious, or otherwise prevented from participating in the combat, the ability does not end, but the bonuses do not resume until she can participate in the combat again. When the inquisitor uses this ability, she must select one type of judgment to make. As a swift action, she can change this judgment to another type.|InquisitorJudgmentTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor ~ Sacred Judgment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.Supernatural.InquisitorJudgment"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "An inquisitor can pronounce judgment upon her foes as a swift action. Starting when the judgment is made, the inquisitor receives a bonus or special ability based on the type of judgment made. An inquisitor can use this ability %1 times per day. Once activated, this ability lasts until the combat ends, at which point all of the bonuses immediately end. The inquisitor must participate in the combat to gain these bonuses. If she is frightened, panicked, paralyzed, stunned, unconscious, or otherwise prevented from participating in the combat, the ability does not end, but the bonuses do not resume until she can participate in the combat again. When the inquisitor uses this ability, she must select one type of judgment to make. As a swift action, she can change this judgment to another type.|InquisitorJudgmentTimes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Judgment ~ Healing|PREMULT:2,[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorJudgmentHealing],[PREVAREQ:Inquisitor_CF_JudgmentHealing,0]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Judgment ~ Resiliency|PREMULT:2,[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorJudgmentResiliency],[PREVAREQ:Inquisitor_CF_JudgmentResiliency,0]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Judgment ~ Resistance|PREMULT:2,[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorJudgmentResistance],[PREVAREQ:Inquisitor_CF_JudgmentResistance,0]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Judgment ~ Smiting|PREMULT:2,[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorJudgmentSmiting],[PREVAREQ:Inquisitor_CF_JudgmentSmiting,0]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Sacred Judgment ~ Destruction|PREMULT:2,[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorJudgmentDestruction],[PREVAREQ:Inquisitor_CF_JudgmentDestruction,0]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Sacred Judgment ~ Justice|PREMULT:2,[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorJudgmentJustice],[PREVAREQ:Inquisitor_CF_JudgmentJustice,0]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Sacred Judgment ~ Piercing|PREMULT:2,[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorJudgmentPiercing],[PREVAREQ:Inquisitor_CF_JudgmentPiercing,0]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Sacred Judgment ~ Protection|PREMULT:2,[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorJudgmentProtection],[PREVAREQ:Inquisitor_CF_JudgmentProtection,0]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Sacred Judgment ~ Purity|PREMULT:2,[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorJudgmentPurity],[PREVAREQ:Inquisitor_CF_JudgmentPurity,0]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 297,
+    "record_key": "Inquisitor ~ Sacred Judgment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

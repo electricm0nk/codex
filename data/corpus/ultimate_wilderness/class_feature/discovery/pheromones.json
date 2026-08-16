@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Pheromones",
+    "name": "Pheromones",
+    "class": "Discovery",
+    "description": "The alchemist exudes an imperceptible musk that grants him a permanent +3 competence bonus on Bluff, Diplomacy, and Intimidate checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Pheromones"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.AlchemistDiscovery.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The alchemist exudes an imperceptible musk that grants him a permanent +3 competence bonus on Bluff, Diplomacy, and Intimidate checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Diplomacy,Intimidate|3|TYPE=Competence"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 111,
+    "record_key": "Discovery ~ Pheromones"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

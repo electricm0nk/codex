@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Crossblooded Rager ~ Bloodline",
+    "name": "Bloodline",
+    "class": "Crossblooded Rager",
+    "description": "While most bloodragers manifest only one bloodline, there are some who, through some quirk of heredity or the conjunction of other powers, manifest two. This combination of two distinct bloodlines can create a versatile and powerful rager who stands out among the horde.&nl;A crossblooded rager selects two different bloodlines. He gains access to the feats, bonus spells, and some of the powers of both bloodlines he is descended from, but at the cost of reducing mental clarity (see Drawbacks). If the crossblooded rager already has a bloodline from another class, one of the chosen bloodlines must be that bloodline.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crossblooded Rager ~ Bloodline"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature.Crossblooded Rager Class Feature.SpecialQuality.Special Quality.Bloodline"
+      },
+      {
+        "key": "DESC",
+        "value": "While most bloodragers manifest only one bloodline, there are some who, through some quirk of heredity or the conjunction of other powers, manifest two. This combination of two distinct bloodlines can create a versatile and powerful rager who stands out among the horde.&nl;A crossblooded rager selects two different bloodlines. He gains access to the feats, bonus spells, and some of the powers of both bloodlines he is descended from, but at the cost of reducing mental clarity (see Drawbacks). If the crossblooded rager already has a bloodline from another class, one of the chosen bloodlines must be that bloodline."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bloodrager ~ Bloodline Tracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Bloodline|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Bloodrager Bloodline"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2749,
+    "record_key": "Crossblooded Rager ~ Bloodline"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

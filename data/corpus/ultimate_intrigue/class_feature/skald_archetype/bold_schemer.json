@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skald Archetype ~ Bold Schemer",
+    "name": "Bold Schemer",
+    "class": "Skald Archetype",
+    "description": "The bold schemer combines wrath, wits, and daring to win battles and wars in unconventional ways, often through infiltration and deception. If raw force of arms is insufficient, she improvises ways to pull victory from the jaws of defeat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald Archetype ~ Bold Schemer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SkaldArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Skald=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Skald Archetype ~ Bold Schemer],[!PREFACT:1,ABILITIES,Skald_Archetype_ClassSkills=True,Skald_Archetype_BardicKnowledge=True,Skald_Archetype_UncannyDodge=True,Skald_Archetype_ImprovedUncannyDodge=True,Skald_Archetype_DamageReduction=True,Skald_Archetype_DirgeOfDoom=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The bold schemer combines wrath, wits, and daring to win battles and wars in unconventional ways, often through infiltration and deception. If raw force of arms is insufficient, she improvises ways to pull victory from the jaws of defeat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bold Schemer ~ Skills|PRECLASS:1,Skald=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bold Schemer ~ Skald of Twists and Turns|PRECLASS:1,Skald=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bold Schemer ~ Bold Strategy|PRECLASS:1,Skald=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_DamageReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_DamageReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_DirgeOfDoom|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 896,
+    "record_key": "Skald Archetype ~ Bold Schemer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

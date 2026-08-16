@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Swashbuckler Archetype ~ Wildstrider",
+    "name": "Wildstrider",
+    "class": "Swashbuckler Archetype",
+    "description": "Most swashbucklers call cities their home, but some prefer deserts, marshlands, mountains, or woods, where the rough terrain grants them an advantage, and have little interest in the comforts of an urban lifestyle.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler Archetype ~ Wildstrider"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SwashbucklerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Swashbuckler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Wildstrider],[!PREFACT:1,ABILITIES,Swashbuckler_Archetype_ClassSkills=True,Swashbuckler_Archetype_DodgingPanacheDeed=True,Swashbuckler_Archetype_DerringDoDeed=True,Swashbuckler_Archetype_SwashbucklersEdgeDeed=True,Swashbuckler_Archetype_KipUpDeed=True,Swashbuckler_Archetype_SubtleBladeDeed=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Most swashbucklers call cities their home, but some prefer deserts, marshlands, mountains, or woods, where the rough terrain grants them an advantage, and have little interest in the comforts of an urban lifestyle."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Wildstrider ~ Class Skills|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wildstrider ~ Subterfuge|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wildstrider ~ Adroit Step|PRECLASS:1,Swashbuckler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wildstrider ~ Keen Gaze|PRECLASS:1,Swashbuckler=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_DodgingPanacheDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_DerringDoDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklersEdgeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_KipUpDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SubtleBladeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_DodgingPanacheDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_KipUpDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SubtleBladeDeed|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1196,
+    "record_key": "Swashbuckler Archetype ~ Wildstrider"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Master Spy ~ Shift Alignment",
+    "name": "Shift Alignment",
+    "class": "Master Spy",
+    "description": "Starting at 6th level, a master spy's control over her aura improves. When she assumes a false alignment, she can choose to have all spells and magic items affect her as though she were that alignment; this includes helpful and harmful effects. For example, a neutral good master spy can shift her aura to lawful evil so she can pass through a doorway that shocks creatures that aren't lawful evil; if hit by holy smite with this shifted aura, she takes damage as if she were evil. A master spy can change her alignment aura from a masked alignment (as per her 2nd-level class feature, where effects still function based on her actual alignment) to a shifted alignment (as per this ability, where effects function based on her assumed alignment) as a standard action. Shifting her alignment aura is a standard action, and lasts until she changes it again or ends the effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master Spy ~ Shift Alignment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 6th level, a master spy's control over her aura improves. When she assumes a false alignment, she can choose to have all spells and magic items affect her as though she were that alignment; this includes helpful and harmful effects. For example, a neutral good master spy can shift her aura to lawful evil so she can pass through a doorway that shocks creatures that aren't lawful evil; if hit by holy smite with this shifted aura, she takes damage as if she were evil. A master spy can change her alignment aura from a masked alignment (as per her 2nd-level class feature, where effects still function based on her actual alignment) to a shifted alignment (as per this ability, where effects function based on her assumed alignment) as a standard action. Shifting her alignment aura is a standard action, and lasts until she changes it again or ends the effect."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1413,
+    "record_key": "Master Spy ~ Shift Alignment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

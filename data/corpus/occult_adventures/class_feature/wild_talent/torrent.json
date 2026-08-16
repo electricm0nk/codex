@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Torrent",
+    "name": "Torrent",
+    "class": "Wild Talent",
+    "description": "Element air, fire, or water; Type form infusion; Level 3; Burn 2 Associated Blasts air, blizzard, blue flame, charged water, fire, magma, mud, plasma, sandstorm, steam, thunderstorm, water Saving Throw Reflex half A torrent of energy buffets or burns all foes in a 30-foot line, dealing half your normal amount of blast damage (or full damage for energy blasts). The saving throw DC is Dexterity-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Torrent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Fire"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:KineticistLVL_Fire,6],[PREVARGTEQ:KineticistLVL_Air,6],[PREVARGTEQ:KineticistLVL_Water,6]"
+      },
+      {
+        "key": "DESC",
+        "value": "Element air, fire, or water; Type form infusion; Level 3; Burn 2 Associated Blasts air, blizzard, blue flame, charged water, fire, magma, mud, plasma, sandstorm, steam, thunderstorm, water Saving Throw Reflex half A torrent of energy buffets or burns all foes in a 30-foot line, dealing half your normal amount of blast damage (or full damage for energy blasts). The saving throw DC is Dexterity-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 720,
+    "record_key": "Wild Talent ~ Torrent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

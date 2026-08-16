@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Tumor Familiar",
+    "name": "Tumor Familiar",
+    "class": "Discovery",
+    "description": "You create a Diminutive or Tiny tumor on your body, usually on your back or stomach. As a standard action, you can have the tumor detach itself from your body as a separate creature vaguely resembling a kind of animal suitable for a familiar (bat, cat, and so on) and move about as if it were an independent creature. The tumor can reattach itself to you as a standard action. The tumor has all the abilities of the animal it resembles (for example, a batlike tumor can fly) and familiar abilities based on your caster level (though some familiar abilities may be useless to an alchemist). The tumor acts as your familiar whether attached or separated (providing a skill bonus, the Alertness feat, and so on). When attached to you, the tumor has fast healing 5. Your extracts and mutagens are considered spells for the purposes of familiar abilities like share spells and deliver touch spells. If a tumor familiar is lost or dies, it can be replaced 1 week later through a specialized procedure that costs 200 gp per alchemist level. The ritual takes 8 hours to complete.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Tumor Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a Diminutive or Tiny tumor on your body, usually on your back or stomach. As a standard action, you can have the tumor detach itself from your body as a separate creature vaguely resembling a kind of animal suitable for a familiar (bat, cat, and so on) and move about as if it were an independent creature. The tumor can reattach itself to you as a standard action. The tumor has all the abilities of the animal it resembles (for example, a batlike tumor can fly) and familiar abilities based on your caster level (though some familiar abilities may be useless to an alchemist). The tumor acts as your familiar whether attached or separated (providing a skill bonus, the Alertness feat, and so on). When attached to you, the tumor has fast healing 5. Your extracts and mutagens are considered spells for the purposes of familiar abilities like share spells and deliver touch spells. If a tumor familiar is lost or dies, it can be replaced 1 week later through a specialized procedure that costs 200 gp per alchemist level. The ritual takes 8 hours to complete."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|AlchemistDiscoveryLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Standard Familiar List"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 164,
+    "record_key": "Discovery ~ Tumor Familiar"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bloody Jake ~ The Woods Have Eyes",
+    "name": "The Woods Have Eyes",
+    "class": "Bloody Jake",
+    "description": "A bloody jake in his favored terrain can spend one use of cruel tricks as a swift action to gain blindsense in a 30-foot radius for 1 round; this blindsense is sound-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloody Jake ~ The Woods Have Eyes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "BloodyJake_CruelTrick_5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "DESC",
+        "value": "A bloody jake in his favored terrain can spend one use of cruel tricks as a swift action to gain blindsense in a 30-foot radius for 1 round; this blindsense is sound-based."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 215,
+    "record_key": "Bloody Jake ~ The Woods Have Eyes"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,108 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Celestial Bloodline ~ Heavenly Fire",
+    "name": "Heavenly Fire",
+    "class": "Celestial Bloodline",
+    "description": "You can unleash a ray of heavenly fire as a standard action, targeting any foe within 30 feet as a ranged touch attack. Against evil creatures, this ray deals 1d4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Celestial Bloodline ~ Heavenly Fire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Celestial Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Celestial"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Celestial_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Celestial_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Celestial_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CelestialHeaventlyFire_DamageBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a ray of heavenly fire as a standard action, targeting any foe within 30 feet as a ranged touch attack. Against evil creatures, this ray deals 1d4"
+      },
+      {
+        "key": "DESC",
+        "value": "+ %1|Sorcerer_CelestialHeaventlyFire_DamageBonus|PREVARGT:Sorcerer_CelestialHeaventlyFire_DamageBonus,0"
+      },
+      {
+        "key": "DESC",
+        "value": "points of damage. This damage is divine and not subject to energy resistance or immunity. This ray heals good creatures of 1d4"
+      },
+      {
+        "key": "DESC",
+        "value": "+ %1|Sorcerer_CelestialHeaventlyFire_DamageBonus|PREVARGT:Sorcerer_CelestialHeaventlyFire_DamageBonus,0"
+      },
+      {
+        "key": "DESC",
+        "value": "points of damage. A good creature cannot benefit from your heavenly fire more than once per day. Neutral creatures are neither harmed nor healed by this effect. You can use this ability %1 times per day.|Sorcerer_Celestial_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CelestialHeaventlyFire_DamageBonus|Sorcerer_Celestial_BloodlinePower1LVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6 divine energy)|Sorcerer_CelestialHeaventlyFire_DamageBonus|Sorcerer_Celestial_BloodlinePower1Times|PREVARLTEQ:Sorcerer_CelestialHeaventlyFire_DamageBonus,0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6+%1 divine energy)|Sorcerer_CelestialHeaventlyFire_DamageBonus|Sorcerer_Celestial_BloodlinePower1Times|PREVARGT:Sorcerer_CelestialHeaventlyFire_DamageBonus,0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Celestial_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CelestialBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2408,
+    "record_key": "Celestial Bloodline ~ Heavenly Fire"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

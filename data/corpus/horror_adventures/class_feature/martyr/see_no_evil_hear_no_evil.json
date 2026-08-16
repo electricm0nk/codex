@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Martyr ~ See No Evil Hear No Evil",
+    "name": "See No Evil, Hear No Evil",
+    "class": "Martyr",
+    "description": "The martyr and all allies within 20 feet of him gain a +4 morale bonus on saving throws against bardic performance, sonic effects, language-dependent effects, and gaze attacks. This ability functions only when the martyr is conscious.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Martyr ~ See No Evil Hear No Evil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.MartyrClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "DESC",
+        "value": "The martyr and all allies within 20 feet of him gain a +4 morale bonus on saving throws against bardic performance, sonic effects, language-dependent effects, and gaze attacks. This ability functions only when the martyr is conscious."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 183,
+    "record_key": "Martyr ~ See No Evil Hear No Evil"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

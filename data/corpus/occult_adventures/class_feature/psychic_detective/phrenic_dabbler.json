@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Detective ~ Phrenic Dabbler",
+    "name": "Phrenic Dabbler",
+    "class": "Psychic Detective",
+    "description": "At 3rd level, a psychic detective gains a small pool of phrenic points equal to 1/2 her psychic detective level, as well as one phrenic amplification, as the psychic class feature. This does not allow the psychic detective to qualify for the Extra Amplification feat. This ability replaces the investigator talent gained at 3rd level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Detective ~ Phrenic Dabbler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Detective Class Feature.Investigator Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a psychic detective gains a small pool of phrenic points equal to 1/2 her psychic detective level, as well as one phrenic amplification, as the psychic class feature. This does not allow the psychic detective to qualify for the Extra Amplification feat. This ability replaces the investigator talent gained at 3rd level."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Phrenic Amplification|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1762,
+    "record_key": "Psychic Detective ~ Phrenic Dabbler"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

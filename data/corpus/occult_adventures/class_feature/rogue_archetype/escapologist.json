@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Archetype ~ Escapologist",
+    "name": "Escapologist",
+    "class": "Rogue Archetype",
+    "description": "The escapologist excels at escaping any conf inement, whether physical, magical, or mental. Few restraints can hold an escapologist for long.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ Escapologist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Archetype.RogueArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Escapologist],[!PREFACT:1,ABILITIES,Rogue_Archetype_Trapfinding=true,Rogue_Archetype_UncannyDodge=true,Rogue_Archetype_ImprovedUncannyDodge=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "The escapologist excels at escaping any conf inement, whether physical, magical, or mental. Few restraints can hold an escapologist for long."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Escapologist ~ Elusive|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Escapologist ~ Unfettered Mind|PRECLASS:1,Rogue=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Escapologist ~ Impossible Escape|PRECLASS:1,Rogue=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_ImprovedUncannyDodge|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1895,
+    "record_key": "Rogue Archetype ~ Escapologist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

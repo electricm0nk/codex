@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bloodrager ~ Improved Uncanny Dodge",
+    "name": "Improved Uncanny Dodge",
+    "class": "Bloodrager",
+    "description": "At 5th level, a bloodrager can no longer be flanked. This defense denies rogues (or other classes with the sneak attack ability) the ability to sneak attack the bloodrager by flanking him, unless the attacker has at least four more rogue levels (or levels in the class granting sneak attack) than the target has bloodrager levels.&nl;If a character already has uncanny dodge from another class, the levels from the classes that grant uncanny dodge stack when determining the minimum rogue level required to flank the character.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager ~ Improved Uncanny Dodge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature.Internal"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a bloodrager can no longer be flanked. This defense denies rogues (or other classes with the sneak attack ability) the ability to sneak attack the bloodrager by flanking him, unless the attacker has at least four more rogue levels (or levels in the class granting sneak attack) than the target has bloodrager levels.&nl;If a character already has uncanny dodge from another class, the levels from the classes that grant uncanny dodge stack when determining the minimum rogue level required to flank the character."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeLVL|1|PREVARGTEQ:BloodragerLVL,5|PREVAREQ:Bloodrager_CF_ImprovedUncannyDodge,0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 340,
+    "record_key": "Bloodrager ~ Improved Uncanny Dodge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

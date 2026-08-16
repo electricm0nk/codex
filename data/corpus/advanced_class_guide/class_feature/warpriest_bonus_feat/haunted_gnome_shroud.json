@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Haunted Gnome Shroud",
+    "name": "Haunted Gnome Shroud",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your disturbing glamer expands to make your exact location hard to pinpoint.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Haunted Gnome Shroud"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Gnome ~ Gnome Magic"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Haunted Gnome,Haunted Gnome Assault"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Knowledge (arcana)=6"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,CHA=13"
+      },
+      {
+        "key": "DESC",
+        "value": "Your disturbing glamer expands to make your exact location hard to pinpoint."
+      },
+      {
+        "key": "DESC",
+        "value": " You gain another independent use of your gnome magic like that which Haunted Gnome Assault grants. Further, while you are under the effect of haunted fey aspect, you also have concealment (20%% miss chance) against an opponent until that opponent deals you damage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Haunted Gnome Shroud"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4459,
+    "record_key": "Warpriest Bonus Feat ~ Haunted Gnome Shroud"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

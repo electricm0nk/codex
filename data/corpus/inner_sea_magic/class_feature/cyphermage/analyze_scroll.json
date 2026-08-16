@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cyphermage ~ Analyze Scroll",
+    "name": "Analyze Scroll",
+    "class": "Cyphermage",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cyphermage ~ Analyze Scroll"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CyphermageClassFeatures.SpecialQuality.Supernatural.CypherLore"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnalyzeScrollBonus|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, a cyphermage can automatically discern the contents of a magic scroll, as if he were using read magic. He gains a +%1 insight bonus on Use Magic Device checks made to cast spells from scrolls.|AnalyzeScrollBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Use Magic Device=Cast scrolls|AnalyzeScrollBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnalyzeScrollBonus|CyphermageLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 12,
+    "record_key": "Cyphermage ~ Analyze Scroll"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

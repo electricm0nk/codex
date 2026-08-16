@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Invoke Death ~ Orcus",
+    "name": "Invoke Death",
+    "class": "Invoke Death",
+    "description": "1/day, you may use slay living as a spell-like ability. A creature slain by this spell immediately rises from death as a juju zombie. The zombie is not under your control, but it will not attack you. This ability is equivalent to a 7th-level spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Invoke Death ~ Orcus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Slay Living,17+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, you may use slay living as a spell-like ability. A creature slain by this spell immediately rises from death as a juju zombie. The zombie is not under your control, but it will not attack you. This ability is equivalent to a 7th-level spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 170,
+    "record_key": "Invoke Death ~ Orcus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

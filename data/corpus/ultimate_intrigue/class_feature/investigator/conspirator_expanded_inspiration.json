@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Conspirator Expanded Inspiration",
+    "name": "Conspirator Expanded Inspiration",
+    "class": "Investigator",
+    "description": "A conspirator can use inspiration on any Knowledge, Linguistics, and Spellcraft check without expending a use of inspirtation, provided he is trained in the skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Conspirator Expanded Inspiration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.InvestigatorTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Investigator Archetype ~ Conspirator"
+      },
+      {
+        "key": "DESC",
+        "value": "A conspirator can use inspiration on any Knowledge, Linguistics, and Spellcraft check without expending a use of inspirtation, provided he is trained in the skill."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 513,
+    "record_key": "Investigator ~ Conspirator Expanded Inspiration"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

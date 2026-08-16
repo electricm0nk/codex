@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Heavens Spirit ~ Stardust",
+    "name": "Stardust",
+    "class": "Heavens Spirit",
+    "description": "As a standard action, the shaman causes stardust to materialize around one creature within 30 feet. This stardust causes the target to shed light as a candle, and it cannot benefit from concealment or any invisibility effects. The creature takes a %1 penalty on attack rolls and sight-based Perception checks. This effect lasts for %2 rounds level. Sightless creatures cannot be affected by this ability. The shaman can use this ability %3/day.|ShamanStardustPenalty|ShamanStardustDuration|ShamanStardustTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heavens Spirit ~ Stardust"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanStardustPenalty|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanStardustDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanStardustTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the shaman causes stardust to materialize around one creature within 30 feet. This stardust causes the target to shed light as a candle, and it cannot benefit from concealment or any invisibility effects. The creature takes a %1 penalty on attack rolls and sight-based Perception checks. This effect lasts for %2 rounds level. Sightless creatures cannot be affected by this ability. The shaman can use this ability %3/day.|ShamanStardustPenalty|ShamanStardustDuration|ShamanStardustTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanStardustPenalty|-1*(1+min(5,ShamanSpiritLVL/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanStardustDuration|max(1,ShamanSpiritLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanStardustTimes|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1579,
+    "record_key": "Heavens Spirit ~ Stardust"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

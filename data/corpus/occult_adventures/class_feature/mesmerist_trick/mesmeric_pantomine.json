@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mesmerist Trick ~ Mesmeric Pantomine",
+    "name": "Mesmeric Pantomine",
+    "class": "Mesmerist Trick",
+    "description": "By orchestrating the movement of his ally's body, the mesmerist imparts to that ally his own skill at a physical task. The mesmerist can trigger this trick when the subject attempts a Strength- or Dexterity-based skill check. The subject either uses the mesmerist's bonus on the skill check in place of her own or gains a +%1 morale bonus on the check, whichever results in a higher modifier. The mesmerist can't implant this trick on himself.|CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Trick ~ Mesmeric Pantomine"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristTrick.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "By orchestrating the movement of his ally's body, the mesmerist imparts to that ally his own skill at a physical task. The mesmerist can trigger this trick when the subject attempts a Strength- or Dexterity-based skill check. The subject either uses the mesmerist's bonus on the skill check in place of her own or gains a +%1 morale bonus on the check, whichever results in a higher modifier. The mesmerist can't implant this trick on himself.|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 948,
+    "record_key": "Mesmerist Trick ~ Mesmeric Pantomine"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

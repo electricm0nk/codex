@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Purifier ~ Diminished Spellcasting",
+    "name": "Diminished Spellcasting",
+    "class": "Purifier",
+    "description": "A purifier can use one fewer spell per day of each level and does not automatically learn cure or inflict spells. Her number of oracle spells known is unchanged.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Purifier ~ Diminished Spellcasting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A purifier can use one fewer spell per day of each level and does not automatically learn cure or inflict spells. Her number of oracle spells known is unchanged."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Oracle Spell Choice|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Oracle;LEVEL=ALL|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 412,
+    "record_key": "Purifier ~ Diminished Spellcasting"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

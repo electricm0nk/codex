@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Masterful Trick ~ Spell Anticipation",
+    "name": "Spell Anticipation",
+    "class": "Masterful Trick",
+    "description": "The mesmerist can choose a spell to strike back at enemy spellcasters. When the mesmerist implants this trick, he must expend one spell slot to couple a spell he knows of that level with the trick. That spell must have a casting time of 1 standard action or less and be able to target one creature (spells like dominate person that have more restrictive targeting can be used, but have no effect if triggered against creatures that don't match). He can trigger this trick when the subject is targeted by an enemy's spell. The mesmerist's spell then triggers, affecting only the enemy spellcaster. This takes effect only if the enemy spellcaster is within range of the spell (as measured from the subject of the trick), and functions as though the mesmerist were in the subject's square. The enemy's spell still has its full effect, even if the mesmerist's spell would normally protect against it or make the caster unable to cast it. (Masterful Trick)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterful Trick ~ Spell Anticipation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristTrick.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mesmerist ~ Masterful Tricks"
+      },
+      {
+        "key": "DESC",
+        "value": "The mesmerist can choose a spell to strike back at enemy spellcasters. When the mesmerist implants this trick, he must expend one spell slot to couple a spell he knows of that level with the trick. That spell must have a casting time of 1 standard action or less and be able to target one creature (spells like dominate person that have more restrictive targeting can be used, but have no effect if triggered against creatures that don't match). He can trigger this trick when the subject is targeted by an enemy's spell. The mesmerist's spell then triggers, affecting only the enemy spellcaster. This takes effect only if the enemy spellcaster is within range of the spell (as measured from the subject of the trick), and functions as though the mesmerist were in the subject's square. The enemy's spell still has its full effect, even if the mesmerist's spell would normally protect against it or make the caster unable to cast it. (Masterful Trick)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 974,
+    "record_key": "Masterful Trick ~ Spell Anticipation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,105 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inquisitor Domain ~ Devil Subdomain (Law)",
+    "name": "Devil Subdomain (Law)",
+    "class": "Inquisitor Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Domain ~ Devil Subdomain (Law)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LG,LN,LE"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Inquisitor Domain ~ Devil Subdomain (Law)],[PREABILITY:1,CATEGORY=Special Ability,Core Domain ~ Devil Subdomain (Law)],[!PREMULT:1,[PREVARGT:LawDomain,0],[PREABILITY:1,CATEGORY=Special Ability,Inquisitor Domain ~ Devil Subdomain (Evil)]]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:BypassInquisititorDomain,1],[PREVARGTEQ:InquisitorDomainDevilSubdomainLaw,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LawDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Devil Subdomain (Law) ~ Hell's Corruption|PREVARGTEQ:DomainLawAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Law Domain ~ Staff of Order|PREVARGTEQ:DomainLawAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LawDomain|1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLawLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLawDC|10+(DomainLawLVL/2)+CHA|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLawTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLawAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 425,
+    "record_key": "Inquisitor Domain ~ Devil Subdomain (Law)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

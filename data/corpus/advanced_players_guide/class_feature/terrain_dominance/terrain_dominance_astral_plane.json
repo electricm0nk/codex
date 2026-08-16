@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Terrain Dominance ~ Plane (Astral)",
+    "name": "Terrain Dominance (Astral Plane)",
+    "class": "Terrain Dominance",
+    "description": "The horizon walker gains a +1 competence bonus on attack and damage rolls against outsiders. He gains dimension door as a spell-like ability a number of times per day equal to 3 + the character's Wisdom modifier (caster level equal to the character's level).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terrain Dominance ~ Plane (Astral)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.TerrainDominance"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Terrain Mastery ~ Plane (Astral)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Terrain Dominance|TIMES=3+WIS|CASTERLEVEL=TL|Dimension Door,14+WIS"
+      },
+      {
+        "key": "DESC",
+        "value": "The horizon walker gains a +1 competence bonus on attack and damage rolls against outsiders. He gains dimension door as a spell-like ability a number of times per day equal to 3 + the character's Wisdom modifier (caster level equal to the character's level)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1346,
+    "record_key": "Terrain Dominance ~ Plane (Astral)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

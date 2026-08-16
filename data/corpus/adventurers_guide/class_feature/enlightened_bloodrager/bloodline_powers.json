@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Enlightened Bloodrager ~ Bloodline Powers ~ AG",
+    "name": "Bloodline Powers",
+    "class": "Enlightened Bloodrager",
+    "description": "At 8th level, an enlightened bloodrager gains the bloodline power normally granted at 1st level. At 12th level she gains the bloodline power normally granted at 4th level, at 16th level she gains the bloodline power normally granted at 8th level, and at 20th level she gains the bloodline power normally gained at 12th level. She still uses her full bloodrager level when making level-based calculations in regard to these abilities. This alters the bloodrager's bloodline powers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enlightened Bloodrager ~ Bloodline Powers ~ AG"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bloodrager Class Feature.EnlightenedBloodragerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, an enlightened bloodrager gains the bloodline power normally granted at 1st level. At 12th level she gains the bloodline power normally granted at 4th level, at 16th level she gains the bloodline power normally granted at 8th level, and at 20th level she gains the bloodline power normally gained at 12th level. She still uses her full bloodrager level when making level-based calculations in regard to these abilities. This alters the bloodrager's bloodline powers."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlinePowerLvl1|-1|PRECLASS:1,Bloodrager,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlinePowerLvl4|-1|PRECLASS:1,Bloodrager,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlinePowerLvl8|-1|PRECLASS:1,Bloodrager,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlinePowerLvl12|-1|PRECLASS:1,Bloodrager,20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 703,
+    "record_key": "Enlightened Bloodrager ~ Bloodline Powers ~ AG"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

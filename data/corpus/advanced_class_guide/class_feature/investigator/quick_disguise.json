@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent ~ Quick Disguise",
+    "name": "Quick Disguise",
+    "class": "Investigator",
+    "description": "An investigator with this talent can use the items at hand and seemingly innocuous material hidden on her person to create startlingly effective disguises, reducing the amount of time it takes to create a disguise using the Disguise skill. The time needed for the investigator to alter her appearance in this manner is based on the complexity of the disguise, as noted on the following table. The times are cumulative, so if a female investigator wants to disguise herself as a male of a different race, that takes 2 minutes. Minor details - 1 full-round action; different gender, race, age category, or size category - 1 minute",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent ~ Quick Disguise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorRogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An investigator with this talent can use the items at hand and seemingly innocuous material hidden on her person to create startlingly effective disguises, reducing the amount of time it takes to create a disguise using the Disguise skill. The time needed for the investigator to alter her appearance in this manner is based on the complexity of the disguise, as noted on the following table. The times are cumulative, so if a female investigator wants to disguise herself as a male of a different race, that takes 2 minutes. Minor details - 1 full-round action; different gender, race, age category, or size category - 1 minute"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1365,
+    "record_key": "Investigator ~ Rogue Talent ~ Quick Disguise"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

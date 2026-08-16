@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spirit Walker ~ Master of the Dead",
+    "name": "Master of the Dead",
+    "class": "Spirit Walker",
+    "description": "A spirit walker gains mastery of the undead. Once per day, a spirit walker can use control undead as a spell-like ability on one target. If that creature fails its saving throw and has 20 or fewer Hit Dice, it falls permanently under the spirit walker's control until the spirit walker dies. A creature that fails its save but has more than 20 HD suffers the effect of command undead. A creature that succeeds at its save can't be affected by master of the dead for 24 hours. A spirit walker can control only one undead creature in this fashion at a time. If he permanently controls a new undead creature, the previous one is set free.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Walker ~ Master of the Dead"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A spirit walker gains mastery of the undead. Once per day, a spirit walker can use control undead as a spell-like ability on one target. If that creature fails its saving throw and has 20 or fewer Hit Dice, it falls permanently under the spirit walker's control until the spirit walker dies. A creature that fails its save but has more than 20 HD suffers the effect of command undead. A creature that succeeds at its save can't be affected by master of the dead for 24 hours. A spirit walker can control only one undead creature in this fashion at a time. If he permanently controls a new undead creature, the previous one is set free."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1484,
+    "record_key": "Spirit Walker ~ Master of the Dead"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ghost Hunter ~ Speak to the Restless",
+    "name": "Speak to the Restless",
+    "class": "Ghost Hunter",
+    "description": "At 9th level, a ghost hunter can commune with the spirits of the restless dead once per day. By holding a seance for 10 minutes, she can ask questions of a destroyed undead or a neutralized or destroyed haunt. To use this ability on a corporeal undead, the ghost hunter must have the creature's head in her possession. For a haunt or incorporeal undead, this seance must be held in the haunt's location or where the incorporeal undead was destroyed. Treat this ability as speak with hauntACG or as speak with dead (but affecting only undead rather than only corpses), using the ghost hunter's class level as the caster level. This ability replaces the 9th-level mercy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghost Hunter ~ Speak to the Restless"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ghost Hunter Class Feature.Paladin Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a ghost hunter can commune with the spirits of the restless dead once per day. By holding a seance for 10 minutes, she can ask questions of a destroyed undead or a neutralized or destroyed haunt. To use this ability on a corporeal undead, the ghost hunter must have the creature's head in her possession. For a haunt or incorporeal undead, this seance must be held in the haunt's location or where the incorporeal undead was destroyed. Treat this ability as speak with hauntACG or as speak with dead (but affecting only undead rather than only corpses), using the ghost hunter's class level as the caster level. This ability replaces the 9th-level mercy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1913,
+    "record_key": "Ghost Hunter ~ Speak to the Restless"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

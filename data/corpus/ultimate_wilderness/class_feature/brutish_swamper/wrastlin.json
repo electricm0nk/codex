@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Brutish Swamper ~ Wrastlin'",
+    "name": "Wrastlin'",
+    "class": "Brutish Swamper",
+    "description": "While raging, a brutish swamper gains a +2 bonus to her CMD against grapple combat maneuvers and a +2 bonus on damage rolls made as part of successful grapple combat maneuver checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brutish Swamper ~ Wrastlin'"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.BrutishSwamperClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, a brutish swamper gains a +2 bonus to her CMD against grapple combat maneuvers and a +2 bonus on damage rolls made as part of successful grapple combat maneuver checks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 194,
+    "record_key": "Brutish Swamper ~ Wrastlin'"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

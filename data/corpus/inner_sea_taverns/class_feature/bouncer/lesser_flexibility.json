@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bouncer ~ Lesser Flexibility",
+    "name": "Lesser Flexibility",
+    "class": "Bouncer",
+    "description": "A bouncer can use her martial flexibility only a number of times per day equal to 2 + half her brawler level (minimum 3 times per day). This alters martial flexibility.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bouncer ~ Lesser Flexibility"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.BouncerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "A bouncer can use her martial flexibility only a number of times per day equal to 2 + half her brawler level (minimum 3 times per day). This alters martial flexibility."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerMartialFlexibilityTimes|-1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_abilities_class.lst",
+    "sha256": "1344b6dcf98ada3b51a62cd2169c486eb4896dda4078eee3f7abc062a7d957fa",
+    "line": 24,
+    "record_key": "Bouncer ~ Lesser Flexibility"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Celestial Bloodline ~ Wings of Heaven",
+    "name": "Wings of Heaven",
+    "class": "Celestial Bloodline",
+    "description": "You can sprout feathery wings and fly for %1 minutes per day, with a speed of 60 feet and good maneuverability. This duration does not need to be consecutive, but it must be used in 1 minute increments.|Sorcerer_CelestialWingsOfHeaven_TimeMinutes|!PREABILITY:1,CATEGORY=Special Ability,Celestial Bloodline ~ Ascension",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Celestial Bloodline ~ Wings of Heaven"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Celestial Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Celestial"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Celestial_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Celestial_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CelestialWingsOfHeaven_TimeMinutes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can sprout feathery wings and fly for %1 minutes per day, with a speed of 60 feet and good maneuverability. This duration does not need to be consecutive, but it must be used in 1 minute increments.|Sorcerer_CelestialWingsOfHeaven_TimeMinutes|!PREABILITY:1,CATEGORY=Special Ability,Celestial Bloodline ~ Ascension"
+      },
+      {
+        "key": "DESC",
+        "value": "You can sprout feathery wings and fly with a speed of 60 feet and good maneuverability.|PREABILITY:1,CATEGORY=Special Ability,Celestial Bloodline ~ Ascension"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CelestialWingsOfHeaven_TimeMinutes|Sorcerer_Celestial_BloodlinePower9LVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 minutes/day)|Sorcerer_CelestialWingsOfHeaven_TimeMinutes|!PREABILITY:1,CATEGORY=Special Ability,Celestial Bloodline ~ Ascension"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_CelestialWingsOfHeaven_TimeMinutes|!PREABILITY:1,CATEGORY=Special Ability,Celestial Bloodline ~ Ascension"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|0|PREABILITY:1,CATEGORY=Special Ability,Celestial Bloodline ~ Ascension"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Minutes per Day|!PREABILITY:1,CATEGORY=Special Ability,Celestial Bloodline ~ Ascension"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|At Will|PREABILITY:1,CATEGORY=Special Ability,Celestial Bloodline ~ Ascension"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CelestialBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2410,
+    "record_key": "Celestial Bloodline ~ Wings of Heaven"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

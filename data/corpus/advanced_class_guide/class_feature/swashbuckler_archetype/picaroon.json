@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Swashbuckler Archetype ~ Picaroon",
+    "name": "Picaroon",
+    "class": "Swashbuckler Archetype",
+    "description": "While some swashbucklers take pride in their ability to wear down an opponent with great skill at arms and clever positioning, there are those who use firearms to get in close and hit hard.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler Archetype ~ Picaroon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SwashbucklerArchetype.SwashbucklerWeaponProficiency.SwashbucklerPanache.DeedOpportuneParry.DeedRiposte.DeedKipUp.DeedSuperiorFeint.DeedBleedingWound.SwashbucklerFinesse"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Swashbuckler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Picaroon],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DeedOpportuneParry,TYPE.DeedRiposte,TYPE.DeedKipUp,TYPE.DeedSuperiorFeint,TYPE.DeedBleedingWound,TYPE.SwashbucklerFinesse]"
+      },
+      {
+        "key": "DESC",
+        "value": "While some swashbucklers take pride in their ability to wear down an opponent with great skill at arms and clever positioning, there are those who use firearms to get in close and hit hard."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Picaroon ~ Weapon Proficiency|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Picaroon ~ Panache|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Picaroon ~ Deeds|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Picaroon ~ Melee Shooter|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Picaroon ~ Quick Clear|PRECLASS:1,Swashbuckler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Picaroon ~ Gun Feint|PRECLASS:1,Swashbuckler=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Picaroon ~ Lightning Reload|PRECLASS:1,Swashbuckler=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Class Feature|AUTOMATIC|Picaroon ~ Two-Weapon Finesse|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.127"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Swashbuckler"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3846,
+    "record_key": "Swashbuckler Archetype ~ Picaroon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

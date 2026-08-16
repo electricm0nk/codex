@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bloodrager Archetype ~ Steelblood",
+    "name": "Steelblood",
+    "class": "Bloodrager Archetype",
+    "description": "Most bloodragers prefer light armor, but some learn the secret of using heavy armors. These steelbloods plod around the battlefield inspiring fear and delivering carnage from within a steel shell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Archetype ~ Steelblood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BloodragerArchetype.BloodragerArmorProficiency.BloodragerFastMovement.BloodragerUncannyDodge.BloodragerImprovedUncannyDodge.BloodragerDamageReduction"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bloodrager=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Steelblood],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BloodragerArmorProficiency,TYPE.BloodragerFastMovement,TYPE.BloodragerUncannyDodge,TYPE.BloodragerImprovedUncannyDodge,TYPE.BloodragerDamageReduction]"
+      },
+      {
+        "key": "DESC",
+        "value": "Most bloodragers prefer light armor, but some learn the secret of using heavy armors. These steelbloods plod around the battlefield inspiring fear and delivering carnage from within a steel shell."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Steelblood ~ Weapon and Armor Proficiency|PRECLASS:1,Bloodrager=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Steelblood ~ Indomitable Stance|PRECLASS:1,Bloodrager=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Steelblood ~ Armored Swiftness|PRECLASS:1,Bloodrager=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Steelblood ~ Armor Training|PRECLASS:1,Bloodrager=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Steelblood ~ Blood Deflection|PRECLASS:1,Bloodrager=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bloodrager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2709,
+    "record_key": "Bloodrager Archetype ~ Steelblood"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

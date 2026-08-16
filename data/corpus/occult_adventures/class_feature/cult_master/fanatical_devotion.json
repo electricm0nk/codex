@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cult Master ~ Fanatical Devotion",
+    "name": "Fanatical Devotion",
+    "class": "Cult Master",
+    "description": "A cult master has manipulated his cohort and followers into becoming utterly devoted to him. The cult master no longer takes a penalty to his Leadership score for being aloof or cruel. Additionally, the DCs of all enchantment spells the cult master casts on his cohort and followers increase by 4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cult Master ~ Fanatical Devotion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A cult master has manipulated his cohort and followers into becoming utterly devoted to him. The cult master no longer takes a penalty to his Leadership score for being aloof or cruel. Additionally, the DCs of all enchantment spells the cult master casts on his cohort and followers increase by 4."
+      },
+      {
+        "key": "DESC",
+        "value": " The cult master no longer takes a penalty to his Leadership score for any cohorts of followers he has killed or caused to be killed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1470,
+    "record_key": "Cult Master ~ Fanatical Devotion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

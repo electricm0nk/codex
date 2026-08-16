@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Outer Rifts Mystery ~ Balefire",
+    "name": "Balefire",
+    "class": "Outer Rifts Mystery",
+    "description": "You call upon the cleansing or searing fires of the Outer Rifts to burn your foes. As a standard action, one target within 30 feet is wreathed in screaming flames and takes %1d6 points of fire damage.|BalefireDamageDice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Outer Rifts Mystery ~ Balefire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BalefireTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BalefireDamageDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You call upon the cleansing or searing fires of the Outer Rifts to burn your foes. As a standard action, one target within 30 feet is wreathed in screaming flames and takes %1d6 points of fire damage.|BalefireDamageDice"
+      },
+      {
+        "key": "DESC",
+        "value": "The fire's howls cause any creatures damaged by it to be staggered for 1 round.|PREVARGTEQ:OracleLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Creatures who fail their saves against the balefire are staggered for 1d4 rounds and stunned for 1 round.|PREVARGTEQ:OracleLVL,15"
+      },
+      {
+        "key": "DESC",
+        "value": "A successful Reflex save halves this damage. You can use this ability %1 per day.|BalefireTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BalefireDamageDice|OracleLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BalefireTimes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BalefireTimes|1|PRECLASS:1,Oracle=10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 111,
+    "record_key": "Outer Rifts Mystery ~ Balefire"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

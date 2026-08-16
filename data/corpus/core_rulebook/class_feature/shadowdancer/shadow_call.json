@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shadowdancer ~ Shadow Call",
+    "name": "Shadow Call",
+    "class": "Shadowdancer",
+    "description": "At 4th level, a shadowdancer can create creatures and effects out of raw shadow. This ability functions as shadow conjuration, using the shadowdancer's level as the caster level. A shadowdancer can use this ability once per day at 4th level, plus one additional time per day for every two levels attained beyond 4th (2/day at 6th level, 3/day at 8th level, and 4/day at 10th level). Upon reaching 10th level, this ability functions as greater shadow conjuration. The DC for this ability is Charisma-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadowdancer ~ Shadow Call"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShadowdancerClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShadowCallLvl|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShadowCallTimes|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Class|TIMES=ShadowCallTimes|CASTERLEVEL=ShadowCallLvl|Shadow Conjuration,14+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a shadowdancer can create creatures and effects out of raw shadow. This ability functions as shadow conjuration, using the shadowdancer's level as the caster level. A shadowdancer can use this ability once per day at 4th level, plus one additional time per day for every two levels attained beyond 4th (2/day at 6th level, 3/day at 8th level, and 4/day at 10th level). Upon reaching 10th level, this ability functions as greater shadow conjuration. The DC for this ability is Charisma-based."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowCallLvl|ShadowDancerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowCallTimes|ShadowDancerLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.393"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3071,
+    "record_key": "Shadowdancer ~ Shadow Call"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

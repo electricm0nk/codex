@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bushwhacker ~ Sneak Shot",
+    "name": "Sneak Shot",
+    "class": "Bushwhacker",
+    "description": "A bushwhacker deals 1d6 points of extra damage when using a firearm to attack opponents who are unable to properly defend themselves. Unlike with the shifty shot ability, she deals this extra damage regardless of whether or not she has any grit points when making the attack. Except for the requirement that she makes a firearm attack, this works identically to a rogue's sneak attack class feature. This extra damage stacks with sneak attack and the damage from shifty shot.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bushwhacker ~ Sneak Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A bushwhacker deals 1d6 points of extra damage when using a firearm to attack opponents who are unable to properly defend themselves. Unlike with the shifty shot ability, she deals this extra damage regardless of whether or not she has any grit points when making the attack. Except for the requirement that she makes a firearm attack, this works identically to a rogue's sneak attack class feature. This extra damage stacks with sneak attack and the damage from shifty shot."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 626,
+    "record_key": "Bushwhacker ~ Sneak Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

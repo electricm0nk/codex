@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mutagen ~ Stat Selection Final",
+    "name": "Grand Mutagen",
+    "class": "Mutagen",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutagen ~ Stat Selection Final"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Mutagen_1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Display"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutagenActive|0"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|MutagenACBonus|TYPE=NaturalArmor"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR,DEX,CON|MutagenStatBonus|TYPE=Alchemical"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|INT,WIS,CHA|MutagenStatPenalty"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|MutagenActive|1|TYPE=Boolean"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 80,
+    "record_key": "Mutagen ~ Stat Selection Final"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

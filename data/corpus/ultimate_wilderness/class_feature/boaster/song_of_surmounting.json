@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Boaster ~ Song of Surmounting",
+    "name": "Song of Surmounting",
+    "class": "Boaster",
+    "description": "The boaster's raging song can inspire allies to move quickly and easily. By spending 1 round of raging song, the boaster can affect all allies within 90 feet for 1 hour. Affected allies gain a benefit according to the surrounding terrain (the benefits don't stack)- a climb speed equal to half their base speed (forest, jungle, mountain, underground), a swim speed equal to their base speed (swamp, water), or a +10 foot enhancement bonus to their base speed (cold, desert, hill, plains, or urban). The skald must continue to perform the song for the remainder of the hour; otherwise, its effects end, but only 1 round of raging song is expended for that hour.  At 13th level, the speed or bonus granted by this ability doubles. At 19th level, this ability grants triple the listed speed or bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Boaster ~ Song of Surmounting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.BoasterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The boaster's raging song can inspire allies to move quickly and easily. By spending 1 round of raging song, the boaster can affect all allies within 90 feet for 1 hour. Affected allies gain a benefit according to the surrounding terrain (the benefits don't stack)- a climb speed equal to half their base speed (forest, jungle, mountain, underground), a swim speed equal to their base speed (swamp, water), or a +10 foot enhancement bonus to their base speed (cold, desert, hill, plains, or urban). The skald must continue to perform the song for the remainder of the hour; otherwise, its effects end, but only 1 round of raging song is expended for that hour.  At 13th level, the speed or bonus granted by this ability doubles. At 19th level, this ability grants triple the listed speed or bonus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1128,
+    "record_key": "Boaster ~ Song of Surmounting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

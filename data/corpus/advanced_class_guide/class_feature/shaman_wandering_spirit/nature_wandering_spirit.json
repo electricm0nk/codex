@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Wandering Spirit ~ Nature",
+    "name": "Nature (Wandering Spirit)",
+    "class": "Shaman Wandering Spirit",
+    "description": "Spirit Magic Spells: charm animal (1st), barkskin (2nd), speak with plants (3rd), grove of respite (4th), awaken (5th), stone tell (6th), creeping doom (7th), animal shapes (8th), world wave (9th)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Wandering Spirit ~ Nature"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanWanderingSpirit.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: charm animal (1st), barkskin (2nd), speak with plants (3rd), grove of respite (4th), awaken (5th), stone tell (6th), creeping doom (7th), animal shapes (8th), world wave (9th)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Nature Spirit ~ Storm Burst|PREVARGTEQ:ShamanWanderingSpiritBase,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Nature Spirit ~ Spirit of Nature|PREVARGTEQ:ShamanWanderingSpiritGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Nature Spirit ~ Companion Animal|PREVARGTEQ:ShamanWanderingSpiritTrue,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Nature Wandering Hex|ShamanWanderingHexUses"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1464,
+    "record_key": "Shaman Wandering Spirit ~ Nature"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

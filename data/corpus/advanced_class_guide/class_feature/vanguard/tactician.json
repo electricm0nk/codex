@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vanguard ~ Tactician",
+    "name": "Tactician",
+    "class": "Vanguard",
+    "description": "A vanguard receives a teamwork feat as a bonus feat. He must meet the prerequisites for this feat. Once per day as a standard action, the vanguard can grant one of his teamwork feats to all allies within 30 feet who can see and hear him. Allies retain the use of this bonus feat for %1 rounds. Allies do not need to meet the prerequisites of this bonus feat. Whenever the vanguard is able to select a new slayer talent, he can instead choose to gain an additional use per day of this ability.|3+floor(SlayerLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vanguard ~ Tactician"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vanguard Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VanguardTacticianTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A vanguard receives a teamwork feat as a bonus feat. He must meet the prerequisites for this feat. Once per day as a standard action, the vanguard can grant one of his teamwork feats to all allies within 30 feet who can see and hear him. Allies retain the use of this bonus feat for %1 rounds. Allies do not need to meet the prerequisites of this bonus feat. Whenever the vanguard is able to select a new slayer talent, he can instead choose to gain an additional use per day of this ability.|3+floor(SlayerLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Teamwork Feat|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VanguardTacticianTimes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VanguardTacticianTimes|ExtraTacticianAbility"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|VanguardTacticianTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3773,
+    "record_key": "Vanguard ~ Tactician"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

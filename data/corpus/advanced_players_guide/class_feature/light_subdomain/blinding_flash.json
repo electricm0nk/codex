@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Light Subdomain ~ Blinding Flash",
+    "name": "Blinding Flash",
+    "class": "Light Subdomain",
+    "description": "As a standard action, you can emit a flash of light from your holy symbol or divine focus. The most powerful light emanates out 20 feet from you. Creatures with fewer than %1 Hit Dice within this area are blinded for 1d4 rounds unless they succeed at a Fortitude save. All creatures in this area are dazzled for %2 rounds. You can use this ability %3 times per day.|DomainSunLVL|max(DomainSunLVL/2,1)|DomainSunTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Light Subdomain ~ Blinding Flash"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can emit a flash of light from your holy symbol or divine focus. The most powerful light emanates out 20 feet from you. Creatures with fewer than %1 Hit Dice within this area are blinded for 1d4 rounds unless they succeed at a Fortitude save. All creatures in this area are dazzled for %2 rounds. You can use this ability %3 times per day.|DomainSunLVL|max(DomainSunLVL/2,1)|DomainSunTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1780,
+    "record_key": "Light Subdomain ~ Blinding Flash"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

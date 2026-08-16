@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Animal Domain ~ Speak with Animals",
+    "name": "Speak with Animals",
+    "class": "Animal Domain",
+    "description": "You can Speak with Animals, as per the spell, for %1 rounds per day.|SpeakWithAnimalsRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Domain ~ Speak with Animals"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.SpellLike.DomainPower.Communicate"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpeakWithAnimalsRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can Speak with Animals, as per the spell, for %1 rounds per day.|SpeakWithAnimalsRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpeakWithAnimalsRounds|3+DomainAnimalLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds/day)|SpeakWithAnimalsRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SpeakWithAnimalsRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3184,
+    "record_key": "Animal Domain ~ Speak with Animals"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

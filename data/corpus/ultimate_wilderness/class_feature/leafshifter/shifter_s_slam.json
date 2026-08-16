@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Leafshifter ~ Shifter's Slam",
+    "name": "Shifter's Slam",
+    "class": "Leafshifter",
+    "description": "This ability functions as the shifter claws class feature, except the leafshifter gains two slam attacks instead of two claw attacks. These slam attacks are made with her arms, which are covered in jagged bark and thorns, so these attacks deal bludgeoning and piercing damage. This alters shifter claws.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leafshifter ~ Shifter's Slam"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.LeafshifterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability functions as the shifter claws class feature, except the leafshifter gains two slam attacks instead of two claw attacks. These slam attacks are made with her arms, which are covered in jagged bark and thorns, so these attacks deal bludgeoning and piercing damage. This alters shifter claws."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1070,
+    "record_key": "Leafshifter ~ Shifter's Slam"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

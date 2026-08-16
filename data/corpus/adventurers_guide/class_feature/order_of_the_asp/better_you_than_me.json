@@ -1,0 +1,45 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Asp ~ Better You Than Me",
+    "name": "Better You Than Me",
+    "class": "Order of the Asp",
+    "description": "The cavalier can interpose an adjacent ally in the way of an incoming attack as an immediate action, gaining cover against the attack. The attack must target only the cavalier, and she must choose to use this ability before seeing the result of the attack roll. The ally must have the shaken condition or have no more than half the Hit Dice of the cavalier, and the ally gains a Reflex save to negate this ability's effect entirely (DC %1). If the attack hits, the damage is split evenly between the cavalier and the ally. If the ally's save was a natural 1, the ally takes all of the damage, including any associated effects (bleed, poison, etc.). An ally can purposefully fail this saving throw, but cannot purposefully roll a natural 1.|10+CavalierLVL/2+max(STR,CHA)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Asp ~ Better You Than Me"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The cavalier can interpose an adjacent ally in the way of an incoming attack as an immediate action, gaining cover against the attack. The attack must target only the cavalier, and she must choose to use this ability before seeing the result of the attack roll. The ally must have the shaken condition or have no more than half the Hit Dice of the cavalier, and the ally gains a Reflex save to negate this ability's effect entirely (DC %1). If the attack hits, the damage is split evenly between the cavalier and the ally. If the ally's save was a natural 1, the ally takes all of the damage, including any associated effects (bleed, poison, etc.). An ally can purposefully fail this saving throw, but cannot purposefully roll a natural 1.|10+CavalierLVL/2+max(STR,CHA)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1144,
+    "record_key": "Order of the Asp ~ Better You Than Me"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

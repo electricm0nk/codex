@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gunslinger ~ Lightning Reload",
+    "name": "Lightning Reload",
+    "class": "Gunslinger",
+    "description": "At 11th level, as long as the gunslinger has at least 1 grit point, she can reload a single barrel of a one-handed or two-handed firearm as a swift action once per round. If she has the Rapid Reload feat or is using an alchemical cartridge (or both), she can reload a single barrel of the weapon as a free action each round instead. Furthermore, using this deed does not provoke attacks of opportunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Lightning Reload"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_Deed_LVL11"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeedsLVL11.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, as long as the gunslinger has at least 1 grit point, she can reload a single barrel of a one-handed or two-handed firearm as a swift action once per round. If she has the Rapid Reload feat or is using an alchemical cartridge (or both), she can reload a single barrel of the weapon as a free action each round instead. Furthermore, using this deed does not provoke attacks of opportunity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 71,
+    "record_key": "Gunslinger ~ Lightning Reload"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus Arcana ~ Arcane Edge",
+    "name": "Arcane Edge",
+    "class": "Magus Arcana",
+    "description": "The magus can expend 1 point from his arcane pool as an immediate action after hitting a target with a slashing or piercing weapon in order to deal an amount of bleed damage equal to his Intelligence modifier (minimum 0). The magus must be at least 9th level before he selects this arcana.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Arcane Edge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.MagusArcana.SpecialQuality"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ArcanaQualifyLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "The magus can expend 1 point from his arcane pool as an immediate action after hitting a target with a slashing or piercing weapon in order to deal an amount of bleed damage equal to his Intelligence modifier (minimum 0). The magus must be at least 9th level before he selects this arcana."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 904,
+    "record_key": "Magus Arcana ~ Arcane Edge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nature Spirit ~ Companion Animal",
+    "name": "Companion Animal",
+    "class": "Nature Spirit",
+    "description": "The shaman's spirit animal takes the form of an animal companion of her choice, using her shaman level as her effective druid level. The animal retains all the special abilities and the Intelligence score of the spirit animal, but also has the statistics and abilities of an animal companion. If the animal is dismissed, is lost, or dies, it can be replaced in the same way as a normal spirit animal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Spirit ~ Companion Animal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural.Animal Companion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman's spirit animal takes the form of an animal companion of her choice, using her shaman level as her effective druid level. The animal retains all the special abilities and the Intelligence score of the spirit animal, but also has the statistics and abilities of an animal companion. If the animal is dismissed, is lost, or dies, it can be replaced in the same way as a normal spirit animal."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Animal Companion ~ Base|!PREABILITY:1,CATEGORY=Special Ability,TYPE.NatureBondAnimalCompanion,TYPE.NaturesBondAnimalCompanion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|ShamanSpiritLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1646,
+    "record_key": "Nature Spirit ~ Companion Animal"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

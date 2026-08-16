@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus Arcana ~ Close Range",
+    "name": "Close Range",
+    "class": "Magus Arcana",
+    "description": "You can deliver ray spells that feature a ranged touch attack as melee touch spells. You can use a ranged touch attack spell that targets more than one creature (such as Scorching Ray), but you make only one melee touch attack to deliver one of these ranged touch effects; additional ranged touch attacks from that spell are wasted and have no effect. These spells can be used with the spellstrike class feature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Close Range"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.MagusArcana"
+      },
+      {
+        "key": "DESC",
+        "value": "You can deliver ray spells that feature a ranged touch attack as melee touch spells. You can use a ranged touch attack spell that targets more than one creature (such as Scorching Ray), but you make only one melee touch attack to deliver one of these ranged touch effects; additional ranged touch attacks from that spell are wasted and have no effect. These spells can be used with the spellstrike class feature."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 83,
+    "record_key": "Magus Arcana ~ Close Range"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

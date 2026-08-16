@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Deadly Courtesan ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Deadly Courtesan",
+    "description": "A deadly courtesan adds Knowledge (history) and Knowledge (nobility) to her list of class skills and removes Knowledge (dungeoneering) from her list of class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deadly Courtesan ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A deadly courtesan adds Knowledge (history) and Knowledge (nobility) to her list of class skills and removes Knowledge (dungeoneering) from her list of class skills."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (Nobility)|Knowledge (History)"
+      },
+      {
+        "key": "CCSKILL",
+        "value": "Knowledge (Dungeoneering)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.209"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 991,
+    "record_key": "Deadly Courtesan ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

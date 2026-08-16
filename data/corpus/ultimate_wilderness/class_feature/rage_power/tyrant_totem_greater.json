@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Tyrant Totem (Greater)",
+    "name": "Tyrant Totem, Greater",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian gains swallow whole as per the universal monster rule.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Tyrant Totem (Greater)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ Tyrant Totem],[PREVARGTEQ:RagePowersPrereqLVL,12]"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian gains swallow whole as per the universal monster rule."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 174,
+    "record_key": "Rage Power ~ Tyrant Totem (Greater)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

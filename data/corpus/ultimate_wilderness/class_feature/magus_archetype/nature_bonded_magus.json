@@ -1,0 +1,111 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus Archetype ~ Nature-Bonded Magus",
+    "name": "Nature-Bonded Magus",
+    "class": "Magus Archetype",
+    "description": "A nature-bonded magus synergizes arcane magic and the divine magic traditions of druids into a deadly synthesis.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Nature-Bonded Magus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MagusArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Nature-Bonded Magus],[!PREFACT:1,ABILITIES,Magus_Archetype_ArcanePool=True,Magus_Archetype_SpellRecall=True,Magus_Archetype_KnowledgePool=True,Magus_Archetype_ImprovedSpellRecall=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A nature-bonded magus synergizes arcane magic and the divine magic traditions of druids into a deadly synthesis."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Nature-Bonded Magus ~ Natural Magic|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Nature-Bonded Magus ~ Plant Familiar|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Nature-Bonded Magus ~ Familiar Symbiosis|PRECLASS:1,Magus=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Nature-Bonded Magus ~ Woodland Stride|PRECLASS:1,Magus=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Nature-Bonded Magus ~ Improved Familiar Symbiosis|PRECLASS:1,Magus=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ArcanePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_KnowledgePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ImprovedSpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ArcanePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_KnowledgePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ImprovedSpellRecall|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 794,
+    "record_key": "Magus Archetype ~ Nature-Bonded Magus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

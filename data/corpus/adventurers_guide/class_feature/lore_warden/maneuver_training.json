@@ -1,0 +1,160 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Lore Warden ~ Maneuver Training ~ AG",
+    "name": "Maneuver Training",
+    "class": "Lore Warden",
+    "description": "The lore warden gains a brawler's maneuver training class feature, treating her fighter level as her brawler level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lore Warden ~ Maneuver Training ~ AG"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SwordsSecret.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "DESC",
+        "value": "The lore warden gains a brawler's maneuver training class feature, treating her fighter level as her brawler level."
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlerManeuverTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BullRushManeuverTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DirtyTrickManeuverTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisarmManeuverTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DragManeuverTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GrappleManeuverTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OverrunManeuverTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RepositionManeuverTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StealManeuverTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SunderManeuverTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TripManeuverTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BullRushManeuverTrainingBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DirtyTrickManeuverTrainingBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisarmManeuverTrainingBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DragManeuverTrainingBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GrappleManeuverTrainingBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OverrunManeuverTrainingBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RepositionManeuverTrainingBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StealManeuverTrainingBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SunderManeuverTrainingBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TripManeuverTrainingBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Maneuver Training I Selection|(FighterLVL>2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Maneuver Training II Selection|(FighterLVL>6)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Maneuver Training III Selection|(FighterLVL>10)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Maneuver Training IV Selection|(FighterLVL>14)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Maneuver Training V Selection|(FighterLVL>18)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerManeuverTraining|(FighterLVL>2)+(FighterLVL>6)+(FighterLVL>10)+(FighterLVL>14)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerManeuverTraining|1|PREVARGT:FighterLVL,18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 858,
+    "record_key": "Lore Warden ~ Maneuver Training ~ AG"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

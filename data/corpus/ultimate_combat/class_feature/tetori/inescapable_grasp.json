@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tetori ~ Inescapable Grasp",
+    "name": "Inescapable Grasp",
+    "class": "Tetori",
+    "description": "At 9th level, a tetori can spend 1 point from his ki pool to suppress his opponents' freedom of movement and magical bonuses to Escape Artist or on checks to escape a grapple. At 13th level, this ability also duplicates the effect of dimensional anchor. At 17th level, the tetori's unarmed strike gains the ghost touch special ability, and an incorporeal creature that he strikes gains the grappled condition (Reflex negates, DC 10 + 1/2 the wrestler's level + his Wisdom modifier). Inescapable grasp is a swift action and lasts until the beginning of the wrestler's next turn. This ability replaces abundant step, improved evasion, timeless body, and tongue of sun and moon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tetori ~ Inescapable Grasp"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a tetori can spend 1 point from his ki pool to suppress his opponents' freedom of movement and magical bonuses to Escape Artist or on checks to escape a grapple. At 13th level, this ability also duplicates the effect of dimensional anchor. At 17th level, the tetori's unarmed strike gains the ghost touch special ability, and an incorporeal creature that he strikes gains the grappled condition (Reflex negates, DC 10 + 1/2 the wrestler's level + his Wisdom modifier). Inescapable grasp is a swift action and lasts until the beginning of the wrestler's next turn. This ability replaces abundant step, improved evasion, timeless body, and tongue of sun and moon."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1402,
+    "record_key": "Tetori ~ Inescapable Grasp"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

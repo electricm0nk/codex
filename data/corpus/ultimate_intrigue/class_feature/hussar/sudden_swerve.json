@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Hussar ~ Sudden Swerve",
+    "name": "Sudden Swerve",
+    "class": "Hussar",
+    "description": "A hussar's control over his mount is advanced enough to allow the mount to turn on the spot, even when charging forward at full speed. Whenever the hussar makes the charge or run action while mounted, he can make a single turn of up to 90 degrees at any one point during this movement.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hussar ~ Sudden Swerve"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.HussarClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A hussar's control over his mount is advanced enough to allow the mount to turn on the spot, even when charging forward at full speed. Whenever the hussar makes the charge or run action while mounted, he can make a single turn of up to 90 degrees at any one point during this movement."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 307,
+    "record_key": "Hussar ~ Sudden Swerve"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

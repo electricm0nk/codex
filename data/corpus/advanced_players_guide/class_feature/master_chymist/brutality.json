@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Master Chymist ~ Brutality",
+    "name": "Brutality",
+    "class": "Master Chymist",
+    "description": "At 3rd level, a master chymist's taste for violence leads her to strike more powerful blows with weapons easily mastered by her bestial mind. At 3rd level, a chymist in her mutagenic form deals +2 damage when attacking with simple weapons and natural attacks. This bonus increases to +4 at 7th level and to +6 at 9th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master Chymist ~ Brutality"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Master Chymist Class Feature.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_Brutality_Bonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a master chymist's taste for violence leads her to strike more powerful blows with weapons easily mastered by her bestial mind. At 3rd level, a chymist in her mutagenic form deals +2 damage when attacking with simple weapons and natural attacks. This bonus increases to +4 at 7th level and to +6 at 9th level."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterChymist_Brutality_Bonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterChymist_Brutality_Bonus|2|PREVARGTEQ:MasterChymistLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterChymist_Brutality_Bonus|2|PREVARGTEQ:MasterChymistLVL,9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.270"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+%1)|MasterChymist_Brutality_Bonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1367,
+    "record_key": "Master Chymist ~ Brutality"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

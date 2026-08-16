@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Occultist Archetype ~ Sha'ir",
+    "name": "Sha'ir",
+    "class": "Occultist Archetype",
+    "description": "Sha'irs delve into the occult not through power over objects but instead via their connection with minor servitor genies from the elemental planes. A sha'ir's jin is both a precious ally and a living implement for its master.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist Archetype ~ Sha'ir"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Occultist Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Occultist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Occultist Archetype ~ Sha'ir],[!PREFACT:1,ABILITIES,Occultist_Archetype_MentalFocus=true,Occultist_Archetype_Spellcasting=true,Occultist_Archetype_ImplementMastery=true,Occultist_Archetype_OutsideContact=true,Occultist_Archetype_Implements=true,Occultist_Archetype_MagicItemSkill=true,Occultist_Archetype_ObjectReading=true,Occultist_Archetype_AuraSight=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Sha'irs delve into the occult not through power over objects but instead via their connection with minor servitor genies from the elemental planes. A sha'ir's jin is both a precious ally and a living implement for its master."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Sha'ir ~ Jin|PRECLASS:1,Occultist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Sha'ir ~ Augment Jin|PRECLASS:1,Occultist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Sha'ir ~ Manifest Jin|PRECLASS:1,Occultist=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Sha'ir ~ Jin Spy|PRECLASS:1,Occultist=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_MentalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_Spellcasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_ImplementMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_OutsideContact|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_Implements|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_MagicItemSkill|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_ObjectReading|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_AuraSight|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_Implements|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_MagicItemSkill|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_ObjectReading|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_AuraSight|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1520,
+    "record_key": "Occultist Archetype ~ Sha'ir"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

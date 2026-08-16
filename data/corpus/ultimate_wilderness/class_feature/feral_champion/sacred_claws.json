@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Feral Champion ~ Sacred Claws",
+    "name": "Sacred Claws",
+    "class": "Feral Champion",
+    "description": "Rather than empowering a physical weapon, a feral champion grows claws as primary natural weapons on each hand. These claws deal damage as a warpriest's sacred weapon and can be enhanced as such. This alters sacred weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Champion ~ Sacred Claws"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Features.FeralChampionClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Rather than empowering a physical weapon, a feral champion grows claws as primary natural weapons on each hand. These claws deal damage as a warpriest's sacred weapon and can be enhanced as such. This alters sacred weapon."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1220,
+    "record_key": "Feral Champion ~ Sacred Claws"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

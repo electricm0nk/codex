@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Elemental Annihilator ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Elemental Annihilator",
+    "description": "At 2nd level, an elemental annihilator can select a bonus feat from the following list: Deadly Aim, Double Slice, Point-Blank Shot, Power Attack, Precise Shot, Rapid Shot, Two- Weapon Fighting, Weapon Finesse, and Weapon Focus. Rapid Shot and Two-Weapon Fighting can be used with a kinetic blast only if the annihilator also possesses flurry of devastation (see below). She gains an additional bonus feat at 8th, 10th, 14th, and 18th levels. At 8th level, she can also select Improved Two-Weapon Fighting and Weapon Specialization. At 10th level, she can also select Greater Weapon Focus, Improved Critical, Improved Precise Shot, and Two-Weapon Rend. An elemental annihilator doesn't need to meet the prerequisites for these feats to select them as bonus feats. This ability replaces the 2nd-, 8th-, 10th-, 14th-, and 18th-level utility wild talents.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Annihilator ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Elemental Annihilator Class Feature.Kineticist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, an elemental annihilator can select a bonus feat from the following list: Deadly Aim, Double Slice, Point-Blank Shot, Power Attack, Precise Shot, Rapid Shot, Two- Weapon Fighting, Weapon Finesse, and Weapon Focus. Rapid Shot and Two-Weapon Fighting can be used with a kinetic blast only if the annihilator also possesses flurry of devastation (see below). She gains an additional bonus feat at 8th, 10th, 14th, and 18th levels. At 8th level, she can also select Improved Two-Weapon Fighting and Weapon Specialization. At 10th level, she can also select Greater Weapon Focus, Improved Critical, Improved Precise Shot, and Two-Weapon Rend. An elemental annihilator doesn't need to meet the prerequisites for these feats to select them as bonus feats. This ability replaces the 2nd-, 8th-, 10th-, 14th-, and 18th-level utility wild talents."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Elemental Annihilator Feat|1+(KineticistLVL>=8)+(KineticistLVL>=10)+(KineticistLVL>=14)+(KineticistLVL>=18)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1330,
+    "record_key": "Elemental Annihilator ~ Bonus Feats"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

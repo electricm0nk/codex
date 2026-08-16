@@ -1,0 +1,135 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium Archetype ~ Reanimated Medium",
+    "name": "Reanimated Medium",
+    "class": "Medium Archetype",
+    "description": "Sometimes a departed soul destined for legend gains a second chance at life by possessing his own revived body.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium Archetype ~ Reanimated Medium"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Medium Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Medium=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Reanimated Medium],[!PREFACT:1,ABILITIES,Medium_Archetype_Spirit=True,Medium_Archetype_Taboo=True,Medium_Archetype_HauntChanneler=True,Medium_Archetype_LocationChannel=True,Medium_Archetype_ConnectionChannel=True,Medium_Archetype_SpaciousSoul=True,Medium_Archetype_AstralBeacon=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Sometimes a departed soul destined for legend gains a second chance at life by possessing his own revived body."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Reanimated Medium ~ Channel Self|Reanimated Medium ~ Nothing Is Taboo|PRECLASS:1,Medium=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Reanimated Medium ~ Ease Passage|PRECLASS:1,Medium=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Reanimated Medium ~ Lingering Spirit|PRECLASS:1,Medium=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Reanimated Medium ~ Spirit Warding|PRECLASS:1,Medium=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Reanimated Medium ~ Living Legend|PRECLASS:1,Medium=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Medium"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_Spirit|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_Taboo|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_HauntChanneler|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_LocationChannel|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_ConnectionChannel|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_SpaciousSoul|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_AstralBeacon|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_Taboo|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_HauntChanneler|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_LocationChannel|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_ConnectionChannel|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_SpaciousSoul|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_AstralBeacon|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1392,
+    "record_key": "Medium Archetype ~ Reanimated Medium"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

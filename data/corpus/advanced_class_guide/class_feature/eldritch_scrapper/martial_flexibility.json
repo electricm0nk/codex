@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Eldritch Scrapper ~ Martial Flexibility",
+    "name": "Martial Flexibility",
+    "class": "Eldritch Scrapper",
+    "description": "At 1st level, an eldritch scrapper gains the brawler's martial flexibility class feature, using her sorcerer level as her brawler level for the purposes of uses per day. The scrapper treats Arcane Strike and Combat Casting as combat feats for the purpose of this ability. At 9th level, an eldritch scrapper can use this ability to gain the benefit of two combat feats at the same time. She can select one feat as a move action or two feats as a standard action. She can use one of these feats to meet a prerequisite of the second feat; doing so means she cannot replace the feat that is currently fulfilling another feat's prerequisites without also replacing all feats that require it. Each individual feat selected counts toward her daily uses of this ability. At 15th level, an eldritch scrapper can use this ability to gain the benefit of three combat feats at the same time. She can select one feat as a swift action, two feats as a move action, or three feats as a standard action. She can use one of the feats to meet a prerequisite of the second and third feats, and use the second feat to meet a prerequisite of the third feat. Each individual feat selected counts toward her daily uses of this ability. This ability replaces the sorcerer's bloodline powers gained 1st, 9th, and 15th levels.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eldritch Scrapper ~ Martial Flexibility"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Eldritch Scrapper Class Feature.Sorcerer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, an eldritch scrapper gains the brawler's martial flexibility class feature, using her sorcerer level as her brawler level for the purposes of uses per day. The scrapper treats Arcane Strike and Combat Casting as combat feats for the purpose of this ability. At 9th level, an eldritch scrapper can use this ability to gain the benefit of two combat feats at the same time. She can select one feat as a move action or two feats as a standard action. She can use one of these feats to meet a prerequisite of the second feat; doing so means she cannot replace the feat that is currently fulfilling another feat's prerequisites without also replacing all feats that require it. Each individual feat selected counts toward her daily uses of this ability. At 15th level, an eldritch scrapper can use this ability to gain the benefit of three combat feats at the same time. She can select one feat as a swift action, two feats as a move action, or three feats as a standard action. She can use one of the feats to meet a prerequisite of the second and third feats, and use the second feat to meet a prerequisite of the third feat. Each individual feat selected counts toward her daily uses of this ability. This ability replaces the sorcerer's bloodline powers gained 1st, 9th, and 15th levels."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|Pool_Temp_Eldritch_Scrapper_Feat|1+(SorcererLVL>=9)+(SorcererLVL>=15)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3798,
+    "record_key": "Eldritch Scrapper ~ Martial Flexibility"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

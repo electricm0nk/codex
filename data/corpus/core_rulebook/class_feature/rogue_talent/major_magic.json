@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Talent ~ Major Magic",
+    "name": "Major Magic",
+    "class": "Rogue Talent",
+    "description": "You can cast %1 two times a day as a spell-like ability. The caster level for this ability is %2. The save DC for this spell is %3.|%CHOICE|RogueCasterLevel|11+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Major Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialQuality.SpellLike.RogueTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rogue Talent ~ Minor Magic"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,INT=11"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast %1 two times a day as a spell-like ability. The caster level for this ability is %2. The save DC for this spell is %3.|%CHOICE|RogueCasterLevel|11+INT"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SPELLS|CLASSLIST=Wizard[LEVELMAX=1;LEVELMIN=1]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1663,
+    "record_key": "Rogue Talent ~ Major Magic"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

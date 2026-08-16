@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cartographer ~ Town Map",
+    "name": "Studied Terrain (Town Map)",
+    "class": "Cartographer",
+    "description": "While in an urban area or ruins, the radius is %1 feet or the entirety of the urban or ruined area, whichever is smaller.|InvestigatorLVL*1000",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cartographer ~ Town Map"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Cartographer_Studied_Terrain_4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.CartographerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "While in an urban area or ruins, the radius is %1 feet or the entirety of the urban or ruined area, whichever is smaller.|InvestigatorLVL*1000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 742,
+    "record_key": "Cartographer ~ Town Map"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Draconic Bloodline ~ Bloodrager",
+    "name": "Draconic Bloodline",
+    "class": "Draconic Bloodline",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Bloodline ~ Bloodrager"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Blood of Dragons Bloodline"
+      },
+      {
+        "key": "TYPE",
+        "value": "BloodragerBloodlineChoice"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Dragon Disciple ~ Blood of Dragons"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Draconic Bloodrager Bloodline ~ Feat Tracker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bloodrager Bloodline ~ Draconic"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Bloodline|AUTOMATIC|Draconic Bloodline"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlineLVL,BloodragerBloodlineProgressionLVL|DragonDiscipleLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlineProgressionLVL|DragonDiscipleLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlineSpells1|if(BloodragerLVL>=1,0,-1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlinePowers|if(Bloodrager_CF_BloodlinePowers==0,1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlinePower1|if(Bloodrager_CF_BloodlinePower1==0,1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlinePower4|if((Bloodrager_CF_BloodlinePower4==0&&Bloodrager_Draconic_BloodlineProgressionLVL>=4),1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlinePower8|if((Bloodrager_CF_BloodlinePower8==0&&Bloodrager_Draconic_BloodlineProgressionLVL>=8),1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlinePower12|if((Bloodrager_CF_BloodlinePower12==0&&Bloodrager_Draconic_BloodlineProgressionLVL>=12),1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlinePower16|if((Bloodrager_CF_BloodlinePower16==0&&Bloodrager_Draconic_BloodlineProgressionLVL>=16),1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlinePower20|if((Bloodrager_CF_BloodlinePower20==0&&Bloodrager_Draconic_BloodlineProgressionLVL>=20),1,0)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlineProgressionLVL|0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 383,
+    "record_key": "Draconic Bloodline ~ Bloodrager"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

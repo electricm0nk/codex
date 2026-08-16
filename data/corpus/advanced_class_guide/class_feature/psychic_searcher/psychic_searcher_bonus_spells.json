@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Searcher ~ Bonus Spells",
+    "name": "Psychic Searcher ~ Bonus Spells",
+    "class": "Psychic Searcher",
+    "description": "Several of the oracle's normal mystery bonus spells are replaced.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Searcher ~ Bonus Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Searcher Class Feature.Oracle Class Feature"
+      },
+      {
+        "key": "DESC",
+        "value": "Several of the oracle's normal mystery bonus spells are replaced."
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=2|Augury|PRECLASS:1,Oracle=4"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=3|Locate Object|PRECLASS:1,Oracle=6"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=4|Divination|PRECLASS:1,Oracle=8"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=6|Find the Path|PRECLASS:1,Oracle=12"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=8|Discern Location|PRECLASS:1,Oracle=16"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=9|Foresight|PRECLASS:1,Oracle=18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3498,
+    "record_key": "Psychic Searcher ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

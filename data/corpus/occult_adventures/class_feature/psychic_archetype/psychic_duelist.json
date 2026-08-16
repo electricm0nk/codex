@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Psychic Archetype ~ Psychic Duelist",
+    "name": "Psychic Duelist",
+    "class": "Psychic Archetype",
+    "description": "Psychic duelists hone their mental powers for combat, much as warriors do with their blades. They specialize in psychic duels, perfecting their thought-form creatures into mighty weapons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Archetype ~ Psychic Duelist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Psychic Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Psychic=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Psychic Archetype ~ Psychic Duelist],[!PREFACT:1,ABILITIES,Psychic_Archetype_PhrenicAmplifications=true,Psychic_Archetype_PhrenicAmplification7=true,Psychic_Archetype_DisciplineSpell4=true,Psychic_Archetype_TelepathicBond=true,Psychic_Archetype_Telepathy=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Psychic duelists hone their mental powers for combat, much as warriors do with their blades. They specialize in psychic duels, perfecting their thought-form creatures into mighty weapons."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic Duelist ~ Psychic Duel Acumen|PRECLASS:1,Psychic=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic Duelist ~ Manifestation Amplifications|PRECLASS:1,Psychic=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic Duelist ~ Extended Effect|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic Duelist ~ Faithful Creature|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic Duelist ~ Punishing Thought-form|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic Duelist ~ Reciprocal Defense|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic Duelist ~ Thought Made Real|PRECLASS:1,Psychic=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Psychic Duelist ~ Expert Manifester|PRECLASS:1,Psychic=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_Archetype_PhrenicAmplifications|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_Archetype_PhrenicAmplification7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_Archetype_DisciplineSpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_Archetype_TelepathicBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_Archetype_Telepathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_CF_PhrenicAmplification7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_CF_DisciplineSpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_CF_TelepathicBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_CF_Telepathy|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1555,
+    "record_key": "Psychic Archetype ~ Psychic Duelist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

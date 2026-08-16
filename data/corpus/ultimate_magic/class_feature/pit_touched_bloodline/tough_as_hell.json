@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Pit-Touched Bloodline ~ Tough as Hell",
+    "name": "Tough as Hell",
+    "class": "Pit-Touched Bloodline",
+    "description": "You gain a +%1 inherent bonus to your Constitution. This bloodline power replaces hellfire.|Sorcerer_PitTouchedToughAsHell_ConBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pit-Touched Bloodline ~ Tough as Hell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Pit-Touched Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wildblooded ~ Pit-Touched"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Infernal_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Infernal_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_PitTouchedToughAsHell_ConBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 inherent bonus to your Constitution. This bloodline power replaces hellfire.|Sorcerer_PitTouchedToughAsHell_ConBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|Sorcerer_PitTouchedToughAsHell_ConBonus|TYPE=Inherent"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_PitTouchedToughAsHell_ConBonus|floor((Sorcerer_Infernal_BloodlinePower9LVL-5)/4*2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|InfernalBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1724,
+    "record_key": "Pit-Touched Bloodline ~ Tough as Hell"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

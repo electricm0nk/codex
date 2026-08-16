@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Amateur Swashbuckler",
+    "name": "Amateur Swashbuckler",
+    "class": "Warpriest Bonus Feat",
+    "description": "Though not a swashbuckler, you have and can use panache.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Amateur Swashbuckler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.Panache"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PanacheMax|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Though not a swashbuckler, you have and can use panache."
+      },
+      {
+        "key": "DESC",
+        "value": " You gain a small amount of panache and the ability to perform a single 1st-level swashbuckler deed. Choose a 1st-level deed from the swashbuckler's deeds class feature (you can't select opportune parry and riposte). Once chosen, this deed cannot be changed. At the start of each day, you gain 1 panache point. Throughout the day, you can gain a number of panache points, up to a maximum of %1 [minimum 1]. You can regain panache points as the swashbuckler's panache class feature. You can spend these panache points to perform the 1st-level deed you chose upon taking this feat as well as any other deeds you have gained through feats or magic items."
+      },
+      {
+        "key": "DESC",
+        "value": " &nl;Special: If you gain levels in a class that has the panache class feature, you can immediately trade this feat for the Extra Panache feat.|PanacheMax"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Amateur Swashbuckler"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4137,
+    "record_key": "Warpriest Bonus Feat ~ Amateur Swashbuckler"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

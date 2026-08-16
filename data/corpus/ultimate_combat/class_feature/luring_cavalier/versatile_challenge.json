@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Luring Cavalier ~ Versatile Challenge",
+    "name": "Versatile Challenge",
+    "class": "Luring Cavalier",
+    "description": "At 12th level, a luring cavalier can expend a use of his challenge to gain the benefit of far challenge or the normal cavalier challenge. He can even change the type of challenge an opponent is under the effects of as a swift action, as long as the target of the challenge is within line of sight.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Luring Cavalier ~ Versatile Challenge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 12th level, a luring cavalier can expend a use of his challenge to gain the benefit of far challenge or the normal cavalier challenge. He can even change the type of challenge an opponent is under the effects of as a swift action, as long as the target of the challenge is within line of sight."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 505,
+    "record_key": "Luring Cavalier ~ Versatile Challenge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

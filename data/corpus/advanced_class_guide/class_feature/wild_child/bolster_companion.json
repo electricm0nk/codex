@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Child ~ Bolster Companion",
+    "name": "Bolster Companion",
+    "class": "Wild Child",
+    "description": "The wild child can use this trick as an immediate action when his animal companion is hit with an attack or a combat maneuver. The companion's AC and combat maneuver defense increase by +4 for the purposes of that attack. If the attack still hits, the animal companion only takes half damage (if any). The animal companion must be able to see and hear the wild child to benefit from this trick.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Child ~ Bolster Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Wild Child Class Feature.SpecialQuality.Extraordinary.WildChildTrickChoice"
+      },
+      {
+        "key": "DESC",
+        "value": "The wild child can use this trick as an immediate action when his animal companion is hit with an attack or a combat maneuver. The companion's AC and combat maneuver defense increase by +4 for the purposes of that attack. If the attack still hits, the animal companion only takes half damage (if any). The animal companion must be able to see and hear the wild child to benefit from this trick."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2937,
+    "record_key": "Wild Child ~ Bolster Companion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

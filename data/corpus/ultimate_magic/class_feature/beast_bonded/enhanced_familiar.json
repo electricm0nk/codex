@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Beast-Bonded ~ Enhanced Familiar",
+    "name": "Enhanced Familiar",
+    "class": "Beast-Bonded",
+    "description": "Your connection with your familiar strengthens. For the purposes of determining your familiar's powers and abilities, you treat your familiar as if you were one level higher than your actual witch level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Beast-Bonded ~ Enhanced Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your connection with your familiar strengthens. For the purposes of determining your familiar's powers and abilities, you treat your familiar as if you were one level higher than your actual witch level."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarLVL|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1997,
+    "record_key": "Beast-Bonded ~ Enhanced Familiar"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

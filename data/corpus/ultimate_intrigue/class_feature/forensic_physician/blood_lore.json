@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forensic Physician ~ Blood Lore",
+    "name": "Blood Lore",
+    "class": "Forensic Physician",
+    "description": "A forensic physician can study a sample of blood and learn about its origins by attempting a Heal check with a DC of 20 for a creature very familiar to the forensic physician (generally common PC races for a PC forensic physician), 25 if the creature is somewhat familiar to the forensic physician (typically a commonly known monster, but not the subject of many investigations), and 30 or more for rarer creatures. This allows the forensic physician to identify the race of creature that spilled the blood, and the creature's age and gender (if any). If the forensic physician succeeds at the Heal check but might not have heard of the creature's race before, he can attempt an automatic Knowledge check to see if he knows about the creature. If he succeeds, he identifies the blood (and gains all other benefits of the Knowledge check); otherwise, he knows that he succeeded at the Heal check but the blood is not from a creature he recognizes. If the blood is in its original setting, and the forensic physician exceeds the DC by 5 or more, he can study the blood to determine a rough estimate of when the blood was shed, and he can study the bloodstain patterns to get an approximate idea of how the creatures involved were positioned and moving.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forensic Physician ~ Blood Lore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.ForensicPhysicianClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A forensic physician can study a sample of blood and learn about its origins by attempting a Heal check with a DC of 20 for a creature very familiar to the forensic physician (generally common PC races for a PC forensic physician), 25 if the creature is somewhat familiar to the forensic physician (typically a commonly known monster, but not the subject of many investigations), and 30 or more for rarer creatures. This allows the forensic physician to identify the race of creature that spilled the blood, and the creature's age and gender (if any). If the forensic physician succeeds at the Heal check but might not have heard of the creature's race before, he can attempt an automatic Knowledge check to see if he knows about the creature. If he succeeds, he identifies the blood (and gains all other benefits of the Knowledge check); otherwise, he knows that he succeeded at the Heal check but the blood is not from a creature he recognizes. If the blood is in its original setting, and the forensic physician exceeds the DC by 5 or more, he can study the blood to determine a rough estimate of when the blood was shed, and he can study the bloodstain patterns to get an approximate idea of how the creatures involved were positioned and moving."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 518,
+    "record_key": "Forensic Physician ~ Blood Lore"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

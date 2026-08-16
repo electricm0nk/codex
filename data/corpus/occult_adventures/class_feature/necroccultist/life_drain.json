@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Necroccultist ~ Life Drain",
+    "name": "Life Drain",
+    "class": "Necroccultist",
+    "description": "At 8th level, a necroccultist can expend 1 point of mental focus from a necromancy implement to unleash a life-draining ray as a ranged touch attack that causes the target to accrue 1d4 negative levels. The ray has a range of 60 feet. The negative levels last a number of minutes equal to the necroccultist's occultist level. For each negative level this attack gives a target, the necroccultist regains a number of hit points equal to his occultist level. The necroccultist can use this ability once per day at 8th level, plus one additional time per day for every 3 occultist levels thereafter. This ability replaces outside contact.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Necroccultist ~ Life Drain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Necroccultist Class Feature.Occultist Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, a necroccultist can expend 1 point of mental focus from a necromancy implement to unleash a life-draining ray as a ranged touch attack that causes the target to accrue 1d4 negative levels. The ray has a range of 60 feet. The negative levels last a number of minutes equal to the necroccultist's occultist level. For each negative level this attack gives a target, the necroccultist regains a number of hit points equal to his occultist level. The necroccultist can use this ability once per day at 8th level, plus one additional time per day for every 3 occultist levels thereafter. This ability replaces outside contact."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.101"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1537,
+    "record_key": "Necroccultist ~ Life Drain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

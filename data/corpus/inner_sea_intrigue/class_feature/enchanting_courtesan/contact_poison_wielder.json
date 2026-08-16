@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Enchanting Courtesan ~ Contact Poison Wielder",
+    "name": "Contact Poison Wielder",
+    "class": "Enchanting Courtesan",
+    "description": "An enchanting courtesan can wield a dose of contact poison as a melee weapon. Delivering the poison requires a touch attack. The enchanting courtesan can prevent foes from noticing he is armed with a successful Sleight of Hand check opposed by observers' Perception checks. The enchanting courtesan gains a +2 bonus on this Sleight of Hand check. The enchanting courtesan can draw and open a dose of contact poison as a swift action. If he has the Quick Draw feat, he gains the ability to draw and open a dose of contact poison as part of rolling initiative if his hands are free and the dose of poison is not hidden.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enchanting Courtesan ~ Contact Poison Wielder"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An enchanting courtesan can wield a dose of contact poison as a melee weapon. Delivering the poison requires a touch attack. The enchanting courtesan can prevent foes from noticing he is armed with a successful Sleight of Hand check opposed by observers' Perception checks. The enchanting courtesan gains a +2 bonus on this Sleight of Hand check. The enchanting courtesan can draw and open a dose of contact poison as a swift action. If he has the Quick Draw feat, he gains the ability to draw and open a dose of contact poison as part of rolling initiative if his hands are free and the dose of poison is not hidden."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 63,
+    "record_key": "Enchanting Courtesan ~ Contact Poison Wielder"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

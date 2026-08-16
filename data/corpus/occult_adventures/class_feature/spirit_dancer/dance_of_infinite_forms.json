@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spirit Dancer ~ Dance of Infinite Forms",
+    "name": "Dance of Infinite Forms",
+    "class": "Spirit Dancer",
+    "description": "A spirit dancer has perfected his dance. He can now use each of his supreme spirit powers' once-per-day abilities one time each day, instead of just one ability. He can use his spirit troika by spending 2 rounds of spirit dance instead of 3. Finally, he can enter a spirit dance with all six of his prepared spirits at once by spending 4 rounds of spirit dance each round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Dancer ~ Dance of Infinite Forms"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A spirit dancer has perfected his dance. He can now use each of his supreme spirit powers' once-per-day abilities one time each day, instead of just one ability. He can use his spirit troika by spending 2 rounds of spirit dance instead of 3. Finally, he can enter a spirit dance with all six of his prepared spirits at once by spending 4 rounds of spirit dance each round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1439,
+    "record_key": "Spirit Dancer ~ Dance of Infinite Forms"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

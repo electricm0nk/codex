@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Implement School Focus Power ~ Mental Discord",
+    "name": "Mental Discord [Enchantment]",
+    "class": "Implement School Focus Power",
+    "description": "As a standard action, you can expend 1 point of mental focus to disrupt the mind of one living creature within 30 feet. The creature can attempt a Will saving throw to negate the effect. If it fails the save, the creature can't concentrate on any spell effects and must succeed at a concentration check to cast any spell (DC = 15 + double the spell level). The affected creature takes a -4 penalty on this check if the spell includes a thought component. The creature takes a -2 penalty on all Will saving throws while under this effect. This effect lasts for %1 rounds.|OccultistLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Implement School Focus Power ~ Mental Discord"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Implement School Focus Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,ABILITIES,OccultistSchool_Enchantment=true"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can expend 1 point of mental focus to disrupt the mind of one living creature within 30 feet. The creature can attempt a Will saving throw to negate the effect. If it fails the save, the creature can't concentrate on any spell effects and must succeed at a concentration check to cast any spell (DC = 15 + double the spell level). The affected creature takes a -4 penalty on this check if the spell includes a thought component. The creature takes a -2 penalty on all Will saving throws while under this effect. This effect lasts for %1 rounds.|OccultistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1070,
+    "record_key": "Implement School Focus Power ~ Mental Discord"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

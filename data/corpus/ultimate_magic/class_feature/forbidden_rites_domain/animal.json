@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Animal Domain",
+    "name": "Animal",
+    "class": "Forbidden Rites Domain",
+    "description": "You can speak with and befriend animals with ease. In addition, you treat Knowledge (Nature) as a class skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Animal Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.AnimalDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can speak with and befriend animals with ease. In addition, you treat Knowledge (Nature) as a class skill."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Speak with Animals|PREDOMAIN:1,Animal|PREVARGTEQ:DomainAnimalAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Animal Companion|PREDOMAIN:1,Animal|PREVARGTEQ:DomainAnimalAbilityTriggerLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAnimalLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAnimalDC|10+(DomainAnimalLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAnimalTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAnimalAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (Nature)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Calm Animals|Cleric=2|Hold Animal|Cleric=3|Dominate Animal|Cleric=4|Summon Nature's Ally IV (Animals Only)|Cleric=5|Beast Shape III (Animals Only)|Cleric=6|Antilife Shell|Cleric=7|Animal Shapes|Cleric=8|Summon Nature's Ally VIII (Animals Only)|Cleric=9|Shapechange"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1028,
+    "record_key": "Forbidden Rites Domain ~ Animal Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

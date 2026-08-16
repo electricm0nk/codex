@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bedrock Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Bedrock Bloodline",
+    "description": "Whenever you cast a spell of the summoning subschool, the creatures summoned gain DR %1/adamantine. This does not stack with any DR the creature might have.|Sorcerer_BedrockArcana_DR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bedrock Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BedrockArcana_DR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a spell of the summoning subschool, the creatures summoned gain DR %1/adamantine. This does not stack with any DR the creature might have.|Sorcerer_BedrockArcana_DR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BedrockArcana_DR|max(Sorcerer_DeepEarth_BloodlineLVL/2,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(creatures summoned gain DR %1/adamantine)|Sorcerer_BedrockArcana_DR"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1651,
+    "record_key": "Bedrock Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rage Power ~ Elemental Blood (Greater)",
+    "name": "Elemental Blood, Greater",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian gains",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Elemental Blood (Greater)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialQuality.Supernatural.BloodRageGreater"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Elemental Blood"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,10"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Special Ability,TYPE.BloodRageGreater],[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ Elemental Blood (Greater)]"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian gains"
+      },
+      {
+        "key": "DESC",
+        "value": " a burrow speed of 30 feet.|PREVAREQ:BloodRage Acid,1"
+      },
+      {
+        "key": "DESC",
+        "value": " a swim speed of 60 feet.|PREVAREQ:BloodRage Cold,1"
+      },
+      {
+        "key": "DESC",
+        "value": " an increase of 30 feet to base land speed.|PREVAREQ:BloodRage Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": " a fly speed of 60 feet (good maneuverability).|PREVAREQ:BloodRage Electricity,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2668,
+    "record_key": "Rage Power ~ Elemental Blood (Greater)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

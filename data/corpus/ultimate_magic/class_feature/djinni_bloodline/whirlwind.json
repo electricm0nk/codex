@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Djinni Bloodline ~ Whirlwind",
+    "name": "Whirlwind",
+    "class": "Djinni Bloodline",
+    "description": "You gain the ability to turn into a 10-foot-high whirlwind once per day %1 rounds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Djinni Bloodline ~ Whirlwind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Djinni Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialAttack.Special Attack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Djinni"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Djinni_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Djinni_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DjinniWhirlwind_Duration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DjinniWhirlwind_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the ability to turn into a 10-foot-high whirlwind once per day %1 rounds."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DjinniWhirlwind_Duration|Sorcerer_Djinni_BloodlinePower9LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DjinniWhirlwind_Times|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (%1 rounds)|Sorcerer_DjinniWhirlwind_Duration|Sorcerer_DjinniWhirlwind_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_DjinniWhirlwind_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DjinniBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 595,
+    "record_key": "Djinni Bloodline ~ Whirlwind"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

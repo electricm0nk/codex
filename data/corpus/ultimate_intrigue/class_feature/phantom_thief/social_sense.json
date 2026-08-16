@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Phantom Thief ~ Social Sense",
+    "name": "Social Sense",
+    "class": "Phantom Thief",
+    "description": "A phantom thief's social sixth sense allows her to avoid danger in social situations and to act first when it breaks out. She receives a +%1 bonus on Sense Motive checks to avoid being surprised by a foe, on Bluff checks to surprise a foe, and on initiative checks for surprise rounds that involved Bluff and Sense Motive checks to determine surprise.|PhantomThiefSocialSenseBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantom Thief ~ Social Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.PhantomThiefClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhantomThiefSocialSenseBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A phantom thief's social sixth sense allows her to avoid danger in social situations and to act first when it breaks out. She receives a +%1 bonus on Sense Motive checks to avoid being surprised by a foe, on Bluff checks to surprise a foe, and on initiative checks for surprise rounds that involved Bluff and Sense Motive checks to determine surprise.|PhantomThiefSocialSenseBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhantomThiefSocialSenseBonus|RogueLVL/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 751,
+    "record_key": "Phantom Thief ~ Social Sense"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcane Bloodrager Bloodline ~ Bloodline Powers",
+    "name": "Bloodline Powers",
+    "class": "Arcane Bloodrager Bloodline",
+    "description": "When you bloodrage, arcane power transforms you into an arcane juggernaut who can cut down even the most careful caster.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Bloodrager Bloodline ~ Bloodline Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Special Attack"
+      },
+      {
+        "key": "DESC",
+        "value": "When you bloodrage, arcane power transforms you into an arcane juggernaut who can cut down even the most careful caster."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|ArcaneBloodragerBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 632,
+    "record_key": "Arcane Bloodrager Bloodline ~ Bloodline Powers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

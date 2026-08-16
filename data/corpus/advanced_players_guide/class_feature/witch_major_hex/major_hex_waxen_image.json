@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Major Hex ~ Waxen Image",
+    "name": "Major Hex - Waxen Image",
+    "class": "Witch Major Hex",
+    "description": "DC %1 |WitchHexDC_WaxenImage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Major Hex ~ Waxen Image"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MajorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMajorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,10]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexWaxenImageTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_WaxenImage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_WaxenImage"
+      },
+      {
+        "key": "DESC",
+        "value": "Once the image is complete (taking a full-round action), the subject must make a Will save. If the subject fails, the witch gains a small measure of control over the creature. Whenever she exercises this control, the creature receives a new Will save to end the effect. This effect occurs on the witch's turn and does not impede the creature's actions on its turn. The witch can use the waxen image %1 times before it melts. As a standard action, the witch can cause the subject to do any one of the following things: move up to the creature's speed in any direction, attack itself once with any weapon in hand (this attack automatically hits), lay down on the ground, or drop anything held. Alternatively, she can spend one of her uses to simply torture the image, causing the creature to be both sickened and staggered on its turn. The hex is an enchantment (compulsion) effect.|WitchHexWaxenImageTimes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Waxen Image"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_WaxenImage|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_WaxenImage|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Waxen Image)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexWaxenImageTimes|WitchHexStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 906,
+    "record_key": "Witch Major Hex ~ Waxen Image"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

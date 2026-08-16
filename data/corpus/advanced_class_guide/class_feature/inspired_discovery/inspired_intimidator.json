@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inspired Discovery ~ Inspired Intimidator",
+    "name": "Inspired Intimidator",
+    "class": "Inspired Discovery",
+    "description": "When the investigator succeeds at an Intimidate check to demoralize an opponent, he can expend one use of inspiration to automatically increase the result of the check by 5 for the purpose of determining the duration of the demoralize effect. He can choose to spend multiple uses to inspiration in this manner to further increase the duration of the demoralize effect.  He must be trained in Intimidate to take this talent. The underworld inspiration investigator talent has no effect on this talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inspired Discovery ~ Inspired Intimidator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InspiredInvestigatorTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Alchemist Archetype ~ Inspired Chemist"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Intimidate=1"
+      },
+      {
+        "key": "DESC",
+        "value": "When the investigator succeeds at an Intimidate check to demoralize an opponent, he can expend one use of inspiration to automatically increase the result of the check by 5 for the purpose of determining the duration of the demoralize effect. He can choose to spend multiple uses to inspiration in this manner to further increase the duration of the demoralize effect.  He must be trained in Intimidate to take this talent. The underworld inspiration investigator talent has no effect on this talent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2349,
+    "record_key": "Inspired Discovery ~ Inspired Intimidator"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Provocateur ~ Damning Performance",
+    "name": "Damning Performance",
+    "class": "Provocateur",
+    "description": "A provocateur can cause all observers fascinated by her fascinate performance to become less friendly to a target creature or group of her choice for",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Provocateur ~ Damning Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.ProvocateurClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A provocateur can cause all observers fascinated by her fascinate performance to become less friendly to a target creature or group of her choice for"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 minutes.|BardLVL*10!PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 days.|BardLVL|PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "DESC",
+        "value": "Affected observers' attitudes toward the target, the target's influence (Ultimate Intrigue 102) with affected observers, and affected observers' trust level as contacts (Ultimate Campaign 148) for the target are all reduced by one step. If she reveals information during the performance that would reduce those creatures' attitudes anyway, those attitudes worsen by an additional step for the duration. If the provocateur engages in a verbal duel (Ultimate Intrigue 176) against the target with an audience affected by damning performance, she automatically gains two edges."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 31,
+    "record_key": "Provocateur ~ Damning Performance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

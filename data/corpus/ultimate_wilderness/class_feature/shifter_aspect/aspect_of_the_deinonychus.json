@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter Aspect ~ Deinonychus",
+    "name": "Aspect of the Deinonychus",
+    "class": "Shifter Aspect",
+    "description": "The deinonychus is adept at racing from ambush to deliver grievous wounds with its talons. This aspect infuses the shifter with an enhanced ability to surprise foes and strike first in battle.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Deinonychus"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Deinonychus_1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Aspect.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterDeinonychusAspectLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The deinonychus is adept at racing from ambush to deliver grievous wounds with its talons. This aspect infuses the shifter with an enhanced ability to surprise foes and strike first in battle."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shifter Aspect ~ Deinonychus ~ Minor|PREVARLT:ReplaceMinorShifterAspect,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shifter Aspect ~ Deinonychus ~ Major|PREVARGTEQ:ShifterAspectLVL,4|PREVARLT:ReplaceMajorShifterAspect,1|PREVARGTEQ:ShifterWildShape,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterDeinonychusAspectLVL|ShifterAspectLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 32,
+    "record_key": "Shifter Aspect ~ Deinonychus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

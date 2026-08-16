@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Flame Spirit ~ Fiery Soul",
+    "name": "Fiery Soul",
+    "class": "Flame Spirit",
+    "description": "The shaman gains fire resistance 10. In addition, as a standard action she can unleash a 15-foot cone of flame from her mouth, dealing %1d4 points of fire damage. A successful Reflex saving throw (DC %2) halves this damage. The shaman can use this ability three times per day, but she must wait 1d4 rounds between each use.|ShamanFierySoulDice|ShamanFierySoulDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flame Spirit ~ Fiery Soul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanFierySoulDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanFierySoulDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman gains fire resistance 10. In addition, as a standard action she can unleash a 15-foot cone of flame from her mouth, dealing %1d4 points of fire damage. A successful Reflex saving throw (DC %2) halves this damage. The shaman can use this ability three times per day, but she must wait 1d4 rounds between each use.|ShamanFierySoulDice|ShamanFierySoulDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanFierySoulDice|ShamanSpiritLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanFierySoulDC|ShamanHexDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1560,
+    "record_key": "Flame Spirit ~ Fiery Soul"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

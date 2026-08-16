@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Desert Domain ~ Servant of the Sands",
+    "name": "Servant of the Sands",
+    "class": "Desert Domain",
+    "description": "Once per day, you may call upon the aid of a janni as if using lesser planar ally.  If you use this power while in desert terrain, you need not make an offering to call the creature(s), and the cost for any service is halved.|PREVARLT:DomainDesertLVL,12",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Desert Domain ~ Servant of the Sands"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.DomainPower.Desert Domain"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you may call upon the aid of a janni as if using lesser planar ally.  If you use this power while in desert terrain, you need not make an offering to call the creature(s), and the cost for any service is halved.|PREVARLT:DomainDesertLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you may call upon the aid of any type of common (non-noble) genie as if using planar ally.  If you use this power while in desert terrain, you need not make an offering to call the creature(s), and the cost for any service is halved.|PREMULT:2,[PREVARGTEQ:DomainDesertLVL,12],[PREVARLT:DomainDesertLVL,16]"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you may call upon the aid of any type of a noble genie as if using greater planar ally.  If you use this power while in desert terrain, you need not make an offering to call the creature(s), and the cost for any service is halved.|PREVARGTEQ:DomainDesertLVL,16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 277,
+    "record_key": "Desert Domain ~ Servant of the Sands"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

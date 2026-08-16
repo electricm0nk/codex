@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gravewalker ~ Bonethrall",
+    "name": "Bonethrall",
+    "class": "Gravewalker",
+    "description": "You can take control of an undead creature within your aura of desecration by forcing your will upon it (Will negates, using your hex DC). If it fails the save, the creature falls under your control as if you had used command undead (once control is established, the undead remain controlled even if outside the witch's aura). Intelligent undead receive a new saving throw each day to resist your command. The witch can control up to %1 HD of undead creatures. If an undead creature is under the control of another creature, you must make an opposed Charisma check whenever your orders conflict with that creature's.|BonethrallHD",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravewalker ~ Bonethrall"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BonethrallHD|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can take control of an undead creature within your aura of desecration by forcing your will upon it (Will negates, using your hex DC). If it fails the save, the creature falls under your control as if you had used command undead (once control is established, the undead remain controlled even if outside the witch's aura). Intelligent undead receive a new saving throw each day to resist your command. The witch can control up to %1 HD of undead creatures. If an undead creature is under the control of another creature, you must make an opposed Charisma check whenever your orders conflict with that creature's.|BonethrallHD"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BonethrallHD|classlevel(\"Witch\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 2008,
+    "record_key": "Gravewalker ~ Bonethrall"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

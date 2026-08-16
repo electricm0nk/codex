@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Phantom Emotional Focus ~ Jealousy",
+    "name": "Jealousy",
+    "class": "Phantom Emotional Focus",
+    "description": "A phantom with this emotional focus is covetous of everything-its master, those who wish to do it harm, and any who do not pay attention to it. It demands to be the center of attention at all times. The forms these phantoms take are as diverse as the forms of jealousy in life. Often they take pleasing forms, wishing to draw others in. Other times they take the form of crawling and lurching things, grasping at all they covet when they come within reach. The auras of these needy phantoms quickly change in color, going from an oily green to orange, to brownish red as they swirl through emotions in their efforts to gain the objects of their dark desires.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantom Emotional Focus ~ Jealousy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phantom Emotional Focus"
+      },
+      {
+        "key": "DESC",
+        "value": "A phantom with this emotional focus is covetous of everything-its master, those who wish to do it harm, and any who do not pay attention to it. It demands to be the center of attention at all times. The forms these phantoms take are as diverse as the forms of jealousy in life. Often they take pleasing forms, wishing to draw others in. Other times they take the form of crawling and lurching things, grasping at all they covet when they come within reach. The auras of these needy phantoms quickly change in color, going from an oily green to orange, to brownish red as they swirl through emotions in their efforts to gain the objects of their dark desires."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Skill Focus (Appraise)|Skill Focus (Bluff)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhantomEmotionalFocus_Jealousy|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1301,
+    "record_key": "Phantom Emotional Focus ~ Jealousy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

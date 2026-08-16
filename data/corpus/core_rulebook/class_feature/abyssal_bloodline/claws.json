@@ -1,0 +1,128 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Abyssal Bloodline ~ Claws",
+    "name": "Claws",
+    "class": "Abyssal Bloodline",
+    "description": "You can grow claws as a free action. These claws are treated as natural weapons, allowing you to make two claw attacks as a full attack action using your full base attack bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Abyssal Bloodline ~ Claws"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Abyssal Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.Special Attack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Abyssal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Abyssal_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Abyssal_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Abyssal_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_GenericClaws_SizeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can grow claws as a free action. These claws are treated as natural weapons, allowing you to make two claw attacks as a full attack action using your full base attack bonus."
+      },
+      {
+        "key": "DESC",
+        "value": "These attacks deal 1d4 points of damage each (1d3 if you are Small) plus your Strength modifier.|PREVARLT:Sorcerer_Abyssal_BloodlinePower1LVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "These attacks deal 1d6 points of damage each (1d4 if you are Small) plus your Strength modifier.|PREVARGTEQ:Sorcerer_Abyssal_BloodlinePower1LVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "These claws are considered magic weapons for the purpose of overcoming DR.|PREVARGTEQ:Sorcerer_Abyssal_BloodlinePower1LVL,5|PREVARLT:Sorcerer_Abyssal_BloodlinePower1LVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "These claws are considered magic weapons for the purpose of overcoming DR and are flaming weapons, each dealing an additional 1d6 points of fire damage on a successful hit.|PREVARGTEQ:Sorcerer_Abyssal_BloodlineProgressionLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your claws for %1 rounds per day. These rounds do not need to be consecutive.|Sorcerer_Abyssal_BloodlinePower1Times"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_GenericClaws_SizeBonus|1|TYPE=Base|PREVARGTEQ:Sorcerer_Abyssal_BloodlinePower1LVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Claw|DAMAGESIZE|Sorcerer_GenericClaws_SizeBonus|PREVARGTEQ:Sorcerer_Abyssal_BloodlinePower1LVL,7"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(2, 1d4+%1, %2 rounds/day)|STR|Sorcerer_Abyssal_BloodlinePower1Times|PREVARLT:Sorcerer_Abyssal_BloodlinePower1LVL,5"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(2, 1d4+%1, treated as magic weapons, %2 rounds/day)|STR|Sorcerer_Abyssal_BloodlinePower1Times|PREVARGTEQ:Sorcerer_Abyssal_BloodlinePower1LVL,5|PREVARLT:Sorcerer_Abyssal_BloodlinePower1LVL,7"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(2, 1d6+%1, treated as magic weapons, %2 rounds/day)|STR|Sorcerer_Abyssal_BloodlinePower1Times|PREVARGTEQ:Sorcerer_Abyssal_BloodlinePower1LVL,7|PREVARLT:Sorcerer_Abyssal_BloodlinePower1LVL,11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(2, 1d6+%1 plus 1d6 fire, treated as magic weapons, %2 rounds/day)|STR|Sorcerer_Abyssal_BloodlinePower1Times|PREVARGTEQ:Sorcerer_Abyssal_BloodlineProgressionLVL,11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Abyssal_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AbyssalBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2361,
+    "record_key": "Abyssal Bloodline ~ Claws"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

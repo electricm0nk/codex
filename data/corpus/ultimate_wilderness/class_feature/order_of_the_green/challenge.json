@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Order of the Green ~ Challenge",
+    "name": "Challenge",
+    "class": "Order of the Green",
+    "description": "An order of the Green cavalier can't issue a challenge against any creature of the animal or plant type. Whenever he issues a challenge, he receives a +%1 morale bonus on attack rolls against the target of his challenge. If the target of his challenge is of the aberration or undead type, each round he can roll his first attack roll against the target creature twice and take the higher result.|1+CavalierLVL/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Green ~ Challenge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An order of the Green cavalier can't issue a challenge against any creature of the animal or plant type. Whenever he issues a challenge, he receives a +%1 morale bonus on attack rolls against the target of his challenge. If the target of his challenge is of the aberration or undead type, each round he can roll his first attack roll against the target creature twice and take the higher result.|1+CavalierLVL/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 457,
+    "record_key": "Order of the Green ~ Challenge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

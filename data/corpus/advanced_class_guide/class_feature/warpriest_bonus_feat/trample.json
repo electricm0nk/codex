@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Trample",
+    "name": "Trample",
+    "class": "Warpriest Bonus Feat",
+    "description": "While mounted, you can ride down opponents and thrample them under your mount.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Trample"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.AttackOption"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Mounted Combat"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Ride=1"
+      },
+      {
+        "key": "DESC",
+        "value": "While mounted, you can ride down opponents and thrample them under your mount."
+      },
+      {
+        "key": "DESC",
+        "value": " When you attempt to overrun an opponent while mounted, your target may not choose to avoid you. Your mount may make one hoof attack against any target you knock down, gaining the standard +4 bonus on attack rolls against prone targets."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Trample"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4297,
+    "record_key": "Warpriest Bonus Feat ~ Trample"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcanist School Undead ~ Bolster",
+    "name": "Bolster",
+    "class": "Arcanist School Undead",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcanist School Undead ~ Bolster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistSchoolChoice"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Arcanist School ~ Undead"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistSchoolBoost_Bolster|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Undead School ~ Bolster|!PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistSchoolBoost_Bolster|-1|!PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Bolster (Arcanist Boost Only)|!PRECLASS:1,Wizard=1|PREVARGTEQ:ArcanistSchoolBoost_Bolster,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 294,
+    "record_key": "Arcanist School Undead ~ Bolster"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

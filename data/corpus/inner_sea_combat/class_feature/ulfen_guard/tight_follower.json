@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ulfen Guard ~ Tight Follower",
+    "name": "Tight Follower",
+    "class": "Ulfen Guard",
+    "description": "At 6th level, if the Ulfen Guard is within 10 feet of her chosen ally and the ally moves more than 10 feet away from her, the Ulfen Guard can move up to her speed as an immediate action so long as she ends the movement within 10 feet of her chosen ally.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ulfen Guard ~ Tight Follower"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ulfen Guard Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, if the Ulfen Guard is within 10 feet of her chosen ally and the ally moves more than 10 feet away from her, the Ulfen Guard can move up to her speed as an immediate action so long as she ends the movement within 10 feet of her chosen ally."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 556,
+    "record_key": "Ulfen Guard ~ Tight Follower"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

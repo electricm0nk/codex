@@ -1,0 +1,139 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bard Archetype ~ Filidh",
+    "name": "Filidh",
+    "class": "Bard Archetype",
+    "description": "By tapping into the world's natural music, specialized bards known as filidhs are able to see not only the tapestry of life but divine portents of the future from the rhythm of all life's song.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Filidh"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Filidh],[!PREFACT:1,ABILITIES,Bard_Archetype_Proficiencies=True,Bard_Archetype_Spellcasting=True,Bard_Archetype_InspireCourage=True,Bard_Archetype_Suggestion=True,Bard_Archetype_DirgeOfDoom=True,Bard_Archetype_InspireHeroics=True,Bard_Archetype_DeadlyPerformance=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "By tapping into the world's natural music, specialized bards known as filidhs are able to see not only the tapestry of life but divine portents of the future from the rhythm of all life's song."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Filidh ~ Armor and Weapon Proficiency|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Filidh ~ Natural Magic|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Filidh ~ Nature's Song|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Filidh ~ Echoes of Nature's Song|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Filidh ~ Divinatory Song|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Filidh ~ Voices of Life|PRECLASS:1,Bard=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Filidh ~ Unity of Life|PRECLASS:1,Bard=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Filidh ~ Song of the Cycle|PRECLASS:1,Bard=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_Spellcasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_Suggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireHeroics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_DeadlyPerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_Suggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireHeroics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_DeadlyPerformance|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 246,
+    "record_key": "Bard Archetype ~ Filidh"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

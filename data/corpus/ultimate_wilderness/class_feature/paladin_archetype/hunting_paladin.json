@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Paladin Archetype ~ Hunting Paladin",
+    "name": "Hunting Paladin",
+    "class": "Paladin Archetype",
+    "description": "Hunting paladins are tenacious trackers and stealthy stalkers in pursuit of evildoers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Hunting Paladin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Hunting Paladin],[!PREFACT:1,ABILITIES,Paladin_Archetype_ClassSkills=True,Paladin_Archetype_Proficiencies=True,Paladin_Archetype_SmiteEvil=True,Paladin_Archetype_DetectEvil=True,Paladin_Archetype_Spells=True,Paladin_Archetype_AuraOfResolve=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Hunting paladins are tenacious trackers and stealthy stalkers in pursuit of evildoers."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Hunting Paladin ~ Class Skills|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hunting Paladin ~ Hunt Evil|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hunting Paladin ~ Detect Evil|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hunting Paladin ~ Smite Evil|PRECLASS:1,Paladin=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hunting Paladin ~ Spells|PRECLASS:1,Paladin=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hunting Paladin ~ Tireless Aura|PRECLASS:1,Paladin=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_SmiteEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DetectEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfResolve|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_ArmorProficiencyHeavy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_SmiteEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfResolve|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 864,
+    "record_key": "Paladin Archetype ~ Hunting Paladin"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

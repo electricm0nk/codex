@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Oath against Savagery ~ Hordebreaker",
+    "name": "Hordebreaker",
+    "class": "Oath against Savagery",
+    "description": "When you hit an evil humanoid with an attack of opportunity, you deal an additional 1d6 points of damage. When using holy reach, you may make %1 additional attacks of opportunity per round. This increase stacks with similar increases from other sources such as Combat Reflexes.|HordebreakerAttacks",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against Savagery ~ Hordebreaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HordebreakerAttacks|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you hit an evil humanoid with an attack of opportunity, you deal an additional 1d6 points of damage. When using holy reach, you may make %1 additional attacks of opportunity per round. This increase stacks with similar increases from other sources such as Combat Reflexes.|HordebreakerAttacks"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HordebreakerAttacks|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1551,
+    "record_key": "Oath against Savagery ~ Hordebreaker"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

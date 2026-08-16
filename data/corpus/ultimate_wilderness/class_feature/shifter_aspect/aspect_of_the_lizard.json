@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shifter Aspect ~ Lizard",
+    "name": "Aspect of the Lizard",
+    "class": "Shifter Aspect",
+    "description": "The aspect of the lizard is one of swift, graceful movement, granting the ability to dart and scurry with an astounding agility and balance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Lizard"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Lizard_1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Aspect.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterLizardAspectLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The aspect of the lizard is one of swift, graceful movement, granting the ability to dart and scurry with an astounding agility and balance."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shifter Aspect ~ Lizard ~ Minor|PREVARLT:ReplaceMinorShifterAspect,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shifter Aspect ~ Lizard ~ Major|PREVARGTEQ:ShifterAspectLVL,4|PREVARLT:ReplaceMajorShifterAspect,1|PREVARGTEQ:ShifterWildShape,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterLizardAspectLVL|ShifterAspectLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 35,
+    "record_key": "Shifter Aspect ~ Lizard"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

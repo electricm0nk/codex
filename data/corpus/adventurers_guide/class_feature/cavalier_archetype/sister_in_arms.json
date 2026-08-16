@@ -1,0 +1,135 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cavalier Archetype ~ Sister-in-Arms",
+    "name": "Sister-in-Arms",
+    "class": "Cavalier Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Archetype ~ Sister-in-Arms"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CavalierArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "DESC",
+        "value": "Some of the most charismatic Gray Maidens combine their devotion to their sisters with the intense tactical training they received, learning to perfectly direct their companions and inspiring them to survive and emerge victorious. Known as sisters-in-arms, these scarred soldiers are highly respected by their fellow Maidens for their dedication. Sisters-in-arms are almost never neutral on the subject of Queen Ileosa; some still hold true to the cruel queen's ideals and lead bands of like-minded veterans, while others have forsaken Ileosa in favor of total devotion to their fellow survivors."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cavalier=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Sister-in-Arms],[!PREFACT:1,ABILITIES,Cavalier_Archetype_Challenge=True,Cavalier_Archetype_Order=True,Cavalier_Archetype_Mount=True,Cavalier_Archetype_CavaliersCharge=True,Cavalier_Archetype_ExpertTrainer=True,Cavalier_Archetype_MightyCharge=True,Cavalier_Archetype_SupremeCharge=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sister-in-Arms ~ Halfhearted Challenge|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sister-in-Arms ~ Maiden's Order|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sister-in-Arms ~ Devoted Defender|PRECLASS:1,Cavalier=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sister-in-Arms ~ Maiden's Loyalty|PRECLASS:1,Cavalier=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sister-in-Arms ~ Dedicated Commander|PRECLASS:1,Cavalier=11"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Challenge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Order|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Mount|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_CavaliersCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_ExpertTrainer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_MightyCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_SupremeCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Order|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Mount|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_CavaliersCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_ExpertTrainer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_MightyCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_SupremeCharge|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 744,
+    "record_key": "Cavalier Archetype ~ Sister-in-Arms"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

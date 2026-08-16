@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Runeforger ~ Bloodthirst",
+    "name": "Bloodthirst*",
+    "class": "Runeforger",
+    "description": "The inscribed piercing or slashing weapon functions as if it had the wounding special ability, even if nonmagical. The forgemaster must be at least 4th level before learning this rune.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Runeforger ~ Bloodthirst"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RuneforgerOption.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cleric=4"
+      },
+      {
+        "key": "DESC",
+        "value": "The inscribed piercing or slashing weapon functions as if it had the wounding special ability, even if nonmagical. The forgemaster must be at least 4th level before learning this rune."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 72,
+    "record_key": "Runeforger ~ Bloodthirst"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

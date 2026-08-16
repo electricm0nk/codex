@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Onmyoji ~ Divine Spellcasting",
+    "name": "Divine Spellcasting",
+    "class": "Onmyoji",
+    "description": "An onmyoji's spellcasting ability comes from divine rather than psychic power. As a divine caster, the onmyoji's spells use verbal components instead of thought components, and somatic components instead of emotional components, and she uses an ofuda as a divine focus. Ofudas are scrolls with holy writings written on parchment, cloth, or wood (having the same cost as a wooden holy symbol) or metal (having the same cost as a silver holy symbol). This ability alters spellcasting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Onmyoji ~ Divine Spellcasting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Onmyoji Class Feature.Spiritualist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An onmyoji's spellcasting ability comes from divine rather than psychic power. As a divine caster, the onmyoji's spells use verbal components instead of thought components, and somatic components instead of emotional components, and she uses an ofuda as a divine focus. Ofudas are scrolls with holy writings written on parchment, cloth, or wood (having the same cost as a wooden holy symbol) or metal (having the same cost as a silver holy symbol). This ability alters spellcasting."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1640,
+    "record_key": "Onmyoji ~ Divine Spellcasting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Nothing Can Stop Me",
+    "name": "Nothing Can Stop Me",
+    "class": "Vigilante Talent",
+    "description": "Once per round, while the vigilante is moving, he can make one attack as a free action against an unattended object in the way of his path, such as a door or table. If his attack deals enough damage to destroy the object, he can continue to move. If he doesn't destroy the object, his move ends. This attack is made as part of his move action and doesn't count against his attacks this round. If his attack inadvertently targets a creature (such as a mimic), it automatically misses and his move ends (although he can still attack the creature as normal at the end of his movement).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Nothing Can Stop Me"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Nothing Can Stop Me"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsAvenger,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round, while the vigilante is moving, he can make one attack as a free action against an unattended object in the way of his path, such as a door or table. If his attack deals enough damage to destroy the object, he can continue to move. If he doesn't destroy the object, his move ends. This attack is made as part of his move action and doesn't count against his attacks this round. If his attack inadvertently targets a creature (such as a mimic), it automatically misses and his move ends (although he can still attack the creature as normal at the end of his movement)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 93,
+    "record_key": "Vigilante Talent ~ Nothing Can Stop Me"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

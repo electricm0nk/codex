@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Jagged Flesh",
+    "name": "Jagged Flesh",
+    "class": "Wild Talent",
+    "description": "Element earth; Type utility (Sp); Level 3; Burn 1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Jagged Flesh"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Elemental Defense ~ Flesh Of Stone"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite flesh of stone"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Earth,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Element earth; Type utility (Sp); Level 3; Burn 1"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;You painfully push forth jagged chunks of rock from your flesh. Until the next time your burn is removed, while your flesh of stone is active, any creature that strikes you with an unarmed strike or natural weapon or that grapples you takes 1d6 points of piercing damage. Weapons that strike you also take this damage, though the damage is unlikely to penetrate the weapon's hardness."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 761,
+    "record_key": "Wild Talent ~ Jagged Flesh"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

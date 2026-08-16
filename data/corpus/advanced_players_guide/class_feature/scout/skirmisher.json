@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Scout ~ Skirmisher",
+    "name": "Skirmisher",
+    "class": "Scout",
+    "description": "Whenever you move more than 10 feet in a round and make an attack action, the attack deals sneak attack damage as if the target was flat-footed. If you make more than one attack this turn, this ability only applies to the first attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scout ~ Skirmisher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RogueClassFeatures.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you move more than 10 feet in a round and make an attack action, the attack deals sneak attack damage as if the target was flat-footed. If you make more than one attack this turn, this ability only applies to the first attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2979,
+    "record_key": "Scout ~ Skirmisher"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

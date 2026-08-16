@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Punishing Kick",
+    "name": "Punishing Kick",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your kicks are so powerful you use them to push or knock back.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Punishing Kick"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:8],[PREVARGTEQ:WarpriestBonusFeatBAB,8]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "2,CON=13,WIS=13"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PunishingKickDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PunishingKickTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your kicks are so powerful you use them to push or knock back."
+      },
+      {
+        "key": "DESC",
+        "value": " You must declare that you are using this feat before you make your attack roll (thus a failed attack roll ruins the attempt). On a successful hit, the attack deals damage normally and you can choose to push your target 5 feet or attempt to knock them prone. If you decide to push the target, it is moved 5 feet directly away from you. This movement does not provoke attacks of opportunity, and the target must end this move in a safe space it can stand in. If you decide to attempt to knock the target prone, the target receives a Fortitude saving throw with a DC %1 [10 + 1/2 your character level + your Wisdom modifier] to avoid the effect. You may attempt a punishing kick attack %2/day [for every four levels you have attained (but see Special)], and no more than once per round.|PunishingKickDC|PunishingKickTimes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Punishing Kick"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.167"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4364,
+    "record_key": "Warpriest Bonus Feat ~ Punishing Kick"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

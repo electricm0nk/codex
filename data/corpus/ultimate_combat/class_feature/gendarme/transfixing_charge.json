@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gendarme ~ Transfixing Charge",
+    "name": "Transfixing Charge",
+    "class": "Gendarme",
+    "description": "At 20th level, a gendarme represents the epitome of mounted combat. Whenever he makes a charge attack while mounted, he deals triple the normal damage (quadruple if using a lance); this damage includes all increases from the Spirited Charge feat and from the use of a lance. In addition, if the gendarme confirms a critical hit on a charge attack while mounted, the attack deals maximum damage for the weapon wielded. Additional damage from weapon properties, magic effects, precision-based bonuses, or other increases are rolled normally. This ability replaces supreme charge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gendarme ~ Transfixing Charge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a gendarme represents the epitome of mounted combat. Whenever he makes a charge attack while mounted, he deals triple the normal damage (quadruple if using a lance); this damage includes all increases from the Spirited Charge feat and from the use of a lance. In addition, if the gendarme confirms a critical hit on a charge attack while mounted, the attack deals maximum damage for the weapon wielded. Additional damage from weapon properties, magic effects, precision-based bonuses, or other increases are rolled normally. This ability replaces supreme charge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 494,
+    "record_key": "Gendarme ~ Transfixing Charge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Lantern Bearer ~ Enhanced Vision",
+    "name": "Enhanced Vision",
+    "class": "Lantern Bearer",
+    "description": "A lantern bearer hones his senses to better combat subterranean enemies. He gains low-light vision. If the lantern bearer already has low-light vision, he can instead see three times as far as humans in areas of dim light.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lantern Bearer ~ Enhanced Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.LanternBearerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A lantern bearer hones his senses to better combat subterranean enemies. He gains low-light vision. If the lantern bearer already has low-light vision, he can instead see three times as far as humans in areas of dim light."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 229,
+    "record_key": "Lantern Bearer ~ Enhanced Vision"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

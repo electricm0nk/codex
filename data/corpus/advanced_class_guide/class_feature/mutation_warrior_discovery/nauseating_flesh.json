@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mutation Warrior Discovery ~ Nauseating Flesh",
+    "name": "Nauseating Flesh",
+    "class": "Mutation Warrior Discovery",
+    "description": "The mutation warrior's body is suffused with poison. Any creature that bites, engulfs, or swallows the mutation warrior must make a Fortitude saving throw or be nauseated for 1d4 rounds. The mutation warrior with this discovery does not suffer the effect of the poison of his own nauseating flesh.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutation Warrior Discovery ~ Nauseating Flesh"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mutation Warrior Discovery.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "FighterLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "The mutation warrior's body is suffused with poison. Any creature that bites, engulfs, or swallows the mutation warrior must make a Fortitude saving throw or be nauseated for 1d4 rounds. The mutation warrior with this discovery does not suffer the effect of the poison of his own nauseating flesh."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3086,
+    "record_key": "Mutation Warrior Discovery ~ Nauseating Flesh"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

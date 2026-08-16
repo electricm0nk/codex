@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Medium ~ Decisive Strike",
+    "name": "Decisive Strike",
+    "class": "Medium",
+    "description": "(Greater) You can allow the marshal to gain 1 point of influence over you as a swift action to allow an ally within 30 feet who can see and hear you to make a single melee or ranged attack during your turn. You can use this ability as a standard action to instead allow the ally to perform any standard action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Decisive Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "(Greater) You can allow the marshal to gain 1 point of influence over you as a swift action to allow an ally within 30 feet who can see and hear you to make a single melee or ranged attack during your turn. You can use this ability as a standard action to instead allow the ally to perform any standard action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 869,
+    "record_key": "Medium ~ Decisive Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Quenching Infusion",
+    "name": "Quenching Infusion",
+    "class": "Wild Talent",
+    "description": "Element water; Type substance infusion; Level 1; Burn 1 Associated Blasts charged water, water Saving Throw none Your blast puts out nonmagical fires as if they had been touched by a water elemental. If you increase the burn cost to 2 or reduce the damage to 0, it also dispels magical fires as if you were a water elemental with a number of Hit Dice equal to your kineticist level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Quenching Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Water"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Water,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Element water; Type substance infusion; Level 1; Burn 1 Associated Blasts charged water, water Saving Throw none Your blast puts out nonmagical fires as if they had been touched by a water elemental. If you increase the burn cost to 2 or reduce the damage to 0, it also dispels magical fires as if you were a water elemental with a number of Hit Dice equal to your kineticist level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 715,
+    "record_key": "Wild Talent ~ Quenching Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

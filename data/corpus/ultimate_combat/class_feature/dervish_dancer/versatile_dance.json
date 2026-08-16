@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dervish Dancer ~ Versatile Dance",
+    "name": "Versatile Dance",
+    "class": "Dervish Dancer",
+    "description": "At 2nd level, a dervish dancer gains a bonus equal to half his level on Perform (dance) checks. He can use his bonus for his Perform (dance) skill in place of his bonus for Acrobatics. This ability replaces versatile performance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dervish Dancer ~ Versatile Dance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a dervish dancer gains a bonus equal to half his level on Perform (dance) checks. He can use his bonus for his Perform (dance) skill in place of his bonus for Acrobatics. This ability replaces versatile performance."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Dance)|BardLvl/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 426,
+    "record_key": "Dervish Dancer ~ Versatile Dance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

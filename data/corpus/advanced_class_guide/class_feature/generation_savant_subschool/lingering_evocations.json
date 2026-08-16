@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Generation Savant Subschool ~ Lingering Evocations",
+    "name": "Lingering Evocations",
+    "class": "Generation Savant Subschool",
+    "description": "Any evocation spell you cast with a duration greater than instantaneous lasts an additional %1 rounds. At 20th level, any dispel checks made against your evocation spells must be rolled twice, and your opponent must use the less favorable result.|max(ArcanistSavantSchoolLVL/2,1)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Generation Savant Subschool ~ Lingering Evocations"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit1"
+      },
+      {
+        "key": "DESC",
+        "value": "Any evocation spell you cast with a duration greater than instantaneous lasts an additional %1 rounds. At 20th level, any dispel checks made against your evocation spells must be rolled twice, and your opponent must use the less favorable result.|max(ArcanistSavantSchoolLVL/2,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2596,
+    "record_key": "Generation Savant Subschool ~ Lingering Evocations"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

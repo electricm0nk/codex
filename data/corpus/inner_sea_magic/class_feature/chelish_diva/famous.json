@@ -1,0 +1,109 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Chelish Diva ~ Famous",
+    "name": "Famous",
+    "class": "Chelish Diva",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Chelish Diva ~ Famous"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.BardBardicKnowledge.DivaFamous"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivaFamousBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivaFamousPopulation|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "Within %1, the locals are more likely to react favorably toward the Chelish diva.|%LIST|PREVARLT:BardLVL,17"
+      },
+      {
+        "key": "DESC",
+        "value": "The diva's renown has spread far, and most civilized folk know of her (GM's discretion).|PREVARGTEQ:BardLVL,17"
+      },
+      {
+        "key": "DESC",
+        "value": "The bard gains a +%1 bonus on Bluff and Intimidate checks in that area and to influence people from that area.|DivaFamousBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "The region is a settlement or settlements with a total population of %1,000 or fewer people.|DivaFamousPopulation|PREVARLT:BardLVL,17"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "USERINPUT|TITLE=Region of fame"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Bluff=Region of fame,Intimidate=Region of fame|DivaFamousBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivaFamousBonus|(BardLVL+3)/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivaFamousPopulation|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivaFamousPopulation|4|PREVARGTEQ:BardLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivaFamousPopulation|20|PREVARGTEQ:BardLVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivaFamousPopulation|75|PREVARGTEQ:BardLVL,13"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 165,
+    "record_key": "Chelish Diva ~ Famous"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

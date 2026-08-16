@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Flame Mystery ~ Gaze of Flames",
+    "name": "Gaze of Flames",
+    "class": "Flame Mystery",
+    "description": "You can see through fire, fog, and smoke without penalty as long as the light is sufficient to allow you to see normally. At 7th level, you can gaze through any source of flame within 10 feet per oracle level, as if using clairvoyance. You can use this ability for %1 rounds per day, but these rounds do not need to be consecutive.|classlevel(\"Oracle\")",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flame Mystery ~ Gaze of Flames"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.FlameRevelation.Supernatural.RoundsPerDayOracleRevelation"
+      },
+      {
+        "key": "DESC",
+        "value": "You can see through fire, fog, and smoke without penalty as long as the light is sufficient to allow you to see normally. At 7th level, you can gaze through any source of flame within 10 feet per oracle level, as if using clairvoyance. You can use this ability for %1 rounds per day, but these rounds do not need to be consecutive.|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 597,
+    "record_key": "Flame Mystery ~ Gaze of Flames"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

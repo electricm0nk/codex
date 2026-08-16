@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mutation Mind ~ Phrenic Empowerment",
+    "name": "Phrenic Empowerment",
+    "class": "Mutation Mind",
+    "description": "At 7th level, a mutation mind's phrenic amplifications empower her physical mutation. Whenever a mutation mind modifies a spell with a phrenic amplification while affected by her physical mutation, she can increase the bonus to her Strength score from her physical mutation by 2 for a number of rounds equal to the level of the spell she cast. This bonus doesn't stack; if the mutation mind activates it again, she uses the longer duration but doesn't increase the bonus. While under the effect of phrenic empowerment, whenever the mutation mind takes damage, she risks losing control of her powers. At the end of each turn that she takes hit point damage, the mutation mind must succeed at a Will save (DC = 15 + 1/2 her character level) or take a -2 penalty on Will saving throws and to Intelligence. These penalties last for 1 hour after the physical mutation ends and stack with themselves. If the penalty lowers her Intelligence score to 0, the mutation mind is comatose until 1 hour after physical mutation ends.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutation Mind ~ Phrenic Empowerment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mutation Mind Class Feature.Psychic Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, a mutation mind's phrenic amplifications empower her physical mutation. Whenever a mutation mind modifies a spell with a phrenic amplification while affected by her physical mutation, she can increase the bonus to her Strength score from her physical mutation by 2 for a number of rounds equal to the level of the spell she cast. This bonus doesn't stack; if the mutation mind activates it again, she uses the longer duration but doesn't increase the bonus. While under the effect of phrenic empowerment, whenever the mutation mind takes damage, she risks losing control of her powers. At the end of each turn that she takes hit point damage, the mutation mind must succeed at a Will save (DC = 15 + 1/2 her character level) or take a -2 penalty on Will saving throws and to Intelligence. These penalties last for 1 hour after the physical mutation ends and stack with themselves. If the penalty lowers her Intelligence score to 0, the mutation mind is comatose until 1 hour after physical mutation ends."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1577,
+    "record_key": "Mutation Mind ~ Phrenic Empowerment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

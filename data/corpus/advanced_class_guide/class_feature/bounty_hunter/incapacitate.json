@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bounty Hunter ~ Incapacitate",
+    "name": "Incapacitate",
+    "class": "Bounty Hunter",
+    "description": "A bounty hunter can incapacitate a studied target. This functions like the assassinate slayer talent, except instead of killing the target, the bounty hunter's successful attack knocks the target unconscious for 1d6 rounds unless it succeeds at its saving throw. If the target does succeed at its saving throw, it still takes the sneak attack damage as normal, but the damage is nonlethal, and the target is immune to that slayer's incapacitate ability for 24 hours.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bounty Hunter ~ Incapacitate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bounty Hunter Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A bounty hunter can incapacitate a studied target. This functions like the assassinate slayer talent, except instead of killing the target, the bounty hunter's successful attack knocks the target unconscious for 1d6 rounds unless it succeeds at its saving throw. If the target does succeed at its saving throw, it still takes the sneak attack damage as normal, but the damage is nonlethal, and the target is immune to that slayer's incapacitate ability for 24 hours."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3737,
+    "record_key": "Bounty Hunter ~ Incapacitate"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

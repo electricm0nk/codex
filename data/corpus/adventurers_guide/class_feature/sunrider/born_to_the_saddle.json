@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sunrider ~ Born to the Saddle",
+    "name": "Born to the Saddle",
+    "class": "Sunrider",
+    "description": "While wearing light or no armor, a sunrider does not need to attempt Ride checks for any task listed in the Ride skill with a DC of 15 or lower. She does not take an armor check penalty on Ride checks while riding her mount.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sunrider ~ Born to the Saddle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.SunriderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "DESC",
+        "value": "While wearing light or no armor, a sunrider does not need to attempt Ride checks for any task listed in the Ride skill with a DC of 15 or lower. She does not take an armor check penalty on Ride checks while riding her mount."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Ride|-ACCHECK"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 803,
+    "record_key": "Sunrider ~ Born to the Saddle"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

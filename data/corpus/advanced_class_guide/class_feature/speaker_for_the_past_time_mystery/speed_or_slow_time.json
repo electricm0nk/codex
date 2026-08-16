@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Speaker for the Past Time Mystery ~ Speed or Slow Time",
+    "name": "Speed or Slow Time",
+    "class": "Speaker for the Past Time Mystery",
+    "description": "As a standard action, you can speed up or slow down time, as either the haste or slow spell. You can use this ability %1/day.|SpeedOrSlowTimeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Speaker for the Past Time Mystery ~ Speed or Slow Time"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "speaker for the past revelation.SpecialQuality.SpellLike.TimeRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shaman=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpeedOrSlowTimeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can speed up or slow down time, as either the haste or slow spell. You can use this ability %1/day.|SpeedOrSlowTimeTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpeedOrSlowTimeTimes|min(3,(classlevel(\"Shaman\")-2)/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3634,
+    "record_key": "Speaker for the Past Time Mystery ~ Speed or Slow Time"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

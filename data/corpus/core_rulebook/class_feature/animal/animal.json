@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Animal Domain",
+    "name": "Animal",
+    "class": null,
+    "description": "You can speak with and befriend animals with ease. In addition, you treat Knowledge (Nature) as a class skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can speak with and befriend animals with ease. In addition, you treat Knowledge (Nature) as a class skill."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Speak with Animals|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Animal)|PREVARGTEQ:DomainAnimalAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Animal Companion|PREVARGTEQ:DomainAnimalAbilityTriggerLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAnimalLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAnimalDC|10+(DomainAnimalLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAnimalTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAnimalAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (Nature)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Animal=1|Calm Animals|Animal=2|Hold Animal|Animal=3|Dominate Animal|Animal=4|Summon Nature's Ally IV (Animals Only)|Animal=5|Beast Shape III (Animals Only)|Animal=6|Antilife Shell|Animal=7|Animal Shapes|Animal=8|Summon Nature's Ally VIII (Animals Only)|Animal=9|Shapechange"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 652,
+    "record_key": "Animal Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

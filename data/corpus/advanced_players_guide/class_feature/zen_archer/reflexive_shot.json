@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Zen Archer ~ Reflexive Shot",
+    "name": "Reflexive Shot",
+    "class": "Zen Archer",
+    "description": "At 9th level, a zen archer can make attacks of opportunity with arrows from his bow. The monk still threatens squares he could reach with unarmed strikes, and can still only make one attack of opportunity per round (unless he has Combat Reflexes). This ability replaces improved evasion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Zen Archer ~ Reflexive Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.Extraordinary.MonkImprovedEvasion"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a zen archer can make attacks of opportunity with arrows from his bow. The monk still threatens squares he could reach with unarmed strikes, and can still only make one attack of opportunity per round (unless he has Combat Reflexes). This ability replaces improved evasion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2389,
+    "record_key": "Zen Archer ~ Reflexive Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Tribal Fighter ~ Tribal Weapon Training",
+    "name": "Tribal Weapon Training",
+    "class": "Tribal Fighter",
+    "description": "When a tribal fighter gains the weapon training ability, he must choose the tribal weapon group and doesn't later gain additional weapon groups, though the weapon training bonus for tribal weapons still improves at 9th level and every 4 levels thereafter. [NOT IMPLEMENTED] Additionally, if the tribal fighter has combat feats that apply to a specific weapon type (such as Improved Critical or Weapon Focus) and he has selected a weapon that belongs to the tribal weapon group, he can apply the benefits of that feat to all weapons that belong to the tribal weapon group that would legally apply (for instance, a feat that applies only to throwing weapons wouldn't apply to greatclubs). This benefit applies only to feats selected as fighter bonus feats. This alters weapon training.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tribal Fighter ~ Tribal Weapon Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fighter Class Features.TribalFighterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When a tribal fighter gains the weapon training ability, he must choose the tribal weapon group and doesn't later gain additional weapon groups, though the weapon training bonus for tribal weapons still improves at 9th level and every 4 levels thereafter. [NOT IMPLEMENTED] Additionally, if the tribal fighter has combat feats that apply to a specific weapon type (such as Improved Critical or Weapon Focus) and he has selected a weapon that belongs to the tribal weapon group, he can apply the benefits of that feat to all weapons that belong to the tribal weapon group that would legally apply (for instance, a feat that applies only to throwing weapons wouldn't apply to greatclubs). This benefit applies only to feats selected as fighter bonus feats. This alters weapon training."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Weapon Training 1 Tribal"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBase|1|PRECLASS:1,Fighter=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBase|1|PRECLASS:1,Fighter=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBase|1|PRECLASS:1,Fighter=17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 590,
+    "record_key": "Tribal Fighter ~ Tribal Weapon Training"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

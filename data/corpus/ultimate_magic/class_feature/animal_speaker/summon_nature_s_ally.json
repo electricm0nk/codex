@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Animal Speaker ~ Summon Nature's Ally",
+    "name": "Summon Nature's Ally",
+    "class": "Animal Speaker",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Speaker ~ Summon Nature's Ally"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=1|Summon Nature's Ally I"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=2|Summon Nature's Ally II|PREVARGTEQ:classlevel(\"Bard\"),4"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=3|Summon Nature's Ally III|PREVARGTEQ:classlevel(\"Bard\"),7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=4|Summon Nature's Ally IV|PREVARGTEQ:classlevel(\"Bard\"),10"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=5|Summon Nature's Ally V|PREVARGTEQ:classlevel(\"Bard\"),13"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bard=6|Summon Nature's Ally VI|PREVARGTEQ:classlevel(\"Bard\"),16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 949,
+    "record_key": "Animal Speaker ~ Summon Nature's Ally"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

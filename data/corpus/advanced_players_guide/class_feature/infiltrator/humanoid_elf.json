@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Infiltrator ~ Humanoid (Elf)",
+    "name": "Humanoid (Elf)",
+    "class": "Infiltrator",
+    "description": "elf blood, low-light vision, elven immunities, elven magic, keen senses, Skill Focus (choose one skill), weapon familiarity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infiltrator ~ Humanoid (Elf)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.AdaptationCreature.ElfBlood.LowLightVision.ElvenImmunities.ElvenMagic.KeenSenses.SkillFocusAll.WeaponFamiliarity"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Favored Enemy ~ Humanoid (Elf)"
+      },
+      {
+        "key": "DESC",
+        "value": "elf blood, low-light vision, elven immunities, elven magic, keen senses, Skill Focus (choose one skill), weapon familiarity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2750,
+    "record_key": "Infiltrator ~ Humanoid (Elf)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

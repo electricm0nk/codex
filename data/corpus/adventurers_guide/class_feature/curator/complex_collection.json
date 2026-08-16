@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Curator ~ Complex Collection",
+    "name": "Complex Collection",
+    "class": "Curator",
+    "description": "A curator can empower two relics that are in his collection simultaneously, and he gains the benefits of both. When he does so, he must allocate his relic collection's mental focus between the two relics.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Curator ~ Complex Collection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.CuratorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "DESC",
+        "value": "A curator can empower two relics that are in his collection simultaneously, and he gains the benefits of both. When he does so, he must allocate his relic collection's mental focus between the two relics."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 961,
+    "record_key": "Curator ~ Complex Collection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

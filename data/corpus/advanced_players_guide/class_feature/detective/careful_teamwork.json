@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Detective ~ Careful Teamwork",
+    "name": "Careful Teamwork",
+    "class": "Detective",
+    "description": "A detective uses performance to keep allies coordinated, alert, and ready for action. All allies within 30 feet gain a +%1 bonus on Initiative checks, Perception, and Disable Device checks for 1 hour. They also gain a +%1 insight bonus on Reflex saves and to AC against traps and when they are flat-footed. These bonuses increase by +1 at 5th level and every six levels thereafter. Using this ability requires 3 rounds of continuous performance, and the targets must be able to see and hear the bard throughout the performance. This ability is language-dependent and requires visual and audible components. This performance replaces inspire courage.|(BardLVL+1)/6",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Detective ~ Careful Teamwork"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Supernatural.BardInspireCourage"
+      },
+      {
+        "key": "DESC",
+        "value": "A detective uses performance to keep allies coordinated, alert, and ready for action. All allies within 30 feet gain a +%1 bonus on Initiative checks, Perception, and Disable Device checks for 1 hour. They also gain a +%1 insight bonus on Reflex saves and to AC against traps and when they are flat-footed. These bonuses increase by +1 at 5th level and every six levels thereafter. Using this ability requires 3 rounds of continuous performance, and the targets must be able to see and hear the bard throughout the performance. This ability is language-dependent and requires visual and audible components. This performance replaces inspire courage.|(BardLVL+1)/6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1660,
+    "record_key": "Detective ~ Careful Teamwork"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

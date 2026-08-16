@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Turfer ~ Favored Turf",
+    "name": "Favored Turf",
+    "class": "Turfer",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Turfer ~ Favored Turf"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.TurferClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredTurfLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Common Favored Turf"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Basic Favored Turf"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTurfPool|(FavoredTurfLVL+1)/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTurfLVL|BrawlerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 376,
+    "record_key": "Turfer ~ Favored Turf"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

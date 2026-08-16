@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Temporal Web ~ Mazmezz",
+    "name": "Temporal Web",
+    "class": "Temporal Web",
+    "description": "1/day, you may use temporal stasis heightened to function as a 9th-level spell. The target of this ability appears to be wrapped tightly in spiderwebs. You can maintain up to 3 targets in a temporal web at a time-if you use this ability on a 4th target, you must select one of the other 3 targets to immediately release. This ability is the ability of a 9th-level spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Temporal Web ~ Mazmezz"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Temporal Stasis,19+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "1/day, you may use temporal stasis heightened to function as a 9th-level spell. The target of this ability appears to be wrapped tightly in spiderwebs. You can maintain up to 3 targets in a temporal web at a time-if you use this ability on a 4th target, you must select one of the other 3 targets to immediately release. This ability is the ability of a 9th-level spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 158,
+    "record_key": "Temporal Web ~ Mazmezz"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

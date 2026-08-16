@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "First Worlder ~ Fey Summons",
+    "name": "Fey Summons",
+    "class": "First Worlder",
+    "description": "A first worlder adds the following creatures to the lists of what he can summon with his summon nature's ally spell-like ability:&nl; Summon nature's ally II: gremlin (jinkin, pugwampi, or vexgit).&nl; Summon nature's ally III: gremlin (nuglub).&nl; Summon nature's ally IV: unicorn.&nl; Summon nature's ally V: pixie, satyr.&nl; Summon nature's ally VII: nymph.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "First Worlder ~ Fey Summons"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A first worlder adds the following creatures to the lists of what he can summon with his summon nature's ally spell-like ability:&nl; Summon nature's ally II: gremlin (jinkin, pugwampi, or vexgit).&nl; Summon nature's ally III: gremlin (nuglub).&nl; Summon nature's ally IV: unicorn.&nl; Summon nature's ally V: pixie, satyr.&nl; Summon nature's ally VII: nymph."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 372,
+    "record_key": "First Worlder ~ Fey Summons"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

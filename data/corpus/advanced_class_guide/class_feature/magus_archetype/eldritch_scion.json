@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magus Archetype ~ Eldritch Scion",
+    "name": "Eldritch Scion",
+    "class": "Magus Archetype",
+    "description": "Unlike typical magi, eldritch scions do not study tomes of magic or spend time learning to combine martial and magical skills. Rather, eldritch scions find that their spells and abilities come to them instinctively.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Eldritch Scion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MagusArchetype.MagusSpells.MagusSpellRecall.MagusArcanePool.MagusKnowledgePool"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Eldritch Scion],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MagusSpells,TYPE.MagusSpellRecall,TYPE.MagusArcanePool,TYPE.MagusKnowledgePool,TYPE.MagusSpellCombat,TYPE.MagusImprovedSpellCombat,TYPE.MagusGreaterSpellCombat]"
+      },
+      {
+        "key": "DESC",
+        "value": "Unlike typical magi, eldritch scions do not study tomes of magic or spend time learning to combine martial and magical skills. Rather, eldritch scions find that their spells and abilities come to them instinctively."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Eldritch Scion SpellCasting Reduction"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Eldritch Scion ~ Spells|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Eldritch Scion ~ Bloodline|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Eldritch Scion ~ Eldritch Pool|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Eldritch Scion ~ Spell Combat|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Eldritch Scion ~ Bonus Spells|PRECLASS:1,Magus=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Eldritch Scion ~ Improved Spell Combat|PRECLASS:1,Magus=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Eldritch Scion ~ Greater Spell Combat|PRECLASS:1,Magus=18"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Magus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3368,
+    "record_key": "Magus Archetype ~ Eldritch Scion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

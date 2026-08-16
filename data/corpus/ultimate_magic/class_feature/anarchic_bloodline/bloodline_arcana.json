@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Anarchic Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Anarchic Bloodline",
+    "description": "Whenever you fail a concentration check to cast a spell, a cantrip effect is created. Randomly determine one of your cantrips known (for example, if you know 6 cantrips, roll 1d6). There is a 50%% chance this cantrip affects a target of your choice within 60 feet; otherwise it affects you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Anarchic Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you fail a concentration check to cast a spell, a cantrip effect is created. Randomly determine one of your cantrips known (for example, if you know 6 cantrips, roll 1d6). There is a 50%% chance this cantrip affects a target of your choice within 60 feet; otherwise it affects you."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(random cantrip when you fail a concentration check)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1635,
+    "record_key": "Anarchic Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

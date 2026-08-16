@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wave Warden Feat ~ Net Maneuvering",
+    "name": "Net Maneuvering",
+    "class": "Wave Warden Feat",
+    "description": "With sweeping movements and brute force, you can use your net to put foes at a disadvantage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wave Warden Feat ~ Net Maneuvering"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WaveWardenBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Ranger Archetype ~ Wave Warden"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Net Maneuvering"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=2"
+      },
+      {
+        "key": "DESC",
+        "value": "With sweeping movements and brute force, you can use your net to put foes at a disadvantage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Net Maneuvering|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 898,
+    "record_key": "Wave Warden Feat ~ Net Maneuvering"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

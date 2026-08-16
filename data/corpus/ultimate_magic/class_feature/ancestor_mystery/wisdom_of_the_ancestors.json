@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ancestor Mystery ~ Wisdom of the Ancestors",
+    "name": "Wisdom of the Ancestors",
+    "class": "Ancestor Mystery",
+    "description": "You can enter a trance in which you commune with the spirits of your ancestors.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancestor Mystery ~ Wisdom of the Ancestors"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.AncestorRevelation.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can enter a trance in which you commune with the spirits of your ancestors."
+      },
+      {
+        "key": "DESC",
+        "value": " Once per day, you can enter a trance in which you commune with the spirits of your ancestors.  This trance lasts for 10 minutes, which must be uninterrupted and during which you can take no other actions.  When you come out of this trance"
+      },
+      {
+        "key": "DESC",
+        "value": " you have gained mystical insight into the future.  This insight acts as an augury spell with 80%% effectiveness.  This spell effect does not require material components.|!PRECLASS:1,Oracle=5"
+      },
+      {
+        "key": "DESC",
+        "value": " you have gained mystical insight into the future.  This insight acts as a divination spell with 90%% effectiveness.  This spell effect does not require material components.|PREMULT:2,[PRECLASS:1,Oracle=5],[!PRECLASS:1,Oracle=8]"
+      },
+      {
+        "key": "DESC",
+        "value": " you have gained mystical insight into the future.  The knowledge you gain is equivalent to a commune spell.  This spell effect does not require material components.|PRECLASS:1,Oracle=8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 462,
+    "record_key": "Ancestor Mystery ~ Wisdom of the Ancestors"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

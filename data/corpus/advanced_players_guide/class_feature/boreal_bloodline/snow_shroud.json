@@ -1,0 +1,116 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Boreal Bloodline ~ Snow Shroud",
+    "name": "Snow Shroud",
+    "class": "Boreal Bloodline",
+    "description": "You ignore concealment and Perception penalties in natural or magical snow, ice, fog, and similar weather conditions. In addition, you can surround yourself with a cloak of swirling snow for %1 rounds per day. This power acts and deals damage as a fire shield (chill shield) that sheds no light. It provides a 20%% miss chance on attacks made against you and grants a +%2 bonus on Stealth checks in snowy or icy areas.|Sorcerer_BorealSnowShroud_Duration|Sorcerer_BorealSnowShroud_StealthBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Boreal Bloodline ~ Snow Shroud"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Boreal Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Boreal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Boreal_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BorealSnowShroud_Duration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BorealSnowShroud_StealthBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BorealSnowShroud_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You ignore concealment and Perception penalties in natural or magical snow, ice, fog, and similar weather conditions. In addition, you can surround yourself with a cloak of swirling snow for %1 rounds per day. This power acts and deals damage as a fire shield (chill shield) that sheds no light. It provides a 20%% miss chance on attacks made against you and grants a +%2 bonus on Stealth checks in snowy or icy areas.|Sorcerer_BorealSnowShroud_Duration|Sorcerer_BorealSnowShroud_StealthBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability once per day.|PREVAREQ:Sorcerer_BorealSnowShroud_Times,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability twice per day.|PREVAREQ:Sorcerer_BorealSnowShroud_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability three times per day.|PREVAREQ:Sorcerer_BorealSnowShroud_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 times per day.|Sorcerer_BorealSnowShroud_Times|PREVARGTEQ:Sorcerer_BorealSnowShroud_Times,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BorealSnowShroud_Duration|Sorcerer_Boreal_BloodlinePower9LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BorealSnowShroud_StealthBonus|Sorcerer_Boreal_BloodlinePower9LVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BorealSnowShroud_Times|max(floor((Sorcerer_Boreal_BloodlinePower9LVL-11)/3),1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds, +%2 stealth, %3/day)|Sorcerer_BorealSnowShroud_Duration|Sorcerer_BorealSnowShroud_StealthBonus|Sorcerer_BorealSnowShroud_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_BorealSnowShroud_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|BorealBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3120,
+    "record_key": "Boreal Bloodline ~ Snow Shroud"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Guard Dedication ~ Clothed in Civilization",
+    "name": "Clothed in Civilization",
+    "class": "Guard Dedication",
+    "description": "The Ulfen Guard gains proficiency in heavy armor. At 5th level, if the Ulfen Guard has the barbarian fast movement ability, she can use her fast movement ability while wearing heavy armor. This does not negate the penalties to movement imposed by the armor itself.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guard Dedication ~ Clothed in Civilization"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Guard Dedication Choice.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The Ulfen Guard gains proficiency in heavy armor. At 5th level, if the Ulfen Guard has the barbarian fast movement ability, she can use her fast movement ability while wearing heavy armor. This does not negate the penalties to movement imposed by the armor itself."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 564,
+    "record_key": "Guard Dedication ~ Clothed in Civilization"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

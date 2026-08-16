@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Slayer Talent ~ Hard to Fool",
+    "name": "Hard to Fool",
+    "class": "Slayer Talent",
+    "description": "%1 times per day, a slayer with this talent can roll two dice while making a Sense Motive check, and take the better result. She must choose to use this talent before making the Sense Motive check.|SlayerHardtoFoolTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Talent ~ Hard to Fool"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SlayerTalent.LesserSlayerTalent.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlayerHardtoFoolTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times per day, a slayer with this talent can roll two dice while making a Sense Motive check, and take the better result. She must choose to use this talent before making the Sense Motive check.|SlayerHardtoFoolTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerHardtoFoolTimes|SlayerTalentLVL/5+1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1841,
+    "record_key": "Slayer Talent ~ Hard to Fool"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

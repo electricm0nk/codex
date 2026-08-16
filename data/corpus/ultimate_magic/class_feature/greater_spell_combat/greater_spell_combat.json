@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Greater Spell Combat Output",
+    "name": "Greater Spell Combat",
+    "class": null,
+    "description": "You can seamlessly cast spells and wield your weapons effectively at the same time. This functions much like two-weapon fighting, but the offhand weapon is a spell that is being cast. To use this ability, you must have one hand free, while wielding a light or one-handed melee weapon in the other hand. As a full-round action, you can make all of your attacks with your melee weapon at a -2 penalty. You can also cast any spell from the magus spell list with a casting time of 1 standard action.  When using the spell combat ability, you receive a +2 circumstance bonus on concentration check. If you cast this spell defensively, you can decide to take an additional penalty on your attack rolls, up to your Intelligence bonus, and add double the same amount as an additional circumstance bonus to your concentration check. If the check fails, the spell is wasted, but the attacks still take the penalty. You can choose to cast the spell first or make the weapon attacks first, but if you have more than one attack, you cannot cast the spell between weapon attacks. You must have one hand free to use this ability, even if the spell being cast does not contain somatic components.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Greater Spell Combat Output"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You can seamlessly cast spells and wield your weapons effectively at the same time. This functions much like two-weapon fighting, but the offhand weapon is a spell that is being cast. To use this ability, you must have one hand free, while wielding a light or one-handed melee weapon in the other hand. As a full-round action, you can make all of your attacks with your melee weapon at a -2 penalty. You can also cast any spell from the magus spell list with a casting time of 1 standard action.  When using the spell combat ability, you receive a +2 circumstance bonus on concentration check. If you cast this spell defensively, you can decide to take an additional penalty on your attack rolls, up to your Intelligence bonus, and add double the same amount as an additional circumstance bonus to your concentration check. If the check fails, the spell is wasted, but the attacks still take the penalty. You can choose to cast the spell first or make the weapon attacks first, but if you have more than one attack, you cannot cast the spell between weapon attacks. You must have one hand free to use this ability, even if the spell being cast does not contain somatic components."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 56,
+    "record_key": "Greater Spell Combat Output"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

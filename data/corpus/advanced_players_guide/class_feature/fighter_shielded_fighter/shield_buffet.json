@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fighter Shielded Fighter ~ Shield Buffet",
+    "name": "Shield Buffet",
+    "class": "Fighter Shielded Fighter",
+    "description": "At 9th level, as a move action, a shielded fighter may make a combat maneuver check to use his shield to impede an adjacent enemy. If successful, the target suffers a -2 penalty on its attack rolls against the shielded fighter and a -2 penalty to AC on attacks made by the shielded fighter until the beginning of his next turn. At 13th level, a shielded fighter may use this ability as a swift action. This ability replaces weapon training 2 and 3.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Shielded Fighter ~ Shield Buffet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterWeaponTraining3.FighterWeaponTraining3"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, as a move action, a shielded fighter may make a combat maneuver check to use his shield to impede an adjacent enemy. If successful, the target suffers a -2 penalty on its attack rolls against the shielded fighter and a -2 penalty to AC on attacks made by the shielded fighter until the beginning of his next turn. At 13th level, a shielded fighter may use this ability as a swift action. This ability replaces weapon training 2 and 3."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2208,
+    "record_key": "Fighter Shielded Fighter ~ Shield Buffet"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

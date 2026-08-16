@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spiritualist ~ Phantom Recall",
+    "name": "Phantom Recall",
+    "class": "Spiritualist",
+    "description": "At 6th level, as either a swift or an immediate action, a spiritualist can call her manifested phantom to her side or back into her consciousness. This ability functions as dimension door, using the spiritualist's class level as the caster level. When the spiritualist calls the phantom in this way, the phantom appears adjacent to the spiritualist (or as close as possible, if all adjacent spaces are occupied). When the spiritualist uses this ability to call the phantom back to her consciousness, she can activate bonded manifestation as part of that action, but doing so costs 1 extra round of bonded manifestation. The spiritualist can use this ability once per day at 6th level, plus one additional time per day for every 4 spiritualist levels she possesses beyond 6th.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Phantom Recall"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, as either a swift or an immediate action, a spiritualist can call her manifested phantom to her side or back into her consciousness. This ability functions as dimension door, using the spiritualist's class level as the caster level. When the spiritualist calls the phantom in this way, the phantom appears adjacent to the spiritualist (or as close as possible, if all adjacent spaces are occupied). When the spiritualist uses this ability to call the phantom back to her consciousness, she can activate bonded manifestation as part of that action, but doing so costs 1 extra round of bonded manifestation. The spiritualist can use this ability once per day at 6th level, plus one additional time per day for every 4 spiritualist levels she possesses beyond 6th."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1284,
+    "record_key": "Spiritualist ~ Phantom Recall"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

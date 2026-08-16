@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wizard Archetype ~ Runesage",
+    "name": "Runesage",
+    "class": "Wizard Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wizard Archetype ~ Runesage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WizardArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "Runesages draw upon the mystic energies of ancient Thassilon. While they sometimes experiment with the same heinous techniques exploited by the runelords, runesages temper their explorations into classic Thassilonian mysteries with moderation and empathy, maintaining balance by using small gemstones as the foci for their spellcasting. Runesages are experts at identifying spell effects associated with Thassilonian magic. As most of Thassilon's mysteries remain buried, runesages remain ever curious and continue to seek out new locations that hide secrets caches of Thassilonian magic."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Wizard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Runesage],[!PREFACT:1,ABILITIES,Wizard_Archetype_ArcaneBond=True,Wizard_Archetype_ArcaneSchool=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Runesage ~ Runic Focus|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ArcaneSchool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_Familiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ArcaneSchool|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1130,
+    "record_key": "Wizard Archetype ~ Runesage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

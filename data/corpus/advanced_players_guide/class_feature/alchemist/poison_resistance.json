@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Alchemist ~ Poison Resistance",
+    "name": "Poison Resistance",
+    "class": "Alchemist",
+    "description": "You gain a +%1 bonus on all saving throws against poison.|AlchemistPoisonResistanceBonus|PREVARLT:AlchemistPoisonLVL,4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist ~ Poison Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistPoisonResistanceBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistPoisonLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistPoisonLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on all saving throws against poison.|AlchemistPoisonResistanceBonus|PREVARLT:AlchemistPoisonLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "You are completely immune to poison.|PREVAREQ:AlchemistPoisonLVL,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Poison|PREVAREQ:AlchemistPoisonLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistPoisonResistanceBonus|2|PREVARGTEQ:AlchemistPoisonLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistPoisonResistanceBonus|2|PREVARGTEQ:AlchemistPoisonLVL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistPoisonResistanceBonus|2|PREVARGTEQ:AlchemistPoisonLVL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistPoisonLVL|1|PREVARGTEQ:AlchemistLVL,2|PREMULT:1,[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistPoisonResistance2],[PREVAREQ:Alchemist_CF_PoisonResistance2,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistPoisonLVL|1|PREVARGTEQ:AlchemistLVL,5|PREMULT:1,[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistPoisonResistance4],[PREVAREQ:Alchemist_CF_PoisonResistance4,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistPoisonLVL|1|PREVARGTEQ:AlchemistLVL,8|PREMULT:1,[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistPoisonResistance6],[PREVAREQ:Alchemist_CF_PoisonResistance6,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistPoisonLVL|1|PREVARGTEQ:AlchemistLVL,10|PREMULT:1,[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistPoisonImmunity],[PREVAREQ:Alchemist_CF_PoisonImmunity,1]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 vs. poison|AlchemistPoisonResistanceBonus|PREVARLT:AlchemistPoisonLVL,4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 95,
+    "record_key": "Alchemist ~ Poison Resistance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

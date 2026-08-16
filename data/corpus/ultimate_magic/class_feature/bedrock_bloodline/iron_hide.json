@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bedrock Bloodline ~ Iron Hide",
+    "name": "Iron Hide",
+    "class": "Bedrock Bloodline",
+    "description": "As a swift action, you can grant yourself DR 10/adamantine for %1 rounds per day. The rounds do not need to be used consecutively. This bloodline power replaces crystal shard.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bedrock Bloodline ~ Iron Hide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Bedrock Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wildblooded ~ Bedrock"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_DeepEarth_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DeepEarth_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BedrockIronHide_Duration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BbedrockIronHide_Activate|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can grant yourself DR 10/adamantine for %1 rounds per day. The rounds do not need to be used consecutively. This bloodline power replaces crystal shard."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BedrockIronHide_Duration|Sorcerer_DeepEarth_BloodlinePower9LVL"
+      },
+      {
+        "key": "DR",
+        "value": "10/adamantine|PREVARGTEQ:Sorcerer_BbedrockIronHide_Activate,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 minutes/day)|Sorcerer_BedrockIronHide_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_BedrockIronHide_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DeepEarthBloodlinePowers"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|Sorcerer_BbedrockIronHide_Activate|1|TYPE=Boolean"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1654,
+    "record_key": "Bedrock Bloodline ~ Iron Hide"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Profane Judgment ~ Protection",
+    "name": "Judgment / Protection",
+    "class": "Profane Judgment",
+    "description": "The inquisitor is surrounded by a protective aura, granting a +%1 profane bonus to Armor Class.|1+InqJudgeProtectionLVL/5",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Profane Judgment ~ Protection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.InquisitorJudgmentProfane.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InqJudgeProtectionLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The inquisitor is surrounded by a protective aura, granting a +%1 profane bonus to Armor Class.|1+InqJudgeProtectionLVL/5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InqJudgeProtectionLVL|InquisitorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 340,
+    "record_key": "Profane Judgment ~ Protection"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

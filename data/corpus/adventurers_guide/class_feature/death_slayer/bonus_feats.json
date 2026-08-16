@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Death Slayer ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Death Slayer",
+    "description": "At 2nd level and every 3 levels thereafter, a death slayer gains a bonus feat in addition to those gained from normal advancement.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Death Slayer ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Death Slayer Class Feature.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level and every 3 levels thereafter, a death slayer gains a bonus feat in addition to those gained from normal advancement."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Death Slayer Bonus Feat|(DeathSlayerLVL+1)/3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 129,
+    "record_key": "Death Slayer ~ Bonus Feats"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

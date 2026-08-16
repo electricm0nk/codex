@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Bond of Blood",
+    "name": "Bond of Blood",
+    "class": "Vigilante Talent",
+    "description": "The cabalist has a magical bond to life-giving blood. When the cabalist deals bleed damage or 5 or more points of piercing or slashing damage to an adjacent living creature, he gains %1d6 temporary hit points. These temporary hit points last for 1 hour, and the cabalist can't gain temporary hit points again from bond of blood during that hour (even if he loses all the temporary hit points from bond of blood before that time).|1+VigilanteLVL/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Bond of Blood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Supernatural.SpellLike"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Bond of Blood"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsCabalist,1"
+      },
+      {
+        "key": "SPELLS",
+        "value": "SPELLS:Innate|TIMES=1|CASTERLEVEL=TL|Blood Armor|PRECLASS:1,Vigilante=4"
+      },
+      {
+        "key": "DESC",
+        "value": "The cabalist has a magical bond to life-giving blood. When the cabalist deals bleed damage or 5 or more points of piercing or slashing damage to an adjacent living creature, he gains %1d6 temporary hit points. These temporary hit points last for 1 hour, and the cabalist can't gain temporary hit points again from bond of blood during that hour (even if he loses all the temporary hit points from bond of blood before that time).|1+VigilanteLVL/4"
+      },
+      {
+        "key": "DESC",
+        "value": "The cabalist can also activate blood armor once per day as a spell-like ability as a swift action.|PRECLASS:1,Vigilante=4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 1003,
+    "record_key": "Vigilante Talent ~ Bond of Blood"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

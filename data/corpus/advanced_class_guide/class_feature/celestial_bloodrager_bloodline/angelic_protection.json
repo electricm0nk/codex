@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Celestial Bloodrager Bloodline ~ Angelic Protection",
+    "name": "Angelic Protection",
+    "class": "Celestial Bloodrager Bloodline",
+    "description": "You gain a +4 defection bonus to AC and a +4 resistance bonus to on saving throws against attacks made or effects created by evil creatures, and you are affected as if subject to a Protection from Evil spell. This effect cannot be dispelled.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Celestial Bloodrager Bloodline ~ Angelic Protection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Celestial Bloodrager Bloodline ~ Power LVL 16.Bloodrager Bloodline Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Celestial"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Celestial_BloodlineProgressionLVL,16"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower16LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +4 defection bonus to AC and a +4 resistance bonus to on saving throws against attacks made or effects created by evil creatures, and you are affected as if subject to a Protection from Evil spell. This effect cannot be dispelled."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CelestialBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 663,
+    "record_key": "Celestial Bloodrager Bloodline ~ Angelic Protection"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

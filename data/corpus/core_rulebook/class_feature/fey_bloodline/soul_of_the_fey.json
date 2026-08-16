@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Fey Bloodline ~ Soul of the Fey",
+    "name": "Soul of the Fey",
+    "class": "Fey Bloodline",
+    "description": "Your soul becomes one with the world of the fey. You gain immunity to poison and DR 10/cold iron. Creatures of the animal type do not attack you unless compelled to do so through magic. Once per day, you can cast shadow walk as a spell-like ability with a caster level of %1.|Sorcerer_FeySoulOfTheFey_CasterLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Bloodline ~ Soul of the Fey"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Fey Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Fey"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Fey_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Fey_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_FeySoulOfTheFey_CasterLevel|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Bloodline|TIMES=1|CASTERLEVEL=Sorcerer_FeySoulOfTheFey_CasterLevel|Shadow Walk,16+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "Your soul becomes one with the world of the fey. You gain immunity to poison and DR 10/cold iron. Creatures of the animal type do not attack you unless compelled to do so through magic. Once per day, you can cast shadow walk as a spell-like ability with a caster level of %1.|Sorcerer_FeySoulOfTheFey_CasterLevel"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Poison"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_FeySoulOfTheFey_CasterLevel|Sorcerer_Fey_BloodlinePower20LVL"
+      },
+      {
+        "key": "DR",
+        "value": "10/Cold Iron"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|FeyBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2521,
+    "record_key": "Fey Bloodline ~ Soul of the Fey"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

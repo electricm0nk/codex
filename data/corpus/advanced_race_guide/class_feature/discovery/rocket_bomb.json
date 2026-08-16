@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Discovery ~ Rocket Bomb",
+    "name": "Rocket Bomb",
+    "class": "Discovery",
+    "description": "Alchemists with this discovery can prepare special rockets to deliver their bombs. Rocket bombs travel farther and explode bigger than normal bombs, but cannot target individual creatures. Rocket bombs explode in a 20-foot radius, and all creatures in that area take the alchemist's normal splash damage. The range increment on a rocket bomb is 50 feet. Rocket bombs cannot be used with the precise bomb or fast bomb discoveries.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Rocket Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery.Supernatural.AlchemistBombModifier"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsGoblin=true"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Alchemists with this discovery can prepare special rockets to deliver their bombs. Rocket bombs travel farther and explode bigger than normal bombs, but cannot target individual creatures. Rocket bombs explode in a 20-foot radius, and all creatures in that area take the alchemist's normal splash damage. The range increment on a rocket bomb is 50 feet. Rocket bombs cannot be used with the precise bomb or fast bomb discoveries."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 563,
+    "record_key": "Discovery ~ Rocket Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

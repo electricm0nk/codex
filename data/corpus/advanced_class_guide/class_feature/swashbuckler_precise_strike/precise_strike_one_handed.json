@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Swashbuckler Precise Strike ~ 1H",
+    "name": "Precise Strike (One-Handed)",
+    "class": "Swashbuckler Precise Strike",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler Precise Strike ~ 1H"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwashbucklerPreciseStrikeBonus|0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Weapon,Melee,OneHanded,Piercing|WEAPON|DAMAGE|SwashbucklerPreciseStrikeBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2078,
+    "record_key": "Swashbuckler Precise Strike ~ 1H"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

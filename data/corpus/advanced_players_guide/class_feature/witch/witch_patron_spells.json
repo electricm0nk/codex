@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch ~ Patron Spells",
+    "name": "Witch Patron Spells",
+    "class": "Witch",
+    "description": "At 1st level, when a witch gains her familiar, she must also select a patron. This patron is a vague and mysterious force, granting the witch power for reasons that she might not entirely understand. While these forces need not be named, they typically hold influence over one of the following forces. At 2nd level, and every two levels thereafter, a witch's patron adds new spells to a witch's list of spells known. These spells are also automatically added to the list of spells stored by the familiar. Spells marked with an asterisk (*) appear in Chapter 5 of this book. The spells gained depend upon the patron chosen. Each patron is listed by its theme. Its actual name is up to the GM and the witch to decide.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch ~ Patron Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, when a witch gains her familiar, she must also select a patron. This patron is a vague and mysterious force, granting the witch power for reasons that she might not entirely understand. While these forces need not be named, they typically hold influence over one of the following forces. At 2nd level, and every two levels thereafter, a witch's patron adds new spells to a witch's list of spells known. These spells are also automatically added to the list of spells stored by the familiar. Spells marked with an asterisk (*) appear in Chapter 5 of this book. The spells gained depend upon the patron chosen. Each patron is listed by its theme. Its actual name is up to the GM and the witch to decide."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 852,
+    "record_key": "Witch ~ Patron Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

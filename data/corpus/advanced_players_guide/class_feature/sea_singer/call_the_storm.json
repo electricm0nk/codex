@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sea Singer ~ Call the Storm",
+    "name": "Call the Storm",
+    "class": "Sea Singer",
+    "description": "At 18th level, a sea singer can use performance to duplicate control water, control weather, control winds, or storm of vengeance, using his bard level as the caster level. Using this ability requires 1 round of continuous performance per level of the spell (as if he were a druid). These effects continue for as long as the bard continues performing (the effects of control weather happen immediately), but not longer than the spell's normal duration. This performance replaces mass suggestion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sea Singer ~ Call the Storm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Supernatural.BardMassSuggestion"
+      },
+      {
+        "key": "DESC",
+        "value": "At 18th level, a sea singer can use performance to duplicate control water, control weather, control winds, or storm of vengeance, using his bard level as the caster level. Using this ability requires 1 round of continuous performance per level of the spell (as if he were a druid). These effects continue for as long as the bard continues performing (the effects of control weather happen immediately), but not longer than the spell's normal duration. This performance replaces mass suggestion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1721,
+    "record_key": "Sea Singer ~ Call the Storm"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

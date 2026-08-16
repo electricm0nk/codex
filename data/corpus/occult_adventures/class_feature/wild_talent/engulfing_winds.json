@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Engulfing Winds",
+    "name": "Engulfing Winds",
+    "class": "Wild Talent",
+    "description": "Element air; Type utility (Sp); Level 3; Burn 0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Engulfing Winds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Air"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Elemental Defense ~ Enveloping Winds"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite enveloping winds"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Air,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Element air; Type utility (Sp); Level 3; Burn 0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;You bend your winds into a formidable barrier. Until the start of your next turn, you lose the benefits of enveloping winds, but can create a wind wall as the spell. You can extend the wall's duration to 1 round per kineticist level by accepting 1 point of burn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 746,
+    "record_key": "Wild Talent ~ Engulfing Winds"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

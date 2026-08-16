@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Elemental Armor",
+    "name": "Elemental Armor",
+    "class": "Vigilante Talent",
+    "description": "When in her vigilante identity, the warlock gains armor made of elemental energy. She is surrounded by a nimbus of ice, lightning, or flames, granting her resistance 5 to cold, electricity, or fire, respectively. The damage type must be chosen when she selects this talent, and it can't be changed.|VigilanteElementalArmorResist",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Elemental Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Elemental Armor"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsWarlock,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VigilanteElementalArmorBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VigilanteElementalArmorResist|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When in her vigilante identity, the warlock gains armor made of elemental energy. She is surrounded by a nimbus of ice, lightning, or flames, granting her resistance 5 to cold, electricity, or fire, respectively. The damage type must be chosen when she selects this talent, and it can't be changed.|VigilanteElementalArmorResist"
+      },
+      {
+        "key": "DESC",
+        "value": "The warlock's armor deals %1d6 points of damage of the chosen energy type to any creature striking the warlock with a natural weapon or a non-reach melee weapon. A creature that attempts a grapple combat maneuver check against the warlock also takes this damage. A creature can take damage in this way no more than once per round.|VigilanteElementalArmorBonus|PRECLASS:1,Vigilante=4"
+      },
+      {
+        "key": "DESC",
+        "value": "The warlock becomes immune to the chosen damage type while in her vigilante identity.|PRECLASS:1,Vigilante=16"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Cold|Electricity|Fire"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VigilanteElementalArmorBonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VigilanteElementalArmorBonus|1|PRECLASS:1,Vigilante=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VigilanteElementalArmorResist|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VigilanteElementalArmorResist|5|PRECLASS:1,Vigilante=8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 1044,
+    "record_key": "Vigilante Talent ~ Elemental Armor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

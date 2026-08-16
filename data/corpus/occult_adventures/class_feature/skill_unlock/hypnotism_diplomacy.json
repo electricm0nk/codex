@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skill Unlock ~ Hypnotism",
+    "name": "Hypnotism (Diplomacy)",
+    "class": "Skill Unlock",
+    "description": "You use the power of suggestion and subtle psychic influence to alter a subject's mind and dredge up repressed memories. Check: You can use hypnotism once per day. The DC of a Diplomacy check to hypnotize is 20 + the subject's Will save modifier against mind-affecting enchantment (compulsion) effects. All uses of hypnotism are mindaffecting enchantment (compulsion) effects. Implant Suggestion: You can implant a suggested course of reasonable action in the mind of a willing creature, along with a defined trigger. To implant a suggestion, you spend 1 minute inducing a trance-like state in the subject, after which you attempt a Diplomacy check. If the check is successful, you implant the course of action, as a suggestion spell with a duration of 10 minutes plus 10 additional minutes for every 1 by which your check result exceeds the DC. If the subject ceases to be willing, it can attempt a Will save once each round to shake off the effects. The save DC is equal to 10 + 1/2 your character level + your Charisma modifier. You can attempt to subtly implant a suggestion in the mind of an unwilling creature with an attitude of indifferent or better after 1 minute of continuous, calm interaction with that creature, but the DC is 10 higher. Recall Memory: You can draw out forgotten memories from a willing subject. You spend 1 minute inducing a calming, trance-like state in the subject, after which you attempt a Diplomacy check. If you succeed at the check, the hypnotized creature can reroll any previously failed Intelligence or Knowledge check to recall the forgotten information with a +4 bonus. The information must be something the subject once knew or was exposed to. Action: Hypnotism takes 1 minute of calm interaction. Try Again: Yes. You can try to hypnotize the same creature more than once, but only once per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skill Unlock ~ Hypnotism"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SkillUnlock.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "You use the power of suggestion and subtle psychic influence to alter a subject's mind and dredge up repressed memories. Check: You can use hypnotism once per day. The DC of a Diplomacy check to hypnotize is 20 + the subject's Will save modifier against mind-affecting enchantment (compulsion) effects. All uses of hypnotism are mindaffecting enchantment (compulsion) effects. Implant Suggestion: You can implant a suggested course of reasonable action in the mind of a willing creature, along with a defined trigger. To implant a suggestion, you spend 1 minute inducing a trance-like state in the subject, after which you attempt a Diplomacy check. If the check is successful, you implant the course of action, as a suggestion spell with a duration of 10 minutes plus 10 additional minutes for every 1 by which your check result exceeds the DC. If the subject ceases to be willing, it can attempt a Will save once each round to shake off the effects. The save DC is equal to 10 + 1/2 your character level + your Charisma modifier. You can attempt to subtly implant a suggestion in the mind of an unwilling creature with an attitude of indifferent or better after 1 minute of continuous, calm interaction with that creature, but the DC is 10 higher. Recall Memory: You can draw out forgotten memories from a willing subject. You spend 1 minute inducing a calming, trance-like state in the subject, after which you attempt a Diplomacy check. If you succeed at the check, the hypnotized creature can reroll any previously failed Intelligence or Knowledge check to recall the forgotten information with a +4 bonus. The information must be something the subject once knew or was exposed to. Action: Hypnotism takes 1 minute of calm interaction. Try Again: Yes. You can try to hypnotize the same creature more than once, but only once per day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1951,
+    "record_key": "Skill Unlock ~ Hypnotism"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

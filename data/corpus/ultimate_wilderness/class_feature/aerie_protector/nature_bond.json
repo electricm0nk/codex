@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Aerie Protector ~ Nature Bond",
+    "name": "Nature Bond",
+    "class": "Aerie Protector",
+    "description": "If the aerie protector chooses an animal companion as her nature bond, she must choose an animal with a fly speed. She can use spells or other effects to alter her companion's fly speed, but it must be able to fly on its own before it becomes her companion. If the aerie protector chooses a domain as her nature bond, she must choose the Air, Eagle, Earth, Mountain, or Weather domain. This alters nature bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aerie Protector ~ Nature Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.AerieProtectorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "If the aerie protector chooses an animal companion as her nature bond, she must choose an animal with a fly speed. She can use spells or other effects to alter her companion's fly speed, but it must be able to fly on its own before it becomes her companion. If the aerie protector chooses a domain as her nature bond, she must choose the Air, Eagle, Earth, Mountain, or Weather domain. This alters nature bond."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 504,
+    "record_key": "Aerie Protector ~ Nature Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

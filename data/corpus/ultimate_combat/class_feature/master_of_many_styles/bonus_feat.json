@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Master Of Many Styles ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class": "Master Of Many Styles",
+    "description": "At 1st level, 2nd level, and every four levels thereafter, a master of many styles may select a bonus style feat or the Elemental Fist feat (Advanced Player's Guide 158). He does not need to meet the prerequisites of that feat, except the Elemental Fist feat. Starting at 6th level, a master of many styles can choose to instead gain a wildcard style slot. Whenever he enters one or more styles, he can spend his wildcard style slots to gain feats in those styles' feat paths (such as Earth Child Topple) as long as he meets the prerequisites. Each time he changes styles, he can also change these wildcard style slots. This ability replaces a monk's standard bonus feats. The master of many styles currently has %1 wildcard slots available|MonkWildcardSlot",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master Of Many Styles ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeatLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, 2nd level, and every four levels thereafter, a master of many styles may select a bonus style feat or the Elemental Fist feat (Advanced Player's Guide 158). He does not need to meet the prerequisites of that feat, except the Elemental Fist feat. Starting at 6th level, a master of many styles can choose to instead gain a wildcard style slot. Whenever he enters one or more styles, he can spend his wildcard style slots to gain feats in those styles' feat paths (such as Earth Child Topple) as long as he meets the prerequisites. Each time he changes styles, he can also change these wildcard style slots. This ability replaces a monk's standard bonus feats. The master of many styles currently has %1 wildcard slots available|MonkWildcardSlot"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Master Of Many Styles Bonus Feat|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeatLVL|0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1092,
+    "record_key": "Master Of Many Styles ~ Bonus Feat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Talent ~ Maneuvering Dodge",
+    "name": "Maneuvering Dodge",
+    "class": "Rogue Talent",
+    "description": "Whenever a foe of the rogue's size or larger misses the rogue with a melee attack, the rogue gains a +%1 bonus on any Acrobatics, Climb, Fly, and Swim checks she attempts for 1 round.|ManeuveringDodgeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Maneuvering Dodge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent.Unchained Rogue Talent"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ManeuveringDodgeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a foe of the rogue's size or larger misses the rogue with a melee attack, the rogue gains a +%1 bonus on any Acrobatics, Climb, Fly, and Swim checks she attempts for 1 round.|ManeuveringDodgeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ManeuveringDodgeBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ManeuveringDodgeBonus|2|PREVARGTEQ:RogueTalentLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 266,
+    "record_key": "Rogue Talent ~ Maneuvering Dodge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

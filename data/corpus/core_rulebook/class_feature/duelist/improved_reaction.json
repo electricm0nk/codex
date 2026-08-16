@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Duelist ~ Improved Reaction",
+    "name": "Improved Reaction",
+    "class": "Duelist",
+    "description": "At 2nd level, a duelist gains a +%1 bonus on initiative checks. This bonus stacks with the benefit provided by the Improved Initiative feat.|ImprovedReaction",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Duelist ~ Improved Reaction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DuelistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ImprovedReaction|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a duelist gains a +%1 bonus on initiative checks. This bonus stacks with the benefit provided by the Improved Initiative feat.|ImprovedReaction"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|ImprovedReaction"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImprovedReaction|floor((DuelistLVL+4)/6)*2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.383"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|ImprovedReaction"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2988,
+    "record_key": "Duelist ~ Improved Reaction"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

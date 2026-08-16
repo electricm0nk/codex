@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Magaambyan Arcanist ~ Superior Spell Mastery",
+    "name": "Superior Spell Mastery",
+    "class": "Magaambyan Arcanist",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magaambyan Arcanist ~ Superior Spell Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Lantern Bearer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      },
+      {
+        "key": "DESC",
+        "value": "By spending a total of 24 hours studying over a maximum of 3 days, a Magaambyan arcanist can change the spells she has mastered with the Spell Mastery feat. She can choose a number of spells she knows up to her Intelligence modifier (which can have a maximum combined spell level equal to or less than her caster level) to be her Spell Mastery spells in place of the same number of spells she previously selected for her Spell Mastery feat."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 339,
+    "record_key": "Magaambyan Arcanist ~ Superior Spell Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

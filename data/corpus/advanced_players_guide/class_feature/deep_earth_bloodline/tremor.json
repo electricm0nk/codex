@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Deep Earth Bloodline ~ Tremor",
+    "name": "Tremor",
+    "class": "Deep Earth Bloodline",
+    "description": "As a standard action, you can cause the ground to shake beneath a single creature within 30 feet, functioning as a trip maneuver using %1 in place of your CMB. You can use this ability %2 times per day.|Sorcerer_DeepEarthTremor_ManeuverBonus|Sorcerer_DeepEarth_BloodlinePower1Times",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep Earth Bloodline ~ Tremor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Deep Earth Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Deep Earth"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_DeepEarth_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DeepEarth_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DeepEarth_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DeepEarthTremor_ManeuverBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can cause the ground to shake beneath a single creature within 30 feet, functioning as a trip maneuver using %1 in place of your CMB. You can use this ability %2 times per day.|Sorcerer_DeepEarthTremor_ManeuverBonus|Sorcerer_DeepEarth_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DeepEarthTremor_ManeuverBonus|Sorcerer_DeepEarth_BloodlinePower1LVL+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (CMB +%1)|Sorcerer_DeepEarthTremor_ManeuverBonus|Sorcerer_DeepEarth_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_DeepEarth_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DeepEarthBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3136,
+    "record_key": "Deep Earth Bloodline ~ Tremor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

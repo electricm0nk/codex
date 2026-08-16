@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Intrigue Mystery ~ Assumed Form",
+    "name": "Assumed Form",
+    "class": "Intrigue Mystery",
+    "description": "You can change your appearance at will, as disguise self with a caster level equal to your oracle level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intrigue Mystery ~ Assumed Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change your appearance at will, as disguise self with a caster level equal to your oracle level."
+      },
+      {
+        "key": "DESC",
+        "value": " You can choose to actually transform, which works the same way but counts as a polymorph effect instead of an illusion and doesn't allow a Will save to disbelieve.|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "DESC",
+        "value": " The ability lasts until you dismiss it or use it again, allowing you to even keep it active while you sleep.|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "DESC",
+        "value": " When you use this ability as a polymorph effect, you can gain the size bonus to your ability scores and additional racial abilities as if using alter self.|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 567,
+    "record_key": "Intrigue Mystery ~ Assumed Form"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

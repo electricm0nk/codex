@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dune Rider ~ Sand Foot",
+    "name": "Sand Foot",
+    "class": "Dune Rider",
+    "description": "The dune rider adds half his level as a bonus on Ride checks in warm deserts, hills, and mountains.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dune Rider ~ Sand Foot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Features.DuneRiderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The dune rider adds half his level as a bonus on Ride checks in warm deserts, hills, and mountains."
+      },
+      {
+        "key": "DESC",
+        "value": "The dune rider and his mount no longer treat sand or rocky ground as difficult terrain, and they gain a +10-foot enhancement bonus to their base speed in warm deserts, hills, and mountains.|PRECLASS:1,Slayer=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Ride=Warm deserts, hills, and mountains|SlayerLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1156,
+    "record_key": "Dune Rider ~ Sand Foot"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

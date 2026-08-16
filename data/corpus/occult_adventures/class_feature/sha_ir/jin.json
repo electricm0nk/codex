@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sha'ir ~ Jin",
+    "name": "Jin",
+    "class": "Sha'ir",
+    "description": "[not implemented]At 1st level, a sha'ir learns how to contact a jin-a minor, insubstantial genie that makes its home on the elemental planes. She learns how to contact a second jin at 6th level and a third jin at 14th level. Each of these jin is connected to one of the eight schools of magic, just like an occultist implement, but also to the air, earth, fire, or water school (Advanced Player's Guide 142). Each jin works like a living implement for both of its schools. To provide the implement component for a spell or focus power, a jin must be within 30 feet of its master. The elemental schools don't have focus powers or resonant powers. Instead, the sha'ir considers all wizard spells of 6th level and lower from the lists corresponding to her jin's elemental schools to be on her occultist spell list. In addition, she adds additional spells to her list of spells known. For every spell level she can cast, she adds one spell from each jin's elemental school and one spell from each jin's non-elemental school. A jin in its natural form has the base statistics of a Small elemental of the chosen type with the young simple template and without the air mastery, burn, drench, earth glide, earth mastery, vortex, water mastery, or whirlwind abilities. At 20th level, a sha'ir selects one of her jin and chooses one of its two schools instead of selecting an implement for implement mastery. If one of her jin is slain, the sha'ir is treated as if she didn't have the appropriate implement to cast the spells associated with that jin. The sha'ir can replace the slain jin the following morning by expending 1 point of mental focus in a special ritual that takes 1 hour to perform. This ability replaces implements and alters mental focus, spellcasting, and implement mastery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sha'ir ~ Jin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sha'ir Class Feature.Occultist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "[not implemented]At 1st level, a sha'ir learns how to contact a jin-a minor, insubstantial genie that makes its home on the elemental planes. She learns how to contact a second jin at 6th level and a third jin at 14th level. Each of these jin is connected to one of the eight schools of magic, just like an occultist implement, but also to the air, earth, fire, or water school (Advanced Player's Guide 142). Each jin works like a living implement for both of its schools. To provide the implement component for a spell or focus power, a jin must be within 30 feet of its master. The elemental schools don't have focus powers or resonant powers. Instead, the sha'ir considers all wizard spells of 6th level and lower from the lists corresponding to her jin's elemental schools to be on her occultist spell list. In addition, she adds additional spells to her list of spells known. For every spell level she can cast, she adds one spell from each jin's elemental school and one spell from each jin's non-elemental school. A jin in its natural form has the base statistics of a Small elemental of the chosen type with the young simple template and without the air mastery, burn, drench, earth glide, earth mastery, vortex, water mastery, or whirlwind abilities. At 20th level, a sha'ir selects one of her jin and chooses one of its two schools instead of selecting an implement for implement mastery. If one of her jin is slain, the sha'ir is treated as if she didn't have the appropriate implement to cast the spells associated with that jin. The sha'ir can replace the slain jin the following morning by expending 1 point of mental focus in a special ritual that takes 1 hour to perform. This ability replaces implements and alters mental focus, spellcasting, and implement mastery."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1540,
+    "record_key": "Sha'ir ~ Jin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

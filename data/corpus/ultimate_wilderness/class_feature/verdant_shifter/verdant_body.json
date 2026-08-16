@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Verdant Shifter ~ Verdant Body",
+    "name": "Verdant Body",
+    "class": "Verdant Shifter",
+    "description": "A verdant shifter takes on plant qualities as vines grow over her body, flowers bloom in her hair, and bark grows from her skin. The verdant shifter is treated as both her normal creature type and a plant creature for purposes of spells or effects that target a creature by type (such as bane weapons and a ranger's favored enemy). Verdant body also grants the verdant shifter a",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Shifter ~ Verdant Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.VerdantShifterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VerdantShifterConBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A verdant shifter takes on plant qualities as vines grow over her body, flowers bloom in her hair, and bark grows from her skin. The verdant shifter is treated as both her normal creature type and a plant creature for purposes of spells or effects that target a creature by type (such as bane weapons and a ranger's favored enemy). Verdant body also grants the verdant shifter a"
+      },
+      {
+        "key": "DESC",
+        "value": "25%%|!PRECLASS:1,Shifter=8"
+      },
+      {
+        "key": "DESC",
+        "value": "50%%|PRECLASS:1,Shifter=8"
+      },
+      {
+        "key": "DESC",
+        "value": "immunity to critical hits and precision damage (such as sneak attack)."
+      },
+      {
+        "key": "DESC",
+        "value": "The verdant shifter gains a +%1 enhancement bonus to her Constitution score.|VerdantShifterConBonus|PRECLASS:1,Shifter=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|VerdantShifterConBonus|TYPE=Enhancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VerdantShifterConBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VerdantShifterConBonus|2|PRECLASS:1,Shifter=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VerdantShifterConBonus|2|PRECLASS:1,Shifter=15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1102,
+    "record_key": "Verdant Shifter ~ Verdant Body"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

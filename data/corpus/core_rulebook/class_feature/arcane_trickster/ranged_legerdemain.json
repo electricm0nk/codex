@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcane Trickster ~ Ranged Legerdemain",
+    "name": "Ranged Legerdemain",
+    "class": "Arcane Trickster",
+    "description": "An arcane trickster can use Disable Device and Sleight of Hand at a range of 30 feet. Working at a distance increases the normal skill check DC by 5, and an arcane trickster cannot take 10 on this check. Any object to be manipulated must weigh 5 pounds or less. She can only use this ability if she has at least 1 rank in the skill being used.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Trickster ~ Ranged Legerdemain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An arcane trickster can use Disable Device and Sleight of Hand at a range of 30 feet. Working at a distance increases the normal skill check DC by 5, and an arcane trickster cannot take 10 on this check. Any object to be manipulated must weigh 5 pounds or less. She can only use this ability if she has at least 1 rank in the skill being used."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.377"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2934,
+    "record_key": "Arcane Trickster ~ Ranged Legerdemain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

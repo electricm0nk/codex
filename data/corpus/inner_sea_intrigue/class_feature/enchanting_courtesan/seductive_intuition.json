@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Enchanting Courtesan ~ Seductive Intuition",
+    "name": "Seductive Intuition",
+    "class": "Enchanting Courtesan",
+    "description": "An enchanting courtesan gains a competence bonus equal to half his class level on Bluff, Diplomacy, Sense Motive, and Sleight of Hand checks. He can use his total Sense Motive modifier in place of his total modifiers on Diplomacy and Sleight of Hand checks against targets who could be sexually attracted to him.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enchanting Courtesan ~ Seductive Intuition"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An enchanting courtesan gains a competence bonus equal to half his class level on Bluff, Diplomacy, Sense Motive, and Sleight of Hand checks. He can use his total Sense Motive modifier in place of his total modifiers on Diplomacy and Sleight of Hand checks against targets who could be sexually attracted to him."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Diplomacy,Sense Motive,Sleight of Hand|EnchantingCourtesanLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 60,
+    "record_key": "Enchanting Courtesan ~ Seductive Intuition"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

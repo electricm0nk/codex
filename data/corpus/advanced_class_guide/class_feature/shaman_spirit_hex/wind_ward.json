@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Wind Ward",
+    "name": "Wind Ward",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman can touch a willing creature (including herself) and grant a ward of wind. This ward lasts for %1|ShamanWindWardDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Wind Ward"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanWindHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Wind Ward"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanWindSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWindWardDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWindWardMissChance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can touch a willing creature (including herself) and grant a ward of wind. This ward lasts for %1|ShamanWindWardDuration"
+      },
+      {
+        "key": "DESC",
+        "value": "rounds.|PREVARLT:ShamanSpiritLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "minutes.|PREVARGTEQ:ShamanSpiritLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "When a warded creature is attacked with an arrow, ray, or other ranged attack that requires an attack roll, that attack suffers a %1%% miss chance. Once affected, the creature cannot be the target of this hex again for 24 hours.|ShamanWindWardMissChance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWindWardDuration|ShamanSpiritLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWindWardMissChance|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWindWardMissChance|30|PRECLASS:1,Shaman=16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1696,
+    "record_key": "Shaman Spirit Hex ~ Wind Ward"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

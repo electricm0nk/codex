@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kobold Bloodline ~ Trap Sense",
+    "name": "Trap Sense",
+    "class": "Kobold Bloodline",
+    "description": "You develop a sixth sense that helps you avoid traps. You gain a +%1 bonus on Perception checks made to notice traps. You also gain a +%2 bonus on Reflex saves to avoid traps and a +%3 dodge bonus to AC against attacks made by traps. This bonus stacks with that provided by a rogue's trap sense and similar abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kobold Bloodline ~ Trap Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Kobold Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Kobold"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Kobold_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_KoboldTrapSense_SkillBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_KoboldTrapSense_SaveBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_KoboldTrapSense_ACBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You develop a sixth sense that helps you avoid traps. You gain a +%1 bonus on Perception checks made to notice traps. You also gain a +%2 bonus on Reflex saves to avoid traps and a +%3 dodge bonus to AC against attacks made by traps. This bonus stacks with that provided by a rogue's trap sense and similar abilities."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=Trapfinding|Sorcerer_KoboldTrapSense_SkillBonus|TYPE=Trapfinding.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_KoboldTrapSense_SkillBonus|floor((Sorcerer_Kobold_BloodlinePower3LVL+1)/4)+1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_KoboldTrapSense_SaveBonus|floor((Sorcerer_Kobold_BloodlinePower3LVL+1)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_KoboldTrapSense_ACBonus|floor((Sorcerer_Kobold_BloodlinePower3LVL+1)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 Reflex vs. traps|Sorcerer_KoboldTrapSense_SaveBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+%1 dodge bonus to AC against attacks made by traps.|Sorcerer_KoboldTrapSense_ACBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|KoboldBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 641,
+    "record_key": "Kobold Bloodline ~ Trap Sense"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

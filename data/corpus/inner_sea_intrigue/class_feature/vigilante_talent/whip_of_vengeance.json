@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Whip of Vengeance",
+    "name": "Whip of Vengeance",
+    "class": "Vigilante Talent",
+    "description": "Whip of Vengeance (Ex): The vigilante gains Whip Mastery as a bonus feat. If he already has the Whip Mastery feat, he can immediately swap it for another feat he qualified for at the level when he chose Whip Mastery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Whip of Vengeance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Whip of Vengeance"
+      },
+      {
+        "key": "DESC",
+        "value": "Whip of Vengeance (Ex): The vigilante gains Whip Mastery as a bonus feat. If he already has the Whip Mastery feat, he can immediately swap it for another feat he qualified for at the level when he chose Whip Mastery."
+      },
+      {
+        "key": "DESC",
+        "value": "In addition, he also gains the Improved Whip Mastery feat. He treats his vigilante level as his vigilante base attack bonus for the purpose of meeting prerequisites of feats and abilities that have Whip Mastery as a prerequisite.|PREVARGTEQ:VigilanteTalentLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Whip Mastery"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Whip Mastery|PREVARGTEQ:VigilanteTalentLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Whip of Vengeance Qualifier|PREVARGTEQ:VigilanteTalentLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 325,
+    "record_key": "Vigilante Talent ~ Whip of Vengeance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

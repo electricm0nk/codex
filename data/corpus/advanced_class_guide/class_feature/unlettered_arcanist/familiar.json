@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Unlettered Arcanist ~ Familiar",
+    "name": "Familiar",
+    "class": "Unlettered Arcanist",
+    "description": "An unlettered arcanist does not keep a spellbook. Instead, she gains a familiar in which she stores her spells as a witch does, though she does not gain a witch's patron. Treat her arcanist level as her witch level for determining the abilities and benefits granted by the familiar. Anything that would allow an unlettered arcanist to add spells to her spellbook allows her to add spells to her familiar instead. This ability replaces spellbooks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unlettered Arcanist ~ Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unlettered Arcanist Class Feature.Arcanist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An unlettered arcanist does not keep a spellbook. Instead, she gains a familiar in which she stores her spells as a witch does, though she does not gain a witch's patron. Treat her arcanist level as her witch level for determining the abilities and benefits granted by the familiar. Anything that would allow an unlettered arcanist to add spells to her spellbook allows her to add spells to her familiar instead. This ability replaces spellbooks."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|ArcanistLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Standard Familiar List"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2646,
+    "record_key": "Unlettered Arcanist ~ Familiar"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

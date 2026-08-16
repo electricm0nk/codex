@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dinosaur Druid ~ Summon Dinosaur",
+    "name": "Summon Dinosaur",
+    "class": "Dinosaur Druid",
+    "description": "A dinosaur druid can summon a wide range of dinosaurs and related prehistoric beasts using summon nature's ally spells. She adds the following options to these spells when using spontaneous casting to cast such a spell. &nl;[Summon Nature's Ally I] Compsognathus (B2). &nl;[Summon Nature's Ally II] Dimorphodon (B4), troodon (B5). &nl;[Summon Nature's Ally III] Plesiosaurus (B5), velociraptor (B4). &nl;[Summon Nature's Ally IV] Dimetrodon (B3), pachycephalosaurus (B3), parasaurolophus (B2). &nl;[Summon Nature's Ally V] Amargasaurus (B6), ceratosaurus (B5), iguanodon (B3), kentrosaurus (B6), styracosaurus (B4). &nl;[Summon Nature's Ally VI] Allosaurus (B2), quetzalcoatlus (B6), tylosaurus (B2). &nl;[Summon Nature's Ally VII] Therizinosaurus (B5). &nl;[Summon Nature's Ally VIII] Diplodocus (B4), spinosaurus (B3). &nl;[Summon Nature's Ally IX] Giganotosaurus (B6). &nl;This alters spontaneous casting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dinosaur Druid ~ Summon Dinosaur"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.DinosaurDruidClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A dinosaur druid can summon a wide range of dinosaurs and related prehistoric beasts using summon nature's ally spells. She adds the following options to these spells when using spontaneous casting to cast such a spell. &nl;[Summon Nature's Ally I] Compsognathus (B2). &nl;[Summon Nature's Ally II] Dimorphodon (B4), troodon (B5). &nl;[Summon Nature's Ally III] Plesiosaurus (B5), velociraptor (B4). &nl;[Summon Nature's Ally IV] Dimetrodon (B3), pachycephalosaurus (B3), parasaurolophus (B2). &nl;[Summon Nature's Ally V] Amargasaurus (B6), ceratosaurus (B5), iguanodon (B3), kentrosaurus (B6), styracosaurus (B4). &nl;[Summon Nature's Ally VI] Allosaurus (B2), quetzalcoatlus (B6), tylosaurus (B2). &nl;[Summon Nature's Ally VII] Therizinosaurus (B5). &nl;[Summon Nature's Ally VIII] Diplodocus (B4), spinosaurus (B3). &nl;[Summon Nature's Ally IX] Giganotosaurus (B6). &nl;This alters spontaneous casting."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 512,
+    "record_key": "Dinosaur Druid ~ Summon Dinosaur"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

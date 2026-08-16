@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cleric Archetype ~ Hidden Priest",
+    "name": "Hidden Priest",
+    "class": "Cleric Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric Archetype ~ Hidden Priest"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ClericArchetype.ClericDomains"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cleric=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Hidden Priest],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericDomains]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "Practicing one's religion is not always legal. For example, most lands outlaw worshiping fiends. Taldor has banned the faith of Sarenrae from being openly worshiped. Rahadoum flat-out forbids all religions within its borders. But as time has shown again and again, mere laws are poor deterrents to the worship of dedicated members of such faiths, whether the zealous wish to subvert authority, free the spirits of the oppressed, or merely enjoy the right to practice their beliefs. Clerics in these circumstances must conceal their true natures, practice their magic in secret, and always be on guard for betrayal and discovery."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hidden Priest ~ False Arcanist|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hidden Priest ~ Unseen Devotion|PRECLASS:1,Cleric=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Cleric"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 185,
+    "record_key": "Cleric Archetype ~ Hidden Priest"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

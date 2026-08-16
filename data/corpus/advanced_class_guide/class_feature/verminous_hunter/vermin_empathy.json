@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Verminous Hunter ~ Vermin Empathy",
+    "name": "Vermin Empathy",
+    "class": "Verminous Hunter",
+    "description": "A verminous hunter gains the wild empathy ability, but can use it only to influence vermin (not animals or magical beasts).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verminous Hunter ~ Vermin Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.ArchetypeAbility.Extraordinary.HunterWildEmpathy"
+      },
+      {
+        "key": "DESC",
+        "value": "A verminous hunter gains the wild empathy ability, but can use it only to influence vermin (not animals or magical beasts)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Hunter ~ Wild Empathy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "P.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3249,
+    "record_key": "Verminous Hunter ~ Vermin Empathy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

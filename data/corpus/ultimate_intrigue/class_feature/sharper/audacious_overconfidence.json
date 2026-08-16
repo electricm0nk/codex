@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Sharper ~ Audacious Overconfidence",
+    "name": "Audacious Overconfidence",
+    "class": "Sharper",
+    "description": "After failing an attack roll, skill check, or saving throw, a sharper can reduce her saving throw bonus from lucky save by 1 for 24 hours in order to reroll the failed roll. She can use this ability",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sharper ~ Audacious Overconfidence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.SharperClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "After failing an attack roll, skill check, or saving throw, a sharper can reduce her saving throw bonus from lucky save by 1 for 24 hours in order to reroll the failed roll. She can use this ability"
+      },
+      {
+        "key": "DESC",
+        "value": " once per day.|!PRECLASS:1,Rogue=10"
+      },
+      {
+        "key": "DESC",
+        "value": " twice per day. The decreases to her bonus from lucky save stack with each other.|PRECLASS:1,Rogue=10|!PRECLASS:1,Rogue=16"
+      },
+      {
+        "key": "DESC",
+        "value": " three times per day. The decreases to her bonus from lucky save stack with each other.|PRECLASS:1,Rogue=16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 758,
+    "record_key": "Sharper ~ Audacious Overconfidence"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

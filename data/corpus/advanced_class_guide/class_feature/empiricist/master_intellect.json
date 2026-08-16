@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Empiricist ~ Master Intellect",
+    "name": "Master Intellect",
+    "class": "Empiricist",
+    "description": "An empiricist's powers of reason and deduction become almost superhuman, and he is able to use them in nearly all aspects of life. At 20th level, an empiricist can use inspiration on all skills (even ones he is not trained in) and all ability checks (including initiative checks) without spending inspiration. This ability replaces true inspiration.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Empiricist ~ Master Intellect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Empiricist Class Feature.Investigator Class Feature.SpecialQuality.Extraordinary.InvestigatorTrueInspiration"
+      },
+      {
+        "key": "DESC",
+        "value": "An empiricist's powers of reason and deduction become almost superhuman, and he is able to use them in nearly all aspects of life. At 20th level, an empiricist can use inspiration on all skills (even ones he is not trained in) and all ability checks (including initiative checks) without spending inspiration. This ability replaces true inspiration."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3315,
+    "record_key": "Empiricist ~ Master Intellect"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,135 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Archetype ~ Tatterdemalion",
+    "name": "Tatterdemalion",
+    "class": "Witch Archetype",
+    "description": "Some witches can bend the warp and weft of fabric and thread.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Tatterdemalion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "DESC",
+        "value": "Some witches can bend the warp and weft of fabric and thread."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Tatterdemalion],[!PREFACT:1,ABILITIES,Witch_Archetype_WeaponProficiencies=True,Witch_Archetype_Cantrips=True,Witch_Archetype_Hex1=True,Witch_Archetype_Hex4=True,Witch_Archetype_Hex8=True,Witch_Archetype_Hex12=True,Witch_Archetype_Hex16=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Tatterdemalion ~ Weapon Proficiency|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tatterdemalion ~ Cantrips|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tatterdemalion ~ Dancing Strings|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tatterdemalion ~ Moth-Eaten|PRECLASS:1,Witch=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tatterdemalion ~ Lace Weaver|PRECLASS:1,Witch=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tatterdemalion ~ Sinister Stitching|PRECLASS:1,Witch=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tatterdemalion ~ Unravel|PRECLASS:1,Witch=16"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Cantrips|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex16|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 267,
+    "record_key": "Witch Archetype ~ Tatterdemalion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

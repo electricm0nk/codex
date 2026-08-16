@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wilderness Explorer ~ Hazard Sense",
+    "name": "Hazard Sense",
+    "class": "Wilderness Explorer",
+    "description": "A wilderness explorer gains an intuitive understanding of natural hazards and traps fashioned from a natural environment. He gains a +%1 bonus on Reflex saves against natural hazards and wilderness traps and a +%1 dodge bonus to AC against attacks from wilderness traps.|RangerLVL/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wilderness Explorer ~ Hazard Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.WildernessExplorerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wilderness explorer gains an intuitive understanding of natural hazards and traps fashioned from a natural environment. He gains a +%1 bonus on Reflex saves against natural hazards and wilderness traps and a +%1 dodge bonus to AC against attacks from wilderness traps.|RangerLVL/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 946,
+    "record_key": "Wilderness Explorer ~ Hazard Sense"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

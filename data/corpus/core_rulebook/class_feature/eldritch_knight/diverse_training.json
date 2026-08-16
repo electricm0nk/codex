@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Eldritch Knight ~ Diverse Training",
+    "name": "Diverse Training",
+    "class": "Eldritch Knight",
+    "description": "An eldritch knight adds his level to any levels of fighter he might have for the purpose of meeting the prerequisites for feats (if he has no fighter levels, treat his eldritch knight levels as levels of fighter). He also adds his level to any levels in an arcane spellcasting class for the purpose of meeting the prerequisites for feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eldritch Knight ~ Diverse Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Eldritch KnightClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An eldritch knight adds his level to any levels of fighter he might have for the purpose of meeting the prerequisites for feats (if he has no fighter levels, treat his eldritch knight levels as levels of fighter). He also adds his level to any levels in an arcane spellcasting class for the purpose of meeting the prerequisites for feats."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fighter Level Advanced Feat Tracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FighterWeaponQualifyLVL|classlevel(\"Eldritch Knight\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.385"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3010,
+    "record_key": "Eldritch Knight ~ Diverse Training"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

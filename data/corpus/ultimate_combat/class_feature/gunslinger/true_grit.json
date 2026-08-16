@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gunslinger ~ True Grit",
+    "name": "True Grit",
+    "class": "Gunslinger",
+    "description": "At 20th level, a gunslinger picks two deeds that she has access to and that she must spend grit to perform. She can perform these deeds for 1 grit point fewer (minimum 0) than usual. If the number of grit points to perform a deed is reduced to 0, the gunslinger can perform this deed as long as she has at least 1 grit point. If a deed could already be performed as long as she had at least 1 grit point, she can now perform that deed even when she has no grit points.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ True Grit"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_2b"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GunslingerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a gunslinger picks two deeds that she has access to and that she must spend grit to perform. She can perform these deeds for 1 grit point fewer (minimum 0) than usual. If the number of grit points to perform a deed is reduced to 0, the gunslinger can perform this deed as long as she has at least 1 grit point. If a deed could already be performed as long as she had at least 1 grit point, she can now perform that deed even when she has no grit points."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 45,
+    "record_key": "Gunslinger ~ True Grit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bramble Brewer ~ Dendrite Mutagen",
+    "name": "Dendrite Mutagen",
+    "class": "Bramble Brewer",
+    "description": "A bramble brewer's mutagen still contains transformative power, but grants a treelike sturdiness rather than the feral power of standard mutagens. When imbibed, a dendrite mutagen grants a +4 natural armor bonus, a +2 alchemical bonus to one physical ability score, and a -2 penalty to the corresponding mental ability score (as per the normal mutagen class feature; Advanced Player's Guide 28). In addition, the alchemist gains fast healing 1 as long as he is in an area of bright light (such as sunlight or inside the area of a daylight spell). This otherwise works like the standard mutagen class feature and replaces that ability. A bramble brewer who selects the greater mutagen discovery can create a dendrite mutagen that still grants a +4 natural armor bonus, and also grants a +4 alchemical bonus to one physical ability score and a +2 bonus to a second physical ability score. The bramble brewer takes a -2 penalty to both associated mental ability scores as long as the mutagen persists, but his fast healing increases to 3 as long as he is in an area of bright light. This otherwise works like the greater mutagen discovery and replaces that ability. A bramble brewer who selects the grand mutagen discovery can brew a dendrite mutagen that now grants a +6 natural armor bonus, a +6 alchemical bonus to one physical ability score, a +4 alchemical bonus to a second physical ability score, and a +2 alchemical bonus to a third physical ability score. The bramble brewer takes a -2 penalty to his Intelligence, Wisdom, and Charisma scores as long as the mutagen persists. The bramble brewer's fast healing increases to 5 as long as he is within an area of bright light. This otherwise works like the grand mutagen discovery and replaces that ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bramble Brewer ~ Dendrite Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A bramble brewer's mutagen still contains transformative power, but grants a treelike sturdiness rather than the feral power of standard mutagens. When imbibed, a dendrite mutagen grants a +4 natural armor bonus, a +2 alchemical bonus to one physical ability score, and a -2 penalty to the corresponding mental ability score (as per the normal mutagen class feature; Advanced Player's Guide 28). In addition, the alchemist gains fast healing 1 as long as he is in an area of bright light (such as sunlight or inside the area of a daylight spell). This otherwise works like the standard mutagen class feature and replaces that ability. A bramble brewer who selects the greater mutagen discovery can create a dendrite mutagen that still grants a +4 natural armor bonus, and also grants a +4 alchemical bonus to one physical ability score and a +2 bonus to a second physical ability score. The bramble brewer takes a -2 penalty to both associated mental ability scores as long as the mutagen persists, but his fast healing increases to 3 as long as he is in an area of bright light. This otherwise works like the greater mutagen discovery and replaces that ability. A bramble brewer who selects the grand mutagen discovery can brew a dendrite mutagen that now grants a +6 natural armor bonus, a +6 alchemical bonus to one physical ability score, a +4 alchemical bonus to a second physical ability score, and a +2 alchemical bonus to a third physical ability score. The bramble brewer takes a -2 penalty to his Intelligence, Wisdom, and Charisma scores as long as the mutagen persists. The bramble brewer's fast healing increases to 5 as long as he is within an area of bright light. This otherwise works like the grand mutagen discovery and replaces that ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 220,
+    "record_key": "Bramble Brewer ~ Dendrite Mutagen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

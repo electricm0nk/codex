@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bardic Performance ~ Soothing Performance",
+    "name": "Soothing Performance",
+    "class": "Bardic Performance",
+    "description": "You can use your performance to create an effect equivalent to a Mass Cure Serious Wounds (caster level %1). In addition, this performance removes the fatigued, sickened, and shaken conditions from all those affected. Using this ability requires 4 rounds of continuous performance, and the targets must be able to see and hear you throughout the performance. Soothing performance affects all targets that remain within 30 feet throughout the performance. Soothing performance relies on audible and visual components.|SoothingPerformanceLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Soothing Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SoothingPerformanceLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your performance to create an effect equivalent to a Mass Cure Serious Wounds (caster level %1). In addition, this performance removes the fatigued, sickened, and shaken conditions from all those affected. Using this ability requires 4 rounds of continuous performance, and the targets must be able to see and hear you throughout the performance. Soothing performance affects all targets that remain within 30 feet throughout the performance. Soothing performance relies on audible and visual components.|SoothingPerformanceLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SoothingPerformanceLVL|BardicPerformanceLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 529,
+    "record_key": "Bardic Performance ~ Soothing Performance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wildborn ~ Weapon and Armor Proficiencies",
+    "name": "Weapon and Armor Proficiencies",
+    "class": "Wildborn",
+    "description": "A wildborn is proficient with leather and hide armors (but not shields) and all simple weapons that can be crafted from bone, stone, or wood. In addition, a wildborn gains Improved Unarmed Strike and Catch Off Guard as bonus feats at 1st level. If she uses any other kind of weapon or armor, she loses her abilities from this archetype (except illiteracy) for the next 24 hours. This alters the barbarian's normal weapon and armor proficiencies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildborn ~ Weapon and Armor Proficiencies"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.WildbornClassFeatures"
+      },
+      {
+        "key": "DESC",
+        "value": "A wildborn is proficient with leather and hide armors (but not shields) and all simple weapons that can be crafted from bone, stone, or wood. In addition, a wildborn gains Improved Unarmed Strike and Catch Off Guard as bonus feats at 1st level. If she uses any other kind of weapon or armor, she loses her abilities from this archetype (except illiteracy) for the next 24 hours. This alters the barbarian's normal weapon and armor proficiencies."
+      },
+      {
+        "key": "AUTO",
+        "value": "ARMORPROF|Leather|Hide"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Auto|Weapon Prof ~ Simple"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Unarmed Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Catch Off-Guard"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 223,
+    "record_key": "Wildborn ~ Weapon and Armor Proficiencies"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

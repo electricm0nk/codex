@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Metal School ~ Iron Skin",
+    "name": "Iron Skin",
+    "class": "Metal School",
+    "description": "You gain a +%1 armor bonus to your Armor Class for 10 minutes. You can use this ability %2 times per day.|IronSkinACBonus|IronSkinTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metal School ~ Iron Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IronSkinACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IronSkinTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 armor bonus to your Armor Class for 10 minutes. You can use this ability %2 times per day.|IronSkinACBonus|IronSkinTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IronSkinACBonus|2+floor(MetalSchoolLVL/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IronSkinTimes|3+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|IronSkinACBonus|TYPE=Armor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 793,
+    "record_key": "Metal School ~ Iron Skin"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

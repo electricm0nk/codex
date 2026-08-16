@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Paladin Archetype ~ Stonelord",
+    "name": "Stonelord",
+    "class": "Paladin Archetype",
+    "description": "A stonelord is a devoted sentinel of dwarven enclaves, drawing the power of the earth and ancient stone to protect her people.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Stonelord"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype.PaladinSmiteEvil.PaladinDivineGrace.PaladinDivineHealth.PaladinMercy3.PaladinMercy9.PaladinMercy15.PaladinChannelPositiveEnergy.PaladinDivineBond.PaladinAuraOfJustice.PaladinMercy12.PaladinMercy18.PaladinHolyChampion"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Stonelord],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinSmiteEvil,TYPE.PaladinDivineGrace,TYPE.PaladinDivineHealth,TYPE.PaladinMercy3,TYPE.PaladinMercy9,TYPE.PaladinMercy15,TYPE.PaladinChannelPositiveEnergy,TYPE.PaladinDivineBond,TYPE.PaladinAuraOfJustice,TYPE.PaladinMercy12,TYPE.PaladinMercy18,TYPE.PaladinHolyChampion]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsDwarf=true"
+      },
+      {
+        "key": "DESC",
+        "value": "A stonelord is a devoted sentinel of dwarven enclaves, drawing the power of the earth and ancient stone to protect her people."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stonelord ~ Stonestrike|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stonelord ~ Heartstone|PRECLASS:1,Paladin=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stonelord ~ Stoneblood 1|!PRECLASS:1,Paladin=9|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stonelord ~ Stoneblood 2|!PRECLASS:1,Paladin=15|PRECLASS:1,Paladin=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stonelord ~ Stoneblood 3|PRECLASS:1,Paladin=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stonelord ~ Defensive Stance|PRECLASS:1,Paladin=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stonelord ~ Earth Channel|PRECLASS:1,Paladin=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stonelord ~ Stone Servant|PRECLASS:1,Paladin=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stonelord ~ Stonebane|PRECLASS:1,Paladin=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stonelord ~ Phase Strike|PRECLASS:1,Paladin=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stonelord ~ Mobile Defense|PRECLASS:1,Paladin=18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stonelord ~ Stone Body|PRECLASS:1,Paladin=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Paladin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 33,
+    "record_key": "Paladin Archetype ~ Stonelord"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

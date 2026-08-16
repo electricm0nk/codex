@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Soul ~ Nemesis Slayer",
+    "name": "Nemesis Slayer",
+    "class": "Wild Soul",
+    "description": "A wild soul becomes death incarnate to his nemeses. As a standard action, he can make a single attack against a nemesis at his full attack bonus. If the attack hits, the target takes damage normally and must succeed at a Fortitude save (DC %1) or die. The wild soul can instead deal an amount of nonlethal damage equal to the creature's current hit points, which the target can negate with a successful save at the same DC. The ranger can use this ability up to five times per day, but he cannot use it against the same creature more than once in a 24-hour period.|10+RangerLVL/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Soul ~ Nemesis Slayer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.WildSoulClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wild soul becomes death incarnate to his nemeses. As a standard action, he can make a single attack against a nemesis at his full attack bonus. If the attack hits, the target takes damage normally and must succeed at a Fortitude save (DC %1) or die. The wild soul can instead deal an amount of nonlethal damage equal to the creature's current hit points, which the target can negate with a successful save at the same DC. The ranger can use this ability up to five times per day, but he cannot use it against the same creature more than once in a 24-hour period.|10+RangerLVL/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 957,
+    "record_key": "Wild Soul ~ Nemesis Slayer"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

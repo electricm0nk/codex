@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forest Preserver ~ Favored Terrain",
+    "name": "Favored Terrain",
+    "class": "Forest Preserver",
+    "description": "A forest preserver gains the ranger's favored terrain ability but must select either forest or jungle as her favored terrain. The bonuses granted by this ability increase by 2 for every 5 levels after 3rd, but she does not gain additional favored terrains.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forest Preserver ~ Favored Terrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Features.ForestPreserverClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A forest preserver gains the ranger's favored terrain ability but must select either forest or jungle as her favored terrain. The bonuses granted by this ability increase by 2 for every 5 levels after 3rd, but she does not gain additional favored terrains."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Basic Favored Terrain"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Terrain|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Terrain Bonus|(PaladinLVL-3)/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 869,
+    "record_key": "Forest Preserver ~ Favored Terrain"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

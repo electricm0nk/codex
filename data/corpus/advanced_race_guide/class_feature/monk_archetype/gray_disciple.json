@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk Archetype ~ Gray Disciple",
+    "name": "Gray Disciple",
+    "class": "Monk Archetype",
+    "description": "The gray disciple contemplates the inner voice of duergar magic and the silent eternity of stone, mastering these dual mysteries and combining them to deadly effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Gray Disciple"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkSlowFall.MonkStillMind.MonkHighJump.MonkBonusFeat6.MonkWholenessOfBody.MonkAbundantStep.MonkQuiveringPalm.MonkTongueOfTheSunAndMoon.MonkEmptyBody"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Gray Disciple],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkSlowFall,TYPE.MonkStillMind,TYPE.MonkHighJump,TYPE.MonkBonusFeat6,TYPE.MonkWholenessOfBody,TYPE.MonkAbundantStep,TYPE.MonkQuiveringPalm,TYPE.MonkTongueOfTheSunAndMoon,TYPE.MonkEmptyBody]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsDuergar=true"
+      },
+      {
+        "key": "DESC",
+        "value": "The gray disciple contemplates the inner voice of duergar magic and the silent eternity of stone, mastering these dual mysteries and combining them to deadly effect."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gray Disciple ~ Fade from Sight|PREABILITY:1,CATEGORY=Special Ability,Invisibility|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gray Disciple ~ Gray Heart|PREABILITY:1,CATEGORY=Special Ability,Enlarge Person|PRECLASS:1,Monk=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gray Disciple ~ Born in Darkness|PRECLASS:1,Monk=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gray Disciple ~ Earth Glide|PRECLASS:1,Monk=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gray Disciple ~ Entomb|PRECLASS:1,Monk=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gray Disciple ~ Earthen Thrall|PRECLASS:1,Monk=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 832,
+    "record_key": "Monk Archetype ~ Gray Disciple"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

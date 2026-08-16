@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Abjuration Opposition School",
+    "name": "Abjuration Opposition School",
+    "class": null,
+    "description": "You have chosen abjuration spells as an opposition school. Preparing an abjuration spell takes up two spell slots of the same level. You take a -4 penalty on any skill checks made when crafting a magic item that has an abjuration spell as a prerequisite.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneOppositionSchool"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Abjuration School"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "Wizard_CF_AbjurationOppositionSchool,0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen abjuration spells as an opposition school. Preparing an abjuration spell takes up two spell slots of the same level. You take a -4 penalty on any skill checks made when crafting a magic item that has an abjuration spell as a prerequisite."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OppositionalSchool|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2609,
+    "record_key": "Abjuration Opposition School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bloody Jake ~ Cruel Tricks",
+    "name": "Cruel Tricks",
+    "class": "Bloody Jake",
+    "description": "Bloody jakes use backwoods folk magic to confuse, terrify, and weaken their prey. A bloody jake can use this ability %1 times per day. He gains the cruel tricks below at the indicated slayer levels.|SlayerLVL+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloody Jake ~ Cruel Tricks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "BloodyJake_CruelTrick_1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "DESC",
+        "value": "Bloody jakes use backwoods folk magic to confuse, terrify, and weaken their prey. A bloody jake can use this ability %1 times per day. He gains the cruel tricks below at the indicated slayer levels.|SlayerLVL+CHA"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SlayerLVL+CHA"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 211,
+    "record_key": "Bloody Jake ~ Cruel Tricks"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

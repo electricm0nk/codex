@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spell Warrior ~ Enhance Weapons",
+    "name": "Enhance Weapons",
+    "class": "Spell Warrior",
+    "description": "The spell warrior can use his raging song to grant a +%1 enhancement bonus to the weapons (including ammunition) of allies within 60 feet. The maximum bonus gained is based upon the number of weapons affected: +5 to one weapon, +4 to two weapons, +3 to three weapons, or +2 to four or more weapons. Fifty pieces of ammunition count as one weapon for this purpose. The wielder of a weapon enhanced by this raging song counts as if he were under the effect of an inspired rage raging song for all purposes involving the skald's rage powers. These bonuses can also be used to add any of the following weapon special abilities to the weapons enhanced by this ability: dancing, defending, distance, flaming, frost, ghost touch, keen, mighty cleaving, returning, shock, seeking, or speed. Adding these weapon special abilities consumes an amount of bonus equal to the special ability's cost (see Table 15-9: Melee Weapon Special Abilities on page 469 of the Core Rulebook). These enhancement bonuses and special abilities overlap with any enhancements or special abilities the weapon already has, though duplicate special abilities do not stack. If an affected weapon is not magical, at least a +1 enhancement bonus must be added before any other special abilities can be. The bonus and special abilities granted by this raging song are determined when the song begins, and cannot be changed until the raging song ends and another is begun. These bonuses apply to only one end of a double weapon.|1+floor(SkaldLVL/5)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spell Warrior ~ Enhance Weapons"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spell Warrior Class Feature.Skald Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The spell warrior can use his raging song to grant a +%1 enhancement bonus to the weapons (including ammunition) of allies within 60 feet. The maximum bonus gained is based upon the number of weapons affected: +5 to one weapon, +4 to two weapons, +3 to three weapons, or +2 to four or more weapons. Fifty pieces of ammunition count as one weapon for this purpose. The wielder of a weapon enhanced by this raging song counts as if he were under the effect of an inspired rage raging song for all purposes involving the skald's rage powers. These bonuses can also be used to add any of the following weapon special abilities to the weapons enhanced by this ability: dancing, defending, distance, flaming, frost, ghost touch, keen, mighty cleaving, returning, shock, seeking, or speed. Adding these weapon special abilities consumes an amount of bonus equal to the special ability's cost (see Table 15-9: Melee Weapon Special Abilities on page 469 of the Core Rulebook). These enhancement bonuses and special abilities overlap with any enhancements or special abilities the weapon already has, though duplicate special abilities do not stack. If an affected weapon is not magical, at least a +1 enhancement bonus must be added before any other special abilities can be. The bonus and special abilities granted by this raging song are determined when the song begins, and cannot be changed until the raging song ends and another is begun. These bonuses apply to only one end of a double weapon.|1+floor(SkaldLVL/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3694,
+    "record_key": "Spell Warrior ~ Enhance Weapons"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

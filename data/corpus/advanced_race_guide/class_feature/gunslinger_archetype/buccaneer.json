@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Gunslinger Archetype ~ Buccaneer",
+    "name": "Buccaneer",
+    "class": "Gunslinger Archetype",
+    "description": "Freebooters who cling to the convoluted codes that rule independent ships, the buccaneer is a gunslinger of the high seas. Their exploits are fueled by the thrill of danger and often by the temporary courage provided by grog. A buccaneer has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger Archetype ~ Buccaneer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.GunslingerArchetype.GunslingerQuickClearDeed.GunslingerPistolWhipDeed.GunslingerDeadShotDeed.GunslingerLightningReloadDeed.GunslingerGrit.GunslingerNimble.GunslingerGunTraining1.GunslingerGunTraining2.GunslingerGunTraining4"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Gunslinger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ Buccaneer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.GunslingerQuickClearDeed,TYPE.GunslingerPistolWhipDeed,TYPE.GunslingerDeadShotDeed,TYPE.GunslingerLightningReloadDeed,TYPE.GunslingerGrit,TYPE.GunslingerNimble,TYPE.GunslingerGunTraining1,TYPE.GunslingerGunTraining2,TYPE.GunslingerGunTraining4]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHuman=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Freebooters who cling to the convoluted codes that rule independent ships, the buccaneer is a gunslinger of the high seas. Their exploits are fueled by the thrill of danger and often by the temporary courage provided by grog. A buccaneer has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Buccaneer ~ Deeds|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Buccaneer ~ Seadog's Gait|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Buccaneer ~ Pirate's Jargon|PRECLASS:1,Gunslinger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Buccaneer ~ Rope Swing|PRECLASS:1,Gunslinger=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Buccaneer ~ Captain's Curse 1|PRECLASS:1,Gunslinger=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Buccaneer ~ Captain's Curse 2|PRECLASS:1,Gunslinger=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Buccaneer ~ Grit|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Buccaneer ~ Liquid Courage|PRECLASS:1,Gunslinger=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Buccaneer ~ Bonus Feat|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Buccaneer ~ Exotic Pet|PRECLASS:1,Gunslinger=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Buccaneer ~ Sword and Pistol|PRECLASS:1,Gunslinger=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Buccaneer ~ Gun Training|PRECLASS:1,Gunslinger=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Buccaneer ~ Raider's Riposte|PRECLASS:1,Gunslinger=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Gunslinger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 343,
+    "record_key": "Gunslinger Archetype ~ Buccaneer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

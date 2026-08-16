@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Zen Archer ~ Flurry of Blows",
+    "name": "Flurry of Blows",
+    "class": "Zen Archer",
+    "description": "Starting at 1st level, a zen archer can make a flurry of blows as a full-attack action, but only when using a bow (even though it is a ranged weapon). He may not make a flurry of blows with his unarmed attacks or any other weapons. A zen archer does not apply his Strength bonus on damage rolls made with flurry of blows unless he is using a composite bow with a Strength rating. A zen archer's flurry of blows otherwise functions as normal for a monk of his level. A zen archer cannot use Rapid Shot or Manyshot when making a flurry of blows with his bow.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Zen Archer ~ Flurry of Blows"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 1st level, a zen archer can make a flurry of blows as a full-attack action, but only when using a bow (even though it is a ranged weapon). He may not make a flurry of blows with his unarmed attacks or any other weapons. A zen archer does not apply his Strength bonus on damage rolls made with flurry of blows unless he is using a composite bow with a Strength rating. A zen archer's flurry of blows otherwise functions as normal for a monk of his level. A zen archer cannot use Rapid Shot or Manyshot when making a flurry of blows with his bow."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Weapon,Ranged|WEAPON|ATTACKS|FlurryExtraAttacks+1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Weapon,Ranged|WEAPON|TOHIT|-2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2381,
+    "record_key": "Zen Archer ~ Flurry of Blows"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

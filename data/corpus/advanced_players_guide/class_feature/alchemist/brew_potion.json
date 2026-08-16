@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Alchemist ~ Brew Potion",
+    "name": "Brew Potion",
+    "class": "Alchemist",
+    "description": "You receive Brew Potion as a bonus feat. You can brew potions of any formulae you know (up to 3rd level), using your alchemist level as caster level. The spell must be one that can be made into a potion. You do not need to meet the prerequisites for this feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist ~ Brew Potion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You receive Brew Potion as a bonus feat. You can brew potions of any formulae you know (up to 3rd level), using your alchemist level as caster level. The spell must be one that can be made into a potion. You do not need to meet the prerequisites for this feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Brew Potion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 74,
+    "record_key": "Alchemist ~ Brew Potion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

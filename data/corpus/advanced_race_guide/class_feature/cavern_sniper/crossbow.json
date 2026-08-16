@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Cavern Sniper ~ Sniper Training Crossbow",
+    "name": "Crossbow",
+    "class": "Cavern Sniper",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavern Sniper ~ Sniper Training Crossbow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SniperTrainingChoice"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Crossbow|DAMAGE,TOHIT|2+max(0,(FighterLVL-5))/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Crossbow|CRITMULTADD|1|PREABILITY:1,CATEGORY=Special Ability,Cavern Sniper ~ Weapon Mastery"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 506,
+    "record_key": "Cavern Sniper ~ Sniper Training Crossbow"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

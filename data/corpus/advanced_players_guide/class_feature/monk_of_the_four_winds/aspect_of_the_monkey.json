@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Monk of the Four Winds ~ Aspect of the Monkey",
+    "name": "Aspect of the Monkey",
+    "class": "Monk of the Four Winds",
+    "description": "The monk's face becomes that of a monkey, and he grows a prehensile tail. The monk can pick up objects and make unarmed attacks with his tail (though the tail does not grant additional unarmed attacks or natural attacks). In addition, the monk gains a climb speed equal to his land speed. The monkey is a creature of whimsy and a lover of pranks-a monk of any alignment can take on the aspect of the monkey.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk of the Four Winds ~ Aspect of the Monkey"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.AspectMasterSelection"
+      },
+      {
+        "key": "DESC",
+        "value": "The monk's face becomes that of a monkey, and he grows a prehensile tail. The monk can pick up objects and make unarmed attacks with his tail (though the tail does not grant additional unarmed attacks or natural attacks). In addition, the monk gains a climb speed equal to his land speed. The monkey is a creature of whimsy and a lover of pranks-a monk of any alignment can take on the aspect of the monkey."
+      },
+      {
+        "key": "MOVECLONE",
+        "value": "Climb,Walk,*1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2346,
+    "record_key": "Monk of the Four Winds ~ Aspect of the Monkey"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

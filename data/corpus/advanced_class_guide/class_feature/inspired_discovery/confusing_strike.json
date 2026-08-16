@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Inspired Discovery ~ Confusing Strike",
+    "name": "Confusing Strike",
+    "class": "Inspired Discovery",
+    "description": "When the investigator deals damage with studied strike, the opponent must succeed at a DC %1 Fortitude saving throw or become confused for 1d4+1 rounds. A successful saving throw reduces the duration to 1 round.  Constructs, mindless creatures, oozes, plants, undead, incorporeal creatures, and creatures immune to critical hits are not affected by this ability. * Only one of these talents can be applied to an individual attack.|InvestigatorConfusingStrikeDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inspired Discovery ~ Confusing Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InspiredInvestigatorTalent.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Alchemist Archetype ~ Inspired Chemist"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AlchemistLVL,19"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorConfusingStrikeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When the investigator deals damage with studied strike, the opponent must succeed at a DC %1 Fortitude saving throw or become confused for 1d4+1 rounds. A successful saving throw reduces the duration to 1 round.  Constructs, mindless creatures, oozes, plants, undead, incorporeal creatures, and creatures immune to critical hits are not affected by this ability. * Only one of these talents can be applied to an individual attack.|InvestigatorConfusingStrikeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorConfusingStrikeDC|AlchemistLVL/2+INT+10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2337,
+    "record_key": "Inspired Discovery ~ Confusing Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

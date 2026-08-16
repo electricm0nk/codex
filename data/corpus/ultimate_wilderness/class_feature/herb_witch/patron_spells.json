@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Herb Witch ~ Patron Spells",
+    "name": "Patron Spells",
+    "class": "Herb Witch",
+    "description": "[NOT IMPLEMENTED] An herb witch must choose a patron with a theme compatible with the needs of the natural world, selected from the following list: ancestors, animals, death, elements, healing, plague, strength, time, water, winter, wisdom, or woodlands. This alters the witch's patron spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Herb Witch ~ Patron Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.HerbWitchClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] An herb witch must choose a patron with a theme compatible with the needs of the natural world, selected from the following list: ancestors, animals, death, elements, healing, plague, strength, time, water, winter, wisdom, or woodlands. This alters the witch's patron spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1249,
+    "record_key": "Herb Witch ~ Patron Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

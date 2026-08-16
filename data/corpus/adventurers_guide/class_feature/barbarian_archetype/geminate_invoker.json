@@ -1,0 +1,131 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Geminate Invoker",
+    "name": "Geminate Invoker",
+    "class": "Barbarian Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Geminate Invoker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.166"
+      },
+      {
+        "key": "DESC",
+        "value": "Geminate invokers are barbarians who use Rivethun traditions to invite spirits into their bodies. The spirits' aid enables them to overcome the distractions of the flesh-they can ignore pain, and even defy death. These ascetics make up much of the Rivethun martial forces."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassClassAlignment_Barbarian|1"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "NG,LN,TN,CN,NE"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Geminate Invoker],[!PREFACT:1,ABILITIES,Barbarian_Archetype_ClassSkills=True,Barbarian_Archetype_Rage=True,Barbarian_Archetype_TrapSense=True,Barbarian_Archetype_RagePower4=True,Barbarian_Archetype_RagePower8=True,Barbarian_Archetype_RagePower12=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Geminate Invoker ~ Contemplative|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Geminate Invoker ~ Trance|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Geminate Invoker ~ Haunt Channeler|PRECLASS:1,Barbarian=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Geminate Invoker ~ Spirit Conduit|PRECLASS:1,Barbarian=4"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_Rage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_Rage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower12|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 610,
+    "record_key": "Barbarian Archetype ~ Geminate Invoker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

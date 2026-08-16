@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Maneuver Master ~ Flurry of Maneuvers",
+    "name": "Flurry of Maneuvers",
+    "class": "Maneuver Master",
+    "description": "At 1st level, as part of a full attack action, a maneuver master can make one additional combat maneuver, regardless of whether the maneuver normally replaces a melee attack or requires a standard action. The maneuver master uses his monk level in place of his base attack bonus to determine his CMB for the bonus maneuvers, though all combat maneuver checks suffer a -2 penalty when using a flurry. At 8th level, a maneuver master may attempt a second additional combat maneuver, with an additional -3 penalty on combat maneuver checks. At 15th level, a maneuver master may attempt a third additional combat maneuver, with an additional -7 penalty on combat maneuver checks. A maneuver master loses this ability when wearing armor, using a shield, or carrying a medium or heavy load. This ability replaces flurry of blows.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maneuver Master ~ Flurry of Maneuvers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, as part of a full attack action, a maneuver master can make one additional combat maneuver, regardless of whether the maneuver normally replaces a melee attack or requires a standard action. The maneuver master uses his monk level in place of his base attack bonus to determine his CMB for the bonus maneuvers, though all combat maneuver checks suffer a -2 penalty when using a flurry. At 8th level, a maneuver master may attempt a second additional combat maneuver, with an additional -3 penalty on combat maneuver checks. At 15th level, a maneuver master may attempt a third additional combat maneuver, with an additional -7 penalty on combat maneuver checks. A maneuver master loses this ability when wearing armor, using a shield, or carrying a medium or heavy load. This ability replaces flurry of blows."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 977,
+    "record_key": "Maneuver Master ~ Flurry of Maneuvers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

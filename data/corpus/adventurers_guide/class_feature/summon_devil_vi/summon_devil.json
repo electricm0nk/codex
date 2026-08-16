@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Summon Devil VI ~ HK",
+    "name": "Summon Devil",
+    "class": "Summon Devil VI",
+    "description": "You may use summon monster VI as a spell-like ability %1/day to summon 1d3 bearded devils, or 1 erinyes.|HKDiscipline",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summon Devil VI ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use summon monster VI as a spell-like ability %1/day to summon 1d3 bearded devils, or 1 erinyes.|HKDiscipline"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Hellknight|TIMES=HKDiscipline|CASTERLEVEL=TL|Summon Monster VI,HKDisciplineDC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 213,
+    "record_key": "Summon Devil VI ~ HK"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

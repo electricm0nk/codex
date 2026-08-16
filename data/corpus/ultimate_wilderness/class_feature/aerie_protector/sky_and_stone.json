@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Aerie Protector ~ Sky and Stone",
+    "name": "Sky and Stone",
+    "class": "Aerie Protector",
+    "description": "An aerie protector gains a bonus equal to half her level on Knowledge (geography) and Survival checks involving mountainous terrain or high altitudes, and she cannot be tracked in such an environment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aerie Protector ~ Sky and Stone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.AerieProtectorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An aerie protector gains a bonus equal to half her level on Knowledge (geography) and Survival checks involving mountainous terrain or high altitudes, and she cannot be tracked in such an environment."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Knowledge (geography)=Mountains,Survival=In mountains|DruidLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 506,
+    "record_key": "Aerie Protector ~ Sky and Stone"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

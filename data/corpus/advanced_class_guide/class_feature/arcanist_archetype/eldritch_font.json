@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Arcanist Archetype ~ Eldritch Font",
+    "name": "Eldritch Font",
+    "class": "Arcanist Archetype",
+    "description": "For some arcanists, the power bubbling up from within is nearly too much to contain. They become adept at shaping this magical energy without needing to bind it up in spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcanist Archetype ~ Eldritch Font"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ArcanistArchetype.ArcanistExploit3.ArcanistExploit7.ArcanistExploit13.ArcanistMagicalSupremacy"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Arcanist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Arcanist Archetype ~ Eldritch Font],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ArcanistExploit3,TYPE.ArcanistExploit7,TYPE.ArcanistExploit13,TYPE.ArcanistMagicalSupremacy]"
+      },
+      {
+        "key": "DESC",
+        "value": "For some arcanists, the power bubbling up from within is nearly too much to contain. They become adept at shaping this magical energy without needing to bind it up in spells."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Arcanist Class Feature|AUTOMATIC|Eldritch Font ~ Font of Power|PRECLASS:1,Arcanist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Arcanist Class Feature|AUTOMATIC|Eldritch Font ~ Eldritch Surge|PRECLASS:1,Arcanist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Arcanist Class Feature|AUTOMATIC|Eldritch Font ~ Improved Surge|PRECLASS:1,Arcanist=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Arcanist Class Feature|AUTOMATIC|Eldritch Font ~ Greater Surge|PRECLASS:1,Arcanist=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Arcanist Class Feature|AUTOMATIC|Eldritch Font ~ Bottomless Well|PRECLASS:1,Arcanist=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Arcanist"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2376,
+    "record_key": "Arcanist Archetype ~ Eldritch Font"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

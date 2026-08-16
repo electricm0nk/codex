@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skald ~ Song of the Fallen",
+    "name": "Song of the Fallen",
+    "class": "Skald",
+    "description": "At 14th level, a skald can temporarily revive dead allies to continue fighting, with the same limitations as raise dead. The skald selects a dead ally within 60 feet and expends 1 round of raging song to bring that ally back to life. The revived ally is alive but staggered. Each round, the skald may expend another 1 round of raging song to keep that ally alive for another round. The ally automatically dies if the skald ends this performance or is interrupted. The skald may revive multiple allies with this ability (either at the same time or over successive rounds) but must expend 1 round of raging song per revived ally per round to maintain the effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald ~ Song of the Fallen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SkaldSongOfTheFallen.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 14th level, a skald can temporarily revive dead allies to continue fighting, with the same limitations as raise dead. The skald selects a dead ally within 60 feet and expends 1 round of raging song to bring that ally back to life. The revived ally is alive but staggered. Each round, the skald may expend another 1 round of raging song to keep that ally alive for another round. The ally automatically dies if the skald ends this performance or is interrupted. The skald may revive multiple allies with this ability (either at the same time or over successive rounds) but must expend 1 round of raging song per revived ally per round to maintain the effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1743,
+    "record_key": "Skald ~ Song of the Fallen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

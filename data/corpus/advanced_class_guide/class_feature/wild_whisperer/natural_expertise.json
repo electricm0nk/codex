@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Whisperer ~ Natural Expertise",
+    "name": "Natural Expertise",
+    "class": "Wild Whisperer",
+    "description": "A wild whisperer's powers of observation give her an advantage when she's fighting natural creatures. When using inspiration on an attack roll against an animal or a vermin or on a saving throw against an effect from an animal or a vermin, a wild whisperer has to expend only one use of inspiration instead of two.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Whisperer ~ Natural Expertise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wild Whisperer Class Feature.Druid Class Feature.SpecialQuality.Extraordinary.DruidWildShape6"
+      },
+      {
+        "key": "DESC",
+        "value": "A wild whisperer's powers of observation give her an advantage when she's fighting natural creatures. When using inspiration on an attack roll against an animal or a vermin or on a saving throw against an effect from an animal or a vermin, a wild whisperer has to expend only one use of inspiration instead of two."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3038,
+    "record_key": "Wild Whisperer ~ Natural Expertise"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

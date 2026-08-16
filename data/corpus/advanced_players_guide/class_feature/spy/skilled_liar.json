@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Spy ~ Skilled Liar",
+    "name": "Skilled Liar",
+    "class": "Spy",
+    "description": "Whenever a spy uses Bluff to attempt to deceive someone, she gains a +%1 bonus on the opposed roll. This bonus does not apply to feint attempts or attempts to pass secret messages. This ability replaces trapfinding.|max(RogueLVL/2,1)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spy ~ Skilled Liar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RogueClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a spy uses Bluff to attempt to deceive someone, she gains a +%1 bonus on the opposed roll. This bonus does not apply to feint attempts or attempts to pass secret messages. This ability replaces trapfinding.|max(RogueLVL/2,1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Bluff=Lie|max(RogueLVL/2,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2986,
+    "record_key": "Spy ~ Skilled Liar"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

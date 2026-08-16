@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ranger Archetype ~ Summit Sentinel",
+    "name": "Summit Sentinel",
+    "class": "Ranger Archetype",
+    "description": "Some rangers eschew the path of the swift skirmisher and embrace the implacable strength of the mountain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Summit Sentinel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Summit Sentinel],[!PREFACT:1,ABILITIES,Ranger_Archetype_CombatStyleFeat=True,Ranger_Archetype_FavoredTerrain=True,Ranger_Archetype_Spells=True,Ranger_Archetype_SwiftTracker=True,Ranger_Archetype_HideInPlainSight=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some rangers eschew the path of the swift skirmisher and embrace the implacable strength of the mountain."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Summit Sentinel ~ Roots of the Mountain|PRECLASS:1,Ranger=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Summit Sentinel ~ Mountain Mastery|PRECLASS:1,Ranger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Summit Sentinel ~ Spells|PRECLASS:1,Ranger=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Summit Sentinel ~ Rockslide|PRECLASS:1,Ranger=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Summit Sentinel ~ Invincible|PRECLASS:1,Ranger=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_CombatStyleFeat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_SwiftTracker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_HideInPlainSight|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_CombatStyleFeat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_SwiftTracker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_HideInPlainSight|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 900,
+    "record_key": "Ranger Archetype ~ Summit Sentinel"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

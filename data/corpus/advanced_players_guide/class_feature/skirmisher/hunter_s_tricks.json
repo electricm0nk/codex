@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Skirmisher ~ Hunter's Tricks",
+    "name": "Hunter's Tricks",
+    "class": "Skirmisher",
+    "description": "A skirmisher ranger learns the use of %1 hunter's tricks, which typically grant a boon or bonus to the ranger or a nearby ally. A ranger can use these tricks %2 times per day. Tricks are usually swift actions, but sometimes move or free actions that modify a standard action, usually an attack action. Once a trick is chosen, it can't be retrained. A ranger cannot select an individual trick more than once. This ability replaces the ranger's spells class feature. Skirmishers do not gain any spells or spellcasting ability, do not have a caster level, and cannot use spell trigger and spell completion magic items.|SkirmisherTricks|SkirmisherTrickTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skirmisher ~ Hunter's Tricks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.RangerSpells"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SkirmisherTricks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SkirmisherTrickTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A skirmisher ranger learns the use of %1 hunter's tricks, which typically grant a boon or bonus to the ranger or a nearby ally. A ranger can use these tricks %2 times per day. Tricks are usually swift actions, but sometimes move or free actions that modify a standard action, usually an attack action. Once a trick is chosen, it can't be retrained. A ranger cannot select an individual trick more than once. This ability replaces the ranger's spells class feature. Skirmishers do not gain any spells or spellcasting ability, do not have a caster level, and cannot use spell trigger and spell completion magic items.|SkirmisherTricks|SkirmisherTrickTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter's Trick Selection|SkirmisherTricks"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SkirmisherTricks|max(0,(RangerLVL-3)/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SkirmisherTrickTimes|(RangerLVL/2)+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SkirmisherTrickTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Hunter's Trick"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2841,
+    "record_key": "Skirmisher ~ Hunter's Tricks"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

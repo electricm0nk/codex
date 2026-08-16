@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Vigilante Talent ~ Returning Weapon",
+    "name": "Returning Weapon",
+    "class": "Vigilante Talent",
+    "description": "The vigilante has a signature type of thrown weapon that returns to him. Choose a type of thrown weapon, such as throwing axes. Whenever the vigilante uses that type of weapon, it automatically returns as if it had the returning property.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Returning Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Returning Weapon"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante has a signature type of thrown weapon that returns to him. Choose a type of thrown weapon, such as throwing axes. Whenever the vigilante uses that type of weapon, it automatically returns as if it had the returning property."
+      },
+      {
+        "key": "DESC",
+        "value": " If the vigilante chose a type of thrown weapon that is treated as ammunition, such as shuriken, and buys a set of 50 magic ammunition of that type, he automatically replenishes them at no cost and never runs out. If he chose a non-ammunition thrown weapon instead, he can apply the magical properties of the first weapon he throws in a round to any nonmagical thrown weapons of that type he throws that round. This allows him to make a full attack with the benefits of his magical thrown weapon, even though it only returns next round.|PREVARGTEQ:VigilanteTalentLVL,14"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 97,
+    "record_key": "Vigilante Talent ~ Returning Weapon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

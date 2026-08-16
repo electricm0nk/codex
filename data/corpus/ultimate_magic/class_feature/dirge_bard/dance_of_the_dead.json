@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Dirge Bard ~ Dance of the Dead",
+    "name": "Dance of the Dead",
+    "class": "Dirge Bard",
+    "description": "You can use your bardic performance to cause dead bones or bodies to rise up and move or fight at your command. This ability functions like animate dead, but the created skeletons or zombies remain fully animate only as long as you continue the performance. Once it stops, any created undead collapse into carrion. Bodies or bones cannot be animated more than once using this ability. Unlike animate dead, dance of the dead requires no components and does not have the evil descriptor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dirge Bard ~ Dance of the Dead"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Supernatural.BardicPerformance"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your bardic performance to cause dead bones or bodies to rise up and move or fight at your command. This ability functions like animate dead, but the created skeletons or zombies remain fully animate only as long as you continue the performance. Once it stops, any created undead collapse into carrion. Bodies or bones cannot be animated more than once using this ability. Unlike animate dead, dance of the dead requires no components and does not have the evil descriptor."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 967,
+    "record_key": "Dirge Bard ~ Dance of the Dead"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

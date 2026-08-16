@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Assassin ~ Save against Poisons",
+    "name": "Save against Poisons",
+    "class": "Assassin",
+    "description": "The assassin gains a +%1 saving throw bonus against poisons.|AssassinPoisonSaveBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Assassin ~ Save against Poisons"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.AssassinClassFeatures.SpecialQuality.Extraordinary.Defensive"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AssassinPoisonSaveBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The assassin gains a +%1 saving throw bonus against poisons.|AssassinPoisonSaveBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AssassinPoisonSaveBonus|AssassinLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.379"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|AssassinPoisonSaveBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 vs. poison|AssassinPoisonSaveBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2945,
+    "record_key": "Assassin ~ Save against Poisons"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

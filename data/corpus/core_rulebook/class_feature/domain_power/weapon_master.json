@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Domain Power ~ Weapon Master",
+    "name": "Weapon Master",
+    "class": "Domain Power",
+    "description": "As a swift action, you gain the use of one combat feat for %1 rounds per day. These rounds do not need to be consecutive and you can change the feat chosen each time you use this ability. You must meet the prerequisites to use these feats.|WeaponMasterRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Weapon Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower.War Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponMasterRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you gain the use of one combat feat for %1 rounds per day. These rounds do not need to be consecutive and you can change the feat chosen each time you use this ability. You must meet the prerequisites to use these feats.|WeaponMasterRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponMasterRounds|DomainWarLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds/day)|WeaponMasterRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|WeaponMasterRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 748,
+    "record_key": "Domain Power ~ Weapon Master"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Witch Hex ~ Swamp Hag",
+    "name": "Swamp Hag",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_SwampHag",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Swamp Hag"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Spelllike.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMinorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_SwampHag|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_SwampHag"
+      },
+      {
+        "key": "DESC",
+        "value": "While traveling through swamps, mires, bogs, and similar terrain, you leave no trail and cannot be tracked, as the trackless step druid ability. You can walk through mud and even quicksand as if it were normal ground."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Swamp Hag"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_SwampHag|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_SwampHag|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Swamp Hag)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 719,
+    "record_key": "Witch Hex ~ Swamp Hag"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

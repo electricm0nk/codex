@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Air Domain",
+    "name": "Air",
+    "class": "Forbidden Rites Domain",
+    "description": "You can manipulate lightning, mist, and wind, traffic with air creatures, and are resistant to electricity damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Air Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.AirDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manipulate lightning, mist, and wind, traffic with air creatures, and are resistant to electricity damage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Lightning Arc|PREDOMAIN:1,Air|PREVARGTEQ:DomainAirAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Electricity Resistance|PREDOMAIN:1,Air|PREVARGTEQ:DomainAirAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAirLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAirDC|10+(DomainAirLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAirTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAirAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Obscuring Mist|Cleric=2|Wind Wall|Cleric=3|Gaseous Form|Cleric=4|Air Walk|Cleric=5|Control Winds|Cleric=6|Chain Lightning|Cleric=7|Elemental Body IV (Air Only)|Cleric=8|Whirlwind|Cleric=9|Elemental Swarm (Air Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1027,
+    "record_key": "Forbidden Rites Domain ~ Air Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

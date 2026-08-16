@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Wild Talent ~ Ride The Blast",
+    "name": "Ride The Blast",
+    "class": "Wild Talent",
+    "description": "Element universal; Type utility (Sp); Level 6; Burn 0 You can use this wild talent as part of activating a kinetic blast other than telekinetic blast. You transform yourself into your element or energy and send yourself along with your kinetic blast. You appear at the end of the blast's path, adjacent to the blast's target (or final target, for form infusions like chain) or at the center of the burst or spread for form infusions like explosion. This ability doesn't work with form infusions that involve melee attacks (such as kinetic blade) or that use a cone shape (such as spray).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Ride The Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Universal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Base,12"
+      },
+      {
+        "key": "DESC",
+        "value": "Element universal; Type utility (Sp); Level 6; Burn 0 You can use this wild talent as part of activating a kinetic blast other than telekinetic blast. You transform yourself into your element or energy and send yourself along with your kinetic blast. You appear at the end of the blast's path, adjacent to the blast's target (or final target, for form infusions like chain) or at the center of the burst or spread for form infusions like explosion. This ability doesn't work with form infusions that involve melee attacks (such as kinetic blade) or that use a cone shape (such as spray)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 766,
+    "record_key": "Wild Talent ~ Ride The Blast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

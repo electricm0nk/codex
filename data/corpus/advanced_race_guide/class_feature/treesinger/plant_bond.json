@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Treesinger ~ Plant Bond",
+    "name": "Plant Bond",
+    "class": "Treesinger",
+    "description": "A treesinger forms a mystic bond with plant life.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Treesinger ~ Plant Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary.NaturesBondAnimalCompanion.NaturesBondDruidDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidAnimalTerrainDomainNotAllowed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A treesinger forms a mystic bond with plant life."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Plant Bond Option|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidAnimalTerrainDomainNotAllowed|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 139,
+    "record_key": "Treesinger ~ Plant Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

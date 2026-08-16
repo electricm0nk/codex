@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Ringleader ~ Hidden Plans",
+    "name": "Hidden Plans",
+    "class": "Ringleader",
+    "description": "A ringleader becomes a master of discretion. The ringleader gains a +4 bonus on saving throws against effects that would read his thoughts or compel him to tell the truth.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ringleader ~ Hidden Plans"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.RingleaderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A ringleader becomes a master of discretion. The ringleader gains a +4 bonus on saving throws against effects that would read his thoughts or compel him to tell the truth."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 on saves vs. effects that thoughts or compel truth."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 245,
+    "record_key": "Ringleader ~ Hidden Plans"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

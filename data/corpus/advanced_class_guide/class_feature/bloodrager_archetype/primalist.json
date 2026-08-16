@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Bloodrager Archetype ~ Primalist",
+    "name": "Primalist",
+    "class": "Bloodrager Archetype",
+    "description": "While bloodrage powers come from the very essence of a bloodrager's being and are often strict and immutable, some bloodragers tap into ancient traditions and primitive wisdom to enhance their rages with something more primal. The primalist mixes his bloodline with more traditional rage powers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Archetype ~ Primalist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BloodragerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bloodrager=1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RagePowersLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RagePowersPrereqLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "While bloodrage powers come from the very essence of a bloodrager's being and are often strict and immutable, some bloodragers tap into ancient traditions and primitive wisdom to enhance their rages with something more primal. The primalist mixes his bloodline with more traditional rage powers."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Primalist ~ Primal Choices|PRECLASS:1,Bloodrager=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RagePowersLVL|BloodragerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RagePowersPrereqLVL|BloodragerLVL"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bloodrager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2706,
+    "record_key": "Bloodrager Archetype ~ Primalist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

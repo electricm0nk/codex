@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Blight Druid ~ Familiar",
+    "name": "Familiar",
+    "class": "Blight Druid",
+    "description": "A blight druid may not bond with an animal companion, but may either call a familiar as a wizard of her druid level or select from the Darkness, Death, and Destruction domains in addition to those normally available.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blight Druid ~ Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DruidClassFeatures.ArchetypeDruid.Familiar"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Druid Archetype ~ Blight Druid"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A blight druid may not bond with an animal companion, but may either call a familiar as a wizard of her druid level or select from the Darkness, Death, and Destruction domains in addition to those normally available."
+      },
+      {
+        "key": "BONUS",
+        "value": "FOLLOWERS|Animal Companion|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|DruidLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Standard Familiar List"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1938,
+    "record_key": "Blight Druid ~ Familiar"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

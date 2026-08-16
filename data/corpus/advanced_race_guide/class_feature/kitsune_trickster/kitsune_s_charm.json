@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Kitsune Trickster ~ Kitsune's Charm",
+    "name": "Kitsune's Charm",
+    "class": "Kitsune Trickster",
+    "description": "The kitsune trickster can use charm person %1 times per day as a spell-like ability (caster level %2). This ability replaces trap sense.|RogueLVL/3|KitsuneCharmCasterLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kitsune Trickster ~ Kitsune's Charm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KitsuneCharmCasterLVL|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=RogueLVL/3|TIMEUNIT=Day|CASTERLEVEL=KitsuneCharmCasterLVL|Charm Person"
+      },
+      {
+        "key": "DESC",
+        "value": "The kitsune trickster can use charm person %1 times per day as a spell-like ability (caster level %2). This ability replaces trap sense.|RogueLVL/3|KitsuneCharmCasterLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KitsuneCharmCasterLVL|RogueLVL-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.193"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 876,
+    "record_key": "Kitsune Trickster ~ Kitsune's Charm"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

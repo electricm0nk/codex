@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nature Warden ~ Guarded Lands",
+    "name": "Guarded Lands",
+    "class": "Nature Warden",
+    "description": "At 9th level, a nature warden may designate an area as her guarded lands, allowing her to treat it as her favored terrain or to enhance her bonuses if it is already in her favored terrain. The area must be no larger than 1 square mile, and the warden must spend 24 hours carefully studying the entire area. This period of study gives her a +2 favored terrain bonus in that area, which stacks with any favored terrain bonus for that area (for example, she also gets her forest favored terrain bonus if her guarded lands are part of a forest). She may also designate one creature type as her favored enemy within those guarded lands, gaining a +2 favored enemy bonus against the creature type that stacks with any favored enemy bonus she has against that type of creature. Allies who can see and hear the warden gain an initiative bonus equal to half the warden's favored terrain bonus for that terrain. A nature warden may have a number of guarded lands equal to her Wisdom bonus (minimum 1). When she reaches her maximum number of guarded lands, she can select a new guarded land by abandoning an existing one and performing the ritual for a new area.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Warden ~ Guarded Lands"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a nature warden may designate an area as her guarded lands, allowing her to treat it as her favored terrain or to enhance her bonuses if it is already in her favored terrain. The area must be no larger than 1 square mile, and the warden must spend 24 hours carefully studying the entire area. This period of study gives her a +2 favored terrain bonus in that area, which stacks with any favored terrain bonus for that area (for example, she also gets her forest favored terrain bonus if her guarded lands are part of a forest). She may also designate one creature type as her favored enemy within those guarded lands, gaining a +2 favored enemy bonus against the creature type that stacks with any favored enemy bonus she has against that type of creature. Allies who can see and hear the warden gain an initiative bonus equal to half the warden's favored terrain bonus for that terrain. A nature warden may have a number of guarded lands equal to her Wisdom bonus (minimum 1). When she reaches her maximum number of guarded lands, she can select a new guarded land by abandoning an existing one and performing the ritual for a new area."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1434,
+    "record_key": "Nature Warden ~ Guarded Lands"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

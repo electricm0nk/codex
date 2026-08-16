@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Rogue Talent ~ Minor Magic",
+    "name": "Minor Magic",
+    "class": "Rogue Talent",
+    "description": "You can cast %1. This spell can be cast three times a day as a spell-like ability. The caster level for this ability is %2. The save DC for this spell is %3.|%CHOICE|RogueCasterLevel|10+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Minor Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialQuality.SpellLike.RogueTalent"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,INT=10"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RogueCasterLevel|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast %1. This spell can be cast three times a day as a spell-like ability. The caster level for this ability is %2. The save DC for this spell is %3.|%CHOICE|RogueCasterLevel|10+INT"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SPELLS|CLASSLIST=Wizard[LEVELMAX=0;LEVELMIN=0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RogueCasterLevel|RogueTalentLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1664,
+    "record_key": "Rogue Talent ~ Minor Magic"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

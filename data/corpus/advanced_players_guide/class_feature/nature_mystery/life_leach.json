@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Nature Mystery ~ Life Leach",
+    "name": "Life Leach",
+    "class": "Nature Mystery",
+    "description": "As a standard action, you can drain the life essence from one living target within 30 feet. The target takes %1d6 points of damage. You gain temporary hit points equal to the damage you deal. You can't gain more than the target's current hit points + the target's Constitution score (which is enough to kill the subject). The temporary hit points last %2 hours. The target receives a Fortitude save (DC %3) to halve the damage (and the temporary hit points you gain). You may use this ability %4 time(s) per day.|OracleLifeLeachDamageDice|OracleLifeLeachDuration|OracleRevelationDC|OracleLifeLeachTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Mystery ~ Life Leach"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.NatureRevelation.Supernatural.RevelationTargetOneOnly.PerDayOracleRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleLifeLeachDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleLifeLeachDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleLifeLeachTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can drain the life essence from one living target within 30 feet. The target takes %1d6 points of damage. You gain temporary hit points equal to the damage you deal. You can't gain more than the target's current hit points + the target's Constitution score (which is enough to kill the subject). The temporary hit points last %2 hours. The target receives a Fortitude save (DC %3) to halve the damage (and the temporary hit points you gain). You may use this ability %4 time(s) per day.|OracleLifeLeachDamageDice|OracleLifeLeachDuration|OracleRevelationDC|OracleLifeLeachTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleLifeLeachDamageDice|classlevel(\"Oracle\")/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleLifeLeachDuration|CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleLifeLeachTimes|(classlevel(\"Oracle\")-3)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 655,
+    "record_key": "Nature Mystery ~ Life Leach"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

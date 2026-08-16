@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:41:34Z",
+  "data": {
+    "key": "Mooncursed ~ Bear",
+    "name": "Bear",
+    "class": "Mooncursed",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mooncursed ~ Bear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MooncursedAnimalForm"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mooncursed Form (Medium)|PREVARLT:MooncursedRageLarge,1,MooncursedRageHuge,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mooncursed Form (Large)|PREVARLT:MooncursedRageMedium,1,MooncursedRageHuge,1|PREABILITY:1,CATEGORY=Special Ability,Mooncursed ~ Greater Shifting Rage"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mooncursed Form (Huge)|PREVARLT:MooncursedRageMedium,1,MooncursedRageLarge,1|PREABILITY:1,CATEGORY=Special Ability,Mooncursed ~ Mighty Shifting Rage"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw|Bite|PREVARGTEQ:Raging,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent|PREVARGTEQ:Raging,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base|PREVARGTEQ:Raging,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab ~ Claw|PREVARGTEQ:Raging,1|PREABILITY:1,CATEGORY=Special Ability,Mooncursed ~ Greater Shifting Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 52,
+    "record_key": "Mooncursed ~ Bear"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
