@@ -501,3 +501,122 @@ shape; historical receipts in `progress.md` that say `tranche/10` are left as wr
 when recorded — with a dated note added at the top instead.
 
 **Authority:** operator ruling, 2026-08-15, verbatim above.
+
+## Decision 7 — The prose done-bar: zero-magnitude units finish, they do not leave the denominator (operator ruling 2026-08-16)
+
+**Asked:** sign a Structural Exclusion Register entry (`§3`) removing the 404-unit
+`ambiguous:prose_scaling_phrase` / `ambiguous:prose_ability_scaling` population from the 100 %
+denominator. Logged as `artifacts/OPEN-ISSUES.md` row 36, proposed by `SD31-E2-F3-001`.
+
+**Ruled, verbatim:**
+
+> "if they are prose only, nothing to compute, and the prose is available to print in the
+> description on the character sheet, then it counts as done"
+
+**The exclusion is DECLINED and a done-bar granted instead.** The 404 units stay in the denominator
+and gain a real path to `done`. Row 36's proposal is answered and closed; nothing leaves the
+mandate. `§3`'s register remains unsigned and empty.
+
+### The bar — three conjunctive conditions
+
+A unit counts `done` under this decision when ALL THREE hold:
+
+1. **Prose only** — the record's content is text, not a mechanic carrying a magnitude.
+2. **Nothing to compute** — no value the engine would have to derive, scale, or apply.
+3. **The prose is available to print in the description on the character sheet.**
+
+**Condition 3 is load-bearing and is not satisfied by a record merely existing.** It is DoD-8
+shaped: the description must be populated from the real corpus row AND the sheet must render it,
+proven on-screen, not inferred from a green code gate. Three compute twins in this program's
+history each passed a code gate while showing nothing on the sheet (`SD-30 decisions.md §28`).
+A unit whose description is empty, placeholder, or unrendered is **not** done under this decision,
+and marking one so is the anti-gaming violation Decision 1(a) forbids.
+
+### Continuity
+
+This restates, for the corpus board, the standing v0.6 ruling of 2026-07-28 — *"you just include
+the feat description. there is no need to calculate anything… all of our feats need to have
+descriptions on the feats tab and on the printed page. that's all you need to do."* That ruling
+unstuck the v0.6 class matrix, which had sat frozen for a week because zero-magnitude features were
+being counted as unbuilt work. Same category error, same correction, wider scope.
+
+### Size — re-derived 2026-08-16 at `89846f5c9`, not transcribed
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d=json.load(open('docs/work-inventory.json'))
+U=[u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+def v(u): return P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind'))
+zero=[u for u in U if u.get('magnitude_token_count')==0]
+nd=[u for u in zero if v(u)!='done']
+print(len(zero), len(nd))
+print(collections.Counter(u.get('kind') for u in nd).most_common())
+print(collections.Counter(u.get('wiring_class') for u in nd).most_common())
+"
+```
+
+- **16,812 of 38,521 units (43.6 %) carry `magnitude_token_count == 0`**; 2,226 are already `done`.
+- **14,586 are not done — 37.9 % of the whole board.**
+- By kind: `class_feature` 8,637 · `monster_ability` 1,958 · `race_trait` 1,769 · `feat` 928 ·
+  `companion` 520 · `spell` 406 · `equipment` 200 · `equipment_modifier` 134.
+- By wiring class: `display` 12,762 · `derived` 1,339 · `ambiguous` 305 · `static` 161 ·
+  `computed` 19.
+
+The 404 that prompted the ruling are a small corner of what its own wording reaches.
+
+### PROXY WARNING — binding, and it must be discharged before any unit is banked
+
+`magnitude_token_count == 0` is **the engine's own token count**, used above as a proxy for
+conditions 1 and 2. It is not the ruling. Per the standing rule to validate a proxy where it makes
+its confident claim (`SD-30`'s instrument-failure record; 8 in one session, all name-shaped), a
+cycle must first hand-verify a stratified sample of zero-magnitude units against their **whole**
+corpus rows and confirm the row genuinely carries no computable magnitude — held to the same
+whole-record standard as Epic 2's ground-truth sample, and for the same reason: this proxy would
+silently decide ~14,586 units and nothing downstream would catch it being wrong. Where the proxy is
+wrong, the ruling still applies — to the units that genuinely meet conditions 1 and 2.
+
+**Authority:** operator ruling, 2026-08-16, verbatim above.
+
+## Decision 8 — A `done` credit resting on a non-shipping code path is wired, not retracted (operator ruling 2026-08-16)
+
+**Asked:** `SD31-E6-F11-002` (wave 3) moved 7 `monster` units to `done` through a new evaluator
+seam, `spell_like_ability_caster_level()`. The Opus adversarial verifier accepted the evidence as
+clean — every fixture value reproduced byte-for-byte from the pinned `.lst` rows — but found the
+function had **zero production callers anywhere in the tree**, so the credit rested on a code path
+no player could reach (`artifacts/OPEN-ISSUES.md` row 44). Should the 7 be retracted, or wired?
+
+**Ruled, verbatim:**
+
+> "you were right to say wire up the 7 for real."
+
+**Wire it. Do not retract.** The correct response to a `done` credit resting on a non-shipping code
+path is to make the path ship.
+
+**Discharged the same day** by `SD31-E6-F1-002`: `spell_like_ability_caster_level()` is now called
+from `apps/desktop/src-tauri/src/monster_catalog.rs`'s `map_chassis_monster`, serves
+`MonsterCatalogEntryDto.spellLikeAbilityCasterLevel` over the real `list_monster_catalog` Tauri
+command, and renders on `MonsterCatalogScreen.tsx` — proven by two new Rust tests **and a DoD-8
+on-screen screenshot of Demon (Balor) showing "Spell-like abilities CL 20"**. A
+`has_spell_like_abilities` presence gate was added so the function never serves a caster level to a
+monster that has none. Row 44 is closed.
+
+**What does NOT change:** the adversarial finding was correct and the bar it asserted stands — an
+evaluator nothing ships is not a path to `done`. The credit became legitimate when the wiring
+became real and was proven on-screen, not when the ruling was quoted.
+
+### The precedent both of today's rulings set, stated generally
+
+> When a cycle proposes to **remove** something from the mandate — exclude units from the
+> denominator, retract credit, defer a remainder, declare something out of scope — the answer is
+> **"no, finish it properly."** The operator supplies the finish line, not the exit.
+
+Decision 7 declined a 404-unit exclusion and granted a done-bar. Decision 8 declined a 7-unit
+retraction and required the wiring. Neither accepted a reduction in scope. This is consistent with
+what already stands: deferral was struck from this package (`§2` item 5), cost is forbidden as an
+exclusion reason (`§3`), and no scope is too big to just do. **Cycles should stop drafting exclusion
+proposals as a primary deliverable** — build the path, and propose exclusion only for something
+genuinely impossible, never merely expensive.
+
+**Authority:** operator ruling, 2026-08-16, verbatim above.
