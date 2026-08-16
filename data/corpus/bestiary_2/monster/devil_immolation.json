@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:immolation_devil_hellfire"
@@ -38,6 +36,152 @@
     ],
     "race_subtype": "Devil|Evil|Extraplanar|Lawful",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Burn|Fire Shield ~ Constant|Flight Maneuverability|Immolation Devil ~ Hellfire|Regeneration ~ Good|True Seeing ~ Constant"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,CHA|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|19|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BurnDamageDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BurnDamageDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerationRate|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|17"
+      },
+      {
+        "key": "CR",
+        "value": "19"
+      },
+      {
+        "key": "DR",
+        "value": "15/good and silver"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Diplomacy|Intimidate|Knowledge (Engineering)|Spellcraft"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):18"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Fly,80"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing.Burn,*1,2d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Slashing.Burn,*2,1d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Gore,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing.Burn,*1,2d8|Wing,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*2,1d8"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Devil (Puragaus)"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Devil|Evil|Extraplanar|Lawful"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=17|Summon Monster IX (Immolation Devil)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=17|Charm Monster (Mass),18+CHA|Dictum,17+CHA|Fire Storm,18+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=17|Fireball,13+CHA|Persistent Image,15+CHA|Teleport (Greater/self plus objects)|Wall of Fire"
+      },
+      {
+        "key": "SR",
+        "value": "30"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "L",
     "source_page": "p.87",
     "speeds": [
@@ -51,16 +195,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 280,
-    "record_key": "Devil (Immolation)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 280,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Devil (Immolation)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

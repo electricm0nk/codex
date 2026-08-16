@@ -18,6 +18,7 @@ pub mod archetype_tables;
 pub mod class_gunslinger;
 pub mod equipment_tables;
 pub mod feat_tables;
+pub mod spell_list;
 
 /// One resolved class-chassis row: level, base attack bonus, and the
 /// three base saves. Mirrors `rules_tables::acg::ClassTableRow` (kept

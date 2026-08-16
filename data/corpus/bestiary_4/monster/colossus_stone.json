@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:colossus_stone_alternate_form",
@@ -32,6 +30,136 @@
     ],
     "race_subtype": "Colossus|Mythic",
     "race_type": "Construct",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Colossus (Stone)"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|38"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|29|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mythic_Rank|7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|15"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Light Ballista|CRITMULTADD|1"
+      },
+      {
+        "key": "CR",
+        "value": "19"
+      },
+      {
+        "key": "DR",
+        "value": "10/Epic"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|C"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Colossus (Stone)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Intimidate"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Construct:21"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Light Ballista,Natural.Ranged.Weapon,*1,3d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Natural.Melee.Finesseable.Weapon,*2,3d10"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Stomp,Natural.Melee.Finesseable.Weapon,*1,6d10"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Colossus"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Colossus|Mythic"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "REACH",
+        "value": "30"
+      },
+      {
+        "key": "SIZE",
+        "value": "C"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Construct"
+      }
+    ],
     "size": "C",
     "source_page": "p.37",
     "speeds": [
@@ -41,16 +169,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 32,
-    "record_key": "Colossus (Stone)"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 32,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Colossus (Stone)",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

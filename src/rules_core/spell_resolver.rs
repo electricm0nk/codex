@@ -18,7 +18,8 @@ use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
 use crate::rules_core::rules_tables::RuleSetId;
 use crate::rules_core::rules_tables::{
-    acg, advanced_race_guide, apg, crb, occult_adventures, ultimate_intrigue, ultimate_magic,
+    acg, advanced_race_guide, apg, crb, occult_adventures, ultimate_combat, ultimate_intrigue,
+    ultimate_magic,
 };
 use crate::rules_core::source_content::{SourceContentKind, SourcePackageContent};
 
@@ -37,6 +38,10 @@ pub const SPELL_BOOK_UM: &str = "UM";
 /// SD31-E6-F2-003: Occult Adventures, the seventh book -- the largest of
 /// the 19-book remainder `SD31-E6-F2-002` named (`OPEN-ISSUES.md` row 57).
 pub const SPELL_BOOK_OA: &str = "OA";
+/// SD31-E6-F2-004: Ultimate Combat, the eighth book -- the largest
+/// remaining not-started `spell` book after Occult Adventures, re-derived
+/// fresh off `docs/work-inventory.json` at this cycle's own tip.
+pub const SPELL_BOOK_UC: &str = "UC";
 
 /// One ingested spell record, normalized across every book's own
 /// `spell_list` table.
@@ -71,6 +76,12 @@ pub const SPELL_BOOK_OA: &str = "OA";
 /// `src/bin/ingest_occult_adventures_spells.rs` for the ingest path and its
 /// own doc comment for the 328-unit `mod_only` class-widening residue this
 /// cycle deliberately did not ingest).
+///
+/// **SD31-E6-F2-004 widened the chain to eight books**, adding Ultimate
+/// Combat (146 base spell declarations; see
+/// `src/bin/ingest_ultimate_combat_spells.rs` for the ingest path and its
+/// own doc comment for the 2-unit `mod_only` residue this cycle deliberately
+/// did not ingest).
 #[derive(Debug, Clone, PartialEq)]
 pub struct SpellCatalogRow {
     /// One of the `SPELL_BOOK_*` codes above.
@@ -156,6 +167,13 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
             level: entry.level,
             description: entry.description,
         });
+        let uc_rows = ultimate_combat::spell_list::SPELL_LIST.iter().map(|entry| SpellCatalogRow {
+            book: SPELL_BOOK_UC,
+            key: entry.key,
+            school: entry.school.map(|school| format!("{school:?}")),
+            level: entry.level,
+            description: entry.description,
+        });
         crb_rows
             .chain(apg_rows)
             .chain(acg_rows)
@@ -163,6 +181,7 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
             .chain(ui_rows)
             .chain(um_rows)
             .chain(oa_rows)
+            .chain(uc_rows)
             .collect()
     })
 }
@@ -247,5 +266,44 @@ mod spell_catalog_rows_tests {
             .find(|row| row.book == SPELL_BOOK_OA && row.key == "Talismanic Implement")
             .expect("Talismanic Implement must be present in the OA catalog");
         assert_eq!(row.level, None);
+    }
+
+    /// SD31-E6-F2-004: Ultimate Combat is the eighth book chained into
+    /// `spell_catalog_rows()`.
+    #[test]
+    fn ultimate_combat_is_chained_into_the_catalog() {
+        let uc_rows: Vec<&SpellCatalogRow> =
+            spell_catalog_rows().iter().filter(|row| row.book == SPELL_BOOK_UC).collect();
+        assert!(!uc_rows.is_empty(), "expected at least one Ultimate Combat spell row");
+        assert!(
+            uc_rows.iter().any(|row| row.key == "Ablative Barrier"),
+            "expected the real corpus record 'Ablative Barrier' among Ultimate Combat's rows"
+        );
+    }
+
+    /// A record this cycle's own ingest confirmed carries neither `CLASSES:`
+    /// nor `DOMAINS:` (`Life Conduit`) must ship with `level: None`, never a
+    /// fabricated level.
+    #[test]
+    fn a_uc_record_with_no_classes_token_carries_no_level() {
+        let row = spell_catalog_rows()
+            .iter()
+            .find(|row| row.book == SPELL_BOOK_UC && row.key == "Life Conduit")
+            .expect("Life Conduit must be present in the UC catalog");
+        assert_eq!(row.level, None);
+    }
+
+    /// `Share Language (Communal)` is a genuine cross-book collision: OA's
+    /// own ingest (`SD31-E6-F2-003`) already declared it as a real new OA
+    /// spell, and UC's own `uc_spells.lst` independently declares the same
+    /// bare name with no `SCHOOL:`/`CLASSES:` of its own -- UC's thinner
+    /// duplicate must be skipped, keeping OA's fuller record as the single
+    /// shipped entry for that key.
+    #[test]
+    fn share_language_communal_is_served_once_from_oa_not_duplicated_from_uc() {
+        let matches: Vec<&SpellCatalogRow> =
+            spell_catalog_rows().iter().filter(|row| row.key == "Share Language (Communal)").collect();
+        assert_eq!(matches.len(), 1, "expected exactly one served row for this cross-book collision");
+        assert_eq!(matches[0].book, SPELL_BOOK_OA, "OA's fuller record must be the one that ships");
     }
 }

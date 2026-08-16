@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:iathavos_abyssal_transformation",
@@ -38,6 +36,148 @@
     ],
     "race_subtype": "Chaotic|Evil|Extraplanar|Qlippoth",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|All-Around Vision|Can't Be Tripped|Cloak of Chaos ~ Constant|Fast Healing|Flight Maneuverability|Foresight ~ Constant|Freedom of Movement ~ Constant|Grab ~ Claw|Iathavos ~ Abyssal Transformation|Iathavos ~ Entropic Beams|Iathavos ~ Horrific Appearance|Iathavos ~ Ichor|Iathavos ~ Stench|True Seeing ~ Constant"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,WIS|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|30|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyRange|200"
+      },
+      {
+        "key": "CR",
+        "value": "20"
+      },
+      {
+        "key": "DR",
+        "value": "15/cold iron and lawful"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|C"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Intimidate|Knowledge (Arcana)|Spellcraft|Use Magic Device"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Will):24"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Fly,50"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Melee.Natural.Finesseable.Slashing.Grab,*2,4d6|Wing,Weapon.Melee.Natural.Finesseable.Bludgeoning,*4,2d8"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Chaotic|Evil|Extraplanar|Qlippoth"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "30"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "C"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.222"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=20|Imprisonment,19+CHA|Quickened Heal"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=20|Black Tentacles|Dimensional Lock|Horrid Wilting,18+CHA|Insanity,17+CHA|Word of Chaos,17+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=20|Dimension Door|Dispel Law|Dispel Magic (Greater)|Magic Missile|Plane Shift,17+CHA|Wind Walk|Word of Recall"
+      },
+      {
+        "key": "SR",
+        "value": "31"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "C",
     "source_page": "p.222",
     "speeds": [
@@ -51,16 +191,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 716,
-    "record_key": "Qlippoth (Iathavos)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 716,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Qlippoth (Iathavos)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

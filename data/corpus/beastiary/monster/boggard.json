@@ -1,35 +1,141 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-07T20:21:41Z",
   "data": {
+    "challenge_rating": 2.0,
     "id": "beastiary1:monster:boggard",
     "name": "Boggard",
-    "challenge_rating": 2.0,
-    "size": "M",
-    "speed_ft": 20,
-    "race_type": "Humanoid",
-    "race_subtype": "Boggard",
-    "source_page": "p.37",
     "natural_attacks": [
       {
-        "name": "Tongue",
-        "damage_dice": "0"
+        "damage_dice": "0",
+        "name": "Tongue"
       }
-    ]
+    ],
+    "race_subtype": "Boggard",
+    "race_type": "Humanoid",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Boggard ~ Hold Breath|Boggard ~ Sticky Tongue|Boggard ~ Swamp Stride|Boggard ~ Terrifying Croak"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Boggard"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Acrobatics=When Jumping|16|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In swamps|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,INT|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|3|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tongue|DAMAGE|-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tongue|TOHIT|-5"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Humanoid:3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Swim,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tongue,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Touch,*1,0"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Boggard"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Humanoid"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
+    "size": "M",
+    "source_page": "p.37",
+    "speed_ft": 20
   },
+  "ingested_at": "2026-08-07T20:21:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
     "line": 51,
-    "record_key": "Boggard"
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Boggard",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "20",
@@ -24,6 +22,152 @@
     ],
     "race_subtype": "Asura|Evil|Extraplanar|Lawful",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Deflect Arrows|Dodge|Mobility|Snatch Arrows|Spring Attack"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Claw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Asura (Asurendra)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|3|TYPE=Insight"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|5|TYPE=Deflection"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics,Intimidate,Perform (Dance)|3|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|10|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|26"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|10|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClawAttacks|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "CR",
+        "value": "20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "DR",
+        "value": "15/chaotic and good"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "KEY",
+        "value": "Asura (Asurendra)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LE"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Will):22"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,50,Climb,50,Fly,50,Swim,50"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Asura|Evil|Extraplanar|Lawful"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Asura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24-25"
+      },
+      {
+        "key": "SR",
+        "value": "CR+11"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "VISION",
+        "value": "All-Around Vision|Darkvision (60')|Low-Light Vision|True Seeing"
+      }
+    ],
     "size": "H",
     "source_page": "p.24-25",
     "speeds": [
@@ -45,16 +189,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 25,
-    "record_key": "Asura (Asurendra)"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Asura (Asurendra)",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

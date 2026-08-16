@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:nereid_drowning_kiss",
@@ -33,6 +31,120 @@
     ],
     "race_subtype": "Water",
     "race_type": "Fey",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Change Shape ~ Nereid|Immunity to Cold|Immunity to Poison|Nereid ~ Beguiling Aura|Nereid ~ Drowning Kiss|Nereid ~ Poison|Nereid ~ Shawl|Nereid ~ Transparency|Nereid ~ Unearthly Grace"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aquan|Common|Sylvan"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Spray|DAMAGE|-STR"
+      },
+      {
+        "key": "CR",
+        "value": "10"
+      },
+      {
+        "key": "DR",
+        "value": "10/cold iron"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Fey:12"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Swim,60"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Spray,Weapon.Natural.Weapon Group Natural.Ranged.Poison.Touch,*1,0"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Touch,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Poison.Touch,*1,0"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Water"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Fey"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Skill"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=12|Summon Monster VI (Nereid)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=12|Control Water|Suggestion (Nereid),15+CHA"
+      },
+      {
+        "key": "SR",
+        "value": "21"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "M",
     "source_page": "p.198",
     "speeds": [
@@ -46,16 +158,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 639,
-    "record_key": "Nereid"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 639,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Nereid",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

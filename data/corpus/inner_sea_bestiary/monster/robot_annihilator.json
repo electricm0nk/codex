@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "ability_keys": [
       "inner_sea_bestiary:monster_ability:annihilator_booster_jets",
@@ -32,6 +30,128 @@
     ],
     "race_subtype": "Robot",
     "race_type": "Construct",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Annihilator ~ Booster Jets|Annihilator ~ Chain Guns|Annihilator ~ Combined Arms|Annihilator ~ Plasma Lance|Annihilator ~ Suppressing Fire|Immunity to Cold|Resistance to Electricity|Resistance to Fire|Robot ~ Critical Hit Vulnerability|Robot ~ Electricity Vulnerability|Robot ~ Force Field|Robot ~ Intelligent"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Hallit"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,CHA|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,INT|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|22|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_Trip|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus,FireResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Claw|CRITRANGEADD|1"
+      },
+      {
+        "key": "CR",
+        "value": "16"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|G"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "HITDIE",
+        "value": "10"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONCCSKILL",
+        "value": "Climb"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Sense Motive"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Construct:20"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,50,Climb,30"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Robot"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "REACH",
+        "value": "20"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "G"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (120')|Low-Light Vision|Tremorsense (60')"
+      }
+    ],
     "size": "G",
     "source_page": "p.43",
     "speeds": [
@@ -45,16 +165,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
-    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
-    "line": 71,
-    "record_key": "Robot (Annihilator)"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 71,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "record_key": "Robot (Annihilator)",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

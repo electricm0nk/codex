@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:bodythief_absorb_essence",
@@ -28,6 +26,148 @@
     ],
     "race_subtype": null,
     "race_type": "Plant",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Bodythief"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common (cannot speak)|Dwarven (cannot speak)|Elven (cannot speak)|Orc (cannot speak)|Sylvan (cannot speak)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disguise|5|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|25|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|27"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDamageDie|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDice|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponLine|80"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|20|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwallowWholeDamageDie|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwallowWholeDice|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tentacle|REACH|20"
+      },
+      {
+        "key": "CR",
+        "value": "14"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|G"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KEY",
+        "value": "Bodythief"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LE"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Perception|Stealth"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Plant:20"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,5"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,2d8,SPROP=plus grab|Tentacle,Natural.Melee.Finesseable.Weapon,*4,1d8,SPROP=plus grab"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Plant"
+      },
+      {
+        "key": "REACH",
+        "value": "20"
+      },
+      {
+        "key": "SIZE",
+        "value": "G"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Plant"
+      }
+    ],
     "size": "G",
     "source_page": "p.20",
     "speeds": [
@@ -37,16 +177,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 20,
-    "record_key": "Bodythief"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Bodythief",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

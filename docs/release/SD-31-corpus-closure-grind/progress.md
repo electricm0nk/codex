@@ -9118,6 +9118,362 @@ this wave's finished lanes performed after checking every live PID's `CARGO_TARG
 ## Cycle `SD31-ATTRIB-002` (`RETRO_ACTOR=sd31-attrib-finish`, own worktree
 `/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_c2092bd6-95a-3`, branch
 `cycle/sd31-attrib-002`) — 2026-08-16, "finish OPEN-ISSUES row 68"
+## Cycle: SD31-E6-F2-004 (sd31-spell-monster) — 2026-08-16
+
+**Card:** `epic-6-ingest-lanes` F2 (`spell`) and F1 (`monster`). **Starting HEAD:**
+`5d0cd1595cef92ddb3f5b6b1d2e7261316ccd98d` (`docs(sd31): correct Decision 7's sizing, record its
+structural blocker and its first catch`), reset from a clean, package-dir-absent worktree per the
+mandatory branch-state check. **Oracle:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`, `scripts/verify.sh --only preflight-oracle` PASS). **Branch:**
+`sd31/spell-monster-e6-f2-004`, own worktree, pushed.
+
+### 1. Traced end to end before writing code — both kinds, per the dispatch's own instruction
+
+**Monster, `static|grounded` (842 units, the larger of the two held cells at split time):**
+`bestiary:monster:ankheg` — corpus row `data/corpus/beastiary/monster/ankheg.json` cites
+`b1_races.lst:18`, `wiring_class: static`, `status: grounded`. `pf1e_dashboard_producer.doneness_verdict`
+maps `static`+`grounded` to `held`; the ONLY rung that promotes a `static` unit to `done` is
+`status: literal-verified`, stamped exclusively by `v06_work_inventory::apply_done_rung_stamps` when
+`corpus_literal_sweep`'s own population rule is satisfied: `source.kind == "lst_token"` AND
+`data.raw_tokens` present. Checked the actual JSON: **`ankheg.json` carries no `raw_tokens` key at
+all.** Re-derived corpus-wide (`python3 -c "import json,glob; print(sum(1 for f in
+glob.glob('data/corpus/*/monster/*.json') if 'raw_tokens' in json.load(open(f))['data'])")"`) — **0 of
+1242** shipped `monster` records carry `raw_tokens`. This is the exact `monster_ability` shape
+`SD31-E6-F9-001` (row 83) already fixed with `enrich_monster_ability_raw_tokens.rs`; `monster` never
+got its own counterpart. Squarely in this card's territory (`MonsterStatBlock`/monster chassis ingest
+path), and NOT lane 1's population — `static`, not `display`.
+
+**Monster, `derived|grounded` (386 units):** already traced by `SD31-E6-F11-002`/`SD31-E6-F1-002`
+(prior waves) — 104 are the ability-modifier-scaling shape that cannot be honestly fixtured without a
+base-ability-score field the corpus doesn't carry, and the SLA_CL family already has a working seam
+with 7 fixtures landed. Re-checked this cycle's tip (below); did not add new fixtures — the raw_tokens
+lever was larger and unclaimed, so time went there per the dispatch's own "spend your cycle on what
+genuinely is yours" instruction, and the derived-held population's remaining growth vector is a fixture
+batch, not the `MonsterStatBlock` ingest path this cycle's raw_tokens fix already closed for the
+kind's dominant cell.
+
+**Spell, `derived|held` (1248 units, the largest spell cell) and the not-started mass:** `SD31-E6-F2-003`
+(prior wave) chained Occult Adventures as the 7th catalog book. Re-derived the not-started book
+breakdown fresh (`docs/work-inventory.json`, `kind=='spell' and status in ('not-started','not-ingested')`,
+grouped by book): `occult_adventures` 329 (the `SD31-E6-F2-003`-named 328-unit `mod_only` residue, one
+off — pre-existing, out of this cycle's scope, see `rules_tables::occult_adventures::spell_list`'s own
+doc comment), `ultimate_combat` 147 — the largest genuinely un-chained book. Chained it (§3 below).
+
+### 2. `enrich_monster_raw_tokens.rs` — the `monster_ability` fix's counterpart, for `monster`
+
+TDD: wrote `src/bin/enrich_monster_raw_tokens.rs` (15 tests) mirroring `enrich_monster_ability_raw_
+tokens.rs`'s structure exactly — reuses `corpus_literal_sweep::token_closure`/`wiring_class::build_
+mod_index` byte-for-byte (never a re-parse), book-agnostic walk of every `data/corpus/*/monster/`
+directory.
+
+**PI screening built directly into the write path, not left to a post-hoc audit alone** — this cycle's
+own investigation found real cause for caution the ability-enricher precedent did not need to state:
+`bestiary_4/b4_races.lst` carries 14 `NAMEISPI:YES` rows (Demon Lords/Empyreal Lords — Dagon,
+Kostchtchie, Pazuzu, Cernunnos, Korada, …) and `inner_sea_world_guide` carries 5 more (`grep -c
+"NAMEISPI:YES\|DESCISPI:YES"` per file, re-derived). **Verified corpus-wide, before writing any output,
+that none of the 1242 currently-shipped records cite one of these rows** — exact `(source.path, line)`
+match against every PI-marked line found by scanning every book directory `monster` cites (0 hits), plus
+a second pass checking whether any `.MOD` row anywhere in each book directory targets a shipped
+record's own identity with a `NAMEISPI:`/`DESCISPI:` declaration (0 hits, using the same `.MOD`-suffix
+matching rule `wiring_class::build_mod_index` itself uses, not a looser string match). Built the guard
+anyway rather than skip it: `declared_product_identity` runs on the full closure (base row + `.MOD`
+rows) before any token is written; a `declared.name` hit **drops the file** (`decisions.md §50.3`, "a
+key cannot be redacted" — matches `cache_gen::ultimate_equipment`'s `SD31-PI-REPAIR-001` precedent);
+`declared.description` or a `PI_BLACKLIST_TERMS` blacklist hit on ANY closure field value redacts that
+field's value to `REDACTED_PI_MARKER` and stamps `license: "PI-REDACTED"`/`pi_field: "raw_tokens"` at
+the record's own top level (a new hazard this program hasn't hit before: `monster` chassis rows carry
+no `description` field at all — the PI risk here is the raw closure itself, not a pre-existing curated
+field).
+
+**Mutation-proved, not merely asserted:** `enrich_one_drops_a_record_whose_base_row_declares_nameispi`
+(the real `bestiary_4` Demon Lord shape) and `enrich_one_drops_a_record_whose_mod_row_declares_nameispi`
+(the declaration arriving via a `.MOD` row, proving the closure — not just the cited line — is
+screened) both assert the file is removed from disk;
+`enrich_one_redacts_a_blacklist_term_hit_anywhere_in_the_closure` asserts a deity-name hit in a
+`SPECIALS:`-shaped field is redacted in the WRITTEN `raw_tokens`, with a clean `SIZE:` token in the
+same record shipping untouched — proves the redaction is per-field, not whole-record. 15/15 tests
+green (`cargo test --locked --bin enrich_monster_raw_tokens`).
+
+**Ran for real against the pinned oracle:**
+
+```
+cargo run --locked --bin enrich_monster_raw_tokens
+```
+
+`1221 enriched (0 PI-redacted fields across them), 0 dropped for NAMEISPI, 0 no-LST-citation
+(untouched), 0 already-enriched, 21 citation misses` — the 21 misses are all `ultimate_psionics`
+(Dreamscarred Press), the pre-existing 3-segment-vs-4-segment `book_dir_of` path defect already logged
+at `OPEN-ISSUES.md` row 46 for `corpus_literal_sweep` itself and reproduced identically here (same root
+cause, honestly reported, not silently dropped). 0 PI redactions/drops — consistent with the pre-write
+investigation above.
+
+**PI re-verified after writing, both SD-30 contracts:**
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-spell-monster.json
+# corpus-literal-sweep: 22937 records examined of 24736 read, 213771 tokens compared (9 synthesized),
+# 24311 digests checked, 0 findings -- CLEAN (was 21716 before this cycle's enrichment)
+cargo run --locked --bin declared_pi_shipping_audit
+# declared-pi-audit: CLEAN -- no shipped record contradicts its own corpus row's PI declaration
+```
+
+**`v06_corpus_trap_report --audit` — confirmed NOT worsened, before/after on the pristine vs. enriched
+tree** (backed up `data/corpus/` to a scratch copy, `git checkout -- data/corpus`, ran the audit
+pristine, restored the enrichment):
+
+```
+BEFORE (pristine, no monster raw_tokens): 1 0 mod-record; 0 1191 wiring-class-mismatch; TRAP_EXIT=2
+AFTER  (with this cycle's 1221 enrichments): 1 0 mod-record; 0 1191 wiring-class-mismatch; TRAP_EXIT=2
+```
+
+Identical — the wiring-class-mismatch check re-derives `wiring_class` from the citation's own token
+closure independent of `data.raw_tokens`, so adding the field cannot move it. `TRAP_EXIT=2` is the
+pre-existing red state `decisions.md`/DoD item 3 already names (rows 27, 65); unworsened.
+
+### 3. `ingest_ultimate_combat_spells.rs` — the 8th spell catalog book
+
+TDD: wrote `src/bin/ingest_ultimate_combat_spells.rs` (9 tests), mirroring `ingest_occult_adventures_
+spells.rs`'s structure — reuses the existing tested `pcgen_import::lst_parser::spell::parse_lst_spell_
+file` parser (not reimplemented), screens every record's NAME and DESCRIPTION with both SD-30 PI
+contracts (`classify_field` blacklist + `declared_product_identity` declared-reader union), derives
+`level` as the minimum across `CLASSES:` tokens (`uc_spells.lst` carries no `DOMAINS:` token, re-derived:
+`grep -c "DOMAINS:" uc_spells.lst` → 0).
+
+**Shape, re-derived, not transcribed:** `awk -F'\t' '!/^#/ && NF>0 {print $1}' uc_spells.lst | wc -l` →
+308 raw active rows; 159 `.MOD`, 0 `.COPY=`, 147 base declarations. Matches
+`docs/work-inventory.json`'s own 147-unit `ultimate_combat`/`spell` population (145 `origin: declared` +
+2 `origin: mod_only`) almost exactly — the one-off is `Share Language (Communal)`, a genuine cross-book
+collision (§ below).
+
+**Ran for real:** `146 base declarations, 1 cross-book collision (already ingested elsewhere, skipped:
+"Share Language (Communal)"), 0 PI-dropped, 3 no-level (real gap, not fabricated: `Life Conduit`,
+`Life Conduit (Greater)`, `Life Conduit (Improved)` — bare base declarations whose real content lives on
+separate `.MOD` rows, the exact `Talismanic Implement`/`Repulsion` shape OA's own ingest named), 0
+school-unrecognized`. `uc_spells.lst` carries zero `NAMEISPI:`/`DESCISPI:` tokens (re-derived,
+`grep -c`), consistent with the 0 drops/redactions. Wrote `src/rules_core/rules_tables/ultimate_combat/
+spell_list.rs` (146 entries).
+
+**Wired through every consumer, the full sweep, old and new counts grepped across `tests/`, `src/` and
+`apps/`:**
+- `src/rules_core/spell_resolver.rs`: `SPELL_BOOK_UC`, `uc_rows`, chained into `spell_catalog_rows()`;
+  3 new tests (`ultimate_combat_is_chained_into_the_catalog`, `a_uc_record_with_no_classes_token_
+  carries_no_level`, `share_language_communal_is_served_once_from_oa_not_duplicated_from_uc` — the last
+  one specifically pins the collision-skip behavior, not just its existence).
+- `apps/desktop/src-tauri/src/spell_catalog.rs`: `BOOK_UC`, `map_uc_entry`, chained into both
+  `build_spell_catalog()`'s registry read AND `mapping_helpers_agree_with_the_registry`'s independent
+  hand-chain (the "typed proof" the module doc comment requires); total `1699 → 1845`, per-book
+  assertion `book_entries(BOOK_UC).len() == 146` added, `every_entry_has_a_non_empty_key_and_a_known_
+  book`'s allowlist widened.
+- `apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx` / `.test.ts`: `BOOK_LABELS.UC`, `BOOK_ORDER`
+  widened, `CHAINED_BOOK_CODES` (the test's OWN independent oracle, per its module doc comment's
+  explicit warning not to derive it from `BOOK_ORDER`) widened, `testUcIsLabelledWithItsRealBookName`
+  added, `formatBookList(BOOK_ORDER)` prose assertion updated.
+- `apps/desktop/src-tauri/src/reach_gate.rs` (additive-list exception, append-only): `("ultimate_
+  combat", "spells")` match arm added — `ultimate_combat` was already a registered book (equipment/feat
+  tables), only the spell family's own reach claim was missing.
+- `tests/sd27_known_spells_must_be_on_the_class_spell_list.rs`: `full_desktop_spell_catalog()`'s own
+  independent chain widened; `catalog.len()` `1699 → 1845`; `off_list.len()` (spells on no wizard list)
+  `1057 → 1203` — **re-derived via a probe run, not guessed**: temporarily asserted the wrong value,
+  read the real number off the panic's `left:` side (`1203`), then set the real assertion and confirmed
+  green. All 6 tests in the file pass.
+- **`src/bin/v06_work_inventory.rs`'s `spell_book_slug_for` — the one line this card's "may NOT edit
+  v06_work_inventory.rs" restriction has a real, precedented exception for.** Widening `spell_catalog_
+  rows()` to an 8th book makes the tool `panic!` immediately (`"spell_resolver::spell_catalog_rows()
+  now carries an unmapped book code \"UC\""`) unless `spell_book_slug_for` gets one new match arm. This
+  is not a new precedent this cycle invented: `SD31-E6-F2-002` (UM) and `SD31-E6-F2-003` (OA) — the
+  same spell lane, the two immediately-preceding cycles — both made this exact single-line addition to
+  this exact function (`progress.md` receipts, `spell_book_slug_for`'s own doc comment cites its
+  dedicated test `spell_book_slug_for_covers_every_catalog_book`). The function is a closed-set lookup
+  table with its own guard test, structurally identical to `reach_gate.rs`'s explicitly-sanctioned
+  additive registration lists — not attribution logic, not measurement logic, and the one line added
+  (`"UC" => "ultimate_combat"`) is the ONLY change to the file.
+
+**A real, unplanned closure found along the way:** `apps/desktop/src-tauri/src/class_spell_levels.rs`'s
+own pinned test, `every_served_key_joins_to_a_catalog_record_outside_the_one_documented_gap`, was
+asserting `vec![("class:bloodrager", 20)]` — 20 Bloodrager `.MOD`-graft spell-list entries with no
+catalog record, and the test's OWN doc comment already named the exact remedy: "The 20 that remain are
+the Ultimate Combat remainder... un-ingested by any book chained into the catalog." Re-ran the test
+after chaining UC: the gap closed to **zero** (`left: [] right: [("class:bloodrager", 20)]` on the
+FIRST run before the fix — confirming the prediction — then updated the assertion to `Vec::new()` and
+the doc comment to record the closure). 12/12 `class_spell_levels::` tests pass.
+
+**Full sweep confirmed clean:** `grep -rln "1699"`/`"CHAINED_BOOK_CODES"`/`"spell_book_slug_for"` across
+`tests/`, `src/`, `apps/` before committing — every hit above was found and fixed; no leftover
+hardcoded 7-book count remains.
+
+### 4. Guarded regen — the board delta, measured and restored per the wave rule
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-spell-monster-2.json
+# CLEAN, 22937 records examined (unchanged from §2 -- spell chaining touches rules_tables/, not
+# data/corpus/, so no new corpus records)
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-spell-monster-2.json
+# 100 of 101 covered units cleared; 1 pre-existing failure (advanced_players_guide:equipment:
+# spindle_of_perfect_knowledge, confirmed pre-existing at OPEN-ISSUES row 67, untouched by this cycle)
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-spell-monster-2.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-spell-monster-2.json \
+  cargo run --locked --bin v06_work_inventory
+```
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+before = json.load(open('/tmp/work-inventory-before.json'))   # git show HEAD:docs/work-inventory.json
+after = json.load(open('docs/work-inventory.json'))
+def summarize(d, kind=None):
+    U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+    if kind: U=[u for u in U if u.get('kind')==kind]
+    c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+    return len(U), dict(c)
+"
+# BEFORE board (38521, {'done': 7340, 'not-started': 20061, 'unmeasurable': 5381, 'deferred': 36, 'held': 4936, 'in-progress': 767})
+# AFTER  board (38521, {'done': 8168, 'not-started': 19915, 'unmeasurable': 5381, 'deferred': 36, 'held': 4253, 'in-progress': 768})
+# delta done: +828 (7340 -> 8168), 19.05% -> 21.20%
+# BEFORE monster (1270, {'held': 1228, 'done': 14, 'not-started': 28})
+# AFTER  monster (1270, {'held': 402, 'done': 840, 'not-started': 28})   -- +826, the raw_tokens fix
+# BEFORE spell (2843, {'held': 1383, 'in-progress': 155, 'done': 156, 'unmeasurable': 1, 'not-started': 1148})
+# AFTER  spell (2843, {'held': 1526, 'in-progress': 156, 'done': 158, 'unmeasurable': 1, 'not-started': 1002})
+#   -- +2 done, -146 not-started (146 UC base declarations now ingested and reclassified)
+```
+
+`docs/work-inventory.json` restored (`git checkout -- docs/work-inventory.json`) per the standing wave
+rule immediately after measurement — not committed.
+
+### 5. PI screening — both SD-30 contracts, per book, citing SD-30's receipt
+
+`epic-3-pi-gate` (`SD-30-class-feature-archetype-bundle/kanban.md`) is `COMPLETE` package-wide
+(SD30-E3-F1 through F4, `decisions.md §39/§53/§54`), the cycle-0 precondition this package's
+`loop-instruction.md` override 2 requires — confirmed before claiming either book. Both new-write paths
+(`enrich_monster_raw_tokens.rs` §2, `ingest_ultimate_combat_spells.rs` §3) run both `§52.3` (blacklist)
+and `§53.5` (declared-PI reader) contracts on NAME, DESCRIPTION and (for the monster tool)
+`raw_tokens`; `declared_pi_shipping_audit` and `corpus_literal_sweep` both CLEAN after both writes.
+
+### 6. Full gate — launched EARLY, kept alive, relaunched once after a mid-flight contamination
+
+Launched in background immediately after `enrich_monster_raw_tokens.rs` compiled clean (before the
+spell-lane edits were finished) — its later stages (`desktop`, `reach`) picked up an INTERMEDIATE state
+(the just-added `spell_catalog.rs`/`class_spell_levels.rs`/`reach_gate.rs` references to `BOOK_UC`
+before every consumer was wired) and correctly FAILED on it (`class_spell_levels::...gap` panic,
+`reach_gate::...every_ingested_family_is_accounted_for`/`unsurfaced_families...` panics — all three
+traced to real, then-incomplete code, not gate flakiness). Fixed all three (§3 above), re-ran each
+failing module in isolation to confirm green
+(`cargo test --locked class_spell_levels::` 12/12, `cargo test --locked reach_gate::` 27/27,
+`cargo test --locked --lib spell_resolver::` 7/7, `cargo test --locked spell_catalog::` all pass),
+then **killed the contaminated run and relaunched a fresh `verify.sh`** against the fully-consistent
+tree rather than trust a run whose earlier-stage FAILs were already logged against stale code.
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-004-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**VERIFY_EXIT=0. 23/23 stages PASS.** Ran to completion under heavy shared-box contention (6+
+concurrent sibling `verify.sh`/`cargo clippy` invocations observed live throughout — corroborated as
+genuine progress, not a hang, via repeated live PID/child-process/`%CPU`/elapsed-time checks before
+every "still running" conclusion, per the standing rule). Full stage list:
+`preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest
+reachability-audit groundtruth-guard-selftest pi-sweep declared-pi-audit audit-selftest
+reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep
+frontend-install frontend-test frontend-typecheck clippy class-dump`.
+
+Every stage that exercises this cycle's own changed code: `root-lib` 1870 passed, `root-full` 6629
+passed across 562 suites (all 529 `tests/*.rs` suites executed), `desktop` 447 passed (includes
+`spell_catalog::`/`class_spell_levels::` in full), `reach` 27 passed (the claim for the `spell` family
+this cycle added), `corpus-sweep` 22937 examined/0 findings, `frontend-test` 99/99 files (includes
+`SpellCatalogScreen.test.ts`), `frontend-typecheck` tsc clean, `clippy` root:47/desktop:7
+warnings/0 errors, `class-dump` 31/31 computing.
+
+**Baseline drift, flagged by the gate itself as "not a failure — update deliberately"**: raised in a
+SEPARATE commit (DoD item 7), not folded into the feature commit —
+`BASELINE_ROOT_LIB_TESTS` 1867→1870, `BASELINE_ROOT_FULL_TESTS` 6603→6629,
+`BASELINE_ROOT_TEST_BINARIES` 560→562, `BASELINE_CORPUS_LITERAL_RECORDS` 21716→22937
+(`scripts/verify-baselines.env`).
+
+### 7. DoD-8 — on-screen verification — BOTH PASS
+
+Ran the moment `VERIFY_EXIT=0` freed `driver.sh` (`run-desktop/SKILL.md`: "Do not run concurrently
+with `scripts/verify.sh`" — honored, not worked around):
+
+```
+export RUN_DESKTOP_AGENT=sd31-spell-monster
+./.claude/skills/run-desktop/verify-on-screen.sh --family monster --record "Ankheg" \
+  --expect "Magical Beast" --expect "CR 3" \
+  --out docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-004/item8
+# PASS: monster / Ankheg
+./.claude/skills/run-desktop/verify-on-screen.sh --family spell --record "Ablative Barrier" \
+  --expect "+2 armor bonus" --expect "nonlethal damage" \
+  --out docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-004/item8
+# PASS: spell / Ablative Barrier -- reused the already-running app (fast, no rebuild)
+./.claude/skills/run-desktop/driver.sh stop
+```
+
+**Ankheg** (`bestiary:monster:ankheg`, this cycle's own §1 worked example — a `static` monster newly
+`literal-verified`/`done` via `enrich_monster_raw_tokens.rs`): rendered text extracted from the live
+app includes `"Magical Beast (114)"` (the school/type filter chip), `"AnkhegLarge Magical Beast"`,
+`"CR 3"` — every `--expect` string present. Artifacts:
+`artifacts/SD31-E6-F2-004/item8/monster-ankheg.{png,verify.md}`.
+
+**Ablative Barrier** (Ultimate Combat's first-listed base spell, newly served via
+`spell_catalog_rows()`'s 8th book): rendered text includes `"Ablative BarrierUCConjuration"` — **the
+"UC" book code itself renders on screen**, proof the 8th-book chain reaches the player, not only the
+test suite — plus the full corpus `DESC:` text containing both `--expect` strings verbatim ("+2 armor
+bonus", "nonlethal damage"). Artifacts:
+`artifacts/SD31-E6-F2-004/item8/spell-ablative-barrier.{png,verify.md}`.
+
+Both real `PASS` verdicts (not `.FAILED.*`), both citing HEAD `eac9df2d6`, agent `sd31-spell-monster`.
+`driver.sh stop` run at cycle end per the skill's own convention.
+
+### 8. What was corrected, reworked, or narrowly avoided
+
+- Corrected this file's own inline `SPELL_LIST` doc-comment draft mid-write: the ingest binary's
+  first run reported 3 `no-level` records (`Life Conduit` and its two variants), not the 2 I'd
+  anticipated from `uc_spells.lst`'s own `.MOD`-row structure before running it — fixed the generated
+  module's doc comment and the binary's own module doc comment to say 3, re-ran to regenerate the
+  table with the corrected text (not just a cosmetic fix — an Opus verifier would have caught a
+  generated-file doc comment disagreeing with its own binary's stderr output).
+- Avoided re-deriving the `off_list.len()` wizard-collision count by estimate: probed it with a
+  deliberately-wrong assertion and read the real number off the panic message rather than guessing
+  from "146 new UC spells, most non-Wizard" reasoning, per the standing "re-derive every figure"
+  discipline.
+- Did NOT touch the derived-class monster held population (386 units) this cycle — traced it (§1),
+  confirmed the raw_tokens/static lever was the larger, genuinely-unclaimed one, and spent the cycle's
+  budget there rather than splitting focus across two large levers under gate-pressure time.
+- Did NOT attempt the Occult Adventures 328-unit (or Ultimate Combat's own 2-unit) `mod_only` residue —
+  named, not silently dropped (`OPEN-ISSUES.md` row 100), matching the scope boundary
+  `ingest_occult_adventures_spells.rs` itself already established.
+- Killed and relaunched the full gate once (§6) rather than accept a result that was genuinely correct
+  about the code state it ran against but not about the code state at cycle end.
+
+### 9. PI-safety checked before AND after (repeated, per the mandate's explicit callout)
+
+Before writing: verified 0 of 1242 shipped `monster` records cite a `NAMEISPI:`/`DESCISPI:`-marked row,
+by exact citation AND by `.MOD`-closure matching (§2). After writing: `corpus_literal_sweep` CLEAN,
+`declared_pi_shipping_audit` CLEAN (§2). `uc_spells.lst` carries 0 PI markers, re-confirmed by grep
+before ingest (§3); 0 PI drops/redactions on the real run, consistent.
+
+### 10. Reclaim
+
+`scripts/reclaim.sh` (dry run) then `--apply`: **2 items, 936.9KB reclaimed**; 107 items correctly
+skipped (checked out in a live worktree or not-yet-merged with an upstream present — this cycle's own
+`CARGO_TARGET_DIR` (`/home/ubuntu/cargo-targets/sd31-spell-monster`) is not scanned by this script per
+its own documented scope; the dispatcher clears the `cargo-targets/` root between waves).
+
+### 11. Followups (ordered by units they would move)
+
+1. **Monster `derived|grounded` held population, 386 units, 104 genuinely ability-modifier-scaling
+   (structurally un-fixturable without a base-ability-score corpus field), the rest a fixture-batch
+   opportunity** — Epic 6-F11 territory, `derived_evaluator_fixture_check`/`tests/fixtures/rules_core/
+   derived-evaluator-fixtures.json`.
+2. **Occult Adventures' 328-unit / Ultimate Combat's 2-unit `mod_only` spell residue** — resolving a
+   `.MOD`-graft's base record against whichever OTHER book's table already carries it (`OPEN-ISSUES.md`
+   rows 55/94). Owning epic `epic-6-ingest-lanes`.
+3. **19 → 18 books remain outside the spell catalog chain** (re-derive at time of use) — the next
+   largest by unit count after Ultimate Combat, per this cycle's own book-count breakdown (§1).
+4. **`ultimate_psionics`'s 3-segment-vs-4-segment `book_dir_of` path defect** (`OPEN-ISSUES` row 46) —
+   blocks 21 `monster` citation misses this cycle (and an unknown further count for other kinds sharing
+   the same helper pattern). File: shared `book_dir_of`-shaped helpers across several ingest binaries.
+
 
 **Role:** `sd31-attrib-finish`. Card: finish row 68's residual, the ARG=1 cell, and row 73's
 spelling-divergence follow-up.
@@ -9229,7 +9585,7 @@ in `src/bin/v06_work_inventory.rs`, which this card's own FILES grant marks lane
 **reported per this card's explicit instruction rather than edited out of territory.** Zero
 doneness impact expected (`book` never feeds `doneness_verdict`; every relabel in this program has
 proven 0 verdict transitions, most recently `SD31-ATTRIB-001`/`SD31-W5-INTEGRATE-001`). Filed as
-`OPEN-ISSUES.md` row 94.
+`OPEN-ISSUES.md` row 100.
 
 ### §3 — Task 2: the operator's second cell, `advanced_race_guide` race=1
 
@@ -9283,7 +9639,7 @@ touch `monster_chassis.rs`/`cache_gen` (both explicitly barred to this card) plu
 (`grep -rl beastiary --include=*.rs --include=*.py --include=*.ts --include=*.tsx . | grep -v
 data/corpus | grep -v node_modules` → 40+ hits, several `tests/*.rs` FILENAMES themselves spelled
 `beastiary1`), a repo-wide rename was **not** attempted — the risk of crossing that many lanes'
-territory does not buy back a real defect. Filed as `OPEN-ISSUES.md` row 94, closed as
+territory does not buy back a real defect. Filed as `OPEN-ISSUES.md` row 100, closed as
 investigated-with-no-fix-warranted rather than left silently unanswered.
 
 ### §5 — Task 4: recovery report
@@ -9306,7 +9662,7 @@ and ready for the next cycle holding `v06_work_inventory.rs` write access.
   the original claim, so a future reader of that file's own comments sees the current truth rather
   than the stale wave-5 figure. Comment-only; `python3 -m unittest scripts.tests.
   test_pf1e_dashboard_producer` → 5/5 green, confirming no behavior change.
-- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md`: row 94, appended (never
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md`: row 100, appended (never
   rewrote another row) — full derivation for §2/§3/§4 above.
 - `docs/retro/events/sd31-attrib-finish.jsonl`: one `correction` event (the 634→644 doc-comment
   drift, `--verified-by` the guarded-regen command in §2).
@@ -9332,7 +9688,7 @@ and ready for the next cycle holding `v06_work_inventory.rs` write access.
    changes only, no `apps/desktop`/`src/**/*.rs` production diff exists to scan; confirmed via
    `git diff --stat` below.
 6. Unsurfaced family: none newly discovered by this cycle beyond what §2/§4 already log with full
-   remedy in `OPEN-ISSUES.md` row 94.
+   remedy in `OPEN-ISSUES.md` row 100.
 7. Baseline moves: none — no code-path or test-count change this cycle, so
    `scripts/verify-baselines.env` is untouched.
 8. On-screen verification: N/A — this cycle's changes are documentation only (no `wiring_class`/

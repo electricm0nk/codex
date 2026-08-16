@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:brijidine_heat_stone",
@@ -25,6 +23,148 @@
     "natural_attacks": [],
     "race_subtype": "Azata|Earth|Extraplanar|Fire",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brijidine ~ Entrap|Brijidine ~ Flaming Body|Brijidine ~ Heat Stone|Brijidine ~ Lava Blast|Brijidine ~ Obsidian Blade|Burn|Flight Maneuverability|Holy Aura ~ Constant|Resistance to Cold|Trample"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Celestial|Draconic|Ignan|Infernal|Terran"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,DEX|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|13|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BurnDamageDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BurnDamageDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDamageDieSize|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|60|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "17"
+      },
+      {
+        "key": "DR",
+        "value": "10/cold iron and evil"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CG"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Escape Artist|Heal|Knowledge (Nature)"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Will):19"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Fly,60"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Azata|Earth|Extraplanar|Fire"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=19|Earthquake|Fire Storm,17+CHA|Heal|Stoneskin|Wall of Fire"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=5|CASTERLEVEL=19|Cure Serious Wounds|Flame Strike,15+CHA|Move Earth|Spike Stones,14+CHA|Stone Tell|Summon Nature's Ally V (earth/fire elementals)|Wall of Stone,16+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=19|Flaming Sphere,12+CHA|Heat Metal,12+CHA|Meld into Stone (self only)|Soften Earth and Stone|Stone Shape"
+      },
+      {
+        "key": "SR",
+        "value": "28"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "M",
     "source_page": "p.37",
     "speeds": [
@@ -38,16 +178,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 119,
-    "record_key": "Azata (Brijidine)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 119,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Azata (Brijidine)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",
