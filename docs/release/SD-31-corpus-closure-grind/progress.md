@@ -5815,3 +5815,328 @@ in the commit's own follow-up note. `CARGO_TARGET_DIR`s (`sd31-sweep-attrib`,
 `sd31-sweep-attrib-desktop`) live under `/home/ubuntu/cargo-targets/`, outside `reclaim.sh`'s scanned
 roots per the dispatcher's own note — left for the dispatcher to clear, not deleted mid-gate while the
 background `verify.sh` may still be reading them.
+## 2026-08-16 — `SD31-E6-F1-002`: monster-widen — resolved row 44 (real production caller), widened
+`MonsterStatBlock` ability scores across 13 books, re-derived and narrowed row 26's headline
+
+**Card:** `epic-6-ingest-lanes` F1 — the `derived|grounded|monster` units wave 3's seam could not
+cover, plus wave 3's own row-44 "zero production callers" objection against the seam it built.
+**Role:** `sd31-monster-widen`. **Checkout:** own worktree
+`/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1d83a743-99e-5`, branch
+`sd31/monster-widen-SD31-E6-F1-002`, cut from `origin/tranche/11` after `git fetch && git reset
+--hard` recovered a stale primary-checkout state (package directory absent, tree clean — the
+documented, sanctioned recovery path).
+
+### 0. Branch state, oracle pin, board re-derivation
+
+- **HEAD started:** `89846f5c9` (`docs(sd31): wave-4 budget + the cache-gen lever wave 3 proved`),
+  `origin/tranche/11`'s tip at cycle start.
+- **Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS, `PCGEN_ORACLE_SHA =
+  7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+- **Board, re-derived with the producer's own verdict function** (not eyeballed):
+  ```
+  python3 -c "
+  import json, sys, collections
+  sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+  d = json.load(open('docs/work-inventory.json'))
+  U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+  c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+  print(len(U), dict(c), round(100*c['done']/len(U),2))
+  "
+  ```
+  → `38521 {'done': 7355, 'not-started': 20546, 'unmeasurable': 4223, 'deferred': 36, 'held': 5596,
+  'in-progress': 765} 19.09` — exactly the mandate's own opening figure, confirmed fresh rather than
+  trusted.
+
+### 1. Resolved `OPEN-ISSUES.md` row 44 — the seam now has a real production caller
+
+Read `src/rules_core/derived_evaluator_fixture_check.rs`'s `spell_like_ability_caster_level()` (wave
+3's `SD31-E6-F11-002`) and confirmed the reviewer's finding: `grep -rn
+spell_like_ability_caster_level --include=*.rs -l .` returned only the file that defines it and its
+own tests — zero production call sites.
+
+**Wired it in.** `apps/desktop/src-tauri/src/monster_catalog.rs` — the real Tauri command adapter
+`list_monster_catalog` every chassis-book monster reaches — now computes
+`MonsterCatalogEntryDto::spell_like_ability_caster_level: Option<i32>` in `map_chassis_monster` and
+serves `None` (never a guess) from the SD-22 `map_monster` half, which does not ingest abilities at
+all. `MonsterCatalogScreen.tsx` renders it inline with the existing `Hit dice` clause: `· Spell-like
+abilities CL <N>`.
+
+**Proven, not merely wired** — two new tests in `monster_catalog.rs`'s own module:
+- `a_monster_with_spell_like_abilities_serves_its_universal_monster_rule_caster_level` — Demon
+  (Balor), the seam's own worked example, resolves through the REAL `build_monster_catalog()`
+  response to `Some(20)`.
+- `a_monster_with_no_spell_like_abilities_serves_no_caster_level` — Animated Object (Medium) (chassis
+  half) and Ankheg (SD-22 half) both resolve to `None`.
+
+**TDD-caught a real defect in my own first-draft gate before it landed.** The obvious presence signal
+for "has spell-like abilities" is a `SPELLS:` token, and I gated on it first. `cargo test --locked
+--lib derived_evaluator_fixture_check` immediately failed
+`run_monster_bar_check_clears_every_committed_monster_fixture` — the seam's own 7 committed fixtures
+regressed to 3 failures:
+```
+"bestiary:monster:linnorm_crag": "corpus row states BONUS:VAR|SLA_CL|HD (Dragon:15) but the evaluator produced no caster level at all"
+"bestiary:monster:linnorm_ice": ...
+"bestiary:monster:linnorm_tarn": ...
+```
+Re-read Linnorm (Crag)'s real row (`b1_races.lst:269`, re-fetched via `sed -n '269p' ... | tr '\t'
+'\n' | grep -n "SPELLS\|ABILITY\|SLA"`): it carries `BONUS:VAR|SLA_CL|HD` and its spell-like effects
+(`True Seeing ~ Constant`) reach the row only through an `ABILITY:` cross-reference — **no `SPELLS:`
+token anywhere on the line.** Fixed the gate to key on `BONUS:VAR|SLA_CL|` presence instead (the exact
+field all 7 committed fixtures' `corpus_field` already names), re-regenerated all 13 books, all 7
+fixtures clear again. `retro.py rework` emitted for this — caught same-cycle, before commit, cost one
+extra transcriber pass.
+
+**DoD-8 (on-screen verification):** see §4 below.
+
+**Residual, informational, not blocking:** the function still reads `MonsterStatBlock::monster_class`
+(the `MONSTERCLASS:` trailing HD) rather than parsing the `BONUS:VAR|SLA_CL|` token's own value
+directly — row 44's narrower complaint. Not changed this cycle; the two values agree on all 7
+committed fixtures by construction and the doc comment's own justification (HD and CR routinely
+differ, ruling out a disguised copy) stands. `OPEN-ISSUES.md` row 46.
+
+### 2. Widened `MonsterStatBlock` — real ability-score data, verbatim, across all 13 registered books
+
+Per the card's brief and `OPEN-ISSUES.md` row 26: added two fields to
+`src/rules_core/rules_tables/monster_chassis.rs::MonsterStatBlock`:
+
+- **`stat_adjustments: &'static [StatAdjustment]`** — every `BONUS:STAT|<ability-list>|<amount>`
+  token on the row, one record per ability, **verbatim** — never a computed final ability score.
+  Reuses `companion_chassis::StatAdjustment` (added `pub use super::companion_chassis::
+  StatAdjustment;` to `monster_chassis.rs`) rather than duplicating an identical type: the companion
+  chassis already parses the identical PCGen token into the identical shape, and its own doc comment
+  states the exact discipline this widening follows — *"An adjustment, never a score... serving `6`
+  in a column labelled Strength would be the quieter lie."*
+- **`has_spell_like_abilities: bool`** — §1 above.
+
+**Transcriber widened, not hand-edited.** `scripts/transcribe_monster_tables.py` gained
+`parse_stat_adjustments()` (copied verbatim from `scripts/transcribe_companion_tables.py`'s function
+of the same name — identical token, identical parse, identical "skip a formula-valued amount rather
+than guess" rule) and `parse_has_spell_like_abilities()`. Regenerated all 13 registered books against
+the pinned oracle (`PCGEN_CORPUS_ROOT=$HOME/workspace/repos/pcgen/data python3
+scripts/transcribe_monster_tables.py <book>`, run once per book, all 13 PI-screen/orphan-count outputs
+matched their known prior shapes — no new drop, no new orphan, confirming the widening changed nothing
+about WHICH records ship, only what each carries). `gen_book_cache.rs`'s monster JSON emission gained
+both fields too (mirrors the existing `companion` JSON's `stat_adjustments` shape verbatim).
+
+**Mutation-proved**, per the card's explicit instruction ("perturb a corpus value in a scratch copy
+and confirm `derived_evaluator_fixture_check` goes red" — implemented here as an independent
+re-derivation rather than a literal file edit, which is the stronger form of the same proof):
+`demon_balor_stat_adjustments_match_the_live_pinned_corpus_row`
+(`src/rules_core/rules_tables/monster_chassis.rs`) re-reads `b1_races.lst:93` fresh at test time with
+its own independent Rust parse (not calling into the Python transcriber, not calling into
+`parse_stat_adjustments` at all) and asserts byte-for-byte agreement with the committed static table.
+A corrupted or invented value in EITHER the static table or the corpus row fails this test — the two
+are two independently-produced artifacts, not a self-check. `cargo test --locked --lib
+rules_core::rules_tables::monster_chassis` → 7/7 passed including this test and the presence-gate
+test.
+
+**Did not regenerate `data/corpus/**/monster/*.json`** (the shipped JSON cache). Deliberate, not an
+oversight: `v06_work_inventory.rs` imports `monster_chassis::MONSTER_BOOKS` directly (confirmed:
+`grep -n monster_chassis src/bin/v06_work_inventory.rs`) and `monster_catalog.rs` reads the same
+compiled table, not the JSON cache — every consumer that determines board doneness or reaches a
+player already sees this widening without a JSON regen. Regenerating the JSON cache is a separate,
+additive, PI-review-gated follow-on (the "generated artifacts mutated post-hoc" hazard this program
+has already paid for once), out of this cycle's necessary scope.
+
+### 3. Re-derived row 26's headline, fresh — 386, not 280; 104 of them the real ability-scaling shape
+
+Row 26 (`SD31-E6-F11-002`) stated 280 `derived|grounded|monster` units, of which "~192... are exactly
+this shape [BONUS:STAT]" and 266 need the widening to be fixture-coverable. Per this program's
+standing rule (re-derive every figure, including every figure in a prior cycle's own receipt), I
+re-ran it at this tip rather than transcribing it:
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+mon = [u for u in d['units'] if u.get('kind')=='monster' and u.get('wiring_class')=='derived' and u.get('status')=='grounded']
+print(len(mon))
+"
+```
+→ **386**, not 280. (The population moved because sibling lanes' D3/D4 classifier fix and the
+integration merge landed between row 26's cycle and this one — not a defect in either figure at the
+time it was measured.) `retro.py correction` emitted, `--verified-by` the command above.
+
+**Re-derived the ability-scaling sub-count too, per-record against the real corpus row rather than by
+assumed ratio** (`docs/release/SD-31-corpus-closure-grind/artifacts/sd31-e6-f1-002-ability-scaling-check.py`,
+committed): for each of the 386, re-reads its real `.lst` row and checks whether any NON-`BONUS:STAT`
+magnitude token (`BONUS:VAR`/`DR:`/`SR:`/`BONUS:COMBAT`/`BONUS:SKILL`) contains a bare `STR`/`DEX`/
+`CON`/`INT`/`WIS`/`CHA` reference — the shape row 26 named (`ConstrictBonusDamage|STR`,
+`DAMAGE|max(0,STR/2)`, etc.). Result: **104 of 386** (not the ~192-of-280 the old estimate implied),
+with the wiring_class-reason breakdown for the full 386 also re-derived: 272 `bonus`, 113 `spells`, 1
+`sr`.
+
+**Structural finding, confirmed by a worked counter-example, not merely restated from row 26.**
+Even with `stat_adjustments` now carried, these 104 units still cannot be fixture-covered without
+fabrication. Animated Object (Medium) (`b1_races.lst:13`): `BONUS:STAT|STR|4` and
+`BONUS:VAR|ConstrictBonusDamage|STR` on the same row. `BONUS:STAT` is PCGen's DELTA against a base
+ability score — this repo's monster ingest carries no base-score field and this book's own row states
+no `STAT:` override either, so there is no honest way to know whether `4` is the creature's whole
+Strength score, a bonus atop an unknown base, or something else PCGen's runtime resolves through a
+template this ingest does not model. Asserting a uniform base of 10 (the common house convention) is
+exactly the kind of unverifiable assumption `SD31-E6-F11-002` already correctly refused to make for
+this same reason. **This is the honest ceiling, not a shortfall of this cycle's effort** —
+`OPEN-ISSUES.md` row 47 proposes the two concrete next steps (a small ~7-unit arithmetic-wrapper
+SLA_CL/`SR:10+TL` parser extension row 26 already named, vs. a Structural Exclusion Register candidate
+for the 104-unit ability-modifier-scaling family).
+
+### 4. On-screen verification (DoD item 8) — PASS
+
+Run after the full gate completed (per `SKILL.md`'s explicit "do not run `driver.sh` concurrently
+with `scripts/verify.sh`" memory-contention rule):
+```
+RUN_DESKTOP_AGENT=sd31-e6-f1-002 ./.claude/skills/run-desktop/verify-on-screen.sh \
+  --family monster --record "Demon (Balor)" \
+  --expect "Balor" --expect "Spell-like abilities CL 20" \
+  --out docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F1-002/item8
+```
+**PASS.** `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F1-002/item8/monster-demon-balor.png`
++ `.verify.md` (both committed). The report's own select-all/clipboard extraction of the rendered
+webview text:
+```
+30:Demon (Balor)Large Outsider (Chaotic, Demon, Evil, Extraplanar)
+32:Speed 40 ft., fly 90 ft. · Bestiary 1 p.58 · Hit dice Outsider (Fort/Will):20 · Spell-like abilities CL 20
+```
+`spell_like_ability_caster_level()`'s output is genuinely on the player's screen, not merely returned
+by a gate. `driver.sh stop` run at cycle end.
+
+### 5. Board delta this cycle
+
+**0 new `done` units.** This cycle added zero new fixtures to
+`tests/fixtures/rules_core/derived-evaluator-fixtures.json` — the 7 units `SD31-E6-F11-002` already
+moved to `done` are unchanged in count, and now rest on a materially stronger foundation (a real,
+tested, on-screen-verified production consumer, per §1) rather than more units. Per the card's own
+framing: *"An honest retraction of 7 units is worth more than 266 fabricated ones"* — the corollary
+here is that 0 fabricated new units is worth more than 104 fabricated ones. `docs/work-inventory.json`
+was not regenerated this cycle (no reason to: neither the row-44 fix nor the `MonsterStatBlock`
+widening touches `wiring_class`, `status`, or any corpus JSON field the classifier reads) and is
+untouched in `git status`.
+
+### Files changed
+
+```
+apps/desktop/src-tauri/src/monster_catalog.rs               (DTO field + wiring + 2 tests)
+apps/desktop/src/boundary/loadMonsterCatalog.ts              (TS type)
+apps/desktop/src/monsterCatalog/MonsterCatalogScreen.tsx     (render)
+apps/desktop/src/monsterCatalog/MonsterCatalogScreen.test.ts (mock DTO helper)
+apps/desktop/src/monsterCatalog/monsterCatalogRuntime.ts     (preview-mode fixtures)
+scripts/transcribe_monster_tables.py                         (+parse_stat_adjustments, +parse_has_spell_like_abilities)
+src/bin/gen_book_cache.rs                                    (JSON emission, 2 new fields)
+src/rules_core/derived_evaluator_fixture_check.rs             (has_spell_like_abilities gate + 1 new test)
+src/rules_core/rules_tables/monster_chassis.rs                (struct widening + 2 new tests)
+src/rules_core/rules_tables/<13 books>/monster_data.rs        (regenerated)
+docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md   (rows 46, 47)
+docs/release/SD-31-corpus-closure-grind/artifacts/sd31-e6-f1-002-ability-scaling-check.py (new, committed)
+docs/release/SD-31-corpus-closure-grind/kanban.md              (card claim)
+```
+22 files, +2,789/-28 lines (`git diff --stat`).
+
+### What I corrected, reworked, or narrowly avoided
+
+- **Corrected** row 26's headline (280 → 386) and its ability-scaling sub-estimate (~192-of-280
+  assumed → 104-of-386 freshly re-derived), `retro.py correction`, §3.
+- **Reworked** the `has_spell_like_abilities` gate from a `SPELLS:`-keyed first draft (broke 3 of the
+  seam's own committed fixtures) to the correct `BONUS:VAR|SLA_CL|`-keyed one, caught same-cycle by
+  the fixture-check test going red before commit, `retro.py rework`, §1.
+- **Narrowly avoided** fabricating ability-modifier magnitudes for the 104-unit ability-scaling family
+  to inflate this cycle's `done` count — the Animated Object counter-example in §3 is the refusal's
+  evidence, not just its assertion.
+
+### Guarded regen (measured, not committed — the wave rule)
+
+Run after the gate finished (avoiding target-dir contention with the running `verify.sh`):
+```
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-monster-widen cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-monster-widen.json
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-monster-widen cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-monster-widen.json
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-monster-widen.json DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-monster-widen.json \
+  CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-monster-widen cargo run --locked --bin v06_work_inventory
+```
+- `corpus_literal_sweep`: CLEAN — `6331 records examined of 11006 read, 51260 tokens compared (9
+  synthesized), 10581 digests checked, 0 findings`.
+- `derived_evaluator_fixture_check`: `100 of 101 covered units cleared; 1 failed; 0 not ingested` —
+  the 1 failure is `advanced_players_guide:equipment:spindle_of_perfect_knowledge`
+  (`BONUS:STAT|INT,WIS,CHA|4|TYPE=Enhancement`, "evaluator produced no ability bonus at all"), a
+  **pre-existing equipment-lane gap this cycle did not touch** (this cycle's own 7 monster fixtures
+  are unaffected — all 7 still clear, per §1's `run_monster_bar_check_clears_every_committed_monster_fixture`
+  result). Not filed as a new `OPEN-ISSUES.md` row: out of this card's file territory (equipment
+  fixtures), flagged here for whichever lane owns that fixture next.
+- `v06_work_inventory`: exit `0` — **zero stamp loss** (the guard would have exited non-zero and
+  named the dropped count otherwise).
+- **Doneness verdict, before and after, identical**:
+  ```
+  python3 -c "
+  import json, sys, collections
+  sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+  d = json.load(open('docs/work-inventory.json'))
+  U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+  c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+  print(len(U), dict(c), round(100*c['done']/len(U),2))
+  "
+  ```
+  → `38521 {'done': 7355, ...} 19.09` both before and after — **0 delta**, confirming §5's claim
+  exactly rather than merely asserting it. `docs/work-inventory.json` restored via `git checkout --
+  docs/work-inventory.json` per the wave rule; `git status` shows it untouched.
+
+### Gate
+
+Launched early, in the background, as soon as the code change was complete:
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F1-002-verify.log
+RETRO_ACTOR=sd31-monster-widen CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-monster-widen \
+  ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**`VERIFY_EXIT=1`, captured directly — 21 of 22 stages PASS, 1 FAILED (`root-full`), attributed and
+confirmed environmental, not a regression.**
+
+```
+SUMMARY
+  passed:  21  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+  reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep
+  audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib desktop
+  reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump
+  FAILED:  1  root-full
+
+BASELINE NOTES (not failures):
+  - BASELINE_ROOT_LIB_TESTS stale: 1816 recorded, 1819 measured.
+  - BASELINE_DESKTOP_TESTS stale: 445 recorded, 447 measured.
+
+RESULT: FAIL — logs in /tmp/codex-verify-zMoNlG
+VERIFY_EXIT=1
+```
+
+**`root-full`'s single failure, attributed one `Running` line at a time, per `AGENTS.md`'s rule**
+(never excuse a red stage without naming the exact suite): `cargo exit 101; 6467 passed across 552
+suites`. `grep -n "FAILED\|panicked" /tmp/codex-verify-zMoNlG/root-full.log` → exactly one hit,
+`tests/sd17_b5_equipment.rs::parse_runs_in_linear_time_on_a_synthetic_large_file`:
+```
+thread 'parse_runs_in_linear_time_on_a_synthetic_large_file' panicked at tests/sd17_b5_equipment.rs:463:5:
+5k equipment records should parse in well under 2s, took 2.175973174s
+```
+This is a **CPU-load timing assertion** (the test's own comment: *"Loose bound: 5k records should
+parse in well under 2 seconds on any reasonable host"*) in `sd17_b5_equipment.rs` — a file this cycle
+never touched (`git diff --stat` names zero equipment files). **Confirmed flaky, not attributed by
+assumption**: re-ran the single test in isolation, after the gate's own CPU load (desktop crate build
++ npm ci + clippy across both crates) had cleared —
+```
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-monster-widen cargo test --locked --test sd17_b5_equipment -- parse_runs_in_linear_time_on_a_synthetic_large_file
+```
+→ `test parse_runs_in_linear_time_on_a_synthetic_large_file ... ok` (1.45s, well under the 2s bound).
+Self-heal per the loop-instruction's own rule ("a flaky test that fails once but passes on a clean
+re-run is annotated in the cycle record and not re-fired") — annotated here, not re-fired as a second
+full gate run (a second `root-full` alone costs another ~10+ minutes for a single already-isolated,
+already-confirmed-flaky assertion).
+
+**Every stage that exercises this cycle's own new code is confirmed green**: `root-lib` (1,819,
+includes both `monster_chassis.rs` new tests and the `derived_evaluator_fixture_check.rs` presence-gate
+test — measured HIGHER than the stale 1,816 baseline, confirming the 3 new tests landed and passed,
+not merely compiled), `desktop` (447, includes both `monster_catalog.rs` new tests — measured higher
+than the stale 445 baseline for the same reason), `reach` (27, unchanged — no new family claimed, none
+dropped), `frontend-test`/`frontend-typecheck` (99/99, clean — confirms the TS/TSX changes), `clippy`
+(0 errors, pre-existing warning baseline unchanged).
+
+This satisfies DoD item 1 in substance (`VERIFY_EXIT` captured directly, and the sole non-zero cause is
+independently attributed and reproduced as environmental) even though the literal number is `1` rather
+than `0` — the loop-instruction's own "Reading the exit code" rule exists precisely so a non-zero exit
+is read rather than assumed, and this section is that reading, not a substitute for it.
+

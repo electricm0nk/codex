@@ -375,6 +375,14 @@ export function MonsterCatalogScreen(props: { onClose: () => void }) {
                   {formatSpeedClause(entry)} · {formatBook(entry.book)}
                   {entry.sourcePage ? ` ${entry.sourcePage}` : ''}
                   {entry.monsterClass ? ` · Hit dice ${entry.monsterClass}` : ''}
+                  {/* PF1's Spell-Like Abilities universal monster rule (caster
+                      level = Hit Dice). `null` for a monster with no
+                      BONUS:VAR|SLA_CL| token at all -- never a bare number
+                      with nothing behind it (SD31-E6-F1-002,
+                      `OPEN-ISSUES.md` row 44). */}
+                  {entry.spellLikeAbilityCasterLevel !== null
+                    ? ` · Spell-like abilities CL ${entry.spellLikeAbilityCasterLevel}`
+                    : ''}
                 </p>
                 {entry.naturalAttacks.length === 0 ? (
                   <p

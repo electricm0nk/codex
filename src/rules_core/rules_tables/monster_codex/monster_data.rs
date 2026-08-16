@@ -11,7 +11,7 @@
 //!   * `mc_races.lst` -- 2 monster rows
 //!   * `mc_abilities_race.lst` -- 3 monster-ability rows
 
-use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed};
+use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
 /// Every monster_codex monster stat block (2 rows).
 pub(super) static MONSTERS: &[MonsterStatBlock] = &[
@@ -28,6 +28,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d6") }, NaturalAttack { name: "Venom", damage_dice: None }],
         ability_keys: &["Seru ~ Poison", "Seru ~ Spit Venom"],
         external_ability_refs: &[],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: -4 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }],
+        has_spell_like_abilities: false,
         source_file: "mc_races.lst",
         source_line: 5,
     },
@@ -44,6 +46,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d3") }],
         ability_keys: &["Bat (Sootwing) ~ Disease"],
         external_ability_refs: &[],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: -6 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: -2 }],
+        has_spell_like_abilities: false,
         source_file: "mc_races.lst",
         source_line: 6,
     },

@@ -54,6 +54,14 @@
 //! 4,233 remaining units are orphan ability rows, and 703 of those sit in ten
 //! books that carry no monster row at all.
 
+// `StatAdjustment` is `companion_chassis`'s type, reused rather than duplicated
+// here (SD31-E6-F1-002): both chassis kinds parse the identical
+// `BONUS:STAT|<abbrev-list>|<amount>` PCGen token into the identical shape, and
+// `companion_chassis` already reuses THIS module's `NaturalAttack`/`Speed` the
+// other direction (`pub use super::monster_chassis::{NaturalAttack, Speed};`) —
+// one type per PCGen token shape, not one per consuming module.
+pub use super::companion_chassis::StatAdjustment;
+
 /// One movement mode from the row's `MOVE:` token, e.g. `Walk,30,Burrow,10`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Speed {
@@ -167,6 +175,44 @@ pub struct MonsterStatBlock {
     pub monster_class: Option<&'static str>,
     pub source_page: Option<&'static str>,
     pub natural_attacks: &'static [NaturalAttack],
+    /// Every `BONUS:STAT|<abbrev-list>|<amount>` token on the row, one record
+    /// per ability (`companion_chassis::StatAdjustment`, reused rather than
+    /// duplicated — the two chassis kinds parse the identical PCGen token).
+    ///
+    /// **An adjustment, never a score** (SD31-E6-F1-002, `OPEN-ISSUES.md` row
+    /// 26). PCGen computes a monster's actual ability scores at runtime from a
+    /// base template plus these tokens plus whatever the row's other `BONUS:`
+    /// fields add, and this ingest does not compute the result — exactly as
+    /// [`Self::monster_class`] carries the hit-dice token without computing hit
+    /// points. A token whose amount is not a literal integer (a formula, e.g.
+    /// `BONUS:STAT|STR|MutagenicMaulerMutagenStatBonus`) is **skipped**, not
+    /// guessed: there is no formula interpreter here, and a wrong number in an
+    /// ability column is worse than an absent one.
+    pub stat_adjustments: &'static [StatAdjustment],
+    /// Whether the row carries a `BONUS:VAR|SLA_CL|<...>` token — PCGen's
+    /// encoding of PF1's Spell-Like Abilities universal monster rule (caster
+    /// level = Hit Dice, or an arithmetic wrapper of it).
+    ///
+    /// **Not** the more general `SPELLS:` token, deliberately: Linnorm
+    /// (Crag) (`b1_races.lst:269`) carries `BONUS:VAR|SLA_CL|HD` and its
+    /// spell-like effects (`True Seeing ~ Constant`) reach the row only
+    /// through an `ABILITY:` cross-reference, with no `SPELLS:` token
+    /// anywhere on the line — gating on `SPELLS:` answered `false` for one
+    /// of this seam's own already-committed fixtures (TDD red/green anchor,
+    /// `run_monster_bar_check_clears_every_committed_monster_fixture`).
+    ///
+    /// A presence check only — never a count or a list of the spells
+    /// themselves, which this ingest does not capture. Exists so a consumer
+    /// can tell a monster with no spell-like abilities at all from one whose
+    /// `SLA_CL` token simply was not parsed into anything else on this
+    /// struct, which is the same "absence must be honest" reasoning
+    /// `external_ability_refs` already carries for named abilities this book
+    /// does not define. `spell_like_ability_caster_level` in
+    /// `derived_evaluator_fixture_check` reads this field before applying PF1's
+    /// Spell-Like Abilities universal monster rule, so a monster with no
+    /// spell-like abilities at all is never served a caster level it has no
+    /// use for (SD31-E6-F1-002, `OPEN-ISSUES.md` row 44).
+    pub has_spell_like_abilities: bool,
     /// Keys into this book's `monster_abilities`, in row order.
     pub ability_keys: &'static [&'static str],
     /// Ability names this row cites that this book does not define.
@@ -508,5 +554,108 @@ mod tests {
         let seru = book.monster_resolve("Seru").expect("Seru is in this book");
         let names: Vec<_> = book.abilities_of(seru).iter().map(|a| a.name).collect();
         assert_eq!(names, vec!["Poison", "Spit Venom"]);
+    }
+
+    /// **Mutation-proves the ability-score-bonus widening** (SD31-E6-F1-002).
+    /// Re-reads Demon (Balor)'s own row from the pinned PCGen oracle (never
+    /// the corpus JSON cache, never this crate's own output — the independent
+    /// upstream source) and asserts the static table's `stat_adjustments`
+    /// matches it token for token. The static table and this re-read are two
+    /// independently produced artifacts (one baked in by the Python
+    /// transcriber at generation time, one parsed fresh here at test time); a
+    /// corrupted or invented value in either one fails this test, which is
+    /// what makes it a mutation-proof rather than a self-check. Skips (rather
+    /// than fails) when the pinned oracle checkout is absent, matching this
+    /// program's existing convention for oracle-dependent tests — `verify.sh`
+    /// bootstraps the oracle before this test suite runs.
+    #[test]
+    fn demon_balor_stat_adjustments_match_the_live_pinned_corpus_row() {
+        let root = std::env::var("PCGEN_CORPUS_ROOT").unwrap_or_else(|_| {
+            format!("{}/workspace/repos/pcgen/data", std::env::var("HOME").expect("HOME is set"))
+        });
+        let path = std::path::Path::new(&root)
+            .join("pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst");
+        let Ok(text) = std::fs::read_to_string(&path) else {
+            eprintln!("skip: pinned oracle not present at {path:?}");
+            return;
+        };
+        let line = text.lines().nth(92).expect("b1_races.lst has at least 93 lines"); // 1-based line 93
+        assert!(
+            line.starts_with("Demon (Balor)"),
+            "b1_races.lst:93 is no longer Demon (Balor) — the oracle moved: {line:?}"
+        );
+
+        // The SAME parse `parse_stat_adjustments` in
+        // `scripts/transcribe_monster_tables.py` performs, re-implemented
+        // independently here in Rust rather than shelling out to the Python —
+        // an independent re-derivation is the point of a mutation proof.
+        let mut expected: Vec<(String, i16)> = Vec::new();
+        for field in line.split('\t') {
+            let field = field.trim();
+            let Some(rest) = field.strip_prefix("BONUS:STAT|") else { continue };
+            let parts: Vec<&str> = rest.split('|').collect();
+            if parts.len() < 2 {
+                continue;
+            }
+            let Ok(amount) = parts[1].trim().parse::<i16>() else { continue };
+            for ability in parts[0].split(',') {
+                expected.push((ability.trim().to_string(), amount));
+            }
+        }
+        assert!(!expected.is_empty(), "Demon (Balor)'s row carries no readable BONUS:STAT token");
+
+        let book = monster_book("beastiary").expect("bestiary chassis is registered");
+        let balor = book
+            .monster_resolve("Demon (Balor)")
+            .expect("Demon (Balor) is a registered monster in the bestiary chassis");
+        let actual: Vec<(String, i16)> =
+            balor.stat_adjustments.iter().map(|a| (a.ability.to_string(), a.amount)).collect();
+        assert_eq!(
+            actual, expected,
+            "the static table's stat_adjustments diverges from a fresh, independent parse of \
+             the live pinned corpus row"
+        );
+    }
+
+    /// The presence signal `spell_like_ability_caster_level` gates on: a
+    /// monster with a genuine `BONUS:VAR|SLA_CL|` token is `true`, one with
+    /// none is `false` — never guessed from
+    /// `ability_keys`/`external_ability_refs`, which name abilities but do
+    /// not distinguish a spell-like one from any other kind (SD31-E6-F1-002,
+    /// `OPEN-ISSUES.md` row 44).
+    #[test]
+    fn has_spell_like_abilities_is_true_only_for_a_row_with_an_sla_cl_token() {
+        let book = monster_book("beastiary").expect("bestiary chassis is registered");
+        let balor = book
+            .monster_resolve("Demon (Balor)")
+            .expect("Demon (Balor) is a registered monster in the bestiary chassis");
+        assert!(
+            balor.has_spell_like_abilities,
+            "Demon (Balor)'s row carries BONUS:VAR|SLA_CL|HD"
+        );
+
+        // Linnorm (Crag) is the TDD anchor for why the gate is `SLA_CL`, not
+        // the more general `SPELLS:` token: its spell-like effects
+        // (`True Seeing ~ Constant`) reach the row only through an
+        // `ABILITY:` cross-reference, and the row carries no `SPELLS:` token
+        // at all -- an earlier version of this gate answered `false` here
+        // and broke one of this seam's own already-committed fixtures.
+        let linnorm = book
+            .monster_resolve("Linnorm (Crag)")
+            .expect("Linnorm (Crag) is a registered monster in the bestiary chassis");
+        assert!(
+            linnorm.has_spell_like_abilities,
+            "Linnorm (Crag)'s row (b1_races.lst:269) carries BONUS:VAR|SLA_CL|HD but no \
+             SPELLS: token at all"
+        );
+
+        let animated_object = book
+            .monster_resolve("Animated Object (Medium)")
+            .expect("Animated Object (Medium) is a registered monster in the bestiary chassis");
+        assert!(
+            !animated_object.has_spell_like_abilities,
+            "Animated Object (Medium)'s row (b1_races.lst:13) carries no SLA_CL token — it \
+             has no spell-like abilities"
+        );
     }
 }

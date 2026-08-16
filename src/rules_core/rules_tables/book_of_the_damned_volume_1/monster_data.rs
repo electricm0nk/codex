@@ -11,7 +11,7 @@
 //!   * `botd1_races.lst` -- 5 monster rows
 //!   * `botd1_abilities_race.lst` -- 36 monster-ability rows
 
-use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed};
+use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
 /// Every book_of_the_damned_volume_1 monster stat block (5 rows).
 pub(super) static MONSTERS: &[MonsterStatBlock] = &[
@@ -28,6 +28,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Claw", damage_dice: None }],
         ability_keys: &["Apostate Devil ~ Boundless Reach", "Apostate Devil ~ Evangelization", "Apostate Devil ~ Indomitable Oration", "Apostate Devil ~ Malleable Form", "Apostate Devil ~ Ohrwurm", "Apostate Devil ~ Spell-Like Abilities", "Apostate Devil ~ Summon Devil", "Apostate Devil ~ Wisdom Drain"],
         external_ability_refs: &["Flight Maneuverability", "Regeneration"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 18 }, StatAdjustment { ability: "DEX", amount: 20 }, StatAdjustment { ability: "CON", amount: 18 }, StatAdjustment { ability: "INT", amount: 10 }, StatAdjustment { ability: "WIS", amount: 14 }, StatAdjustment { ability: "CHA", amount: 18 }],
+        has_spell_like_abilities: false,
         source_file: "botd1_races.lst",
         source_line: 9,
     },
@@ -44,6 +46,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }, NaturalAttack { name: "Slam", damage_dice: None }],
         ability_keys: &["Heresy Devil ~ Blasphemous Bile", "Heresy Devil ~ Corpulence", "Heresy Devil ~ Devil Summoner", "Heresy Devil ~ Searing Word", "Heresy Devil ~ Spell-Like Abilities", "Heresy Devil ~ Summon Devil", "Heresy Devil ~ Throne of Skulls"],
         external_ability_refs: &["Fast Healing", "Flight Maneuverability"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 14 }, StatAdjustment { ability: "DEX", amount: -2 }, StatAdjustment { ability: "CON", amount: 14 }, StatAdjustment { ability: "INT", amount: 12 }, StatAdjustment { ability: "WIS", amount: 10 }, StatAdjustment { ability: "CHA", amount: 10 }],
+        has_spell_like_abilities: false,
         source_file: "botd1_races.lst",
         source_line: 10,
     },
@@ -60,6 +64,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[],
         ability_keys: &["Lesser Host Devil ~ Noxious Breath", "Lesser Host Devil ~ Shared Senses", "Lesser Host Devil ~ Spell-Like Abilities", "Lesser Host Devil ~ Summon Devil", "Lesser Host Devil ~ Superior Grappler", "Lesser Host Devil ~ Swarming"],
         external_ability_refs: &["Flight Maneuverability"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 4 }, StatAdjustment { ability: "INT", amount: -4 }, StatAdjustment { ability: "WIS", amount: -2 }, StatAdjustment { ability: "CHA", amount: -2 }],
+        has_spell_like_abilities: false,
         source_file: "botd1_races.lst",
         source_line: 11,
     },
@@ -76,6 +82,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Claw", damage_dice: Some("2d4") }],
         ability_keys: &["Greater Host Devil ~ Infernal Wound", "Greater Host Devil ~ Master Grappler", "Greater Host Devil ~ Noxious Breath", "Greater Host Devil ~ Rend", "Greater Host Devil ~ Shared Senses", "Greater Host Devil ~ Spell-Like Abilities", "Greater Host Devil ~ Summon Devil"],
         external_ability_refs: &["Flight Maneuverability"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "DEX", amount: 8 }, StatAdjustment { ability: "CON", amount: 6 }, StatAdjustment { ability: "WIS", amount: 2 }],
+        has_spell_like_abilities: false,
         source_file: "botd1_races.lst",
         source_line: 12,
     },
@@ -92,6 +100,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Leg", damage_dice: Some("1d8") }, NaturalAttack { name: "Claw", damage_dice: None }],
         ability_keys: &["Warmonger Devil ~ Construct Form", "Warmonger Devil ~ Hellstrider", "Warmonger Devil ~ Merciless Blow", "Warmonger Devil ~ Phalanx", "Warmonger Devil ~ Skills", "Warmonger Devil ~ Spell-Like Abilities", "Warmonger Devil ~ Stability", "Warmonger Devil ~ Summon Devil"],
         external_ability_refs: &["Warmonger Devil ~ Trample"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 10 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 8 }, StatAdjustment { ability: "INT", amount: 4 }, StatAdjustment { ability: "WIS", amount: 6 }, StatAdjustment { ability: "CHA", amount: 4 }],
+        has_spell_like_abilities: false,
         source_file: "botd1_races.lst",
         source_line: 13,
     },

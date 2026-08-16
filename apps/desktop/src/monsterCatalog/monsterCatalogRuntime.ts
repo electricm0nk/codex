@@ -37,6 +37,7 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       monsterClass: null,
       abilities: [],
       externalAbilityRefs: [],
+      spellLikeAbilityCasterLevel: null,
     },
     {
       key: 'beastiary1:monster:gnoll',
@@ -53,6 +54,7 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       monsterClass: null,
       abilities: [],
       externalAbilityRefs: [],
+      spellLikeAbilityCasterLevel: null,
     },
     {
       key: 'beastiary1:monster:wolf',
@@ -71,6 +73,7 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       monsterClass: null,
       abilities: [],
       externalAbilityRefs: [],
+      spellLikeAbilityCasterLevel: null,
     },
     {
       key: 'beastiary1:monster:shark',
@@ -89,6 +92,7 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       monsterClass: null,
       abilities: [],
       externalAbilityRefs: [],
+      spellLikeAbilityCasterLevel: null,
     },
     {
       key: 'beastiary1:monster:ankheg',
@@ -115,6 +119,7 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       monsterClass: null,
       abilities: [],
       externalAbilityRefs: [],
+      spellLikeAbilityCasterLevel: null,
     },
     {
       key: 'beastiary1:monster:gelatinous_cube',
@@ -133,6 +138,7 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       monsterClass: null,
       abilities: [],
       externalAbilityRefs: [],
+      spellLikeAbilityCasterLevel: null,
     },
     {
       // Bonus Bestiary's chassis + features, transcribed from
@@ -194,6 +200,9 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
         },
       ],
       externalAbilityRefs: ['Channel Resistance', 'Flight Maneuverability'],
+      // Allip's row carries no `BONUS:VAR|SLA_CL|` token -- its abilities
+      // above are Supernatural, not Spell-Like.
+      spellLikeAbilityCasterLevel: null,
     },
   ];
 }

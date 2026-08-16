@@ -498,6 +498,63 @@ def parse_size(row: list[str]) -> str | None:
     return None
 
 
+def parse_stat_adjustments(row: list[str]) -> list[tuple[str, int]]:
+    """`BONUS:STAT|DEX,WIS|4` -> [("DEX", 4), ("WIS", 4)].
+
+    Identical parse to `scripts/transcribe_companion_tables.py`'s function of
+    the same name -- the two chassis kinds carry the same PCGen token, and
+    `monster_chassis::StatAdjustment` (the Rust side) IS
+    `companion_chassis::StatAdjustment`, reused rather than duplicated
+    (SD31-E6-F1-002).
+
+    A multi-ability token is split into one record each, which is what PCGen
+    itself does with it. A token whose amount is not an integer literal (a
+    formula, e.g. `BONUS:STAT|STR|MutagenicMaulerMutagenStatBonus`) is
+    **skipped**, not guessed: this program has no formula interpreter
+    (`decisions.md §24`) and a wrong number in an ability column is worse than
+    an absent one. This is deliberately an ADJUSTMENT, never a final ability
+    score -- PCGen computes the real score at runtime from a base template
+    this ingest does not carry, so serving anything labelled "Strength" here
+    would be the quieter lie (`companion_chassis::StatAdjustment`'s own doc
+    comment, and `OPEN-ISSUES.md` row 26's structural finding: Demon (Balor)'s
+    `BONUS:STAT|STR|24` is a DELTA against a base this book's own row never
+    states).
+    """
+    out: list[tuple[str, int]] = []
+    for field in row:
+        if not field.startswith("BONUS:STAT|"):
+            continue
+        parts = field.split("|")
+        if len(parts) < 3:
+            continue
+        abilities = [a.strip() for a in parts[1].split(",") if a.strip()]
+        try:
+            amount = int(parts[2].strip())
+        except ValueError:
+            continue
+        for ability in abilities:
+            out.append((ability, amount))
+    return out
+
+
+def parse_has_spell_like_abilities(row: list[str]) -> bool:
+    """Whether the row carries a `BONUS:VAR|SLA_CL|<...>` token -- PCGen's
+    encoding of PF1's "Spell-Like Abilities" universal monster rule (caster
+    level = Hit Dice, or an arithmetic wrapper of it).
+
+    A presence check only (SD31-E6-F1-002, `OPEN-ISSUES.md` row 44), and
+    **not** the more general `SPELLS:` token: TDD red/green anchor --
+    Linnorm (Crag) (`b1_races.lst:269`) carries `BONUS:VAR|SLA_CL|HD` and its
+    spell-like effects (`True Seeing ~ Constant`) reach the row only through
+    an `ABILITY:` cross-reference, with NO `SPELLS:` token anywhere on the
+    line at all; gating on `SPELLS:` would have wrongly answered `False` for
+    one of this seam's own 7 already-committed fixtures. Every one of those 7
+    fixtures' `corpus_field` is exactly `BONUS:VAR|SLA_CL|HD`, which is the
+    signal this function keys on.
+    """
+    return any("BONUS:VAR|SLA_CL|" in field for field in row)
+
+
 def parse_special_ability_refs(row: list[str]) -> list[str]:
     """Keys named by the row's `ABILITY:Special Ability|AUTOMATIC|…` tokens."""
     refs: list[str] = []
@@ -1305,7 +1362,7 @@ def transcribe(book: str) -> str:
     out.append(
         "use crate::rules_core::rules_tables::monster_chassis::{"
         "MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, "
-        "NaturalAttack, Speed};"
+        "NaturalAttack, Speed, StatAdjustment};"
     )
     out.append("")
     out.append(f"/// Every {book} monster stat block ({len(monsters)} rows).")
@@ -1315,6 +1372,8 @@ def transcribe(book: str) -> str:
         row = monster_rows[key]
         speeds = parse_speeds(row)
         attacks = parse_natural_attacks(row)
+        stat_adjustments = parse_stat_adjustments(row)
+        has_spell_like_abilities = parse_has_spell_like_abilities(row)
         out.append("    MonsterStatBlock {")
         out.append(f"        key: {rust_str(key)},")
         out.append(f"        name: {rust_str(unit['name'])},")
@@ -1343,6 +1402,17 @@ def transcribe(book: str) -> str:
             f"        ability_keys: {rust_slice(monster_ability_keys[key])},"
         )
         out.append(f"        external_ability_refs: {rust_slice(external[key])},")
+        out.append(
+            "        stat_adjustments: &["
+            + ", ".join(
+                f"StatAdjustment {{ ability: {rust_str(a)}, amount: {v} }}"
+                for a, v in stat_adjustments
+            )
+            + "],"
+        )
+        out.append(
+            f"        has_spell_like_abilities: {'true' if has_spell_like_abilities else 'false'},"
+        )
         out.append(f"        source_file: {rust_str(unit['source_file'])},")
         out.append(f"        source_line: {unit['source_line']},")
         out.append("    },")

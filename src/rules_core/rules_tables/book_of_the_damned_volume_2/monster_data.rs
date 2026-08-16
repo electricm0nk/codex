@@ -11,7 +11,7 @@
 //!   * `botd2_races.lst` -- 4 monster rows
 //!   * `botd2_abilities_race.lst` -- 17 monster-ability rows
 
-use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed};
+use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
 /// Every book_of_the_damned_volume_2 monster stat block (4 rows).
 pub(super) static MONSTERS: &[MonsterStatBlock] = &[
@@ -28,6 +28,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite (Primary)", damage_dice: Some("1d6") }, NaturalAttack { name: "Bite (with weapon attack)", damage_dice: Some("1d6") }],
         ability_keys: &["Vermlek ~ Abandon Flesh", "Vermlek ~ Flesh Armor", "Vermlek ~ Inhabit Body", "Vermlek ~ Negative Energy Affinity"],
         external_ability_refs: &["Scent"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 4 }, StatAdjustment { ability: "CON", amount: 4 }, StatAdjustment { ability: "DEX", amount: -2 }, StatAdjustment { ability: "INT", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: 2 }],
+        has_spell_like_abilities: true,
         source_file: "botd2_races.lst",
         source_line: 7,
     },
@@ -44,6 +46,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Hoof", damage_dice: Some("1d3") }],
         ability_keys: &["Brimorak ~ Boiling Blood", "Brimorak ~ Breath Weapon", "Brimorak ~ Burning Hooves", "Brimorak ~ Flaming Weapon", "Brimorak ~ Smoke Breath"],
         external_ability_refs: &[],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 6 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 8 }, StatAdjustment { ability: "INT", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: 4 }],
+        has_spell_like_abilities: true,
         source_file: "botd2_races.lst",
         source_line: 8,
     },
@@ -60,6 +64,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Claw (Primary)", damage_dice: Some("1d6") }, NaturalAttack { name: "Claw (with weapon attack)", damage_dice: Some("1d6") }, NaturalAttack { name: "Gore (primary)", damage_dice: Some("2d6") }, NaturalAttack { name: "Gore (with weapon attack)", damage_dice: Some("2d6") }],
         ability_keys: &["Seraptis ~ Bloodless", "Seraptis ~ Compelling Domination", "Seraptis ~ Gaze of Despair", "Seraptis ~ Grab", "Seraptis ~ Ravenous Embrace"],
         external_ability_refs: &["Deathwatch ~ Constant", "True Seeing ~ Constant", "Unholy Aura ~ Constant"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 12 }, StatAdjustment { ability: "DEX", amount: 12 }, StatAdjustment { ability: "CON", amount: 18 }, StatAdjustment { ability: "INT", amount: 6 }, StatAdjustment { ability: "WIS", amount: 8 }, StatAdjustment { ability: "CHA", amount: 10 }],
+        has_spell_like_abilities: true,
         source_file: "botd2_races.lst",
         source_line: 9,
     },
@@ -76,6 +82,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("3d6") }, NaturalAttack { name: "Claw", damage_dice: Some("1d8") }, NaturalAttack { name: "Tail Slap", damage_dice: Some("2d8") }],
         ability_keys: &["Vavakia ~ Breath Weapon", "Vavakia ~ Smoking Wound", "Vavakia ~ Stun"],
         external_ability_refs: &["Frightful Presence", "Immunity to Fire", "Trample", "True Seeing ~ Constant", "Unholy Aura ~ Constant"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 22 }, StatAdjustment { ability: "CON", amount: 22 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "INT", amount: 8 }, StatAdjustment { ability: "WIS", amount: 10 }, StatAdjustment { ability: "CHA", amount: 12 }],
+        has_spell_like_abilities: true,
         source_file: "botd2_races.lst",
         source_line: 10,
     },

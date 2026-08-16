@@ -1166,6 +1166,13 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             "natural_attacks": block.natural_attacks.iter().map(|a| serde_json::json!({ "name": a.name, "damage_dice": a.damage_dice })).collect::<Vec<_>>(),
             "ability_keys": block.ability_keys.iter().map(|k| format!("{book_id}:monster_ability:{}", slugify(k))).collect::<Vec<_>>(),
             "external_ability_refs": block.external_ability_refs,
+            // SD31-E6-F1-002: the same `{ability, amount}` shape the
+            // companion generator already emits for `stat_adjustments`
+            // below (search this file for `"stat_adjustments"` on a
+            // `CompanionRecord` for the precedent) -- a delta against a base
+            // this ingest does not carry, never a final ability score.
+            "stat_adjustments": block.stat_adjustments.iter().map(|a| serde_json::json!({ "ability": a.ability, "amount": a.amount })).collect::<Vec<_>>(),
+            "has_spell_like_abilities": block.has_spell_like_abilities,
         });
         pi_hits.extend(monster_record_pi_hits(block.key, &data.to_string()));
         let source = CorpusSource::LstToken {
