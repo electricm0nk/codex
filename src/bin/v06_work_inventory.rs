@@ -1856,7 +1856,7 @@ fn enumerate_book(book_dir: &Path, book: &str) -> BookEnumeration {
 // `mod_base_name` stays local: it is also the `mod_only_rescue` path's own
 // base-name resolver, imported by name below.
 use codex::rules_core::wiring_class::{
-    CorpusLines, build_mod_index, mod_base_name, token_closure_rows,
+    CorpusLines, build_copy_base_index, build_mod_index, mod_base_name, token_closure_rows,
 };
 
 // ---------------------------------------------------------------------------
@@ -6454,8 +6454,12 @@ fn main() {
 
     // --- wiring_class (GE-01) -----------------------------------------------
     // Built once, corpus-wide: the token closure index and a raw-line cache
-    // shared by every unit's determination.
+    // shared by every unit's determination. `copy_base_index` closes the
+    // GAMED gap wave-8 adversarial review confirmed (SD31-W8-INTEGRATE-001):
+    // `.COPY=` rows carrying a real inherited `BONUS:` chain used to
+    // classify on their own (magnitude-free) text alone.
     let mod_index = build_mod_index(&book_paths);
+    let copy_base_index = build_copy_base_index(&book_paths);
     let mut corpus_lines = CorpusLines::new(&book_paths);
 
     // --- id uniqueness ------------------------------------------------------
@@ -6502,6 +6506,7 @@ fn main() {
             let rows = token_closure_rows(
                 &mut corpus_lines,
                 &mod_index,
+                &copy_base_index,
                 &unit.source_book,
                 &unit.provenance.file,
                 unit.provenance.line,
@@ -7140,6 +7145,7 @@ mod wiring_class_wiring_tests {
         book_paths.insert("test_book".to_string(), book.root.clone());
 
         let mod_index = build_mod_index(&book_paths);
+        let copy_base_index = build_copy_base_index(&book_paths);
         let mut lines = CorpusLines::new(&book_paths);
         let unit = CorpusUnit {
             book: "test_book".to_string(),
@@ -7157,6 +7163,7 @@ mod wiring_class_wiring_tests {
         let rows = token_closure_rows(
             &mut lines,
             &mod_index,
+            &copy_base_index,
             &unit.book,
             &unit.provenance.file,
             unit.provenance.line,
@@ -7173,6 +7180,113 @@ mod wiring_class_wiring_tests {
         assert!(sigs.iter().any(|s| s.starts_with("derived:")));
     }
 
+    /// SD31-W8-INTEGRATE-001: the GAMED-verdict fix. A `.COPY=` row with no
+    /// magnitude token of its own must classify by its inherited BASE row's
+    /// real `BONUS:` chain, the same way a `.MOD` row already does above --
+    /// not stay `display` on the strength of its own (magnitude-free) text
+    /// alone, which is exactly the shape wave-8 adversarial review found
+    /// 109 real `equipment_modifier` `done` credits riding on
+    /// (`mithral_armr_lt`'s `-3` ArmorCheckPenalty / `+2` MaxDex / `-10%`
+    /// SpellFailure chain, cited verbatim in the review's own worked case).
+    #[test]
+    fn token_closure_rows_resolves_a_copy_row_s_inherited_base_row() {
+        let book = ScratchBook::new("copyclosure");
+        // The REAL shipped shape this fix targets, byte-for-byte from the
+        // pinned oracle (`cr_equipmods.lst:102`/`:538`, cited verbatim in
+        // wave-8 adversarial review's worked case), field-count-trimmed for
+        // readability: the base row's field 0 is `Mithral`, its `KEY:`
+        // field is the identity `.COPY=` references ("Material ~ Mithril ~
+        // Armor / Light"), and it carries a real `PRETYPE:` guard plus a
+        // real `BONUS:` chain. The `.COPY=` row's field 0 is
+        // `<that same KEY identity>.COPY=MITHRAL_ARMR_LT` -- MITHRAL_ARMR_LT
+        // is the NEW record's own name (what the ingested unit's
+        // `key`/`name` become), not the base's.
+        book.write(
+            "cr_equipmods.lst",
+            "Mithral\tKEY:Material ~ Mithril ~ Armor / Light\tPRETYPE:1,Light\tBONUS:EQMARMOR|ACCHECK|3\n\
+             Material ~ Mithril ~ Armor / Light.COPY=MITHRAL_ARMR_LT\tSPROP:mithral\n",
+        );
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert("test_book".to_string(), book.root.clone());
+
+        let mod_index = build_mod_index(&book_paths);
+        let copy_base_index = build_copy_base_index(&book_paths);
+        let mut lines = CorpusLines::new(&book_paths);
+        let unit = CorpusUnit {
+            book: "test_book".to_string(),
+            source_book: "test_book".to_string(),
+            kind: Kind::EquipmentModifier,
+            key: "MITHRAL_ARMR_LT".to_string(),
+            name: "MITHRAL_ARMR_LT".to_string(),
+            origin: Origin::Declared,
+            // The `.COPY=` row is the SECOND line in the file.
+            provenance: Provenance { file: "cr_equipmods.lst".to_string(), line: 2 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        };
+
+        let rows = token_closure_rows(
+            &mut lines,
+            &mod_index,
+            &copy_base_index,
+            &unit.book,
+            &unit.provenance.file,
+            unit.provenance.line,
+            &unit.name,
+            &unit.key,
+        );
+        assert_eq!(rows.len(), 2, "the .COPY= row plus its resolved base row");
+        let row_refs: Vec<Option<&str>> = rows.iter().map(|r| r.as_deref()).collect();
+        let (class, _, sigs) = wiring_class::determine_closure(&row_refs);
+        // The .COPY= row alone (no magnitude token, just SPROP: prose)
+        // would be `display`; the resolved base row's `BONUS:` promotes
+        // the unit to `computed` -- proves the closure genuinely follows
+        // .COPY= the same way it already follows .MOD.
+        assert_eq!(class, wiring_class::WiringClass::Computed);
+        assert!(sigs.iter().any(|s| s.starts_with("computed:")));
+    }
+
+    /// A `.COPY=` row whose declared base identity has no plain declaration
+    /// anywhere in the book must NOT fabricate a base row -- the closure
+    /// stays exactly the `.COPY=` row alone, same as before this fix, for
+    /// the population this fix must never touch.
+    #[test]
+    fn token_closure_rows_leaves_an_unresolvable_copy_row_alone() {
+        let book = ScratchBook::new("copyclosure_unresolved");
+        book.write("cr_equipmods.lst", "Nonexistent Base.COPY=Orphan\tSPROP:orphaned\n");
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert("test_book".to_string(), book.root.clone());
+
+        let mod_index = build_mod_index(&book_paths);
+        let copy_base_index = build_copy_base_index(&book_paths);
+        let mut lines = CorpusLines::new(&book_paths);
+        let unit = CorpusUnit {
+            book: "test_book".to_string(),
+            source_book: "test_book".to_string(),
+            kind: Kind::EquipmentModifier,
+            key: "Orphan".to_string(),
+            name: "Orphan".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "cr_equipmods.lst".to_string(), line: 1 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        };
+
+        let rows = token_closure_rows(
+            &mut lines,
+            &mod_index,
+            &copy_base_index,
+            &unit.book,
+            &unit.provenance.file,
+            unit.provenance.line,
+            &unit.name,
+            &unit.key,
+        );
+        assert_eq!(rows.len(), 1, "no base row exists to resolve to -- never fabricated");
+    }
+
     #[test]
     fn token_closure_rows_is_none_for_a_line_past_end_of_file() {
         let book = ScratchBook::new("nolinerow");
@@ -7180,6 +7294,7 @@ mod wiring_class_wiring_tests {
         let mut book_paths = BTreeMap::new();
         book_paths.insert("test_book".to_string(), book.root.clone());
         let mod_index: BTreeMap<(String, String), Vec<String>> = BTreeMap::new();
+        let copy_base_index: BTreeMap<(String, String), String> = BTreeMap::new();
         let mut lines = CorpusLines::new(&book_paths);
         let unit = CorpusUnit {
             book: "test_book".to_string(),
@@ -7197,6 +7312,7 @@ mod wiring_class_wiring_tests {
         let rows = token_closure_rows(
             &mut lines,
             &mod_index,
+            &copy_base_index,
             &unit.book,
             &unit.provenance.file,
             unit.provenance.line,

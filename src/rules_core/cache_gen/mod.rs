@@ -21,7 +21,7 @@ use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
 use crate::rules_core::wiring_class::{
-    CorpusLines, build_mod_index, determine_closure, token_closure_rows,
+    CorpusLines, build_copy_base_index, build_mod_index, determine_closure, token_closure_rows,
 };
 
 /// GE-01 `wiring_class` support shared by every per-book generator: builds
@@ -35,6 +35,7 @@ pub struct WiringClassIndex {
     book_id: String,
     book_paths: BTreeMap<String, PathBuf>,
     mod_index: BTreeMap<(String, String), Vec<String>>,
+    copy_base_index: BTreeMap<(String, String), String>,
 }
 
 impl WiringClassIndex {
@@ -45,7 +46,8 @@ impl WiringClassIndex {
         let mut book_paths = BTreeMap::new();
         book_paths.insert(book_id.to_string(), book_dir.to_path_buf());
         let mod_index = build_mod_index(&book_paths);
-        WiringClassIndex { book_id: book_id.to_string(), book_paths, mod_index }
+        let copy_base_index = build_copy_base_index(&book_paths);
+        WiringClassIndex { book_id: book_id.to_string(), book_paths, mod_index, copy_base_index }
     }
 
     /// A fresh raw-line reader borrowing this index's book-path table.
@@ -76,8 +78,16 @@ impl WiringClassIndex {
         name: &str,
         key: &str,
     ) -> (String, Vec<String>) {
-        let rows =
-            token_closure_rows(lines, &self.mod_index, &self.book_id, file, line as usize, name, key);
+        let rows = token_closure_rows(
+            lines,
+            &self.mod_index,
+            &self.copy_base_index,
+            &self.book_id,
+            file,
+            line as usize,
+            name,
+            key,
+        );
         let row_refs: Vec<Option<&str>> = rows.iter().map(|r| r.as_deref()).collect();
         let (class, _reason, sigs) = determine_closure(&row_refs);
         let mut signals: Vec<String> = sigs.into_iter().collect();

@@ -1084,19 +1084,103 @@ impl<'a> CorpusLines<'a> {
     }
 }
 
-/// The full token closure for one record: its base corpus row plus every
-/// `.MOD` row targeting its name or corpus key, as owned strings ready to
-/// pass (via `.iter().map(|r| r.as_deref())`) to [`determine_closure`].
+/// The identity a `.COPY=<name>` row's first tab-separated field names as
+/// its base — the string before `.COPY=`. `None` for a plain row. This is
+/// the SAME split `gen_equipment_gap_tables.rs`'s own inheritance walk and
+/// `corpus_literal_sweep.rs`'s `copy_base_identity`/`copy_base_row` use for
+/// the identical relationship — wave-8 adversarial review (SD31-W8-
+/// INTEGRATE-001, confirmed GAMED verdict) found this was the ONE call site
+/// among those that still had no `.COPY=` awareness at all: `equipment_
+/// modifier`'s `.COPY=` rows carried real inherited `BONUS:` chains that
+/// the generator, the sweep and the raw-token enricher all resolved, but
+/// this classifier read only the `.COPY=` row's own (magnitude-free) text
+/// and stamped `wiring_class: display` on units whose shipped
+/// `raw_bonus_chains` already proved them magnitude-bearing.
+pub fn copy_base_identity(row: &str) -> Option<&str> {
+    let first = row.split('\t').next().unwrap_or("");
+    first.split_once(".COPY=").map(|(base, _)| base)
+}
+
+/// `(book, base identity a `.COPY=` row names) -> the PLAIN (non-`.COPY=`)
+/// row that declares it`, built once over every `.lst` file in every known
+/// book directory — the same shape as [`build_mod_index`], and resolved by
+/// the identical `KEY:`-token-or-bare-name rule `corpus_literal_sweep.rs`'s
+/// `Sweep::copy_base_row` and `gen_equipment_gap_tables.rs`'s own
+/// inheritance walk both already use for this relationship, so all of them
+/// (and now this classifier) agree on what "the base" means for the same
+/// corpus row. At most one hop: a `.COPY=` row is never itself matched as
+/// someone else's base (mirrors the generator's own "at most one hop"
+/// rule), so a chain of `.COPY=` rows resolves only its own immediate
+/// declared base, never transitively.
+pub fn build_copy_base_index(
+    book_paths: &BTreeMap<String, PathBuf>,
+) -> BTreeMap<(String, String), String> {
+    let mut index: BTreeMap<(String, String), String> = BTreeMap::new();
+    for (book, dir) in book_paths {
+        let mut stack = vec![dir.clone()];
+        let mut files: Vec<PathBuf> = Vec::new();
+        while let Some(d) = stack.pop() {
+            let Ok(entries) = std::fs::read_dir(&d) else { continue };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    stack.push(path);
+                } else if path.extension().and_then(|e| e.to_str()) == Some("lst") {
+                    files.push(path);
+                }
+            }
+        }
+        // Sorted for the same determinism reason `build_mod_index` sorts:
+        // `read_dir` order is stable only for one directory on one
+        // machine, and a first-plain-declaration-wins policy needs a
+        // stable "first" to be meaningful.
+        files.sort();
+        for path in files {
+            let Ok(text) = std::fs::read_to_string(&path) else { continue };
+            for raw in text.split('\n') {
+                let trimmed = raw.trim_end_matches(['\r']);
+                let first_field = trimmed.split('\t').next().unwrap_or("").trim();
+                if first_field.is_empty() || first_field.contains(".COPY=") {
+                    continue;
+                }
+                let key_token =
+                    trimmed.split('\t').find_map(|f| f.trim().strip_prefix("KEY:"));
+                let identity = key_token.unwrap_or(first_field);
+                index
+                    .entry((book.clone(), identity.to_string()))
+                    .or_insert_with(|| trimmed.to_string());
+            }
+        }
+    }
+    index
+}
+
+/// The full token closure for one record: its base corpus row, the plain
+/// base row a `.COPY=` row inherits from (if any — see
+/// [`build_copy_base_index`]), and every `.MOD` row targeting its name or
+/// corpus key — as owned strings ready to pass (via
+/// `.iter().map(|r| r.as_deref())`) to [`determine_closure`].
 pub fn token_closure_rows(
     lines: &mut CorpusLines,
     mod_index: &BTreeMap<(String, String), Vec<String>>,
+    copy_base_index: &BTreeMap<(String, String), String>,
     book: &str,
     file: &str,
     line: usize,
     name: &str,
     key: &str,
 ) -> Vec<Option<String>> {
-    let mut rows = vec![lines.line(book, file, line)];
+    let base_row = lines.line(book, file, line);
+    let mut rows = vec![base_row.clone()];
+    if let Some(row) = base_row.as_deref() {
+        if let Some(base_identity) = copy_base_identity(row) {
+            if let Some(copy_base_row) =
+                copy_base_index.get(&(book.to_string(), base_identity.to_string()))
+            {
+                rows.push(Some(copy_base_row.clone()));
+            }
+        }
+    }
     let mut seen_names: BTreeSet<&str> = BTreeSet::new();
     for n in [name, key] {
         if !seen_names.insert(n) {
