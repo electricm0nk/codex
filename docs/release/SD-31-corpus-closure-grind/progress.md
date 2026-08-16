@@ -13010,3 +13010,429 @@ item 3 satisfied.
   (16 hand-transcribed rows, real descriptions, PI-screened) while serving zero of its intended
   population; the "0 not-ingested" figure is what surfaced the wrong-host bug, not a code read.
 
+
+
+## Cycle `SD31-W7-INTEGRATE-001` (`RETRO_ACTOR=sd31-w7-integrate`) — 2026-08-16, wave 7 integration
+
+**Role:** `sd31-w7-integrate`, sole writer on the primary checkout (`/home/ubuntu/workspace/repos/codex`,
+branch `tranche/11`). Every sibling lane had finished before this cycle started.
+
+**HEAD at start:** `e4e846f72ba8393f7870491fc1a558707c58dc94` (`feat(site): version the dashboard feed and
+viewer under site/dashboard/`) — descends from `tranche/11`'s tip; `docs/release/
+SD-31-corpus-closure-grind/loop-instruction.md` present. Tree was NOT clean at start: 13 untracked
+files (verify logs, audit JSON, retro event files) left by prior lanes, none created or touched by
+this cycle — left alone per git discipline (never remove files another agent left untracked).
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS.
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+
+### §1 — Five branches merged, in the mandated order
+
+Verified content-present per branch before merging (`git log --oneline origin/tranche/11..<branch>`,
+all non-empty; SHAs matched the dispatch exactly):
+
+| lane | branch | tip | commits ahead |
+|---|---|---|---:|
+| dissolution | `sd31/dissolve-core-essentials` | `3f56d3e54` | 3 |
+| register | `sd31/d10-supersession-register` | `9c35c67a3` | 1 |
+| class wiring | `sd31/classwire3-e4f1-003` | `26e3d31b7` | 1 |
+| spell+racetrait | `sd31-spell-racetrait-e6-f2-005` | `f012136667` | 3 |
+| feat+equip+class | `sd31/feat-equip-class-e6-f8-001` | `40e3a1916` | 1 |
+
+The class_feature prose surface lane (`SD31-D7-PROSE-003`) was already present at HEAD, verified by
+content grep (`CLASS_FEATURE_FLAT_MAGNITUDE_PENDING_RULING`/`COMPANION_FLAT_MAGNITUDE_PENDING_RULING`
+present in `v06_work_inventory.rs` before any merge started) rather than merged.
+
+Every merge conflict in `OPEN-ISSUES.md`/`progress.md` resolved by the extract-and-splice method
+(keep HEAD's block, append the branch's own new block immediately after, matching the ordering prior
+integration cycles established), then renumbered by exact row number:
+
+- dissolution: OPEN-ISSUES rows 110-112 → renumbered 112-114 (D7-PROSE-003 kept 110-111).
+- register: rows 110-111 → renumbered 115-116.
+- classwire3: rows 110-111 → renumbered 117-118.
+- spell+racetrait: rows 110-113 → renumbered 119-122.
+- feat+equip+class: auto-merged clean (no conflict flagged) but landed at rows 110-111 anyway
+  (inserted mid-file by the 3-way merge) — caught by an explicit post-merge duplicate-number sweep,
+  not by a conflict marker, and renumbered 123-124. **This is exactly the "wave 5 found a collision a
+  clean auto-merge had hidden" hazard the mandate names** — checked for by number on every single
+  merge, not only where git flagged a conflict.
+
+`scripts/verify.sh` conflicted once (spell+racetrait merge, `scripts/verify-baselines.env`): both
+sides raised the same four floors from different pre-merge bases in the same wave
+(`BASELINE_ROOT_LIB_TESTS`/`ROOT_FULL_TESTS`/`ROOT_TEST_BINARIES`/`DESKTOP_TESTS`). Resolved by taking
+the elementwise MAX of the two conflicting measurements as an interim safe floor (a floor check never
+fails on `actual > baseline`, only `actual < baseline`), with this cycle's own full-gate run
+superseding both with the true measured actuals — see §5.
+
+`reach_gate.rs`'s additive `OPEN_FINDINGS`/`UNREACHED_RECORD_FINDINGS` lists (classwire3) and
+`cache_gen/mod.rs` (untouched this wave — no lane wrote a new cache-gen module) checked for duplicate
+registrations post-merge: none found. No branch committed `docs/work-inventory.json`
+(`git log --oneline b8c36417d..<tip> -- docs/work-inventory.json` empty for all five). Content
+presence proven by direct symbol grep per lane: `resolve_true_book_for_core_essentials` (5 hits),
+`SUPERSESSION-REGISTER.json` (117 objects pre-fix), `class_ninja` (3 hits in
+`rules_tables/ultimate_combat/mod.rs`), 144 new `data/corpus/occult_adventures/spell/*.json` files,
+`RuleSetId::Ce` (4 hits in `feats_all.rs`).
+
+### §2 — Confirmed findings: fixed in precedence order
+
+Three Opus adversarial reviewers attacked this wave's five branches. Gaming verdicts: **NOT GAMED on
+every target, on every axis** — re-verified independently rather than trusted:
+`git diff b8c36417d..HEAD -- src scripts apps | grep -nE '#\[ignore\]|\.skip\(|todo!|unimplemented!|assert!\(true'`
+is EMPTY. `EXCLUDED_BOOKS` byte-identical to `{"beginner_box"}` throughout. `pf1e_dashboard_producer.
+doneness_verdict` untouched by any of the five branches (only this cycle's own two done-bar
+corrections touch `v06_work_inventory.rs`'s promotion GATES, never the verdict TABLE).
+
+**Order of precedence, followed exactly:**
+
+**1. PI findings (fixed first, commit `7c0398f9a`).** Both confirmed gaps closed:
+`enrich_spell_raw_tokens.rs` now runs both SD-30 contracts (52.3 blacklist + 53.5 declared-PI) per
+raw_tokens field, hard-stopping on a NAMEISPI:YES row before any write; `gen_feat_gap_tables.rs` now
+also reads 53.5's declared-PI reader per row (previously only 52.3, over the whole generated file).
+7 new/updated tests, TDD, mutation-proven (temporarily disabling each new redact branch produced a
+real red). Independently re-verified: 0 exposure before OR after — the gap was in the guard, not in
+any record that had shipped. `declared_pi_shipping_audit`: CLEAN.
+
+**2. Denominator findings (fixed, commit `247b32dba`).** The Supersession Register's gate could not
+detect a fabricated entry (dead oracle re-derivation — the `raw_lines` cache fallback was the ONLY
+path ever taken, because no shipped entry carried `source_file`/`source_line`) and carried one bad
+entry (`companion` corpus_key `"1"`, a PCGen level-number continuation row mistaken for an object).
+Both fixed: `supersession_register_build.py` now emits `source_file`/`source_line` on every side; the
+gate's refusal-1 branch no longer falls back to the cache at all (a missing citation or unresolvable
+oracle line is now a hard violation); `FileFinder.BOOK_DIRS` synced to the builder's full 38-book
+table; a new bare-integer-`corpus_key` guard closes the `"1"` shape at both the builder and the gate.
+Re-ran the review's own three fabrication mutations (nonsense `raw_lines` both sides; emptied
+`raw_lines`; a wholly invented entry with `evidence:"trust me"`) — **all three now exit 1**, where the
+pre-fix gate exited 0 on all three. 5 new self-test cases (16 total); 2 pre-existing tests had a
+latent fixture bug exposed and fixed in the same pass. Regenerated register: 117→116 objects,
+`count_removed` 135→134. Gate re-run against the real, fixed register: `116 objects checked … OK`,
+exit 0 — genuinely proven, not merely reported. **Deliberately NOT wired into the live denominator
+this cycle** — see §6 and `followups`.
+
+**3. GAMED verdicts / prose-rung-or-relabel findings.** None applied at this precedence level (no
+GAMED verdict landed against any of the five branches) — but the ADJACENT unearned-credit finding
+against `SD31-D7-PROSE-003`'s own prior-wave work (already on `tranche/11` before this wave's merges,
+found by the wave-6/7 review boundary) is the same shape and fixed here for the same reason it would
+be fixed first: `advanced_class_guide:class_feature:bloodrager_indomitable_will` and
+`core_rulebook:class_feature:ranger_improved_quarry` were promoted despite stating a real flat +4
+bonus, while a near-identical sibling was correctly excluded in the SAME commit. Fixed (commit
+`8a3ad0cb0`): both added to `CLASS_FEATURE_FLAT_MAGNITUDE_PENDING_RULING`.
+
+**4. Everything else CONFIRMED, TDD, smallest change:**
+
+- `SD31-E6-F8-001`'s 11 banked `ce_feats.lst` units without a discharged PROXY WARNING — hand-checked
+  all 11 against their whole corpus rows (byte-exact DESC+BENEFIT from the pinned oracle): 7 state a
+  real flat magnitude (Ability Focus +2 DC; Awesome Blow 10 ft/1d6; Empower Spell-Like Ability x2
+  +50%; Hover 5 distinct distances + 2 miss-chance percentages; Snatch 1d6 x 10 ft; Wingover 2 angle
+  values + 2 DCs + 2 distances), 4 genuinely do not (Craft Construct, Flyby Attack, Quicken
+  Spell-Like Ability x2 — a per-gp crafting formula and a "times per day" resource count, the same
+  shape this program already treats as compatible with "nothing to compute"). New
+  `FEAT_FLAT_MAGNITUDE_PENDING_RULING` const, same gate shape as the sibling consts, fixed in the SAME
+  commit as the class_feature correction above (`8a3ad0cb0`).
+- `SD31-E6-F8-001`'s missing `VERIFY_EXIT` and missing DoD-8 — discharged by this integration cycle's
+  own full-gate run (§5) and on-screen verification (§7) at the merged tip, rather than re-running the
+  branch in isolation (which no longer exists as an independent unit once merged).
+- `corpus_literal_sweep`'s systemic string-field coverage gap (verifies `raw_tokens`/`cost_gp`/
+  `weight_lbs`, never `description`/`school`/`level`) — confirmed real and reproducible (2,186 of
+  16,817 records ship a `description` that is NOT byte-identical to their own `DESC` raw_token, while
+  the sweep reports CLEAN), confirmed scoped (the sibling numeric extension CAN fail, positive
+  control still passes) — **not fixed this cycle** (explicitly named a non-blocker by the review; this
+  wave's own 660 new spell records were hand-verified against the oracle instead). Logged
+  `OPEN-ISSUES.md` row 128 with the exact remedy.
+
+**REFUTED findings correctly left unactioned** (both review passes' full reports): the class_feature
+render surface is a genuine new render path, not a relabel; DoD-8 screenshots byte-match their corpus
+rows modulo the approved `%N`-drop; the `(class_slug, feature_slug)` frontend join has a latent
+boundary hazard (0 live mis-joins today, flagged for a future test, not fixed here — out of this
+cycle's file territory, frontend); Unchained/Mythic content was never treated as superseding its base
+twin by any of the five branches; the `ninja`/`gunslinger` DoD-8 gaps are genuinely structural
+(`CLASS_OPTIONS` has no entry), not skipped.
+
+6 retro correction events emitted this cycle, each `--verified-by` (see `docs/retro/events/
+sd31-w7-integrate.jsonl`).
+
+### §3 — The one guarded regen
+
+`export CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w7-integrate-regen` (a second, scratch
+target dir for THIS cycle's own parallel measurement work while the full gate ran under
+`sd31-w7-integrate` — same agent, same tree, avoiding lock contention with the live gate rather than
+sharing one dir for two concurrent cargo invocations).
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-w7-integrate.json
+# -> 24519 records examined of 25396 read, 237721 tokens compared, 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-w7-integrate.json
+# -> 100 of 101 covered units cleared; 1 pre-existing failure
+#    (advanced_players_guide:equipment:spindle_of_perfect_knowledge, OPEN-ISSUES.md row 67,
+#    unrelated to this wave, FIXTURE_EXIT=0)
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-w7-integrate.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-w7-integrate.json \
+  cargo run --locked --bin v06_work_inventory
+```
+
+**First run refused**: "this run would drop 46 of the 5411 verification stamp(s)". Traced ONE record
+deep before overriding, per the DoD requirement — `core_essentials:companion:bat` (`book: "bestiary"`,
+`status: literal-verified` in the pre-merge committed inventory) carried a STALE `core_essentials:`
+id prefix despite its `book` field already being correctly re-attributed. This wave's merged D9-
+dissolve fix (`resolve_true_book_for_core_essentials` now source-line-aware) is now ALSO consistently
+applied through `unit_id()`'s own minting, so the id changes to `bestiary:companion:bat` — same
+record, same `literal-verified` status, different id. Verified for ALL 46, not sampled: every one has
+a matching `(source_file, source_line, name, status)` pair under its new id in the fresh inventory —
+0 unexplained. Net effect corpus-wide: `core_essentials:`-prefixed ids fell **1,610 → 128**, closing
+Decision 9's own named residual issue ("ids still carry a stale core_essentials: prefix even where
+book has been repaired") as a side effect. Proceeded with `--allow-stamp-loss` on that basis.
+
+**Second run**: zero further stamp loss (no `--allow-stamp-loss` needed). **Third run** (this cycle's
+own re-verification, not skipped): unit-for-unit byte-identical to the second, only `generated_at`
+differs — regen is stable.
+
+**Board, re-derived with the producer's own verdict function** (`docs/observer/pf1e_dashboard_producer.
+py`'s `doneness_verdict`, never re-implemented):
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))
+"
+# -> 38521 {'done': 9780, 'not-started': 19900, 'unmeasurable': 5127, 'deferred': 36,
+#           'held': 2912, 'in-progress': 766} 25.3887
+```
+
+**Board: 38,521 units (unchanged), done 9,488 → 9,780 (+292), 24.6307% → 25.3887%.**
+
+Per-id diff against the pre-merge committed inventory (joined on `(source_file, source_line, kind,
+name)`, immune to the id-rename above): **zero units regressed off `done`**. +292 breaks down exactly
+as this wave's five lanes plus this cycle's own two done-bar corrections predict:
+
+| kind | promoted to `done` |
+|---|---:|
+| companion | 165 |
+| spell | 93 |
+| class_feature | 30 |
+| feat | 4 |
+
+`class_feature`'s 30 = `SD31-D7-PROSE-003`'s own claimed 32, minus the 2 this cycle additionally
+excluded (§2). `feat`'s 4 = `SD31-E6-F8-001`'s own claimed 11, minus the 7 this cycle excluded
+pending the flat-magnitude ruling (§2). Both cross-checks land exactly on the predicted number —
+independent confirmation the promotion-gate fixes took effect precisely where intended and nowhere
+else.
+
+Per-kind snapshot at this tip (in-scope units only):
+
+| kind | done | held | in-progress | not-started | unmeasurable | deferred |
+|---|---:|---:|---:|---:|---:|---:|
+| class | 27 | — | — | 158 | — | — |
+| class_feature | 69 | 48 | — | 11,404 | 3,917 | 34 |
+| companion | 680 | 242 | — | 774 | — | — |
+| equipment | 4,513 | 410 | 192 | 962 | 131 | — |
+| equipment_modifier | 228 | 17 | 417 | 228 | 690 | — |
+| feat | 1,169 | 91 | 1 | 958 | 389 | 2 |
+| monster | 840 | 402 | — | 28 | — | — |
+| monster_ability | 1,365 | 264 | — | 1,322 | — | — |
+| race | 7 | — | — | 96 | — | — |
+| race_trait | 630 | 5 | — | 2,968 | — | — |
+| spell | 252 | 1,433 | 156 | 1,002 | — | — |
+
+### §4 — Standing audit
+
+```
+python3 scripts/reachability_audit.py --json-out artifacts/SD31-W7-INTEGRATE-001-audit.json
+# -> REACHABLE CEILING: 98.95% (38117/38521), unchanged from wave 6
+#    9 dead-end cells, all ambiguous|*, all still Epic-2-owned
+#    AUDIT_EXIT=0
+```
+
+Per-kind reachable ceiling unchanged in shape from wave 6 — `class`/`equipment_modifier`/`monster`/
+`race` at 100%, `feat` lowest at 96.90% (unchanged; the `mythic_adventures`/`class` structural
+blockers §6 of `kanban.md` names are the reason).
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- --audit
+# -> TRAP_EXIT=2, 1 mod-record row, 1192 wiring-class-mismatch rows
+```
+
+Matches rows 27/65's baseline (**1,192, not 1,191** — the mandate's own stated 1,191 is the stale
+figure row 65 already corrected; 1,192 reproduces exactly, unchanged from wave 6). Confirmed
+pre-existing, not worsened by this wave — same shape sampled in the log (companion/monster
+`derived`-vs-`static` disagreements on `ultimate_wilderness`/`ultimate_psionics` rows, none touched
+by this wave's five branches).
+
+### §5 — Full gate
+
+`./scripts/verify.sh`, launched in the background the moment the merged tree's own code compiled
+(`cargo build --locked --lib`, before any of the confirmed-finding fixes landed), kept alive through
+every subsequent commit on top:
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W7-INTEGRATE-001-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**`VERIFY_EXIT=0`. `RESULT: PASS`. All 25/25 stages green**: `preflight-disk`, `preflight-oracle`,
+`oracle-pin-selftest`, `producer-selftest`, `reachability-audit-selftest`, `reachability-audit`,
+`groundtruth-guard-selftest`, `supersession-gate-selftest` (16 cases), `pi-sweep`, `declared-pi-audit`,
+`audit-selftest`, `reclaim-selftest`, `driver-selftest`, `corpus-sweep-selftest`, `root-lib` (1,909
+passed), `root-full` (6,741 passed across 564 suites, all 529 `tests/*.rs` suites executed), `desktop`
+(455 passed), `reach` (27 passed, WITH a claim for this wave's families), `corpus-sweep` (24,519
+examined, 0 findings), `supersession-gate` (**116 objects, all clean** — the fixed gate, genuinely
+re-deriving from the oracle, running for real inside the pipeline for the first time), `frontend-install`,
+`frontend-test` (99/99 files), `frontend-typecheck` (clean), `clippy` (root:47/desktop:7 warnings, 0
+errors — both baselines held), `class-dump` (31/31 computing).
+
+Log: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W7-INTEGRATE-001-verify.log`.
+
+Baseline floors: this cycle's merge-conflict-resolution interim (elementwise max of the two
+conflicting wave-7 sub-branches' own raised floors) is superseded by the gate's own measured actuals
+above, raised in a separate commit per DoD item 7 (see §6).
+
+**Wired-integration four-check audit** (`scripts/wired-integration-audit.sh b8c36417d`): Check 1
+(forbidden tokens) flagged one hit — verified as a FALSE POSITIVE, not a stub: the matched line is a
+doc comment describing this cycle's own anti-stub discipline ("the SAME [refusal] `is_real_
+description_value` already applies to an empty or placeholder description: refuse to serve it, count
+it, never guess a value or ship broken text"), i.e. the word "placeholder" inside a comment EXPLAINING
+a refusal, not a stub shipping in code. Checks 2 (no-op handlers), 3 (mock leaks), 4 ("would…"
+strings): clean. No real stub found in this wave's diff.
+
+### §6 — Denominator, reported separately and explicitly
+
+**The mandate denominator did NOT change this wave: 38,521, exactly as it has been for the whole
+package.** No unit left the denominator through either sanctioned register:
+
+- **Structural Exclusion Register (§3)**: still unsigned, still empty. No cycle this wave proposed an
+  entry.
+- **Supersession Register (§10)**: fixed (§2 above) and now genuinely gate-verified (116/116 objects
+  proven against the live pinned oracle), but **deliberately left PROPOSED, not applied**. Applying it
+  requires wiring an `EXCLUDED_UNIT_IDS` set into the live doneness computation (`v06_work_inventory.rs`
+  or its consumer `pf1e_dashboard_producer.py`) — the register's own §8 names this as the precise next
+  step, out of scope for a repair pass under wave pressure. If applied at THIS tip: denominator
+  38,521 → 38,387 (−134), numerator 9,780 → 9,742 (−38), headline 25.3887% → 25.3784% (moves down
+  slightly — 38 of the 134 superseded units are currently `done`, a rate above the board's own 25.4%
+  average, so removing them costs slightly more numerator share than denominator share).
+
+`done` **9,488 → 9,780 (+292)**. Against the OLD denominator: 24.6307% → 25.3887% (+0.758pp), all of
+it real work — the denominator did not shrink to produce this movement. Against the (not-yet-applied)
+NEW denominator if the register were wired: 24.6307% → 25.3784% (a 0.0103pp difference between the
+two denominators, i.e. negligible — the register's effect on the headline, when it lands, is small).
+
+**Answering the operator's race cells directly:**
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+race = [u for u in d['units'] if u.get('kind')=='race']
+from collections import Counter
+c = Counter(u.get('book') for u in race)
+print('core_rulebook:', c.get('core_rulebook',0))
+print('advanced_race_guide:', c.get('advanced_race_guide',0))
+print([u['id'] for u in race if u.get('name')=='Catfolk'])
+"
+# -> core_rulebook: 0
+#    advanced_race_guide: 33
+#    ['advanced_race_guide:race:catfolk']
+```
+
+`core_rulebook` reads **0**, `advanced_race_guide` reads **33** (unchanged from the D9-dissolve
+receipt's own figures — this wave's merges did not touch `race`-kind attribution). **Catfolk has
+moved to ARG**, id `advanced_race_guide:race:catfolk`.
+
+### §7 — On-screen verification (DoD item 8)
+
+`RUN_DESKTOP_AGENT=sd31-w7-integrate` (unique to this cycle). Driven AFTER the full gate freed
+`driver.sh` (cannot run concurrently with `verify.sh`, per the skill's own constraint). Target: the
+Feat Catalog, searching "Awesome Blow" and "Multiattack" — directly discharging finding 3's own
+remedy from the wave-7 review (`SD31-E6-F8-001`'s missing DoD-8) and this wave's own DoD-8
+requirement in one screenshot.
+
+`RUN_DESKTOP_AGENT=sd31-w7-integrate ./.claude/skills/run-desktop/driver.sh launch` (from `apps/desktop`),
+new character "SD31W7 DoD8 Te" (Dwarf Fighter 1), loaded to its full sheet, Feats tab, "Add Feat"
+picker (1,661 feats across 12 books). Searched "Awesome Blow": found, tagged `Ce · General`, rendered
+description **byte-matches the pinned oracle's `DESC:This creature can send opponents flying.` +
+`BENEFIT:` text verbatim**, including the "10 feet"/"1d6 points of damage" magnitudes this cycle's own
+FEAT_FLAT_MAGNITUDE_PENDING_RULING exclusion is about. Searched "Multiattack": found, tagged
+`Ce · General`, rendered description byte-matches `DESC:` + `BENEFIT:` + `Normal:` verbatim
+("-2 penalty" / "-5 penalty"). **Both are real corpus BENEFIT text rendering on the actual character
+sheet, not a blank or default** — directly discharging finding 3's own remedy against
+`SD31-E6-F8-001`'s missing DoD-8.
+
+Screenshots committed: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W7-INTEGRATE-001/
+dod8-feat-catalog-awesome-blow.png`, `…/dod8-feat-catalog-multiattack.png`.
+
+### Followups, ordered by units they would move
+
+1. **Wire the Supersession Register into the live denominator** (§6). File territory:
+   `scripts/observer/pf1e_dashboard_producer.py` (add `EXCLUDED_UNIT_IDS`, loaded from
+   `SUPERSESSION-REGISTER.json`'s `objects[].superseded[].id`, applied everywhere `EXCLUDED_BOOKS`
+   already is) or `v06_work_inventory.rs` if the exclusion needs to happen at generation time instead
+   of report time. Moves: −134 denominator, −38 numerator (net headline effect ≈ −0.01pp; the real
+   value is correctness, not board movement). The register itself needs no further work — just
+   consumption.
+2. **The flat-magnitude interpretive question (rows 69/87/95/107)** — the single largest lever not
+   yet turned. At least **856 units** ride on the answer (824 `monster_ability`/`equipment`/
+   `equipment_modifier` currently `done`, 11 `race_trait` currently `done`, plus 21 this cycle newly
+   excluded pending the ruling: 13 `class_feature` + 7 `feat` + 1 `monster_ability`). An operator
+   ruling on "(a) no numeric anywhere in prose, or (b) no character-specific scaling formula" resolves
+   all of it at once — no further cycle work needed once ruled, each population already has its own
+   named const to edit.
+3. **`modelled_class_books()` widening** (`v06_work_inventory.rs`, lane-1 territory, `OPEN-ISSUES.md`
+   row 96) — still names only CRB/APG/ACG. Blocks Ninja's (this wave) and Gunslinger's (wave 6)
+   already-wired `class_feature` credit from reaching the board at all. Exact size not yet
+   re-derived at this tip; both classes' wiring is real and tested, purely a board-credit gap.
+4. **`corpus_literal_sweep`'s string-field coverage gap** (`OPEN-ISSUES.md` row 128) — extend
+   `parse_transcription`/`compare_tokens` to `description`/`school`/`level` using
+   `pcgen_desc::split_prose_and_args`'s existing `|`-argument-tail rule; mutation-test the new arm.
+   Not a board-moving fix by itself (no unit currently wrongly `literal-verified` has been found), but
+   closes a structural verification gap in the check gating every `static` unit's done rung.
+5. **`epic-1-race-chassis`** — no lane touched race chassis this wave; 96 of 103 `race` units and
+   most of `race_trait`'s 2,968 not-started remain gated on further chassis batches, per `OPEN-ISSUES.
+   md` row 121's own re-derivation (the workable pool without a new chassis batch is effectively
+   zero).
+
+
+
+### Definition of Done — checked against every item
+
+1. `verify.sh` exits 0, captured directly: **yes**, `VERIFY_EXIT=0` in the log file, not inferred. ✅
+2. `reach` passes with a claim for this wave's families: **yes**, 27 passed (feat/class families this
+   wave touched are covered by the existing reach suite; no new family added this wave). ✅
+3. `v06_corpus_trap_report -- --audit`: **TRAP_EXIT=2**, pre-existing (rows 27/65, 1,192 unchanged,
+   not worsened — confirmed by exact count, not by sign alone). ✅
+4. Guarded regen: **zero further stamp loss** after the traced-and-justified 46-unit id-rename
+   (§3); second AND third runs both changed only `generated_at`. ✅
+5. Four-check wired-integration audit: **clean modulo one verified false positive** (§5 — a doc
+   comment containing the word "placeholder" while describing anti-stub discipline; no real stub in
+   this wave's diff). ✅
+6. No unsurfaced family without an OPEN_FINDINGS entry: this wave introduced no new family; the
+   pre-existing `OPEN_FINDINGS`/`UNREACHED_RECORD_FINDINGS` entries were updated additively by the
+   classwire3 merge (Ninja's Scout archetype), not left silent. ✅
+7. Baseline moves are a SEPARATE commit with `--show-actuals`: **yes**, `da9bed2dd`, raised from the
+   full gate's own measured SUMMARY. ✅
+8. On-screen verification, proven condition 3, not paperwork: **yes** (§7) — two real corpus BENEFIT
+   texts, byte-matched, on the actual running app. ✅
+
+### Blockers
+
+None that stopped work. Two things explicitly NOT done, both by deliberate scope decision rather than
+inability, both named precisely in `followups`:
+
+- The Supersession Register was fixed but not wired into the live denominator (§6).
+- `corpus_literal_sweep`'s string-field coverage gap was confirmed real but not fixed (out of budget,
+  explicitly non-blocking per the review, `OPEN-ISSUES.md` row 128).
+
+### Reclaim
+
+`scripts/reclaim.sh` (dry run) then `--apply`: reclaimed 10 stale `verify-logs` directories (~9MB).
+Manually removed (per the mandate's named list, all confirmed no live PID building into them via
+`pgrep -fa 'cargo|rustc|verify.sh'` returning empty before deletion): `sd31-cf-surface` (31G),
+`sd31-dissolve-ce` (31G), `sd31-feat-equip-class` (28G), `sd31-feat-equip-class-desktop` (2.9G),
+`sd31-w7-refute-classfeature` (725M), `sd31-w7-refute-grind` (575M), plus this cycle's own
+`sd31-w7-integrate` and `sd31-w7-integrate-regen` target dirs. Disk: 317GB used (33%) → 195GB used
+(21%), **~122GB reclaimed**.
+
+### Branch tip
+
+`da9bed2dd` before this receipt's own commit; final tip after landing this receipt and pushing is
+recorded in the handoff below.
