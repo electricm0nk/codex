@@ -4295,6 +4295,7 @@ fn companion_flat_magnitude_pending_ruling(engine_book: &str, key: &str) -> bool
 /// 111 names all 11 with their full corpus text. **A ONE-LINE change**
 /// either direction, exactly as the sibling consts document.
 const CLASS_FEATURE_FLAT_MAGNITUDE_PENDING_RULING: &[(&str, &str)] = &[
+    ("advanced_class_guide", "Bloodrager ~ Indomitable Will"),
     ("advanced_players_guide", "Cave Druid ~ Wild Empathy"),
     ("core_rulebook", "Barbarian ~ Indomitable Will"),
     ("core_rulebook", "Bard ~ Well-Versed"),
@@ -4302,16 +4303,68 @@ const CLASS_FEATURE_FLAT_MAGNITUDE_PENDING_RULING: &[(&str, &str)] = &[
     ("core_rulebook", "Monk ~ Still Mind"),
     ("core_rulebook", "Paladin ~ Aura of Faith"),
     ("core_rulebook", "Paladin ~ Aura of Justice"),
+    ("core_rulebook", "Ranger ~ Improved Quarry"),
     ("core_rulebook", "Ranger ~ Swift Tracker"),
     ("pathfinder_unchained", "Unchained Barbarian ~ Indomitable Will"),
     ("pathfinder_unchained", "Unchained Barbarian ~ Tireless Rage"),
     ("pathfinder_unchained", "Unchained Monk ~ Still Mind"),
+    // Wave-7 integration review (SD31-W7-INTEGRATE-001): the full-closure
+    // hand-check above MISSED these two -- `Bloodrager ~ Indomitable Will`
+    // was promoted with near-identical +4 prose to `Barbarian ~
+    // Indomitable Will` (excluded, same commit); `Ranger ~ Improved
+    // Quarry` states "+4 insight bonus on attack rolls" and was promoted
+    // regardless. Added conservatively, pending the same rows 69/87/95/107
+    // ruling; `retro.py correction` emitted against the original claim
+    // ("the other 32 genuinely state nothing but level-gate references").
 ];
 
 fn class_feature_flat_magnitude_pending_ruling(book: &str, key: &str) -> bool {
     CLASS_FEATURE_FLAT_MAGNITUDE_PENDING_RULING
         .iter()
         .any(|&(b, k)| b == book && k == key)
+}
+
+/// SD31-W7-INTEGRATE-001: same discipline as `CLASS_FEATURE_FLAT_MAGNITUDE_
+/// PENDING_RULING`/`COMPANION_FLAT_MAGNITUDE_PENDING_RULING`, for `Kind::
+/// Feat`. Decision 7's own binding PROXY WARNING was not discharged before
+/// `SD31-E6-F8-001` banked the 11 `core_essentials`-directory (`ce_feats.
+/// lst`, engine book `core_essentials`) `display`-wiring-class feats to
+/// `done` -- 7 of the 11 state a real, flat, non-scaling numeric bonus,
+/// penalty, distance, dice roll or percentage in `BENEFIT:` prose only (a
+/// PCGen field this engine's `magnitude_token_count` proxy never reads,
+/// same defect class row 69 named for `monster_ability`), read directly off
+/// `ce_feats.lst` lines 9-24 at the pinned oracle:
+/// - `Ability Focus` -- "+2 to the DC"
+/// - `Awesome Blow` -- "10 feet", "1d6 points of damage"
+/// - `Empower Spell-Like Ability ~ Ability` / `~ Spell` -- "+50%"
+/// - `Hover` -- "20 feet"/"60 feet"/"10 feet"/"15 to 20 feet"/"25 feet",
+///   "20% miss chance"/"50% miss chance"
+/// - `Snatch` -- "1d6 x 10 feet", "1d6 points of damage per 10 feet"
+/// - `Wingover` -- "180 degrees", "90 degrees", "DC 15"/"DC 20", "5 feet"/
+///   "10 feet"
+///
+/// The other 4 (`Craft Construct`, `Flyby Attack`, `Quicken Spell-Like
+/// Ability ~ Ability`, `~ Spell`) genuinely state no flat combat bonus --
+/// `Craft Construct`'s per-gp crafting-time formula and Quicken's "three
+/// times per day" resource-use count are the SAME shape this program
+/// already treats as compatible with "nothing to compute" elsewhere (a
+/// resource-frequency count, not a scaling combat magnitude) -- and stay
+/// `done`, discharging Decision 7's PROXY WARNING rather than banking the
+/// whole population on the unchecked proxy. Excluded here, conservatively,
+/// pending the SAME operator ruling rows 69/87/95/107 already ask for.
+/// **A ONE-LINE change** either direction, exactly as the sibling consts.
+const FEAT_FLAT_MAGNITUDE_PENDING_RULING: &[(&str, &str)] = &[
+    ("core_essentials", "Ability Focus"),
+    ("core_essentials", "Awesome Blow"),
+    ("core_essentials", "Empower Spell-Like Ability ~ Ability"),
+    ("core_essentials", "Empower Spell-Like Ability ~ Spell"),
+    ("core_essentials", "Hover"),
+    ("core_essentials", "Snatch"),
+    ("core_essentials", "Wingover"),
+];
+
+fn feat_flat_magnitude_pending_ruling(engine_book: &str, key: &str) -> bool {
+    FEAT_FLAT_MAGNITUDE_PENDING_RULING.iter().any(|&(b, k)| b == engine_book && k == key)
 }
 
 /// CONFIRMED finding, this cycle's own guarded regen (SD31-D7-PROSE-003):
@@ -4472,10 +4525,34 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
-            if text_only && has_real_description {
+            if text_only
+                && has_real_description
+                && !feat_flat_magnitude_pending_ruling(engine_book.as_str(), &unit.key)
+                && !feat_flat_magnitude_pending_ruling(engine_book.as_str(), &unit.name)
+            {
                 return Verdict {
                     status: "text-complete",
                     evidence: "in_catalog_and_corpus_record_carries_no_magnitude_token".to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if text_only
+                && has_real_description
+                && (feat_flat_magnitude_pending_ruling(engine_book.as_str(), &unit.key)
+                    || feat_flat_magnitude_pending_ruling(engine_book.as_str(), &unit.name))
+            {
+                // Wave-7 integration review (SD31-W7-INTEGRATE-001): Decision
+                // 7's PROXY WARNING was not discharged before `SD31-E6-F8-
+                // 001` banked this cell -- `magnitude_token_count == 0`
+                // missed a flat, non-scaling numeric stated only in the
+                // record's `BENEFIT:` prose (the same shape rows 69/87/95/
+                // 107 already ask an open ruling for). `grounded` caps at
+                // `held` for `display` wiring_class, same fallback shape
+                // `class_feature`/`companion`'s own pending-ruling gates use.
+                return Verdict {
+                    status: "grounded",
+                    evidence: "feat_flat_magnitude_pending_ruling".to_string(),
                     reason: None,
                     engine_book: engine_book_field,
                 };
@@ -8472,6 +8549,55 @@ mod class_feature_text_complete_rung_tests {
         ));
         const TEST_LIST: &[(&str, &str)] = &[("core_rulebook", "Rogue ~ Sneak Attack")];
         assert!(TEST_LIST.iter().any(|&(b, k)| b == "core_rulebook" && k == "Rogue ~ Sneak Attack"));
+    }
+
+    /// SD31-W7-INTEGRATE-001: the two class_feature units the wave-6 hand-
+    /// check missed (near-identical +4 prose to an already-excluded sibling,
+    /// and a "+4 insight bonus" the check should have caught) are now on
+    /// the list; a genuinely clean class_feature stays off it.
+    #[test]
+    fn the_wave_7_class_feature_corrections_are_on_the_pending_ruling_list() {
+        assert!(class_feature_flat_magnitude_pending_ruling(
+            "advanced_class_guide",
+            "Bloodrager ~ Indomitable Will"
+        ));
+        assert!(class_feature_flat_magnitude_pending_ruling("core_rulebook", "Ranger ~ Improved Quarry"));
+        assert!(!class_feature_flat_magnitude_pending_ruling("core_rulebook", "Rogue ~ Sneak Attack"));
+    }
+
+    /// SD31-W7-INTEGRATE-001: the 7 `ce_feats.lst` display units whose
+    /// `BENEFIT:` prose states a real flat magnitude the
+    /// `magnitude_token_count` proxy never reads (Decision 7's PROXY
+    /// WARNING, discharged for this population); the 4 that genuinely carry
+    /// no flat combat magnitude stay off the list.
+    #[test]
+    fn feat_flat_magnitude_pending_ruling_matches_the_hand_checked_population() {
+        for key in [
+            "Ability Focus",
+            "Awesome Blow",
+            "Empower Spell-Like Ability ~ Ability",
+            "Empower Spell-Like Ability ~ Spell",
+            "Hover",
+            "Snatch",
+            "Wingover",
+        ] {
+            assert!(
+                feat_flat_magnitude_pending_ruling("core_essentials", key),
+                "{key} must be on the pending-ruling list"
+            );
+        }
+        for key in [
+            "Craft Construct",
+            "Flyby Attack",
+            "Quicken Spell-Like Ability ~ Ability",
+            "Quicken Spell-Like Ability ~ Spell",
+        ] {
+            assert!(
+                !feat_flat_magnitude_pending_ruling("core_essentials", key),
+                "{key} genuinely states no flat magnitude and must stay off the list"
+            );
+        }
+        assert!(!feat_flat_magnitude_pending_ruling("core_rulebook", "Ability Focus"));
     }
 
     /// CONFIRMED live regression, caught by this cycle's own guarded regen
