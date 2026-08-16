@@ -14712,3 +14712,292 @@ unchanged by this cycle (no reclaim needed, no leak left behind either).
 4. **Regenerating `data/corpus/` without re-running the enrichment pass silently thinned 455 records**
    (§3) — caught by the guarded regen's own stamp-loss guard exactly as designed, traced one record deep,
    fixed by re-running the correct existing tool rather than hand-patching or loosening the guard.
+## Cycle `SD31-E6-F2-006` (`RETRO_ACTOR=sd31-spell-held`) — 2026-08-16, `epic-6-ingest-lanes` F2 (`spell`), the held mass
+
+**Starting HEAD:** `17ba8be53` (`docs(sd31): SD31-W7-INTEGRATE-001 receipt + ORCHESTRATOR-LOG wave-7
+entry`), recovered via the mandatory clean-tree reset (package dir was absent from this fresh
+worktree, tree was clean, `git fetch origin && git reset --hard origin/tranche/11`). **Oracle:**
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/verify.sh --only
+preflight-oracle` PASS: `oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6`). **Own
+worktree/branch:** did not touch the primary checkout; all work landed on `sd31/spell-held-SD31-E6-F2-006`
+in this dispatched worktree, committed and pushed.
+
+### §0 — Re-derivation before any work
+
+Board headline, re-derived fresh at start-of-cycle HEAD with the producer's own verdict function:
+
+```
+python3 -c "... P.doneness_verdict(...) ..."
+-> 38521 {'done': 9780, 'not-started': 19900, 'unmeasurable': 5127, 'deferred': 36, 'held': 2912,
+          'in-progress': 766} 25.39
+```
+
+Matches the dispatch's stated 9,780/38,521 (25.39%) exactly. Per-kind `spell`:
+
+```
+2843 units: held 1433, in-progress 156, done 252, not-started 1002
+```
+
+`done` 252/2843 = 8.86%, matches the dispatch's "~8.9%" exactly.
+
+### §1 — Trace ONE held unit end to end, per the card's own instruction
+
+`advanced_class_guide:spell:adhesive_blood` (`wiring_class=derived`, `status=ingested-magnitude`).
+`doneness_verdict`'s `derived` arm requires `status in {literal-verified, fixture-verified}` for
+`done`; `ingested-magnitude` stays `held`. The corpus row states `DURATION:(CASTERLEVEL) minutes`
+(`acg_spells.lst:8`) — this independently reproduces `OPEN-ISSUES.md` row 119's own finding.
+`derived_evaluator_fixture_check.rs` had **zero evaluator seams for `kind=spell`** before this
+cycle (only `monster`'s narrow SLA-caster-level rule and `equipment`'s `BONUS:STAT` rule existed).
+This is **derived -> fixture-verified rung — mine to build**, not lane 1's `display` prose rung and
+not lane 4's `pilot_compute.rs` probe-fixture territory.
+
+Re-derived the `derived`+held population fresh (not transcribed from row 119's earlier count):
+
+```
+python3 -c "..."
+-> 1356 units: 884 ingested-magnitude + 472 grounded
+   wiring_class_reason: prose_expr 1152, range_keyword 199, prose_formula_segment 5
+```
+
+### §2 — Why a live number is fabrication, and what is genuinely groundable instead
+
+A spell's DURATION scales with the CASTING CHARACTER's caster level — a value no corpus row states
+for a spell (unlike a monster's own Hit Dice, which `spell_like_ability_caster_level` reads off
+`MONSTERCLASS:`). Resolving `(CASTERLEVEL)` to one number of minutes/rounds without a live character
+would repeat exactly the ability-score-scaling fabrication `SD31-E6-F1-002` already correctly
+refused for `monster`. Confirmed this is the engine's own existing, deliberate policy, not a new
+one invented for this cycle: `src/rules_core/pcgen_desc.rs`'s `render_pcgen_desc` already drops an
+unresolved `CASTERLEVEL` argument tail into `dropped_args` rather than guess (`tests` at that
+module's own lines ~747-790).
+
+What IS genuinely groundable from the corpus alone: the FORMULA's own parameters (multiplier +
+literal trailing unit), independent of any live caster level — a structural derivation, exactly the
+same shape as the monster seam's "rule + corpus field -> a real, provable fact," just applied to a
+formula's shape instead of a monster's HD.
+
+### §3 — The seam: `parse_caster_level_linear_duration`
+
+`src/rules_core/derived_evaluator_fixture_check.rs`:
+
+- `CasterLevelLinearFormula { per_level: i32, unit: String }`.
+- `parse_caster_level_linear_duration(raw: &str) -> Option<...>` — parses `(CASTERLEVEL)` or
+  `(CASTERLEVEL*N)`/`(CASTERLEVEL * N)` followed by a non-empty trailing unit carrying no second
+  `CASTERLEVEL` occurrence. Refuses (`None`) on `min(`/`max(` clamps, additive terms, and
+  alternations ("Concentration, up to...", "Instantaneous or...") — TDD RED-then-GREEN, 8 parser
+  unit tests plus 2 mutation-shaped "wrong expected value genuinely disagrees" tests.
+- `format_caster_level_linear_duration` renders "N `<unit>` per caster level" — a literal
+  restatement, never an invented "official" Paizo phrasing this crate cannot verify.
+- `run_spell_bar_check` resolves each fixture against `data/corpus/<book>/spell/`'s own
+  `raw_tokens` (via a new `load_spell_durations`/`spell_corpus_dir_exists` pair, mirroring the
+  equipment half of this file's `load_equipment_corpus` pattern) and compares to the fixture's
+  `expected.per_level`/`expected.unit`. Merged into the shared `run_bar_check` alongside
+  equipment/monster.
+- `all_spell_caster_level_durations` (new pub fn): walks all 8 chained books once and returns
+  every parseable `(book_dir, record_key) -> formula` pair — built for the real consumer (§5), a
+  broader population than the fixture-covered set (matching how equipment's rendered ability bonus
+  is not limited to its ~94 fixture rows either).
+
+### §4 — The fixture batch: 898 entries, independently derived
+
+`scripts/derive_spell_caster_level_duration_fixtures.py` (new). Reads `docs/work-inventory.json`
+for `kind=spell`+`wiring_class=derived`+`status in (ingested-magnitude, grounded)` candidates, then
+for each re-reads the **pinned upstream PCGen `.lst` bytes** at that unit's own
+`(source_file, source_line)` — never `data/corpus/`, which the Rust evaluator itself reads and must
+therefore stay independent of (same independence guarantee the equipment `BONUS:STAT` family's own
+`derivation`/`independence` fields already document, restated here for `spell`). Re-hashes each
+`.lst` file itself with `hashlib.sha256` (never copies `data/corpus`'s own stored hash). Applies a
+**standalone Python regex** — never imports or calls the Rust parser — to classify the DURATION
+value and extract `(per_level, unit)`.
+
+Corpus-wide shape census, re-derived fresh, not assumed:
+
+```
+DURATION tokens containing CASTERLEVEL corpus-wide: 1161
+  simple `(CASTERLEVEL[*N])` shape:  1046
+  complex (min/max/additive/alternation), refused: 115
+```
+
+Of the 1046 candidates whose corpus unit is currently `derived`+held, **904** initially generated;
+**6 filtered out** (`advanced_players_guide:spell:fester` and 5 siblings) because their
+`data/corpus/` JSON predates the `.lst`-pipeline enrichment (`source.kind = "web_second_source"`,
+no `raw_tokens` at all) — the Rust evaluator genuinely cannot resolve them, so a fixture naming one
+would fail for a reason unrelated to this seam's own correctness. Self-corrected mid-cycle (`retro.py
+rework` filed) by adding an existence check against `data/corpus/`'s own `raw_tokens` before
+emitting an entry, landing **898** final `spell_entries`, all resolving.
+
+TDD: `cargo test --locked --lib rules_core::derived_evaluator_fixture_check` — the 6 initial
+resolution failures were caught RED before the fix, all 18 tests GREEN after (`/tmp/test1.log` ->
+`/tmp/test2.log`, this worktree). `tests/derived_evaluator_fixture_check.rs`'s own pre-existing
+5 guarantee-3/guarantee-4 tests (equipment family, untouched) stayed green throughout.
+
+### §5 — Wired a real consumer, up front (Decision 8)
+
+Rather than land the fixture-verified credit resting on a code path nothing ships — the exact shape
+Decision 8 required `SD31-E6-F1-002` to fix in a follow-up cycle — this cycle wires the consumer in
+the same commit:
+
+- `SpellCatalogEntryDto.duration: Option<String>` (`apps/desktop/src-tauri/src/spell_catalog.rs`),
+  populated via `duration_for()` (new fn, this file), backed by a process-lifetime-cached
+  `spell_caster_level_durations()` (`OnceLock`, mirrors `corpus_full.rs`'s own established
+  runtime-`data/corpus`-read pattern — NOT a new architectural risk; `race_trait_picker.rs`,
+  `companion_catalog.rs`, `class_feature_descriptions.rs` all already read `data/corpus/` at
+  runtime the same way).
+- Served over the real `list_spell_catalog`/`list_spells` Tauri commands (both route through
+  `build_spell_catalog()`).
+- Rendered on `SpellCatalogScreen.tsx` as a `Duration: <text>` line, only when non-null — most
+  records legitimately carry no such line and that absence is not shown as a placeholder.
+- `apps/desktop/src/boundary/loadSpellCatalog.ts`'s `SpellCatalogEntryDto` TS interface widened to
+  match.
+- **Count-change-needs-a-sweep, run for real**: `npm run typecheck` caught every fixture object
+  literal missing the new required field — 4 files, 22 occurrences (`spellCatalogRuntime.ts` 7,
+  `itemPickerFilter.test.ts` 4, `spellPickerOffering.test.ts` 6, `spellsTabModel.test.ts` 5), all
+  patched with `duration: null` (the honest default — none of these hand-authored fixtures state a
+  caster-level-linear duration).
+- 2 new Rust tests (`adhesive_blood_serves_its_caster_level_linear_duration`,
+  `a_flat_duration_spell_serves_no_caster_level_duration`, verified Power Word Stun's real
+  `DURATION:See text` first so the negative case is genuine, not assumed).
+
+Verification run (this worktree, before the full gate):
+`cd apps/desktop/src-tauri && cargo test --locked spell_catalog::` -> **21/21 passed** (19
+pre-existing + 2 new). `cd apps/desktop && npm run typecheck` -> 0 errors (after the fixture fix).
+`npm test` -> **99/99 test files passed**. `npm run build` -> succeeded (vite).
+
+### §6 — Guarded regen, measured
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-spell-held-2.json
+  -> CLEAN, 24519 records examined, 0 findings
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-spell-held-2.json
+  -> 998 of 999 covered units cleared; 1 failed (pre-existing, NOT this cycle's:
+     advanced_players_guide:equipment:spindle_of_perfect_knowledge, present in the very first
+     baseline run of this cycle before any code change — not a regression)
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+python3 -c "... P.doneness_verdict(...) ..."
+-> BOARD 38521 {'done': 10678, ...} 27.72
+-> SPELL 2843 {'done': 1150, 'held': 535, 'in-progress': 156, 'not-started': 1002}
+```
+
+**Board `done` 9,780 -> 10,678 (+898), 25.39% -> 27.72% (+2.33pp). `spell` `done` 252 -> 1,150 (+898),
+`held` 1,433 -> 535 (-898).** Zero movement anywhere else — the delta is exactly the 898 fixture
+entries, one-for-one, confirming no unintended coupling. `docs/work-inventory.json` restored
+(`git checkout --`) immediately after measurement both times, per the wave rule; never committed.
+
+### §7 — Reachability audit and trap report (DoD items 2/3)
+
+```
+python3 scripts/reachability_audit.py --json-out /tmp/reach-audit-sd31-spell-held.json
+-> spell 97.82%, dead-end cells: 9, all `ambiguous|*`, all Epic-2-owned -- unchanged from baseline
+   (ambiguous_wiring_class_units: 404, unchanged)
+
+cargo run --locked --bin v06_corpus_trap_report -- --audit
+-> TRAP_EXIT=2 (pre-existing, expected)
+   TRAP   DEFECT  trap
+      1        0  mod-record
+      0     1191  wiring-class-mismatch
+```
+
+`1191` matches `SD31-W6-INTEGRATE-001`'s/wave 7's own re-derived baseline exactly — **not worsened
+by this cycle**. (Ran against the committed, pre-regen `docs/work-inventory.json`, i.e. the true
+baseline check, not this cycle's own uncommitted regen.)
+
+### §8 — PI screening
+
+This cycle writes no new corpus records and enriches no NEW `raw_tokens` — it only READS
+`raw_tokens` that `enrich_spell_raw_tokens.rs` already screened with both SD-30 PI contracts
+(`§52.3`/`§53.5`, wired per `SD31-W7-INTEGRATE-001`'s own row-126 fix, citing that receipt). The
+`DURATION` token family is corpus-mechanical formula text (multiplier + unit words: "minutes",
+"rounds", "[D]"/"(D)" dismissible markers) — verified directly, not merely argued: all 898 fixture
+`expected.unit` strings inspected (`sorted(set(...))`, 71 distinct values, all game-mechanical, zero
+name-shaped or free-prose content). `declared_pi_shipping_audit` re-run as part of the full gate
+(§9).
+
+### §9 — Full gate
+
+Launched early, in the background, kept alive while the rest of this receipt was written:
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-006-verify.log
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-spell-held ./scripts/verify.sh > "$LOG" 2>&1
+echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**VERIFY_EXIT=0, RESULT: PASS, all 25 stages green** (relaunched clean after one self-caught fix —
+see below). Full stage list: `preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest
+pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest
+root-lib(1921) root-full(6753 across 564 suites, all 529 tests/*.rs executed) desktop(457)
+reach(27) corpus-sweep(24519 examined, 0 findings) supersession-gate(116 objects clean)
+frontend-install frontend-test(99/99) frontend-typecheck(clean) clippy(root:47 desktop:7 warnings,
+0 errors) class-dump(31/31)`. Log: `docs/release/SD-31-corpus-closure-grind/artifacts/
+SD31-E6-F2-006-verify.log`.
+
+**One real self-caught defect, fixed before the green run**: `root-full`'s FIRST launch (task
+`bv8nmz5vb`) failed `tests/sd24_wired_integration_audit.rs::
+placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral` — my own
+`SpellCatalogScreen.tsx` JSX comment ("...not shown as a placeholder.") tripped the wired-integration
+audit's stub-marker heuristic (a multi-line JSX comment's continuation line doesn't start with `//`/
+`*`, so the audit's `is_reviewed_comment_prose` bucket does not exempt it — the exact false-positive
+shape a prior wave's own receipt already named for a doc comment). Fixed by rewording the comment to
+avoid the trigger word (no code-behavior change). **Operational note, recorded honestly**: mid-diagnosis
+I momentarily believed the first (still-running) `verify.sh` had finished and relaunched a second one
+before killing the first, producing two concurrent `verify.sh` processes against the same
+`CARGO_TARGET_DIR` for several minutes. Caught via `ps -p <pid> -o ppid,cmd` before any corruption
+occurred (cargo's own lock file only serializes, does not corrupt), killed both cleanly by PID
+(verified `CARGO_TARGET_DIR` via `/proc/<pid>/environ` first, per the shared-tree discipline rule),
+and relaunched once, cleanly — the run reported above is that single clean relaunch.
+
+### Definition of Done
+
+1. `verify.sh` exit code, captured directly: **VERIFY_EXIT=0** (§9).
+2. `reach` (reachability audit) — spell 97.82%, unchanged from baseline, no new dead-end cell;
+   gate's own `reach` stage: 27 passed. ✅
+3. `v06_corpus_trap_report -- --audit` — TRAP_EXIT=2, pre-existing (1 mod-record, 1191
+   wiring-class-mismatch, matching the standing baseline). Not worsened. ✅
+4. Guarded regen: zero stamp loss — the delta is exactly +898 `spell` `done`/-898 `held`, nothing
+   else moved. ✅
+5. Four-check wired-integration audit: `tests/sd24_wired_integration_audit.rs`'s 5 tests, part of
+   `root-full` — all green in the final run (one genuine finding against this cycle's own diff,
+   fixed, see above). ✅
+6. Unsurfaced families get an OPEN_FINDINGS entry: `range_keyword` (199) and `prose_formula_segment`
+   (5) named in `OPEN-ISSUES.md` row 129 as untouched remaining scope, not silently dropped. ✅
+7. Baseline moves are a separate commit: the gate's own BASELINE NOTES flagged 3 stale floors this
+   cycle's new tests moved — `BASELINE_ROOT_LIB_TESTS` 1909→1921 (+12), `BASELINE_ROOT_FULL_TESTS`
+   6741→6753 (+12), `BASELINE_DESKTOP_TESTS` 455→457 (+2), all fully attributed to this cycle's own
+   12 new `derived_evaluator_fixture_check` tests + 2 new `spell_catalog` tests. Raised in a
+   dedicated follow-up commit on this same branch, with `--show-actuals` output, per DoD item 7 —
+   see the branch's second commit. ✅
+8. On-screen verification: see DoD-8 section below. ✅
+
+### DoD-8 — On-screen verification
+
+Driven via `apps/desktop/.claude/skills/run-desktop/driver.sh` (`RUN_DESKTOP_AGENT=sd31spellheld`,
+run strictly after the full gate finished, never concurrently, per the skill's own documented
+constraint). `launch` → landing screen → clicked "Browse Spell Catalog" → typed "Adhesive Blood"
+into the search box → **the real running app renders**:
+
+> **Adhesive Blood** — ACG, Transmutation, Level 2
+> *Your blood thickens to becomes a glue-like substance upon contact with air. ...*
+> **Duration: 1 minutes per caster level**
+
+This is the exact unit traced in §1, its exact corpus-stated formula
+(`DURATION:(CASTERLEVEL) minutes`, `acg_spells.lst:8`), rendered live through the real
+`list_spell_catalog` Tauri command → `SpellCatalogScreen.tsx`, not inferred from a green code gate.
+Screenshot committed: `docs/release/SD-31-corpus-closure-grind/artifacts/
+SD31-E6-F2-006-dod8-adhesive-blood-duration.png`.
+
+### Blockers
+
+None that stopped work.
+
+### Reclaim
+
+`scripts/reclaim.sh --apply` run at cycle end: **0 items, 0.0B reclaimed** — every candidate
+(`cargo-target`, `verify-logs`, `worktrees`, `branches`) was correctly refused as either
+modified within the last 6h, checked out in a live sibling worktree (many concurrent SD-31
+cycles active on this box), or not-yet-merged with an upstream present. An honest zero, not a
+skipped step.
+
+### Branch tip
+
+`sd31/spell-held-SD31-E6-F2-006`, pushed to origin. Two commits: `535d94ea8` (feature) and
+`973f8e41f` (baseline raise, DoD item 7). Final tip: `973f8e41f`.
