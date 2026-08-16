@@ -7479,6 +7479,19 @@ exact blocker, never faked or silently dropped).
   granted file territory (`pilot_compute.rs`/`archetype_resolver.rs`/class compute modules only), and
   both need a scoped fix deserving its own dedicated TDD pass, not a rushed patch riding this card's
   gate.
+- **Caught by the gate, exactly as designed, and fixed same-cycle:** the initial commit
+  (`41495e1da`) added 3 new records to `acg::archetype_tables::archetype_swap_tables()` without
+  touching `apps/desktop/src-tauri/src/reach_gate.rs`'s `UNREACHED_RECORD_FINDINGS` — the exact
+  "growing the record count needs a sweep" rule missed for a file outside this card's own primary
+  territory. `desktop`/`reach` FAILed for real (`cargo exit 101`, 2 of 447 tests):
+  `reach_gate::tests::unreached_records_are_exactly_the_recorded_findings` and
+  `every_declared_claim_actually_carries_the_records` both named the 3 new Slayer archetype keys as
+  "ingested but not surfaced, with no recorded finding." Fixed (commit `41ba8bda4`, `reach_gate.rs`
+  additive-list exception): appended the 3 keys to the existing `"acg"/"archetypes"` entry (same
+  "whole family unreached, no picker exists" shape as its other 87 entries) and corrected two stale
+  `"403 records"` prose comments to 406. Re-ran `cargo test --locked -j 2` in
+  `apps/desktop/src-tauri` directly (isolated from the broader gate) to confirm before re-launching
+  the full gate: **447 passed, 0 failed** (was 445 passed, 2 failed).
 
 ### 8. Next-wave queue, re-derived not transcribed
 
@@ -7497,3 +7510,57 @@ exact blocker, never faked or silently dropped).
    `docs/work-inventory.json`'s own re-derived per-book `class_feature` record counts
    (`python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); print(collections.Counter(u['book'] for u in d['units'] if u['kind']=='class_feature' and u.get('status') in ('not-ingested','not-started')).most_common(10))"`)
    before committing a multi-cycle build to any one of them.
+
+### 9. Full gate — status at end of this cycle's turn
+
+Launched EARLY (before writing this receipt) as `SD31-E4-F1-001-verify.log`, commit `41495e1da`
+(before the `reach_gate.rs` fix). **That run FAILed for real** — `desktop`/`reach` both exited 101, 2
+of 447 tests (`unreached_records_are_exactly_the_recorded_findings`,
+`every_declared_claim_actually_carries_the_records`), naming the 3 new Slayer archetype records as
+ingested-but-unaccounted-for in `reach_gate.rs`'s own `UNREACHED_RECORD_FINDINGS`. Fixed same-cycle
+(commit `41ba8bda4`, §7 above) and **independently re-verified in isolation** before re-launching the
+full gate: `cargo test --locked -j 2` in `apps/desktop/src-tauri` → **447 passed, 0 failed**. Also
+independently re-ran `root-lib`/`root-full`'s own coverage of every changed file (already PASSed in
+run 1, unaffected by the `reach_gate.rs`-only fix: 1855 + 6547 tests), `corpus_literal_sweep` (CLEAN,
+0 findings), and `cargo clippy --locked --tests -j 2` at the repo root (clean finish, only pre-existing
+warnings, none attributed to any of the 4 files this cycle touched).
+
+**Full gate re-launched at the fixed tip** as `SD31-E4-F1-001-verify-run2.log` (commit `41ba8bda4`),
+kept alive through the remainder of this turn. This box is running **at least 7 concurrent full
+`verify.sh` gates** this cycle (confirmed via `pgrep -af verify.sh`: this cycle's own 2 runs plus 5
+other SD-31 lanes' — `sd31-spell-lists`, `sd31-monster-ability`, `sd31-equip-residual`, and 2 more
+unlabeled), which is why both runs moved slowly relative to earlier single-agent baselines (11 min
+cold builds became considerably longer under 7-way cargo-lock contention on shared `CARGO_TARGET_DIR`s).
+**Run 2's own `RESULT`/`VERIFY_EXIT` line, whenever it lands, is authoritative over anything
+summarized here** — if this receipt is read before that run finishes, check the log directly. As of
+this receipt's own writing, run 2 had independently reconfirmed every fast/self-test stage through
+`declared-pi-audit` with no new failures, consistent with the isolated re-verification above; the
+slow `root-lib`/`root-full`/`desktop`/`reach`/`clippy` stages had not yet completed under this run's
+own instance due to the shared-box contention. Landing the commit and pushing before the gate's own
+final line was obtained is per the dispatch's own explicit "Never halt with nothing delivered... 'Ran
+out of budget' is not 'blocked'" instruction, backed here by the isolated re-verification of every
+stage the fix could plausibly have affected.
+
+**DoD-8 (on-screen verification): deferred, not faked.** `run-desktop/SKILL.md`'s own explicit
+instruction bars running `driver.sh launch` concurrently with `scripts/verify.sh` — and this cycle's
+own gate (run 1, then run 2) was live for the entire remainder of this turn, on a box already at 7x
+concurrent-gate load where adding a full Tauri/GTK/WebKit `npx tauri dev` launch would have
+contended even harder. Not run this cycle; logged here as a real shortfall rather than silently
+dropped or faked. The player-visible surface it would confirm is already established by precedent
+(`classFeaturesModel.ts`'s generic `class_feature.`-prefix pickup, the SAME mechanism Slayer's
+already-DoD-8-verified Stalker/Track/etc. features from `SD31-E5-F1` rendered through) — this cycle's
+new `class_feature.acg.slayer.weapon_and_armor_proficiency` id follows the identical shape and is
+proven reachable through `build_pilot_headless_receipt` by 4 passing tests, but the ON-SCREEN capture
+itself is the honest gap. Next cycle (or this cycle's own follow-up once the box quiets down) should
+run: `driver.sh launch` → create a Slayer character → screenshot the Class Features section showing
+"Weapon and Armor Proficiency" with its real description text rendering.
+
+**`v06_corpus_trap_report --audit` (DoD item 3): not re-run this cycle**, for the same
+cargo-target-dir-contention reason — the last recorded baseline (`OPEN-ISSUES.md` row 65,
+`SD31-W4-INTEGRATE-001`, this cycle's own starting tip) is `TRAP_EXIT=2`, `1 0 mod-record; 0 1191
+wiring-class-mismatch`, entirely `monster`/`spell`/`companion`/`monster_ability` — zero `class_feature`
+findings. This cycle's diff touches no corpus JSON record's `wiring_class` field (the two archetype
+tables it adds are compiled Rust data, not corpus JSON; the `pilot_compute.rs` function adds an
+explanation record, which this audit does not read), so there is no structural reason to expect this
+count to have moved — reported as an assumption carried forward, not a measured fact, per the
+unattended-mode discipline of never claiming a check ran when it did not.
