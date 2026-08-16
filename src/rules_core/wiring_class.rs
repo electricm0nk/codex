@@ -404,12 +404,28 @@ fn has_arith(value: &str) -> bool {
 /// must keep signalling `derived` rather than falling to
 /// `literal_magnitudes_only`, which the record would contradict.
 fn has_arith_scoped(value: &str, allow_slash: bool) -> bool {
-    if value.contains('*') {
-        return true;
-    }
     if let Some(idx) = value.find('/')
         && (allow_slash || !is_integer_literal(&value[..idx]))
     {
+        return true;
+    }
+    has_arith_no_slash(value)
+}
+
+/// The slash-independent half of [`has_arith_scoped`]: `*`, `min(`/`max(`,
+/// `classlevel(`, and the `+`-then-guard patterns — every arithmetic shape
+/// this scanner recognizes EXCEPT the `/`-as-division check. Split out for
+/// [`has_scalar_or_arith_in_spells_field`]'s D7 repair
+/// (`SD31-W3-INTEGRATE-001`): a spell-NAME segment's own literal slash
+/// (`Open/Close`) must never be read as arithmetic, but `has_arith_scoped`'s
+/// `allow_slash=false` arm was written for `DR:`/`CR:` bypass notation and
+/// deliberately still flags a slash whose left side is a NAMED VARIABLE
+/// (`EidolonDR/evil`) — exactly the shape a spell name's `Open` half also
+/// has (not an integer literal), so passing `allow_slash: false` to
+/// `has_arith_scoped` does not suppress it for spell names. This helper
+/// skips the slash check entirely rather than narrowing it further.
+fn has_arith_no_slash(value: &str) -> bool {
+    if value.contains('*') {
         return true;
     }
     let lower = value.to_ascii_lowercase();
@@ -594,8 +610,25 @@ fn has_scalar_or_arith_in_spells_field(value: &str) -> bool {
         if seg.starts_with("TIMES=") {
             continue;
         }
-        if has_scalar(seg) || has_arith_scoped(seg, true) {
+        // D7 repair (`SD31-W3-INTEGRATE-001`, adversarial-review finding):
+        // this segment is `<spell name>[,<DC formula>]`, and canonical PF1
+        // spell names routinely carry a literal slash of their own
+        // (`Open/Close`, `Blindness/Deafness`, `Clairaudience/Clairvoyance`)
+        // that is not division. Scan the whole segment with the slash-as-
+        // division arm DISABLED (still catches `*`, `min(`/`max(`,
+        // `classlevel(`, and the `+<UPPER-run>` guard, none of which a real
+        // spell name collides with), then separately re-scan only the
+        // comma-delimited DC-formula tail (if any) with the slash arm
+        // enabled -- a genuine formula never needs a slash in the name half,
+        // and the tail is where PCGen's own `,15+CHA`-shaped DCs live.
+        if has_scalar(seg) || has_arith_no_slash(seg) {
             return true;
+        }
+        if let Some(comma_idx) = seg.rfind(',') {
+            let tail = &seg[comma_idx + 1..];
+            if has_arith_scoped(tail, true) {
+                return true;
+            }
         }
     }
     false
@@ -1635,6 +1668,48 @@ mod tests {
     fn d6_spells_field_times_per_day_does_not_hide_a_real_scalar() {
         let (class, reason) = cls(
             "Innate Fireball\tTYPE:General\tSPELLS:Innate|TIMES=3/DAY|CASTERLEVEL=TL|Fireball",
+        );
+        assert_eq!(class, WiringClass::Derived);
+        assert_eq!(reason, "spells");
+    }
+
+    // D7 repair (`SD31-W3-INTEGRATE-001`, adversarial-review finding on
+    // `SD31-E2-F3-001`'s `SPELLS:` change): a spell-name segment's own
+    // literal slash (`Open/Close`, `Blindness/Deafness`,
+    // `Clairaudience/Clairvoyance`) is not division, and must not flip an
+    // otherwise fully-literal `SPELLS:` field to `derived`. Real row,
+    // `inner_sea_bestiary/isb_abilities_race.lst:54`,
+    // "Cayhound ~ Spell-Like Abilities":
+    // `SPELLS:Innate|TIMES=ATWILL|Freedom of Movement|Open/Close` carries no
+    // `CASTERLEVEL=`, no DC formula, and no other scalar/arith token
+    // anywhere in the record.
+    #[test]
+    fn d7_spells_field_slash_in_spell_name_is_not_arithmetic() {
+        let (class, reason) = cls(
+            "Cayhound Spell-Like Abilities\tTYPE:General\tSPELLS:Innate|TIMES=ATWILL|Freedom of Movement|Open/Close",
+        );
+        assert_eq!(class, WiringClass::Static);
+        assert_eq!(reason, "literal_magnitudes_only");
+    }
+
+    // D7 — same shape, a second canonical PF1 slashed spell name
+    // (`Blindness/Deafness`), and a third segment in the same field to
+    // confirm the fix is not order-dependent.
+    #[test]
+    fn d7_spells_field_blindness_deafness_is_not_arithmetic() {
+        let (class, reason) = cls(
+            "Doll Spells\tTYPE:General\tSPELLS:Innate|CASTERLEVEL=3|Light|Mage Hand|Open/Close|Prestidigitation|Blindness/Deafness",
+        );
+        assert_eq!(class, WiringClass::Static);
+        assert_eq!(reason, "literal_magnitudes_only");
+    }
+
+    // D7 — a slash in the spell-NAME half must not hide a REAL DC formula
+    // in the same segment's comma-delimited tail.
+    #[test]
+    fn d7_spells_field_slash_in_name_does_not_hide_a_real_dc_formula() {
+        let (class, reason) = cls(
+            "Slashed Save Spell\tTYPE:General\tSPELLS:Innate|CASTERLEVEL=10|Open/Close,15+CHA",
         );
         assert_eq!(class, WiringClass::Derived);
         assert_eq!(reason, "spells");

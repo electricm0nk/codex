@@ -3635,14 +3635,22 @@ one `data/corpus/ultimate_equipment/equipment/*.json` output (matching `cache_ge
 top-level one; confirmed via `v06_work_inventory.rs:187` `Kind::EquipmentModifier`
 classification). New bin `src/bin/gen_cache_ultimate_equipment.rs` (mirrors `gen_cache_apg.rs`).
 
-**PI screening — both SD-30 invocation contracts** (`decisions.md §52.3`/`§53.5`, cited by this
-package's own cross-gate note; SD-30 `epic-3-pi-gate` COMPLETE corpus-wide, `progress.md` cycle
-`SD30-E3-F3-001`): every record's `description` runs through
-`pi_screening::classify_optional_field_declared`, which is the union of both contracts in one call —
-a new `declared_pi_at(lst_path, line)` helper reads the resolved citation's own `NAMEISPI:`/`DESCISPI:`
-corpus tokens (§53.5's declared-PI reader) and takes precedence when present; the shared 55-term
-blacklist (§52.3's sweep, `pi_screening::PI_BLACKLIST_TERMS`) still scans everything else regardless.
-Result: `grep -rl '"license": "PI' data/corpus/ultimate_equipment/equipment/ \| wc -l` → **0** — clean.
+**PI screening — CORRECTED (integration, `SD31-W3-INTEGRATE-001`): this section originally read "both
+SD-30 invocation contracts", which overclaims. What is actually wired is the blacklist sweep
+(§52.3) over `description` plus the declared-PI reader's `DESCISPI:` half only — the reader's
+`NAMEISPI:` half is computed (`declared_pi_at` populates `DeclaredProductIdentity.name`) and then
+DISCARDED: `pi_screening::classify_optional_field_declared` is called with only `declared.description`,
+never `declared.name`. Adversarial review CONFIRMED 2 shipped records whose corpus row declares
+`NAMEISPI:YES` (`ue_equip_arms_armor.lst:66` "Otyugh Hide", `:129` "Elysian Shield") ship their name
+verbatim under plain `license: "OGL"`. `pi_screening.rs`'s own doc comment on `DeclaredProductIdentity`
+is explicit this needs an operator ruling ("A name cannot be redacted ... the only way not to publish
+it is not to publish the row ... which is an operator decision") — not something this cycle should
+invent a redaction policy for, so the code is left as-is (matching the same pattern every other corpus
+writer in the repo uses today) and the 2 keys are logged for an operator ruling (`OPEN-ISSUES.md` row
+38, new this integration cycle). The blacklist half genuinely is wired and genuinely is clean:**
+`grep -rl '"license": "PI' data/corpus/ultimate_equipment/equipment/ \| wc -l` → **0** — all 55
+`PI_BLACKLIST_TERMS` checked against all 1,549 shipped `name`/`key`/`description` fields also returns
+**0** hits, so the blanket `license: OGL` on the other 1,547 records is genuinely earned.
 
 **Citation resolution, re-derived twice.** First run: `1369 equipment, 180 equipment_modifier
 records; 36 unresolved`. Investigated one record deep
@@ -3751,9 +3759,8 @@ and by file — the same shared-name-not-shared-item shape ACG/CRB already carry
 31 (renumbered from this cycle's own row 24 at integration; informational, no action needed on the UE
 finding itself). Every other one of the 1,040 findings is pre-existing and unrelated to any file this
 cycle touched (monster/companion `wiring-class-mismatch` rows under
-`ultimate_psionics`/`ultimate_wilderness`/`monster_codex`) — see `OPEN-ISSUES.md`'s new stamp-refresh
-row (appended this integration cycle, §2 of this receipt names its exact number) for the corpus-wide
-remedy.
+`ultimate_psionics`/`ultimate_wilderness`/`monster_codex`) — see `OPEN-ISSUES.md` row 41 (appended
+this integration cycle) for the corpus-wide remedy.
 
 ### 7. Wired-integration four-check audit (`no-stub-mvp-doctrine.md` §"Per-cycle audit")
 

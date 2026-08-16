@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "MagicItems",
-    "cost_gp": 18000.0,
+    "cost_gp": 3000.0,
     "description": null,
     "key": "Miser's Mask",
     "name": "Miser's Mask",
@@ -67,7 +67,7 @@
         "value": "Magic Item|TIMES=1|TIMEUNIT=Week|CASTERLEVEL=9|Atonement|PRESPELLCAST:TYPE=Divine"
       }
     ],
-    "weight_lbs": 2.0
+    "weight_lbs": 1.0
   },
   "ingested_at": "2026-08-15T22:41:23Z",
   "license": "OGL",
