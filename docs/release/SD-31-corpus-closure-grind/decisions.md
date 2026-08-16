@@ -684,3 +684,166 @@ A known, quantified under-claim rides with it: `closure_has_real_description()` 
 demoted units genuinely do have a real description that the check cannot see (`OPEN-ISSUES.md`
 row 70). The conservative direction was shipped deliberately; recovering those 247 is owed work, not
 a defect to argue about.
+
+## Decision 9 — `core_essentials` is not a book; it leaves scope, but only after its content is re-attributed (operator ruling 2026-08-16)
+
+**Ruled, verbatim:**
+
+> "I did some digging, there is no such book in pathfinder 1e as 'core essentials'   it should be
+> removed from scope and ignored.   If you see one listed in the pcgen corpus, it might be a
+> community construct that just groups together 2 or 3 common books everyone considers essential.
+> we can safely ignore that if we ingest all the real books."
+
+**The operator is right, and the corpus proves it.**
+`$PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/core_essentials/_core_essentials.pcc` declares
+`CAMPAIGN:Core Essentials` — a PCGen *packaging bundle* — and its own `#SOURCELONG:Core Essentials`
+and `#SOURCESHORT:CE` are **commented out**, so it asserts no book identity at all. Its
+`#SOURCEWEB` points at Paizo's free-downloads page and `#SOURCEDATE:2009-08` is the Core Rulebook's
+release month. Meanwhile every `.lst` file inside declares its own real source:
+
+```
+grep -rhoP 'SOURCELONG:[^\t]*' "$PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/core_essentials/" \
+  | sort | uniq -c | sort -rn
+#   53 Core Rulebook     6 Ultimate Magic    5 Ironfang Invasion   2 Bestiary 6/5/4 (each)
+#   19 Bestiary          6 Bestiary 2        3 Bestiary 3          1 Universal Rules
+#                                            3 Advanced Player's Guide
+#                                            1 Pathfinder Player Companion: Blood of the Moon
+```
+
+**~11 real books aggregated under a name that is not one of them.**
+
+### THE CONDITION BINDS: re-attribute first, drop the label second
+
+The ruling's own clause — *"we can safely ignore that if we ingest all the real books"* — is the
+whole safety property. **Adding `core_essentials` to `EXCLUDED_BOOKS` before re-attribution would
+silently delete real content from the denominator**, the shape Decision 1(a) forbids and the
+operator has twice declined. The label must end at **zero units because every unit moved**, never
+because the bucket was excluded. Enforce it with the attribution contract gate `SD31-ATTRIB-001`
+built: a unit stamped `core_essentials` is a gate failure, not a silent label.
+
+### The re-attribution is provable — 92 % resolves mechanically
+
+Re-derived 2026-08-16 at `5d0cd1595` by joining each still-labelled unit's `source_file` to that
+file's own `SOURCELONG` header in the pinned oracle:
+
+| | units |
+|---|---:|
+| still labelled `core_essentials` | **644** (`monster_ability` 378, `race_trait` 258, `race` 8) |
+| **resolved by the file's own `SOURCELONG`** | **591 (92 %)** — `Bestiary` 545, `Core Rulebook` 46 |
+| unresolved (no uncommented `SOURCELONG`) | **53**, across 12 files |
+
+The 53 are four races and their ability files: `aquaticelf` 13+1, `ghoran` 12+1, `android` 11+1,
+`gathlain` 9+1. Next signal for those: each race's own `core_essentials/races/<race>/_race.pcc`,
+which `SD31-ATTRIB-001` already used successfully for its 44-race hand-derived table. **A race that
+still cannot be resolved is left unattributed and said so** — a confidently wrong label is what
+created this defect.
+
+**Watch for books outside the roster.** `Ironfang Invasion`, `Pathfinder Player Companion: Blood of
+the Moon` and `Universal Rules` appear in that census and are not obviously on the 37-book mandate
+roster. A unit resolving to a book we do not carry is **a scope question to log, not a unit to
+delete** — the ruling's condition is "if we ingest all the real books."
+
+**Also noted:** ids still carry a stale `core_essentials:` prefix even where `book` has been
+repaired (e.g. `id=core_essentials:race:catfolk` with `book=bestiary_3`). The id namespace needs the
+same repair, or the fake book survives in every receipt that quotes an id.
+
+**Authority:** operator ruling, 2026-08-16, verbatim above.
+
+## Decision 10 — the Supersession Register: duplicates do not inflate the denominator; newest printing wins (operator ruling 2026-08-16)
+
+**Ruled, verbatim:**
+
+> "we need to track, in writing, all the superseded objects and the sourcebooks. i dont want
+> duplicates falsely adding to the denominator. if a duplicate is found, the most recent publishing
+> takes precedence and the older one is flagged as supersceded/out of scope."
+
+and, clarifying with a worked example:
+
+> "if catfolk exists as a race in beastiary and advanced race guide - thats a duplicate. most recent
+> publish wins"
+
+### This is a SECOND register, and it must not be conflated with §3
+
+| | Structural Exclusion Register (§3) | **Supersession Register (this decision)** |
+|---|---|---|
+| removes a unit because | finishing it is genuinely **impossible** | it is a **duplicate** of a newer printing |
+| authorization | per-entry **operator signature** | this ruling is a **standing rule** a cycle may apply |
+| bar | impossible, never merely expensive | **proven to be the same object**; newest printing wins |
+| state today | **empty** — twice declined | to be built |
+
+Tracked **in writing**, covering both superseded **objects** and superseded **sourcebooks**.
+Publication order is provable from the PCGen `.pcc` headers' `SOURCEDATE:` — use it; never date a
+book from memory.
+
+### The Catfolk clarification widens this from deletion to ATTRIBUTION
+
+The worked example resolves an ambiguity the first statement left open. Today the corpus ships
+**one** Catfolk race record (`catfolk_races.lst`, whose row carries only `SOURCEPAGE:p.xx`), so
+there is no duplicate *record* to delete — but Catfolk is printed in **Bestiary 3 (2011)** and in
+the **Advanced Race Guide (2012)**, and ARG is the newer printing. **The unit therefore belongs to
+ARG.** So the rule governs attribution wherever multiple books print an object, not only cases where
+we hold two rows.
+
+**This resolves the operator's earlier `advanced_race_guide` observation** ("ARG reports as nearly
+untouched"): ARG shows **1** race unit because its reprinted races are filed to the Bestiary line.
+Under this decision they file to ARG.
+
+**The provable signal, re-derived 2026-08-16:** a book prints a race if that book's own `.lst` files
+carry rows for it — ARG's `arg_abilities_race.lst` carries `Catfolk ~ Cat's Claws`, `Catfolk ~
+Clever Cat`, `Catfolk ~ Climber`, `Catfolk ~ Curiosity`, `Catfolk ~ Nimble Faller`, `Catfolk ~
+Scent`, plus `arg_feats.lst`'s `Catfolk Exemplar` line and `arg_equip_arms_armor.lst`'s
+`Claw Blades (Catfolk)`. Scanning that signal across all books:
+
+> **50 of the 103 `race` units are currently attributed to a book older than another book that also
+> prints them.** Examples: Aasimar (now `bestiary`, also ARG) · Dhampir (now `bestiary_2`, also
+> ARG) · Changeling (now `bestiary_4`, also ARG) · Fetchling, Grippli (now `bestiary_2`, also ARG)
+> · Drow, Duergar, Goblin, Hobgoblin (now `bestiary`, also ARG).
+
+### THE TWO GUARDS — non-optional, both derived the hard way
+
+**1. A shared NAME is not a duplicate.** Matching `(kind, name)` implicates **8,738 units, 22.7 % of
+the board** — and sampling shows most are unrelated: `class_feature` "Flight" is a Witch Hex *and*
+an Aegis power *and* a Psychic power; "Misfortune" is an Elf Shaman Hex *and* a Guecubu monster
+ability; "Outsider (Earth)" is four different favored-enemy contexts. Matching `(kind, corpus_key)`,
+which carries the owning context, gives the defensible figure:
+
+| measure | value |
+|---|---:|
+| objects sharing `(kind, corpus_key)` across books | **748** |
+| units involved | **1,553** (4.0 %) |
+| **redundant excess if only the newest survives** | **805** (2.1 %) |
+
+Confirmed-looking samples: `equipment:bullet_firearm_pitted` (Ultimate Combat → Ultimate
+Equipment) · `equipment:pathfinder_chronicle` (Inner Sea World Guide → Adventurer's Guide) ·
+`race_trait:half_orc_bestial` (APG → ARG).
+
+**2. A later VARIANT is not a reprint.** `core_rulebook` ↔ `mythic_adventures` share **95** objects,
+including `feat:weapon_focus` and `feat:improved_channel`. Mythic Adventures publishes a *mythic
+version* — a different object. Blind "newest wins" there deletes base Core Rulebook feats that are
+unambiguously still in the game. The same hazard applies to `pathfinder_unchained` (Unchained Rage
+Power vs Rage Power) and to the race scan above, where Mythic Adventures over-fires because it adds
+mythic racial traits without printing the race. **Every register entry states the field-level
+evidence that the two records are the SAME object, not merely the same key.**
+
+### Sequencing
+
+**Decision 9's re-attribution runs BEFORE the register is built.** `core_essentials` produces
+phantom collisions — e.g. `monster_ability:kyton_unnerving_gaze` colliding between `bestiary` and
+`core_essentials` — that dissolve once its units move to their real books. (Separately noted: the
+misspelled `beastiary` directory now carries **0** units, so that potential systematic duplicate is
+already gone.)
+
+### Register shape
+
+`artifacts/SUPERSESSION-REGISTER.md` plus a machine-readable JSON the inventory consumes:
+superseded **sourcebooks**; superseded **objects**, one row each carrying `kind`, `corpus_key`, the
+surviving unit id + book + `SOURCEDATE`, the superseded unit id + book + `SOURCEDATE`, the
+same-object evidence, and the command that produced the pairing; and a **gate, proven able to
+fail**, that refuses an entry whose two records differ materially and that recomputes the
+denominator so the reduction is visible and attributable. The denominator change is reported as its
+own number — `§5` defines the mandate denominator and a change to it is never incidental.
+
+**`core_essentials` does NOT belong in this register.** It is not a superseded book; it is not a
+book (Decision 9).
+
+**Authority:** operator rulings, 2026-08-16, both verbatim above.
