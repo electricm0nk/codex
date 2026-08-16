@@ -58,14 +58,23 @@
 //! places on a leveled spell list. The counts below are still properties
 //! of `apg::spell_list` as ingested and are asserted as such.
 
+use std::collections::BTreeMap;
+use std::sync::OnceLock;
+
 use serde::{Deserialize, Serialize};
 
+use codex::rules_core::derived_evaluator_fixture_check::{
+    all_spell_caster_level_durations, format_caster_level_linear_duration,
+    spell_book_corpus_dir_for_short_code, CasterLevelLinearFormula,
+};
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
     acg, advanced_race_guide, apg, crb, occult_adventures, ultimate_combat, ultimate_intrigue,
     ultimate_magic,
 };
 use codex::rules_core::spell_resolver;
+
+use crate::authoring_workbench::codex_repo_root;
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
 /// form; the frontend maps them to display labels.
@@ -95,6 +104,43 @@ pub struct SpellCatalogEntryDto {
     pub level: Option<u8>,
     /// `None` for an APG record the corpus supplies no `DESC:` text for.
     pub description: Option<String>,
+    /// The corpus's own `DURATION:` formula, rendered as literal text ("N
+    /// <unit> per caster level") when it matches a caster-level-LINEAR
+    /// shape (`derived_evaluator_fixture_check::parse_caster_level_linear_duration`,
+    /// SD31-E6-F2-006). `None` both for spells with no such formula (a
+    /// flat/instantaneous/permanent duration — most of the catalog) and
+    /// for the small population whose formula is more complex than this
+    /// function commits to (`min(`/`max(`/an additive term) — never a
+    /// resolved live number: a spell's actual duration depends on the
+    /// CASTING CHARACTER's caster level, which no corpus row states and
+    /// this reference catalog has no character context for (see that
+    /// function's own doc comment for why fabricating one would repeat
+    /// the ability-score-scaling monster mistake `SD31-E6-F1-002` refused).
+    pub duration: Option<String>,
+}
+
+/// `(book corpus dir, record key) -> parsed caster-level-linear DURATION`
+/// for every spell in every ingested book, built once per process. Backs
+/// [`duration_for`]; see [`all_spell_caster_level_durations`]'s own doc
+/// comment for what "parseable" means and why an unparseable/absent
+/// DURATION renders `None` rather than a guess.
+fn spell_caster_level_durations() -> &'static BTreeMap<(String, String), CasterLevelLinearFormula>
+{
+    static DURATIONS: OnceLock<BTreeMap<(String, String), CasterLevelLinearFormula>> =
+        OnceLock::new();
+    DURATIONS.get_or_init(|| match codex_repo_root() {
+        Ok(root) => all_spell_caster_level_durations(&root),
+        Err(_) => BTreeMap::new(),
+    })
+}
+
+/// The rendered duration text for one catalog row, or `None` — see
+/// [`SpellCatalogEntryDto::duration`].
+fn duration_for(book_short_code: &str, key: &str) -> Option<String> {
+    let corpus_dir = spell_book_corpus_dir_for_short_code(book_short_code)?;
+    spell_caster_level_durations()
+        .get(&(corpus_dir.to_string(), key.to_string()))
+        .map(format_caster_level_linear_duration)
 }
 
 /// Renders one table description into the prose this catalog is allowed to
@@ -128,6 +174,7 @@ fn map_crb_entry(entry: &crb::spell_list::SpellListEntry) -> SpellCatalogEntryDt
         school: Some(format!("{:?}", entry.school)),
         level: Some(entry.level),
         description: Some(serve_description(entry.description)),
+        duration: duration_for(BOOK_CRB, entry.key),
     }
 }
 
@@ -138,6 +185,7 @@ fn map_apg_entry(entry: &apg::spell_list::SpellListEntry) -> SpellCatalogEntryDt
         school: entry.school.map(|school| format!("{school:?}")),
         level: entry.level,
         description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_APG, entry.key),
     }
 }
 
@@ -148,6 +196,7 @@ fn map_acg_entry(entry: &acg::spell_list::SpellListEntry) -> SpellCatalogEntryDt
         school: Some(format!("{:?}", entry.school)),
         level: Some(entry.level),
         description: Some(serve_description(entry.description)),
+        duration: duration_for(BOOK_ACG, entry.key),
     }
 }
 
@@ -162,6 +211,7 @@ fn map_arg_entry(entry: &advanced_race_guide::spell_list::SpellListEntry) -> Spe
         school: Some(format!("{:?}", entry.school)),
         level: Some(entry.level),
         description: Some(serve_description(entry.description)),
+        duration: duration_for(BOOK_ARG, entry.key),
     }
 }
 
@@ -182,6 +232,7 @@ fn map_um_entry(entry: &ultimate_magic::spell_list::SpellListEntry) -> SpellCata
         school: entry.school.map(|school| format!("{school:?}")),
         level: entry.level,
         description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_UM, entry.key),
     }
 }
 
@@ -192,6 +243,7 @@ fn map_ui_entry(entry: &ultimate_intrigue::spell_list::SpellListEntry) -> SpellC
         school: Some(format!("{:?}", entry.school)),
         level: Some(entry.level),
         description: Some(serve_description(entry.description)),
+        duration: duration_for(BOOK_UI, entry.key),
     }
 }
 
@@ -207,6 +259,7 @@ fn map_oa_entry(entry: &occult_adventures::spell_list::SpellListEntry) -> SpellC
         school: entry.school.map(|school| format!("{school:?}")),
         level: entry.level,
         description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_OA, entry.key),
     }
 }
 
@@ -221,6 +274,7 @@ fn map_uc_entry(entry: &ultimate_combat::spell_list::SpellListEntry) -> SpellCat
         school: entry.school.map(|school| format!("{school:?}")),
         level: entry.level,
         description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_UC, entry.key),
     }
 }
 
@@ -252,6 +306,7 @@ pub fn build_spell_catalog() -> SpellCatalogResponse {
             school: row.school.clone(),
             level: row.level,
             description: row.description.map(serve_description),
+            duration: duration_for(row.book, row.key),
         })
         .collect();
     SpellCatalogResponse { entries }
@@ -684,6 +739,36 @@ mod tests {
         assert!(
             description.contains("Hit Points | Duration"),
             "the inline rulebook table's column separators are prose and must survive: {description}"
+        );
+    }
+
+    // SD31-E6-F2-006: the DoD-8 worked example this cycle's on-screen
+    // verification also uses — `OPEN-ISSUES.md` row 119's own traced unit.
+    #[test]
+    fn adhesive_blood_serves_its_caster_level_linear_duration() {
+        let entries = build_spell_catalog().entries;
+        let entry = entries
+            .iter()
+            .find(|entry| entry.key == "Adhesive Blood" && entry.book == BOOK_ACG)
+            .expect("ACG's Adhesive Blood record must reach the catalog");
+        assert_eq!(
+            entry.duration.as_deref(),
+            Some("1 minutes per caster level"),
+            "acg_spells.lst:8 states DURATION:(CASTERLEVEL) minutes"
+        );
+    }
+
+    #[test]
+    fn a_flat_duration_spell_serves_no_caster_level_duration() {
+        let entries = build_spell_catalog().entries;
+        let entry = entries
+            .iter()
+            .find(|entry| entry.key == "Power Word Stun" && entry.book == BOOK_CRB)
+            .expect("CRB's Power Word Stun record must reach the catalog");
+        assert_eq!(
+            entry.duration, None,
+            "Power Word Stun's DURATION is Instantaneous, not caster-level-linear -- must not \
+             be fabricated"
         );
     }
 }

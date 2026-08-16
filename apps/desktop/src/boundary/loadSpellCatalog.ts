@@ -38,6 +38,17 @@ export interface SpellCatalogEntryDto {
   level: number | null;
   /** `null` for the 12 APG records ingested without description text. */
   description: string | null;
+  /**
+   * The corpus's own `DURATION:` formula, rendered as literal text ("N
+   * <unit> per caster level") when it matches a caster-level-LINEAR shape
+   * (SD31-E6-F2-006). `null` both for a flat/instantaneous/permanent
+   * duration (most records) and for a formula this catalog does not
+   * attempt (`min(`/`max(`/an additive term) — never a resolved live
+   * number, since a spell's actual duration depends on the casting
+   * character's caster level, which this reference catalog has no
+   * character context for.
+   */
+  duration: string | null;
 }
 
 export interface SpellCatalogResponse {

@@ -268,6 +268,21 @@ export function SpellCatalogScreen(props: { onClose: () => void }) {
                 >
                   {entry.description ?? 'No description in the corpus for this record.'}
                 </p>
+                {/* Only rendered when the corpus's own DURATION token
+                    parses as a caster-level-linear formula (SD31-E6-F2-006)
+                    — most records carry no such line, and nothing is shown
+                    in its place for those. */}
+                {entry.duration !== null ? (
+                  <p
+                    style={{
+                      color: 'var(--color-text-muted)',
+                      fontSize: '0.72rem',
+                      margin: '0.15rem 0 0',
+                    }}
+                  >
+                    Duration: {entry.duration}
+                  </p>
+                ) : null}
               </div>
             ))}
           </div>

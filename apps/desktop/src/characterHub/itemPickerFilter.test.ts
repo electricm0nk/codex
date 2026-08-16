@@ -25,12 +25,12 @@ const EQUIPMENT_ENTRIES: EquipmentCatalogEntryDto[] = [
 ];
 
 const SPELL_ENTRIES: SpellCatalogEntryDto[] = [
-  { key: 'spell:magic_missile', book: 'CRB', school: 'Evocation', level: 1, description: 'A missile of magical energy.' },
-  { key: 'spell:fireball', book: 'CRB', school: 'Evocation', level: 3, description: 'A burst of flame.' },
-  { key: 'spell:cure_light_wounds', book: 'CRB', school: 'Conjuration', level: 1, description: 'Heals wounds.' },
+  { key: 'spell:magic_missile', book: 'CRB', school: 'Evocation', level: 1, description: 'A missile of magical energy.', duration: null },
+  { key: 'spell:fireball', book: 'CRB', school: 'Evocation', level: 3, description: 'A burst of flame.', duration: null },
+  { key: 'spell:cure_light_wounds', book: 'CRB', school: 'Conjuration', level: 1, description: 'Heals wounds.', duration: null },
   // A real `apg_spells.lst` gap shape: resolves, but the corpus row
   // carries no SCHOOL:/CLASSES:/DESC: token.
-  { key: 'spell:corpus_gap', book: 'APG', school: null, level: null, description: null },
+  { key: 'spell:corpus_gap', book: 'APG', school: null, level: null, description: null, duration: null },
 ];
 
 /**
