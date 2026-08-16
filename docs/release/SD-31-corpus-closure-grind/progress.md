@@ -5133,10 +5133,25 @@ this same reason. **This is the honest ceiling, not a shortfall of this cycle's 
 SLA_CL/`SR:10+TL` parser extension row 26 already named, vs. a Structural Exclusion Register candidate
 for the 104-unit ability-modifier-scaling family).
 
-### 4. On-screen verification (DoD item 8)
+### 4. On-screen verification (DoD item 8) — PASS
 
-<!-- filled in after the gate completes and the desktop driver runs, per SKILL.md's explicit "do not
-run driver.sh concurrently with scripts/verify.sh" memory-contention rule (22 GiB RAM, no swap) -->
+Run after the full gate completed (per `SKILL.md`'s explicit "do not run `driver.sh` concurrently
+with `scripts/verify.sh`" memory-contention rule):
+```
+RUN_DESKTOP_AGENT=sd31-e6-f1-002 ./.claude/skills/run-desktop/verify-on-screen.sh \
+  --family monster --record "Demon (Balor)" \
+  --expect "Balor" --expect "Spell-like abilities CL 20" \
+  --out docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F1-002/item8
+```
+**PASS.** `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F1-002/item8/monster-demon-balor.png`
++ `.verify.md` (both committed). The report's own select-all/clipboard extraction of the rendered
+webview text:
+```
+30:Demon (Balor)Large Outsider (Chaotic, Demon, Evil, Extraplanar)
+32:Speed 40 ft., fly 90 ft. · Bestiary 1 p.58 · Hit dice Outsider (Fort/Will):20 · Spell-like abilities CL 20
+```
+`spell_like_ability_caster_level()`'s output is genuinely on the player's screen, not merely returned
+by a gate. `driver.sh stop` run at cycle end.
 
 ### 5. Board delta this cycle
 
@@ -5182,8 +5197,38 @@ docs/release/SD-31-corpus-closure-grind/kanban.md              (card claim)
 
 ### Guarded regen (measured, not committed — the wave rule)
 
-<!-- filled in after the gate completes; CARGO_TARGET_DIR is shared with the running verify.sh and
-running a second heavy cargo command concurrently risks starving both -->
+Run after the gate finished (avoiding target-dir contention with the running `verify.sh`):
+```
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-monster-widen cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-monster-widen.json
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-monster-widen cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-monster-widen.json
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-monster-widen.json DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-monster-widen.json \
+  CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-monster-widen cargo run --locked --bin v06_work_inventory
+```
+- `corpus_literal_sweep`: CLEAN — `6331 records examined of 11006 read, 51260 tokens compared (9
+  synthesized), 10581 digests checked, 0 findings`.
+- `derived_evaluator_fixture_check`: `100 of 101 covered units cleared; 1 failed; 0 not ingested` —
+  the 1 failure is `advanced_players_guide:equipment:spindle_of_perfect_knowledge`
+  (`BONUS:STAT|INT,WIS,CHA|4|TYPE=Enhancement`, "evaluator produced no ability bonus at all"), a
+  **pre-existing equipment-lane gap this cycle did not touch** (this cycle's own 7 monster fixtures
+  are unaffected — all 7 still clear, per §1's `run_monster_bar_check_clears_every_committed_monster_fixture`
+  result). Not filed as a new `OPEN-ISSUES.md` row: out of this card's file territory (equipment
+  fixtures), flagged here for whichever lane owns that fixture next.
+- `v06_work_inventory`: exit `0` — **zero stamp loss** (the guard would have exited non-zero and
+  named the dropped count otherwise).
+- **Doneness verdict, before and after, identical**:
+  ```
+  python3 -c "
+  import json, sys, collections
+  sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+  d = json.load(open('docs/work-inventory.json'))
+  U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+  c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+  print(len(U), dict(c), round(100*c['done']/len(U),2))
+  "
+  ```
+  → `38521 {'done': 7355, ...} 19.09` both before and after — **0 delta**, confirming §5's claim
+  exactly rather than merely asserting it. `docs/work-inventory.json` restored via `git checkout --
+  docs/work-inventory.json` per the wave rule; `git status` shows it untouched.
 
 ### Gate
 
@@ -5193,5 +5238,58 @@ LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F1-002-verify.log
 RETRO_ACTOR=sd31-monster-widen CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-monster-widen \
   ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
 ```
-<!-- VERIFY_EXIT filled in below once obtained -->
+
+**`VERIFY_EXIT=1`, captured directly — 21 of 22 stages PASS, 1 FAILED (`root-full`), attributed and
+confirmed environmental, not a regression.**
+
+```
+SUMMARY
+  passed:  21  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+  reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep
+  audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib desktop
+  reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump
+  FAILED:  1  root-full
+
+BASELINE NOTES (not failures):
+  - BASELINE_ROOT_LIB_TESTS stale: 1816 recorded, 1819 measured.
+  - BASELINE_DESKTOP_TESTS stale: 445 recorded, 447 measured.
+
+RESULT: FAIL — logs in /tmp/codex-verify-zMoNlG
+VERIFY_EXIT=1
+```
+
+**`root-full`'s single failure, attributed one `Running` line at a time, per `AGENTS.md`'s rule**
+(never excuse a red stage without naming the exact suite): `cargo exit 101; 6467 passed across 552
+suites`. `grep -n "FAILED\|panicked" /tmp/codex-verify-zMoNlG/root-full.log` → exactly one hit,
+`tests/sd17_b5_equipment.rs::parse_runs_in_linear_time_on_a_synthetic_large_file`:
+```
+thread 'parse_runs_in_linear_time_on_a_synthetic_large_file' panicked at tests/sd17_b5_equipment.rs:463:5:
+5k equipment records should parse in well under 2s, took 2.175973174s
+```
+This is a **CPU-load timing assertion** (the test's own comment: *"Loose bound: 5k records should
+parse in well under 2 seconds on any reasonable host"*) in `sd17_b5_equipment.rs` — a file this cycle
+never touched (`git diff --stat` names zero equipment files). **Confirmed flaky, not attributed by
+assumption**: re-ran the single test in isolation, after the gate's own CPU load (desktop crate build
++ npm ci + clippy across both crates) had cleared —
+```
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-monster-widen cargo test --locked --test sd17_b5_equipment -- parse_runs_in_linear_time_on_a_synthetic_large_file
+```
+→ `test parse_runs_in_linear_time_on_a_synthetic_large_file ... ok` (1.45s, well under the 2s bound).
+Self-heal per the loop-instruction's own rule ("a flaky test that fails once but passes on a clean
+re-run is annotated in the cycle record and not re-fired") — annotated here, not re-fired as a second
+full gate run (a second `root-full` alone costs another ~10+ minutes for a single already-isolated,
+already-confirmed-flaky assertion).
+
+**Every stage that exercises this cycle's own new code is confirmed green**: `root-lib` (1,819,
+includes both `monster_chassis.rs` new tests and the `derived_evaluator_fixture_check.rs` presence-gate
+test — measured HIGHER than the stale 1,816 baseline, confirming the 3 new tests landed and passed,
+not merely compiled), `desktop` (447, includes both `monster_catalog.rs` new tests — measured higher
+than the stale 445 baseline for the same reason), `reach` (27, unchanged — no new family claimed, none
+dropped), `frontend-test`/`frontend-typecheck` (99/99, clean — confirms the TS/TSX changes), `clippy`
+(0 errors, pre-existing warning baseline unchanged).
+
+This satisfies DoD item 1 in substance (`VERIFY_EXIT` captured directly, and the sole non-zero cause is
+independently attributed and reproduced as environmental) even though the literal number is `1` rather
+than `0` — the loop-instruction's own "Reading the exit code" rule exists precisely so a non-zero exit
+is read rather than assumed, and this section is that reading, not a substitute for it.
 
