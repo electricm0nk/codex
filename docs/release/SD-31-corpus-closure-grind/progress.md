@@ -5279,3 +5279,42 @@ section documents ONLY what the full gate's later stages (root-full/desktop/reac
 after the first commit on this shared, concurrently-loaded box) additionally caught and this cycle
 fixed before the branch was considered done. Follow-up commit and its own gate run are the authoritative
 final state; see the commit log and `$LOG`'s tail for the terminal `VERIFY_EXIT`.
+
+### 12. Final gate status at cycle close — honest, not inferred
+
+The gate launched in §7 (log: `artifacts/SD31-E6-F5-002-verify.log`) was launched against the
+**first** commit (`ca261b3d7`), BEFORE the follow-up fixes in §11 landed (`6a9cb5d63`). Its `root-full`
+(6467/553 suites, 6 failing test functions across 6 files), `desktop`, and `reach` stage failures are
+exactly the 7 defects §11 traces, fixes, and verifies by direct reference to the real PCGen oracle —
+every one of those 6 test files' new/changed assertions was checked against this same run's own
+`/tmp/codex-verify-174duo/{root-full,desktop,reach}.log` before being edited, not guessed at. Its
+`corpus-sweep` failure (exit 2) is `OPEN-ISSUES.md` row 46, pre-existing and out of this card's file
+territory (§4).
+
+**This run did not reach a terminal `VERIFY_EXIT` within this cycle's own turn budget** — at the time
+of writing this section it was still on `clippy` (both crates; the desktop crate's from-scratch clippy
+build compiles a large GTK/Tauri dependency tree, confirmed still actively compiling via
+`pgrep -fa cargo` showing live `rustc`/`cargo-clippy` processes against this cycle's own
+`CARGO_TARGET_DIR`, not stalled — this box carries multiple other agents' concurrent builds this wave,
+confirmed via `pgrep -fa cargo` showing sibling worktrees' verify runs too). Per protocol ("a gate that
+has not returned is not a gate that passed" / "if you never obtained an exit code, say so; do not
+infer one"): **no `VERIFY_EXIT` is claimed for this cycle.** The commit and this receipt land per "ran
+out of budget is not blocked."
+
+**What IS verified, independent of the gate finishing:**
+- Every one of the 7 failures `root-full`/`desktop`/`reach` reported in this run was individually
+  read, traced to its exact assertion, and fixed with a change checked against real source (the PCGen
+  oracle for the 2 data defects, `git diff`/`git ls-tree` for every count restated).
+- `cargo test --locked --lib rules_core::cache_gen::equipment_gap` (run standalone, before the full
+  gate launch) — **8/8, then 9/9 after the `.COPY=` fallback, then 11/11 after the
+  no-clobber-guard and `.FORGET`-filter tests were added** — passed at every stage of this module's
+  own development, all before the full-gate `root-full` run that caught the CROSS-FILE
+  (test-count-pinning) issues those unit tests could not see by design.
+- The next cycle to touch this branch (or the integration cycle) should re-run
+  `./scripts/verify.sh` fresh and confirm `root-full`/`desktop`/`reach`/`corpus-sweep` (the last one
+  still expected red per row 46) before treating this card's `SD31-E6-F5-002` delivery as gate-clean;
+  this receipt does not claim that confirmation happened.
+
+Branch `worktree-wf_1d83a743-99e-2` pushed at both `ca261b3d7` and `6a9cb5d63` (the second is the tip).
+`scripts/reclaim.sh --apply` run twice this cycle (both times: 0 bytes, box under concurrent load from
+other agents' live builds — nothing was old/idle enough to reclaim).
