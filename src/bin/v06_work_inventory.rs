@@ -944,6 +944,37 @@ mod equipment_verdict_rung_tests {
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "text-complete");
     }
+
+    /// SD31-W8-INTEGRATE-001 (wave-8 adversarial review, CONFIRMED
+    /// finding): `Kind::Equipment`/`Kind::EquipmentModifier` was the ONE
+    /// prose-bearing kind `SD31-D7-PROSE-004` did not gate on
+    /// `universal_sheet_modifier` -- a unit whose recovered description
+    /// states an unconditional ("size bonus"-shaped) modifier to a value
+    /// the sheet computes must NOT read `text-complete`, the same way
+    /// `Kind::Feat` and every other kind already refuses it.
+    #[test]
+    fn a_universal_sheet_modifier_equipment_modifier_is_refused_even_when_otherwise_qualifying() {
+        let mut facts = EngineFacts::default();
+        facts
+            .equipment_keys
+            .entry("ultimate_equipment")
+            .or_default()
+            .insert("Special Ability ~ Universal".to_string());
+        facts.corpus_json_descriptions.insert(
+            ("ue_equipmods.lst".to_string(), 1700, "Special Ability ~ Universal".to_string()),
+            "+1 size bonus to Armor Class.".to_string(),
+        );
+        let unit =
+            equipment_modifier_unit("ue_equipmods.lst", 1700, "Special Ability ~ Universal");
+        // `universal_sheet_modifier: true` is not a stub -- it is the
+        // caller's own `closure_states_universal_sheet_modifier` verdict
+        // for this exact text (it contains "size bonus" and no
+        // conditional cue, the discriminator's own paradigm case).
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", true);
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(verdict.evidence, "equipment_universal_sheet_modifier_pending_compute");
+    }
 }
 
 /// `"Fast Movement"` -> `"fast_movement"`. The engine's own explanation-id
@@ -4727,8 +4758,19 @@ fn classify(
             // `corpus_json_description_leaks_pcgen_syntax`'s own doc
             // comment. The equipment render path has no leak guard of its
             // own, so a promotion here is the last chance to catch it.
+            //
+            // CONFIRMED finding (`SD31-W8-INTEGRATE-001`, wave-8
+            // adversarial review): `Kind::Equipment`/`Kind::EquipmentModifier`
+            // was the ONE prose-bearing kind `SD31-D7-PROSE-004` did not
+            // gate on `universal_sheet_modifier` when it threaded that
+            // parameter through every other kind's arm below -- so a
+            // universal ("size bonus"-shaped) modifier could still reach
+            // `done` as text here. Same `!universal_sheet_modifier` guard,
+            // same `grounded`/pending-compute fallback, as `Kind::Feat`
+            // above and every kind below.
             if text_only
                 && has_real_description
+                && !universal_sheet_modifier
                 && !corpus_json_description_leaks_pcgen_syntax(
                     &facts.corpus_json_descriptions,
                     &unit.provenance.file,
@@ -4740,6 +4782,23 @@ fn classify(
                     status: "text-complete",
                     evidence: "in_equipment_tables_and_corpus_record_carries_no_magnitude_token"
                         .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if text_only
+                && has_real_description
+                && universal_sheet_modifier
+                && !corpus_json_description_leaks_pcgen_syntax(
+                    &facts.corpus_json_descriptions,
+                    &unit.provenance.file,
+                    unit.provenance.line,
+                    &unit.key,
+                )
+            {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "equipment_universal_sheet_modifier_pending_compute".to_string(),
                     reason: None,
                     engine_book: engine_book_field,
                 };
