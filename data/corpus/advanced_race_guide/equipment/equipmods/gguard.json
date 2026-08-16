@@ -1,0 +1,34 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": null,
+    "key": "GGUARD",
+    "name": "GGUARD",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 58,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
+    "record_key": "GGUARD",
+    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

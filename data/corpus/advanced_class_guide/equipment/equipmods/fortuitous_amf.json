@@ -1,0 +1,34 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": null,
+    "key": "Fortuitous_AMF",
+    "name": "Fortuitous_AMF",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 128,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
+    "record_key": "Fortuitous_AMF",
+    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -14,6 +14,28 @@
 //! record's `DESC:` and `SPROP:` tokens when both are present.
 //!
 //! Total: 769 rows.
+//!
+//! **SD-31 `SD31-E6-F5-002` hand correction (8 rows, ACG only).** 8 ACG
+//! `Equipmods` rows (`Amorphous`, `Burdenless`, `Restful`, `Spiteful`,
+//! `Trackless`, `Exclusionary`, `Prehensile`, `Sneaky`) carried
+//! `cost_gp: None` despite their real, cited `acg_equipmods.lst` line
+//! stating a plain literal `COST:` token (not a formula) —
+//! `tests/sd27_equipment_modifier_price_matches_corpus_cost_token.rs`
+//! caught the first of the 8 (`Amorphous` charging `None` against a real
+//! `COST:4500`) the first time a corpus record existed for the engine's
+//! ALREADY-WIRED `equipment_resolver::equipment_catalog_row_by_key`
+//! (which chains this table in directly) to compare against — the
+//! `cost_gp: None` defect pre-dates this cycle and was already reaching
+//! the live resolver; this cycle's `cache_gen::equipment_gap` dump is
+//! what finally gave a test something on disk to check it against. Each
+//! of the 8 verified directly against the real oracle line (e.g.
+//! `acg_equipmods.lst:10`: `Amorphous␉␉KEY:Special Ability ~ Amorphous ~
+//! Armor␉␉TYPE:Armor␉␉␉COST:4500`) before correcting — the corpus wins
+//! over the (evidently buggy) upstream generator's formula-detection
+//! heuristic, per `decisions.md`'s "a dumped record must be the corpus's
+//! record" discipline. Not a full audit of this table's other ~570
+//! `cost_gp: None` rows (most are genuinely formula-priced or token-free;
+//! out of this cycle's bounded scope) — only the 8 a real test caught.
 
 /// One recovered corpus equipment row. Deliberately one flat shape for
 /// every book: unlike the hand-authored per-book tables (each with its own
@@ -425,15 +447,15 @@ pub static ADVANCED_PLAYERS_GUIDE_GAP_ROWS: &[EquipmentGapRow] = &[
 
 /// advanced_class_guide — 50 record(s) the hand-authored `advanced_class_guide` table does not hold.
 pub static ADVANCED_CLASS_GUIDE_GAP_ROWS: &[EquipmentGapRow] = &[
-    EquipmentGapRow { book: "ACG", key: "Amorphous", name: "Amorphous", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
-    EquipmentGapRow { book: "ACG", key: "Burdenless", name: "Burdenless", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
+    EquipmentGapRow { book: "ACG", key: "Amorphous", name: "Amorphous", category: "Equipmods", cost_gp: Some(4500.0), weight_lbs: None, description: None },
+    EquipmentGapRow { book: "ACG", key: "Burdenless", name: "Burdenless", category: "Equipmods", cost_gp: Some(4000.0), weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "Calming", name: "Calming", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "Jarring", name: "Jarring", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
-    EquipmentGapRow { book: "ACG", key: "Restful", name: "Restful", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
+    EquipmentGapRow { book: "ACG", key: "Restful", name: "Restful", category: "Equipmods", cost_gp: Some(4500.0), weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "Sensing", name: "Sensing", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "Spell_Dodging", name: "Spell_Dodging", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
-    EquipmentGapRow { book: "ACG", key: "Spiteful", name: "Spiteful", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
-    EquipmentGapRow { book: "ACG", key: "Trackless", name: "Trackless", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
+    EquipmentGapRow { book: "ACG", key: "Spiteful", name: "Spiteful", category: "Equipmods", cost_gp: Some(7000.0), weight_lbs: None, description: None },
+    EquipmentGapRow { book: "ACG", key: "Trackless", name: "Trackless", category: "Equipmods", cost_gp: Some(7500.0), weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "Vouchsafing", name: "Vouchsafing", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "Answering", name: "Answering", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "BloodHunting", name: "BloodHunting", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
@@ -442,7 +464,7 @@ pub static ADVANCED_CLASS_GUIDE_GAP_ROWS: &[EquipmentGapRow] = &[
     EquipmentGapRow { book: "ACG", key: "Confounding", name: "Confounding", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "Distracting", name: "Distracting", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "Distracting_Greater", name: "Distracting_Greater", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
-    EquipmentGapRow { book: "ACG", key: "Exclusionary", name: "Exclusionary", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
+    EquipmentGapRow { book: "ACG", key: "Exclusionary", name: "Exclusionary", category: "Equipmods", cost_gp: Some(3750.0), weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "Exhausting", name: "Exhausting", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "FateStealing", name: "FateStealing", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "Flamboyant", name: "Flamboyant", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
@@ -451,9 +473,9 @@ pub static ADVANCED_CLASS_GUIDE_GAP_ROWS: &[EquipmentGapRow] = &[
     EquipmentGapRow { book: "ACG", key: "Fortuitous", name: "Fortuitous", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "Inspired", name: "Inspired", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "Phantom_Ammunition", name: "Phantom_Ammunition", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
-    EquipmentGapRow { book: "ACG", key: "Prehensile", name: "Prehensile", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
+    EquipmentGapRow { book: "ACG", key: "Prehensile", name: "Prehensile", category: "Equipmods", cost_gp: Some(2500.0), weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "Sacred", name: "Sacred", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
-    EquipmentGapRow { book: "ACG", key: "Sneaky", name: "Sneaky", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
+    EquipmentGapRow { book: "ACG", key: "Sneaky", name: "Sneaky", category: "Equipmods", cost_gp: Some(5000.0), weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "SpiritHunting", name: "SpiritHunting", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "Answering_AMF", name: "Answering_AMF", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },
     EquipmentGapRow { book: "ACG", key: "BloodHunting_AMF", name: "BloodHunting_AMF", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None },

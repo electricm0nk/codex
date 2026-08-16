@@ -176,7 +176,12 @@ fn spell_cache_has_all_92_real_records() {
 #[test]
 fn equipment_cache_has_all_200_real_records_across_4_categories() {
     let records = load_all("equipment");
-    assert_eq!(records.len(), 200, "real, de-duplicated ARG equipment record count across arg_equip_arms_armor.lst (28) + arg_equip_general.lst (79) + arg_equip_magic_items.lst (78) + arg_equipmods.lst (15)");
+    // SD-31 `SD31-E6-F5-002`: `cache_gen::equipment_gap` separately added
+    // 15 real, oracle-cited `equipment_gap_tables.rs` records for ARG
+    // (residue the hand-authored table this file's own generator reads
+    // never held) into this same directory -- 200 + 15 = 215
+    // (`git diff --stat 89846f5c9 ca261b3d7 -- data/corpus/advanced_race_guide/`).
+    assert_eq!(records.len(), 215, "real, de-duplicated ARG equipment record count across arg_equip_arms_armor.lst (28) + arg_equip_general.lst (79) + arg_equip_magic_items.lst (78) + arg_equipmods.lst (15), PLUS 15 SD31-E6-F5-002 equipment_gap_tables records");
 
     let mut by_category: std::collections::HashMap<String, u32> = std::collections::HashMap::new();
     let mut slugs: std::collections::HashMap<String, BTreeSet<String>> = std::collections::HashMap::new();
@@ -292,6 +297,9 @@ fn every_v1_record_passes_the_shared_validate_license_gate() {
             audited += 1;
         }
     }
-    assert_eq!(audited, 92 + 200 + 187);
+    // 200 -> 215: SD31-E6-F5-002's equipment_gap_tables ARG addition, see
+    // `equipment_cache_has_all_200_real_records_across_4_categories`'s
+    // comment above.
+    assert_eq!(audited, 92 + 215 + 187);
     let _ = dir;
 }

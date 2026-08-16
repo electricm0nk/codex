@@ -1130,7 +1130,12 @@ mod tests {
     /// and a table that silently loses records shows up as a mismatch here.
     ///
     /// ARG's corpus-JSON-only racial traits + class_feature records (201 ->
-    /// 844 by SD-31 `epic-5-chassis-sweep` F1, `SD31-E5-F1-001`, 2026-08-15)
+    /// 844 by SD-31 `epic-5-chassis-sweep` F1, `SD31-E5-F1-001`, 2026-08-15;
+    /// 844 -> 859 by `SD31-W4-INTEGRATE-001`, 2026-08-16, reconciling
+    /// `SD31-E6-F5-002`'s 15 corpus-JSON-only `equipment`/`equipment_modifier`
+    /// records -- `equipment_gap_tables` is not among this diagnostic's
+    /// tracked `rules_tables` sums for ARG, the same corpus-only shape as
+    /// the class_feature records above)
     /// are the one declared difference, stated as a number here rather than
     /// waved at, so the two artifacts reconcile exactly.
     #[test]
@@ -1143,7 +1148,7 @@ mod tests {
             // book (no rules_tables module carries class_feature data, so
             // this is not double-counted -- see that cycle's module doc
             // comment and `artifacts/SD31-E5-F1-001-lever-measurement.md`).
-            ("advanced_race_guide", "advanced_race_guide", 844u32),
+            ("advanced_race_guide", "advanced_race_guide", 859u32),
             ("pathfinder_unchained", "pathfinder_unchained", 0),
         ] {
             let response = build_corpus_ingest_diagnostic();

@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 850.0,
+    "description": "Ingested; Fort DC 19; Onset 10 min; Freq 1 hr (8); Effect 1 Int, Wis, and Cha dmg, -5 on concentration, concentration to cast spells or use spell-like abilities (see text); Cure 2 saves",
+    "key": "Poison (Witch-Hunter's Sword)",
+    "name": "Poison (Witch-Hunter's Sword)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "850"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "SPROP",
+        "value": "Ingested; Fort DC 19; Onset 10 min; Freq 1 hr (8); Effect 1 Int, Wis, and Cha dmg, -5 on concentration, concentration to cast spells or use spell-like abilities (see text); Cure 2 saves"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 107,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_equip_general.lst",
+    "record_key": "Poison (Witch-Hunter's Sword)",
+    "sha256": "372c2ea96d9352ae5d06f115b3f8fbd504b4857145cdae1b51d05e54d9be70c7"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

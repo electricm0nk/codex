@@ -664,6 +664,11 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // claims (feats/equipment/archetypes) sourced directly from their
     // compiled `rules_tables` modules, never from `data/corpus/`, which is
     // why they could be claimed without ever needing a row here until now.
+    // Both books' `data/corpus/` directories are now populated by TWO
+    // independent SD-31 wave-4 lanes: `cache_gen::class_feature`'s
+    // `class_feature/` subdirectory and `cache_gen::equipment_gap`'s
+    // `equipment/` subdirectory (`SD31-E6-F5-002`) -- one registration
+    // covers both, the mapping is directory-to-book-id, not kind-scoped.
     ("occult_adventures", "occult_adventures"),
     ("adventurers_guide", "adventurers_guide"),
     ("ultimate_combat", "ultimate_combat"),

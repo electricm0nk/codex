@@ -1,0 +1,34 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": null,
+    "key": "RGHTS",
+    "name": "RGHTS",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 73,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equipmods.lst",
+    "record_key": "RGHTS",
+    "sha256": "f7f13bdfc3132b935fe2ec9a7fa4be460eebea86eefd4026468fae8d06adb338"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

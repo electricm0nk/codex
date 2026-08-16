@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 10000.0,
+    "description": "On command, alters its shape to become any other melee weapon of the same general shape and handedness.",
+    "key": "Special Ability ~ Transformative ~ Melee",
+    "name": "Transformative",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Transformative ~ Melee"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee"
+      },
+      {
+        "key": "COST",
+        "value": "10000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,WeaponEnhancement,Weapon"
+      },
+      {
+        "key": "SPROP",
+        "value": "On command, alters its shape to become any other melee weapon of the same general shape and handedness."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equipmods.lst",
+    "record_key": "Special Ability ~ Transformative ~ Melee",
+    "sha256": "f7f13bdfc3132b935fe2ec9a7fa4be460eebea86eefd4026468fae8d06adb338"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}
