@@ -76,6 +76,7 @@ enum Outcome {
     NoLstCitation,
     AlreadyEnriched,
     CitationMiss(String),
+    MergedEntryMismatch(String),
 }
 
 fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
@@ -105,6 +106,38 @@ fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
     let Some(raw_record) = parsed.entries.iter().find(|e| e.header_line_number == line) else {
         return Outcome::CitationMiss(format!("no record at {lst_rel_path}:{line} (record_key={record_key:?})"));
     };
+
+    // `SD31-W4-INTEGRATE-001` (`OPEN-ISSUES.md` row 48/49): `open_record`'s
+    // same-name merge (this parser's own documented handling of PCGen
+    // restating one logical item across multiple lines) also fires on
+    // rows that are NOT restatements at all -- two separate `.lst` rows
+    // sharing a base template name (a duplicate corpus row, or
+    // `extract_record_name` returning a `.COPY=` row's BASE name rather
+    // than its own distinct post-`.COPY=` name) merge into one parsed
+    // entry whose token list can carry tokens that never appear on the
+    // SPECIFIC cited line at all -- confirmed for `bastard_s_sting`
+    // (line 447, a bare `.COPY=` row with no tokens of its own, shipped
+    // an unrelated `EQMOD:Material ~ Steel` and a duplicated
+    // `VISIBLE:YES`), `mountain_pattern_armor` (every token doubled from
+    // a second, near-identical row at line 46) and `hunter_s_stand`
+    // (three genuinely distinct `.COPY=` items' tokens merged into one).
+    // Guard: every token this enrichment is about to ship must be
+    // byte-present on the record's OWN cited line -- the same invariant
+    // `corpus_literal_sweep` independently re-checks after the fact, run
+    // here BEFORE writing so a merged-entry defect is refused at the
+    // source rather than caught downstream. A record that fails this
+    // check is left un-enriched (`MergedEntryMismatch`, counted and
+    // reported, never silently dropped) rather than shipping a citation
+    // whose tokens the cited line does not actually carry.
+    let cited_line_text = lst_text.lines().nth(line.saturating_sub(1)).unwrap_or("");
+    for token in &raw_record.tokens {
+        let rendered = format!("{}:{}", token.key, token.value);
+        if !cited_line_text.contains(&rendered) {
+            return Outcome::MergedEntryMismatch(format!(
+                "{lst_rel_path}:{line} (record_key={record_key:?}): token {rendered:?} not byte-present on the cited line -- likely a same-name merge with a different row"
+            ));
+        }
+    }
 
     let raw_tokens: Vec<Value> = raw_record
         .tokens
@@ -162,6 +195,7 @@ fn main() {
     let mut total_no_citation = 0u32;
     let mut total_already = 0u32;
     let mut misses: Vec<String> = Vec::new();
+    let mut merged_entry_mismatches: Vec<String> = Vec::new();
 
     for book in books {
         let book_dir = corpus_root.join(book);
@@ -179,19 +213,32 @@ fn main() {
                 Outcome::NoLstCitation => total_no_citation += 1,
                 Outcome::AlreadyEnriched => total_already += 1,
                 Outcome::CitationMiss(msg) => misses.push(format!("{}: {}", file.display(), msg)),
+                Outcome::MergedEntryMismatch(msg) => {
+                    merged_entry_mismatches.push(format!("{}: {}", file.display(), msg))
+                }
             }
         }
         eprintln!("{book}: {} equipment files scanned, {book_enriched} enriched", files.len());
     }
 
     eprintln!(
-        "\nenrich_equipment_raw_tokens: {total_enriched} enriched, {total_no_citation} no-LST-citation (untouched), {total_already} already-enriched, {} citation misses",
-        misses.len()
+        "\nenrich_equipment_raw_tokens: {total_enriched} enriched, {total_no_citation} no-LST-citation (untouched), {total_already} already-enriched, {} citation misses, {} merged-entry mismatches (left un-enriched)",
+        misses.len(),
+        merged_entry_mismatches.len()
     );
     if !misses.is_empty() {
         eprintln!("\nCitation misses (not enriched, real gaps to investigate):");
         for miss in &misses {
             eprintln!("  {miss}");
+        }
+    }
+    if !merged_entry_mismatches.is_empty() {
+        eprintln!(
+            "\nMerged-entry mismatches (parse_equipment_entries's same-name merge pulled in a \
+             token from a DIFFERENT row than the one cited -- left un-enriched, OPEN-ISSUES.md row 48/49):"
+        );
+        for mismatch in &merged_entry_mismatches {
+            eprintln!("  {mismatch}");
         }
     }
 }

@@ -7,20 +7,7 @@
     "key": "Bastard's Sting",
     "name": "Bastard's Sting",
     "raw_bonus_chains": [],
-    "raw_tokens": [
-      {
-        "key": "VISIBLE",
-        "value": "YES"
-      },
-      {
-        "key": "EQMOD",
-        "value": "Material ~ Steel"
-      },
-      {
-        "key": "VISIBLE",
-        "value": "YES"
-      }
-    ],
+    "raw_tokens": [],
     "weight_lbs": null
   },
   "ingested_at": "2026-08-16T01:34:54Z",

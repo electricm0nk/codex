@@ -69,6 +69,13 @@ fn main() {
                     report.skipped_pre_existing
                 );
             }
+            if !report.excluded_non_content_directive.is_empty() {
+                eprintln!(
+                    "NOTE: {} record(s) excluded as non-content (.FORGET directive or a disabled #-prefixed row): {:?}",
+                    report.excluded_non_content_directive.len(),
+                    report.excluded_non_content_directive
+                );
+            }
             if report.equipment_written == 0 && report.equipment_modifier_written == 0 {
                 eprintln!("FATAL: zero records written -- corpus likely unreachable.");
                 std::process::exit(1);

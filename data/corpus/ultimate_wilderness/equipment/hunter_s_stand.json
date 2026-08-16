@@ -7,40 +7,7 @@
     "key": "Hunter's Stand",
     "name": "Hunter's Stand",
     "raw_bonus_chains": [],
-    "raw_tokens": [
-      {
-        "key": "TYPE",
-        "value": "Goods.General"
-      },
-      {
-        "key": "COST",
-        "value": "25"
-      },
-      {
-        "key": "WT",
-        "value": "15"
-      },
-      {
-        "key": "SOURCEPAGE",
-        "value": "p.243"
-      },
-      {
-        "key": "OUTPUTNAME",
-        "value": "Hunter's Stand, Camouflage Blind"
-      },
-      {
-        "key": "COST",
-        "value": "30"
-      },
-      {
-        "key": "OUTPUTNAME",
-        "value": "Hunter's Stand, All-Weather Cover"
-      },
-      {
-        "key": "COST",
-        "value": "35"
-      }
-    ],
+    "raw_tokens": [],
     "weight_lbs": 15.0
   },
   "ingested_at": "2026-08-16T01:34:55Z",

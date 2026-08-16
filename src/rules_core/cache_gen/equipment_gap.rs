@@ -288,6 +288,22 @@ fn find_citation(book_dir: &Path, key: &str, name: &str) -> Option<(PathBuf, u32
     try_files(&nested, book_dir, key, name)
 }
 
+/// `true` when the real corpus row at `lst_path:line` (1-indexed) opens
+/// with a `#` in its identity column -- PCGen's own comment marker for a
+/// row the maintainers explicitly disabled, per `Trap::DisabledLine`
+/// (`src/pcgen_import/corpus_traps.rs`). A missing/unreadable row is
+/// treated as NOT disabled (the pre-existing unresolved-citation path
+/// already handles a genuinely absent row; this check only fires on a
+/// row that resolved and needs its identity column read).
+fn disabled_identity_column(lst_path: &Path, line: u32) -> bool {
+    if line == 0 {
+        return false;
+    }
+    let Ok(content) = std::fs::read_to_string(lst_path) else { return false };
+    let Some(row) = content.lines().nth((line - 1) as usize) else { return false };
+    row.trim_start().starts_with('#')
+}
+
 /// Reads [`DeclaredProductIdentity`] off the real corpus line at
 /// `lst_path:line` (1-indexed) -- `§53.5`'s declared-PI reader.
 fn declared_pi_at(lst_path: &Path, line: u32) -> DeclaredProductIdentity {
@@ -435,6 +451,21 @@ pub fn generate(
         let abs_path = book_dir.join(&rel_path);
         let rel_path_str = rel_path.to_string_lossy().replace('\\', "/");
 
+        // `SD31-W4-INTEGRATE-001` (`OPEN-ISSUES.md` row 48/49): a leading
+        // `#` in the identity column is PCGen's own comment marker --
+        // `Trap::DisabledLine` (`src/pcgen_import/corpus_traps.rs`) already
+        // names these rows "suppressed and must not be ingested, but they
+        // look live." Same disposition as the `.FORGET` guard above (not
+        // real content, excluded rather than shipped), same reason the
+        // upstream compiled table doesn't know to skip them: 3 real
+        // records were shipping the raw KEY: token (`CRRSVE_BRST_M`,
+        // `CRRSVE_BRST_R`, `REACH`) as their player-facing `name` because
+        // the row they cite is disabled.
+        if disabled_identity_column(&abs_path, line) {
+            report.excluded_non_content_directive.push(format!("{book_id}:{} (disabled #-line)", entry.key));
+            continue;
+        }
+
         let sha = match sha_cache.get(&abs_path) {
             Some(s) => s.clone(),
             None => {
@@ -537,6 +568,37 @@ mod tests {
         assert!("False Face.FORGET".ends_with(".FORGET"));
         assert!(!"Amorphous".ends_with(".FORGET"));
         assert!(!"Special Ability ~ Dueling ~ Melee".ends_with(".FORGET"));
+    }
+
+    /// `OPEN-ISSUES.md` row 48/49: 3 shipped records were sourced from a
+    /// commented-out (`#`-prefixed) identity column and shipped the raw
+    /// KEY: token as their player-facing name -- `CRRSVE_BRST_M`,
+    /// `CRRSVE_BRST_R`, `REACH`. Regression test against the real,
+    /// byte-for-byte disabled rows (`apg_equipmods.lst:13`,
+    /// `uc_equipmods.lst:7`) and a real-shaped live row that must NOT be
+    /// flagged.
+    #[test]
+    fn disabled_hash_prefixed_rows_are_recognized_and_live_rows_are_not() {
+        let dir = std::env::temp_dir().join(format!("cgeq_disabled_test_{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let file = dir.join("book_equipmods.lst");
+        std::fs::write(
+            &file,
+            "#Corrosive Burst\tKEY:CRRSVE_BRST_M\tTYPE:Weapon.Melee\n\
+             Widget\tKEY:Special Ability ~ Widget ~ Weapon\tCOST:0\n",
+        )
+        .unwrap();
+        assert!(disabled_identity_column(&file, 1), "a #-prefixed identity column must be flagged");
+        assert!(
+            !disabled_identity_column(&file, 2),
+            "an ordinary live row must not be flagged"
+        );
+        assert!(!disabled_identity_column(&file, 0), "line 0 (no citation) is not disabled");
+        assert!(
+            !disabled_identity_column(&dir.join("nonexistent.lst"), 1),
+            "an unreadable file is not disabled -- the unresolved-citation path handles absence"
+        );
+        std::fs::remove_dir_all(&dir).ok();
     }
 
     #[test]

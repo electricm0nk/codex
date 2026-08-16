@@ -386,19 +386,39 @@ fn short_book_of(source_path: &str) -> Option<String> {
 
 /// The corpus-relative directory of the book a `source.path` belongs to.
 ///
-/// PCGen files a book four segments deep — `<system>/<publisher>/<line>/<book>`
-/// — and the line segment is NOT always `roleplaying_game`. Anchoring on that
-/// one line was this sweep's own first defect: the 71 shipped records citing
-/// `pathfinder/paizo/campaign_setting/inner_sea_races` were rejected outright,
-/// and `v06_work_inventory` carries thirteen such directories in its
-/// `additional_book_dirs`. Taking the first four segments is the rule the
-/// corpus layout actually follows, and it needs no book list to maintain.
+/// PCGen files a Paizo book four segments deep —
+/// `<system>/<publisher>/<line>/<book>` — and the line segment is NOT always
+/// `roleplaying_game`. Anchoring on that one line was this sweep's own first
+/// defect: the 71 shipped records citing
+/// `pathfinder/paizo/campaign_setting/inner_sea_races` were rejected
+/// outright, and `v06_work_inventory` carries thirteen such directories in
+/// its `additional_book_dirs`. Taking the first four segments is the rule
+/// the Paizo corpus layout actually follows, and it needs no book list to
+/// maintain.
+///
+/// **Third-party publishers do not all carry a "line" tier.** Dreamscarred
+/// Press ships `<system>/dreamscarred_press/<book>` — three segments, one
+/// shallower — confirmed against the real oracle
+/// (`$PCGEN_CORPUS_ROOT/pathfinder/dreamscarred_press/*` has no further
+/// nesting before the book directory) and against
+/// `v06_work_inventory.rs`'s own `additional_book_dirs`, which registers
+/// `"pathfinder/dreamscarred_press/ultimate_psionics"` directly (3
+/// segments) rather than through the 4-segment Paizo shape. Before this
+/// fix (`OPEN-ISSUES.md` row 48/49), every Dreamscarred-Press-sourced
+/// record with `raw_tokens` populated `fatal()`-aborted this entire sweep
+/// (`SD31-E6-F5-002`'s 113 `ultimate_psionics` equipment records). The
+/// publisher name is checked explicitly, not inferred from segment count
+/// alone, so an unrelated 4-segment path shape does not silently borrow
+/// this narrower rule.
 fn book_dir_of(source_path: &str) -> Option<String> {
     let segments: Vec<&str> = source_path.split('/').filter(|s| !s.is_empty()).collect();
-    if segments.len() < 5 {
-        return None;
+    if segments.len() >= 5 {
+        return Some(segments[..4].join("/"));
     }
-    Some(segments[..4].join("/"))
+    if segments.len() == 4 && segments[1] == "dreamscarred_press" {
+        return Some(segments[..3].join("/"));
+    }
+    None
 }
 
 fn display_rel(path: &Path, repo_root: &Path) -> String {
@@ -614,6 +634,31 @@ mod short_book_of_tests {
     fn rejects_a_source_path_not_shaped_system_publisher_line_book_file() {
         assert_eq!(short_book_of("too/short.lst"), None);
         assert_eq!(short_book_of(""), None);
+    }
+
+    /// `OPEN-ISSUES.md` row 48/49: Dreamscarred Press ships with no "line"
+    /// tier (`<system>/dreamscarred_press/<book>/<file>`, one segment
+    /// shallower than Paizo's shape) -- confirmed against the real oracle
+    /// directory layout and against `v06_work_inventory.rs`'s own
+    /// `additional_book_dirs` registration of
+    /// `"pathfinder/dreamscarred_press/ultimate_psionics"` (3 segments).
+    /// Before this fix every such record with `raw_tokens` populated
+    /// `fatal()`-aborted the whole sweep.
+    #[test]
+    fn dreamscarred_press_four_segment_path_resolves_one_tier_shallower() {
+        assert_eq!(
+            short_book_of("pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst"),
+            Some("ultimate_psionics".to_string())
+        );
+    }
+
+    /// The narrower Dreamscarred-Press rule must not swallow an unrelated
+    /// 4-segment path from a different (or malformed) publisher -- the
+    /// publisher name is checked explicitly, not inferred from segment
+    /// count alone.
+    #[test]
+    fn a_four_segment_non_dreamscarred_press_path_still_rejects() {
+        assert_eq!(short_book_of("pathfinder/some_other_press/book/file.lst"), None);
     }
 
     /// Regression, corpus-wide: for every shipped `race`/`race_trait`
