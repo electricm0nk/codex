@@ -75,17 +75,27 @@ const BOOK_INPUTS: &[BookInput] = &[
         rule_set: RuleSetId::Crb,
         variant: "Crb",
         slug: "core_rulebook",
-        files: &[
-            "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
-            // `core_essentials` is the shared library `core_rulebook.pcc`
-            // includes unconditionally. Its 15 feat records are reported
-            // `shared_library_record_held_by_no_ingested_host` precisely
-            // because no ingested host's table holds them; CRB is that host,
-            // and filing them here is what lets `classify()` attribute them
-            // rather than leave them unattributed. Same precedent the
-            // equipment gap lane set for `ce_equip_*.lst`.
-            "pathfinder/paizo/roleplaying_game/core_essentials/ce_feats.lst",
-        ],
+        files: &["pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst"],
+    },
+    BookInput {
+        rule_set: RuleSetId::Ce,
+        variant: "Ce",
+        slug: "core_essentials",
+        // **Corrected `SD31-E6-F8-001`** — this was previously filed under
+        // `RuleSetId::Crb` on the theory that `core_rulebook.pcc`'s
+        // unconditional include of `core_essentials` made CRB the "observed
+        // host". That predates `RuleSetId::Ce` existing as its own compiled
+        // rule set (added later for companion/familiar content); now that it
+        // does, `classify()`'s feat arm resolves a `core_essentials`-directory
+        // record's `engine_book` straight from its own `source_book` field
+        // ("core_essentials" -> `RuleSetId::Ce`, `own_engine_book`, never the
+        // CRB shared-library-host fallback) — so filing these 15 records
+        // under Crb left them permanently unreachable through the ONLY path
+        // `classify()` actually checks, regardless of which real-world book
+        // Decision 9's separate content re-attribution says they belong to
+        // (`bestiary`, per that decision's SOURCELONG join — a different
+        // question from which RULE SET serves them at chargen).
+        files: &["pathfinder/paizo/roleplaying_game/core_essentials/ce_feats.lst"],
     },
     BookInput {
         rule_set: RuleSetId::Arg,

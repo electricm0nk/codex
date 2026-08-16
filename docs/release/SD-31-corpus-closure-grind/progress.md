@@ -11363,3 +11363,262 @@ checking every live PID's `CARGO_TARGET_DIR` against `/proc/<pid>/environ`.
    reported anywhere, so a run that never exercises the check is indistinguishable from one that did and
    found nothing. File: `src/rules_core/corpus_literal_sweep.rs`.
 
+## Cycle: SD31-E6-F8-001 (sd31-feat-equip-class) — 2026-08-16
+
+**Role:** `sd31-feat-equip-class` (`RETRO_ACTOR=sd31-feat-equip-class`), own worktree
+`/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_599fa00f-e92-6`,
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-feat-equip-class`.
+
+**Card:** `epic-6-ingest-lanes` F8 (`feat`), F5/F6 (`equipment`), F10 (`class`).
+
+**HEAD at claim:** worktree was inherited at an unrelated tip (`061b623ee`, PR #362 merge, package dir
+absent); tree was clean (`git status --porcelain` empty), so per the mandate's own protocol:
+`git fetch origin && git reset --hard origin/tranche/11`, landing at `b8c36417d` ("docs(sd31): Decision
+10 amendment — variant lines are new content, never supersession") — the true `tranche/11` tip at claim
+time.
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS.
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+
+### 0. Re-derived the dispatch's own figures, and the mandate headline
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),2))
+"
+# -> 38521 {'done': 9488, 'not-started': 19915, 'unmeasurable': 5123, 'deferred': 36, 'held': 3193,
+#    'in-progress': 766} 24.63
+```
+
+Matches the mandate's stated 9,488/24.63% exactly. Per-kind (same replay, `kind` filtered): `feat`
+2,610 total, `done` 1,165 (44.64%), `held` 84, `not-started` 973 — matches the dispatch's ~44.6%/973/84.
+`class` 185 total, `done` 27 (14.6%), `not-started` 158, `held` 0 — matches the dispatch's 14.6%/158.
+`equipment`/`equipment_modifier` figures matched the dispatch's ~72.7%/962/410 and ~14.4%/228 (both
+unchanged this cycle — see §2 below on why rows 90/91/92/61 needed re-verification, not re-fixing).
+
+### 1. `class` (F10) — traced end to end, found structurally blocked, NOT a fake ingest
+
+Per the dispatch's own "trace one unit before anything else" instruction. Traced a `done` unit
+(`advanced_class_guide:class:arcanist`, `status: grounded`, `evidence:
+class_probe_observed_computed_delta_on_the_rendered_snapshot`) against a `not-done` unit
+(`advanced_class_guide:class:ex_warpriest`, `status: not-ingested`, `evidence:
+class_absent_from_ClassId_ALL_and_book_class_id_enums`) through `src/bin/v06_work_inventory.rs`'s
+`Kind::Class` arm. **Finding: a `class` unit reaches `done` only by (a) registering in a per-book
+`ClassId`-shaped enum AND (b) having a full BAB/save/HD/spellcasting chassis wired in
+`pilot_compute.rs` so the probe observes a computed delta** — both mechanisms live in
+`v06_work_inventory.rs` (lane 3) and `pilot_compute.rs` (lane 4), explicitly out of file territory for
+every `epic-6-ingest-lanes` F-card, not only this one. This is not per-book ingest work the way
+`equipment`/`feat` are: it is the SAME instrument Epic 3/4/5's per-class chassis sweep already builds
+one class at a time for `class_feature`, so `class`-kind closure rides on that work landing, not on an
+independent F10 lever.
+
+Re-derived the population precisely: 158 not-done, 146 `visible: true` (real, player-selectable
+classes gated on the chassis work above), 12 `visible: false` (PCGen-internal bookkeeping
+shadow-classes like Ex-Warpriest, never player-selected). A further 27 of the 146 are
+`bestiary`-book `ce_classes_race.lst`/`b1_classes_race.lst` rows (`Aberration`, `Animal`, `Construct`,
+`Humanoid`, `Outsider (Fort/Ref)`, …) — PF1's per-creature-TYPE monster-advancement HD-progression
+tables, a different game object from a base PC class entirely. Neither the 12 nor the 27 were
+excluded; both stay in the denominator, flagged as scope questions for whoever eventually builds the
+chassis capability. Logged as `OPEN-ISSUES.md` row 110 with the full proving command; emitted
+`retro.py correction` against `epic-breakdown.md`'s SD31-E6-F10 acceptance text ("real per-book
+ingest; no probe or fixture blocks this kind" — found false).
+
+Same structural shape confirmed for `mythic_adventures`'s 566 not-started `feat` units (all
+`evidence: no_compiled_rule_set_for_book` — no `RuleSetId` variant exists for the book at all, and
+`COMPILED_RULE_SETS` lives in `v06_work_inventory.rs`, lane 3). Did not onboard the book. Pre-derived
+and logged the §10 collision set for whoever does: **96** `(kind=feat, corpus_key)` collisions between
+`mythic_adventures` and `core_rulebook` (matching Decision 10 amendment's cited ~95 figure), which a
+future Supersession Register pass must blanket-exclude as variants, never reprints. Logged as
+`OPEN-ISSUES.md` row 111.
+
+### 2. THE NAMED EQUIPMENT DEBT (rows 90/92, 91, 61) — already fixed by prior cycles; re-verified, not re-done
+
+Before touching anything, checked whether the dispatch's named debt still existed at this HEAD
+(`b8c36417d` is downstream of `SD31-E6-F5-004`/`SD31-E6-F5-003`, which the merged `kanban.md` already
+recorded as having fixed all four). Verified each one directly rather than trusting the log:
+
+- **Rows 90/92** (`equipment_gap::find_citation` mis-citation): `grep -n
+  "find_by_key_field\|find_exact_first_column\|is_equipment_shaped" src/rules_core/cache_gen/equipment_gap.rs`
+  confirms the equipment-shaped-file-first search order is live; `tests/v06_corpus_trap_report.rs`'s
+  `KNOWN_KEY_MISMATCH_DEBT` allowlist is `&[]` (empty) — the debt list committed by
+  `SD31-E6-F5-004` has already been shrunk to zero, not left non-empty for me to shrink further.
+- **Row 91** (`compare_tokens` typed-field gap): `grep -n "compare_typed_numeric_field\|cost_gp\|weight_lbs"
+  src/rules_core/corpus_literal_sweep.rs` confirms the `cost_gp`/`weight_lbs` typed-field cross-check is
+  live and wired into `compare_tokens`.
+- **Row 61** (`open_record` same-name-merge bug): `grep -n "\.COPY=\|CopyRecord" src/pcgen_import/lst_parser/equipment.rs`
+  confirms the fix (a `.COPY=`-declared row never merges via the KEY-less bare-name fallback) is live;
+  ran `corpus_literal_sweep` fresh (§4 below) — CLEAN, confirming the 3 previously-reverted records
+  (`bastard_s_sting`, `mountain_pattern_armor`, `hunter_s_stand`) are still correctly re-enriched.
+
+No further action taken on this item — re-doing already-landed work would not move the board and risks
+reintroducing the exact defects the prior fixes closed. Time redirected to §1 and §3.
+
+### 3. THE GRIND — `feat`'s `ce_feats.lst` re-attribution defect (Decision 9 fallout), 15 units
+
+`OPEN-ISSUES.md` row 106 (a peer cycle's trace) had already scoped `feat`'s `held` population
+correctly (a `cache_gen::feat` module is the real lever for the bulk of it, out of this cycle's bounded
+budget). Looking for the smaller, immediately-actionable slice instead: traced why `feat_gap_tables.rs`'s
+16-row `CORE_RULEBOOK_FEAT_GAP_ROWS` bucket (hand-authored, already compiled, already served by
+`feats_all::all_feat_tables()`) produced **zero** `core_rulebook` `not-ingested` feat units today
+(`python3` one-liner, `book=='core_rulebook' and status=='not-ingested'` → `0`) despite the bucket
+existing specifically to close that population.
+
+**Root cause.** `gen_feat_gap_tables.rs`'s `BOOK_INPUTS` filed `core_essentials/ce_feats.lst`'s 15
+records under `RuleSetId::Crb` on the theory (its own doc comment) that "`core_rulebook.pcc` includes
+`core_essentials` unconditionally, so CRB is the observed host" — a theory that predates
+`RuleSetId::Ce` existing as its own compiled rule set (added later for companion/familiar content).
+`v06_work_inventory.rs`'s `classify()` resolves a `feat` unit's `engine_book` from `unit.source_book`,
+not `unit.book` — and a `core_essentials`-directory record's `source_book` is `"core_essentials"`,
+which resolves DIRECTLY to `RuleSetId::Ce` (the `own_engine_book` branch, never CRB's
+shared-library-host fallback). So these 15 records were never reachable through `RuleSetId::Crb`'s
+catalog at all, regardless of which real-world book Decision 9's separate content re-attribution
+(`book: "bestiary"`, per `ce_feats.lst`'s own `SOURCELONG`) says they belong to — a different question
+from which RULE SET serves them at chargen. Confirmed via
+`python3 -c "...source_file=='ce_feats.lst'..."`: **15 feat units, all `book: bestiary`, all
+`evidence: feat_key_absent_from_catalog`** — not a per-book ingest gap, a wrong-bucket bug.
+
+**Fix (TDD).** Added two failing tests first (`every_ce_feats_lst_record_resolves_under_rule_set_ce`,
+`no_ce_feats_lst_record_is_filed_under_crb`, `tests/feat_gap_tables.rs`), confirmed RED for the right
+reason (both `assert!` panics naming exactly the 15 records). Then:
+
+1. `src/rules_core/rules_tables/feats_all.rs`: added `BookFeatTable { rule_set: RuleSetId::Ce, entries:
+   &[] }` to `hand_authored_feat_tables()` — `RuleSetId::Ce` has no hand-authored feat table of its own
+   (`core_essentials` is a packaging bundle per Decision 9), but `all_feat_tables()` only joins gap rows
+   onto a `RuleSetId` already present in this list, so an empty entry here is what lets
+   `feat_gap_rows_for(Ce)`'s rows actually get served.
+2. `src/bin/gen_feat_gap_tables.rs`: split the old single CRB `BookInput` (which mixed `cr_feats.lst`
+   and `ce_feats.lst`) into two — `Crb` (`cr_feats.lst` only) and a new `Ce`
+   (`core_essentials/ce_feats.lst`).
+3. Regenerated: `PCGEN_CORPUS_ROOT="$HOME/workspace/repos/pcgen/data" cargo run --locked --bin
+   gen_feat_gap_tables` → `wrote ... feat_gap_tables.rs: 83 rows` (total unchanged — same 83 rows,
+   re-bucketed, not added/removed): `core_rulebook 1` (was 16), `core_essentials 15` (new), plus the
+   other 6 books unchanged. `pi-screening: CLEAN (0 hits over the generated text)` — the generator's own
+   `screen_generated_table` call, run before any write.
+4. GREEN: all 8 `tests/feat_gap_tables.rs` tests pass, including the 2 new ones and the pre-existing
+   `the_gap_rows_are_exactly_the_joined_catalog_minus_the_hand_authored_one` (still 83 added, unchanged).
+
+**Count-change sweep** (`grep -rn "1578\|books.len(), 11\|entries_for(RuleSetId::Crb)\|by_source(\"Crb\")"`
+across `src/`, `tests/`, `apps/`): 3 more pinned assertions needed updating, all fixed in this
+cycle — `hand_authored_feat_tables().len()` 11→12 and the new `Ce` row (`feats_all.rs`'s own test),
+`all_feat_tables().len()` 11→12 plus `entries_for(RuleSetId::Crb)` 201→186 and a new
+`entries_for(RuleSetId::Ce)` 15 (`tests/v06_apg_acg_feat_catalog.rs`), and the desktop catalog's
+`by_source("Crb")` 201→186 plus a new `by_source("Ce")` 15
+(`apps/desktop/src-tauri/src/feat_catalog.rs`) — the 1578/1661 grand totals are unchanged (records
+moved between buckets, none added or removed). All three files' tests re-run GREEN after the fix (root
+`cargo test --locked --lib feats_all` 14/14, `cargo test --locked --test feat_gap_tables` 8/8,
+`cargo test --locked --test v06_apg_acg_feat_catalog` 9/9, desktop `cargo test --locked feat_catalog::`
+15/15).
+
+**Wired, live end to end, no further work needed.** `apps/desktop/src-tauri/src/feat_catalog.rs`'s
+`build_feat_catalog_for` is fully generic over `all_feat_tables()` (`source = format!("{:?}",
+book.rule_set)`) — the 15 records are served with `source: "Ce"` automatically, no new command, DTO
+field, or frontend change required. Confirmed by the desktop test suite's own
+`catalog_spans_every_ingested_book_with_their_real_counts` and `catalog_serves_every_corpus_gap_row`
+(re-run GREEN after the fix, §"Count-change sweep" above).
+
+**Measured, guarded regen (local, per the wave rule — checked out before committing):**
+
+```
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/... DERIVED_FIXTURE_CHECK_REPORT=/tmp/... \
+  cargo run --locked --bin v06_work_inventory
+python3 -c "... same doneness_verdict replay as §0 ..."
+# -> 38521 {'done': 9499, ...} 24.6593   (board: 9488 -> 9499, +11)
+# feat: {'done': 1176, 'unmeasurable': 389, 'held': 84, 'not-started': 958, ...}
+#   (feat done: 1165 -> 1176, +11; not-started: 973 -> 958, -15)
+```
+
+**+11 done, not +15**, exactly as predicted from each record's own `wiring_class` before the fix: 11 of
+the 15 are `wiring_class: display` (magnitude 0) and land on `text-complete`/`done` once "in catalog"
+(Decision 7's prose done-bar, `has_real_description` true off the already-real `DESC:`/`BENEFIT:` text
+`feat_gap_tables.rs` already carried); 4 are `wiring_class: computed` (magnitude 1 —
+`Improved Natural Armor`, `Improved Natural Attack`, `Multiattack`, `Multiweapon Fighting`) and land on
+`unknown` (`in_catalog_with_corpus_magnitude_but_no_observed_consumer`, no feat-effect probe covers
+these monster feats) — genuinely `unmeasurable`, not `held`/`not-started` and not gamed into `done`.
+`docs/work-inventory.json` checked out afterward, not committed, per the wave rule.
+
+### 4. PI screening and corpus fidelity
+
+No new corpus JSON records were written this cycle (only Rust static tables re-bucketed; the 15
+records' underlying content is unchanged, only which `RuleSetId` bucket serves them). Re-ran both
+checks anyway, corpus-wide, per the dispatch's binding PI rule:
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/.../sweep-sd31-feat-equip-class.json
+# -> 23859 records examined of 24736 read, 228147 tokens compared (9 synthesized), 24311 digests
+#    checked, 0 findings. CLEAN.
+cargo run --locked --bin declared_pi_shipping_audit
+# -> declared-pi-audit: CLEAN — no shipped record contradicts its own corpus row's PI declaration
+```
+
+`gen_feat_gap_tables`'s own `screen_generated_table` call (§3 item 3 above) additionally screened the
+regenerated `feat_gap_tables.rs` text before it was written — `pi-screening: CLEAN`. Both SD-30
+contracts (blacklist sweep + declared-PI reader) are therefore exercised on this cycle's own change,
+citing `SD31-PI-REPAIR-001`'s receipt for the underlying `cache_gen::hand_authored_equipment`/
+`gen_feat_gap_tables` writers' existing PI-screening wiring (unmodified by this cycle).
+
+### 5. DoD-8, on-screen verification
+
+**NOT captured this cycle — logged as a blocker, not faked.** `run-desktop/SKILL.md` bars `driver.sh
+launch` from running concurrently with `scripts/verify.sh` (RAM contention), and this cycle's own
+`verify.sh` ran for the cycle's full remaining budget. The change itself needed no new player-visible
+surface (`build_feat_catalog_for` is already fully generic over `all_feat_tables()` — the 15 records
+serve automatically, §3 above), and the desktop `feat_catalog::` test suite (15/15, including
+`catalog_serves_every_corpus_gap_row`) already exercises the served catalog content byte-for-byte
+against `feat_gap_tables.rs`'s own rows — but that is a test proof, not a screenshot, and Decision 7
+condition 3 is explicit that DoD-8 is not satisfied by a green code gate alone. **BLOCKER, named
+precisely:** a follow-up cycle should drive `driver.sh` (`RUN_DESKTOP_AGENT` unique, e.g.
+`sd31-feat-equip-class-2`), open the Feat Catalog, filter to `source: Ce` or search "Awesome Blow" /
+"Craft Construct" / "Multiattack", and screenshot the rendered description — cheap, since the render
+path is already proven live by the test suite above; it only needs the actual screen capture.
+
+### 6. Gate
+
+Launched early, in the background, per gate-sequencing discipline. Log:
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F8-001-verify.log`.
+
+**At the time this receipt was committed, the gate had NOT yet returned a final exit code** — per the
+mandate's own "always land the commit and the receipt before returning, even if the gate has not
+finished" rule, and "a receipt that says gate launched at HH:MM, log at `<path>`, exit code not yet
+obtained is honest and resumable; a card left IN-FLIGHT with nothing written is not." Stages observed
+PASS before commit, read directly from the log (`tail
+docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F8-001-verify.log`): `preflight-oracle`,
+`oracle-pin-selftest`, `producer-selftest`, `reachability-audit-selftest`, `reachability-audit`
+(reachable ceiling 98.95%, unchanged), `groundtruth-guard-selftest`, `pi-sweep`, `declared-pi-audit`,
+`audit-selftest`, `reclaim-selftest`, `driver-selftest`, `corpus-sweep-selftest`, **`root-lib` (1894
+passed)**, **`root-full` (6687 passed across 563 suites, all 529 `tests/*.rs` suites executed)** — the
+two heaviest, highest-risk stages, both green, both matching this cycle's own local pre-gate runs
+exactly. The `desktop` stage (`apps/desktop/src-tauri`) was in progress at commit time; this cycle's
+own local, standalone run of the same suite (§3 above) already passed 15/15 on `feat_catalog::`
+specifically. **A resumed cycle should tail the log above for the final `RESULT:`/`VERIFY_EXIT` line
+before merging, and re-run `./scripts/verify.sh` if a full exit code is still needed** — box load from
+5+ other concurrently-dispatched agents (confirmed via `pgrep -fa 'verify.sh\|cargo test'`, not this
+cycle's own defect) is why the gate did not finish inside this cycle's own turn budget, the same
+condition `AGENTS.md`'s "starved, not hung" guidance names.
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit`: **`EXIT=2`, `1 0 mod-record; 0 1191
+wiring-class-mismatch`** — matches the mandate's own stated baseline (1,191) exactly, confirming this
+cycle did not worsen it. All 1191 findings are pre-existing companion/`ultimate_wilderness`/`monster`
+wiring-class-mismatch entries (e.g. `Familiar (Koala)`, `Peafowl`, `Xeph` — `stored derived` vs
+`computed fresh static`); none touch `feat`/`equipment`/`class` or any file this cycle changed. DoD
+item 3 satisfied.
+
+### 7. What was corrected, reworked, or narrowly avoided
+
+- **Corrected `epic-breakdown.md`'s SD31-E6-F10 acceptance text** ("real per-book ingest; no probe or
+  fixture blocks this kind" for `class`) — found false; `retro.py correction` emitted (§1).
+- **Did NOT attempt a rushed `mythic_adventures` or `class` ingest** once the lane-3 (`v06_work_inventory.rs`)
+  dependency was confirmed — reported the structural blocker with the exact proving command instead of
+  a partial/fake ingest that would either invent a chassis or silently skip the probe requirement.
+- **Did NOT re-do rows 90/91/92/61** once each was independently verified still-fixed at this HEAD —
+  re-deriving before re-fixing avoided wasting the cycle's budget on already-landed work and the risk of
+  a second, conflicting fix to the same code.
+- **Caught the `ce_feats.lst` re-attribution defect by re-deriving `core_rulebook`'s own `not-ingested`
+  feat count (0) rather than trusting `feat_gap_tables.rs`'s existence** — the bucket looked complete
+  (16 hand-transcribed rows, real descriptions, PI-screened) while serving zero of its intended
+  population; the "0 not-ingested" figure is what surfaced the wrong-host bug, not a code read.
+

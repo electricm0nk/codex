@@ -30,6 +30,7 @@ use super::RuleSetId;
 pub fn feat_gap_rows_for(rule_set: RuleSetId) -> &'static [FeatCatalogRecord] {
     match rule_set {
         RuleSetId::Crb => CORE_RULEBOOK_FEAT_GAP_ROWS,
+        RuleSetId::Ce => CORE_ESSENTIALS_FEAT_GAP_ROWS,
         RuleSetId::Arg => ADVANCED_RACE_GUIDE_FEAT_GAP_ROWS,
         RuleSetId::Uc => ULTIMATE_COMBAT_FEAT_GAP_ROWS,
         RuleSetId::Ui => ULTIMATE_INTRIGUE_FEAT_GAP_ROWS,
@@ -40,9 +41,13 @@ pub fn feat_gap_rows_for(rule_set: RuleSetId) -> &'static [FeatCatalogRecord] {
     }
 }
 
-/// core_rulebook — 16 record(s) the hand-authored `core_rulebook` feat table does not hold.
+/// core_rulebook — 1 record(s) the hand-authored `core_rulebook` feat table does not hold.
 pub static CORE_RULEBOOK_FEAT_GAP_ROWS: &[FeatCatalogRecord] = &[
     FeatCatalogRecord { key: "Leadership Score", category: "Special", name: "Leadership Score", description: None, prerequisites: None },
+];
+
+/// core_essentials — 15 record(s) the hand-authored `core_essentials` feat table does not hold.
+pub static CORE_ESSENTIALS_FEAT_GAP_ROWS: &[FeatCatalogRecord] = &[
     FeatCatalogRecord { key: "Ability Focus", category: "General", name: "Ability Focus", description: Some("One of this creature's special attacks is particularly difficult to resist. Choose one of the creature's special attacks. Add +2 to the DC for all saving throws against the special attack on which the creature focuses. Special: A creature can gain this feat multiple times. Its effects do not stack. Each time the creature takes the feat, it applies to a different special attack."), prerequisites: Some(&["PREABILITY:1,CATEGORY=Ability Focus,TYPE.Ability Focus"]) },
     FeatCatalogRecord { key: "Awesome Blow", category: "General", name: "Awesome Blow", description: Some("This creature can send opponents flying. As a standard action, the creature may perform an awesome blow combat manuever. If the creature's maneuver succeeds against a corporeal opponent smaller than itself, its opponent is knocked flying 10 feet in a direction of the attacking creature's choice and falls prone. The attacking creature can only push the opponent in a straight line, and the opponent can't move closer to the attacking creature than the square it started in. If an obstacle prevents the completion of the opponent's move, the opponent and the obstacle each take 1d6 points of damage, and the opponent is knocked prone in the space adjacent to the obstacle."), prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Power Attack,Improved Bull Rush", "PRESIZEGTEQ:L", "PRESTAT:1,STR=25"]) },
     FeatCatalogRecord { key: "Craft Construct", category: "ItemCreation", name: "Craft Construct", description: Some("You can create construct creatures like golems. You can create any construct whose prerequisites you meet. The act of animating a construct takes one day for each 1,000 gp in its market price. To create a construct, you must use up raw materials costing half of its base price, plus the full cost of the basic body created for the construct. Each construct has a special section that summarizes its costs and other prerequisites. A newly created construct has average hit points for its Hit Dice."), prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Craft Magic Arms and Armor,Craft Wondrous Item", "PREMULT:1,[PRECLASS:1,SPELLCASTER=5],[PREVARGTEQ:CasterLevel_Highest,5]"]) },

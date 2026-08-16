@@ -272,7 +272,7 @@ fn cross_book_feat_key_repeats_are_exactly_the_known_set() {
 #[test]
 fn the_aggregate_catalog_spans_every_ingested_book() {
     let books = all_feat_tables();
-    assert_eq!(books.len(), 11);
+    assert_eq!(books.len(), 12);
 
     let entries_for = |rule_set: RuleSetId| {
         books
@@ -290,10 +290,13 @@ fn the_aggregate_catalog_spans_every_ingested_book() {
     //   grep -E '^/// [a-z_]+ - [0-9]+ record' src/rules_core/rules_tables/feat_gap_tables.rs
     //   awk '/^pub static /{n=$3} /FeatCatalogRecord \{/{c[n]++} END{for(k in c) print c[k],k}' \
     //     src/rules_core/rules_tables/feat_gap_tables.rs
-    // Both agree: CRB 16, ARG 48, UC 2, UI 3, UM 12, UPsi 1, UW 1 = 83 rows,
-    // matching that file's own stated total. APG/ACG/PU/UCA have no gap rows
+    // Both agree: CRB 1, core_essentials 15, ARG 48, UC 2, UI 3, UM 12, UPsi 1,
+    // UW 1 = 83 rows, matching that file's own stated total (`SD31-E6-F8-001`
+    // re-bucketed 15 of the prior CRB-filed 16 rows to `RuleSetId::Ce`, the
+    // rule set `classify()`'s feat arm actually resolves a `core_essentials`
+    // -directory record's `source_book` to). APG/ACG/PU/UCA have no gap rows
     // and are unmoved.
-    assert_eq!(entries_for(RuleSetId::Crb), 201); // 185 + 16
+    assert_eq!(entries_for(RuleSetId::Crb), 186); // 185 + 1
     assert_eq!(entries_for(RuleSetId::Apg), 172); // unmoved
     assert_eq!(entries_for(RuleSetId::Acg), 129); // unmoved
     assert_eq!(entries_for(RuleSetId::Arg), 235); // 187 + 48
@@ -304,9 +307,10 @@ fn the_aggregate_catalog_spans_every_ingested_book() {
     assert_eq!(entries_for(RuleSetId::Uc), 263); // 261 + 2
     assert_eq!(entries_for(RuleSetId::Um), 156); // 144 + 12
     assert_eq!(entries_for(RuleSetId::Upsi), 222); // 221 + 1
+    assert_eq!(entries_for(RuleSetId::Ce), 15); // 0 + 15
 
     let total: usize = books.iter().map(|b| b.entries.len()).sum();
-    assert_eq!(total, 1661, "201 CRB + 172 APG + 129 ACG + 235 ARG + 17 PU + 23 UCA + 107 UI + 136 UW + 263 UC + 156 UM + 222 UPsi = 1578 hand-authored + 83 corpus gap rows");
+    assert_eq!(total, 1661, "186 CRB + 172 APG + 129 ACG + 235 ARG + 17 PU + 23 UCA + 107 UI + 136 UW + 263 UC + 156 UM + 222 UPsi + 15 Ce = 1578 hand-authored + 83 corpus gap rows");
 }
 
 #[test]
