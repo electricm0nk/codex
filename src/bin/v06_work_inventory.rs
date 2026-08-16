@@ -1446,39 +1446,126 @@ const SOURCELONG_TO_BOOK: &[(&str, &str)] = &[
 ];
 
 /// The true book for a unit `enumerate_file` found inside `core_essentials/`,
-/// or `None` when neither signal below resolves -- the honest "not yet
+/// or `None` when no signal below resolves -- the honest "not yet
 /// attributable" state, never a silent default back to `core_essentials`
 /// (`decisions.md §25.2`/§25.3`, `race_resolver.rs`'s module doc,
 /// `OPEN-ISSUES.md` row 68).
 ///
-/// Two independent, per-record-provable signals, checked in order:
+/// Two independent, per-record-provable signals, in priority order:
 ///
-/// 1. **Per-race files** (`core_essentials/races/<slug>/...`): `slug` is the
-///    directory component right after `races` in `path`, looked up in
-///    [`RACE_TRUE_BOOK`].
-/// 2. **Root-level shared files** (`core_essentials/ce_*.lst`): the file's
-///    own header `SOURCELONG:` token (checked over the first 5 lines, where
-///    every file that carries one in this corpus places it), looked up in
-///    [`SOURCELONG_TO_BOOK`].
+/// 1. **Per-race files** (`core_essentials/races/<slug>/...`): [`race_slug_true_book`],
+///    computed once for the whole file (a per-race file names exactly one race).
+/// 2. **Root-level shared files** (`core_essentials/ce_*.lst`): a `SOURCELONG:`
+///    directive line, resolved via [`sourcelong_directive_book`] -- but
+///    SOURCE-LINE-AWARE, not merely "somewhere in the first 5 lines"
+///    (`OPEN-ISSUES.md` row 98, `SD31-ATTRIB-002`). `ce_abilities_race.lst`
+///    carries 11 real mid-file directive lines, each setting the source for
+///    every row that follows it until the next directive: line 1273's
+///    `SOURCELONG:Bestiary` precedes the file's own Universal Monster Rules
+///    block, and the very next rows are "Ability Damage"/"Ability Drain" --
+///    Bestiary 1's own appendix, not book-agnostic bookkeeping. `enumerate_file`
+///    tracks the currently-in-effect directive as it scans top to bottom
+///    (see its own `directive_book` local) and resolves each row against
+///    whatever directive most recently preceded it -- a row before the
+///    first directive stays unattributed, and `SOURCELONG:Universal Rules`
+///    (PCGen's own internal designation, not a Paizo book) never resolves
+///    because it is absent from [`SOURCELONG_TO_BOOK`].
 ///
-/// Callers only invoke this for `book == "core_essentials"`; every other
-/// book's units are unaffected.
-fn resolve_true_book_for_core_essentials(path: &Path, text: &str) -> Option<&'static str> {
+/// Callers only invoke either signal for `book == "core_essentials"`; every
+/// other book's units are unaffected.
+/// The directory component right after `races` in `path` -- the race a
+/// `core_essentials/races/<slug>/...` file belongs to, independent of
+/// whichever book that race resolves to. `None` for a root-level file (no
+/// `races` path segment at all).
+fn race_path_slug(path: &Path) -> Option<String> {
     let components: Vec<String> =
         path.components().map(|c| c.as_os_str().to_string_lossy().into_owned()).collect();
-    let race_slug_book = components
-        .iter()
-        .position(|c| c == "races")
-        .and_then(|races_at| components.get(races_at + 1))
-        .and_then(|slug| RACE_TRUE_BOOK.iter().find(|(s, _)| s == slug))
-        .map(|(_, book)| *book);
-    if let Some(book) = race_slug_book {
-        return Some(book);
-    }
-    text.lines().take(5).find_map(|line| {
-        let value = line.split("SOURCELONG:").nth(1)?.split('\t').next().unwrap_or("").trim();
-        SOURCELONG_TO_BOOK.iter().find(|(s, _)| *s == value).map(|(_, book)| *book)
-    })
+    components.iter().position(|c| c == "races").and_then(|races_at| components.get(races_at + 1)).cloned()
+}
+
+/// The `core_essentials/races/<slug>/` per-race path signal alone --
+/// [`race_path_slug`] looked up in [`RACE_TRUE_BOOK`]. File-wide (a
+/// per-race file names exactly one race for its whole length), so this is
+/// computed once per file, unlike [`sourcelong_directive_book`] below.
+fn race_slug_true_book(path: &Path) -> Option<&'static str> {
+    race_path_slug(path).and_then(|slug| RACE_TRUE_BOOK.iter().find(|(s, _)| *s == slug)).map(|(_, book)| *book)
+}
+
+/// `decisions.md §10`'s "newest publish wins" ruling, applied to the
+/// `kind == Race` population specifically (`§10`'s own worked example:
+/// Catfolk, printed in both Bestiary 3 (2012-01) and Advanced Race Guide
+/// (2012-06), belongs to ARG, the newer of the two).
+///
+/// Every entry here is a race [`RACE_TRUE_BOOK`] currently attributes to a
+/// book STRICTLY OLDER than `advanced_race_guide`'s own `SOURCEDATE:2012-06`
+/// (`advanced_race_guide/advanced_race_guide.pcc`), for which ARG's OWN
+/// files independently carry rows keyed to that race (the provable signal
+/// `decisions.md §10` names: `arg_abilities_race.lst`'s per-race ability
+/// rows, cross-checked against ARG's own `arg_races.lst`'s six labelled
+/// `.pcc` sections -- `# Core Races`/`# B1 races`/`# B2 races`/`# B3
+/// races`/`#ISWG races`, re-derived 2026-08-16 against the pinned oracle:
+/// "Core 7 + B1 11 + B2 7 + B3 5 + ISWG 2 = 32" race names, matching
+/// `arg_races.lst`'s own `.MOD` lines for exactly those 32).
+///
+/// **Bestiary 4's own 5 ARG-reprinted races are deliberately EXCLUDED**,
+/// correcting `decisions.md §10`'s own worked-example list (which named
+/// "Changeling (now bestiary_4, also ARG)" as a case needing to move):
+/// `bestiary_4/_bestiary_4_for_players.pcc`'s own `SOURCEDATE:2013-10` is
+/// LATER than ARG's `2012-06`, so under strict SOURCEDATE ordering --
+/// `§10`'s own binding rule, "never date a book from memory" -- Bestiary 4
+/// is the NEWER printing for those 5 races and the current attribution is
+/// already correct; moving them to ARG would be the exact reverse of what
+/// "most recent publish wins" requires. Flagged as a correction rather than
+/// silently followed (`OPEN-ISSUES.md`).
+const RACE_NEWEST_PRINTING: &[(&str, &str)] = &[
+    // Core Rulebook -- 7, all older than ARG (2009-08 < 2012-06).
+    ("dwarf", "advanced_race_guide"),
+    ("elf", "advanced_race_guide"),
+    ("gnome", "advanced_race_guide"),
+    ("half_elf", "advanced_race_guide"),
+    ("half_orc", "advanced_race_guide"),
+    ("halfling", "advanced_race_guide"),
+    ("human", "advanced_race_guide"),
+    // Bestiary 1 -- 11, older than ARG (2009-10 < 2012-06).
+    ("aasimar", "advanced_race_guide"),
+    ("drow", "advanced_race_guide"),
+    ("duergar", "advanced_race_guide"),
+    ("goblin", "advanced_race_guide"),
+    ("hobgoblin", "advanced_race_guide"),
+    ("kobold", "advanced_race_guide"),
+    ("merfolk", "advanced_race_guide"),
+    ("orc", "advanced_race_guide"),
+    ("svirfneblin", "advanced_race_guide"),
+    ("tengu", "advanced_race_guide"),
+    ("tiefling", "advanced_race_guide"),
+    // Bestiary 2 -- 7, older than ARG (2010-12 < 2012-06).
+    ("dhampir", "advanced_race_guide"),
+    ("fetchling", "advanced_race_guide"),
+    ("grippli", "advanced_race_guide"),
+    ("ifrit", "advanced_race_guide"),
+    ("oread", "advanced_race_guide"),
+    ("sylph", "advanced_race_guide"),
+    ("undine", "advanced_race_guide"),
+    // Bestiary 3 -- 5, older than ARG (2012-01 < 2012-06 -- the ruling's
+    // own worked example, Catfolk).
+    ("catfolk", "advanced_race_guide"),
+    ("ratfolk", "advanced_race_guide"),
+    ("suli", "advanced_race_guide"),
+    ("vanara", "advanced_race_guide"),
+    ("vishkanya", "advanced_race_guide"),
+    // Inner Sea World Guide -- 2, older than ARG (2011-03 < 2012-06).
+    ("gillman", "advanced_race_guide"),
+    ("strix", "advanced_race_guide"),
+];
+
+/// If `line` carries a `SOURCELONG:<value>` token whose value is a
+/// recognized in-scope book (per [`SOURCELONG_TO_BOOK`]), that book;
+/// otherwise `None`. A single-line, stateless check -- the caller tracks
+/// which directive is currently "in effect" as it scans a file top to
+/// bottom (`OPEN-ISSUES.md` row 98, `SD31-ATTRIB-002`).
+fn sourcelong_directive_book(line: &str) -> Option<&'static str> {
+    let value = line.split("SOURCELONG:").nth(1)?.split('\t').next().unwrap_or("").trim();
+    SOURCELONG_TO_BOOK.iter().find(|(s, _)| *s == value).map(|(_, book)| *book)
 }
 
 /// Enumerate one `.lst` file into `out`, recording every trap hit.
@@ -1487,13 +1574,32 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
     // `SOURCELONG_TO_BOOK`, both `&'static str` tables, never derived from
     // `book`'s own shorter-lived reference -- so it can be stashed in
     // `mod_targets` (which outlives this call) without a lifetime escape.
-    let resolved_book: Option<&'static str> =
-        if book == "core_essentials" { resolve_true_book_for_core_essentials(path, text) } else { None };
-    let effective_book: &str = resolved_book.unwrap_or(book);
+    // File-wide: a per-race file names exactly one race for its whole
+    // length, so this signal (when present) overrides every row and takes
+    // priority over any mid-file directive this same file might also carry.
+    let race_slug_book: Option<&'static str> =
+        if book == "core_essentials" { race_slug_true_book(path) } else { None };
+    // `decisions.md §10`: the "newest publish wins" book for THIS file's
+    // race, when this file's own race has one (see `RACE_NEWEST_PRINTING`'s
+    // doc comment). Applied only to `Kind::Race` units at push time below --
+    // a race's OWN `race_trait` rows are unaffected, `§10`'s ruling is
+    // scoped to the `race` kind's 103-unit population, not race_trait.
+    let race_newest_printing: Option<&'static str> = if book == "core_essentials" {
+        race_path_slug(path).and_then(|slug| RACE_NEWEST_PRINTING.iter().find(|(s, _)| *s == slug)).map(|(_, b)| *b)
+    } else {
+        None
+    };
     let rel = path
         .file_name()
         .map(|n| n.to_string_lossy().into_owned())
         .unwrap_or_default();
+    // The `SOURCELONG:` directive most recently seen while scanning this
+    // file top to bottom -- `None` until (and unless) the first directive
+    // line is reached. Only tracked for `core_essentials`; irrelevant, and
+    // left `None`, for every other book. See `race_slug_true_book`'s and
+    // `sourcelong_directive_book`'s shared doc comment above for why this
+    // must be source-line-aware rather than a first-5-lines file-wide scan.
+    let mut directive_book: Option<&'static str> = None;
 
     for (index, line) in text.lines().enumerate() {
         let line_number = index + 1;
@@ -1519,9 +1625,36 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
             })
             .unwrap_or(false);
         if is_directive && !first.starts_with("CLASS:") {
+            // Only ever consulted when no per-race path signal already
+            // resolved the whole file (`race_slug_book.is_none()`) -- a
+            // per-race file naming its race by path never needs (and must
+            // never be overridden by) a stray directive-shaped row.
+            //
+            // Unconditional assignment, not "update only when resolved":
+            // an UNRECOGNIZED `SOURCELONG:` value (`Universal Rules`, PCGen's
+            // own internal designation, absent from `SOURCELONG_TO_BOOK`)
+            // must RESET tracking to unattributed, never silently keep
+            // serving whichever earlier, unrelated directive last resolved.
+            // This fix's own first draft got this wrong and wrongly
+            // attributed `ce_abilities_race.lst`'s 6 real `SOURCELONG:
+            // Universal Rules` rows to `bestiary_3` (the PRECEDING
+            // directive) -- caught by re-deriving the real corpus effect
+            // before commit, see
+            // `an_unrecognized_directive_resets_tracking_rather_than_inheriting_the_prior_book`.
+            if book == "core_essentials" && race_slug_book.is_none() && line.contains("SOURCELONG:") {
+                directive_book = sourcelong_directive_book(line);
+            }
             *out.trap_hits.entry("directive_line").or_default() += 1;
             continue;
         }
+        // The book in effect for THIS row -- per-race path signal first,
+        // then whichever directive most recently preceded this line, else
+        // unresolved. Recomputed every row (not hoisted out of the loop):
+        // `directive_book` can change mid-file (`ce_abilities_race.lst`
+        // carries 11 directive lines across its 2,448).
+        let resolved_book: Option<&'static str> =
+            if book == "core_essentials" { race_slug_book.or(directive_book) } else { None };
+        let effective_book: &str = resolved_book.unwrap_or(book);
 
         // SD28-E15 (2026-08-09): widened from `first.starts_with("CATEGORY=Internal|")`
         // alone, which only matched the directive-line shape. A normal
@@ -1645,8 +1778,18 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
             .map(|k| k.to_string())
             .unwrap_or_else(|| display_name.clone());
 
+        // `decisions.md §10`: for the `race` KIND specifically (never
+        // `race_trait`, which stays on its own book), the newest-publish
+        // book wins over the true-first-printing book `effective_book`
+        // otherwise resolves to. See `RACE_NEWEST_PRINTING`'s doc comment.
+        let attributed_book: &str = if record_kind == Kind::Race {
+            race_newest_printing.unwrap_or(effective_book)
+        } else {
+            effective_book
+        };
+
         out.units.push(CorpusUnit {
-            book: effective_book.to_string(),
+            book: attributed_book.to_string(),
             source_book: book.to_string(),
             kind: record_kind,
             key,
@@ -5970,12 +6113,25 @@ fn main() {
     // walks, so `unit_id` can suffix exactly the ids that would otherwise
     // collide and leave every other id byte-identical to the one it has always
     // carried. See [`unit_id`] for why the collisions exist and what they broke.
+    //
+    // Keyed on `unit.book` -- each unit's own RESOLVED book -- never
+    // `book.id`, the raw directory `enumerate_book` walked to find it.
+    // Before this fix it was keyed on `book.id`, which is safe only when
+    // `book.id == unit.book` for every unit in the walk -- true everywhere
+    // except `core_essentials`, where `resolve_true_book_for_core_essentials`
+    // /`race_slug_true_book`/`sourcelong_directive_book` may have already
+    // re-attributed `unit.book` to the unit's TRUE source book
+    // (`SD31-ATTRIB-001`, `decisions.md §9`). Keying the collision count on
+    // the stale `book.id` would count a re-attributed unit's collisions
+    // against the wrong population (every OTHER `core_essentials`-walked
+    // unit, not its real book-mates) -- see `unit_id`'s own call site below,
+    // which must key on the SAME field for the same reason.
     let mut slug_population: BTreeMap<(String, Kind, String), usize> = BTreeMap::new();
     for book in &books {
         let Some(enumeration) = enumerations.get(&book.id) else { continue };
         for unit in &enumeration.units {
             *slug_population
-                .entry((book.id.clone(), unit.kind, slug(&unit.key)))
+                .entry((unit.book.clone(), unit.kind, slug(&unit.key)))
                 .or_default() += 1;
         }
     }
@@ -6018,10 +6174,19 @@ fn main() {
                 );
             let verdict = classify(unit, &facts, hosts, carries_prose_magnitude, has_real_description);
             let collides = slug_population
-                .get(&(book.id.clone(), unit.kind, slug(&unit.key)))
+                .get(&(unit.book.clone(), unit.kind, slug(&unit.key)))
                 .is_some_and(|n| *n > 1);
+            // `unit.book`, never `book.id` (`decisions.md §9`'s closing note,
+            // `OPEN-ISSUES.md` row 68/98): a `core_essentials`-sourced unit
+            // whose `book` has already been repaired to its true source must
+            // mint an id under that TRUE book's prefix, never a stale
+            // `core_essentials:` one -- e.g. `core_rulebook:race:dwarf`, not
+            // `core_essentials:race:dwarf`, even though `book.id` (the
+            // walked directory) is still literally `"core_essentials"`. The
+            // hard `exit(1)` collision check just below this loop is the
+            // safety net if this ever mints a real duplicate.
             inventory.push(InventoryUnit {
-                id: unit_id(&book.id, unit.kind, &unit.key, collides),
+                id: unit_id(&unit.book, unit.kind, &unit.key, collides),
                 unit: unit.clone(),
                 verdict,
                 wiring_class: wc_class,
@@ -9015,15 +9180,17 @@ mod stamp_loss_guard_tests {
 /// This is the mechanical gate proving the contract, and the first test
 /// below is the "prove it fails" seed the card requires: it exercises
 /// `enumerate_book` against a synthetic `core_essentials`-shaped scratch
-/// directory carrying a Dwarf race row -- the exact CRB-race shape row 68
-/// names -- and asserts the resulting unit's `book` is `"core_rulebook"`,
-/// never `"core_essentials"`. Reverting `enumerate_file`'s `effective_book`
-/// substitution (this module's own fix) makes this test fail immediately:
-/// the unit would carry `book: "core_essentials"` instead, reproducing row
-/// 68's defect exactly. `cargo test --locked --bin v06_work_inventory
-/// core_essentials_book_attribution_tests` is this gate's own invocation,
-/// picked up by `./scripts/verify.sh`'s `root-full`/`root-lib` stages via
-/// `cargo test --workspace` with no separate wiring needed.
+/// directory carrying a Kasatha race row -- the exact Bestiary-4-native
+/// race shape row 68 names -- and asserts the resulting unit's `book` is
+/// `"bestiary_4"`, never `"core_essentials"`. Reverting `enumerate_file`'s
+/// `attributed_book` substitution (this module's own fix) makes this test
+/// fail immediately: the unit would carry `book: "core_essentials"`
+/// instead, reproducing row 68's defect exactly. `cargo test --locked
+/// --bin v06_work_inventory core_essentials_book_attribution_tests` is
+/// this gate's own invocation, picked up by `./scripts/verify.sh`'s
+/// `root-full`/`root-lib` stages via `cargo test --workspace` with no
+/// separate wiring needed. `decisions.md §10`'s SEPARATE "newest publish
+/// wins" layer (`RACE_NEWEST_PRINTING`) has its own tests further down.
 #[cfg(test)]
 mod core_essentials_book_attribution_tests {
     use super::*;
@@ -9060,27 +9227,31 @@ mod core_essentials_book_attribution_tests {
     }
 
     /// **The seeded-mislabel proof.** A per-race row under
-    /// `core_essentials/races/dwarf/` -- the real, in-scope CRB race row 68
-    /// names by example -- must attribute to `core_rulebook`, not
+    /// `core_essentials/races/kasatha/` -- a real, in-scope Bestiary-4-native
+    /// race row 68 names by example, deliberately NOT one of
+    /// [`RACE_NEWEST_PRINTING`]'s 32 (so this test stays a clean proof of the
+    /// `core_essentials` -> true-book signal alone, independent of
+    /// `decisions.md §10`'s separate newest-printing layer, which has its
+    /// own tests below) -- must attribute to `bestiary_4`, not
     /// `core_essentials`. Before the fix this unit's `book` was
     /// unconditionally `"core_essentials"` (`enumerate_file` stamped
     /// `book.to_string()` verbatim); this test fails against that code.
     #[test]
-    fn a_dwarf_race_row_attributes_to_core_rulebook_not_core_essentials() {
-        let book = ScratchCoreEssentials::new("dwarf_race");
+    fn a_kasatha_race_row_attributes_to_bestiary_4_not_core_essentials() {
+        let book = ScratchCoreEssentials::new("kasatha_race");
         book.write(
-            "races/dwarf/dwarf_races.lst",
-            "Dwarf\t\tSORTKEY:a_base_pc\tSTARTFEATS:1\tSOURCEPAGE:p.xx\tFACT:IsPC|true\n",
+            "races/kasatha/kasatha_races.lst",
+            "Kasatha\t\tSORTKEY:a_base_pc\tSTARTFEATS:1\tSOURCEPAGE:p.xx\tFACT:IsPC|true\n",
         );
         let enumeration = enumerate_book(&book.root, "core_essentials");
         let unit = enumeration
             .units
             .iter()
-            .find(|u| u.name == "Dwarf")
-            .expect("the Dwarf race row was enumerated");
+            .find(|u| u.name == "Kasatha")
+            .expect("the Kasatha race row was enumerated");
         assert_eq!(
-            unit.book, "core_rulebook",
-            "a per-race row under core_essentials/races/dwarf/ must attribute to its true \
+            unit.book, "bestiary_4",
+            "a per-race row under core_essentials/races/kasatha/ must attribute to its true \
              source book (decisions.md §25.2), never stay core_essentials"
         );
     }
@@ -9147,6 +9318,182 @@ mod core_essentials_book_attribution_tests {
             .find(|u| u.key == "Darkvision")
             .expect("the row was enumerated");
         assert_eq!(unit.book, "core_essentials");
+    }
+
+    /// **The `ce_abilities_race.lst` shape** (`OPEN-ISSUES.md` row 98,
+    /// `SD31-ATTRIB-002`): a root-level file with NO header `SOURCELONG` in
+    /// its first 5 lines, but real mid-file `SOURCELONG:<Book>` directive
+    /// lines that set the source for every row that follows until the next
+    /// directive -- a real PCGen convention, confirmed against the pinned
+    /// oracle's own file (11 such directive lines). A row BEFORE the first
+    /// directive must stay unattributed; a row AFTER a directive must
+    /// resolve to that directive's book, not the file's (nonexistent)
+    /// header.
+    #[test]
+    fn a_mid_file_sourcelong_directive_resolves_rows_after_it_not_before() {
+        let book = ScratchCoreEssentials::new("mid_file_directive");
+        book.write(
+            "ce_abilities_race.lst",
+            "Default\t\tCATEGORY:Internal\tDEFINE:Foo|0\n\
+             Before Directive\tKEY:Before Directive\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n\
+             SOURCELONG:Bestiary\tSOURCESHORT:B1\tSOURCEDATE:2009-10\n\
+             After Directive\tKEY:After Directive\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
+        );
+        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let before = enumeration
+            .units
+            .iter()
+            .find(|u| u.key == "Before Directive")
+            .expect("the pre-directive row was enumerated");
+        assert_eq!(
+            before.book, "core_essentials",
+            "a row before any SOURCELONG directive has no provable source book"
+        );
+        let after = enumeration
+            .units
+            .iter()
+            .find(|u| u.key == "After Directive")
+            .expect("the post-directive row was enumerated");
+        assert_eq!(
+            after.book, "bestiary",
+            "a row after a mid-file SOURCELONG:Bestiary directive attributes to bestiary"
+        );
+    }
+
+    /// A SECOND mid-file directive supersedes the first for every row that
+    /// follows it -- the file is not "whichever book's directive appears
+    /// anywhere", it is "whichever directive most recently preceded this
+    /// exact row".
+    #[test]
+    fn a_second_mid_file_directive_supersedes_the_first_for_rows_after_it() {
+        let book = ScratchCoreEssentials::new("second_directive");
+        book.write(
+            "ce_abilities_race.lst",
+            "SOURCELONG:Bestiary\tSOURCESHORT:B1\n\
+             B1 Row\tKEY:B1 Row\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n\
+             SOURCELONG:Bestiary 2\tSOURCESHORT:B2\n\
+             B2 Row\tKEY:B2 Row\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
+        );
+        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let b1 = enumeration.units.iter().find(|u| u.key == "B1 Row").unwrap();
+        assert_eq!(b1.book, "bestiary");
+        let b2 = enumeration.units.iter().find(|u| u.key == "B2 Row").unwrap();
+        assert_eq!(b2.book, "bestiary_2");
+    }
+
+    /// **The stale-directive regression this fix's own first draft shipped**
+    /// (caught by re-deriving the real corpus effect before commit, traced
+    /// to `ce_abilities_race.lst:2343-2348` -- 6 real rows under a
+    /// `SOURCELONG:Universal Rules` directive that immediately follows a
+    /// RECOGNIZED `SOURCELONG:Bestiary 3` directive). An unrecognized
+    /// `SOURCELONG:` value must RESET the tracked directive to unattributed,
+    /// not silently keep serving the previous recognized book -- a naive
+    /// "update only when resolved" implementation makes these 6 rows wrongly
+    /// inherit `bestiary_3`, exactly the kind of confident-wrong label
+    /// `decisions.md §9` exists to prevent.
+    #[test]
+    fn an_unrecognized_directive_resets_tracking_rather_than_inheriting_the_prior_book() {
+        let book = ScratchCoreEssentials::new("stale_directive_regression");
+        book.write(
+            "ce_abilities_race.lst",
+            "SOURCELONG:Bestiary 3\tSOURCESHORT:B3\n\
+             B3 Row\tKEY:B3 Row\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n\
+             SOURCELONG:Universal Rules\tSOURCESHORT:UR\n\
+             Capsize\tKEY:Capsize\tCATEGORY:Special Ability\tTYPE:Extraordinary.SpecialQuality\n",
+        );
+        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let b3 = enumeration.units.iter().find(|u| u.key == "B3 Row").unwrap();
+        assert_eq!(b3.book, "bestiary_3");
+        let capsize = enumeration.units.iter().find(|u| u.key == "Capsize").unwrap();
+        assert_eq!(
+            capsize.book, "core_essentials",
+            "a row governed by an unrecognized SOURCELONG value must not inherit an earlier, \
+             unrelated directive's resolved book"
+        );
+    }
+
+    /// `SOURCELONG:Universal Rules` is PCGen's own internal designation
+    /// (`SOURCESHORT:UR`), not a Paizo book this program tracks -- a row
+    /// governed by it must stay unattributed, never guessed onto an
+    /// unrelated in-scope book.
+    #[test]
+    fn a_universal_rules_directive_leaves_rows_unattributed() {
+        let book = ScratchCoreEssentials::new("universal_rules");
+        book.write(
+            "ce_abilities_race.lst",
+            "SOURCELONG:Universal Rules\tSOURCESHORT:UR\n\
+             UR Row\tKEY:UR Row\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
+        );
+        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let ur = enumeration.units.iter().find(|u| u.key == "UR Row").unwrap();
+        assert_eq!(ur.book, "core_essentials");
+    }
+
+    /// A per-race `RACE_TRUE_BOOK` resolution takes precedence over any
+    /// mid-file directive that might coincidentally appear in a per-race
+    /// file -- the path-based signal is the more specific one.
+    #[test]
+    fn per_race_resolution_wins_over_a_stray_mid_file_directive() {
+        let book = ScratchCoreEssentials::new("race_beats_directive");
+        book.write(
+            "races/dwarf/dwarf_abilities_race.lst",
+            "SOURCELONG:Bestiary 2\tSOURCESHORT:B2\n\
+             Dwarf Ability\tKEY:Dwarf Ability\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
+        );
+        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let unit = enumeration.units.iter().find(|u| u.key == "Dwarf Ability").unwrap();
+        assert_eq!(
+            unit.book, "core_rulebook",
+            "the races/dwarf/ path signal must win over an unrelated stray directive"
+        );
+    }
+
+    /// A `.MOD` row rescued from AFTER a mid-file directive must carry that
+    /// directive's resolved book too -- the rescue path must not bypass the
+    /// per-line resolution the ordinary declared-row path uses.
+    #[test]
+    fn a_mod_only_rescued_row_after_a_mid_file_directive_also_attributes_correctly() {
+        let book = ScratchCoreEssentials::new("mod_after_directive");
+        book.write(
+            "ce_abilities_race.lst",
+            "SOURCELONG:Bestiary 3\tSOURCESHORT:B3\n\
+             Universal Monster Rule ~ Light Blindness.MOD\tKEY:Universal Monster Rule ~ Light \
+             Blindness\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
+        );
+        let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
+        enumerations.insert(
+            "core_essentials".to_string(),
+            enumerate_book(&book.root, "core_essentials"),
+        );
+        let declared: BTreeSet<(Kind, String)> = BTreeSet::new();
+        let mut rescued: BTreeSet<(Kind, String)> = BTreeSet::new();
+        let targets = std::mem::take(&mut enumerations.get_mut("core_essentials").unwrap().mod_targets);
+        for (kind, key, name, provenance, magnitudes, resolved_book) in targets {
+            if declared.contains(&(kind, name.to_lowercase())) {
+                continue;
+            }
+            if !rescued.insert((kind, name.to_lowercase())) {
+                continue;
+            }
+            enumerations.get_mut("core_essentials").unwrap().units.push(CorpusUnit {
+                book: resolved_book.map(str::to_string).unwrap_or_else(|| "core_essentials".to_string()),
+                source_book: "core_essentials".to_string(),
+                kind,
+                key,
+                name,
+                origin: Origin::ModOnly,
+                provenance,
+                magnitude_token_count: magnitudes,
+                type_facet: None,
+                visible: true,
+            });
+        }
+        let unit = enumerations["core_essentials"]
+            .units
+            .iter()
+            .find(|u| u.origin == Origin::ModOnly)
+            .expect("the .MOD row was rescued");
+        assert_eq!(unit.book, "bestiary_3");
     }
 
     /// A `.MOD` row inside a per-race `core_essentials` file that is rescued
@@ -9237,5 +9584,153 @@ mod core_essentials_book_attribution_tests {
              natively declares it); a table-length change means the roster moved and both \
              this assertion and the doc comment above need re-deriving, not just bumping"
         );
+    }
+
+    /// **`decisions.md §9`'s "un-producible" requirement, made real.** A unit
+    /// stamped `core_essentials` is a gate failure, not a silent label. This
+    /// walks the REAL pinned oracle (not a scratch fixture) and pins the
+    /// EXACT residual `core_essentials`-attributed population as a RATCHET:
+    /// any growth above the pinned figure is a hard test failure, so a
+    /// future regression to the resolution mechanism above (the
+    /// `an_unrecognized_directive_resets_tracking_...` shape, or a table
+    /// edit that drops an entry) is caught here, on the real corpus, not
+    /// only against the synthetic fixtures above.
+    ///
+    /// **The residual is not, and cannot honestly be, zero.** This walk
+    /// (deliberately the simple `enumerate_book`/`out.units` count, with no
+    /// corpus-wide `.MOD`-rescue pass -- the full pipeline's own rescue step
+    /// finds one further unit's true base elsewhere, so the SAME population
+    /// measures 128 in `docs/work-inventory.json`'s own
+    /// `book=="core_essentials"` count) finds 129 units genuinely
+    /// unattributable by any signal this program has found (re-derived
+    /// 2026-08-16, `SD31-D9-DISSOLVE-001`, from a starting 644): the 23 rows
+    /// in `ce_abilities_race.lst` before that file's first `SOURCELONG:`
+    /// directive (book-agnostic PCGen internal bookkeeping per its own top
+    /// comment), the 6 rows there governed by `SOURCELONG:Universal Rules`
+    /// (PCGen's own internal designation, not a Paizo book), and the 8 races
+    /// [`core_essentials_ambiguous_races_stay_unattributed`] pins as
+    /// genuinely ambiguous (2+ in-scope candidate books each, provable one
+    /// `.pcc` deep) plus their own ability/chassis rows. A future cycle that
+    /// resolves one of these with real new evidence LOWERS this pin in the
+    /// same commit as the fix; nobody may raise it to make a regression
+    /// pass.
+    ///
+    /// Gated on the real oracle being present (same `PCGEN_CORPUS_ROOT`
+    /// resolution `main` uses) so this test degrades to a no-op, not a false
+    /// failure, on a box that has not bootstrapped the pin -- `verify.sh`'s
+    /// `preflight-oracle` stage runs first in every cycle specifically so
+    /// this condition is never actually hit in the gate that matters.
+    #[test]
+    fn core_essentials_real_corpus_residual_never_grows_past_its_pinned_baseline() {
+        let corpus_root = match std::env::var("PCGEN_CORPUS_ROOT") {
+            Ok(configured) => PathBuf::from(configured),
+            Err(_) => {
+                let Ok(home) = std::env::var("HOME") else { return };
+                PathBuf::from(home).join("workspace/repos/pcgen/data")
+            }
+        };
+        let book_dir = corpus_root.join(BOOKS_RELATIVE).join("core_essentials");
+        if !book_dir.is_dir() {
+            // No oracle checked out on this box -- not this test's job to
+            // bootstrap it (`fetch-pcgen-oracle.sh` is), and failing here
+            // would be a false negative, not a real finding.
+            return;
+        }
+        let enumeration = enumerate_book(&book_dir, "core_essentials");
+        let residual = enumeration.units.iter().filter(|u| u.book == "core_essentials").count();
+        const PINNED_BASELINE: usize = 129;
+        assert!(
+            residual <= PINNED_BASELINE,
+            "core_essentials residual GREW to {residual} (pinned baseline {PINNED_BASELINE}) -- \
+             a unit that used to resolve to its true book no longer does. This is the \
+             decisions.md §9 gate: investigate before touching this assertion, never raise the \
+             pin to make a regression pass."
+        );
+    }
+
+    /// **`decisions.md §10`'s worked example, reproduced mechanically.**
+    /// Catfolk (`bestiary_3/races/catfolk/`) must attribute to
+    /// `advanced_race_guide`, the newer of its two printings -- not
+    /// `bestiary_3`, its true FIRST printing, which `RACE_TRUE_BOOK` alone
+    /// would still resolve to.
+    #[test]
+    fn catfolk_attributes_to_advanced_race_guide_the_newer_printing() {
+        let book = ScratchCoreEssentials::new("catfolk_newest_printing");
+        book.write(
+            "races/catfolk/catfolk_races.lst",
+            "Catfolk\t\tSORTKEY:a_base_pc\tSOURCEPAGE:p.xx\tFACT:IsPC|true\n",
+        );
+        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let unit = enumeration.units.iter().find(|u| u.name == "Catfolk").unwrap();
+        assert_eq!(unit.book, "advanced_race_guide");
+    }
+
+    /// The `§10` re-attribution is scoped to the `race` KIND only -- a
+    /// race's own `race_trait` rows, even from the identical per-race
+    /// directory, keep their TRUE first-printing book. `§10`'s own text
+    /// answers the operator's `advanced_race_guide` observation via
+    /// `race_trait` staying on the ORIGINAL book, not by moving it too.
+    #[test]
+    fn a_race_trait_row_from_the_same_race_directory_is_unaffected() {
+        let book = ScratchCoreEssentials::new("catfolk_trait_unaffected");
+        book.write(
+            "races/catfolk/catfolk_abilities_race.lst",
+            "Catfolk ~ Cat's Luck\tKEY:Catfolk ~ Cat's Luck\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
+        );
+        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let unit = enumeration.units.iter().find(|u| u.name == "Catfolk ~ Cat's Luck").unwrap();
+        assert_eq!(
+            unit.book, "bestiary_3",
+            "race_trait rows stay on the true first-printing book; only kind==race moves"
+        );
+    }
+
+    /// A race NOT on [`RACE_NEWEST_PRINTING`] (e.g. Skinwalker, native to
+    /// Bestiary 5 with no older printing to supersede) is unaffected --
+    /// the override is opt-in per race, never a blanket "every race moves
+    /// to ARG."
+    #[test]
+    fn a_race_absent_from_the_newest_printing_table_keeps_its_true_book() {
+        let book = ScratchCoreEssentials::new("skinwalker_unaffected");
+        book.write(
+            "races/skinwalker/skinwalker_races.lst",
+            "Skinwalker\t\tSOURCEPAGE:p.xx\tFACT:IsPC|true\n",
+        );
+        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let unit = enumeration.units.iter().find(|u| u.name == "Skinwalker").unwrap();
+        assert_eq!(unit.book, "bestiary_5");
+    }
+
+    /// **Bestiary 4's own 5 ARG-reprinted races stay on Bestiary 4** --
+    /// this fix's own correction to `decisions.md §10`'s worked-example
+    /// list, which named Changeling (Bestiary 4) as a case needing to move.
+    /// Bestiary 4's `SOURCEDATE:2013-10` postdates ARG's `2012-06`, so under
+    /// strict SOURCEDATE ordering Bestiary 4 is the NEWER printing and the
+    /// current attribution is already correct.
+    #[test]
+    fn bestiary_4_races_are_not_in_the_newest_printing_table() {
+        for slug in ["changeling", "kitsune", "nagaji", "samsaran", "wayang"] {
+            assert!(
+                RACE_NEWEST_PRINTING.iter().all(|(s, _)| *s != slug),
+                "{slug} is a Bestiary 4 race newer than ARG (2013-10 > 2012-06) and must stay \
+                 attributed to bestiary_4, not move to advanced_race_guide"
+            );
+        }
+    }
+
+    /// Pins the exact 32-race roster this fix's own doc comment claims, so
+    /// a future edit cannot silently widen or narrow it without updating
+    /// both this test and the doc comment together.
+    #[test]
+    fn race_newest_printing_table_has_the_derived_32_races() {
+        assert_eq!(
+            RACE_NEWEST_PRINTING.len(),
+            32,
+            "7 CRB + 11 Bestiary 1 + 7 Bestiary 2 + 5 Bestiary 3 + 2 ISWG == 32 races currently \
+             attributed to a book strictly older than ARG's own SOURCEDATE (2012-06), \
+             re-derived 2026-08-16 (SD31-D9-DISSOLVE-001); a length change means the roster \
+             moved and needs re-deriving, not just bumping"
+        );
+        assert!(RACE_NEWEST_PRINTING.iter().all(|(_, book)| *book == "advanced_race_guide"));
     }
 }
