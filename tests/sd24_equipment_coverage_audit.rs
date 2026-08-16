@@ -175,13 +175,21 @@ fn equipment_table_entry_weight_and_description_field_coverage_for_acg() {
 /// total) is **fully record-ingested** as of SD-25 criterion 7.N item 4
 /// -- a plain scope gap (no module existed at all), not a corpus
 /// ceiling, so 4/4 is the honest ceiling for `total_records` itself.
-/// `cost_gp`/`weight_lbs` are 4/4 (every real record carries both `COST:`
-/// and `WT:` tokens, including literal `0` values). `description` is
-/// also 4/4: 3 records source from the corpus's own `SPROP:` token
-/// (register A10, same convention `acg::equipment_data` established),
-/// and the 4th (`Rag Armor (Dark Creeper)`, which has neither `DESC:`
-/// nor `SPROP:`) was closed via an identity-matched web second-source
-/// pass -- see this cycle's receipt for the cited URLs.
+/// `weight_lbs` is 4/4 (every real record carries a `WT:` token,
+/// including literal `0` values). `cost_gp` is **3/4, corrected
+/// `SD31-E6-F5-004`** (`OPEN-ISSUES.md` row 91's typed-field cross-check):
+/// `Poison (Black Smear)` (`b1_equip_general.lst:7`) carries no `COST:`
+/// token at all in the pinned oracle -- the original `Some(0.0)` was a
+/// transcription error (a stated `0` price is not the same fact as no
+/// price being stated), not a genuine gap this test should paper over by
+/// asserting a count the corpus does not support. `description` is 4/4:
+/// 3 records source from the corpus's own `SPROP:` token (register A10,
+/// same convention `acg::equipment_data` established, and the SAME
+/// `SPROP:` token that recovers `Poison (Black Smear)`'s own
+/// description even without a `COST:`), and the 4th (`Rag Armor (Dark
+/// Creeper)`, which has neither `DESC:` nor `SPROP:`) was closed via an
+/// identity-matched web second-source pass -- see this cycle's receipt
+/// for the cited URLs.
 #[test]
 fn beastiary1_equipment_is_fully_record_ingested_with_full_description_coverage() {
     let report = beastiary1::equipment_tables::field_coverage_report();
@@ -193,7 +201,12 @@ fn beastiary1_equipment_is_fully_record_ingested_with_full_description_coverage(
         report.total_records, report.records_expected,
         "Bestiary 1 equipment record coverage should be 100% (closed this cycle)"
     );
-    assert_eq!(report.has_cost, 4, "every real record carries a COST: token");
+    assert_eq!(
+        report.has_cost, 3,
+        "3 of 4 real records carry a COST: token -- Poison (Black Smear) genuinely does not \
+         (b1_equip_general.lst:7 has no COST: token in the pinned oracle at all); asserting 4 \
+         here would re-introduce the fabricated-price defect SD31-E6-F5-004 fixed"
+    );
     assert_eq!(report.has_weight, 4, "every real record carries a WT: token");
     assert_eq!(
         report.has_description, 4,

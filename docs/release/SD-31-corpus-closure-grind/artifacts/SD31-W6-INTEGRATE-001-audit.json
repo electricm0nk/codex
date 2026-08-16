@@ -121,11 +121,11 @@
     "race_trait_total": 3603,
     "unmeasurable_unknown_status_by_kind": {
       "class_feature": 3917,
-      "equipment": 134,
-      "equipment_modifier": 692,
+      "equipment": 131,
+      "equipment_modifier": 690,
       "feat": 385
     },
-    "unmeasurable_unknown_status_units": 5128
+    "unmeasurable_unknown_status_units": 5123
   },
   "ok": true,
   "reachable_ceiling": 0.989512,
@@ -142,7 +142,7 @@
     "race_trait": 0.995837,
     "spell": 0.978192
   },
-  "source_generated_at": "2026-08-16T10:23:54Z",
+  "source_generated_at": "2026-08-16T10:35:51Z",
   "statuses_evaluated": [
     "deferred-with-reason",
     "fixture-verified",
