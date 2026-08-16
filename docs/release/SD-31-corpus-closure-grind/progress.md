@@ -13716,9 +13716,13 @@ None that stopped work.
 
 ### Reclaim
 
-`scripts/reclaim.sh --apply` run at cycle end; reclaimed bytes and targets recorded in the closing
-handoff below (run after this receipt's own commit, per the standing cycle-end step).
+`scripts/reclaim.sh --apply` run at cycle end: **0 items, 0.0B reclaimed** — every candidate
+(`cargo-target`, `verify-logs`, `worktrees`, `branches`) was correctly refused as either
+modified within the last 6h, checked out in a live sibling worktree (many concurrent SD-31
+cycles active on this box), or not-yet-merged with an upstream present. An honest zero, not a
+skipped step.
 
 ### Branch tip
 
-`sd31/spell-held-SD31-E6-F2-006`, pushed to origin. Tip SHA recorded in the closing handoff below.
+`sd31/spell-held-SD31-E6-F2-006`, pushed to origin. Two commits: `535d94ea8` (feature) and
+`973f8e41f` (baseline raise, DoD item 7). Final tip: `973f8e41f`.
