@@ -7478,9 +7478,23 @@ work, not a rung extension — reported honestly rather than promised as "coming
 ### Full gate
 
 Launched early, in the background (`LOG=docs/release/SD-31-corpus-closure-grind/artifacts/
-SD31-D7-PROSE-001-verify.log`). **[This section is finalized after the gate's own exit code is known —
-see the log's own `RESULT`/`VERIFY_EXIT` line, authoritative over anything summarized above it if this
-receipt is read before the gate finished.]**
+SD31-D7-PROSE-001-verify.log`), commits landed and pushed while it ran, per the mandate's explicit
+"land the commit and receipt before returning, even if a gate has not finished" rule.
+
+**Status at receipt-finalization time:** every stage through `root-lib` PASSED (`1849 passed`, matching
+the current baseline exactly — confirms this cycle's `src/bin/v06_work_inventory.rs` changes, a BIN
+target, do not move the `--lib`-only count). `root-full` (the slow stage — `cargo test --locked
+--no-fail-fast -j 2`, building ~490 test binaries under concurrent load from 4+ sibling lanes' own
+`verify.sh` runs sharing this box) was still running when this receipt was finalized — confirmed ALIVE
+and making genuine forward progress, not stalled: `pgrep -fa 'cargo test --locked --no-fail-fast'` finds
+PID `658549`, `/proc/658549/environ` confirms `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/
+sd31-prose-path` (this cycle's own, not a sibling's), load average ~19 on 24 cores (busy, not hung).
+**The log's own `RESULT`/`VERIFY_EXIT` line is authoritative over this summary** if read after the gate
+finishes — check `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D7-PROSE-001-verify.log`
+directly. The four-check Wired Integration audit (`no-stub-mvp-doctrine.md`) was run separately against
+this cycle's own commit diff and is clean: all four `OK_NO_*` markers, no `TODO`/`STUB`/`mock`/
+`"Would "` strings, no empty handlers (this cycle touches no `.tsx`/`.jsx`, so checks 2/4's frontend
+half is vacuously clean).
 
 ### Reclaim
 
