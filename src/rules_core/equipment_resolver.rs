@@ -877,7 +877,7 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         }
         disagreements.sort_unstable();
         disagreements.dedup();
-        // SD-29 `epic-4-proven-equip-mod` grew this list from 1 to 36, and
+        // SD-29 `epic-4-proven-equip-mod` grew this list from 1 to 28, and
         // every addition is one shape: a corpus gap row whose `KEY:` equals
         // some hand-authored row's display NAME. `Cold Iron` is the worked
         // example — CRB's hand table has a row *named* `Cold Iron` (0 gp);
@@ -890,7 +890,23 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // `purchase_equipment_at_root` already follow: a caller holding a
         // catalog key from a picker prices via `equipment_catalog_row_by_key`,
         // never via the free-form resolver. Pinned by name, not by count, so
-        // a 37th — which would be a genuinely new ambiguity — still fails.
+        // a 29th — which would be a genuinely new ambiguity — still fails.
+        //
+        // CORRECTED `SD31-W4-INTEGRATE-001`, 2026-08-16 (found already red
+        // at this integration cycle's own inherited tip, `40771d3bf`,
+        // predating every wave-4 branch): a prior pass added 8 ACG
+        // equipment_modifier names (Amorphous, Burdenless, Exclusionary,
+        // Prehensile, Restful, Sneaky, Spiteful, Trackless) to this pinned
+        // list, apparently anticipating a KEY/NAME collision by the same
+        // shape as `Cold Iron`. Traced one deep: `acg/equipment_data/
+        // equipmods.rs`'s hand-authored `Amorphous` row and
+        // `equipment_gap_tables.rs`'s gap row both cost 4500 gp -- the two
+        // lookups AGREE (both resolve to 4500), so there is no real pricing
+        // ambiguity for any of these 8, only a coincidental KEY/NAME name
+        // reuse with an identical price. Removed the 8 phantom entries;
+        // `disagreements` reproduces this 28-item list exactly, verified by
+        // an isolated `cargo test --lib
+        // equipment_resolver::tests::the_two_lookups_agree` run.
         assert_eq!(
             disagreements,
             vec![
@@ -900,16 +916,13 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
                 "Adamantine (Medium Armor)",
                 "Adamantine (Weapon)",
                 "Alchemical Silver",
-                "Amorphous",
                 "BRACE",
                 "Backpack (Carrier)",
                 "Backpack (Hydration)",
                 "Backpack (Weaponrack)",
-                "Burdenless",
                 "CLOTH",
                 "Cold Iron",
                 "DISARM",
-                "Exclusionary",
                 "LEATHER",
                 "MONK",
                 "Mithral (Heavy Armor)",
@@ -919,15 +932,10 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
                 "Mithral (Shield)",
                 "NONLETHAL",
                 "OBSIDIAN",
-                "Prehensile",
                 "REACH",
                 "ROPE",
-                "Restful",
                 "STEEL",
-                "Sneaky",
-                "Spiteful",
                 "TRIP",
-                "Trackless",
                 "WOOD",
                 "Wooden",
             ],
