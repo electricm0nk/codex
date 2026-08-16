@@ -7,8 +7,56 @@
     "level": 4,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Removes polymorph effects.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "True form removes any polymorph effect from a target creature, returning it to its true form, even against its will. Against creatures affected by polymorph spell effects (such as baleful polymorph or giant form), you must make a caster level check (1d20 + caster level, maximum +15) against a DC of 11 + caster level of the effect. Success means that the polymorph effect immediately ends.  A creature with the supernatural ability to change shape (such as a lycanthrope) must make a Will saving throw or immediately revert to its true form. If it fails this first saving throw, the creature can attempt another Will saving throw to overcome the spell as a full-round action that does not provoke attacks of opportunity. If this save succeeds, the spell ends and the creature is capable of changing shape once again. If the second save fails, the creature is locked in its true form for the duration of the spell, preventing any further polymorph effects from changing its shape.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/trueForm.html#_true-form"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.251"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "up to (CASTERLEVEL/3) creatures, no two of which can be more than 30 ft. apart"
       }
     ],
     "school": "Abjuration"
@@ -20,7 +68,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 2096,
+    "line": 251,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "True Form",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

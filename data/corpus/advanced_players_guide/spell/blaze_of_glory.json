@@ -7,8 +7,60 @@
     "level": 4,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action or immediate action; see text"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Paladin=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "Last stand cures good creatures, hurts evil.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "You fall unconscious but also unleash a spectacular wave of holy energy that heartens and heals your allies while leaving your opponents daunted and damaged. You can cast this spell as either a standard action on your turn, or as an immediate action when brought to below 0 hit points. If cast as a standard action, you are immediately reduced to -1 hit points, but stable, after casting the spell.  When you cast this spell, any good creature within range is healed for 1d6 points of damage per two caster levels. All evil creatures within range take the same amount as damage instead (a successful Will save halves this damage). In addition, all allies and enemies within range are affected as if by the prayer spell for 1 round per caster level.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Good|Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous and (CASTERLEVEL) rounds; see text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will partial"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/blazeOfGlory.html#_blaze-of-glory-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.205"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Healing"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "30-ft.-radius burst centered on you"
       }
     ],
     "school": "Conjuration"
@@ -20,7 +72,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1864,
+    "line": 37,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Blaze of Glory",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

@@ -27,7 +27,7 @@ import { assert, assertEqual } from '../testSupport/asserts';
  */
 
 /** The wire codes `build_spell_catalog` chains, in that order. */
-const CHAINED_BOOK_CODES = ['CRB', 'APG', 'ACG', 'ARG', 'UI'] as const;
+const CHAINED_BOOK_CODES = ['CRB', 'APG', 'ACG', 'ARG', 'UI', 'UM'] as const;
 
 function testBookOrderCoversEveryServedBookInChainOrder() {
   assertEqual(
@@ -60,6 +60,10 @@ function testArgIsLabelledWithItsRealBookName() {
   assertEqual(BOOK_LABELS.ARG, 'Advanced Race Guide', "ARG's display label");
 }
 
+function testUmIsLabelledWithItsRealBookName() {
+  assertEqual(BOOK_LABELS.UM, 'Ultimate Magic', "UM's display label");
+}
+
 function testFormatBookListReadsAsProseOverTheRealLabels() {
   assertEqual(formatBookList(['CRB']), 'Core Rulebook', 'single book');
   assertEqual(
@@ -69,7 +73,7 @@ function testFormatBookListReadsAsProseOverTheRealLabels() {
   );
   assertEqual(
     formatBookList(BOOK_ORDER),
-    "Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Advanced Race Guide and Ultimate Intrigue",
+    "Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Advanced Race Guide, Ultimate Intrigue and Ultimate Magic",
     'every served book'
   );
 }
@@ -83,6 +87,7 @@ function main() {
   testEveryOrderedBookHasARealDisplayLabel();
   testLabelsDefineNoBookTheCatalogDoesNotServe();
   testArgIsLabelledWithItsRealBookName();
+  testUmIsLabelledWithItsRealBookName();
   testFormatBookListReadsAsProseOverTheRealLabels();
   testFormatBookListNeverInventsALabelForAnUnknownCode();
 }

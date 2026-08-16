@@ -6,8 +6,64 @@
     "level": 6,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
         "key": "DESC",
         "value": "You become a Medium chromatic or metallic dragon. You gain a +4 size bonus to Strength, a +2 size bonus to Constitution, a +4 natural armor bonus, fly 60 feet [poor], darkvision 60 feet, a breath weapon, and resistance to one element. You also gain one bite [1d8], two claws [1d6], and two wing attacks [1d4]. Your breath weapon and resistance depend on the type of dragon. You can only use the breath weapon once per casting of this spell. All breath weapons deal 6d8 points of damage and allow a Reflex save for half damage. In addition, some of the dragon types grant additional abilities, as noted below. Black dragon: 60-foot line of acid, resist acid 20, swim 60 feet Blue dragon: 60-foot line of electricity, resist electricity 20, burrow 20 feet Green dragon: 30-foot cone of acid, resist acid 20, swim 40 feet Red dragon: 30-foot cone of fire, resist fire 30, vulnerability to cold White dragon: 30-foot cone of cold, resist cold 20, swim 60 feet, vulnerability to fire Brass dragon: 60-foot line of fire, resist fire 20, burrow 30 feet, vulnerability to cold Bronze dragon: 60-foot line of electricity, resist electricity 20, swim 60 feet Copper dragon: 60-foot line of acid, resist acid 20, spider climb [always active] Gold dragon: 30-foot cone of fire, resist fire 20, swim 60 feet Silver dragon: 30-foot cone of cold, resist cold 30, vulnerability to fire|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You become a Medium chromatic or metallic dragon.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "See text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/formOfTheDragon.html#_form-of-the-dragon-i"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.286"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Polymorph"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
       }
     ],
     "school": "Transmutation"
@@ -19,9 +75,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1006,
+    "line": 247,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Form of the Dragon I.MOD",
+    "record_key": "Form of the Dragon I",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

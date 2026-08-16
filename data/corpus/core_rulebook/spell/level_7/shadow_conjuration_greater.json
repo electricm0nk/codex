@@ -6,8 +6,64 @@
     "level": 7,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like shadow conjuration, except that it duplicates any sorcerer or wizard conjuration [summoning] or conjuration (creation) spell of 6th level or lower.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "This spell functions like shadow conjuration, except that it duplicates any sorcerer or wizard conjuration [summoning] or conjuration [creation] spell of 6th level or lower. The illusory conjurations created deal three-fifths [60%%] damage to nonbelievers, and nondamaging effects are 60%% likely to work against nonbelievers.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "See text"
+      },
+      {
+        "key": "RANGE",
+        "value": "See text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will disbelief (if interacted with); varies; see text;"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/shadowConjuration.html#_shadow-conjuration-greater"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.340"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes; see text"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Shadow"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "See text"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
       }
     ],
     "school": "Illusion"
@@ -19,9 +75,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1281,
+    "line": 531,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Shadow Conjuration (Greater).MOD",
+    "record_key": "Shadow Conjuration (Greater)",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

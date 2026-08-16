@@ -7,12 +7,52 @@
     "level": 3,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 immediate action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Oracle=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "Retry attack or check, but do worse on next two.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "When you make a d20 roll, you may choose to immediately cast this spell to reroll that die before success or failure is known, keeping the more favorable result. For the next two rounds following your casting of the spell, you must roll two dice each time a d20 roll is called for, keeping the less favorable result.|PRERULE:1,DisplayFullSpell"
       },
       {
         "key": "DOMAINS",
         "value": "Fate Subdomain=3"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/borrowFortune.html#_borrow-fortune"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.206"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
       }
     ],
     "school": "Evocation"
@@ -24,7 +64,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1872,
+    "line": 277,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Borrow Fortune",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

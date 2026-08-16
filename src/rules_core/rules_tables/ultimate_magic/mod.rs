@@ -72,3 +72,4 @@ pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
 pub mod archetype_tables;
 pub mod equipment_tables;
 pub mod feat_tables;
+pub mod spell_list;

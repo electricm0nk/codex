@@ -7,8 +7,56 @@
     "level": 3,
     "raw_tokens": [
       {
+        "key": "CLASSES",
+        "value": "Ranger=3|Inquisitor=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as tireless pursuit, except as noted above.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "This spell functions as tireless pursuit, except as noted above.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a hard biscuit broken into pieces)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/tirelessPursuers.html#_tireless-pursuers"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.249"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You plus (CASTERLEVEL/3) touched creatures"
       }
     ],
     "school": "Transmutation"
@@ -20,7 +68,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 2090,
+    "line": 244,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Tireless Pursuers",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

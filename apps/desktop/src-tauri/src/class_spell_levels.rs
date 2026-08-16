@@ -210,21 +210,28 @@ mod tests {
     /// Advanced Race Guide. They are genuinely on those classes' PF1
     /// spell lists; only the record is missing.
     ///
-    /// **The gap shrank on 2026-07-31, and that is the whole point of the
-    /// pin.** It was 73 of Bloodrager's 200 entries and 21 of Shaman's
-    /// while the catalog served CRB+APG+ACG only. `spell_catalog.rs` then
-    /// chained `advanced_race_guide::spell_list`'s 92 records, and since
-    /// ARG's keys are the *only* delta between the old catalog and the new
-    /// one, the 23 Bloodrager and 6 Shaman keys that started joining are
-    /// necessarily ARG base records — one of the three books the ruling
-    /// above named as un-ingested, now ingested. 50 and 15 remain, and
-    /// those are the Ultimate Magic / Ultimate Combat remainder. Re-derive
-    /// rather than relax these when another book lands.
+    /// **The gap shrank on 2026-07-31, and again on 2026-08-15, and that is
+    /// the whole point of the pin.** It was 73 of Bloodrager's 200 entries
+    /// and 21 of Shaman's while the catalog served CRB+APG+ACG only.
+    /// `spell_catalog.rs` then chained `advanced_race_guide::spell_list`'s
+    /// 92 records, and since ARG's keys are the *only* delta between the
+    /// old catalog and the new one, the 23 Bloodrager and 6 Shaman keys
+    /// that started joining are necessarily ARG base records — one of the
+    /// three books the ruling above named as un-ingested, now ingested.
+    /// **SD31-E6-F2-002 (2026-08-15) chained `ultimate_magic::spell_list`'s
+    /// 269 records** (`spell_resolver::spell_catalog_rows()`'s 6th book) —
+    /// UM's own base records for every Shaman-class `.MOD` graft this file
+    /// carries now join, closing that gap to **zero**, and 30 of
+    /// Bloodrager's 50 remaining grafts join too (their UM base records now
+    /// exist), leaving **20**. The 20 that remain are the Ultimate Combat
+    /// remainder (`acg::bloodrager_spell_list`'s doc comment names it),
+    /// un-ingested by any book chained into the catalog as of this cycle.
+    /// Re-derive rather than relax these when another book lands.
     ///
     /// Every OTHER dispatched class joins completely, which is the part
     /// the frontend actually depends on.
     #[test]
-    fn every_served_key_joins_to_a_catalog_record_outside_the_two_documented_gaps() {
+    fn every_served_key_joins_to_a_catalog_record_outside_the_one_documented_gap() {
         let catalog: std::collections::HashSet<String> = build_spell_catalog()
             .entries
             .into_iter()
@@ -242,7 +249,7 @@ mod tests {
                 gaps.push((class_id, missing));
             }
         }
-        assert_eq!(gaps, vec![("class:bloodrager", 50), ("class:shaman", 15)]);
+        assert_eq!(gaps, vec![("class:bloodrager", 20)]);
     }
 
     #[test]

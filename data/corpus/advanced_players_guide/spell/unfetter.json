@@ -7,8 +7,60 @@
     "level": null,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Remove distance restriction on eidolon.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "This spell breaks the life link between you and your eidolon. This spell allows your eidolon to venture more than 100 feet away from you without penalty. It can travel any distance while this spell is in effect without penalty, but if the spell expires while the eidolon is farther than 100 feet away, it immediately loses hit points as normal for distance and is possibly sent back to its home plane. While this spell is in effect, you cannot sacrifice hit points to prevent damage to your eidolon. Damage that would be transferred due to the life bond ability is not transferred. If you attempt to use the transposition ability while this spell is in effect, you must roll on the teleport mishap table, using the \"studied carefully\" row.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a broken chain)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/unfetter.html#_unfetter"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.253"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Your eidolon"
       }
     ],
     "school": "Transmutation"
@@ -20,7 +72,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 2100,
+    "line": 255,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Unfetter",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"

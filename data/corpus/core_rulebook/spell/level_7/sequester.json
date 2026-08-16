@@ -6,8 +6,60 @@
     "level": 7,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "When cast, this spell prevents divination spells from detecting or locating the target and also renders the affected target invisible (as the invisibility spell).|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "When cast, this spell prevents divination spells from detecting or locating the target and also renders the affected target invisible [as the invisibility spell]. The spell does not prevent the subject from being discovered through tactile means or through the use of devices. Creatures affected by sequester become comatose and are effectively in a state of suspended animation until the spell ends. Note: The Will save prevents an attended or magical object from being sequestered. There is no save to see the sequestered creature or object or to detect it with a divination spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None or Will negates (object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/sequester.html#_sequester"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.340"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No or yes (object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One willing creature or object [up to a (CASTERLEVEL) 2-ft. cubes] touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
       }
     ],
     "school": "Abjuration"
@@ -19,9 +71,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1278,
+    "line": 528,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Sequester.MOD",
+    "record_key": "Sequester",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",

@@ -916,6 +916,30 @@ fn reach_of(family: &Family) -> Option<Reach> {
                 .map(|entry| entry.key.to_owned())
                 .collect(),
         )),
+        // SD31-E6-F2-002: UM joined `spell_resolver::spell_catalog_rows()` as
+        // the catalog's 6th book, the same `build_spell_catalog`/"All books"
+        // render path ARG and UI use. 10 of its 269 records carry neither a
+        // `CLASSES:`/`DOMAINS:` level (`Restore Eidolon` and siblings), but
+        // every one still carries a real `SCHOOL:` and/or `DESC:`, so
+        // `has_payload` is satisfied regardless -- not a bare-record risk.
+        // The genuine risk was the 15 `Masterpiece` bard-performance records,
+        // which carry NEITHER a recognized `SCHOOL:` (`"Masterpiece"`, this
+        // engine's 9-school enum does not model it) NOR a `DESC:` token --
+        // only a real `level`, from their own `CLASSES:Bard=N` token. Caught
+        // by this gate's own `bare_records_are_exactly_the_recorded_findings`
+        // check the FIRST time this arm was added: a level-parsing bug in
+        // `ingest_ultimate_magic_spells.rs` had silently dropped that level
+        // too, making all 15 genuinely bare (fixed; see `OPEN-ISSUES.md` row
+        // 47). With the level restored, `has_payload` is satisfied by
+        // `level` alone for all 15, and this gate passes with zero
+        // `OPEN_FINDINGS` entries needed for this family.
+        ("ultimate_magic", "spells") => Some(spells_reach(
+            "UM",
+            um::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
 
         // Equipment: `list_equipment_catalog` / `list_equipment` serve every
         // ingested book's table since the SD-27 widening of

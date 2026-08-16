@@ -6,8 +6,64 @@
     "level": 8,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=8"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
         "key": "DESC",
         "value": "This spell functions like resilient sphere, but the creatures or objects caught inside the globe created by the spell are made nearly weightless. Anything contained within a telekinetic sphere weighs only one-sixteenth of its normal weight. You can telekinetically lift anything in the sphere that normally weighs 5,000 pounds or less. The telekinetic control extends from you out to medium range [100 feet + 10 feet per caster level] after the sphere has succeeded in encapsulating its contents. You can move the sphere, along with the objects and creatures it contains that weigh a total of 5,000 pounds or less, by concentrating on the sphere. You can begin moving a sphere in the round after casting the spell. If you concentrate on doing so [a standard action], you can move the sphere as much as 30 feet in a round. If you cease concentrating, the sphere does not move in that round [if on a level surface] or descends at its falling rate [if aloft] until it reaches a level surface. You can resume concentrating on your next turn or any later turn during the spell's duration. The sphere falls at a rate of only 60 feet per round, which is not fast enough to cause damage to the contents of the sphere. You can move the sphere telekinetically even if you are in it.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like resilient sphere, but the creatures or objects caught inside the globe created by the spell are made nearly weightless.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Force"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex negates (object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/telekineticSphere.html#_telekinetic-sphere"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.358"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL)-ft.-diameter sphere, centered around creatures or objects"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
       }
     ],
     "school": "Evocation"
@@ -19,9 +75,9 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1369,
+    "line": 620,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "record_key": "Telekinetic Sphere.MOD",
+    "record_key": "Telekinetic Sphere",
     "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",

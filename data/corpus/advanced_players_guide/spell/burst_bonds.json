@@ -7,8 +7,60 @@
     "level": 1,
     "raw_tokens": [
       {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "(min(CASTERLEVEL,5))d6 damage to restraints.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
         "key": "DESC",
         "value": "You blast your restraints with divine wrath, dealing 1d6 points of damage per caster level to the target object (maximum 5d6), ignoring hardness of 10 or less. A Fortitude save halves the damage, although only magical restraints receive a saving throw.  You can also target a creature that is grappling or otherwise restraining you (such as by adhesive or the swallow whole ability) with the spell. You don't need to make a touch attack to use burst bonds against a creature, and you can cast this spell without making a concentration check while grappled or pinned. The creature does not take damage as above. If you are grappled and your target fails its save, you may make an immediate attempt to break the grapple (but not reverse it) as a free action, with a +1 luck bonus to your CMB per caster level (maximum +5). If the target creature fails its save and you are restrained by an ability that originally allowed a saving throw, burst bonds allows a new saving throw with a +1 luck bonus per two caster levels (maximum +5).|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude half (object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/burstBonds.html#_burst-bonds"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.208"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one object or creature restraining you"
       }
     ],
     "school": "Evocation"
@@ -20,7 +72,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1881,
+    "line": 53,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "record_key": "Burst Bonds",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
