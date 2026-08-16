@@ -32,13 +32,21 @@
 //! citation are computed by one function, not two independently-written
 //! ones that could drift apart.
 //!
-//! Scoped to the five spell books the engine's `spell_resolver` actually
-//! models (`SPELL_BOOK_CRB/APG/ACG/ARG/UI`'s corpus slugs) — enriching a
-//! sixth book's spell records would add real, correct data that no
-//! `wiring_class`/`status` path can ever promote to `done`, since that book
-//! is absent from `spell_catalog_rows()` entirely; narrower scope, same
-//! reason `enrich_equipment_raw_tokens.rs` names its own six books rather
-//! than walking `data/corpus/*` blindly.
+//! Scoped to the spell books the engine's `spell_resolver` actually models
+//! (`spell_book_slug_for`'s corpus slugs) — enriching an unchained book's
+//! spell records would add real, correct data that no `wiring_class`/
+//! `status` path can ever promote to `done`, since that book is absent
+//! from `spell_catalog_rows()` entirely; narrower scope, same reason
+//! `enrich_equipment_raw_tokens.rs` names its own six books rather than
+//! walking `data/corpus/*` blindly.
+//!
+//! Widened 5 -> 8 by `SD31-E6-F2-005`: `ultimate_magic`, `occult_adventures`
+//! and `ultimate_combat` had no `data/corpus/<book>/spell/*.json` at all
+//! until `cache_gen::spell_lane_dump`/`gen_cache_spell_lane_dump` (this
+//! same cycle) generated one (`OPEN-ISSUES.md` rows 76/77's named missing
+//! piece) — this list is widened in the SAME cycle that made the
+//! directories exist, so this tool's own "carries a source.kind but no
+//! raw_tokens" scan no longer reads as permanently empty for them.
 
 use std::env;
 use std::fs;
@@ -49,15 +57,21 @@ use codex::rules_core::wiring_class::build_mod_index;
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};
 
-/// The five corpus book directories `spell_resolver::spell_catalog_rows()`
+/// The corpus book directories `spell_resolver::spell_catalog_rows()`
 /// models (`spell_book_slug_for` in `v06_work_inventory.rs`) — the only
 /// books whose `static` spell units this enrichment can ever move to `done`.
+/// Widened 5 -> 8 by `SD31-E6-F2-005`: `ultimate_magic`/`occult_adventures`/
+/// `ultimate_combat` now have a `data/corpus/<book>/spell/*.json` cache
+/// (`cache_gen::spell_lane_dump`, same cycle) for this tool to enrich.
 const TARGET_BOOKS: &[&str] = &[
     "core_rulebook",
     "advanced_players_guide",
     "advanced_class_guide",
     "advanced_race_guide",
     "ultimate_intrigue",
+    "ultimate_magic",
+    "occult_adventures",
+    "ultimate_combat",
 ];
 
 fn pcgen_data_root() -> PathBuf {

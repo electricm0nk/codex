@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as contingency, except as noted. This spell also only comes into effect after your death and works only with certain spells. The companion spell triggers 1d6 rounds after your death. All decisions made involving the companion spell must be made when deadman's contingency is cast (including messages and recipients for spells like magic mouth or sending). If the spell targets an object or appears in a certain location, it must target or be centered on your corpse. The following spells can be companion spells for deadman's contingency: animate dead (animating your corpse as an uncontrolled skeleton or zombie), disintegrate, fireball, gentle repose, magic mouth, major image (with a duration of 3 rounds), permanent image, sending, stinking cloud, and teleport object. Focus; ivory statuette of you worth 1,500 gp.|PRERULE:1,DisplayFullSpell",
+    "key": "Deadman's Contingency",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes or more; see text"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Cleric,Psychic,Sorcerer,Witch,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M,F"
+      },
+      {
+        "key": "DESC",
+        "value": "Set one of a list of contingencies for your demise.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as contingency, except as noted. This spell also only comes into effect after your death and works only with certain spells. The companion spell triggers 1d6 rounds after your death. All decisions made involving the companion spell must be made when deadman's contingency is cast (including messages and recipients for spells like magic mouth or sending). If the spell targets an object or appears in a certain location, it must target or be centered on your corpse. The following spells can be companion spells for deadman's contingency: animate dead (animating your corpse as an uncontrolled skeleton or zombie), disintegrate, fireball, gentle repose, magic mouth, major image (with a duration of 3 rounds), permanent image, sending, stinking cloud, and teleport object. Focus; ivory statuette of you worth 1,500 gp.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Up to (CASTERLEVEL) hours plus 1d6 rounds [D]; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Deadman's Contingency"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Evocation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 37,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Deadman's Contingency",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

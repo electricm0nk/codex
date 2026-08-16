@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You create a one-handed object that you might expect to see in your current surroundings, which you can then use as an improvised weapon. The spell conjures such an object near your hand such that you can retrieve it as you complete the spell. No matter what sort of object you picked, it functions as a one-handed improvised weapon appropriate for your size and that deals 1d6 points of damage for a Medium creature (1d4 for Small creatures). The item deals the type of damage you choose (bludgeoning, piercing, or slashing) when casting the spell, though the object you request must conform to the damage type. The spell ends prematurely if the improvised weapon leaves your grasp. The object has no value and can't be used for other functions other than as an improvised weapon (for instance, this spell doesn't allow you to conjure an expensive spyglass and sell it or use its other abilities, but you could still use it to beat someone over the head). The conjured object can't already be a manufactured weapon, even in a location where you might expect to see manufactured weapons. It can be an object that would normally make for an unusual improvised weapon, like a herring at a fish market, and it still deals its full damage.|PRERULE:1,DisplayFullSpell",
+    "key": "Desperate Weapon",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 swift action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin,Bard,Bloodrager,Cleric,Inquisitor,Magus,Occultist,Ranger,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "Create an improvised weapon.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a one-handed object that you might expect to see in your current surroundings, which you can then use as an improvised weapon. The spell conjures such an object near your hand such that you can retrieve it as you complete the spell. No matter what sort of object you picked, it functions as a one-handed improvised weapon appropriate for your size and that deals 1d6 points of damage for a Medium creature (1d4 for Small creatures). The item deals the type of damage you choose (bludgeoning, piercing, or slashing) when casting the spell, though the object you request must conform to the damage type. The spell ends prematurely if the improvised weapon leaves your grasp. The object has no value and can't be used for other functions other than as an improvised weapon (for instance, this spell doesn't allow you to conjure an expensive spyglass and sell it or use its other abilities, but you could still use it to beat someone over the head). The conjured object can't already be a manufactured weapon, even in a location where you might expect to see manufactured weapons. It can be an object that would normally make for an unusual improvised weapon, like a herring at a fish market, and it still deals its full damage.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Desperate Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One-handed improvised weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 42,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Desperate Weapon",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

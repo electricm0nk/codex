@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "When casting this spell, you must concentrate on a culture or subculture to which you wish to adapt. If you speak the native language of the culture in question, then for the duration of this spell, you speak the language with a native accent. The spell doesn't teach you the language in question, but can be combined with tongues or a similar spell. Your body language and gestures mark you as a native of the culture, and you unconsciously make small decisions that help you blend in. Combined, these grant you a +2 circumstance bonus on Diplomacy checks to influence members of the culture to which you have adapted, which doesn't stack with other circumstance bonuses you might possess by virtue of being a member of the chosen culture. You also gain a +2 circumstance bonus on Disguise checks to pass yourself off as if you were a member of the culture, if you are not. This doesn't provide benefits when disguising yourself as a specific member of the culture, though it negates any circumstance penalties you might otherwise have taken due to not acting appropriately for that person's culture. Finally, the DCs of enchantment (charm) spells you cast against natives of the culture to which you are attuned increase by 1.|PRERULE:1,DisplayFullSpell",
+    "key": "Cultural Adaptation",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Cleric,Medium,Occultist,Psychic,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Adapt to fit the local culture.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "When casting this spell, you must concentrate on a culture or subculture to which you wish to adapt. If you speak the native language of the culture in question, then for the duration of this spell, you speak the language with a native accent. The spell doesn't teach you the language in question, but can be combined with tongues or a similar spell. Your body language and gestures mark you as a native of the culture, and you unconsciously make small decisions that help you blend in. Combined, these grant you a +2 circumstance bonus on Diplomacy checks to influence members of the culture to which you have adapted, which doesn't stack with other circumstance bonuses you might possess by virtue of being a member of the chosen culture. You also gain a +2 circumstance bonus on Disguise checks to pass yourself off as if you were a member of the culture, if you are not. This doesn't provide benefits when disguising yourself as a specific member of the culture, though it negates any circumstance penalties you might otherwise have taken due to not acting appropriately for that person's culture. Finally, the DCs of enchantment (charm) spells you cast against natives of the culture to which you are attuned increase by 1.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Cultural Adaptation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.208"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Divination"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 34,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Cultural Adaptation",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

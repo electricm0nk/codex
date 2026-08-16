@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You purge impure thoughts from the target's mind and fill him with exultant relief at the forgiveness of his sins. Absolution ends all charm or compulsion effects affecting the target (including harmless compulsions, such as heroism) as per break enchantment. If the target was forced to perform any actions contrary to his alignment, monk vows, paladin oath, or similar code of conduct by that charm or compulsion effect, that action doesn't cause him to lose access to class abilities, including divine spellcasting. Unlike an atonement spell, absolution can't reverse alignment change or the effects of willing transgressions, induce a creature to change its alignment, or restore class abilities lost because of misdeeds performed in the past. Absolution automatically works if the caster and the target share the same alignment or the same patron deity. If they don't, but their alignments are within one step of each other, absolution has a %1%% chance of success. If neither of these is true, the spell automatically fails. If using the honor subsystem, casting absolution also eliminates the honor loss for events and actions committed by the target while he was affected by a charm or compulsion effect that the spell ended. Material component; vial of holy water.|CASTERLEVEL*5|PRERULE:1,DisplayFullSpell",
+    "key": "Absolution",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Paladin=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M,DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Removes enchantments and forgives actions taken under their effects.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You purge impure thoughts from the target's mind and fill him with exultant relief at the forgiveness of his sins. Absolution ends all charm or compulsion effects affecting the target (including harmless compulsions, such as heroism) as per break enchantment. If the target was forced to perform any actions contrary to his alignment, monk vows, paladin oath, or similar code of conduct by that charm or compulsion effect, that action doesn't cause him to lose access to class abilities, including divine spellcasting. Unlike an atonement spell, absolution can't reverse alignment change or the effects of willing transgressions, induce a creature to change its alignment, or restore class abilities lost because of misdeeds performed in the past. Absolution automatically works if the caster and the target share the same alignment or the same patron deity. If they don't, but their alignments are within one step of each other, absolution has a %1%% chance of success. If neither of these is true, the spell automatically fails. If using the honor subsystem, casting absolution also eliminates the honor loss for events and actions committed by the target while he was affected by a charm or compulsion effect that the spell ended. Material component; vial of holy water.|CASTERLEVEL*5|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Absolution"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.203"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Living creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Abjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Absolution",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "derived:range_keyword"
+  ]
+}

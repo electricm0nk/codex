@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You glimpse the future. Prognostication functions as divination except that the spell can see up to a year and a day into the future. Because of the increased unpredictability of the distant future, prognostication is significantly more cryptic than the already-cryptic divination spell. Material component; rare incense and tonics worth 250 gp.|PRERULE:1,DisplayFullSpell",
+    "key": "Prognostication",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "8 hours"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium=4|Cleric,Inquisitor,Psychic,Shaman,Spiritualist,Witch=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain cryptic information from further in the future than divination.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You glimpse the future. Prognostication functions as divination except that the spell can see up to a year and a day into the future. Because of the increased unpredictability of the distant future, prognostication is significantly more cryptic than the already-cryptic divination spell. Material component; rare incense and tonics worth 250 gp.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Prognostication"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.223"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Divination"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 90,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Prognostication",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

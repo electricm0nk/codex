@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "The firearm fires with a blinding flash, even if the firearm is not currently loaded. Every creature within 15 feet of the creature carrying the weapon must succeed at a Fortitude save or be blinded for 1d4 rounds. The creature carrying the firearm takes a -4 penalty on this saving throw. If the firearm is loaded, the ammunition is wasted.",
+    "key": "Flash Fire",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Witch,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Ammunition in the targeted firearm creates a tremendous flash capable of blinding the weapon's bearer and those around him.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "The firearm fires with a blinding flash, even if the firearm is not currently loaded. Every creature within 15 feet of the creature carrying the weapon must succeed at a Fortitude save or be blinded for 1d4 rounds. The creature carrying the firearm takes a -4 penalty on this saving throw. If the firearm is loaded, the ammunition is wasted.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "instantaneous"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a pinch of powdered fool's gold)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (object); see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/flashFire.html#_flash-fire"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.230"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (object); see text"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "1 firearm"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 46,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Flash Fire",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

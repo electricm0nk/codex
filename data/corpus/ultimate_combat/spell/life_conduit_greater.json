@@ -1,0 +1,43 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions like life conduit, except you can transfer 3d6 hit points as a swift action.",
+    "key": "Life Conduit (Greater)",
+    "level": null,
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "This spell functions like life conduit, except you can transfer 3d6 hit points as a swift action.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You transfer 3d6 hit points to your eidolon as a swift action.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/lifeConduit.html#_life-conduit,-greater"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.234"
+      }
+    ],
+    "school": null
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 65,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Life Conduit (Greater)",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

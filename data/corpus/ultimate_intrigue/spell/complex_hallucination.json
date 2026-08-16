@@ -1,0 +1,92 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You cause the targets to believe they hear any sound you imagine. The sound can include intelligible speech. Instead of precisely imagining a sound, you can identify a sound the subjects know and they imagine it doing what you describe as you cast the spell. You can include the image of any object, creature, or force you imagine or identify for the targets to imagine. You can also include olfactory, tactile, and thermal effects. You can change the effects while you concentrate. After you cease concentration, you can define simple movements or changes for the phantasm to perform that can be explained in 25 words or fewer. The image disappears when struck by an opponent unless you cause the illusion to react appropriately or instruct it to do so. Its AC is equal to 10 + the level of this spell. All targets experience the same hallucination.|PRERULE:1,DisplayFullSpell",
+    "key": "Complex Hallucination",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium=3|Bard,Magus,Mesmerist,Occultist,Psychic,Sorcerer,Witch,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "S"
+      },
+      {
+        "key": "DESC",
+        "value": "Create a phantasm with effects for all senses.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause the targets to believe they hear any sound you imagine. The sound can include intelligible speech. Instead of precisely imagining a sound, you can identify a sound the subjects know and they imagine it doing what you describe as you cast the spell. You can include the image of any object, creature, or force you imagine or identify for the targets to imagine. You can also include olfactory, tactile, and thermal effects. You can change the effects while you concentrate. After you cease concentration, you can define simple movements or changes for the phantasm to perform that can be explained in 25 words or fewer. The image disappears when struck by an opponent unless you cause the illusion to react appropriately or instruct it to do so. Its AC is equal to 10 + the level of this spell. All targets experience the same hallucination.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "Concentration + 3 rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Long"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will disbelief"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Complex Hallucination"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.206"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Phantasm"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL) creatures, no two of which can be more than 30ft. apart"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Psychic"
+      }
+    ],
+    "school": "Illusion"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 24,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Complex Hallucination",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

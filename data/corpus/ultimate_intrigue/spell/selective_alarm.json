@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as alarm, except that you can tweak the spell to be more discerning in what types of creatures or objects trigger the alarm. Instead of being triggered whenever a creature of Tiny size or larger enters the warded area, you can set whatever triggering conditions you wish, as long as they are based on observable phenomenon. For example, you could cause the selective alarm to trigger when creatures of a certain race (such as orcs, bugbears, or kobolds) enter the area, or whenever a group of four or more creatures enters the area together, or when a metal object is brought into the area. You can't choose triggering conditions that rely on unobservable information, such as having it triggered when creatures of a certain alignment enter the area, nor could you have the alarm be triggered by \"something worth more than 5,000 gp\" entering the area, or even \"a weapon\" entering the area, because an item's value and classification as a weapon is subjective, and might vary from one person to the next.|PRERULE:1,DisplayFullSpell",
+    "key": "Selective Alarm",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Ranger=2|Bard,Inquisitor,Occultist,Psychic,Sorcerer,Spiritualist,Summoner,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,F/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "As alarm, but only against selected creatures.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as alarm, except that you can tweak the spell to be more discerning in what types of creatures or objects trigger the alarm. Instead of being triggered whenever a creature of Tiny size or larger enters the warded area, you can set whatever triggering conditions you wish, as long as they are based on observable phenomenon. For example, you could cause the selective alarm to trigger when creatures of a certain race (such as orcs, bugbears, or kobolds) enter the area, or whenever a group of four or more creatures enters the area together, or when a metal object is brought into the area. You can't choose triggering conditions that rely on unobservable information, such as having it triggered when creatures of a certain alignment enter the area, nor could you have the alarm be triggered by \"something worth more than 5,000 gp\" entering the area, or even \"a weapon\" entering the area, because an item's value and classification as a weapon is subjective, and might vary from one person to the next.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*2) hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Selective Alarm"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Up to 20-ft.-radius emanation centered on a point in space"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Abjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 97,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Selective Alarm",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

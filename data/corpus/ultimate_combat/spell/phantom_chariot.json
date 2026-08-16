@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You conjure a quasi-real heavy chariot with four horselike creatures in a team to pull it. (The exact description can be customized as you wish.) The chariot has all the normal qualities of a heavy chariot (see page 182). You or a person you designate while casting the spell must drive the chariot, which can carry up to six passengers (including the driver). The team and chariot make no sound and the team does not fight, although the driver can use the chariot like any normal chariot. The chariot and team are essentially a single entity with an AC of 19 (-2 size, +6 natural armor, +5 Dex), and 10 hit points + 2 hit points per caster level (maximum 50). If the entity loses all its hit points, it disappears, possibly subjecting all aboard to a crash (treat as wrecked). The entity gains certain powers according to caster level, just like a mount does in the phantom steed spell.",
+    "key": "Phantom Chariot",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Conjures a quasi-real heavy chariot pulled by four horses.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You conjure a quasi-real heavy chariot with four horselike creatures in a team to pull it. (The exact description can be customized as you wish.) The chariot has all the normal qualities of a heavy chariot (see page 182). You or a person you designate while casting the spell must drive the chariot, which can carry up to six passengers (including the driver). The team and chariot make no sound and the team does not fight, although the driver can use the chariot like any normal chariot. The chariot and team are essentially a single entity with an AC of 19 (-2 size, +6 natural armor, +5 Dex), and 10 hit points + 2 hit points per caster level (maximum 50). If the entity loses all its hit points, it disappears, possibly subjecting all aboard to a crash (treat as wrecked). The entity gains certain powers according to caster level, just like a mount does in the phantom steed spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours (D)"
+      },
+      {
+        "key": "RANGE",
+        "value": "0 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/phantomChariot.html#_phantom-chariot"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.239"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one quasi-real chariot and draft team"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 98,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Phantom Chariot",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_expr"
+  ]
+}

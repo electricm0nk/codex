@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as languid venom, but you can stipulate a specific condition or circumstance that will end the poison's onset time and cause it to take effect. The conditions for triggering the poison can be as general or as detailed as desired, but the triggers must be visual or audible (as per magic mouth) or else based on physical contact with or consumption of a specific object, substance, or creature. This triggering condition can either result in the immediate onset of the poison, or cause the poison to take effect a number of rounds after being triggered no greater than %1 rounds. You must make all decisions involving triggering when you cast contingent venom, and you can't change those decisions later.|CASTERLEVEL|PRERULE:1,DisplayFullSpell",
+    "key": "Contingent Venom",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Shaman,Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "As languid venom, but with a triggering condition.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as languid venom, but you can stipulate a specific condition or circumstance that will end the poison's onset time and cause it to take effect. The conditions for triggering the poison can be as general or as detailed as desired, but the triggers must be visual or audible (as per magic mouth) or else based on physical contact with or consumption of a specific object, substance, or creature. This triggering condition can either result in the immediate onset of the poison, or cause the poison to take effect a number of rounds after being triggered no greater than %1 rounds. You must make all decisions involving triggering when you cast contingent venom, and you can't change those decisions later.|CASTERLEVEL|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Poison"
+      },
+      {
+        "key": "DURATION",
+        "value": "Permanent until discharged [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Contingent Venom"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.208"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One dose of poison or one venomous creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Necromancy"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 30,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Contingent Venom",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ]
+}

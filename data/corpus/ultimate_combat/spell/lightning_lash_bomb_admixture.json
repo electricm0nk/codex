@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Upon drinking an extract created with this formula, you make a significant change to your magical reserve that modifies the nature of all bombs you create and throw during this extract's duration. This effect on your magical reserve has no effect on any discoveries that you use to modify your bombs, but you can only have one admixture effect (formulae with the word \"bomb admixture\" in its title) active at a time. If you drink another bomb admixture, the effects of the former bomb admixture end and those of the new one become active. When you throw a bomb and hit a direct target, lashes of electrical energy are released from the bomb, coalescing on the bomb's direct target and up to three creatures that take damage from the bomb's splash (alchemist's choice). Those affected by the electricity must succeed at a Reflex saving throw or take 1d6 points of electrical damage each time they take a move action to move more than 5 feet for the duration of the effect. This effect does not ignore spell resistance.",
+    "key": "Lightning Lash Bomb Admixture",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Empowers bombs you throw with a ward that deals lightning damage each time those damaged by the bomb move more than 5 feet.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Upon drinking an extract created with this formula, you make a significant change to your magical reserve that modifies the nature of all bombs you create and throw during this extract's duration. This effect on your magical reserve has no effect on any discoveries that you use to modify your bombs, but you can only have one admixture effect (formulae with the word \"bomb admixture\" in its title) active at a time. If you drink another bomb admixture, the effects of the former bomb admixture end and those of the new one become active. When you throw a bomb and hit a direct target, lashes of electrical energy are released from the bomb, coalescing on the bomb's direct target and up to three creatures that take damage from the bomb's splash (alchemist's choice). Those affected by the electricity must succeed at a Reflex saving throw or take 1d6 points of electrical damage each time they take a move action to move more than 5 feet for the duration of the effect. This effect does not ignore spell resistance.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Electricity"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "special, see below"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/lightningLashBombAdmixture.html#_lightning-lash-bomb-admixture"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.234"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "special, see below"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Evocation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 67,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Lightning Lash Bomb Admixture",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "True prognostication functions as divination except that the spell can see up to 100 years into the future. Because of the extreme unpredictability of the far-distant future, true prognostication is incredibly cryptic when used to learn about events on such large a scale. Material component; rare incense and tonics worth 1,000 gp.|PRERULE:1,DisplayFullSpell",
+    "key": "True Prognostication",
+    "level": 8,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 week"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Psychic,Shaman,Witch=8"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain incredibly cryptic information from the distant future.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "True prognostication functions as divination except that the spell can see up to 100 years into the future. Because of the extreme unpredictability of the far-distant future, true prognostication is incredibly cryptic when used to learn about events on such large a scale. Material component; rare incense and tonics worth 1,000 gp.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=True Prognostication"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Divination"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 106,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "True Prognostication",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

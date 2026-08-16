@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You create and control an invisible telekinetic force, manipulating it with either startling abruptness or careful deliberateness, allowing you to seize an object from an opponent or remotely manipulate an object. You can utilize this force to one of two ends. Abrupt Maneuver - You instantaneously attempt a disarm or steal combat maneuver against a target within range. Use your caster level as your Combat Maneuver Bonus, adding your Charisma modifier (bard, oracle, sorcerer), Intelligence modifier (magus, wizard), or Wisdom modifier (cleric) in place of your Strength or Dexterity modifier. This combat maneuver attempt does not provoke an attack of opportunity from its target, but casting this spell might. If you are successful, you pull the target object to you, and if you have enough hands free, you can catch it. Otherwise, the object lands in your square as if you dropped it. Careful Maneuver - You attempt a Disable Device check or a Sleight of Hand check to pick-pocket a target within range. This spell lasts as long as you need to accomplish the task, requiring your full concentration for that duration. Once you resolve the skill check, the spell ends. If you are successful on your Sleight of Hand check, you pull the target object to you as with an abrupt maneuver. The target gains a +2 bonus on its Perception check to notice the successful attempt.",
+    "key": "Pilfering Hand",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Cleric,Magus,Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "S"
+      },
+      {
+        "key": "DESC",
+        "value": "You create and control an invisible telekinetic force, manipulating it with either startling abruptness or careful deliberateness, allowing you to seize an object from an opponent or remotely manipulate an object. You can utilize this force to one of two ends. Abrupt Maneuver - You instantaneously attempt a disarm or steal combat maneuver against a target within range. Use your caster level as your Combat Maneuver Bonus, adding your Charisma modifier (bard, oracle, sorcerer), Intelligence modifier (magus, wizard), or Wisdom modifier (cleric) in place of your Strength or Dexterity modifier. This combat maneuver attempt does not provoke an attack of opportunity from its target, but casting this spell might. If you are successful, you pull the target object to you, and if you have enough hands free, you can catch it. Otherwise, the object lands in your square as if you dropped it. Careful Maneuver - You attempt a Disable Device check or a Sleight of Hand check to pick-pocket a target within range. This spell lasts as long as you need to accomplish the task, requiring your full concentration for that duration. Once you resolve the skill check, the spell ends. If you are successful on your Sleight of Hand check, you pull the target object to you as with an abrupt maneuver. The target gains a +2 bonus on its Perception check to notice the successful attempt.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You may seize an object or manipulate it from afar.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Force"
+      },
+      {
+        "key": "DURATION",
+        "value": "see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/pilferingHand.html#_pilfering-hand"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.239"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one object"
+      }
+    ],
+    "school": "Evocation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 101,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Pilfering Hand",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "derived:range_keyword"
+  ]
+}

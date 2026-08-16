@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This creates one of several cantrip-level effects relating to your health, well-being, and entertainment. The panacea has no side effects (for example, the intoxication panacea does not cause a hangover). When you use polypurpose panacea, choose one of the following effects. Analgesic: You do not feel minor aches and pains, such as from arthritis, a cold, or a hangover, for 1 hour. For the duration, you gain a +2 resistance bonus against pain-related spells. Clarity: You get a +1 competence bonus on a single attack roll, saving throw, or skill check within 1 minute. You must choose to use the bonus before making the roll to which it applies. Hallucination: You have pleasant hallucinations for 1 hour, such as wandering lights, music, playful surreal animals, and so on. You can tell these are not real, but they are distracting, and you take a -2 penalty on Perception checks for the duration. Intoxication: You feel comfortably intoxicated for 1 hour, as if you had a few alcoholic beverages. Lucid Dream: If you take this panacea within 1 hour of going to sleep, you have a lucid dream that is under your control and lasts for an hour. Resistance: You gain a +1 resistance bonus on saves for 1 minute. Sleep: You enter a pleasant and restful sleep for at least 1 hour unless wakened. If you would normally begin sleeping at this time, when the panacea ends you continue sleeping normally. Sobriety: You become completely sober for 1 hour, negating any penalties to your actions for being drunk (GameMastery Guide 237). Magical and alchemical methods (such as detect poison) still detect you as inebriated. Time spent under the effect of this panacea do not count toward the time necessary to sober up (it merely delays your intoxication). Tenacity: You gain 1 temporary hit point for 1 minute. Wakefulness: You remain awake for 2 hours without feeling sleepy, and without side effects such as jitteriness. You gain a +5 resistance bonus against sleep-related spells such as lullaby and sleep. This use of the panacea merely delays your need for sleep and does not count as rest or sleep. You can use it multiple times in succession, but as each effect wears off, you are as tired as you would be had you not used the panacea.",
+    "key": "Polypurpose Panacea",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "S"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain a relaxing or entertaining effect.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This creates one of several cantrip-level effects relating to your health, well-being, and entertainment. The panacea has no side effects (for example, the intoxication panacea does not cause a hangover). When you use polypurpose panacea, choose one of the following effects. Analgesic: You do not feel minor aches and pains, such as from arthritis, a cold, or a hangover, for 1 hour. For the duration, you gain a +2 resistance bonus against pain-related spells. Clarity: You get a +1 competence bonus on a single attack roll, saving throw, or skill check within 1 minute. You must choose to use the bonus before making the roll to which it applies. Hallucination: You have pleasant hallucinations for 1 hour, such as wandering lights, music, playful surreal animals, and so on. You can tell these are not real, but they are distracting, and you take a -2 penalty on Perception checks for the duration. Intoxication: You feel comfortably intoxicated for 1 hour, as if you had a few alcoholic beverages. Lucid Dream: If you take this panacea within 1 hour of going to sleep, you have a lucid dream that is under your control and lasts for an hour. Resistance: You gain a +1 resistance bonus on saves for 1 minute. Sleep: You enter a pleasant and restful sleep for at least 1 hour unless wakened. If you would normally begin sleeping at this time, when the panacea ends you continue sleeping normally. Sobriety: You become completely sober for 1 hour, negating any penalties to your actions for being drunk (GameMastery Guide 237). Magical and alchemical methods (such as detect poison) still detect you as inebriated. Time spent under the effect of this panacea do not count toward the time necessary to sober up (it merely delays your intoxication). Tenacity: You gain 1 temporary hit point for 1 minute. Wakefulness: You remain awake for 2 hours without feeling sleepy, and without side effects such as jitteriness. You gain a +5 resistance bonus against sleep-related spells such as lullaby and sleep. This use of the panacea merely delays your need for sleep and does not count as rest or sleep. You can use it multiple times in succession, but as each effect wears off, you are as tired as you would be had you not used the panacea.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "See text"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateMagic/spells/polypurposePanacea.html#_polypurpose-panacea"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 163,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+    "record_key": "Polypurpose Panacea",
+    "sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

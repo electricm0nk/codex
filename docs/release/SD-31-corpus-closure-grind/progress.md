@@ -11363,3 +11363,228 @@ checking every live PID's `CARGO_TARGET_DIR` against `/proc/<pid>/environ`.
    reported anywhere, so a run that never exercises the check is indistinguishable from one that did and
    found nothing. File: `src/rules_core/corpus_literal_sweep.rs`.
 
+
+## Cycle `SD31-E6-F2-005` (`RETRO_ACTOR=sd31-spell-racetrait`) — 2026-08-16, `epic-6-ingest-lanes` F2 (`spell`) and F4 (`race_trait`)
+
+**Starting HEAD:** `b8c36417d` (`docs(sd31): Decision 10 amendment — variant lines are new content,
+never supersession`), recovered via the mandatory clean-tree reset (package dir was absent, tree was
+clean, `git fetch origin && git reset --hard origin/tranche/11`). **Oracle:** `PCGEN_ORACLE_SHA=
+7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/verify.sh --only preflight-oracle` PASS).
+**Own worktree/branch:** did NOT touch the primary checkout; all work landed in this dispatched
+worktree, committed on its own branch and pushed (branch name in the closing summary below).
+
+### §0 — Re-derivation before any work (per `AGENTS.md`/loop-instruction re-derive rule)
+
+Board headline, re-derived fresh at start-of-cycle HEAD with the producer's own verdict function
+(command in every cycle's dispatch):
+
+```
+python3 -c "... P.doneness_verdict(...) ..."
+-> 38521 {'done': 9488, 'not-started': 19915, 'unmeasurable': 5123, 'deferred': 36, 'held': 3193,
+          'in-progress': 766} 24.63
+```
+
+Matches the dispatch's own stated 9,488/38,521 (24.63%) exactly — no correction needed here. Per-kind:
+
+```
+spell        2843 units: held 1526, in-progress 156, done 159, not-started 1002
+race_trait   3603 units: not-started 2968, done 630, held 5
+```
+
+Both match the dispatch's own cited figures exactly.
+
+### §1 — SPELL: the held mass, traced one unit end to end (per card instruction 1)
+
+`advanced_class_guide:spell:adhesive_blood` (`wiring_class=derived`, `status=ingested-magnitude`).
+`pf1e_dashboard_producer.doneness_verdict`'s `derived` arm requires `status in {literal-verified,
+fixture-verified}` for `done`; `ingested-magnitude` stays `held`. The corpus row states `DURATION:
+(CASTERLEVEL) minutes` (`acg_spells.lst:8`) — a genuine caster-level-scaled formula.
+`src/rules_core/derived_evaluator_fixture_check.rs` has **zero evaluator seams for `kind=spell`**
+(only `monster`'s narrow SLA-caster-level rule exists) — this independently reproduces
+`OPEN-ISSUES.md` row 76's own finding at scale (91%, 1,127/1,240, of the pre-cycle `held` population
+is this exact shape). **This is NOT lane 3's display/prose rung** (the unit is `derived`, not
+`display`) and it is NOT cheap fixture coverage — building a spell-formula evaluator is a genuine new
+capability (row 76's own honest assessment, which this cycle concurs with rather than re-litigates).
+Did not attempt to fake or stub one. Full findings, including the two structural cross-territory
+blockers this cycle's own investigation found, are `OPEN-ISSUES.md` row 110.
+
+### §2 — SPELL: the lever genuinely inside this card's file grant (`OPEN-ISSUES.md` row 111)
+
+Re-derived `docs/work-inventory.json`'s pre-cycle `wiring_class=static`+`status=ingested-magnitude`
+`spell` population: **87 units** (`occult_adventures` 40, `ultimate_magic` 26, `ultimate_combat` 11,
+`ultimate_intrigue` 10). Traced why: none of the four books had a `data/corpus/<book>/spell/*.json`
+cache at all — `corpus_literal_sweep` had nothing to byte-compare, so the `literal-verified` rung was
+structurally unreachable regardless of how correct the compiled `SPELL_LIST` table already was. Row
+77 named this for 2 of the 4 books; re-checked `ultimate_intrigue` fresh (it is one of the ORIGINAL
+five chained books) and found it had never had a spell cache either.
+
+**Built `cache_gen::spell_lane_dump`** (`src/rules_core/cache_gen/spell_lane_dump.rs`, registered
+additively in `cache_gen/mod.rs`) mirroring `cache_gen::ultimate_equipment`'s established shape
+exactly: DUMPS each book's already-compiled `spell_list::SPELL_LIST` (never re-derives a field value
+from raw LST — per `decisions.md §11.3`), recovers each record's real citation via the SAME tested
+`pcgen_import::lst_parser::spell::parse_lst_spell_file` parser every `ingest_*_spells.rs` binary
+already used, and screens NAME + DESCRIPTION with **both** SD-30 PI invocation contracts
+(`pi_screening::declared_product_identity` — `§53.5` — and `classify_field`/
+`classify_optional_field_declared`'s blacklist sweep — `§52.3`) from the production write path, not
+an author-time check. `src/bin/gen_cache_spell_lane_dump.rs` is the one-off generator entry point.
+
+Ran it: **660 spell records written** (101 UI + 269 UM + 144 OA + 146 UC), **0 unresolved citations**,
+**0 dropped for `NAMEISPI:YES`/blacklist** (re-derived corpus-wide: `grep -c 'NAMEISPI\|DESCISPI'`
+over all four books' own `*_spells.lst` files finds 0 declarations, so the 0 is a real "nothing to
+screen" result, not an unexercised path — 4 tests in `spell_lane_dump.rs` cover the drop branch, the
+citation-resolution branch, and the slug-disambiguation branch directly, one of them running the real
+generator against the pinned oracle and asserting 0 unresolved citations).
+
+**Widened `enrich_spell_raw_tokens.rs`'s `TARGET_BOOKS` 5 → 8** (own file, spell lane — not lane 3's
+`v06_work_inventory.rs`) to cover the three newly-existing directories, then ran it: **660/660
+enriched, 0 citation misses**. `corpus_literal_sweep --json-out`: **CLEAN, 24,519 examined (was
+23,859 at this tip's own pre-cycle baseline, +660)**.
+
+Guarded regen (`corpus_literal_sweep`/`derived_evaluator_fixture_check`/`v06_work_inventory` in that
+order, `docs/work-inventory.json` restored via `git checkout --` after measuring, per the wave rule —
+NOT committed):
+
+```
+board:  done 9,488 -> 9,581 (+93), 24.63% -> 24.87%
+spell:  held 1,526 -> 1,433 (-93), done 159 -> 252 (+93), not-started/in-progress unchanged
+```
+
+Zero movement in any other kind, zero regressions (`in-progress`/`not-started`/`held`/`done` totals
+for every OTHER kind are byte-identical before/after — checked, not assumed).
+`derived_evaluator_fixture_check` reported its one pre-existing, already-documented, unrelated
+failure (`advanced_players_guide:equipment:spindle_of_perfect_knowledge`, `OPEN-ISSUES.md` row 67) —
+confirmed pre-existing by the same three checks that row already made, not re-investigated.
+
+**Caught and fixed a real "count change needs a sweep" moment on myself before committing**: the 4
+books' `LICENSE.json` `records_processed` fields were now stale against the real on-disk count.
+Updated all 4 (`occult_adventures` 979→1123, `ultimate_magic` 1119→1388, `ultimate_combat`
+1195→1341, `ultimate_intrigue` 749→850) with an appended `screening_method_note` sentence naming this
+cycle, the count math, and the PI-screening method — re-verified against
+`tests/sd27_book_license_record_counts.rs` (6/6 pass, including the note-quotes-the-number test).
+`declared_pi_shipping_audit`: **CLEAN**.
+
+### §3 — RACE_TRAIT: the pre-cycle screens (per card instruction, before selecting a book)
+
+```
+python3 scripts/classify_race_trait_rows.py <candidate>.lst   # run against horror_adventures'
+                                                                 support/ha_abilities_race_oa.lst
+-> in-scope rows 1 | default 0 | alternate 1 | flag_granted 0 | unclassified 0
+-> out-of-scope races 0 | .MOD rows carrying a race TYPE 0 (never ingested)
+-> 1 of 1 rows need no new mechanism
+
+python3 scripts/screen_pcc_load_gates.py
+-> campaigns this repo has registered : 33
+-> remaining units screened           : 0
+-> TOTAL remaining units excluded by a PCC load gate: 0
+```
+
+The second screen's `0 remaining` confirms no OTHER hidden PCC-conditional hazard is waiting among
+the in-scope-race candidates this cycle traced (§4) beyond the one `ingest_race_traits.rs` already
+documents.
+
+### §4 — RACE_TRAIT: the workable pool re-derived, and why it is not 553 (`OPEN-ISSUES.md` rows 112/113)
+
+Per the loop-instruction override: "the two internal capability gates are hard, and they are
+per-batch" — confirmed the open race-chassis batches in `kanban.md` before touching anything: **24
+races** (7 CRB + 11 Bestiary 1 + 6 Bestiary 2 — `Fetchling`/`Grippli`/`Ifrit`/`Oread`/`Sylph`/
+`Undine`) plus **Skinwalker, chassis + standard-tier rows only** (heritage rows stay closed).
+
+Filtered the 2,968 not-started `race_trait` units to those whose `corpus_key`'s leading race name is
+one of the 24 in-scope races: **70 units**. Traced every one, not batch-assumed (full per-book
+breakdown and reasoning in `OPEN-ISSUES.md` rows 112/113):
+
+- **49 (`advanced_players_guide`)** — already-investigated-and-REVERTED duplicates of
+  `advanced_race_guide`'s own already-ingested rows (row 23). Confirmed still correct; not re-attempted.
+- **8 (`advanced_race_guide`)** + **7 (Aasimar/Tiefling-shaped `bestiary`/`monster_codex` bare rows)**
+  — structural non-content rows (`CATEGORY:Adoptive Parentage` background traits; bare chassis-grantor
+  rows with no `TYPE:` field at all) that `ingest_race_traits.rs`'s own row-shape filter correctly
+  excludes — not race_trait content, not a gap.
+- **1 (`horror_adventures`)** — `Half-Elf ~ Starchild`, an ALREADY-documented deliberate exclusion:
+  `support/ha_abilities_race_oa.lst` loads only `PRECAMPAIGN:1,INCLUDES=Occult Adventures`, a
+  per-campaign runtime condition this program's ingest mechanism does not model (confirmed live via
+  §3's classifier run — 1 row, `alternate`, needs no new mechanism, but the PCC gate is the reason it
+  stays out, not a mechanism gap).
+- **2 (`inner_sea_races`)** — `DESCISPI:YES`/`NAMEISPI:`-declared, correctly excluded by the existing
+  PI screen.
+- **~4 (Aasimar/Tiefling `~ Default` subrace-selector base rows)** — real, narrow (2 races × 1 row
+  each, plus `monster_codex`'s `Standard Goblin`/`Oversized Goblin` sibling shape), but adding the
+  base `_abilities_race.lst` file to `core_essentials`'s `BookSource` risks re-declaring the 9
+  already-shipped standard traits per race under a different, older ingest path's KEY scheme — the
+  exact APG-shaped collision hazard row 23 already proved out. Not attempted this cycle; named
+  precisely for a future cycle instead (`OPEN-ISSUES.md` rows 112(b)/113).
+- **1 (`inner_sea_races`, `Human ~ Tribalistic Languages`)** — genuine 1-unit residual in an
+  already-registered `BookSource` file, root cause not traced further this cycle (out of budget).
+
+**The remaining 2,898 of 2,968 not-started units belong to races Epic 1's chassis batches have not
+yet covered.** Re-derived, not assumed: this cycle's own workable pool under the CURRENT batches is
+effectively zero net-new safely-ingestable units — not the old 553 figure, which was a function of
+chassis output that has since moved. No race_trait ingest landed this cycle; the honest re-derivation
+IS the deliverable the card asked for.
+
+### §5 — DoD item 8: on-screen verification
+
+`RUN_DESKTOP_AGENT=sd31-e6-f2-005`, driven via `apps/desktop/.claude/skills/run-desktop/driver.sh`.
+`verify-on-screen.sh`'s own automated run FAILED first — the reused live app was left on a stale
+"Create a character" screen from an earlier agent's session sharing this box, not a defect in this
+cycle's own change (kept as evidence: `artifacts/SD31-E6-F2-005/item8/oa-akashic-form.FAILED.verify.md`).
+Clicked "Back", drove the Spell Catalog navigation directly. Captured
+`occult_adventures:spell:akashic_form` — one of the 40 `occult_adventures` units this cycle's own
+`cache_gen::spell_lane_dump`/`enrich_spell_raw_tokens` widening moved `held`→`done` — rendering live:
+**"Akashic Form · OA · Necromancy · Level 9 — Store a copy of your body in the Akashic Record, and
+restore yourself to that form upon your death."**, byte-matching the corpus JSON and the pinned
+oracle. The Spell Catalog's own header text also confirms the catalog chains exactly 8 books, and its
+filter chips (`OA (144)`, `UM (269)`, `UC (146)`) match this cycle's own generator counts exactly —
+live corroboration the catalog and the newly-written corpus cache agree. Artifacts:
+`artifacts/SD31-E6-F2-005/item8/oa-akashic-form.{png,verify.md}`.
+
+### §6 — Gate
+
+`./scripts/verify.sh` launched EARLY (as soon as `spell_lane_dump.rs` compiled clean and the guarded
+regen was measured), backgrounded, log at
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-005-verify.log`. `root-lib` 1898 passed
+(was 1894 baseline, +4 — this cycle's own 4 new `spell_lane_dump` tests, no others). `root-full` 6689
+passed across 564 suites (was 6685/563). `VERIFY_EXIT` and the remaining stages' outcome are quoted
+in the structured return's `verify_exit`/`verify_log` fields, sourced directly from the log's own
+`SUMMARY`/`VERIFY_EXIT=` line, never inferred.
+
+### §7 — What was corrected, reworked, or narrowly avoided
+
+- **Corrected this module's own doc comment mid-cycle**: an early draft claimed `ultimate_intrigue`
+  "already has a cache for its ORIGINAL ingest" that this generator would merely re-cover byte-identical
+  — re-checked the real `data/corpus/ultimate_intrigue/` directory before shipping the claim and found
+  it had **no** `spell/` subdirectory at all before this cycle. Fixed the doc comment to say so
+  precisely rather than ship a plausible-sounding but false provenance claim.
+- **Caught the LICENSE.json `records_processed` staleness on myself** (§2) before committing, via the
+  program's own standing "count change needs a sweep" rule — re-ran the exact tests that would have
+  caught it in review and fixed all 4 books before the commit, not after.
+- **Did not chase the tempting-looking `wiring_class==computed` spell lever** (120 units,
+  `ingested-magnitude`→`grounded` would reach `done` directly) once `--spell-probe` showed the real
+  binding constraint is the probe's fixed pilot-character fixture (`pilot_compute.rs`, lane 4), not
+  `class_spell_levels.rs`'s per-class table coverage (this card's own file) — traced one level deeper
+  before committing budget to a fix that would not have moved anything.
+- **Did not re-attempt the APG race_trait duplicate ingest** row 23 already tried and reverted, despite
+  it being the single largest in-scope-race not-started bucket (49 units) — verified the prior finding
+  still holds rather than assuming a stale receipt.
+- **Did not widen `ingest_race_traits.rs`'s `core_essentials` `BookSource`** for the Aasimar/Tiefling
+  `~ Default` rows despite a clean-looking 2-4 unit win, once the collision risk against the existing
+  9-per-race standard-trait ingest (a different, older path) was traced — named precisely instead of
+  risking a duplicate-KEY panic mid-cycle.
+
+### §8 — Remaining scope, named precisely (per `AGENTS.md` "close what you claim")
+
+1. **Spell: 19-book / ~1,177-unit remainder outside the 8-book catalog chain** (`OPEN-ISSUES.md` row
+   48, unchanged this cycle — chaining a NEW book needs `v06_work_inventory.rs`'s `spell_book_slug_for`,
+   this cycle's own forbidden lane-3 file; row 110 names this precisely).
+2. **Spell: 120-unit `wiring_class==computed` `ingested-magnitude` population**, capped by
+   `pilot_compute.rs`'s fixed probe fixture (lane 4, forbidden this cycle) — row 110.
+3. **Spell: 1,127-unit `derived`+no-fixture-evaluator population** — a genuine new capability
+   (spell-formula evaluator), correctly not attempted this or any prior cycle (row 76/110).
+4. **race_trait: 2,898 not-started units gated on race-chassis batches Epic 1 has not yet built** —
+   the dominant remaining mass; not this card's lever.
+5. **race_trait: ~4-6 narrow, real, individually-traced units** (Aasimar/Tiefling `~ Default` rows,
+   monster_codex's Standard/Oversized Goblin, `inner_sea_races`' `Human ~ Tribalistic Languages`) —
+   named in `OPEN-ISSUES.md` rows 112(b)/112(e)/113 for a future cycle with the collision-hazard
+   context already worked out.
+
+**Branch:** `sd31-spell-racetrait-e6-f2-005`, pushed; not merged onto `tranche/11` — the integration
+cycle owns that merge per this program's standing convention.

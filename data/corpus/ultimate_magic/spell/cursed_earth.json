@@ -1,0 +1,95 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You lay a terrible curse upon the land, blighting those who live and die there. Choose one of the following effects. Famine: All normal plants in the area reduce their growth and food production by half, as if affected by the stunt growth effect of diminish plants. Living Death: Any creatures of Small size or larger killed in the area rise as uncontrolled zombies 24 hours after their death, as do corpses buried in the area. Burning or dismembering the corpses prevents them from rising as zombies. Plague: Every day at sundown, all creatures in the area must make a Fortitude save or catch one of the following diseases (your choice, decided at the time of casting): blinding sickness, bubonic plague, cackle fever, filth fever, leprosy, mindfire, red ache, shakes, or slimy doom. The disease is contracted immediately (the onset period does not apply). Use the disease's listed frequency and save DC to determine further effects. This is a disease effect.",
+    "key": "Cursed Earth",
+    "level": 9,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Sorcerer,Witch,Wizard=9"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Plants die, living creatures catch diseases, or dead creatures rise as zombies.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You lay a terrible curse upon the land, blighting those who live and die there. Choose one of the following effects. Famine: All normal plants in the area reduce their growth and food production by half, as if affected by the stunt growth effect of diminish plants. Living Death: Any creatures of Small size or larger killed in the area rise as uncontrolled zombies 24 hours after their death, as do corpses buried in the area. Burning or dismembering the corpses prevents them from rising as zombies. Plague: Every day at sundown, all creatures in the area must make a Fortitude save or catch one of the following diseases (your choice, decided at the time of casting): blinding sickness, bubonic plague, cackle fever, filth fever, leprosy, mindfire, red ache, shakes, or slimy doom. The disease is contracted immediately (the onset period does not apply). Use the disease's listed frequency and save DC to determine further effects. This is a disease effect.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Curse|Evil"
+      },
+      {
+        "key": "DURATION",
+        "value": "Permanent"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(10,000 gp powdered onyx)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None (see text)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateMagic/spells/cursedEarth.html#_cursed-earth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "1-mile radius emanating from the touched point"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Necromancy"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 64,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+    "record_key": "Cursed Earth",
+    "sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}
