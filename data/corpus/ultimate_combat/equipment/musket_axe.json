@@ -1,42 +1,27 @@
 {
-  "completeness": "full",
-  "data": {
-    "category": "ArmsArmor",
-    "cost_gp": 1600.0,
-    "description": "Misfire 1-2 (5 ft.)",
-    "key": "Musket (Axe)",
-    "name": "Axe Musket",
-    "raw_bonus_chains": [],
-    "raw_tokens": [
-      {
-        "key": "KEY",
-        "value": "Musket (Axe)"
-      },
-      {
-        "key": "TYPE",
-        "value": "Ranged.Piercing.Bludgeoning.Proficiency_Group_Firearm.Firearm.Weapon Group Firearms.TwoHandedFireArm.Musket"
-      },
-      {
-        "key": "HANDS",
-        "value": "2"
-      }
-    ],
-    "weight_lbs": 6.0
-  },
-  "ingested_at": "2026-08-16T05:06:54Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
   "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T07:49:31Z",
+  "data": {
+    "key": "Musket (Axe)",
+    "category": "ArmsArmor",
+    "name": "Axe Musket",
+    "cost_gp": 1600.0,
+    "weight_lbs": 6.0,
+    "description": "Misfire 1-2 (5 ft.)"
+  },
   "source": {
     "kind": "lst_token",
-    "line": 27,
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_profs_weapon.lst",
-    "record_key": "Musket (Axe)",
-    "sha256": "7b6c476a643e80578b0e493fbfcc7928619628bbb57ad56be0e6d3e3fc50493c"
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_arms_armor.lst",
+    "sha256": "adc5e058994bfae7f14ff0a41a408e0e6bf74ed0f4e656d50533bc66874b67fc",
+    "line": 134,
+    "record_key": "Musket (Axe)"
   },
-  "wiring_class": "display",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ]
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

@@ -1,70 +1,27 @@
 {
-  "completeness": "chassis_only",
-  "data": {
-    "category": "ArmsArmor",
-    "cost_gp": 0.0,
-    "description": null,
-    "key": "Flurry of Fists",
-    "name": "Flurry of Fists",
-    "raw_bonus_chains": [
-      {
-        "qualifiers": [
-          "VAR",
-          "FlurryOfFistsExtraAttacks",
-          "1"
-        ]
-      }
-    ],
-    "raw_tokens": [
-      {
-        "key": "KEY",
-        "value": "Blade Skill ~ Flurry of Fists"
-      },
-      {
-        "key": "CATEGORY",
-        "value": "Special Ability"
-      },
-      {
-        "key": "TYPE",
-        "value": "BladeSkill.SpecialQuality"
-      },
-      {
-        "key": "PREABILITY",
-        "value": "1,CATEGORY=FEAT,Improved Unarmed Strike"
-      },
-      {
-        "key": "DEFINE",
-        "value": "FlurryOfFistsExtraAttacks|0"
-      },
-      {
-        "key": "DESC",
-        "value": "When making unarmed attacks and making a full attack, you can make one additional attack at your highest attack bonus, but all attacks in the full attack suffer a -2 penalty to the attack roll.  This extra attack does not stack with abilities that grant additional attacks, such as Two-Weapon Fighting, Flurry of Blows, or other such effects."
-      },
-      {
-        "key": "AUTO",
-        "value": "EQUIP|Flurry of Fists"
-      },
-      {
-        "key": "SOURCEPAGE",
-        "value": "p.278"
-      }
-    ],
-    "weight_lbs": 0.0
-  },
-  "ingested_at": "2026-08-16T05:06:54Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
   "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T07:49:31Z",
+  "data": {
+    "key": "Flurry of Fists",
+    "category": "ArmsArmor",
+    "name": "Flurry of Fists",
+    "cost_gp": 0.0,
+    "weight_lbs": 0.0,
+    "description": null
+  },
   "source": {
     "kind": "lst_token",
-    "line": 814,
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
-    "record_key": "Flurry of Fists",
-    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d"
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371",
+    "line": 73,
+    "record_key": "Flurry of Fists"
   },
-  "wiring_class": "computed",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "computed:pre_guard"
-  ]
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

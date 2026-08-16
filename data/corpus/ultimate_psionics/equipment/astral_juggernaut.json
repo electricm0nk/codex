@@ -1,66 +1,27 @@
 {
-  "completeness": "chassis_only",
-  "data": {
-    "category": "ArmsArmor",
-    "cost_gp": -150.0,
-    "description": null,
-    "key": "Astral Juggernaut",
-    "name": "Astral Juggernaut",
-    "raw_bonus_chains": [],
-    "raw_tokens": [
-      {
-        "key": "KEY",
-        "value": "Aegis ~ Astral Juggernaut"
-      },
-      {
-        "key": "CATEGORY",
-        "value": "Special Ability"
-      },
-      {
-        "key": "TYPE",
-        "value": "AegisClassFeatures.SpecialQuality.AstralSuitType"
-      },
-      {
-        "key": "DESC",
-        "value": "Treat like masterwork half-plate.  Gain the following customizations for free: fortification, hardy|PREVARLT:AstralSuitLVL,7"
-      },
-      {
-        "key": "DESC",
-        "value": "Treat like masterwork full plate.  Gain the following customizations for free: fortification, hardy|PREVARGT:AstralSuitLVL,6"
-      },
-      {
-        "key": "DESC",
-        "value": "stalwart|PREVARGT:AstralSuitLVL,1"
-      },
-      {
-        "key": "ABILITY",
-        "value": "Astral Suit Customization|VIRTUAL|Aegis ~ Fortification|Aegis ~ Hardy"
-      },
-      {
-        "key": "ABILITY",
-        "value": "Astral Suit Customization|VIRTUAL|Aegis ~ Stalwart|PREVARGT:AstralSuitLVL,1"
-      },
-      {
-        "key": "SOURCEPAGE",
-        "value": "p.29"
-      }
-    ],
-    "weight_lbs": 50.0
-  },
-  "ingested_at": "2026-08-16T05:06:54Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
   "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T07:49:31Z",
+  "data": {
+    "key": "Astral Juggernaut",
+    "category": "ArmsArmor",
+    "name": "Astral Juggernaut",
+    "cost_gp": -150.0,
+    "weight_lbs": 50.0,
+    "description": null
+  },
   "source": {
     "kind": "lst_token",
-    "line": 45,
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
-    "record_key": "Astral Juggernaut",
-    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d"
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371",
+    "line": 13,
+    "record_key": "Astral Juggernaut"
   },
-  "wiring_class": "display",
+  "wiring_class": "computed",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ]
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

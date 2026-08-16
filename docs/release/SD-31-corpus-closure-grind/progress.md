@@ -9116,3 +9116,315 @@ this wave's finished lanes performed after checking every live PID's `CARGO_TARG
    `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh`.
 
 
+
+## Cycle: SD31-E6-F5-004 (sd31-equip-repair) — 2026-08-16
+
+**Role:** `sd31-equip-repair` (`RETRO_ACTOR=sd31-equip-repair`), own worktree
+`/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_c2092bd6-95a-5`, branch
+`sd31-equip-repair/E6-F5-004` (pushed). `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-equip-repair`.
+
+**HEAD at claim:** worktree was inherited at an unrelated tip (`061b623ee`, a develop-side merge
+commit, package dir absent); tree was clean (`git status --porcelain` empty), so per the mandate's
+own protocol: `git fetch origin && git reset --hard origin/tranche/11`, landing at `5d0cd1595`
+("docs(sd31): correct Decision 7's sizing, record its structural blocker and its first catch") — the
+true `tranche/11` tip at claim time. New branch `sd31-equip-repair/E6-F5-004` cut from there.
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS.
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+
+**Card:** `epic-6-ingest-lanes` F5/F6 — the named equipment debt (rows 90/92) and the sweep gap
+(row 91), then the residual grind.
+
+### 0. Re-derived the dispatch's own figures
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d=json.load(open('docs/work-inventory.json'))
+U=[u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+for kind in ['equipment','equipment_modifier']:
+    Uk=[u for u in U if u.get('kind')==kind]
+    c=collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in Uk)
+    print(kind, len(Uk), dict(c))
+"
+# equipment 6208 {'in-progress': 194, 'done': 4364, 'unmeasurable': 244, 'held': 444, 'not-started': 962} -- 70.29%
+# equipment_modifier 1580 {'held': 17, 'unmeasurable': 834, 'done': 84, 'in-progress': 417, 'not-started': 228} -- 5.32%
+```
+
+Matches the dispatch's ~70.3%/~962/~444 and ~5.3%/~228 figures. `equipment_modifier` untouched
+this cycle per the dispatch's own instruction (lane 1 owns its recovery).
+
+### 1. THE NAMED DEBT (rows 90/92) — FIXED, re-derived to 39 records, not 50
+
+Re-derived the affected population fresh rather than trusting row 90's "50" figure
+(`retro.py correction` emitted — `SD31-W5-INTEGRATE-001` never itself re-counted, it inherited the
+adversarial review's own headline):
+
+```
+python3 -c "
+import json, glob
+books = ['core_rulebook','advanced_players_guide','advanced_class_guide','advanced_race_guide',
+         'ultimate_combat','ultimate_intrigue','ultimate_magic','ultimate_psionics','ultimate_wilderness']
+bad=[]
+for b in books:
+    for pattern in [f'data/corpus/{b}/equipment/*.json', f'data/corpus/{b}/equipment/equipmods/*.json',
+                     f'data/corpus/{b}/equipment_modifier/*.json']:
+        for f in glob.glob(pattern):
+            d=json.load(open(f))
+            p=d.get('source',{}).get('path',''); base=p.split('/')[-1]
+            if p and 'equip' not in base: bad.append(f)
+print(len(bad))
+"
+# 39: 29 ultimate_combat (uc_profs_weapon.lst), 10 class-ability-cited (ultimate_intrigue x1,
+#     ultimate_magic x2, ultimate_psionics x7) -- exactly row 92's own 10-record enumeration
+#     plus the un-key-mismatched 29 that never tripped that separate ratchet.
+```
+
+**Root cause, confirmed one record deep against the real pinned oracle** (Catapult (Standard)):
+`equipment_gap::try_files` ran `find_by_key_field` across EVERY flat `.lst` file in the book
+BEFORE ever trying `find_exact_first_column` in ANY file. `uc_profs_weapon.lst:188` carries
+`Catapult ... KEY:Catapult (Standard) ... TYPE:Exotic.Ranged.SiegeEngine...` — a weapon-proficiency
+listing with no `COST:`/`WT:`/`SPROP:` at all — and its `KEY:` field coincidentally equals the
+equipment record's own identity string, so the key-field strategy claimed it before the real row
+(`uc_equip_arms_armor.lst:168`, `COST:800`, first-column match only) was ever tried.
+
+**Fix, TDD (RED confirmed pre-fix on the real byte content, GREEN post-fix):** new
+`is_equipment_shaped_file()` predicate (basename contains `"equip"` — verified corpus-wide that
+every one of the ~1,900 already-correctly-resolved equipment/equipment_modifier citations already
+lands in such a file, so the narrowing changes nothing for them). `find_citation` now runs every
+strategy against equipment-shaped flat files, then equipment-shaped nested files, and only widens
+to non-equipment-shaped files if NEITHER tier resolves anything — narrower search order, not a
+narrower fallback (a book with no `"equip"`-named file at all still resolves via the widened tier;
+covered by its own test). 2 new tests
+(`find_citation_prefers_an_equipment_shaped_file_over_a_proficiency_file_with_a_coincidental_key_match`,
+`find_citation_falls_back_to_a_non_equipment_shaped_file_when_no_equipment_shaped_file_resolves`) plus
+all 12 pre-existing `equipment_gap` tests green (14/14 total).
+
+**Re-cited all 39 records for real.** `write_json`'s no-clobber guard blocks a re-run from
+correcting an EXISTING file, so deleted the 39 wrong-citation JSONs (`xargs rm` over the derived
+list) and re-ran `PCGEN_CORPUS_ROOT=~/workspace/repos/pcgen/data cargo run --locked --bin
+gen_cache_hand_authored_equipment` — all 39 regenerated by the SAME generator that shipped them
+originally (all 39 are `cache_gen::hand_authored_equipment`'s own table entries, confirmed by
+grepping each name in `rules_tables/{ultimate_combat,ultimate_intrigue,ultimate_magic,
+ultimate_psionics}/equipment_tables.rs`, none in `equipment_gap_tables.rs`), 581 other records
+correctly skipped (`skipped_pre_existing`), 8 correctly excluded for `NAMEISPI:YES` (unchanged).
+Verified byte-for-byte against the fixed code path: `catapult_standard.json` now cites
+`uc_equip_arms_armor.lst:168` — exactly the citation the hand-authored table's own long-standing
+`// uc_equip_arms_armor.lst:168` source comment already named; `astral_armor.json` now cites
+`up_equipment.lst:12`; `mystic_bolts.json` now cites `ui_equip_arms_armor.lst:47`. Re-checked all
+39: 0 remain wrong.
+
+**Row 92's `KNOWN_KEY_MISMATCH_DEBT` shrunk from 10 to 0** in `tests/v06_corpus_trap_report.rs`
+(never widened, never deleted the assertion — same ratchet mechanism the ACG Naturalist debt used).
+`cargo test --locked --test v06_corpus_trap_report ingested_record_keys_match_their_cited_line` →
+green with the empty list, proving the debt is genuinely paid, not hidden.
+
+### 2. THE SYSTEMIC SWEEP GAP (row 91) — FIXED and MUTATION-PROVEN
+
+**Scope, re-derived:** `corpus_literal_sweep::compare_tokens` compared only `data.raw_tokens`
+against the closure — never the record's own typed `cost_gp`/`weight_lbs` fields, which (in
+`cache_gen::equipment_gap`/`hand_authored_equipment`) come from an INDEPENDENT source (a
+hand-transcribed Rust table) than `raw_tokens` (whatever row `find_citation` resolves), making the
+existing comparison tautological whenever the two disagree — exactly row 90's shape.
+
+**Extended `compare_tokens`** with `cost_gp<->COST:` / `weight_lbs<->WT:` typed-field checks
+(`compare_typed_numeric_field`, `closure_numeric_values`), a new `Finding::TypedFieldNotInClosure`
+variant, a new `SweepTally::typed_fields_compared` counter. Scoped to `cost_gp`/`weight_lbs` only
+this cycle (not `description`/`name`, row 91's remedy note also named those — see the followup
+below; description needs a real per-kind reconstruction rule that risks false positives across
+non-equipment kinds if built blind under time pressure).
+
+**6 new unit tests**, including the exact real-world reproduction
+(`the_real_catapult_standard_shape_trips_the_typed_field_check_pre_fix`) and a
+no-false-positive-when-absent test.
+
+**MUTATION-PROVEN twice, per the DoD:**
+1. Unit level: removed the two `compare_typed_numeric_field(...)` call sites in a scratch copy of
+   the file — exactly the 3 new-check tests went RED (`a_cost_gp_the_closure_never_states_is_a_
+   finding_even_with_empty_raw_tokens`, `a_cost_gp_present_in_the_closure_is_not_a_finding`,
+   `the_real_catapult_standard_shape_trips_the_typed_field_check_pre_fix`), the other 22 stayed
+   green — confirmed the tests test the extension, not something else. Restored, re-confirmed 25/25
+   green.
+2. Corpus level: ran the real `corpus_literal_sweep` binary against the full pinned oracle BEFORE
+   fixing the underlying data:
+   ```
+   corpus-literal-sweep: 21677 records examined of 24736 read, 181122 tokens compared (9 synthesized),
+   24311 digests checked, 1 findings
+   corpus-literal-sweep: MISMATCH data/corpus/beastiary/equipment/poison_black_smear.json: typed
+   field cost_gp=0 is not byte-derivable from any COST: entry in the corpus token closure
+   ```
+
+**The finding traced one record deep and fixed, exactly as instructed ("expect this to surface real
+corpus-fidelity defects — fix what it finds").** `Poison (Black Smear)`'s real corpus row
+(`b1_equip_general.lst:7`) carries NO `COST:` token at all
+(`grep -n "Poison (Black Smear)" ~/workspace/repos/pcgen/data/.../b1_equip_general.lst` confirms:
+`OUTPUTNAME`/`TYPE`/`WT`/`SOURCEPAGE`/`SPROP`, no `COST`). The shipped `cost_gp: 0.0` was a
+transcription error in `rules_tables::beastiary1::equipment_data.rs` — 0 gp is a stated price, not
+"unstated" — dating to the original 2026-08-07 hand-transcription (`register A8`), pre-dating this
+package entirely. **Corrected both the source table (`cost_gp: Some(0.0) -> None`, with a
+citation comment) and the shipped JSON** (`cost_gp: null`, single-field diff, byte-identical
+otherwise). Deliberately did **NOT** re-run `gen_cache_beastiary` to regenerate the JSON from the
+corrected table: caught and reverted a near-miss where doing so (a) clobbered all 4 equipment
+records' schema (silently DROPPED `raw_tokens` entirely — the binary's `write_json` has no
+no-clobber guard and a stale schema not synced with a later `enrich_equipment_raw_tokens` cycle)
+and (b) rewrote **46 unrelated monster records' `wiring_class`** (`derived` -> `static`, an
+unrelated classifier-fix side effect from a stale cache), squarely in the `monster chassis` file
+territory this card is barred from touching. `git checkout --` both directories, hand-edited the
+one JSON field directly instead — the same minimal-touch discipline the 39-record equipment
+citations used.
+
+Re-ran the sweep after both fixes: `corpus-literal-sweep: ... 0 findings` / `CLEAN`. Ran
+`declared_pi_shipping_audit` → `CLEAN`. Ran `sd26_cache_beastiary` (12/12), full `equipment`-filtered
+lib test sweep (109/109), and the mandate's own named suites — `sd17_b5_equipment`,
+`sd19_equipment_{arms_armor,equipmods,general,magic_items}`, `sd20_{contract_equipment_wiring,
+equipment_arms_armor,equipment_effects_parity,equipment_equipmods,equipment_general,
+equipment_magic_items}`, `sd27_equipment_modifier_price_matches_corpus_cost_token` — all green
+(17 test binaries, 0 failures).
+
+### 3. THE PARSER ROOT CAUSE (row 61) — ALREADY LANDED, confirmed not re-broken
+
+Checked before building anything, per the mandate's own read-first discipline: `SD31-E6-F5-003`
+(merged onto `tranche/11` via `SD31-W5-INTEGRATE-001`, already at this cycle's claim HEAD) already
+root-caused and fixed `parse_equipment_entries::open_record`'s `.COPY=`-declared-row KEY-less
+merge bug (`is_copy_declaration`, `tokens_on_line`/`bonus_chains_on_line`) and re-enriched all 3
+previously-reverted records. Verified fresh, not merely trusted: `grep -n "is_copy_declaration\|
+tokens_on_line" src/pcgen_import/lst_parser/equipment.rs` confirms the fix is present at this
+cycle's HEAD; `bastard_s_sting.json`/`mountain_pattern_armor.json`/`hunter_s_stand.json` all carry
+non-empty, correct `raw_tokens` (checked byte content against the real oracle rows). The multi-`COST:`
+corpus-shape guard (`Trap::MultiCostRow`) exists, is wired into `scan_lst`'s production trap-report
+path, and is already mutation-proven against the real historical Miser's Mask/Mitre-of-the-Hierophant
+defect (`the_real_misers_mask_mitre_of_the_hierophant_glued_row_trips_the_guard`) — re-ran
+`cargo test --locked --lib pcgen_import::corpus_traps::` fresh: 19/19 passed, no rebuild needed
+(building a second guard would itself violate "smallest compliant change"). No new work landed here
+this cycle; correctly not re-done.
+
+### 4. THE RESIDUAL GRIND — dispatch premise corrected, not attempted blind
+
+Re-derived the not-started-by-book split (`docs/work-inventory.json`, unchanged since this cycle's
+own work never touches `status`/`wiring_class`): `equipment` 962 not-started across 17 books
+(`inner_sea_gods` 150, `occult_adventures` 119, `adventurers_guide` 115, `horror_adventures` 115,
+`mythic_adventures` 110, `inner_sea_combat` 72, `inner_sea_races` 72, `inner_sea_world_guide` 47,
+`monster_codex` 45, `inner_sea_temples` 43, `inner_sea_intrigue` 39, plus 6 smaller); confirmed via
+`grep -oE 'book: "[A-Z_]+"' src/rules_core/rules_tables/equipment_gap_tables.rs | sort -u` that
+`equipment_gap_tables.rs` has rows for ONLY the same 9 books already routed — extending
+`book_routing`'s match arms to any of the 17 not-started books' short codes would route to a table
+with ZERO rows for them, a no-op. Confirmed via `find` that none of the 17 books has ANY
+`rules_tables/<book>/*equip*` module at all. **The card's own item 4 premise ("extend book_routing")
+does not describe the real remaining lever** — `retro.py correction` emitted. The real remedy is a
+genuine new per-book hand-transcription ingest (the "book onboarding tax is per-file" the dispatch
+itself names), which this cycle deliberately did not rush: a brand-new book's PI screening is the
+highest-risk shape of work in this program (wave 4's PI failure was in this exact module's sibling),
+and doing it correctly under this cycle's own remaining time budget risked exactly the corner-cutting
+the mandate forbids. Logged with full remedy, owning epic, and the largest first candidate
+(`inner_sea_gods`, 150 units) at `OPEN-ISSUES.md` row 95.
+
+### 5. PI screening — both SD-30 contracts, verified for every record this cycle wrote
+
+`SD-30-class-feature-archetype-bundle/kanban.md` line 58: `epic-3-pi-gate` COMPLETE, corpus-wide,
+covers every book this cycle touched (Ultimate Combat, Ultimate Intrigue, Ultimate Magic, Ultimate
+Psionics, Bestiary). `gen_cache_hand_authored_equipment`'s production path calls both contracts
+unchanged (this cycle's `find_citation` fix does not touch the PI-screening call sites at all — pure
+citation-resolution logic): `equipment_gap::declared_pi_at` (`§53.5`) on name+description,
+`pi_screening::classify_field`/`classify_optional_field_declared` (`§52.3`'s blacklist union) on
+name+description. Re-ran `declared_pi_shipping_audit` after the 39-record re-cite AND after the
+`poison_black_smear` fix: **CLEAN both times**. `corpus_literal_sweep` CLEAN. The `poison_black_smear`
+hand-edit touched only `cost_gp` — no name/description field, so no PI surface at all.
+
+### 6. Guarded regen — measured, restored per the wave rule
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-equip-repair.json
+  # 21677 records examined of 24736 read, 181122 tokens compared (9 synthesized), 24311 digests
+  # checked, 0 findings -- CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-equip-repair.json
+  # 100 of 101 covered units cleared; 1 pre-existing FAIL (advanced_players_guide:equipment:
+  # spindle_of_perfect_knowledge, row 67, confirmed unchanged, untouched by this cycle)
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+  # completed with ZERO stamp loss -- no --allow-stamp-loss needed, no refusal message
+```
+
+Board headline (`pf1e_dashboard_producer.doneness_verdict` replay):
+`38521 {'done': 7340, ...} 19.05%` — **unchanged** from the committed tip. Expected: the 39
+re-citations only correct `raw_tokens`/`source.{path,line}` on records already `static`+`grounded`
+(the sweep was already vacuously CLEAN for them pre-fix, since it was comparing `raw_tokens` against
+the row it was itself harvested from); the `poison_black_smear` fix was applied BEFORE this
+measurement, so no stamp loss occurred from the new typed-field check. `equipment`/`equipment_modifier`
+per-kind counts likewise unchanged: `equipment` 4364 done (70.3%), `equipment_modifier` 84 done
+(5.32%) — no regression, no phantom gain. `docs/work-inventory.json` restored:
+`git checkout -- docs/work-inventory.json`, confirmed clean via `git status --porcelain`.
+
+**Trap report** (`cargo run --locked --bin v06_corpus_trap_report -- --audit`, captured to a log,
+exit code read directly): `TRAP_EXIT=2`, **1191** `wiring-class-mismatch` findings — byte-identical
+count to the last-reported baseline (`SD31-W5-INTEGRATE-001`, row 65). **Confirmed not worsened**;
+DoD item 3 is the pre-existing, already-documented shortfall, untouched by this cycle.
+
+**Reachability audit** (`verify.sh`'s own `reachability-audit` stage): unchanged, 98.95%, matching
+every prior wave — this cycle's fixes are citation/data corrections, not reachability changes.
+
+### 7. DoD-8 — on-screen verification
+
+`apps/desktop` had no `node_modules/` in this fresh worktree (`npm ci`, 43 packages, ~10s). Two
+launch attempts (`verify-on-screen.sh`, 280-300s timeout each) were killed mid-Tauri-cargo-build by
+their own timeout — the box was running load average 16-23 on 24 cores from 5+ concurrent sibling
+agents' own `verify.sh`/cargo builds this cycle, and a cold ~496-crate Tauri build genuinely did not
+finish inside either window. Diagnosed via `ps -o etimes` before assuming a hang (per the standing
+"frozen timestamps under live rustc means starved, not hung" rule) — confirmed no zombie, just slow.
+Third attempt: `driver.sh launch` directly (cargo build now warm from the two prior attempts) →
+succeeded in seconds, `WM_NAME="Codex"` confirmed.
+
+`verify-on-screen.sh`'s own automated navigation then FAILED on this run (`marker 'Equipment
+Catalog' not in rendered text`) — logged as `ultimate-combat-catapult-standard.FAILED.verify.md`,
+kept as evidence per the standing convention, not investigated further under this cycle's own time
+budget (a second shared-harness coordinate/timing gap, same shape as row 93's `race_trait` finding,
+not re-diagnosed here to avoid further budget spend on tooling rather than the card's own work).
+**Worked around by driving `driver.sh` directly**, the same precedent row 93 set: hub screenshot →
+click "Browse Equipment Catalog" (578,929) → Equipment Catalog screen confirmed on screen → click
+search box (970,326) → type `Catapult (Standard)` → **`Catapult (Standard) UC Arms & Armor 800 gp`
+renders live**, description `Range (100 ft. min.); Crew 3, Aim 2, Load 3, Speed 0 ft.` (the real
+`SPROP:` text, joined). Machine-verdicted (not eyeballed), replicating `verify-on-screen.sh`'s own
+extraction primitive: blur click (970,700) → `ctrl+a` → `ctrl+c` → `read-clipboard.py` → extracted
+text contains `Catapult (Standard)UCArms & Armor` and the literal substring `800 gp`
+(`grep -c "800 gp"` → 1 match).
+
+**Chosen deliberately**: `Catapult (Standard)` is one of the 39 records THIS cycle re-cited — the
+screenshot proves the fix end to end (citation now resolves to `uc_equip_arms_armor.lst:168`, the
+real row, and the corrected `800 gp` renders where a player actually looks), not just any equipment
+record. Artifacts: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F5-004/item8/
+ultimate-combat-catapult-standard.{png,verify.md}` (PASS) plus the `.FAILED.verify.md` evidence.
+`driver.sh stop` run after, before launching the full gate (never concurrent with `verify.sh`, per
+`SKILL.md`'s memory-constraint rule).
+
+### 8. Four-check wired-integration audit
+
+```
+git diff --unified=0 5d0cd1595...HEAD -- 'apps/desktop/**/*.ts*' 'apps/desktop/src-tauri/**/*.rs' \
+  'src/**/*.rs' ':!**/__tests__/**' ':!**/*.test.ts' ':!**/*.test.rs' \
+  | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS
+git diff --unified=0 5d0cd1595...HEAD -- 'apps/desktop/**/*.tsx' 'apps/desktop/**/*.jsx' \
+  | grep -nE 'onClick=\{\s*\(\)\s*=>\s*\{\s*\}\s*\}|onClick=\{undefined' || echo OK_NO_NOOP_HANDLERS
+git diff --unified=0 5d0cd1595...HEAD -- 'apps/desktop/**/*.{ts,tsx,jsx,rs}' ':!**/__tests__/**' ':!**/*.test.*' \
+  | grep -nE 'mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__' || echo OK_NO_MOCK_LEAKS
+git diff --unified=0 5d0cd1595...HEAD -- 'apps/desktop/**/*.{ts,tsx}' 'src/**/*.rs' \
+  | grep -nE '"Would [^"]*"' || echo OK_NO_WOULD_STRINGS
+```
+All 4 clean (this cycle touched no `apps/desktop` source at all — pure `src/rules_core`/`tests`/data).
+
+### 9. Reclaim
+
+`scripts/reclaim.sh` then `--apply` at cycle end.
+
+### Files changed
+
+- `src/rules_core/cache_gen/equipment_gap.rs` — `is_equipment_shaped_file`, `find_citation` search
+  order fix, 2 new tests (row 90 fix).
+- `src/rules_core/corpus_literal_sweep.rs` — typed-field cross-check (`cost_gp`/`weight_lbs`),
+  `Finding::TypedFieldNotInClosure`, `SweepTally::typed_fields_compared`, 6 new tests (row 91 fix).
+- `tests/v06_corpus_trap_report.rs` — `KNOWN_KEY_MISMATCH_DEBT` shrunk 10 -> 0 (row 92 fix).
+- `src/rules_core/rules_tables/beastiary1/equipment_data.rs` — `Poison (Black Smear)`'s `cost_gp`
+  corrected `Some(0.0) -> None` (the row-91 check's own first catch).
+- `data/corpus/beastiary/equipment/poison_black_smear.json` — same fix, shipped record.
+- 39 re-cited `data/corpus/{ultimate_combat,ultimate_intrigue,ultimate_magic,
+  ultimate_psionics}/equipment/*.json` records.
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` — rows 90/91/92 marked
+  RESOLVED (row 94); row 95 (item 4's real scope, corrected).

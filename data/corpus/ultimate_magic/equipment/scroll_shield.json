@@ -1,62 +1,27 @@
 {
-  "completeness": "chassis_only",
-  "data": {
-    "category": "ArmsArmor",
-    "cost_gp": 0.0,
-    "description": null,
-    "key": "Scroll Shield",
-    "name": "Scroll Shield",
-    "raw_bonus_chains": [],
-    "raw_tokens": [
-      {
-        "key": "KEY",
-        "value": "Scrollmaster ~ Scroll Shield"
-      },
-      {
-        "key": "CATEGORY",
-        "value": "Special Ability"
-      },
-      {
-        "key": "TYPE",
-        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
-      },
-      {
-        "key": "DESC",
-        "value": "You can wield any paper, parchment, or cloth scroll as if it were a light wooden shield. In your hands, the scroll grants a +1 shield bonus with an enhancement bonus equal to 1/2 the level of the highest-level wizard spell on the scroll; a scroll with only a cantrip or 1st-level spell counts as a masterwork light shield sword. The scroll shield has no armor check penalty, arcane spell failure chance, or maximum Dexterity bonus. The scrollmaster is considered proficient in this shield. You can use a scrollblade in one hand and a scroll shield in the other hand. Activating this ability is a free action. A scroll shield only retains its abilities in your hands. The scroll shield has hardness 0 and hit points equal to the highest-level wizard spell on the scroll. Each successful attack roll against you reduces the scroll shield's hit points by 1; this damage cannot be repaired, but does not affect casting from the scroll. When its hit points reach 0, the scroll is destroyed."
-      },
-      {
-        "key": "DESC",
-        "value": "When using a 3rd-level or higher wizard scroll as a scroll shield, you can choose to reduce its enhancement bonus (to a minimum of a +1 enhancement bonus) to give it any of the following shield properties: ghost touch, light fortification, moderate fortification. Adding any of these properties consumes an amount of bonus equal to the property's cost (see Table 15-5: Shield Special Abilities in the Core Rulebook). You must know the prerequisite spell or spells to craft the shield property in question (for example, you must know limited wish to be able to give your scroll shield the fortification property). If a scroll contains a spell with a metamagic feat, this ability uses the original spell level of the spell (a scroll of empowered fireball counts as a 3rd-level spell).|PRECLASS:1,Wizard=5"
-      },
-      {
-        "key": "AUTO",
-        "value": "EQUIP|Scroll Shield"
-      },
-      {
-        "key": "AUTO",
-        "value": "SHIELDPROF|Scroll Shield"
-      },
-      {
-        "key": "SOURCEPAGE",
-        "value": "p.89"
-      }
-    ],
-    "weight_lbs": 0.0
-  },
-  "ingested_at": "2026-08-16T05:06:54Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
   "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T07:49:31Z",
+  "data": {
+    "key": "Scroll Shield",
+    "category": "ArmsArmor",
+    "name": "Scroll Shield",
+    "cost_gp": 0.0,
+    "weight_lbs": 0.0,
+    "description": null
+  },
   "source": {
     "kind": "lst_token",
-    "line": 2034,
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
-    "record_key": "Scroll Shield",
-    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e"
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_arms_armor.lst",
+    "sha256": "7183ca15e259890adca9f47b3bb7347ca2bb3811552ead90c588c6cc7c7c113f",
+    "line": 7,
+    "record_key": "Scroll Shield"
   },
-  "wiring_class": "display",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ]
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

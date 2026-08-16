@@ -1,50 +1,27 @@
 {
-  "completeness": "chassis_only",
-  "data": {
-    "category": "ArmsArmor",
-    "cost_gp": 0.0,
-    "description": null,
-    "key": "Mind Shield",
-    "name": "Mind Shield",
-    "raw_bonus_chains": [],
-    "raw_tokens": [
-      {
-        "key": "KEY",
-        "value": "Blade Skill ~ Mind Shield"
-      },
-      {
-        "key": "CATEGORY",
-        "value": "Special Ability"
-      },
-      {
-        "key": "TYPE",
-        "value": "BladeSkill.SpecialQuality"
-      },
-      {
-        "key": "DESC",
-        "value": "Gain +2 shield bonus to AC with free hand and formed mind blade."
-      },
-      {
-        "key": "SOURCEPAGE",
-        "value": "p.62"
-      }
-    ],
-    "weight_lbs": 0.0
-  },
-  "ingested_at": "2026-08-16T05:06:54Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
   "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T07:49:31Z",
+  "data": {
+    "key": "Mind Shield",
+    "category": "ArmsArmor",
+    "name": "Mind Shield",
+    "cost_gp": 0.0,
+    "weight_lbs": 0.0,
+    "description": null
+  },
   "source": {
     "kind": "lst_token",
-    "line": 790,
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
-    "record_key": "Mind Shield",
-    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d"
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371",
+    "line": 67,
+    "record_key": "Mind Shield"
   },
-  "wiring_class": "display",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ]
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }
