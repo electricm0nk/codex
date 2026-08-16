@@ -1,0 +1,34 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": null,
+    "key": "FIREARM_LUCKY",
+    "name": "FIREARM_LUCKY",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 57,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equipmods.lst",
+    "record_key": "FIREARM_LUCKY",
+    "sha256": "74c6f604d044b7bd0487c13c03d4aefad9eab3f2f7b814b54d424da334adedcc"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

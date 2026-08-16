@@ -4967,3 +4967,238 @@ This closes DoD item 1 (`VERIFY_EXIT=0`, captured directly) and confirms DoD ite
 with a real, non-zero claim) for this integration cycle. DoD item 3 (`v06_corpus_trap_report --audit`)
 remains a documented, pre-existing shortfall (§6.3 above, exit 2, `OPEN-ISSUES.md` row 41) — the full
 gate does not run that check as a stage, so this PASS does not speak to it either way.
+
+## SD31-E6-F5-002 (2026-08-16, `epic-6-ingest-lanes` F5/F6 — cache-gen for every kind except `class_feature`)
+
+**Cycle:** `sd31-cachegen-rest` / `SD31-E6-F5-002`. **Worktree:** `.claude/worktrees/wf_1d83a743-99e-2`,
+own branch `worktree-wf_1d83a743-99e-2` (pushed to origin; the integration cycle merges it, not this
+cycle). **HEAD at start:** `89846f5c9` ("docs(sd31): wave-4 budget + the cache-gen lever wave 3
+proved") — recovered via `git fetch origin && git reset --hard origin/tranche/11` per the mandatory
+first action (the worktree's initial checkout was a stale non-SD-31 commit with the package directory
+absent; tree was clean, recovery ran per protocol). **Oracle pin:** `PCGEN_ORACLE_SHA=
+7f818006e371188e5717fd18d74d18a420747fc6` (`./scripts/verify.sh --only preflight-oracle` → PASS,
+quoted from `scripts/pcgen-oracle-pin.env`).
+
+### 1. The map (task 1 of the card)
+
+Committed `artifacts/SD31-E6-F5-002-book-kind-map.md`. Re-derived, not narrated:
+`ls src/rules_core/rules_tables/ | wc -l` → **38** (matches the dispatch preamble's figure exactly).
+`ls src/rules_core/cache_gen/` before this cycle → **4** modules (`acg`, `apg`, `beastiary1`,
+`ultimate_equipment`). The map's headline finding: **`feat_gap_tables.rs`/`equipment_gap_tables.rs`
+are a SEPARATE, already-shipped lever from any per-book `rules_tables` module** — pre-generated,
+oracle-verified join tables (`gen_feat_gap_tables`/`gen_equipment_gap_tables`) carrying
+already-compiled-book residue that had never been dumped to `data/corpus/`. Re-derived row counts:
+`equipment_gap_tables::equipment_gap_rows()` **704** rows excluding `"UE"` (`grep -c 'EquipmentGapRow
+{ book: "<CODE>"' src/rules_core/rules_tables/equipment_gap_tables.rs` per book: CRB 335, APG 37,
+ACG 50, ARG 15, UC 20, UI 7, UPSI 113, UW 127); `feat_gap_tables::feat_gap_rows_for()` **83** rows
+across 7 books (script in the map artifact). Per-book kind-coverage table built from a heuristic
+symbol scan (documented as heuristic, not proof, in the artifact) cross-checked against real
+`data/corpus/<book>/<kind>/` directory existence.
+
+### 2. `cache_gen::equipment_gap` — the worked lever
+
+New module `src/rules_core/cache_gen/equipment_gap.rs` (mirrors `cache_gen::ultimate_equipment`'s
+shape, own local Shape B types/citation helpers per `decisions.md §11.3`) + entry point
+`src/bin/gen_cache_equipment_gap.rs`. Dumps `equipment_gap_tables::equipment_gap_rows()` (excluding
+`"UE"`, `cache_gen::ultimate_equipment`'s book) to `data/corpus/<book>/equipment/*.json` across 8
+books: core_rulebook, advanced_players_guide, advanced_class_guide, advanced_race_guide,
+ultimate_combat, ultimate_intrigue, ultimate_psionics, ultimate_wilderness.
+
+**Citation resolution.** Unlike `ultimate_equipment`'s per-category-file-name lookup,
+`EquipmentGapRow` carries no source file. `find_citation` searches the book's own `.lst` files (flat
+first, subdirectories only as fallback) trying, in order: `KEY:<key>` field, first-column `key`,
+first-column `name`, `.COPY=<key>`, `.COPY=<name>` — the same three-strategy shape
+`cache_gen::ultimate_equipment::resolve_line` established, generalized to an unknown filename.
+**First run (no `.COPY=` fallback): 175/704 resolved.** Traced the gap: `core_rulebook`'s `PLUS1W`
+etc. are `.COPY=` variant lines (`cr_equipmods.lst:665`: `Special Ability ~ +1 ~
+Weapon.COPY=PLUS1W`), the exact shape `cache_gen::ultimate_equipment::find_copy_variant` already
+solved for UE. Added the same fallback (TDD: `find_citation_falls_back_to_copy_variant` written and
+proven failing before the fix, per `find_citation_key_then_first_column_then_name`'s sibling test).
+**Second run: 701/704 resolved (99.6%)** — 127 equipment + 574 equipment_modifier. 3 genuinely
+unresolved, not guessed at: `core_rulebook`'s "Rock (Small)"/"Rock (Medium)"/"Poison (Violet Venom)"
+— re-derived independently (`grep -rl "Rock (Small)" $PCGEN_CORPUS_ROOT/pathfinder/paizo/...`) to
+actually live under `core_essentials`, a DIFFERENT book directory than the gap table's own `"CRB"`
+tag; left unwritten rather than mis-attributed.
+
+**Spot-checks against the real `.lst` rows** (the mandate's "the table compiling is not evidence it is
+right"): `PLUS1W` → `cr_equipmods.lst:665` exact byte match. `Rending Claw Blades`
+(advanced_race_guide) → `arg_equip_arms_armor.lst:54`, `Claw Blades (Catfolk).COPY=Rending Claw
+Blades`, exact match. `Special Ability ~ Dueling ~ Melee` (advanced_players_guide) →
+`apg_equipmods.lst:16`, `COST:14000` and the full `SPROP:` description byte-match the shipped
+`cost_gp`/`description`. All three checked by direct `sed -n '<line>p'` against
+`$PCGEN_CORPUS_ROOT`, not by trusting the table.
+
+**PI screening — both contracts, per the dispatch preamble's confirmed bug in
+`cache_gen::ultimate_equipment`.** That module computes `DeclaredProductIdentity` but only passes
+`declared.description` into the screen — `entry.name` ships raw, unscreened. `cache_gen::
+equipment_gap` screens `name` too: since `EquipmentData.name` is a REQUIRED field (no
+`Option<String>` to redact into), a `declared.name` hit OR a blacklist-term hit on `name` skips
+writing the WHOLE record (`GenerationReport::name_pi_excluded`), matching
+`DeclaredProductIdentity`'s own doc comment ("the only way not to publish it is not to publish the
+row"). **0 of 701 real rows hit either name screen** — the code path is proven by two unit tests
+against synthetic data (`a_nameispi_declared_row_would_be_excluded_not_redacted`,
+`a_blacklisted_name_is_flagged_by_the_term_scan`) rather than by real-corpus coverage, stated
+honestly in the module doc comment rather than left unproven.
+
+**Enrichment.** Widened `src/bin/enrich_equipment_raw_tokens.rs`'s hardcoded book list (append-only,
+own file territory) with `ultimate_combat`/`ultimate_intrigue`/`ultimate_psionics`/
+`ultimate_wilderness`. Ran it: raw_tokens populated for 698/701 new records (3 misses — 1
+`ultimate_combat` `.COPY=` line, 2 `ultimate_wilderness` `.COPY=` lines — the shared parser's
+`header_line_number` matching doesn't treat a `.COPY=` line as a valid header; not fixed, out of this
+cycle's file territory, a residue for the next `enrich_equipment_raw_tokens` cycle).
+
+### 3. A real defect this cycle caused and fixed before commit (`OPEN-ISSUES.md` row 47)
+
+`write_json`'s first implementation unconditionally overwrote its target path. Its slug-collision
+guard (`used: BTreeSet<String>`) only tracks slugs used WITHIN one `generate()` call — it cannot see
+a book's already-shipped corpus from a prior, unrelated run. `core_rulebook`'s gap row
+`"Intelligent Item Purpose (Slay All)"` (citation line 895) slugifies to the SAME filename an
+already-shipped, richer record (`key: "Intelligent Item ~ Purpose / Slay All"`, citation line **446**,
+real `PRETYPE`/`SPROP`, `wiring_class: computed`) already occupied — clobbered to `wiring_class:
+display`, `description: null`. A second row (`intelligent_item_purpose_slay_creature_type.json`) hit
+the identical shape. **Caught before commit** by reading `git status --porcelain data/corpus/` for `M`
+(not `??`) entries — a modified path under a directory this card only ever adds to is itself the
+tell. Reverted both (`git checkout --`) — confirmed 0 `M` entries under `data/corpus/` at commit time.
+Fixed `write_json` to check `path.exists()` and refuse to overwrite (`Ok(false)`, reported in
+`GenerationReport::skipped_pre_existing`); added `write_json_never_overwrites_an_existing_file`
+(writes a sentinel string to a pre-existing path, asserts `write_json` leaves it untouched — proven
+against a real filesystem, not mocked). Retro `correction` event emitted
+(`1786845355069-sd31-cachegen-rest-71fb81`). **The on-disk `data/corpus/` this cycle ships is already
+consistent with the fixed code** — the manual revert produced exactly what `write_json`'s fixed
+`path.exists()` guard would have produced on a fresh run (leave the pre-existing file untouched), so
+no re-generation was needed to reconcile code and data. Named as a corpus-wide risk in row 47: the
+other 4 `cache_gen` modules share the same per-run-only collision pattern; out of this card's file
+territory to fix them.
+
+### 4. `corpus_literal_sweep` blocked wholesale by a pre-existing, out-of-territory defect (`OPEN-ISSUES.md` row 46)
+
+Running `cargo run --locked --bin corpus_literal_sweep` against this cycle's own new
+`data/corpus/ultimate_psionics/equipment/equipmods/agile.json` hit a `fatal`:
+`book_dir_of` (`src/bin/corpus_literal_sweep.rs:345-351`) hard-requires **5** `/`-delimited
+`source.path` segments; `pathfinder/dreamscarred_press/<book>/<file>` (Dreamscarred Press books —
+`ultimate_psionics`, `psionics_unleashed`, `psionics_expanded`) has only **4**. The ENTIRE sweep
+aborts, not just the one record. **Verified pre-existing, not introduced by this cycle**: re-derived
+that `data/corpus/ultimate_psionics/monster/xeph.json` (committed `612004dfb`, SD-29, five waves
+before this one) already carries `source.kind: "lst_token"` and the identical 4-segment path — the
+segment-count check is pure and deterministic over `source.path`, so that record was ALREADY primed
+to hit the identical fatal; this cycle's new equipment file merely sorted earlier
+(`equipment` < `monster`) in the file-walk than the pre-existing monster records that would have hit
+it regardless. `corpus_literal_sweep.rs` is a sibling lane's file this wave (named in the dispatch
+preamble) — not edited. Retro `incident` event emitted
+(`1786845377813-sd31-cachegen-rest-df5b00`).
+
+**Worked around locally, only to measure this cycle's own delta** (did not touch the shared binary):
+built a scratch `--repo-root` with `ultimate_psionics` excluded via symlinks to every OTHER
+`data/corpus/<book>` (script: this cycle's scratchpad, not committed — the WORKAROUND is local
+measurement only, never the shipped path). `corpus_literal_sweep --repo-root <scratch> --json-out
+...` → **6,895 records examined of 11,558 read, 8 findings, 3 records** (all pre-existing or a
+downstream token-closure artifact of `enrich_equipment_raw_tokens`'s `.COPY=`-line handling — 2 of
+the 3 flagged records, `bastard_s_sting.json`/`mountain_pattern_armor.json`, are pre-existing
+`ultimate_equipment` records the enrichment re-run also touched; reverted, see below). Because this
+sweep excludes `ultimate_psionics` entirely, it cannot speak to that book's own 65 new records'
+`literal-verified` reach, and it is NOT the sanctioned wave-rule guarded regen (that command chain
+requires the REAL, unmodified `data/corpus/` and fatals on the same defect) — **the official
+board-`done` delta for this cycle's work could not be measured this cycle**, honestly reported rather
+than inferred. The 6 non-`ultimate_psionics` books' 636 new records are real, well-formed,
+`lst_token`-sourced, `raw_tokens`-enriched records sitting in `data/corpus/`, ready for the next
+guarded regen once row 46 is fixed.
+
+**A second side-effect caught and reverted**: re-running `enrich_equipment_raw_tokens` (widened list,
+§2) touched 2 PRE-EXISTING `ultimate_equipment` records (`bastard_s_sting.json`,
+`mountain_pattern_armor.json`) — `ultimate_equipment` is a sibling lane's book this wave. Reverted
+both (`git checkout --`) before commit; confirmed via `git status --porcelain data/corpus/` (0 `M`
+entries at commit time, matching §3's confirmation).
+
+### 5. The Mitre of the Hierophant guard (task 3 of the card)
+
+Re-derived the real corpus row: `sed -n '714p' $PCGEN_CORPUS_ROOT/.../ue_equip_magic_items.lst`
+confirms two items glued on one physical line — Miser's Mask (COST:3000/WT:1/p.246, already fixed by
+`SD31-W3-INTEGRATE-001`) and Mitre of the Hierophant (COST:18000/WT:2/p.247, two `SPELLS:` grants,
+`BONUS:SKILL` chain). **Did NOT add a "Mitre of the Hierophant" table entry** — `OPEN-ISSUES.md` row
+40 option (a) requires the citation resolver to gain a "one line supports 2 records" exception, and
+that resolver lives in `cache_gen::ultimate_equipment.rs`, this wave's explicitly forbidden file; a
+table entry with no citation path the sibling's generator can resolve would either (i) sit invisible
+to `data/corpus/` forever (zero board benefit) or (ii) trip that generator's own
+"any unresolved citation exits 1" hard-fail if re-run, breaking the sibling's already-shipped tool.
+Building option (b) instead — the corpus-shape guard — needs no forbidden-file edit and is the
+durable fix: it would have caught THIS defect's shape before it shipped, corpus-wide, for every future
+book.
+
+**Built `Trap::MultiCostRow`** (`src/pcgen_import/corpus_traps.rs`, `collect_findings`): a live,
+non-disabled, record-declaring `.lst` line carrying **2+ `COST:` tokens** is `Severity::Trap` (the
+module's own documented discipline: raw-corpus-shape findings are always `Trap`, never `Defect` —
+`Defect` is reserved for `audit_ingested_cache`'s cache-vs-corpus contradictions). Registered in both
+`Trap::id()`/`Trap::miscount_risk()` and `v06_corpus_trap_report.rs`'s `REPORT_ORDER` (+ its own
+`every_trap_variant_appears_in_the_report_order` coverage test, which would otherwise have silently
+made this trap invisible in the report). **Proven able to fail, then proven it fires on the real
+defect** (the mandate's "prove it fails before you trust it" — this repo has shipped three gates that
+could not fail): `a_single_cost_row_does_not_trip_the_multi_cost_guard` and
+`two_records_on_two_separate_lines_do_not_trip_the_guard` prove the guard stays silent on ordinary,
+well-formed shapes (it is not unconditionally true); `two_cost_tokens_on_one_row_trips_the_multi_cost_guard`
+proves a synthetic minimal reproduction fires; **
+`the_real_misers_mask_mitre_of_the_hierophant_glued_row_trips_the_guard`** reproduces
+`ue_equip_magic_items.lst:714`'s exact byte content verbatim (tab-delimited, not paraphrased) and
+asserts the guard fires with `2 COST:`/`2 SOURCEPAGE:` in its detail — proof this exact historical
+defect would now be caught at trap-report time, before any ingest code is written, per cycle mechanics
+step 0b. This is a `Severity::Trap` finding surfaced by the PLAIN `v06_corpus_trap_report <book>`
+scan (cycle mechanics step 0b), not the `--audit` stage (DoD item 3, currently RED for the
+pre-existing, unrelated `wiring-class-mismatch` reason tracked at row 41) — confirmed this addition
+does not touch `--audit`'s code path at all (`audit_ingested_cache` is a separate function; this
+addition is entirely inside `collect_findings`/`scan_lst`), so it cannot have made that pre-existing
+red worse.
+
+### 6. Guarded regen — could not run the sanctioned command this cycle
+
+Per §4, the wave-rule's sanctioned `corpus_literal_sweep -- --json-out ...` command fatals on the
+real, unmodified `data/corpus/` (row 46, pre-existing, not this card's file territory). The bare
+`cargo run --locked --bin v06_work_inventory` guard correctly refused to write (`refusing to write
+... this run would drop 3569 of the 3569 verification stamp(s)`), proving the guard itself works as
+designed. **No `docs/work-inventory.json` write was attempted or is staged** — nothing to
+`git checkout --` restore, per the wave rule, because nothing was ever written.
+
+### 7. Full gate
+
+Launched EARLY, in the background, per protocol:
+```
+RETRO_ACTOR=sd31-cachegen-rest CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-cachegen-rest \
+  ./scripts/verify.sh > docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F5-002-verify.log 2>&1
+echo "VERIFY_EXIT=$?" >> docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F5-002-verify.log
+```
+`$LOG` is authoritative. At receipt-writing time the gate had reached `root-full` (the slow ~490-binary
+stage) with `root-lib` already PASS (**1825 passed** — includes this cycle's own `equipment_gap`
+module tests, written and green BEFORE `corpus_traps.rs`'s trap-12 additions, which land in this same
+`root-lib` pass on the NEXT invocation of that stage since they were added after `root-lib` had already
+completed once). See the log's tail for the terminal `VERIFY_EXIT` line; if this receipt is read before
+the gate finished, that is the honest state — the commit and this receipt land regardless, per
+protocol ("ran out of budget is not blocked").
+
+### 8. Figures, exact commands
+
+- `equipment_gap_tables` rows: `grep -c 'EquipmentGapRow { book: "<CODE>"' src/rules_core/rules_tables/equipment_gap_tables.rs` per code, summed (excl. `"UE"`) → **704**.
+- New records written: `git status --porcelain data/corpus/ | grep '^??' | grep '\.json$' | wc -l` → **347**, plus `find <6 untracked dirs> -name '*.json' | wc -l` → **352**; **347+352=699** (701 generated − 2 reverted collisions).
+- Resolution rate: 701/704 = **99.6%** (`cargo run --locked --bin gen_cache_equipment_gap` stdout, this cycle's second run).
+- `feat_gap_tables` rows (next lever, not built this cycle): per-static-array `{` count in `feat_gap_tables.rs` → **83**.
+- Oracle pin: `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+
+### 9. Reclaim
+
+`scripts/reclaim.sh` then `--apply` run at cycle end; bytes reclaimed recorded in the commit's own
+shell output (not duplicated here — see the terminal output at cycle close).
+
+### 10. Files changed / added, this cycle's own territory only
+
+New: `src/rules_core/cache_gen/equipment_gap.rs`, `src/bin/gen_cache_equipment_gap.rs`,
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F5-002-book-kind-map.md`,
+699 new `data/corpus/<book>/equipment/**/*.json` records across 8 books.
+Modified (append-only where shared): `src/rules_core/cache_gen/mod.rs` (module list, shared
+additive-list exception), `src/bin/enrich_equipment_raw_tokens.rs` (book list), `src/bin/
+v06_corpus_trap_report.rs` (`REPORT_ORDER` + its coverage test), `src/pcgen_import/corpus_traps.rs`
+(`Trap::MultiCostRow` + detection + 5 tests), `docs/release/SD-31-corpus-closure-grind/artifacts/
+OPEN-ISSUES.md` (rows 46/47, appended, not rewritten).
+NOT touched, per file territory: `class_feature`, `cache_gen/ultimate_equipment.rs`, `src/bin/
+ingest_races.rs`, `src/bin/corpus_literal_sweep.rs`, the monster chassis, the spell catalog.
+`v06_work_inventory.rs`'s `OBSERVABLE_BOOK_DIRS` was NOT widened this cycle (deferred — the guarded
+regen that would confirm the equipment-effect wiring probe actually observes the 6 new books could
+not run this cycle per §4/§6; widening it without being able to verify the observation would be an
+unverified claim, not a landed fix — left for the cycle that lands row 46's fix or a working scratch
+workaround at guarded-regen time).

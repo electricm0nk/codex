@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "data": {
+    "key": "CRRSVE_BRST_M",
+    "category": "Equipmods",
+    "name": "CRRSVE_BRST_M",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equipmods.lst",
+    "sha256": "f7f13bdfc3132b935fe2ec9a7fa4be460eebea86eefd4026468fae8d06adb338",
+    "line": 13,
+    "record_key": "CRRSVE_BRST_M"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

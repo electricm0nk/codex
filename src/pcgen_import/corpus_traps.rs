@@ -542,6 +542,14 @@ pub enum Trap {
     GoverningTokenHiddenByFilter,
     /// 11 — `.COPY=` declares a new record.
     CopyRecord,
+    /// 12 — a single physical row carries 2+ `COST:`/`SOURCEPAGE:` tokens:
+    /// two records glued onto one line by a missing newline
+    /// (`OPEN-ISSUES.md` row 40's confirmed `ue_equip_magic_items.lst:714`
+    /// shape, "Miser's Mask"/"Mitre of the Hierophant" — wave 3 shipped
+    /// the wrong item's cost and weight because a citation resolver
+    /// faithfully transcribed a malformed corpus row without this flag
+    /// ever having existed).
+    MultiCostRow,
     /// Audit-only: an ingested record cites a line that does not resolve.
     UnresolvableCitation,
     /// Audit-only: a stored `wiring_class` disagrees with what
@@ -565,6 +573,7 @@ impl Trap {
             Trap::TokenDenseRecord => "token-dense-record",
             Trap::GoverningTokenHiddenByFilter => "governing-token-hidden-by-filter",
             Trap::CopyRecord => "copy-record",
+            Trap::MultiCostRow => "multi-cost-row",
             Trap::UnresolvableCitation => "unresolvable-citation",
             Trap::WiringClassMismatch => "wiring-class-mismatch",
         }
@@ -610,6 +619,12 @@ impl Trap {
             Trap::CopyRecord => {
                 "`.COPY=` declares a *new* record. Excluding it undercounts by as much as \
                  including `.MOD` overcounts."
+            }
+            Trap::MultiCostRow => {
+                "A citation resolver keying on the first item's name/KEY will silently \
+                 attach the SECOND item's COST/WT/SOURCEPAGE to the first item's record \
+                 (or vice versa) -- exactly what shipped a wrong price and weight before \
+                 this flag existed. Split the line into its real records before ingesting."
             }
             Trap::UnresolvableCitation => {
                 "The provenance chain is broken: the cited line does not exist or is blank."
@@ -985,6 +1000,28 @@ fn collect_findings(path: &str, lines: &[LstLine]) -> Vec<Finding> {
                 format!(
                     "{dense} `BONUS:VAR` tokens on this single record; \
                      a token count here is {dense}x a record count"
+                ),
+            );
+        }
+
+        // ------------------------------------------------------ trap 12
+        // A genuine single record never carries the same "which physical
+        // item is this" token twice. `COST:` and `SOURCEPAGE:` are the two
+        // tokens `OPEN-ISSUES.md` row 40's real defect actually collided
+        // on; `SOURCEPAGE:` alone (no second `COST:`) is a normal
+        // multi-page item and not flagged.
+        let cost_count = line.tokens.iter().filter(|(k, _)| k == "COST").count();
+        if cost_count >= 2 {
+            let sourcepage_count = line.tokens.iter().filter(|(k, _)| k == "SOURCEPAGE").count();
+            push(
+                &mut findings,
+                line,
+                Trap::MultiCostRow,
+                format!(
+                    "{cost_count} `COST:` tokens ({sourcepage_count} `SOURCEPAGE:` tokens) on \
+                     one physical row; this is two records glued onto one line, not one \
+                     record with two prices -- do not key a citation resolver on this \
+                     line's first column/name alone"
                 ),
             );
         }
@@ -1662,6 +1699,7 @@ mod tests {
             Trap::TokenDenseRecord,
             Trap::GoverningTokenHiddenByFilter,
             Trap::CopyRecord,
+            Trap::MultiCostRow,
             Trap::UnresolvableCitation,
             Trap::WiringClassMismatch,
         ];
@@ -1708,6 +1746,72 @@ mod tests {
         let mut sorted = lines.clone();
         sorted.sort_unstable();
         assert_eq!(lines, sorted);
+    }
+
+    // --------------------------------------------------------------
+    // Trap 12 (`MultiCostRow`) -- `OPEN-ISSUES.md` row 40 (SD-31,
+    // `SD31-E6-F5-002`): a citation resolver keyed on the first item's
+    // name/KEY silently attached the second glued item's COST/WT to the
+    // first item's shipped record. This section proves the guard both
+    // fires on the malformed shape (this test would have caught the real
+    // defect before it shipped) and stays silent on ordinary rows (so it
+    // is not a check that "fails" by being unconditionally true).
+    // --------------------------------------------------------------
+
+    #[test]
+    fn a_single_cost_row_does_not_trip_the_multi_cost_guard() {
+        let scan = scan_lst("t.lst", "Widget\tTYPE:Goods.General\tCOST:5\tSOURCEPAGE:p.1\n");
+        assert_eq!(scan.count_for(Trap::MultiCostRow), 0);
+    }
+
+    /// Two ordinary, well-formed records on two SEPARATE lines (a real,
+    /// legitimate corpus shape -- see `equipment_gap_tables.rs`'s own
+    /// `.COPY=` variant rows) must not trip the guard either: the check is
+    /// per-LINE, not per-file.
+    #[test]
+    fn two_records_on_two_separate_lines_do_not_trip_the_guard() {
+        let scan = scan_lst(
+            "t.lst",
+            "Widget\tTYPE:Goods.General\tCOST:5\tSOURCEPAGE:p.1\nGadget\tTYPE:Goods.General\tCOST:9\tSOURCEPAGE:p.2\n",
+        );
+        assert_eq!(scan.count_for(Trap::MultiCostRow), 0);
+    }
+
+    /// Synthetic minimal reproduction of the glued-line shape: one
+    /// physical row, two `COST:` tokens.
+    #[test]
+    fn two_cost_tokens_on_one_row_trips_the_multi_cost_guard() {
+        let scan = scan_lst(
+            "t.lst",
+            "First Item\tTYPE:Goods\tCOST:100\tSOURCEPAGE:p.1\tSecond Item\tTYPE:Goods\tCOST:200\tSOURCEPAGE:p.2\n",
+        );
+        assert_eq!(scan.count_for(Trap::MultiCostRow), 1);
+        let finding = scan.findings_for(Trap::MultiCostRow).next().unwrap();
+        assert_eq!(finding.severity, Severity::Trap);
+        assert!(finding.detail.contains("2 `COST:`"));
+    }
+
+    /// The guard proven against the REAL corpus row this trap exists for:
+    /// `ue_equip_magic_items.lst:714`'s exact byte content (Miser's
+    /// Mask/Mitre of the Hierophant, `OPEN-ISSUES.md` row 40), reproduced
+    /// verbatim (tab-delimited) rather than paraphrased. This is the
+    /// "prove it fails before you trust it" requirement: this exact shape
+    /// shipped a wrong cost/weight for one wave BEFORE this guard existed
+    /// (no `MultiCostRow` finding would have been raised then), and this
+    /// test proves the guard now catches it.
+    #[test]
+    fn the_real_misers_mask_mitre_of_the_hierophant_glued_row_trips_the_guard() {
+        let raw = "Miser's Mask\tTYPE:Magic.Wondrous.Headgear.LesserMinor\tCOST:3000\tWT:1\tSOURCEPAGE:p.246\tBONUS:SITUATION|Appraise=Gems|5|TYPE=CompetenceMitre of the Hierophant\tTYPE:Magic.Wondrous.Headgear.GreaterMedium\tCOST:18000\tWT:2\tSOURCEPAGE:p.247\tSPELLS:Magic Item|TIMES=1|CASTERLEVEL=9|Commune|PRESPELLCAST:TYPE=Divine\tSPELLS:Magic Item|TIMES=1|TIMEUNIT=Week|CASTERLEVEL=9|Atonement|PRESPELLCAST:TYPE=Divine\tBONUS:SKILL|Diplomacy,Knowledge (Religion)|5|TYPE=Competence|PRESPELLCAST:TYPE=Divine\n";
+        let scan = scan_lst("ue_equip_magic_items.lst", raw);
+        assert_eq!(
+            scan.count_for(Trap::MultiCostRow),
+            1,
+            "the real Miser's Mask/Mitre of the Hierophant glued row must trip the guard"
+        );
+        let finding = scan.findings_for(Trap::MultiCostRow).next().unwrap();
+        assert_eq!(finding.line, 1);
+        assert!(finding.detail.contains("2 `COST:`"));
+        assert!(finding.detail.contains("2 `SOURCEPAGE:`"));
     }
 
     // --------------------------------------------------------------

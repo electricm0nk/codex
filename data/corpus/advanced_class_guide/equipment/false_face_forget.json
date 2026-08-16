@@ -1,0 +1,29 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": null,
+    "description": null,
+    "key": "False Face.FORGET",
+    "name": "False Face.FORGET",
+    "raw_bonus_chains": [],
+    "raw_tokens": [],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/_pfs/pfs_acg_equip.lst",
+    "record_key": "False Face.FORGET",
+    "sha256": "ec50157f0dc59e3f6bff2728b0b8cdd410702b6df82f0987c87bb8f62f374f30"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

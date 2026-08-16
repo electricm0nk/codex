@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "Conducts touch attacks from spell-like and supernatural abilities.",
+    "key": "Special Ability ~ Conductive ~ Weapon",
+    "name": "Conductive",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Conductive ~ Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Ammunition"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.286"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,WeaponEnhancement,Weapon"
+      },
+      {
+        "key": "SPROP",
+        "value": "Conducts touch attacks from spell-like and supernatural abilities."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equipmods.lst",
+    "record_key": "Special Ability ~ Conductive ~ Weapon",
+    "sha256": "f7f13bdfc3132b935fe2ec9a7fa4be460eebea86eefd4026468fae8d06adb338"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

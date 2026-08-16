@@ -1,0 +1,34 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": null,
+    "key": "SILENCING",
+    "name": "SILENCING",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 26,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equipmods.lst",
+    "record_key": "SILENCING",
+    "sha256": "5bc2ad2638890d74716a60fb31681d23ec188d9c540e2e662a31e696f3fcd056"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

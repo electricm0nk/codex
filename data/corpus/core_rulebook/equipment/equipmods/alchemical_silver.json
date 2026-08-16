@@ -1,0 +1,139 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": null,
+    "key": "Alchemical Silver",
+    "name": "Alchemical Silver",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.AMMUNITION",
+          "2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.WEAPON",
+          "20",
+          "PREMULT:2,[PREWIELD:1,LIGHT],[!PRETYPE:1,Double]"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.WEAPON",
+          "90",
+          "PREMULT:2,[PREWIELD:1,ONEHANDED],[!PRETYPE:1,Double]"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.WEAPON",
+          "180",
+          "PREMULT:2,[PREWIELD:1,TWOHANDED],[!PRETYPE:1,Double]"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.WEAPON",
+          "90",
+          "PRETYPE:1,Double"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGE",
+          "-1",
+          "TYPE=Enhancement.STACK",
+          "PRETYPE:1,PIERCING,SLASHING"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Material ~ Alchemical Silver"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "TEXT=Silver"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.Ammunition.Weapon"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Metal.Silver"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.155"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Weapon,Ammunition"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Metal"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,Mithral,Adamantine,ColdIron,Silver"
+      },
+      {
+        "key": "SPROP",
+        "value": "silver"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "NO"
+      },
+      {
+        "key": "INFO",
+        "value": "hp|10 hp/inch"
+      },
+      {
+        "key": "INFO",
+        "value": "Hardness|hardness 8"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 110,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Alchemical Silver",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}
