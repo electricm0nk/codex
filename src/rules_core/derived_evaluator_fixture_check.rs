@@ -216,6 +216,17 @@ fn run_equipment_bar_check(repo_root: &Path) -> BarCheckReport {
 /// or when its trailing segment is not a plain integer (e.g. a book that
 /// spells it differently) -- an honest absence, never a guessed value.
 pub fn spell_like_ability_caster_level(monster: &MonsterStatBlock) -> Option<i32> {
+    // SD31-E6-F1-002 (`OPEN-ISSUES.md` row 44): a monster with no
+    // `BONUS:VAR|SLA_CL|` token has no spell-like abilities, and this
+    // function has a real
+    // production caller now (`apps/desktop/src-tauri/src/monster_catalog.rs`)
+    // that would otherwise hand every monster with a readable `MONSTERCLASS:`
+    // a caster level it has no use for -- a number on a screen with nothing
+    // to attach it to. `has_spell_like_abilities` is a row-presence check
+    // (`MonsterStatBlock`'s own doc comment), never a guess.
+    if !monster.has_spell_like_abilities {
+        return None;
+    }
     let monster_class = monster.monster_class?;
     let hd_str = monster_class.rsplit(':').next()?;
     hd_str.trim().parse::<i32>().ok()
@@ -369,6 +380,19 @@ mod monster_seam_tests {
     use super::*;
 
     fn stat_block(monster_class: Option<&'static str>) -> MonsterStatBlock {
+        stat_block_with_sla(monster_class, true)
+    }
+
+    /// [`stat_block`] plus explicit control over
+    /// [`MonsterStatBlock::has_spell_like_abilities`] (SD31-E6-F1-002,
+    /// `OPEN-ISSUES.md` row 44) -- every pre-existing test in this module is
+    /// about the HD-parsing rule, not the presence gate, so `stat_block`
+    /// keeps defaulting to `true` and only the presence-gate test below calls
+    /// this directly with `false`.
+    fn stat_block_with_sla(
+        monster_class: Option<&'static str>,
+        has_spell_like_abilities: bool,
+    ) -> MonsterStatBlock {
         MonsterStatBlock {
             key: "test:monster:probe",
             name: "Probe",
@@ -382,6 +406,8 @@ mod monster_seam_tests {
             natural_attacks: &[],
             ability_keys: &[],
             external_ability_refs: &[],
+            stat_adjustments: &[],
+            has_spell_like_abilities,
             source_file: "test.lst",
             source_line: 1,
         }
@@ -419,6 +445,25 @@ mod monster_seam_tests {
     fn non_integer_trailing_segment_refuses_rather_than_guesses() {
         let block = stat_block(Some("Outsider (Fort/Will):unknown"));
         assert_eq!(spell_like_ability_caster_level(&block), None);
+    }
+
+    // SD31-E6-F1-002, `OPEN-ISSUES.md` row 44's fix: a monster with a
+    // perfectly valid `MONSTERCLASS:` token but NO `BONUS:VAR|SLA_CL|` token
+    // on its row has no spell-like abilities at all, and this evaluator must
+    // not hand a
+    // production caller a caster level it has no meaning for. TDD red/green
+    // anchor: the real Animated Object (Medium) worked example
+    // (`b1_races.lst:13`, `MONSTERCLASS` absent from that row too, but the
+    // presence gate is tested independently of the HD-parse path here).
+    #[test]
+    fn a_valid_monster_class_with_no_spell_like_abilities_yields_no_caster_level() {
+        let block = stat_block_with_sla(Some("Construct:3"), false);
+        assert_eq!(
+            spell_like_ability_caster_level(&block),
+            None,
+            "a monster with no BONUS:VAR|SLA_CL| token has no spell-like abilities, regardless \
+             of HD"
+        );
     }
 
     #[test]

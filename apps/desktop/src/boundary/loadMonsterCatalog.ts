@@ -113,6 +113,15 @@ export interface MonsterCatalogEntryDto {
   abilities: MonsterAbilityDto[];
   /** Ability names the row cites that its own book does not define. */
   externalAbilityRefs: string[];
+  /**
+   * PF1's "Spell-Like Abilities" universal monster rule (caster level = Hit
+   * Dice), or `null` when this monster has no `BONUS:VAR|SLA_CL|` token on
+   * its row at all (no spell-like abilities to attach a caster level to) —
+   * or when it is served by Bestiary 1's SD-22 half, whose ingest does not
+   * capture abilities and so cannot honestly answer either way
+   * (SD31-E6-F1-002, `OPEN-ISSUES.md` row 44).
+   */
+  spellLikeAbilityCasterLevel: number | null;
 }
 
 export interface MonsterCatalogResponse {

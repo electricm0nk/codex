@@ -102,6 +102,7 @@ function entry(overrides: Partial<MonsterCatalogEntryDto>): MonsterCatalogEntryD
     monsterClass: 'Undead:4',
     abilities: [],
     externalAbilityRefs: [],
+    spellLikeAbilityCasterLevel: null,
     ...overrides,
   };
 }

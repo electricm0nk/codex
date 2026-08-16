@@ -1,24 +1,19 @@
-//! Bonus Bestiary monster + monster-ability tables, transcribed verbatim
+//! bonus_bestiary monster + monster-ability tables, transcribed verbatim
 //! from the book's own PCGen `.lst` rows.
 //!
-//! GENERATED FILE -- do not hand-edit. Re-transcribe by re-running the
-//! authoring transcriber recorded in this cycle's receipt
-//! (`docs/release/SD-29-corpus-wide-catch-up-lanes/progress.md`, card
-//! `epic-5-monster-lane-pilot`) against
-//! `pathfinder/paizo/roleplaying_game/bonus_bestiary/`.
+//! GENERATED FILE -- do not hand-edit. Regenerate with
+//! `python3 scripts/transcribe_monster_tables.py bonus_bestiary`, whose unit set is
+//! `docs/work-inventory.json`'s own units for this book rather than a raw
+//! line count over the `.lst` (which counts `.MOD`/`.COPY` overlays the
+//! inventory correctly excludes).
 //!
 //! Sources, with the line each record was read from carried per row:
-//!   * `bb_races.lst`          -- 14 monster rows
+//!   * `bb_races.lst` -- 14 monster rows
 //!   * `bb_abilities_race.lst` -- 17 monster-ability rows
-//!
-//! Identity is the corpus `KEY:` token, never the display name: 6 of the
-//! 17 ability rows carry a namespaced key (`Caryatid Column ~ Immunity to
-//! Magic`) whose leaf collides with a differently-owned rule, which is
-//! exactly the `key-differs-from-name` trap this book's trap report flags.
 
-use super::{MonsterAbilityRecord, MonsterAbilityFacet, MonsterAbilityDelivery, MonsterStatBlock, NaturalAttack, Speed};
+use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
-/// Every Bonus Bestiary monster stat block (14 rows).
+/// Every bonus_bestiary monster stat block (14 rows).
 pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     MonsterStatBlock {
         key: "Allip",
@@ -33,6 +28,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Incorporeal touch", damage_dice: Some("0") }],
         ability_keys: &["Babble", "Madness", "Touch of Insanity"],
         external_ability_refs: &["Channel Resistance", "Flight Maneuverability"],
+        stat_adjustments: &[StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CHA", amount: 6 }],
+        has_spell_like_abilities: false,
         source_file: "bb_races.lst",
         source_line: 6,
     },
@@ -49,6 +46,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
         ability_keys: &["Sand Trap"],
         external_ability_refs: &["Grab"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 10 }, StatAdjustment { ability: "CON", amount: 6 }],
+        has_spell_like_abilities: false,
         source_file: "bb_races.lst",
         source_line: 7,
     },
@@ -65,6 +64,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
         ability_keys: &[],
         external_ability_refs: &["Flight Maneuverability"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 14 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 8 }],
+        has_spell_like_abilities: false,
         source_file: "bb_races.lst",
         source_line: 8,
     },
@@ -81,6 +82,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Slam", damage_dice: None }],
         ability_keys: &["Spores"],
         external_ability_refs: &["Resistance to Electricity", "Resistance to Fire", "Trample"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CON", amount: 6 }, StatAdjustment { ability: "CHA", amount: -9 }],
+        has_spell_like_abilities: false,
         source_file: "bb_races.lst",
         source_line: 9,
     },
@@ -97,6 +100,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
         ability_keys: &["Sudden Charge"],
         external_ability_refs: &[],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 6 }, StatAdjustment { ability: "INT", amount: -8 }],
+        has_spell_like_abilities: false,
         source_file: "bb_races.lst",
         source_line: 10,
     },
@@ -113,6 +118,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[],
         ability_keys: &["Caryatid Column ~ Immunity to Magic", "Shatter Weapons", "Statue"],
         external_ability_refs: &[],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "DEX", amount: -2 }, StatAdjustment { ability: "CHA", amount: -9 }],
+        has_spell_like_abilities: false,
         source_file: "bb_races.lst",
         source_line: 11,
     },
@@ -129,6 +136,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
         ability_keys: &["Faerie Dragon ~ Breath Weapon"],
         external_ability_refs: &["Flight Maneuverability", "Immunity to Paralysis", "Immunity to Sleep"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: -2 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "INT", amount: 6 }, StatAdjustment { ability: "CHA", amount: 6 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "WIS", amount: 4 }],
+        has_spell_like_abilities: false,
         source_file: "bb_races.lst",
         source_line: 12,
     },
@@ -145,6 +154,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }, NaturalAttack { name: "Claw", damage_dice: None }],
         ability_keys: &["Roar"],
         external_ability_refs: &["Flight Maneuverability", "Pounce", "Scent"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: 6 }, StatAdjustment { ability: "INT", amount: -4 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: 2 }],
+        has_spell_like_abilities: false,
         source_file: "bb_races.lst",
         source_line: 13,
     },
@@ -161,6 +172,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }, NaturalAttack { name: "Claw", damage_dice: None }],
         ability_keys: &[],
         external_ability_refs: &["Grab", "Rend"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 14 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "INT", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CON", amount: 8 }],
+        has_spell_like_abilities: false,
         source_file: "bb_races.lst",
         source_line: 14,
     },
@@ -177,6 +190,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Claw", damage_dice: None }],
         ability_keys: &["Faithless", "Huecuva ~ Disease"],
         external_ability_refs: &[],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: 2 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "INT", amount: -6 }],
+        has_spell_like_abilities: false,
         source_file: "bb_races.lst",
         source_line: 15,
     },
@@ -193,6 +208,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Claw", damage_dice: None }],
         ability_keys: &["Magic Circle against Evil"],
         external_ability_refs: &["Flight Maneuverability", "Pounce", "Rake"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 12 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CON", amount: 8 }, StatAdjustment { ability: "INT", amount: 6 }, StatAdjustment { ability: "WIS", amount: 6 }, StatAdjustment { ability: "CHA", amount: 4 }],
+        has_spell_like_abilities: false,
         source_file: "bb_races.lst",
         source_line: 16,
     },
@@ -209,6 +226,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
         ability_keys: &["Water Naga ~ Poison"],
         external_ability_refs: &[],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 6 }, StatAdjustment { ability: "WIS", amount: 6 }, StatAdjustment { ability: "CHA", amount: 6 }, StatAdjustment { ability: "DEX", amount: 12 }, StatAdjustment { ability: "CON", amount: 10 }],
+        has_spell_like_abilities: false,
         source_file: "bb_races.lst",
         source_line: 17,
     },
@@ -225,6 +244,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[],
         ability_keys: &[],
         external_ability_refs: &["Wild Empathy"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: -4 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "INT", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: 8 }],
+        has_spell_like_abilities: false,
         source_file: "bb_races.lst",
         source_line: 18,
     },
@@ -241,12 +262,14 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
         ability_keys: &["Shadow Mastiff ~ Bay", "Shadow Mastiff ~ Shadow Blend"],
         external_ability_refs: &["Scent", "Trip"],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: 6 }, StatAdjustment { ability: "INT", amount: -6 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: 2 }],
+        has_spell_like_abilities: false,
         source_file: "bb_races.lst",
         source_line: 19,
     },
 ];
 
-/// Every Bonus Bestiary monster-ability record (17 rows).
+/// Every bonus_bestiary monster-ability record (17 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Babble",

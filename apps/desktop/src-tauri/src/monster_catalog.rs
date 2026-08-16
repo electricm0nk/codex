@@ -48,6 +48,7 @@ use serde::{Deserialize, Serialize};
 use codex::rules_core::rules_tables::beastiary1::{
     self, natural_attack_provenance, MonsterId, MonsterStatBlock,
 };
+use codex::rules_core::derived_evaluator_fixture_check::spell_like_ability_caster_level;
 use codex::rules_core::rules_tables::monster_chassis::{self, MonsterBook};
 use codex::rules_core::rules_tables::RuleSetId;
 
@@ -393,6 +394,20 @@ pub struct MonsterCatalogEntryDto {
     /// monster rules such as `Grab` or `Scent`). Kept so the screen can say the
     /// creature has them without this catalog pretending to carry their text.
     pub external_ability_refs: Vec<String>,
+    /// PF1's "Spell-Like Abilities" universal monster rule (caster level = Hit
+    /// Dice), computed by
+    /// `derived_evaluator_fixture_check::spell_like_ability_caster_level` —
+    /// the FIRST production caller that function has ever had (SD31-E6-F1-002,
+    /// `OPEN-ISSUES.md` row 44: the seam that built it had zero, which is why
+    /// this field exists rather than the function being called from a test
+    /// alone).
+    ///
+    /// `None` for a monster with no `BONUS:VAR|SLA_CL|` token on its row at
+    /// all (has no spell-like abilities to attach a caster level to — never shown as a
+    /// bare number with nothing behind it), and for every record served by
+    /// [`map_monster`]'s Bestiary 1 half, whose ingest does not capture
+    /// abilities at all and so cannot honestly answer either way.
+    pub spell_like_ability_caster_level: Option<i32>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -512,6 +527,12 @@ fn map_monster(monster_id: MonsterId) -> MonsterCatalogEntryDto {
         monster_class: None,
         abilities: Vec::new(),
         external_ability_refs: Vec::new(),
+        // Bestiary 1's SD-22 half does not ingest `monster_ability` records at
+        // all (`abilities` is always empty above), so this catalog cannot tell
+        // a monster with no spell-like abilities from one whose abilities were
+        // simply never captured. `None` is the honest answer to a question
+        // this half of the ingest cannot answer, not a claim that none exist.
+        spell_like_ability_caster_level: None,
     }
 }
 
@@ -667,6 +688,7 @@ fn map_chassis_monster(
             .iter()
             .map(|r| (*r).to_owned())
             .collect(),
+        spell_like_ability_caster_level: spell_like_ability_caster_level(block),
     }
 }
 
@@ -1219,6 +1241,60 @@ mod tests {
         assert_eq!(ankheg.natural_attacks.len(), 1);
         assert_eq!(ankheg.natural_attacks[0].name, "Bite");
         assert_eq!(ankheg.natural_attacks[0].damage_dice.as_deref(), Some("2d6"));
+    }
+
+    /// The first production caller of
+    /// `derived_evaluator_fixture_check::spell_like_ability_caster_level`
+    /// (SD31-E6-F1-002, `OPEN-ISSUES.md` row 44 -- the wave-3 seam that built
+    /// the function had zero). Demon (Balor) is one of the seam's own 7
+    /// committed fixtures: `MONSTERCLASS:Outsider (Fort/Will):20` states 20
+    /// Hit Dice, and its row carries `BONUS:VAR|SLA_CL|HD`
+    /// (`b1_races.lst:93`), so PF1's Spell-Like Abilities universal monster
+    /// rule gives it caster level 20 on the wire, not merely in a test.
+    #[test]
+    fn a_monster_with_spell_like_abilities_serves_its_universal_monster_rule_caster_level() {
+        let entries = build_monster_catalog().entries;
+        let balor = entries
+            .iter()
+            .find(|entry| entry.book == BOOK_B1 && entry.name == "Demon (Balor)")
+            .expect("Demon (Balor) is a real chassis record served under Bestiary 1's wire code");
+        assert_eq!(
+            balor.spell_like_ability_caster_level,
+            Some(20),
+            "Balor's MONSTERCLASS states 20 Hit Dice and its row carries BONUS:VAR|SLA_CL|HD"
+        );
+    }
+
+    /// A monster with a perfectly readable `MONSTERCLASS:` token but no
+    /// `BONUS:VAR|SLA_CL|` token at all must not be served a caster level it
+    /// has no spell-like abilities to attach to — a number with nothing
+    /// behind it is exactly the class of defect this file's
+    /// `serve_ability_description` leak-check exists to catch for a
+    /// different field.
+    #[test]
+    fn a_monster_with_no_spell_like_abilities_serves_no_caster_level() {
+        let entries = build_monster_catalog().entries;
+        let animated_object = entries
+            .iter()
+            .find(|entry| entry.book == BOOK_B1 && entry.name == "Animated Object (Medium)")
+            .expect("Animated Object (Medium) is a real chassis record");
+        assert_eq!(
+            animated_object.spell_like_ability_caster_level, None,
+            "Animated Object (Medium)'s row (b1_races.lst:13) carries no SLA_CL token"
+        );
+
+        // And the SD-22 half of Bestiary 1, whose ingest does not capture
+        // abilities at all, must answer the same honest `None` rather than
+        // guessing from a `monster_class` it happens to have.
+        let ankheg = entries
+            .iter()
+            .find(|entry| entry.key == "beastiary1:monster:ankheg")
+            .expect("Ankheg is a real Bestiary 1 record");
+        assert_eq!(
+            ankheg.spell_like_ability_caster_level, None,
+            "Bestiary 1's SD-22 half never ingested monster_ability records, so it cannot \
+             honestly say whether Ankheg has spell-like abilities"
+        );
     }
 
     /// A monster whose row genuinely declares no natural attack is served with
