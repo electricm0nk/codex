@@ -88,6 +88,7 @@ class FileFinder:
         "advanced_players_guide": "pathfinder/paizo/roleplaying_game/advanced_players_guide",
         "advanced_race_guide": "pathfinder/paizo/roleplaying_game/advanced_race_guide",
         "adventurers_guide": "pathfinder/paizo/roleplaying_game/adventurers_guide",
+        "beginner_box": "pathfinder/paizo/roleplaying_game/beginner_box",
         "bestiary": "pathfinder/paizo/roleplaying_game/bestiary",
         "bestiary_2": "pathfinder/paizo/roleplaying_game/bestiary_2",
         "bestiary_3": "pathfinder/paizo/roleplaying_game/bestiary_3",
@@ -97,14 +98,18 @@ class FileFinder:
         "bonus_bestiary": "pathfinder/paizo/roleplaying_game/bonus_bestiary",
         "book_of_the_damned_volume_1": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1",
         "book_of_the_damned_volume_2": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2",
+        "core_essentials": "pathfinder/paizo/roleplaying_game/core_essentials",
         "core_rulebook": "pathfinder/paizo/roleplaying_game/core_rulebook",
         "horror_adventures": "pathfinder/paizo/roleplaying_game/horror_adventures",
         "inner_sea_bestiary": "pathfinder/paizo/campaign_setting/inner_sea_bestiary",
         "inner_sea_combat": "pathfinder/paizo/campaign_setting/inner_sea_combat",
+        "inner_sea_faiths": "pathfinder/paizo/campaign_setting/inner_sea_faiths",
         "inner_sea_gods": "pathfinder/paizo/campaign_setting/inner_sea_gods",
         "inner_sea_intrigue": "pathfinder/paizo/campaign_setting/inner_sea_intrigue",
         "inner_sea_magic": "pathfinder/paizo/campaign_setting/inner_sea_magic",
         "inner_sea_races": "pathfinder/paizo/campaign_setting/inner_sea_races",
+        "inner_sea_taverns": "pathfinder/paizo/campaign_setting/inner_sea_taverns",
+        "inner_sea_temples": "pathfinder/paizo/campaign_setting/inner_sea_temples",
         "inner_sea_world_guide": "pathfinder/paizo/campaign_setting/inner_sea_world_guide",
         "monster_codex": "pathfinder/paizo/roleplaying_game/monster_codex",
         "mythic_adventures": "pathfinder/paizo/roleplaying_game/mythic_adventures",
@@ -152,6 +157,19 @@ def validate_entry(entry: dict, finder: FileFinder | None) -> list[str]:
     superseded = entry.get("superseded", [])
     all_sides = [surviving] + list(superseded)
 
+    # -- degenerate corpus_key: a bare integer is a PCGen level-number
+    # continuation row, never an object identity (the `companion` "1"
+    # defect: two DIFFERENT class-continuation rows that happen to share a
+    # level number are not the same object, and the material-difference
+    # check below cannot tell them apart when their shared key IS the
+    # thing being compared).
+    corpus_key = entry.get("corpus_key")
+    if isinstance(corpus_key, str) and corpus_key.strip().isdigit():
+        violations.append(
+            f"{entry.get('kind')}:{corpus_key}: corpus_key is a bare integer -- "
+            f"a level-number continuation row, not an object identity; refused"
+        )
+
     # -- core_essentials never belongs here (Decision 9) -------------------
     for side in all_sides:
         if side.get("book") == "core_essentials":
@@ -183,19 +201,39 @@ def validate_entry(entry: dict, finder: FileFinder | None) -> list[str]:
             )
 
     # -- REFUSAL 1: material-difference guard (re-derived from the oracle) -
+    #
+    # No fallback to the register's own cached `raw_lines`. A side with no
+    # `source_file`/`source_line`, or whose citation the oracle cannot
+    # resolve, is a HARD violation -- never a silent pass. (Prior shape:
+    # falling back to the cached `raw_lines` made this branch entirely
+    # dead code, since no shipped entry ever carried `source_file`/
+    # `source_line` on its sides -- proven by mutation test: a fabricated
+    # entry with no evidence at all, or with its raw_lines swapped for
+    # nonsense, passed clean. See `scripts/tests/test_supersession_register_gate.py`.)
     if finder is not None:
-        raw_lines = entry.get("raw_lines") or {}
         rederived: dict[str, str | None] = {}
         for side in all_sides:
             book = side.get("book")
             sf = side.get("source_file")
             sl = side.get("source_line")
-            if sf is not None and sl is not None:
-                rederived[book] = finder.raw_line(book, sf, sl)
-            else:
-                # register only stores raw_lines keyed by book when built
-                # from the full inventory row; fall back to the cached line
-                rederived[book] = raw_lines.get(book)
+            if sf is None or sl is None:
+                violations.append(
+                    f"{entry.get('kind')}:{entry.get('corpus_key')}: {book} "
+                    f"({side.get('id')}) carries no source_file/source_line to "
+                    f"re-derive from the oracle -- an entry with no re-derivable "
+                    f"evidence is refused, never trusted on its cached raw_lines alone"
+                )
+                rederived[book] = None
+                continue
+            line = finder.raw_line(book, sf, sl)
+            if line is None:
+                violations.append(
+                    f"{entry.get('kind')}:{entry.get('corpus_key')}: {book} "
+                    f"({side.get('id')}) citation {sf}:{sl} could not be re-derived "
+                    f"from the pinned oracle (unknown book, missing file, or line out "
+                    f"of range)"
+                )
+            rederived[book] = line
         parsed = {b: fields_of(line) for b, line in rederived.items()}
         base_book = surviving.get("book")
         base = parsed.get(base_book)

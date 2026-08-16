@@ -430,3 +430,59 @@ firing correctly), then the real register was restored and the stage re-run to c
   or plausibility alone — every one stayed in §7.
 - Did not enter any `pathfinder_unchained`/`mythic_adventures` record into the register — 0 this pass,
   by design; the default is variant.
+
+## 11. Wave-7 integration amendment (`SD31-W7-INTEGRATE-001`, 2026-08-16)
+
+Adversarial review of this card found the gate in §9 was **unable to catch a fabricated entry** —
+its "re-derive from the pinned oracle" branch (refusal 1) was dead code, because no shipped entry
+ever carried `source_file`/`source_line` on its `surviving`/`superseded` sides (only the builder's
+own separately-cached `raw_lines` did), so every entry fell through to a `None`-vs-cached-line
+comparison that a `None == None` coincidence let pass silently. A second, independent defect: one
+entry (`companion` corpus_key `"1"`) paired two unrelated PCGen class-continuation rows (a bare
+level number, not an object identity) that happened to share the literal text
+`1\tABILITY:FEAT|AUTOMATIC|CMB Output`.
+
+**Both fixed, TDD, mutation-proven:**
+
+1. `supersession_register_build.py` now emits `source_file`/`source_line` on every `surviving`/
+   `superseded` side (the data was already in hand — `recs[b]["source_file"]`/`["source_line"]` —
+   just never carried into the entry).
+2. `supersession_register_gate.py`'s refusal-1 branch no longer falls back to the cached
+   `raw_lines` at all: a side missing `source_file`/`source_line`, or whose citation the oracle
+   cannot resolve, is now a **hard violation**. Re-ran the exact three fabrication mutations named
+   by the review (planted-nonsense `raw_lines` on both sides; emptied `raw_lines`; a wholly invented
+   entry with `evidence: "trust me"` and no `raw_lines` at all) against the fixed gate: **all three
+   now exit 1**, where the pre-fix gate exited 0 on all three.
+3. `supersession_register_gate.py`'s `FileFinder.BOOK_DIRS` synced to the builder's full 38-book
+   table (previously missing `beginner_box`/`core_essentials`/`inner_sea_faiths`/
+   `inner_sea_taverns`/`inner_sea_temples`, a second way an unresolvable citation could silently
+   read as "equal").
+4. A new builder guard refuses any group whose `corpus_key` is a bare integer before it can ever
+   reach the material-difference comparison (which cannot distinguish two different continuation
+   rows that happen to share a level number); the same guard was added to the gate as defense in
+   depth. The `companion` `"1"` entry no longer builds.
+5. 5 new self-test cases (16 total, up from 12 named in §9), all green; the 2 pre-existing
+   `CleanEntryPassesTest` cases had their own latent fixture bug exposed and fixed in the same pass
+   (`_entry()`'s file defaults were positional, not book-aware, and had silently been masked by the
+   exact `None == None` hole being fixed here).
+
+**Regenerated register, corrected figures:**
+
+| | before (finding 1/2 unfixed) | after (this amendment) |
+|---|---:|---:|
+| objects | 117 | **116** |
+| redundant units (`denominator.count_removed`) | 135 | **134** |
+| proposed denominator if applied | 38,386 | **38,387** |
+| of the redundant units, currently `done` | 36 (34 equipment, 1 companion, 1 monster) | **36** (33 equipment, 2 companion, 1 monster) |
+| numerator if applied | 9,452 | **9,452** |
+| mandate headline if applied | 24.6236% | **24.6229%** |
+
+`python3 scripts/supersession_register_gate.py --corpus-root "$PCGEN_CORPUS_ROOT"` against the
+regenerated register: `116 objects checked … OK: every entry proves same-object field equality and
+clears both guards`, exit 0 — the gate now GENUINELY proves this, not merely reports it.
+
+**Status: still PROPOSED, NOT YET APPLIED.** The gate defect that made this unsafe to wire is fixed
+and the one bad entry is gone, but wiring `EXCLUDED_UNIT_IDS` into the live denominator computation
+(§8's own spec) remains a separate, dedicated change this integration cycle chose not to make
+inline under wave pressure — see `progress.md`'s `SD31-W7-INTEGRATE-001` receipt and the followups
+list for the exact next step.

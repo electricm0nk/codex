@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-16T12:12:41Z",
+  "generated_at": "2026-08-16T14:04:34Z",
   "cycle_id": "SD31-D10-REGISTER-001",
   "oracle_sha": "7f818006e371188e5717fd18d74d18a420747fc6",
   "authority": "decisions.md Decision 10 + its 2026-08-16 amendment (operator rulings)",
@@ -7,8 +7,8 @@
     "rule": "match on (kind, corpus_key), never (kind, name)",
     "re_derived_kind_name_collision_units": 8382,
     "re_derived_kind_name_collision_pct_of_board": 21.8,
-    "re_derived_kind_corpus_key_collision_objects": 743,
-    "re_derived_kind_corpus_key_collision_units": 1543
+    "re_derived_kind_corpus_key_collision_objects": 742,
+    "re_derived_kind_corpus_key_collision_units": 1541
   },
   "guard_2_variant_lines_excluded": {
     "variant_books": [
@@ -20,14 +20,19 @@
     "rule": "no record from either line enters a pair without record-level reprint proof; default is variant",
     "entries_with_reprint_proof_this_pass": 0
   },
+  "guard_1b_degenerate_corpus_key_excluded": {
+    "rule": "a corpus_key that is a bare integer (a PCGen level-number continuation row, not an object identity) is never a supersession candidate",
+    "groups_excluded": 1,
+    "units_excluded": 2
+  },
   "core_essentials_deferred": {
     "rule": "Decision 9/10 sequencing: core_essentials re-attribution runs before this register; every core_essentials-labelled unit is excluded from pairing this pass",
     "units_excluded_this_pass": 644
   },
   "denominator": {
     "before": 38521,
-    "proposed_after": 38386,
-    "count_removed": 135,
+    "proposed_after": 38387,
+    "count_removed": 134,
     "status": "PROPOSED, NOT YET APPLIED -- see SUPERSESSION-REGISTER.md \u00a78"
   },
   "numerator_impact": {
@@ -71,7 +76,7 @@
       "bestiary_3:monster:kami_shikigami"
     ],
     "superseded_verdict_breakdown": {
-      "not-started": 63,
+      "not-started": 62,
       "unmeasurable": 33,
       "held": 2,
       "done": 36,
@@ -80,7 +85,7 @@
     "numerator_before": 9488,
     "numerator_after_if_applied": 9452,
     "mandate_pct_before": 24.6307,
-    "mandate_pct_after_if_applied": 24.6236,
+    "mandate_pct_after_if_applied": 24.6229,
     "note": "every surviving-side unit keeps its own `done` credit unchanged; only the superseded duplicate stops being counted at all -- this is a real, if small, downward pull on the headline (the superseded population's own done-rate is slightly above the board average), not an upward one, so it is reported precisely rather than assumed to be denominator-only."
   },
   "superseded_sourcebooks": [],
@@ -97,13 +102,17 @@
       "surviving": {
         "id": "adventurers_guide:class:hellknight",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_classes.lst",
+        "source_line": 170
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class:hellknight",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_classes.lst",
+          "source_line": 23
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -119,13 +128,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:armored_casting_rma",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 420
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:armored_casting_rma",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 152
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -141,13 +154,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:artifice_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 270
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:artifice_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 92
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -163,13 +180,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:blood_mantis_form",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 429
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:blood_mantis_form",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 161
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -185,13 +206,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:brand_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 205
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:brand_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 76
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -207,13 +232,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:censor_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 206
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:censor_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 77
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -229,13 +258,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:death_mantis_form",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 430
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:death_mantis_form",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 162
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -251,13 +284,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:discipline_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 204
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:discipline_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 75
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -273,18 +310,24 @@
       "surviving": {
         "id": "ultimate_wilderness:class_feature:domain_power_dragonbreath",
         "book": "ultimate_wilderness",
-        "source_date": "2017-11"
+        "source_date": "2017-11",
+        "source_file": "uw_abilities_class.lst",
+        "source_line": 1300
       },
       "superseded": [
         {
           "id": "bestiary_6:class_feature:domain_power_dragonbreath",
           "book": "bestiary_6",
-          "source_date": "2017-05"
+          "source_date": "2017-05",
+          "source_file": "b6_abilities_class.lst",
+          "source_line": 12
         },
         {
           "id": "inner_sea_world_guide:class_feature:domain_power_dragonbreath",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 34
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -301,23 +344,31 @@
       "surviving": {
         "id": "bestiary_6:class_feature:domain_power_guarded_mind",
         "book": "bestiary_6",
-        "source_date": "2017-05"
+        "source_date": "2017-05",
+        "source_file": "b6_abilities_class.lst",
+        "source_line": 14
       },
       "superseded": [
         {
           "id": "bestiary_4:class_feature:domain_power_guarded_mind",
           "book": "bestiary_4",
-          "source_date": "2013-10"
+          "source_date": "2013-10",
+          "source_file": "b4_abilities_class.lst",
+          "source_line": 9
         },
         {
           "id": "horror_adventures:class_feature:domain_power_guarded_mind",
           "book": "horror_adventures",
-          "source_date": "2016-08"
+          "source_date": "2016-08",
+          "source_file": "ha_abilities_class.lst",
+          "source_line": 87
         },
         {
           "id": "inner_sea_world_guide:class_feature:domain_power_guarded_mind",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 31
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -335,23 +386,31 @@
       "surviving": {
         "id": "bestiary_6:class_feature:domain_power_it_came_from_beyond",
         "book": "bestiary_6",
-        "source_date": "2017-05"
+        "source_date": "2017-05",
+        "source_file": "b6_abilities_class.lst",
+        "source_line": 16
       },
       "superseded": [
         {
           "id": "bestiary_4:class_feature:domain_power_it_came_from_beyond",
           "book": "bestiary_4",
-          "source_date": "2013-10"
+          "source_date": "2013-10",
+          "source_file": "b4_abilities_class.lst",
+          "source_line": 11
         },
         {
           "id": "horror_adventures:class_feature:domain_power_it_came_from_beyond",
           "book": "horror_adventures",
-          "source_date": "2016-08"
+          "source_date": "2016-08",
+          "source_file": "ha_abilities_class.lst",
+          "source_line": 90
         },
         {
           "id": "inner_sea_world_guide:class_feature:domain_power_it_came_from_beyond",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 33
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -369,23 +428,31 @@
       "surviving": {
         "id": "bestiary_6:class_feature:domain_power_part_the_veil",
         "book": "bestiary_6",
-        "source_date": "2017-05"
+        "source_date": "2017-05",
+        "source_file": "b6_abilities_class.lst",
+        "source_line": 18
       },
       "superseded": [
         {
           "id": "bestiary_4:class_feature:domain_power_part_the_veil",
           "book": "bestiary_4",
-          "source_date": "2013-10"
+          "source_date": "2013-10",
+          "source_file": "b4_abilities_class.lst",
+          "source_line": 10
         },
         {
           "id": "horror_adventures:class_feature:domain_power_part_the_veil",
           "book": "horror_adventures",
-          "source_date": "2016-08"
+          "source_date": "2016-08",
+          "source_file": "ha_abilities_class.lst",
+          "source_line": 88
         },
         {
           "id": "inner_sea_world_guide:class_feature:domain_power_part_the_veil",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 32
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -403,18 +470,24 @@
       "surviving": {
         "id": "ultimate_wilderness:class_feature:domain_power_serpent_companion",
         "book": "ultimate_wilderness",
-        "source_date": "2017-11"
+        "source_date": "2017-11",
+        "source_file": "uw_abilities_class.lst",
+        "source_line": 1299
       },
       "superseded": [
         {
           "id": "bestiary_6:class_feature:domain_power_serpent_companion",
           "book": "bestiary_6",
-          "source_date": "2017-05"
+          "source_date": "2017-05",
+          "source_file": "b6_abilities_class.lst",
+          "source_line": 19
         },
         {
           "id": "inner_sea_world_guide:class_feature:domain_power_serpent_companion",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 30
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -431,23 +504,31 @@
       "surviving": {
         "id": "bestiary_6:class_feature:domain_power_the_stars_are_right",
         "book": "bestiary_6",
-        "source_date": "2017-05"
+        "source_date": "2017-05",
+        "source_file": "b6_abilities_class.lst",
+        "source_line": 20
       },
       "superseded": [
         {
           "id": "bestiary_4:class_feature:domain_power_the_stars_are_right",
           "book": "bestiary_4",
-          "source_date": "2013-10"
+          "source_date": "2013-10",
+          "source_file": "b4_abilities_class.lst",
+          "source_line": 12
         },
         {
           "id": "horror_adventures:class_feature:domain_power_the_stars_are_right",
           "book": "horror_adventures",
-          "source_date": "2016-08"
+          "source_date": "2016-08",
+          "source_file": "ha_abilities_class.lst",
+          "source_line": 91
         },
         {
           "id": "inner_sea_world_guide:class_feature:domain_power_the_stars_are_right",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 35
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -465,13 +546,17 @@
       "surviving": {
         "id": "ultimate_wilderness:class_feature:domain_power_venomous_saliva",
         "book": "ultimate_wilderness",
-        "source_date": "2017-11"
+        "source_date": "2017-11",
+        "source_file": "uw_abilities_class.lst",
+        "source_line": 1301
       },
       "superseded": [
         {
           "id": "bestiary_6:class_feature:domain_power_venomous_saliva",
           "book": "bestiary_6",
-          "source_date": "2017-05"
+          "source_date": "2017-05",
+          "source_file": "b6_abilities_class.lst",
+          "source_line": 22
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -487,13 +572,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:fear_hkfow1",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 225
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:fear_hkfow1",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 108
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -509,13 +598,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:fear_hkfow2",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 233
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:fear_hkfow2",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 116
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -531,13 +624,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:fear_hkfow3",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 241
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:fear_hkfow3",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 124
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -553,13 +650,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:fearsomeness_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 207
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:fearsomeness_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 78
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -575,13 +676,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:force_of_will_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 198
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:force_of_will_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 60
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -597,13 +702,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:glory_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 271
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:glory_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 93
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -619,13 +728,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:hellknight_armor_benefits",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 197
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:hellknight_armor_benefits",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 59
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -641,18 +754,24 @@
       "surviving": {
         "id": "bestiary_6:class_feature:inquisitor_domain_dark_tapestry_subdomain",
         "book": "bestiary_6",
-        "source_date": "2017-05"
+        "source_date": "2017-05",
+        "source_file": "b6_abilities_class.lst",
+        "source_line": 34
       },
       "superseded": [
         {
           "id": "horror_adventures:class_feature:inquisitor_domain_dark_tapestry_subdomain",
           "book": "horror_adventures",
-          "source_date": "2016-08"
+          "source_date": "2016-08",
+          "source_file": "ha_abilities_class.lst",
+          "source_line": 94
         },
         {
           "id": "inner_sea_world_guide:class_feature:inquisitor_domain_dark_tapestry_subdomain",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 245
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -669,18 +788,24 @@
       "surviving": {
         "id": "ultimate_wilderness:class_feature:inquisitor_domain_dragon_subdomain",
         "book": "ultimate_wilderness",
-        "source_date": "2017-11"
+        "source_date": "2017-11",
+        "source_file": "uw_abilities_class.lst",
+        "source_line": 1304
       },
       "superseded": [
         {
           "id": "bestiary_6:class_feature:inquisitor_domain_dragon_subdomain",
           "book": "bestiary_6",
-          "source_date": "2017-05"
+          "source_date": "2017-05",
+          "source_file": "b6_abilities_class.lst",
+          "source_line": 35
         },
         {
           "id": "inner_sea_world_guide:class_feature:inquisitor_domain_dragon_subdomain",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 246
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -697,18 +822,24 @@
       "surviving": {
         "id": "ultimate_wilderness:class_feature:inquisitor_domain_scalykind",
         "book": "ultimate_wilderness",
-        "source_date": "2017-11"
+        "source_date": "2017-11",
+        "source_file": "uw_abilities_class.lst",
+        "source_line": 1303
       },
       "superseded": [
         {
           "id": "bestiary_6:class_feature:inquisitor_domain_scalykind",
           "book": "bestiary_6",
-          "source_date": "2017-05"
+          "source_date": "2017-05",
+          "source_file": "b6_abilities_class.lst",
+          "source_line": 30
         },
         {
           "id": "inner_sea_world_guide:class_feature:inquisitor_domain_scalykind",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 240
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -725,18 +856,24 @@
       "surviving": {
         "id": "bestiary_6:class_feature:inquisitor_domain_stars_subdomain",
         "book": "bestiary_6",
-        "source_date": "2017-05"
+        "source_date": "2017-05",
+        "source_file": "b6_abilities_class.lst",
+        "source_line": 36
       },
       "superseded": [
         {
           "id": "horror_adventures:class_feature:inquisitor_domain_stars_subdomain",
           "book": "horror_adventures",
-          "source_date": "2016-08"
+          "source_date": "2016-08",
+          "source_file": "ha_abilities_class.lst",
+          "source_line": 96
         },
         {
           "id": "inner_sea_world_guide:class_feature:inquisitor_domain_stars_subdomain",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 247
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -753,18 +890,24 @@
       "surviving": {
         "id": "bestiary_6:class_feature:inquisitor_domain_void",
         "book": "bestiary_6",
-        "source_date": "2017-05"
+        "source_date": "2017-05",
+        "source_file": "b6_abilities_class.lst",
+        "source_line": 31
       },
       "superseded": [
         {
           "id": "horror_adventures:class_feature:inquisitor_domain_void",
           "book": "horror_adventures",
-          "source_date": "2016-08"
+          "source_date": "2016-08",
+          "source_file": "ha_abilities_class.lst",
+          "source_line": 93
         },
         {
           "id": "inner_sea_world_guide:class_feature:inquisitor_domain_void",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 241
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -781,13 +924,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:knowledge_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 272
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:knowledge_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 94
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -803,13 +950,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:law_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 273
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:law_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 95
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -825,13 +976,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:magic_warrior_magic_warrior_s_aspect",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 887
       },
       "superseded": [
         {
           "id": "inner_sea_intrigue:class_feature:magic_warrior_magic_warrior_s_aspect",
           "book": "inner_sea_intrigue",
-          "source_date": "2016-06"
+          "source_date": "2016-06",
+          "source_file": "isi_abilities_class.lst",
+          "source_line": 185
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -847,13 +1002,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:magic_warrior_nameless_anonymity",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 888
       },
       "superseded": [
         {
           "id": "inner_sea_intrigue:class_feature:magic_warrior_nameless_anonymity",
           "book": "inner_sea_intrigue",
-          "source_date": "2016-06"
+          "source_date": "2016-06",
+          "source_file": "isi_abilities_class.lst",
+          "source_line": 186
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -869,13 +1028,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:magic_warrior_nameless_mask",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 886
       },
       "superseded": [
         {
           "id": "inner_sea_intrigue:class_feature:magic_warrior_nameless_mask",
           "book": "inner_sea_intrigue",
-          "source_date": "2016-06"
+          "source_date": "2016-06",
+          "source_file": "isi_abilities_class.lst",
+          "source_line": 184
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -891,13 +1054,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:magic_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 274
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:magic_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 96
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -913,13 +1080,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:magus_archetype_magic_warrior",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 881
       },
       "superseded": [
         {
           "id": "inner_sea_intrigue:class_feature:magus_archetype_magic_warrior",
           "book": "inner_sea_intrigue",
-          "source_date": "2016-06"
+          "source_date": "2016-06",
+          "source_file": "isi_abilities_class.lst",
+          "source_line": 181
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -935,13 +1106,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:mantis_doom",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 432
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:mantis_doom",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 164
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -957,13 +1132,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:mantis_form",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 428
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:mantis_form",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 160
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -979,13 +1158,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:nobility_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 275
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:nobility_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 97
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1001,13 +1184,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:onslaught_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 208
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:onslaught_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 79
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1023,13 +1210,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:pentamic_faith_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 209
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:pentamic_faith_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 80
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1045,13 +1236,17 @@
       "surviving": {
         "id": "advanced_class_guide:class_feature:physical_enhancement_constitution",
         "book": "advanced_class_guide",
-        "source_date": "2014-08"
+        "source_date": "2014-08",
+        "source_file": "acg_abilities_class.lst",
+        "source_line": 2579
       },
       "superseded": [
         {
           "id": "core_rulebook:class_feature:physical_enhancement_constitution",
           "book": "core_rulebook",
-          "source_date": "2009-08"
+          "source_date": "2009-08",
+          "source_file": "cr_abilities_class.lst",
+          "source_line": 2688
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1067,13 +1262,17 @@
       "surviving": {
         "id": "advanced_class_guide:class_feature:physical_enhancement_dexterity",
         "book": "advanced_class_guide",
-        "source_date": "2014-08"
+        "source_date": "2014-08",
+        "source_file": "acg_abilities_class.lst",
+        "source_line": 2578
       },
       "superseded": [
         {
           "id": "core_rulebook:class_feature:physical_enhancement_dexterity",
           "book": "core_rulebook",
-          "source_date": "2009-08"
+          "source_date": "2009-08",
+          "source_file": "cr_abilities_class.lst",
+          "source_line": 2687
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1089,13 +1288,17 @@
       "surviving": {
         "id": "advanced_class_guide:class_feature:physical_enhancement_strength",
         "book": "advanced_class_guide",
-        "source_date": "2014-08"
+        "source_date": "2014-08",
+        "source_file": "acg_abilities_class.lst",
+        "source_line": 2577
       },
       "superseded": [
         {
           "id": "core_rulebook:class_feature:physical_enhancement_strength",
           "book": "core_rulebook",
-          "source_date": "2009-08"
+          "source_date": "2009-08",
+          "source_file": "cr_abilities_class.lst",
+          "source_line": 2686
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1111,13 +1314,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:protection_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 276
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:protection_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 98
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1133,13 +1340,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:rma_bonus_spells",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 433
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:rma_bonus_spells",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 165
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1155,13 +1366,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:rma_weapon_proficiencies",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 419
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:rma_weapon_proficiencies",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 151
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1177,13 +1392,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:red_shroud",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 425
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:red_shroud",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 157
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1199,13 +1418,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:resurrection_sense",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 427
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:resurrection_sense",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 159
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1221,13 +1444,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:rune_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 277
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:rune_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 99
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1243,13 +1470,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:shackle_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 210
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:shackle_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 81
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1265,13 +1496,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:strength_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 278
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:strength_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 100
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1287,13 +1522,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:summon_devil_v_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 212
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:summon_devil_v_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 83
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1309,13 +1548,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:summon_devil_vi_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 213
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:summon_devil_vi_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 84
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1331,13 +1574,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:summon_devil_vii_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 214
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:summon_devil_vii_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 85
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1353,13 +1600,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:summon_devil_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 211
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:summon_devil_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 82
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1375,13 +1626,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:summon_mantis",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 426
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:summon_mantis",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 158
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1397,13 +1652,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:tempest_druid_druid_domain",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 820
       },
       "superseded": [
         {
           "id": "inner_sea_magic:class_feature:tempest_druid_druid_domain",
           "book": "inner_sea_magic",
-          "source_date": "2011-07"
+          "source_date": "2011-07",
+          "source_file": "ism_abilities_class.lst",
+          "source_line": 248
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1419,13 +1678,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:travel_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 279
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:travel_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 101
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1441,13 +1704,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:vigilance_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 216
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:vigilance_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 88
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1463,13 +1730,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:war_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 280
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:war_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 102
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1485,13 +1756,17 @@
       "surviving": {
         "id": "adventurers_guide:class_feature:wrack_hk",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_abilities_class.lst",
+        "source_line": 217
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:class_feature:wrack_hk",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_abilities_class.lst",
+          "source_line": 89
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1503,39 +1778,21 @@
     },
     {
       "kind": "companion",
-      "corpus_key": "1",
-      "surviving": {
-        "id": "ultimate_magic:companion:1",
-        "book": "ultimate_magic",
-        "source_date": "2011-05"
-      },
-      "superseded": [
-        {
-          "id": "book_of_the_damned_volume_1:companion:1",
-          "book": "book_of_the_damned_volume_1",
-          "source_date": "2009-10"
-        }
-      ],
-      "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
-      "raw_lines": {
-        "book_of_the_damned_volume_1": "1\tABILITY:FEAT|AUTOMATIC|CMB Output",
-        "ultimate_magic": "1\tABILITY:FEAT|AUTOMATIC|CMB Output"
-      },
-      "command": "python3 docs/release/SD-31-corpus-closure-grind/artifacts/supersession_register_build.py"
-    },
-    {
-      "kind": "companion",
       "corpus_key": "Chicken ~ Drift",
       "surviving": {
         "id": "ultimate_wilderness:companion:chicken_drift",
         "book": "ultimate_wilderness",
-        "source_date": "2017-11"
+        "source_date": "2017-11",
+        "source_file": "uw_abilities_companion.lst",
+        "source_line": 209
       },
       "superseded": [
         {
           "id": "bestiary_5:companion:chicken_drift",
           "book": "bestiary_5",
-          "source_date": "2015-12"
+          "source_date": "2015-12",
+          "source_file": "b5_abilities_companion.lst",
+          "source_line": 43
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1551,13 +1808,17 @@
       "surviving": {
         "id": "monster_codex:companion:companion_advancement_giant_vulture",
         "book": "monster_codex",
-        "source_date": "2014-11"
+        "source_date": "2014-11",
+        "source_file": "mc_abilities_companion.lst",
+        "source_line": 14
       },
       "superseded": [
         {
           "id": "bestiary_3:companion:companion_advancement_giant_vulture",
           "book": "bestiary_3",
-          "source_date": "2012-01"
+          "source_date": "2012-01",
+          "source_file": "b3_abilities_companion.lst",
+          "source_line": 17
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1573,13 +1834,17 @@
       "surviving": {
         "id": "ultimate_wilderness:companion:grab_medium",
         "book": "ultimate_wilderness",
-        "source_date": "2017-11"
+        "source_date": "2017-11",
+        "source_file": "uw_abilities_companion.lst",
+        "source_line": 406
       },
       "superseded": [
         {
           "id": "bestiary_4:companion:grab_medium",
           "book": "bestiary_4",
-          "source_date": "2013-10"
+          "source_date": "2013-10",
+          "source_file": "b4_abilities_race_ce_companion.lst",
+          "source_line": 12
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1595,13 +1860,17 @@
       "surviving": {
         "id": "ultimate_wilderness:companion:penguin_toboggan",
         "book": "ultimate_wilderness",
-        "source_date": "2017-11"
+        "source_date": "2017-11",
+        "source_file": "uw_abilities_companion.lst",
+        "source_line": 300
       },
       "superseded": [
         {
           "id": "bestiary_5:companion:penguin_toboggan",
           "book": "bestiary_5",
-          "source_date": "2015-12"
+          "source_date": "2015-12",
+          "source_file": "b5_abilities_companion.lst",
+          "source_line": 49
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1617,13 +1886,17 @@
       "surviving": {
         "id": "adventurers_guide:equipment:aldori_dueling_sword",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_equip_arms_armor.lst",
+        "source_line": 1
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:equipment:aldori_dueling_sword",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_equip_arms_armor.lst",
+          "source_line": 15
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1639,13 +1912,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:blunderbuss",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 294
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:blunderbuss",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 128
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1661,13 +1938,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:buckler_gun",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 286
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:buckler_gun",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 129
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1683,13 +1964,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:culverin",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 295
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:culverin",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 130
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1705,13 +1990,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:do_maru",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 6
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:do_maru",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 41
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1727,13 +2016,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:double_hackbut",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 296
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:double_hackbut",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 131
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1749,13 +2042,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:fire_lance",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 297
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:fire_lance",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 132
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1771,13 +2068,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:four_mirror_armor",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 7
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:four_mirror_armor",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 42
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1793,13 +2094,17 @@
       "surviving": {
         "id": "adventurers_guide:equipment:goz_mask",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_equip_magic_items.lst",
+        "source_line": 25
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:equipment:goz_mask",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_equip_magic_items.lst",
+          "source_line": 9
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1815,13 +2120,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:haramaki",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 8
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:haramaki",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 43
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1837,13 +2146,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:katana",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 356
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:katana",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 78
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1859,13 +2172,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:kikko_armor",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 10
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:kikko_armor",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 45
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1881,13 +2198,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:kusari_gusoku",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 9
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:kusari_gusoku",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 44
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1903,13 +2224,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:lamellar_horn",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 11
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:lamellar_horn",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 46
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1925,13 +2250,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:lamellar_iron",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 12
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:lamellar_iron",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 47
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1947,13 +2276,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:lamellar_leather",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 13
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:lamellar_leather",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 49
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1969,13 +2302,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:lamellar_steel",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 14
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:lamellar_steel",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 50
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -1991,13 +2328,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:lamellar_cuirass",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 15
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:lamellar_cuirass",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 51
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2013,13 +2354,17 @@
       "surviving": {
         "id": "adventurers_guide:equipment:mask_of_the_mantis",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_equip_magic_items.lst",
+        "source_line": 37
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:equipment:mask_of_the_mantis",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_equip_magic_items.lst",
+          "source_line": 10
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2035,13 +2380,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:mountain_pattern_armor",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 16
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:mountain_pattern_armor",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 52
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2057,13 +2406,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:musket_axe",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 299
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:musket_axe",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 134
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2079,13 +2432,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:musket_double_barreled",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 300
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:musket_double_barreled",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 135
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2101,13 +2458,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:musket_warhammer",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 301
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:musket_warhammer",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 136
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2123,13 +2484,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:o_yoroi",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 17
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:o_yoroi",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 53
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2145,13 +2510,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:pistol_coat",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 289
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:pistol_coat",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 139
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2167,13 +2536,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:pistol_dagger",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 290
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:pistol_dagger",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 140
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2189,13 +2562,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:pistol_double_barreled",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 291
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:pistol_double_barreled",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 141
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2211,13 +2588,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:pistol_dragon",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 292
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:pistol_dragon",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 142
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2233,13 +2614,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:pistol_sword_cane",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 293
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:pistol_sword_cane",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 143
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2255,13 +2640,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:powder_keg",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_general.lst",
+        "source_line": 507
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:powder_keg",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_general.lst",
+          "source_line": 12
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2277,13 +2666,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:revolver",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 302
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:revolver",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 144
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2299,13 +2692,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:rifle",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 303
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:rifle",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 145
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2321,13 +2718,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:rifle_pepperbox",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 304
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:rifle_pepperbox",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 146
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2343,13 +2744,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:shotgun",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 305
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:shotgun",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 147
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2365,13 +2770,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:shotgun_double_barreled",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 306
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:shotgun_double_barreled",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 148
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2387,13 +2796,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:silken_ceremonial_armor",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 18
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:silken_ceremonial_armor",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 54
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2409,13 +2822,17 @@
       "surviving": {
         "id": "ultimate_equipment:equipment:tatami_do",
         "book": "ultimate_equipment",
-        "source_date": "2012-08"
+        "source_date": "2012-08",
+        "source_file": "ue_equip_arms_armor.lst",
+        "source_line": 19
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment:tatami_do",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equip_arms_armor.lst",
+          "source_line": 55
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2431,13 +2848,17 @@
       "surviving": {
         "id": "adventurers_guide:equipment:zoic_fetish_amphibian",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_equip_magic_items.lst",
+        "source_line": 59
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:equipment:zoic_fetish_amphibian",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_equip_magic_items.lst",
+          "source_line": 16
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2453,13 +2874,17 @@
       "surviving": {
         "id": "adventurers_guide:equipment:zoic_fetish_bird",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_equip_magic_items.lst",
+        "source_line": 57
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:equipment:zoic_fetish_bird",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_equip_magic_items.lst",
+          "source_line": 14
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2475,13 +2900,17 @@
       "surviving": {
         "id": "adventurers_guide:equipment:zoic_fetish_fish",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_equip_magic_items.lst",
+        "source_line": 60
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:equipment:zoic_fetish_fish",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_equip_magic_items.lst",
+          "source_line": 17
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2497,13 +2926,17 @@
       "surviving": {
         "id": "adventurers_guide:equipment:zoic_fetish_mammal",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_equip_magic_items.lst",
+        "source_line": 56
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:equipment:zoic_fetish_mammal",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_equip_magic_items.lst",
+          "source_line": 13
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2519,13 +2952,17 @@
       "surviving": {
         "id": "adventurers_guide:equipment:zoic_fetish_reptile",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_equip_magic_items.lst",
+        "source_line": 58
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:equipment:zoic_fetish_reptile",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_equip_magic_items.lst",
+          "source_line": 15
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2541,13 +2978,17 @@
       "surviving": {
         "id": "inner_sea_world_guide:equipment_modifier:stone",
         "book": "inner_sea_world_guide",
-        "source_date": "2011-03"
+        "source_date": "2011-03",
+        "source_file": "iswg_equipmods.lst",
+        "source_line": 16
       },
       "superseded": [
         {
           "id": "ultimate_combat:equipment_modifier:stone",
           "book": "ultimate_combat",
-          "source_date": "2011-01"
+          "source_date": "2011-01",
+          "source_file": "uc_equipmods.lst",
+          "source_line": 70
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2563,13 +3004,17 @@
       "surviving": {
         "id": "ultimate_wilderness:feat:tribal_hunter",
         "book": "ultimate_wilderness",
-        "source_date": "2017-11"
+        "source_date": "2017-11",
+        "source_file": "uw_feats.lst",
+        "source_line": 104
       },
       "superseded": [
         {
           "id": "adventurers_guide:feat:tribal_hunter",
           "book": "adventurers_guide",
-          "source_date": "2017-06"
+          "source_date": "2017-06",
+          "source_file": "ag_feats.lst",
+          "source_line": 69
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2585,13 +3030,17 @@
       "surviving": {
         "id": "occult_adventures:monster:kami_shikigami",
         "book": "occult_adventures",
-        "source_date": "2015-07"
+        "source_date": "2015-07",
+        "source_file": "oa_races_b3.lst",
+        "source_line": 6
       },
       "superseded": [
         {
           "id": "bestiary_3:monster:kami_shikigami",
           "book": "bestiary_3",
-          "source_date": "2012-01"
+          "source_date": "2012-01",
+          "source_file": "b3_races.lst",
+          "source_line": 161
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2607,13 +3056,17 @@
       "surviving": {
         "id": "occult_adventures:race_trait:shikigami_improvised_weapon_mastery",
         "book": "occult_adventures",
-        "source_date": "2015-07"
+        "source_date": "2015-07",
+        "source_file": "oa_abilities_race_b3.lst",
+        "source_line": 9
       },
       "superseded": [
         {
           "id": "bestiary_3:race_trait:shikigami_improvised_weapon_mastery",
           "book": "bestiary_3",
-          "source_date": "2012-01"
+          "source_date": "2012-01",
+          "source_file": "b3_abilities_race.lst",
+          "source_line": 1127
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2629,13 +3082,17 @@
       "surviving": {
         "id": "occult_adventures:race_trait:shikigami_spell_like_abilities",
         "book": "occult_adventures",
-        "source_date": "2015-07"
+        "source_date": "2015-07",
+        "source_file": "oa_abilities_race_b3.lst",
+        "source_line": 10
       },
       "superseded": [
         {
           "id": "bestiary_3:race_trait:shikigami_spell_like_abilities",
           "book": "bestiary_3",
-          "source_date": "2012-01"
+          "source_date": "2012-01",
+          "source_file": "b3_abilities_race.lst",
+          "source_line": 1128
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2651,18 +3108,24 @@
       "surviving": {
         "id": "inner_sea_races:race_trait:vishkanya_toxic_vishkanya_venom",
         "book": "inner_sea_races",
-        "source_date": "2015-09"
+        "source_date": "2015-09",
+        "source_file": "isr_abilities_race.lst",
+        "source_line": 1658
       },
       "superseded": [
         {
           "id": "advanced_race_guide:race_trait:vishkanya_toxic_vishkanya_venom",
           "book": "advanced_race_guide",
-          "source_date": "2012-06"
+          "source_date": "2012-06",
+          "source_file": "arg_abilities_race.lst",
+          "source_line": 1267
         },
         {
           "id": "bestiary_3:race_trait:vishkanya_toxic_vishkanya_venom",
           "book": "bestiary_3",
-          "source_date": "2012-01"
+          "source_date": "2012-01",
+          "source_file": "b3_abilities_race_pc.lst",
+          "source_line": 109
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2679,18 +3142,24 @@
       "surviving": {
         "id": "ultimate_wilderness:spell:animal_growth_reptiles_only",
         "book": "ultimate_wilderness",
-        "source_date": "2017-11"
+        "source_date": "2017-11",
+        "source_file": "uw_spells.lst",
+        "source_line": 137
       },
       "superseded": [
         {
           "id": "bestiary_6:spell:animal_growth_reptiles_only",
           "book": "bestiary_6",
-          "source_date": "2017-05"
+          "source_date": "2017-05",
+          "source_file": "b6_spells.lst",
+          "source_line": 3
         },
         {
           "id": "inner_sea_world_guide:spell:animal_growth_reptiles_only",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_spells.lst",
+          "source_line": 26
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2707,18 +3176,24 @@
       "surviving": {
         "id": "ultimate_wilderness:spell:animal_shapes_reptiles_only",
         "book": "ultimate_wilderness",
-        "source_date": "2017-11"
+        "source_date": "2017-11",
+        "source_file": "uw_spells.lst",
+        "source_line": 138
       },
       "superseded": [
         {
           "id": "bestiary_6:spell:animal_shapes_reptiles_only",
           "book": "bestiary_6",
-          "source_date": "2017-05"
+          "source_date": "2017-05",
+          "source_file": "b6_spells.lst",
+          "source_line": 4
         },
         {
           "id": "inner_sea_world_guide:spell:animal_shapes_reptiles_only",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_spells.lst",
+          "source_line": 27
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2735,13 +3210,17 @@
       "surviving": {
         "id": "inner_sea_world_guide:spell:summon_demons_nascent_demon_lord",
         "book": "inner_sea_world_guide",
-        "source_date": "2011-03"
+        "source_date": "2011-03",
+        "source_file": "iswg_spells.lst",
+        "source_line": 24
       },
       "superseded": [
         {
           "id": "book_of_the_damned_volume_2:spell:summon_demons_nascent_demon_lord",
           "book": "book_of_the_damned_volume_2",
-          "source_date": "2010-10"
+          "source_date": "2010-10",
+          "source_file": "botd2_spells_ndl.lst",
+          "source_line": 6
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2757,13 +3236,17 @@
       "surviving": {
         "id": "adventurers_guide:spell:summon_mantis",
         "book": "adventurers_guide",
-        "source_date": "2017-06"
+        "source_date": "2017-06",
+        "source_file": "ag_spells.lst",
+        "source_line": 59
       },
       "superseded": [
         {
           "id": "inner_sea_world_guide:spell:summon_mantis",
           "book": "inner_sea_world_guide",
-          "source_date": "2011-03"
+          "source_date": "2011-03",
+          "source_file": "iswg_spells.lst",
+          "source_line": 22
         }
       ],
       "evidence": "field-level: raw .lst rows for every book in this group are IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI and normalizing TYPE: as an order-insensitive tag set.",
@@ -2774,8 +3257,8 @@
       "command": "python3 docs/release/SD-31-corpus-closure-grind/artifacts/supersession_register_build.py"
     }
   ],
-  "objects_count": 117,
-  "objects_redundant_excess": 135,
+  "objects_count": 116,
+  "objects_redundant_excess": 134,
   "candidates_needing_record_level_comparison": [
     {
       "kind": "companion",
@@ -4464,6 +4947,6 @@
   ],
   "candidates_count": 28,
   "differs_excluded_as_shared_key_not_duplicate_count": 433,
-  "clean_groups_checked": 578,
+  "clean_groups_checked": 577,
   "no_sourcedate_left_out": []
 }

@@ -73,10 +73,28 @@ class HermeticCorpusMixin:
         self._tmp.cleanup()
 
 
+# Each fake book's own .lst basename -- used to resolve a caller's default
+# `source_file` from the BOOK it names, not from argument position. (Fixed
+# 2026-08-16, SD31-W7-INTEGRATE-001: the old fixed defaults
+# `surviving_file="a.lst"`/`superseded_file="b.lst"` silently mismatched
+# whenever a caller passed `bookB` as the surviving side -- e.g.
+# `_entry("bookB", ..., "bookA", ...)` -- and every test in this file did.
+# That mismatch was invisible under the gate's old dead-fallback bug (a
+# lookup that fails on BOTH sides compared `None == None` as equal and
+# passed silently); fixing the gate's real-resolution requirement exposed
+# it. Deriving the default file from the book name closes it at the root
+# for every caller, not just the ones this cycle touched.)
+_DEFAULT_FILE_FOR_BOOK = {"bookA": "a.lst", "bookB": "b.lst", "pathfinder_unchained": "pu.lst"}
+
+
 def _entry(surviving_book, surviving_date, superseded_book, superseded_date,
-           surviving_file="a.lst", surviving_line=1,
-           superseded_file="b.lst", superseded_line=1,
+           surviving_file=None, surviving_line=1,
+           superseded_file=None, superseded_line=1,
            reprint_proof=None):
+    if surviving_file is None:
+        surviving_file = _DEFAULT_FILE_FOR_BOOK.get(surviving_book, f"{surviving_book}.lst")
+    if superseded_file is None:
+        superseded_file = _DEFAULT_FILE_FOR_BOOK.get(superseded_book, f"{superseded_book}.lst")
     e = {
         "kind": "equipment",
         "corpus_key": "Widget of Testing",
@@ -177,6 +195,17 @@ class VariantLineRefusalTest(HermeticCorpusMixin, unittest.TestCase):
 
 
 class StructuralRefusalTest(HermeticCorpusMixin, unittest.TestCase):
+    def test_bare_integer_corpus_key_is_refused(self):
+        """The `companion` key `"1"` defect: a bare-integer corpus_key is a
+        PCGen level-number continuation row, never an object identity."""
+        entry = _entry("bookB", "2012-01", "bookA", "2009-08")
+        entry["corpus_key"] = "1"
+        violations = gate_mod.validate_entry(entry, self.finder)
+        self.assertTrue(
+            any("bare integer" in v for v in violations),
+            f"a bare-integer corpus_key must be refused, got: {violations}",
+        )
+
     def test_core_essentials_is_refused_on_either_side(self):
         entry = _entry("bookA", "2009-08", "core_essentials", "2009-08")
         violations = gate_mod.validate_entry(entry, self.finder)
@@ -194,6 +223,48 @@ class StructuralRefusalTest(HermeticCorpusMixin, unittest.TestCase):
         result = gate_mod.validate_register(register, self.finder)
         self.assertFalse(result["ok"])
         self.assertTrue(any("count_removed" in v for v in result["violations"]))
+
+
+class MissingEvidenceRefusalTest(HermeticCorpusMixin, unittest.TestCase):
+    """The defect this cycle fixed: an entry with no `source_file`/
+    `source_line` on a side must be a HARD violation, never silently
+    accepted via a fallback to the register's own cached `raw_lines` --
+    that fallback was dead code in production (no shipped entry ever
+    carried source_file/source_line) and let a wholly fabricated entry,
+    or one with its raw_lines swapped for nonsense, pass clean."""
+
+    def test_a_side_with_no_source_file_or_line_is_refused(self):
+        entry = _entry("bookB", "2012-01", "bookA", "2009-08")
+        del entry["surviving"]["source_file"]
+        del entry["surviving"]["source_line"]
+        violations = gate_mod.validate_entry(entry, self.finder)
+        self.assertTrue(
+            any("no source_file/source_line" in v for v in violations),
+            f"a side with no re-derivable citation must be refused, got: {violations}",
+        )
+
+    def test_a_fabricated_entry_with_raw_lines_but_no_citation_is_refused(self):
+        """The exact shape that passed before this fix: raw_lines present
+        (even set to something bogus), source_file/source_line absent."""
+        entry = _entry("bookB", "2012-01", "bookA", "2009-08")
+        del entry["surviving"]["source_file"]
+        del entry["surviving"]["source_line"]
+        entry["raw_lines"] = {
+            "bookB": "CLASS:Totally Fabricated Object\tHD:99\tTYPE:PC.Nonsense",
+            "bookA": "CLASS:Totally Fabricated Object\tHD:99\tTYPE:PC.Nonsense",
+        }
+        register = {"objects": [entry], "denominator": {"count_removed": 1}}
+        result = gate_mod.validate_register(register, self.finder)
+        self.assertFalse(result["ok"], "a fabricated entry must never pass just because raw_lines is present")
+
+    def test_a_citation_the_oracle_cannot_resolve_is_refused(self):
+        entry = _entry("bookB", "2012-01", "bookA", "2009-08",
+                        surviving_file="does_not_exist.lst")
+        violations = gate_mod.validate_entry(entry, self.finder)
+        self.assertTrue(
+            any("could not be re-derived" in v for v in violations),
+            f"an unresolvable citation must be refused, got: {violations}",
+        )
 
 
 class NoOracleStructuralOnlyTest(unittest.TestCase):

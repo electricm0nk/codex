@@ -196,6 +196,24 @@ def main() -> None:
         by_key[(u.get("kind"), u.get("corpus_key"))].append(u)
     multi = {k: v for k, v in by_key.items() if len({x.get("book") for x in v}) > 1}
 
+    # -- Guard-1b: a bare-integer corpus_key is never an object identity --
+    # Caught by the wave-7 adversarial review: `companion` key "1" paired
+    # ultimate_magic's Vermin Companion continuation row against Book of
+    # the Damned's Imp Companion continuation row -- both raw rows are
+    # literally `1	ABILITY:FEAT|AUTOMATIC|CMB Output`, a PCGen LEVEL
+    # NUMBER on a class-continuation line, not the object's own KEY/CLASS/
+    # name. `corpus_key` collapsing to a bare integer means the source
+    # record carried no real identity for this join to key on at all --
+    # refuse the group before it can ever reach the material-difference
+    # comparison, which cannot tell two DIFFERENT continuation rows apart
+    # if their shared level number happens to match.
+    def _is_degenerate_key(key: object) -> bool:
+        return isinstance(key, str) and key.strip().isdigit()
+
+    degenerate_key_groups = {k: v for k, v in multi.items() if _is_degenerate_key(k[1])}
+    degenerate_key_units = sum(len(v) for v in degenerate_key_groups.values())
+    multi = {k: v for k, v in multi.items() if k not in degenerate_key_groups}
+
     # -- Guard-2: blanket-exclude variant lines ---------------------------
     variant_groups = {k: v for k, v in multi.items() if any(x.get("book") in VARIANT_BOOKS for x in v)}
     clean_groups = {k: v for k, v in multi.items() if k not in variant_groups}
@@ -235,9 +253,17 @@ def main() -> None:
             newest = max(books, key=lambda b: dates[b])
             proven.append({
                 "kind": kind, "corpus_key": ckey,
-                "surviving": {"id": recs[newest]["id"], "book": newest, "source_date": dates[newest]},
+                "surviving": {
+                    "id": recs[newest]["id"], "book": newest, "source_date": dates[newest],
+                    "source_file": recs[newest].get("source_file"),
+                    "source_line": recs[newest].get("source_line"),
+                },
                 "superseded": [
-                    {"id": recs[b]["id"], "book": b, "source_date": dates[b]}
+                    {
+                        "id": recs[b]["id"], "book": b, "source_date": dates[b],
+                        "source_file": recs[b].get("source_file"),
+                        "source_line": recs[b].get("source_line"),
+                    }
                     for b in books if b != newest
                 ],
                 "evidence": (
@@ -323,6 +349,13 @@ def main() -> None:
             "units_excluded": sum(len(v) for v in variant_groups.values()),
             "rule": "no record from either line enters a pair without record-level reprint proof; default is variant",
             "entries_with_reprint_proof_this_pass": 0,
+        },
+        "guard_1b_degenerate_corpus_key_excluded": {
+            "rule": "a corpus_key that is a bare integer (a PCGen level-number "
+                    "continuation row, not an object identity) is never a "
+                    "supersession candidate",
+            "groups_excluded": len(degenerate_key_groups),
+            "units_excluded": degenerate_key_units,
         },
         "core_essentials_deferred": {
             "rule": ("Decision 9/10 sequencing: core_essentials re-attribution runs "
