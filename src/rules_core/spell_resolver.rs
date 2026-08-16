@@ -18,7 +18,7 @@ use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
 use crate::rules_core::rules_tables::RuleSetId;
 use crate::rules_core::rules_tables::{
-    acg, advanced_race_guide, apg, crb, ultimate_intrigue, ultimate_magic,
+    acg, advanced_race_guide, apg, crb, occult_adventures, ultimate_intrigue, ultimate_magic,
 };
 use crate::rules_core::source_content::{SourceContentKind, SourcePackageContent};
 
@@ -34,6 +34,9 @@ pub const SPELL_BOOK_UI: &str = "UI";
 /// this catalog beyond the five books `spell_resolver.rs`'s own module doc
 /// comment named as the reachable set before this cycle.
 pub const SPELL_BOOK_UM: &str = "UM";
+/// SD31-E6-F2-003: Occult Adventures, the seventh book -- the largest of
+/// the 19-book remainder `SD31-E6-F2-002` named (`OPEN-ISSUES.md` row 57).
+pub const SPELL_BOOK_OA: &str = "OA";
 
 /// One ingested spell record, normalized across every book's own
 /// `spell_list` table.
@@ -62,6 +65,12 @@ pub const SPELL_BOOK_UM: &str = "UM";
 /// path and `docs/release/SD-31-corpus-closure-grind/progress.md`'s
 /// `SD31-E6-F2-002` receipt for the remaining books this cycle did not
 /// reach.
+///
+/// **SD31-E6-F2-003 widened the chain to seven books**, adding Occult
+/// Adventures (145 base spell declarations; see
+/// `src/bin/ingest_occult_adventures_spells.rs` for the ingest path and its
+/// own doc comment for the 328-unit `mod_only` class-widening residue this
+/// cycle deliberately did not ingest).
 #[derive(Debug, Clone, PartialEq)]
 pub struct SpellCatalogRow {
     /// One of the `SPELL_BOOK_*` codes above.
@@ -140,12 +149,20 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
             level: entry.level,
             description: entry.description,
         });
+        let oa_rows = occult_adventures::spell_list::SPELL_LIST.iter().map(|entry| SpellCatalogRow {
+            book: SPELL_BOOK_OA,
+            key: entry.key,
+            school: entry.school.map(|school| format!("{school:?}")),
+            level: entry.level,
+            description: entry.description,
+        });
         crb_rows
             .chain(apg_rows)
             .chain(acg_rows)
             .chain(arg_rows)
             .chain(ui_rows)
             .chain(um_rows)
+            .chain(oa_rows)
             .collect()
     })
 }
@@ -204,6 +221,31 @@ mod spell_catalog_rows_tests {
             .iter()
             .find(|row| row.book == SPELL_BOOK_UM && row.key == "Restore Eidolon")
             .expect("Restore Eidolon must be present in the UM catalog");
+        assert_eq!(row.level, None);
+    }
+
+    /// SD31-E6-F2-003: Occult Adventures is the seventh book chained into
+    /// `spell_catalog_rows()`.
+    #[test]
+    fn occult_adventures_is_chained_into_the_catalog() {
+        let oa_rows: Vec<&SpellCatalogRow> =
+            spell_catalog_rows().iter().filter(|row| row.book == SPELL_BOOK_OA).collect();
+        assert!(!oa_rows.is_empty(), "expected at least one Occult Adventures spell row");
+        assert!(
+            oa_rows.iter().any(|row| row.key == "Akashic Form"),
+            "expected the real corpus record 'Akashic Form' among Occult Adventures's rows"
+        );
+    }
+
+    /// A record this cycle's own ingest confirmed carries neither `CLASSES:`
+    /// nor `DOMAINS:` (`Talismanic Implement`) must ship with `level: None`,
+    /// never a fabricated level.
+    #[test]
+    fn an_oa_record_with_no_classes_token_carries_no_level() {
+        let row = spell_catalog_rows()
+            .iter()
+            .find(|row| row.book == SPELL_BOOK_OA && row.key == "Talismanic Implement")
+            .expect("Talismanic Implement must be present in the OA catalog");
         assert_eq!(row.level, None);
     }
 }

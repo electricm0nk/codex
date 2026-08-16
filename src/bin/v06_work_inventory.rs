@@ -1284,6 +1284,8 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     // SD-29 Epic 5 extend, round 9 (monster lane). Engine id and corpus
     // directory are spelled the same.
     RuleSetId::Isg,
+    // SD31-E6-F2-003 -- this book's first compiled rule set of any kind.
+    RuleSetId::Oa,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -1322,6 +1324,7 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::B4 => "bestiary_4",
         RuleSetId::Isb => "inner_sea_bestiary",
         RuleSetId::Isg => "inner_sea_gods",
+        RuleSetId::Oa => "occult_adventures",
     }
 }
 
@@ -1374,6 +1377,7 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::B4 => "bestiary_4",
         RuleSetId::Isb => "inner_sea_bestiary",
         RuleSetId::Isg => "inner_sea_gods",
+        RuleSetId::Oa => "occult_adventures",
     }
 }
 
@@ -1425,6 +1429,7 @@ fn spell_book_slug_for(short_code: &str) -> &'static str {
         "ARG" => "advanced_race_guide",
         "UI" => "ultimate_intrigue",
         "UM" => "ultimate_magic",
+        "OA" => "occult_adventures",
         other => panic!(
             "spell_resolver::spell_catalog_rows() now carries an unmapped book code {other:?} \
              -- add it to spell_book_slug_for so the spell classifier does not silently drop \
@@ -5804,18 +5809,23 @@ mod rule_set_mapping_tests {
     #[test]
     fn uncompiled_books_stay_none() {
         // This test needs a book the engine genuinely has not compiled, and it
-        // has now outlived TWO of them: `ultimate_psionics` moved to compiled
-        // in SD28-E29 (`epic-29-upsi-complete`), and `inner_sea_gods` in SD-29
-        // Epic 5 extend round 9, which registered `RuleSetId::Isg` for its
-        // monster / monster_ability families. The comment this replaces also
-        // stated a reason that was wrong by the time it was read --
-        // "`inner_sea_gods` ... (SD-30's own book set, out of this bundle)" --
-        // and `decisions.md §38` had already re-scoped SD-29 corpus-wide.
+        // has now outlived THREE of them: `ultimate_psionics` moved to
+        // compiled in SD28-E29 (`epic-29-upsi-complete`), `inner_sea_gods` in
+        // SD-29 Epic 5 extend round 9 (`RuleSetId::Isg`), and
+        // `occult_adventures` in SD31-E6-F2-003 (`RuleSetId::Oa`, its spell
+        // family). The comment this replaces also stated a reason that was
+        // wrong by the time it was read -- "`inner_sea_gods` ... (SD-30's own
+        // book set, out of this bundle)" -- and `decisions.md §38` had
+        // already re-scoped SD-29 corpus-wide.
         //
-        // `occult_adventures` is uncompiled by DERIVATION, not by assumption:
+        // `adventurers_guide` is uncompiled by DERIVATION, not by assumption:
         // `corpus_dir_for` is exhaustive over `RuleSetId` and carries no arm
-        // returning it, so no `COMPILED_RULE_SETS` member can map to it.
-        assert_eq!(rule_set_for("occult_adventures"), None);
+        // returning it, so no `COMPILED_RULE_SETS` member can map to it --
+        // re-checked against the current match arm one by one (32 arms, none
+        // return `"adventurers_guide"`), and the book genuinely has a corpus
+        // directory (`data/corpus/adventurers_guide/`), so this is a real
+        // uncompiled book, not a typo'd nonexistent one.
+        assert_eq!(rule_set_for("adventurers_guide"), None);
     }
 }
 

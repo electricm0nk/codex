@@ -848,6 +848,11 @@ fn main() {
             // the arm exists for exhaustiveness, as `B4`'s above does.
             RuleSetId::Isb => "inner_sea_bestiary",
             RuleSetId::Isg => "inner_sea_gods",
+            // SD31-E6-F2-003. Occult Adventures has no feats file this repo
+            // compiles either; the arm exists for exhaustiveness, exactly as
+            // `Isg`'s and `Isb`'s above do -- `all_feat_tables()` never
+            // yields an `Oa` table.
+            RuleSetId::Oa => "occult_adventures",
         };
         let records = table.entries.len();
         let wired_here = table

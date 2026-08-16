@@ -112,9 +112,10 @@ use codex::rules_core::rules_tables::crb::race_tables::RaceId;
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::{
-    acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
-    ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
-    ultimate_magic as um, ultimate_psionics as upsi, ultimate_wilderness as uw, RuleSetId,
+    acg, advanced_race_guide as arg, apg, beastiary1, crb, occult_adventures as oa,
+    pathfinder_unchained as pu, ultimate_combat as uc, ultimate_equipment as ue,
+    ultimate_intrigue as ui, ultimate_magic as um, ultimate_psionics as upsi,
+    ultimate_wilderness as uw, RuleSetId,
 };
 
 use crate::corpus_ingest_diagnostic::build_corpus_ingest_diagnostic;
@@ -941,6 +942,24 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("ultimate_magic", "spells") => Some(spells_reach(
             "UM",
             um::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD31-E6-F2-003: OA joins `spell_resolver::spell_catalog_rows()` as
+        // the catalog's 7th book, the same `build_spell_catalog`/"All books"
+        // render path UM/UI/ARG use -- this book's FIRST reach claim of any
+        // kind. One record (`Talismanic Implement`) carries no `CLASSES:`
+        // token so no `level`, and two (`Repulsion` excluded as a cross-book
+        // collision; `Share Language (Communal)`) carry neither `SCHOOL:`
+        // nor `DESC:` of their own -- every shipped record still carries a
+        // real `key` plus at least one of `school`/`level`/`description`,
+        // so `has_payload` is satisfied for all 144, proven by this gate's
+        // own `bare_records_are_exactly_the_recorded_findings` check below
+        // rather than assumed.
+        ("occult_adventures", "spells") => Some(spells_reach(
+            "OA",
+            oa::spell_list::SPELL_LIST
                 .iter()
                 .map(|entry| entry.key.to_owned())
                 .collect(),

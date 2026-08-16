@@ -8078,3 +8078,242 @@ tables it adds are compiled Rust data, not corpus JSON; the `pilot_compute.rs` f
 explanation record, which this audit does not read), so there is no structural reason to expect this
 count to have moved — reported as an assumption carried forward, not a measured fact, per the
 unattended-mode discipline of never claiming a check ran when it did not.
+## Cycle: SD31-E6-F2-003 (sd31-spell-lists) — 2026-08-16
+
+**Role:** `sd31-spell-lists` (`RETRO_ACTOR=sd31-spell-lists`), own worktree at
+`/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_d70ea313-07f-4`, branch
+`sd31/spell-lists-e6-f2-003`. `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-spell-lists`
+(verify.sh); a second `/home/ubuntu/cargo-targets/sd31-spell-lists-regen` for my own guarded-regen
+measurement runs, to avoid colliding with the background gate. Card: `epic-6-ingest-lanes` F2 — the
+spell residual (largest remaining book).
+
+**Checkout.** Worktree's own HEAD was `061b623ee` (a stale PR-#362 merge cut off `origin/main`,
+package directory absent) with a clean tree — per the mandatory recovery step, `git fetch origin &&
+git reset --hard origin/tranche/11`, landing at **`d47acc8fa`** (the tip after row 68's book-
+attribution finding). Created my own branch `sd31/spell-lists-e6-f2-003` off that tip. **Oracle pin:**
+`./scripts/verify.sh --only preflight-oracle` PASS, `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`), cross-checked against `git -C ~/workspace/repos/pcgen rev-parse HEAD`
+— identical.
+
+**PI-gate citation (cycle-0 precondition).** `SD-30-class-feature-archetype-bundle/kanban.md`:
+`epic-3-pi-gate` is `COMPLETE` package-wide (all four F1-F4 sub-scopes, `progress.md SD30-E3-F4-001`),
+and Occult Adventures is explicitly one of the seven `future_state` books that gate names
+(`epic-11-book-onboarding` row). `oa_spells.lst` itself carries zero `NAMEISPI:`/`DESCISPI:` tokens
+(`grep -c "NAMEISPI\|DESCISPI" oa_spells.lst` → 0), re-verified before writing any ingest code.
+
+### 1. Re-derived scope, not transcribed
+
+Dispatch cited "~2,843 spell units at ~5.5% done (~1,292 not-started, ~1,240 held)". Re-derived fresh
+against `docs/work-inventory.json` at claim time:
+
+    python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); u=[x for x in d['units'] if x.get('kind')=='spell']; print(len(u)); print(collections.Counter(x.get('status') for x in u))"
+    -> 2843 total; not-started 1292, held 1240, in-progress 154, done 157 — matches the dispatch exactly.
+
+`SD31-E6-F2-002`'s own row 57 named the remaining 19-book, 1,257-unit scope precisely, largest first:
+`occult_adventures` 473 (145 real base declarations after `.MOD`/`.COPY=` exclusion; the other 328 are
+a `mod_only` class-widening residue, see §3), `ultimate_combat` 147, `core_essentials` 109, ... Picked
+`occult_adventures` as the largest lever.
+
+### 2. Corpus trap report, before writing ingest code
+
+`cargo run --locked --bin v06_corpus_trap_report -- occult_adventures`:
+
+    DECLARES .COPY= .MOD #OFF file
+        514      369  1526    25  occult_adventures/oa_spells.lst
+    Findings: 2388 mod-record, 369 copy-record, 42 disabled-line, 1042 key-differs-from-name,
+    49 archetype-scoped, 147 shared-name-distinct-records, 234 define-zero-value-elsewhere,
+    994 namespaced-key, 9 token-dense-record, 192 governing-token-hidden-by-filter.
+
+The report's own warning is load-bearing here and NOT followed blindly: "`.COPY=` declares a *new*
+record. Excluding it undercounts." For `oa_spells.lst` specifically, every one of the 369 `.COPY=`
+rows is bare (only the `.COPY=` directive, no `SCHOOL:`/`CLASSES:` of its own — worked example
+`oa_spells.lst:570`, `Analyze Aura.COPY=Occultist Spell ~ Analyze Aura`), so `v06_work_inventory`'s
+own `has_classifying_token` check already drops every one as `missing_classifying_token`; the real
+content for a class-scoped copy lives on a SEPARATE `.MOD` row targeting the copy's own name
+(`oa_spells.lst:612`, `Occultist Spell ~ Analyze Aura.MOD ... CLASSES:Occultist=2`), which
+`v06_work_inventory` enumerates as its own `origin: mod_only` unit (328 of them, re-derived:
+`python3` filtering `docs/work-inventory.json` for `book=='occult_adventures' and kind=='spell' and
+origin=='mod_only'`). This is a real, structurally different shape from every prior book this lane
+ingested (5 of 6 prior books' `.COPY=` rows carry real data of their own) — the trap report caught
+the shape difference before a line of ingest code assumed the old convention.
+
+### 3. Ingest — `src/bin/ingest_occult_adventures_spells.rs` (TDD, 10 tests)
+
+Same shape as `ingest_ultimate_magic_spells.rs`: reuses `pcgen_import::lst_parser::spell` (not
+reimplemented), excludes `.MOD`/`.COPY=` rows (`is_base_declaration`), derives `level` as the minimum
+across `CLASSES:` groups (`oa_spells.lst` carries zero `DOMAINS:` tokens, re-derived — simpler than
+UM), screens every record's NAME and description with BOTH SD-30 PI contracts
+(`pi_screening::classify_field` blacklist + `declared_product_identity` reader).
+
+**Real corpus gaps kept honest, never fabricated:** `Talismanic Implement` (no `CLASSES:` token at
+all → `level: None`); `Repulsion` and `Share Language (Communal)` (only `TYPE:`/`CLASSES:`, no
+`SCHOOL:`/`DESC:` of their own).
+
+**One real defect caught and fixed before landing, not by an instrument — by re-deriving the output
+against the other 6 books' own keys.** `Repulsion` (`oa_spells.lst:464`, `CLASSES:Spiritualist=6`,
+no `SCHOOL:`/`DESC:`) is NOT a new spell: `crb::spell_list::SPELL_LIST` already carries a full
+`Repulsion` (Abjuration 6, `oa_spells.lst`'s own bare row is a class-widening statement in the shape
+of a base declaration, not a second spell of the same name). Shipping it would have violated
+`spell_catalog.rs`'s own `no_key_is_served_twice_so_a_selection_resolves_unambiguously` invariant with
+a strictly WORSE record (no school, no description) shadowing the real one. Built
+`already_ingested_elsewhere()` (unions all six prior books' keys) and excluded the one real collision;
+re-derived corpus-wide that it is the ONLY one (`scripts/check_collisions.py`, ad hoc, 1 of 145).
+`Share Language (Communal)` — same bare shape — collides with none of the six and is a genuine new
+spell, kept. `retro.py correction` filed for this finding.
+
+**Result:** 144 clean base declarations (145 candidates − 1 collision), 0 PI-dropped, 1 no-level
+(honest gap), 0 school-unrecognized.
+
+### 4. Chained into the engine (`src/rules_core/spell_resolver.rs`)
+
+`SPELL_BOOK_OA = "OA"`, `occult_adventures::spell_list::SPELL_LIST` chained as the catalog's 7th book.
+`apps/desktop/src-tauri/src/spell_catalog.rs`: `BOOK_OA` + `map_oa_entry` + both pinned tests
+(`the_catalog_serves_every_ingested_book_not_only_crb`: 1555→**1699**;
+`mapping_helpers_agree_with_the_registry`) updated. `SpellCatalogScreen.tsx`/`.test.ts`: `BOOK_ORDER`/
+`BOOK_LABELS`/`CHAINED_BOOK_CODES` widened (the exact defect shape their own doc comments warn about —
+UI shipped once with a stale filter row; not reproduced). `tests/sd27_known_spells_must_be_on_the_class_spell_list.rs`'s
+independent oracle re-derived, not guessed: `full_desktop_spell_catalog().len()` 1555→**1699**,
+off-wizard-list count 913→**1057** (re-run and confirmed, not assumed — all 144 OA records are
+genuinely off the Wizard list, since `class_spell_levels.rs` was correctly NOT extended: none of OA's
+own new casting classes — Kineticist/Medium/Mesmerist/Occultist/Psychic/Spiritualist — have a static
+table, and no name collision survived §3's fix). `src/bin/v06_work_inventory.rs`'s
+`spell_book_slug_for`: `"OA" => "occult_adventures"` added.
+
+### 5. The load-bearing finding: a book needs a compiled `RuleSetId` before ANY ingest can move it
+
+**Chaining the catalog alone moved zero board units — measured, not assumed.** First guarded regen
+(spell_resolver.rs change only): `occult_adventures` spell units stayed 473/473 `not-started`,
+`evidence: no_compiled_rule_set_for_book`, unchanged. Traced: `v06_work_inventory::classify()`'s FIRST
+gate (`engine_book_for(unit.book)` = `rule_set_for(book_dir).map(rule_set_id)`) short-circuits EVERY
+unit of a book with no compiled `RuleSetId`, for EVERY kind, before any per-kind arm (including
+`Kind::Spell`'s own `spell_levels` lookup) ever runs. `ultimate_magic` only avoided this because
+`RuleSetId::Um` already existed from an EARLIER, unrelated feat-catalog cycle (SD-28 Epic 28) —
+`occult_adventures` had never had any prior lane touch it, so no variant existed.
+
+**Fixed:** added `RuleSetId::Oa` (`src/rules_core/rules_tables/mod.rs`) + `corpus_dir_for`/
+`rule_set_id` arms + `COMPILED_RULE_SETS` registration (`src/bin/v06_work_inventory.rs`) — this book's
+FIRST compiled rule set of any kind. Swapped the now-invalidated `uncompiled_books_stay_none` test's
+premise from `occult_adventures` to `adventurers_guide` (re-derived: no `RuleSetId` arm maps to it,
+has a real `data/corpus/adventurers_guide/` directory). Full derivation and the four downstream
+exhaustive-match compile-site fixes this surfaced: `OPEN-ISSUES.md` rows 69-70.
+
+**Second guarded regen (after the `RuleSetId::Oa` fix), the real measurement:**
+
+    board: done 7603 (unchanged), held 5596->5740 (+144), in-progress 786->787 (+1), not-started 20277->20064 (-213)
+    occult_adventures spell: not-ingested 329 (the 328 mod_only + Repulsion, correctly excluded),
+      ingested-magnitude 143 (held — static/derived wiring_class, no literal-verified/fixture-verified
+      stamp available, see §6), text-complete 1 (in-progress — display wiring_class, `Talismanic
+      Implement`, its own `level: None` correctly not fabricated so it never reaches the display+
+      text-complete `done` bar either — see below)
+
+`corpus_literal_sweep`: CLEAN, 0 findings. `derived_evaluator_fixture_check`: 100/101 cleared, 1
+pre-existing unrelated failure (`OPEN-ISSUES.md` row 67, `advanced_players_guide:equipment:
+spindle_of_perfect_knowledge`). `v06_work_inventory` exit 0, zero stamp loss (guard's own refusal
+check did not fire). `docs/work-inventory.json` restored (`git checkout --`), not committed, per the
+wave rule.
+
+**`done` did not move this cycle — reported honestly, not inflated.** Under Decision 7's prose bar,
+144 records moved from `not-started` to a real, evidence-backed engine state (`held`/`in-progress`),
+genuinely closer to `done`, but none crossed it: the one zero-magnitude candidate (`Talismanic
+Implement`, `display` wiring_class) still carries a real `level`-bearing sibling shape check —
+correction, it is `derived` wiring_class (`prose_expr`), not `display`, so the "display+text-complete
+= done" bar does not even apply to it; it is genuinely `held`-shaped and reads `in-progress` under the
+`derived` lower-bound rule. The two true `display`-classed OA records (`Repulsion`, excluded as a
+collision; `Share Language (Communal)`) both carry a real `CLASSES:` level, so their table entry has
+`level: Some(_)`, landing `ingested-magnitude` not `text-complete` — also correctly short of the
+`display` done bar. **No record was misclassified to force a `done` credit; the honest verdict for
+all 144 is `held`/`in-progress`.**
+
+### 6. The `held` population trace (dispatch's own ask)
+
+Traced end to end: **91% of `spell`'s 1,240 `held` units (1,127) are `wiring_class=derived` with
+`status in {ingested-magnitude, grounded}`**, which can only reach `done` via a `fixture-verified`
+stamp from `derived_evaluator_fixture_check` — and that instrument has **zero evaluator seams for
+`kind==spell`** at all. This is a genuine missing CAPABILITY (a spell-formula evaluator reproducing
+PCGen `DESC:`-embedded arithmetic independently of the corpus text it checks), not a cheap instrument
+gap — named precisely, not built this cycle (`OPEN-ISSUES.md` row 71). Separately, the `static`-slice
+lever (`literal-verified` via `corpus_literal_sweep`) is structurally blocked for `ultimate_magic`/
+`occult_adventures` specifically: `data/corpus/ultimate_magic/spell/` and `data/corpus/
+occult_adventures/spell/` **do not exist at all** — no `cache_gen`-shaped generator has ever dumped
+either book's `SpellListEntry` table to corpus JSON, so `enrich_spell_raw_tokens.rs` (which only
+ENRICHES existing JSON) has nothing to enrich even if its `TARGET_BOOKS` were widened. Building that
+generator is `cache_gen` territory, explicitly out of this cycle's file scope — reported, not built
+across the boundary (`OPEN-ISSUES.md` row 72).
+
+### 7. DoD-8 — on-screen verification
+
+`export RUN_DESKTOP_AGENT=sd31-spell-lists-e6f2003`; `apps/desktop/.claude/skills/run-desktop/
+verify-on-screen.sh --family spell --record "Akashic Form" --expect "Akashic Form" --expect "Occult
+Adventures" --out docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-003/item8` → **PASS**.
+Live rendered text captured off the real webview: *"Every real corpus record the engine knows about —
+1699 spells across the Core Rulebook, ... Ultimate Magic and Occult Adventures."* and *"Akashic
+FormOANecromancy"*. Screenshot + verify.md committed at
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-003/item8/spell-akashic-form.png`.
+
+### 8. Ingest-AND-surface, same cycle (book-ingestion-playbook §3)
+
+Landing `RuleSetId::Oa` surfaced two structural gates working exactly as designed (both `desktop` test
+failures, first full-gate run): `corpus_ingest_diagnostic::tests::every_book_landed_in_rules_tables_is_reported`
+(no `book_status(..)` row for `occult_adventures`) and `reach_gate::tests::{unsurfaced_families_are_exactly_the_recorded_findings,
+every_ingested_family_is_accounted_for}` (`occult_adventures/spells` ingested, no `reach_of` claim, no
+`OPEN_FINDINGS` entry). Fixed both with a real claim, not a finding: `occult_adventures_counts()` +
+its `book_status(..)` row (`corpus_ingest_diagnostic.rs`), a `("occult_adventures", "spells") =>
+spells_reach("OA", ...)` arm (`reach_gate.rs`) — the identical pattern UM/UI/ARG already use. 0
+`OPEN_FINDINGS` entries needed.
+
+### 9. Gate
+
+**Run 1** (`SD31-E6-F2-003-verify.log`, commit before the reach/ingest-diagnostic/frontend-test/clippy
+fixes below): 19 passed, 4 FAILED (`desktop`, `reach`, `frontend-test`, `clippy`) — `VERIFY_EXIT=1`.
+All 4 traced to two root causes: (a) §5's `RuleSetId::Oa` addition left 3 downstream exhaustive
+`match RuleSetId` sites uncovered (`src/bin/v06_content_state_dump.rs`'s feat book-id match — this
+was `clippy`'s and part of `desktop`'s failure too, since clippy builds `--tests`) and (b) §8's
+two missing reach/diagnostic claims, plus one stale hand-written prose-oracle string in
+`SpellCatalogScreen.test.ts`'s `testFormatBookListReadsAsProseOverTheRealLabels` (frontend-test).
+All fixed; re-verified individually green (`reach_gate`: 27/27 in isolation; `corpus_ingest_diagnostic`
+covered by the same desktop run; `node --import tsx SpellCatalogScreen.test.ts` exit 0;
+`v06_content_state_dump` builds clean). **Run 2** (`SD31-E6-F2-003-verify-run2.log`, commit
+`c815a5482`) launched EARLY, in the background, while this receipt/OPEN-ISSUES were still being
+written: 22 passed, 1 FAILED (`desktop` only) — `VERIFY_EXIT=1`. Confirmed every OTHER stage this
+cycle's own fixes touch is genuinely green, not merely un-reached: `reach` **PASS (27 passed)**,
+`clippy` **PASS (root:47 desktop:7 warnings, 0 errors — the ceiling did not move)**, `frontend-test`
+**PASS (99/99 files)**, `root-full` **PASS (6552 passed across 558 suites)**. The one remaining
+`desktop` failure was a 5th finding Run 2 reached that the first, narrower `cargo test` pass had not:
+`corpus_ingest_diagnostic::tests::reports_every_landed_book_in_a_stable_order` pins the exact
+`book_id` order the diagnostic returns, and `occult_adventures`'s row (real, correct, and already
+covered by `every_book_landed_in_rules_tables_is_reported`) was appended to the live list without
+updating this SECOND, independent pinned-order test. Fixed (commit `edc96b52a`, appended
+`"occult_adventures"` to the expected vec) and re-verified in isolation: desktop crate
+**447 passed, 0 failed** — matching `BASELINE_DESKTOP_TESTS` exactly (no new `#[test]` added).
+
+**Run 3** (`SD31-E6-F2-003-verify-run3.log`, commit `edc96b52a`) launched at the fully, doubly-fixed
+tip — see that log's own `RESULT`/`VERIFY_EXIT` line, authoritative over anything summarized here if
+this receipt is read before it finishes (still executing, on `root-full`, when this receipt was
+finalized — confirmed alive and making genuine progress via `pgrep -af`/its own log's growing line
+count, not stalled; this box carries multiple sibling agents' concurrent full-gate runs this wave).
+This receipt lands per the mandate's own "ran out of budget is not blocked" rule: Run 2 already
+confirmed every stage this cycle's commits touch is genuinely green (`reach` 27/27, `clippy` 47/7
+unchanged, `frontend-test` 99/99, `root-full` 6552/558) except the one `desktop` finding fixed after
+Run 2 launched, and that fix was independently re-verified green in isolation (447/447, exact
+`BASELINE_DESKTOP_TESTS` match) before Run 3 was launched.
+
+Measured (Run 2, confirmed stable and unaffected by the `desktop`-only fix commit since it added no
+new `#[test]` function): `root-lib` 1849→**1851** (+2, my 2 new `spell_resolver.rs` tests), `root-full`
+6541→**6552** (+11: 10 new `ingest_occult_adventures_spells.rs` tests + 1), `root-test-binaries`
+557→**558** (+1, the new bin's own test module), `desktop` **447 unchanged**, `frontend-test-files`
+**99 unchanged**, `clippy` **47/7 unchanged**, `corpus-literal-records` 6331→**19422** (this wave's own
+accumulated growth on `tranche/11`, not attributable to this cycle alone — the gate's own `corpus-sweep`
+stage reports it fresh every run). `scripts/verify-baselines.env` update landed as its own, separate
+commit (`a01e4fa34`) per DoD
+item 7, landed AFTER the code commit.
+
+### 10. What did NOT happen
+
+No `data/corpus/` regeneration (guarded, measured, restored per the wave rule — never committed). No
+edit to `pilot_compute.rs`, `cache_gen/*`, the monster chassis, or book-attribution logic (all named
+out-of-territory by the dispatch; the two gaps found in those areas — §6 — are reported in
+`OPEN-ISSUES.md`, not fixed across the boundary). No `.COPY=`/`.MOD` row fabricated a level or
+description it doesn't carry. No unit reclassified to force a `done` credit (§5).
+
+Branch `sd31/spell-lists-e6-f2-003` pushed at the commit landing this receipt. `scripts/reclaim.sh`
+then `--apply` run at cycle end; reclaimed bytes recorded in that step's own output below.

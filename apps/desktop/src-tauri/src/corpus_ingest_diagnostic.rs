@@ -101,6 +101,7 @@ use codex::rules_core::rules_tables::crb::{
     class_tables::ClassId, equipment_tables as crb_equipment_tables, feats as crb_feats,
     race_tables::RaceId, spell_list as crb_spell_list,
 };
+use codex::rules_core::rules_tables::occult_adventures as oa;
 use codex::rules_core::rules_tables::pathfinder_unchained as pu;
 use codex::rules_core::rules_tables::ultimate_campaign as uca;
 use codex::rules_core::rules_tables::ultimate_equipment as ue;
@@ -525,6 +526,17 @@ fn ultimate_magic_counts() -> BTreeMap<String, u32> {
     counts
 }
 
+/// Occult Adventures: SD31-E6-F2-003 -- this book's FIRST compiled record
+/// family of any kind (no prior lane has ingested any of its content). 144
+/// base spell records -- see `occult_adventures::spell_list`'s own doc
+/// comment for the catalog and the 328-unit `mod_only` class-widening
+/// residue it deliberately does not cover.
+fn occult_adventures_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("spells".to_string(), oa::spell_list::SPELL_LIST.len() as u32);
+    counts
+}
+
 /// Ultimate Psionics: SD-28 Epic 29 (`epic-29-upsi-complete`) from-scratch
 /// book ingest, and the last Ultimate book. 221 feat records -- see
 /// `ultimate_psionics::feat_tables`'s own doc comment for the catalog and
@@ -825,6 +837,12 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             ultimate_psionics_counts(),
             &races,
         ),
+        book_status(
+            "occult_adventures",
+            "src/rules_core/rules_tables/occult_adventures",
+            occult_adventures_counts(),
+            &races,
+        ),
     ]
 }
 
@@ -974,7 +992,12 @@ mod tests {
                 "core_essentials",
                 "ultimate_combat",
                 "ultimate_magic",
-                "ultimate_psionics"
+                "ultimate_psionics",
+                // SD31-E6-F2-003 -- this book's first compiled record family
+                // of any kind, appended at the end of the list rather than
+                // inserted into a book-family block, since it shares no
+                // chassis with any book above it.
+                "occult_adventures"
             ]
         );
     }
