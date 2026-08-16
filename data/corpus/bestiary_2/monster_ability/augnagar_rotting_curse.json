@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Augnagar ~ Rotting Curse",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:qlippoth_augnagar"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Rotting Curse"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AugnagarRottingCurseDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AugnagarRottingCurseDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Rotting Curse)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AugnagarRottingCurseDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Bite - injury; Save Fort DC %1; Frequency 1/day; Effect 1d6 Con drain plus constant stench.  A creature that suffers the rotting curse imparted by an augnagar's bite displays hideous, festering wounds that exude a horrific stench.  This functions as the stench universal monster rule (see page 302), save that it affects all creatures except those that are immune to poison.  The victim of this curse receives no saving throw to avoid becoming sickened by the stench, but other creatures can attempt a DC %1 Fortitude save to negate this condition - those who fail remain sickened as long as they remain within 30 feet of the cursed victim.  The horrific stench also imparts a -8 penalty on all Stealth checks made by the cursed victim.|AugnagarRottingCurseDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Augnagar ~ Rotting Curse"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.219",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 994,
-    "record_key": "Augnagar ~ Rotting Curse"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 994,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Augnagar ~ Rotting Curse",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

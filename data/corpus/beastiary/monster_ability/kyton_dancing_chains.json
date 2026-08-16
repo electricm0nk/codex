@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Kyton ~ Dancing Chains",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:kyton"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Dancing Chains"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DancingChainsDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DancingChainsDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Dancing Chains)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Chains|TOHIT|4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DancingChainsDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A kyton can control up to four chains within 20 feet as a standard action, making the chains dance or move as it wishes. In addition, a kyton can increase these chains' length by up to 15 feet and cause them to sprout razor-edged barbs. These chains attack as effectively as the kyton itself. If a chain is in another creature's possession, the creature can attempt a DC %1 Will save to break the kyton's power over that chain. If the save is successful, the kyton cannot attempt to control that particular chain again for 24 hours or until the chain leaves the creature's possession. A kyton can climb chains it controls at its normal speed without making Climb checks.|DancingChainsDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Kyton ~ Dancing Chains"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.185"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.185",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 816,
-    "record_key": "Kyton ~ Dancing Chains"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 816,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Kyton ~ Dancing Chains",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

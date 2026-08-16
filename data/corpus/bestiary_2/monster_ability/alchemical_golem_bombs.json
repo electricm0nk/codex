@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Alchemical Golem ~ Bombs",
     "delivery": "Extraordinary",
@@ -13,19 +11,47 @@
     "owners": [
       "bestiary_2:monster:golem_alchemical"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, an alchemical golem can throw a bomb as a ranged touch attack to a distance of 60 feet (no range increment).  If the attack misses, treat it as a thrown splash weapon to determine where it lands.  Anyone struck by an alchemical golem's bomb takes 8d6 points of acid, cold, electricity, or fire damage (determine type randomly).  All creatures adjacent to the location where the bomb hits take 1d6 points of energy damage of the same type."
+      },
+      {
+        "key": "KEY",
+        "value": "Alchemical Golem ~ Bombs"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bomb,Weapon.Natural.Weapon Group Natural.Ranged.Touch.Acid.Cold.Electricity.Fire,*1,8d6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.135",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 595,
-    "record_key": "Alchemical Golem ~ Bombs"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 595,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Alchemical Golem ~ Bombs",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

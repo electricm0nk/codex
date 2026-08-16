@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Bebilith ~ Dismantle Armor",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:bebilith"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Dismantle Armor"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|DismantleArmorDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DismantleArmorDC|10+(HD/2)+STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DismantleArmorDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Dismantle Armor)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DismantleArmorDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If a bebilith hits a foe with both claw attacks, it can attempt to peel away the target's armor and shield as a free action by making a CMB check. If the bebilith is successful, the target's armor and shield are torn from his body and dismantled, falling to the ground. Armor subjected to this attack loses half its hit points and gains the broken condition if the target fails a DC %1 Reflex save.|DismantleArmorDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Bebilith ~ Dismantle Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.32",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 159,
-    "record_key": "Bebilith ~ Dismantle Armor"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 159,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Bebilith ~ Dismantle Armor",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

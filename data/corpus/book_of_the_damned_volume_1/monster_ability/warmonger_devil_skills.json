@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T11:18:41Z",
   "data": {
     "corpus_key": "Warmonger Devil ~ Skills",
     "delivery": null,
@@ -13,19 +11,51 @@
     "owners": [
       "book_of_the_damned_volume_1:monster:devil_warmonger"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=concealed in metal objects or debris|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth,Perception|2|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Levalochs have a +2 racial bonus on Stealth and Perception checks. This Stealth bonus increases to +8 when a levaloch is concealed amid metal objects or debris."
+      },
+      {
+        "key": "KEY",
+        "value": "Warmonger Devil ~ Skills"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
     "source_page": "p.60",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
-    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177",
-    "line": 53,
-    "record_key": "Warmonger Devil ~ Skills"
-  },
+  "ingested_at": "2026-08-12T11:18:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 53,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
+    "record_key": "Warmonger Devil ~ Skills",
+    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

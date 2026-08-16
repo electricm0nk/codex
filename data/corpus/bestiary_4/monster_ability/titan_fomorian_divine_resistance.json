@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Titan (Fomorian) ~ Divine Resistance",
     "delivery": "Supernatural",
@@ -13,19 +11,47 @@
     "owners": [
       "bestiary_4:monster:titan_fomorian"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+4 deflection to AC vs. attacks from deities, outsiders who serve a deity, and divine spellcasters."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 on saves vs. divine effects from deities, outsiders who serve a deity, and divine spellcasters."
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A fomorian titan gains a +4 deflection bonus to Armor Class and a +4 bonus on saving throws against attacks and effects from deities, outsiders who serve a deity, and divine spellcasters."
+      },
+      {
+        "key": "KEY",
+        "value": "Titan (Fomorian) ~ Divine Resistance"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1366,
-    "record_key": "Titan (Fomorian) ~ Divine Resistance"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1366,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Titan (Fomorian) ~ Divine Resistance",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

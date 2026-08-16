@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Guardian Dragon ~ Agonizing Venom",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:guardian_dragon"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature failing its saving throw against the dragon's breath weapon, poison, or poisonous blood is sickened with pain for 1 minute. A second, third, and fourth failed saving throw mean the creature is also staggered for 1 minute, nauseated for 1 minute, and helpless for 1 minute, respectively. This is a pain effect. If the dragon expends one use of mythic power when poisoning a creature, the dragon's breath weapon and poison overcome any poison immunity the target has."
+      },
+      {
+        "key": "KEY",
+        "value": "Guardian Dragon ~ Agonizing Venom"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 842,
-    "record_key": "Guardian Dragon ~ Agonizing Venom"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 842,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Guardian Dragon ~ Agonizing Venom",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

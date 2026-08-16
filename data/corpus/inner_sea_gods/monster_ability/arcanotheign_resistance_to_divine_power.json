@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "corpus_key": "Arcanotheign ~ Resistance to Divine Power",
     "delivery": "Extraordinary",
@@ -13,21 +11,53 @@
     "owners": [
       "inner_sea_gods:monster:arcanotheign"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|30"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ResistanceOutput|Divine power 30"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Resistance|Divine power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The Arcanotheign has resistance against the first 30 points of damage from a divine source (such as Flame Strike)."
+      },
+      {
+        "key": "KEY",
+        "value": "Arcanotheign ~ Resistance to Divine Power"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Resistance"
+      }
+    ],
     "source_page": null,
     "traits": [
       "Resistance"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
-    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
-    "line": 211,
-    "record_key": "Arcanotheign ~ Resistance to Divine Power"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 211,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Arcanotheign ~ Resistance to Divine Power",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

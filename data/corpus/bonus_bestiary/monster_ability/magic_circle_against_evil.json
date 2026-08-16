@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-11T09:16:36Z",
   "data": {
     "corpus_key": "Magic Circle against Evil",
     "delivery": "Supernatural",
@@ -13,19 +11,35 @@
     "owners": [
       "bonus_bestiary:monster:lammasu"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_abilities_race.lst",
-    "sha256": "57d97e9b0d8e6e002162187ace2c288c558fa9a3f0d333a2ba487a0161f4f82e",
-    "line": 43,
-    "record_key": "Magic Circle against Evil"
-  },
+  "ingested_at": "2026-08-11T09:16:36Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 43,
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_abilities_race.lst",
+    "record_key": "Magic Circle against Evil",
+    "sha256": "57d97e9b0d8e6e002162187ace2c288c558fa9a3f0d333a2ba487a0161f4f82e"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

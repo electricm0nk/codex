@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "corpus_key": "Ascomoid ~ Spores",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_3:monster:ascomoid"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round as a free action, an ascomoid can release a jet of deadly spores to a range of 30 feet. Upon impacting a solid surface, such as a wall or creature, the jet billows out into a cloud of spores that fills a 10-foot-radius spread. This cloud lasts for 1 round before dispersing. Any creature in the cloud must make a DC 16 Fortitude save or become nauseated as long as it remains in the cloud. Any creature that fails to save against this nausea is also exposed to the ascomoid's poison (see above). The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Ascomoid ~ Spores"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.20",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
-    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
-    "line": 386,
-    "record_key": "Ascomoid ~ Spores"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 386,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Ascomoid ~ Spores",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

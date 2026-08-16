@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Olethrodaemon ~ Soul-Drained Breath",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:daemon_olethrodaemon"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Soul-Drained Breath"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OlethrodaemonSoulDrainedBreathDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OlethrodaemonSoulDrainedBreathDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Soul-Drained Breath)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OlethrodaemonSoulDrainedBreathDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An olethrodaemon can convert life energy it has consumed into a potent breath weapon.  Up to three times per day, but no more often than once every 1d4 rounds, an olethrodaemon can expel a 120-foot line or a 60-foot cone of shrieking black smoke and wind one of its mouths as a standard action.  Any living creature in the area of this attack takes 20d10 points of damage from negative energy, or half on a successful DC %1 Reflex save.  Undead creatures caught in this negative energy are healed for the same amount instead of damaged.|OlethrodaemonSoulDrainedBreathDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Olethrodaemon ~ Soul-Drained Breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.70",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 314,
-    "record_key": "Olethrodaemon ~ Soul-Drained Breath"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 314,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Olethrodaemon ~ Soul-Drained Breath",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

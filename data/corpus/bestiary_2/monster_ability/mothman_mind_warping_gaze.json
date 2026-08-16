@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Mothman ~ Mind-Warping Gaze",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:mothman"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Mind-Warping Gaze"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MothmanMindWarpingGazeDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MothmanMindWarpingGazeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Mind-Warping Gaze)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MothmanMindWarpingGazeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Fear, 30 feet, Will DC %1 negates.  A creature that fails a save against this attack becomes shaken for 1d6 rounds.  A creature currently suffering from a fear effect that fails this save instead takes 1d4 points of Wisdom damage.  This is a mind-affecting effect.|MothmanMindWarpingGazeDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Mothman ~ Mind-Warping Gaze"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.194",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 852,
-    "record_key": "Mothman ~ Mind-Warping Gaze"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 852,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Mothman ~ Mind-Warping Gaze",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

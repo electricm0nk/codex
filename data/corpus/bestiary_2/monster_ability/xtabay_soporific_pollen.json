@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Xtabay ~ Soporific Pollen",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:xtabay"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Soporific Pollen"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SoporificPollenSaveDC|10+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SoporificPollenSaveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Soporific Pollen)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SoporificPollenSaveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a xtabay can release sleep-inducing pollen into the air around it.  Each creature within a 10-ft.-radius burst centered on the xtabay must make a DC %1 Will save or fall asleep for 1d3 minutes.  A creature that succeeds on the Fortitude save cannot be affected by the same xtabay's soporific pollen for 24 hours.  A creature put to sleep by this pollen can be awakened by vigorously shaking the sleeper (a standard action) or by damaging it.  This is a mind-affecting sleep effect.|SoporificPollenSaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Xtabay ~ Soporific Pollen"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.289",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1402,
-    "record_key": "Xtabay ~ Soporific Pollen"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1402,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Xtabay ~ Soporific Pollen",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

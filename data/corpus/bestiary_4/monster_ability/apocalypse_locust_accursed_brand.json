@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Apocalypse Locust ~ Accursed Brand",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:apocalypse_locust"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a victim fails its save against an apocalypse locust's breath weapon, the unholy fire burns an accursed brand into his flesh. For the next 24 hours, the branded victim is subjected to auditory hallucinations of foul desires and sinful deeds. The hallucinations cause lawful and good victims to become tainted; good-aligned clerics, druids, paladins, and even lawful monks are treated as though they've temporarily broken their codes of conduct. Any character marked by the accursed brand who has a class that's restricted to a good alignment or lawful alignment is treated as an ex-member of that class for 24 hours; an  atonement spell can end this effect."
+      },
+      {
+        "key": "KEY",
+        "value": "Apocalypse Locust ~ Accursed Brand"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 276,
-    "record_key": "Apocalypse Locust ~ Accursed Brand"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 276,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Apocalypse Locust ~ Accursed Brand",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

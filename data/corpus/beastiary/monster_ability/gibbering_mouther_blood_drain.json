@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Gibbering Mouther ~ Blood Drain",
     "delivery": "Extraordinary",
@@ -13,21 +11,45 @@
     "owners": [
       "beastiary:monster:gibbering_mouther"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "On a successful grapple check after grabbing, several of your mouths attach to its target. Each round you maintain your grapple, your mouths automatically deal 1d4 points of bite damage and 1 point of Constitution damage as you drain your victim's blood."
+      },
+      {
+        "key": "KEY",
+        "value": "Gibbering Mouther ~ Blood Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.AttackOption"
+      }
+    ],
     "source_page": "p.153",
     "traits": [
       "AttackOption"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 699,
-    "record_key": "Gibbering Mouther ~ Blood Drain"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 699,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Gibbering Mouther ~ Blood Drain",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

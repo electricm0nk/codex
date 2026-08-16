@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-11T19:42:15Z",
   "data": {
     "corpus_key": "Bat (Sootwing) ~ Disease",
     "delivery": "Supernatural",
@@ -13,19 +11,43 @@
     "owners": [
       "monster_codex:monster:bat_sootwing"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackBonus|Bite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Ghoul Fever; See Pathfinder RPG Bestiary entry on ghouls."
+      },
+      {
+        "key": "KEY",
+        "value": "Bat (Sootwing) ~ Disease"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
-    "sha256": "2cde87583641aec61ec0da397064c651fefd27d679ac0cc6368930ded84e5e30",
-    "line": 71,
-    "record_key": "Bat (Sootwing) ~ Disease"
-  },
+  "ingested_at": "2026-08-11T19:42:15Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 71,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
+    "record_key": "Bat (Sootwing) ~ Disease",
+    "sha256": "2cde87583641aec61ec0da397064c651fefd27d679ac0cc6368930ded84e5e30"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

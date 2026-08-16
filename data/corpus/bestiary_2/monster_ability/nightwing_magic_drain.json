@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Nightwing ~ Magic Drain",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:nightshade_nightwing"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Magic Drain"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NightwingMagicDrainDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NightwingMagicDrainDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Magic Drain)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NightwingMagicDrainDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The bite of a nightwing drains magical power and energy.  When a nightwing bites a foe, the victim must make a DC %1 Will save or one spell effect currently affecting him immediately ends - determine which spell is drained randomly if the target is under the effects of more than one spell.  The nightwing heals damage equal to twice the level of the spell drained - hit points in excess of its maximum are instead gained as temporary hit points that last for 1 hour.  If a nightwing attempts to sunder a magic item with its bite, its magic-draining bite renders the item nonmagical for 1d4 rounds (if the item is a permanent magic item), drains 1d8 charges (if the item has charges), or renders it permanently nonmagical (if the item is a one-use item).  The item (or its wielder, if the item is attended) can resist this effect with a DC %1 Will save.  Damage dealt to an item is applied after the effects of magic drain are applied.|NightwingMagicDrainDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Nightwing ~ Magic Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.203"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.203",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 903,
-    "record_key": "Nightwing ~ Magic Drain"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 903,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Nightwing ~ Magic Drain",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

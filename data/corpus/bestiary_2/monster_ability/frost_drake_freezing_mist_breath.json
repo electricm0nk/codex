@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Frost Drake ~ Freezing Mist Breath",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:drake_frost"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrostDrakeFreezingMistBreathDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrostDrakeFreezingMistBreathDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FrostDrakeFreezingMistBreathDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A frost drake can, as a standard action, spit a ball of liquid that bursts into a cloud of freezing mist.  This attack has a range of 60 feet and deals 7d6 points of cold damage (DC %1 Reflex half) to all creatures in a 20-foot-radius spread.  The mist cakes all surfaces in the area with a sheet of slippery ice that turns the area into difficult terrain for 2d4 rounds, after which the ice cracks or melts enough to revert to the normal terrain features in the area.  Once a frost drake has used its freezing mist breath, it cannot do so again for 1d6 rounds.|FrostDrakeFreezingMistBreathDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Frost Drake ~ Freezing Mist Breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.108",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 448,
-    "record_key": "Frost Drake ~ Freezing Mist Breath"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 448,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Frost Drake ~ Freezing Mist Breath",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

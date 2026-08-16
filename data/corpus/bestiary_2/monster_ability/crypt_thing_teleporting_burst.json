@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Crypt Thing ~ Teleporting Burst",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:crypt_thing"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Teleporting Burst"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CryptThingTeleportingBurstDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CryptThingTeleportingBurstDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Teleporting Burst)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CryptThingTeleportingBurstDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a crypt thing can teleport all creatures within 50 feet of it to randomly determined locations. The crypt thing can only affect creatures of which it is aware and to which it has line of sight. A successful DC %1 Will save negates this effect. An affected creature is teleported in a random direction (roll 1d8, with 1 indicating north and the other numbers indicating compass going clockwise) and a random distance (1d10 x 100 feet) away from the crypt thing; determine each creature's direction randomly. A teleported creature arrives in the closest open space to the determined destination, but must appear on a solid surface capable of supporting its weight. If there is no appropriate destination in that direction, the creature does not teleport at all.|CryptThingTeleportingBurstDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Crypt Thing ~ Teleporting Burst"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.60",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 264,
-    "record_key": "Crypt Thing ~ Teleporting Burst"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 264,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Crypt Thing ~ Teleporting Burst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Thrasfyr ~ Entangling Chains",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:thrasfyr"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Entangling Chains"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThrasfyrEntanglingChainsDC|10+TL/2+DEX"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThrasfyrEntanglingChainsDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Entangling Chains)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThrasfyrEntanglingChainsDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A thrasfyr can control the six chains that hang from its body as if they were its own limbs.  As a standard action, it can cause these chains to snake outward to a radius of 30 feet.  All creatures in this area take 10d6 points of slashing damage and become entangled - a DC %1 Reflex save halves the damage and negates the entangled condition.  An entangled creature can escape with a DC %1 Reflex save or a DC 30 Escape Artist check made as a full-round action.  The chains can also be sundered (hardness 10, hp 20, Break DC 28).  The thrasfyr creates these chains from its own body - destroyed chains regrow in 24 hours.|ThrasfyrEntanglingChainsDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Thrasfyr ~ Entangling Chains"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.263"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.263",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1242,
-    "record_key": "Thrasfyr ~ Entangling Chains"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1242,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Thrasfyr ~ Entangling Chains",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

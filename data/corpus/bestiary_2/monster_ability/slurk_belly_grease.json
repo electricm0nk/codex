@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Slurk ~ Belly Grease",
     "delivery": "Extraordinary",
@@ -13,19 +11,51 @@
     "owners": [
       "bestiary_2:monster:slurk"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SKILL|Escape Artist|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_Grapple|4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The slurk exudes a slippery grease from its belly that grants it a +4 bonus on Escape Artist skill checks and to its CMD versus grapples.  One per minute, a slurk may wallow on a solid surface as a full-round action to coat the floor in a 5-foot radius with this grease.  The smear created turns that area of floor into difficult terrain for 10 minutes, after which the grease dries to a nasty crust."
+      },
+      {
+        "key": "KEY",
+        "value": "Slurk ~ Belly Grease"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.251"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.251",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1179,
-    "record_key": "Slurk ~ Belly Grease"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1179,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Slurk ~ Belly Grease",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

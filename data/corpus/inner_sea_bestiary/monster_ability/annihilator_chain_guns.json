@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "corpus_key": "Annihilator ~ Chain Guns",
     "delivery": "Extraordinary",
@@ -13,19 +11,59 @@
     "owners": [
       "inner_sea_bestiary:monster:robot_annihilator"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Chain Guns|CRITMULTADD|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Chain Guns|RANGE|200"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Chain Guns|TOHIT|6|TYPE=Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "These advanced firearms have a range increment of 200 feet, automatically reload as a free action, and never misfire. An annihilator's core can process scrap metal into new ammunition, effectively giving the annihilator infinite ammo with these weapons."
+      },
+      {
+        "key": "KEY",
+        "value": "Annihilator ~ Chain Guns"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Chain Guns,Weapon.Natural.Weapon Group Natural.Ranged.Piercing.Finesseable,*2,8d6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.43",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
-    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
-    "line": 290,
-    "record_key": "Annihilator ~ Chain Guns"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 290,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Annihilator ~ Chain Guns",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

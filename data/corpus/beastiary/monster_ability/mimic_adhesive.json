@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Mimic ~ Adhesive",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "beastiary:monster:mimic"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Adhesive"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AdhesiveDC|10+(HD/2)+STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AdhesiveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Adhesive)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AdhesiveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A mimic exudes a thick slime that acts as a powerful adhesive, holding fast any creatures or items that touch it. An adhesive-covered mimic automatically grapples any creature it hits with its slam attack. Opponents so grappled cannot get free while the mimic is alive without removing the adhesive first. A weapon that strikes an adhesivecoated mimic is stuck fast unless the wielder succeeds on a DC %1 Reflex save. A successful DC %1 Strength check is needed to pry off a stuck weapon. Strong alcohol or universal solvent dissolves the adhesive, but the mimic can still grapple normally. A mimic can dissolve its adhesive at will, and the substance breaks down 5 rounds after the creature dies. The save DC is Strength-based.|AdhesiveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Mimic ~ Adhesive"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.205"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.205",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 921,
-    "record_key": "Mimic ~ Adhesive"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 921,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Mimic ~ Adhesive",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

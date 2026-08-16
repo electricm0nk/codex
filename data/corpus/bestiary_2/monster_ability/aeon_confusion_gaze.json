@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Aeon ~ Confusion Gaze",
     "delivery": "Supernatural",
@@ -15,19 +13,51 @@
     "owners": [
       "bestiary_2:monster:aeon_bythos"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|ConfusionGazeDC|10+HD/2+CHA"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConfusionGazeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Confusion for 1d4 rounds, 30 feet, Fortitude DC %1 negates.|ConfusionGazeDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Aeon ~ Confusion Gaze"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.10",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 16,
-    "record_key": "Aeon ~ Confusion Gaze"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Aeon ~ Confusion Gaze",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

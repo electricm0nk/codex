@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Living Topiary ~ Hedge Stride",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_4:monster:living_topiary"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability functions as tree stride, but rather than allowing for teleportation from tree to tree, it permits the living topiary to teleport from one area of brush or hedges to another area of similar vegetation within 1,500 feet."
+      },
+      {
+        "key": "DESC",
+        "value": "When you cast this spell, you gain the ability to step into an area of brush or hedges, magically infusing yourself with the plant. Once within a hedge, you can teleport from that particular hedge to another hedge. The hedges you enter must be of similar vegetation, must be living, and must have girth at least equal to yours. By moving into an area of brush or hedges, you instantly know the location of all other areas of brush or hedges of similar vegetation within 1,500 feet and may choose whether you want to pass into one or simply step back out of the hedge you moved into. You may choose to pass to any hedge of the appropriate kind within range. You may move into a hedge up to one time per caster level [passing from one hedge to another counts only as moving into one hedge]. The spell lasts until the duration expires or you exit a hedge. Each transport is a full-round action. You can, at your option, remain within a hedge without transporting yourself, but you are forced out when the spell ends. If the hedge in which you are concealed is chopped down or burned, you are slain if you do not exit before the process is complete.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "KEY",
+        "value": "Living Topiary ~ Hedge Stride"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1020,
-    "record_key": "Living Topiary ~ Hedge Stride"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1020,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Living Topiary ~ Hedge Stride",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

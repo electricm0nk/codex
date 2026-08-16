@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Moonflower ~ Pod Prison",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_2:monster:moonflower"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "This works like the swallow whole ability, except the moonflower can only use it once every 1d4 rounds, and the swallowed creature is immediately wrapped in a tight digestive cocoon and expelled into an adjacent square, where it takes damage every round (2d6 bludgeoning and 2d6 acid, AC 15, 25 hp).  The cocooned target cannot use Escape Artist to get out of the cocoon.  Other creatures can aid the target by attacking the cocoon with piercing or slashing weapons, but the creature within takes half the damage from any attack against the cocoon.  Once the cocoon is destroyed, it deflates and decays.  Each creature swallowed by a moonflower is encased in its own cocoon."
+      },
+      {
+        "key": "KEY",
+        "value": "Moonflower ~ Pod Prison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.192"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.192",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 839,
-    "record_key": "Moonflower ~ Pod Prison"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 839,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Moonflower ~ Pod Prison",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

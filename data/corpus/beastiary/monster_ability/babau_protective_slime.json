@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Babau ~ Protective Slime",
     "delivery": "Supernatural",
@@ -13,21 +11,45 @@
     "owners": [
       "beastiary:monster:demon_babau"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A layer of acidic slime coats a babau's skin. Any creature that strikes a babau with a natural attack or unarmed strike takes 1d8 points of acid damage from this slime if it fails a DC 18 Reflex save. A creature that strikes a babau with a melee weapon must make a DC 18 Reflex save or the weapon takes 1d8 points of acid damage; if this damage penetrates the weapon's hardness, the weapon gains the broken condition. Ammunition that strikes a babau is automatically destroyed after it inflicts its damage."
+      },
+      {
+        "key": "KEY",
+        "value": "Babau ~ Protective Slime"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Defensive"
+      }
+    ],
     "source_page": "p.57",
     "traits": [
       "Defensive"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 270,
-    "record_key": "Babau ~ Protective Slime"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 270,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Babau ~ Protective Slime",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Jinmenju ~ Intoxicating Stench",
     "delivery": "Supernatural",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:jinmenju"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a swift action, a jinmenju can cause its fruits to emit an unnaturally sweet aroma in a 60-foot spread for 6 rounds. All creatures within the area must succeed at a DC %1 Will save each round or be captivated. A captivated creature takes no actions except to approach the jinmenju via the most direct route possible. If this path leads it into a dangerous area or the jinmenju attacks it, the captivated creature receives a new saving throw. This is a mind-affecting effect.|CON+16"
+      },
+      {
+        "key": "KEY",
+        "value": "Jinmenju ~ Intoxicating Stench"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 908,
-    "record_key": "Jinmenju ~ Intoxicating Stench"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 908,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Jinmenju ~ Intoxicating Stench",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Spriggan ~ Size Alteration",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_2:monster:spriggan"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "At will as a standard action, a spriggan can change his size between Small and Large.  Weapons, armor, and other objects on the spriggan's person grow proportionally when he changes size (objects revert to normal size 1 round after a spriggan releases them).  When a spriggan becomes Large, his speed increases to 30 feet, he gains +12 Strength, -2 Dexterity, and +6 Constitution, and he takes a -2 size penalty to his AC.  While Large, a spriggan cannot use his sneak attack or his racial spell-like abilities (although if he possesses either from class levels or templates, he retains their use in both sizes). [Use the Spriggan Size Alteration template to implement.]"
+      },
+      {
+        "key": "KEY",
+        "value": "Spriggan ~ Size Alteration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.257"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.257",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1216,
-    "record_key": "Spriggan ~ Size Alteration"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1216,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Spriggan ~ Size Alteration",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

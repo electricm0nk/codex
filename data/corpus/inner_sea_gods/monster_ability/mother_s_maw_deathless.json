@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "corpus_key": "Mother's Maw ~ Deathless",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "inner_sea_gods:monster:mother_s_maw"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "If destroyed, the herald it returns to unlife 1 hour later at 1 hit point, allowing its fast healing to resume healing it. It can be permanently destroyed by positive energy, being reduced to 0 hit points in the area of a Bless or Hallow spell, or if 20 vials of holy water are sprinkled on its remains."
+      },
+      {
+        "key": "KEY",
+        "value": "Mother's Maw ~ Deathless"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
-    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
-    "line": 283,
-    "record_key": "Mother's Maw ~ Deathless"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 283,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Mother's Maw ~ Deathless",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

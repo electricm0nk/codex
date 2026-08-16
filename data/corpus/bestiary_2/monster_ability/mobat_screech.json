@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Mobat ~ Screech",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:bat_mobat"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Screech"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MobatScreechDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MobatScreechDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Screech)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MobatScreechDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a standard action, a mobat can produce an ear-splitting screech that stuns non-mobats in a 20-foot-radius burst.  All creatures within the area must make a DC %1 Fortitude save or be staggered for 1d3 rounds.  Other mobats and urdefhans are immune to this effect.  This is a sonic mind-affecting effect.|MobatScreechDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Mobat ~ Screech"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.42",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 168,
-    "record_key": "Mobat ~ Screech"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 168,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Mobat ~ Screech",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

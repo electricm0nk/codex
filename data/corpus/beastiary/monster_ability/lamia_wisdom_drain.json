@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Lamia ~ Wisdom Drain",
     "delivery": "Supernatural",
@@ -13,19 +11,47 @@
     "owners": [
       "beastiary:monster:lamia"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(1d4/touch)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A lamia drains 1d4 points of Wisdom each time it hits with its melee touch attack. (Unlike with other kinds of ability drain attacks, a lamia does not heal any damage when it uses its Wisdom drain.) Lamias try to use this power early in an encounter to make foes more susceptible to charm monster and suggestion."
+      },
+      {
+        "key": "KEY",
+        "value": "Lamia ~ Wisdom Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.186"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.186",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 822,
-    "record_key": "Lamia ~ Wisdom Drain"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 822,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Lamia ~ Wisdom Drain",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

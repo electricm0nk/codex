@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Neh-Thalggu ~ Poison",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:neh_thalggu"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Poison"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NehThalgguPoisonDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NehThalgguPoisonDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Poison)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NehThalgguPoisonDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Bite - injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d2 Strength damage and staggered; cure 2 consecutive saves.|NehThalgguPoisonDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Neh-Thalggu ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.197"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.197",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 867,
-    "record_key": "Neh-Thalggu ~ Poison"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 867,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Neh-Thalggu ~ Poison",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

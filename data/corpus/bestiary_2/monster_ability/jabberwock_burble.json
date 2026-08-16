@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Jabberwock ~ Burble",
     "delivery": "Supernatural",
@@ -16,19 +14,59 @@
       "bestiary_2:monster:jabberwock",
       "bestiary_2:monster:jabberwock_lesser"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Burble"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|JabberwockBurbleDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|JabberwockBurbleDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Burble)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "JabberwockBurbleDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A jabberwock can burble once every 1d4 rounds as a standard action.  This blast of strange noises and shouted nonsense in the various languages known to the jabberwock (and invariably some languages it doesn't know) affects all creatures within a 60-foot-radius spread - these creatures must make a DC %1 Will save or become confused for 1d4 rounds.  Alternatively, the jabberwock can focus its burble attack to create a 60-foot line of sonic energy that deals 20d6 points of sonic damage (DC %1 Reflex save for half).  The confusion effect is mind-affecting; both are sonic effects.|JabberwockBurbleDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Jabberwock ~ Burble"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.168"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.168",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 723,
-    "record_key": "Jabberwock ~ Burble"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 723,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Jabberwock ~ Burble",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

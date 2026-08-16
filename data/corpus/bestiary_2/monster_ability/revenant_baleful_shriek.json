@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Revenant ~ Baleful Shriek",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:revenant"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Baleful Shriek"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RevenantBalefulShriekDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RevenantBalefulShriekDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Baleful Shriek)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RevenantBalefulShriekDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every 1d4 rounds, a revenant can shriek as a standard action.  All creatures within a 60-foot spread must make a DC %1 Will save or cower in fear for 1d4 rounds.  This is a mind-affecting fear effect.|RevenantBalefulShriekDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Revenant ~ Baleful Shriek"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.235",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1078,
-    "record_key": "Revenant ~ Baleful Shriek"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1078,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Revenant ~ Baleful Shriek",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

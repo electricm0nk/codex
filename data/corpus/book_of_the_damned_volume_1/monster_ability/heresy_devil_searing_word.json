@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T11:18:41Z",
   "data": {
     "corpus_key": "Heresy Devil ~ Searing Word",
     "delivery": "Supernatural",
@@ -13,19 +11,43 @@
     "owners": [
       "book_of_the_damned_volume_1:monster:devil_heresy"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An ayngavhaul can speak words of torment, giving them shape and sending them streaking toward their enemies in the form of diabolical sigils. Any good-aligned creature struck by one of these infernal words takes 3d6 points of hellfire damage (half fire, half evil energy); nongood creatures take half damage. These words cannot affect creatures affected by protection from evil or within an area of magical silence. [+10 to Hit]"
+      },
+      {
+        "key": "KEY",
+        "value": "Heresy Devil ~ Searing Word"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.56",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
-    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177",
-    "line": 23,
-    "record_key": "Heresy Devil ~ Searing Word"
-  },
+  "ingested_at": "2026-08-12T11:18:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 23,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
+    "record_key": "Heresy Devil ~ Searing Word",
+    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

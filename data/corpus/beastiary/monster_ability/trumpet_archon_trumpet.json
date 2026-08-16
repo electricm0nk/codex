@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Trumpet Archon ~ Trumpet",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:archon_trumpet"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Trumpet"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|TrumpetDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrumpetDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrumpetDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Trumpet)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrumpetDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "All creatures except archons within 100 feet of the trumpet's blast must succeed on a DC %1 Fortitude save or be paralyzed for 1d4 rounds. The archon can also command its trumpet to become a +4 greatsword as a free action. Out of the archon's hands, it is a chunk of useless metal.|TrumpetDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Trumpet Archon ~ Trumpet"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.21",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 120,
-    "record_key": "Trumpet Archon ~ Trumpet"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 120,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Trumpet Archon ~ Trumpet",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

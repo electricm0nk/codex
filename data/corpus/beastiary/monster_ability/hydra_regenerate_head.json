@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Hydra ~ Regenerate Head",
     "delivery": "Extraordinary",
@@ -13,19 +11,55 @@
     "owners": [
       "beastiary:monster:hydra"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a hydra's head is destroyed, two heads regrow in 1d4 rounds. A hydra cannot have more than twice its original number of heads at any one time. To prevent new heads from growing, at least 5 points of acid or fire damage must be dealt to the stump (a touch attack to hit) before they appear. Acid or fire damage from area attacks can affect stumps and the body simultaneously. A Multiple angry snake-like heads rise from the sleek, serpentine body of this terrifying monster. hydra doesn't die from losing its heads until all are cut off and the stumps seared by acid or fire."
+      },
+      {
+        "key": "KEY",
+        "value": "Hydra ~ Regenerate Head"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.178"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|HydraHeads|%CHOICE"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Use this temporary bonus to add heads (and bite attacks) to the Hydra reflecting newly grown heads."
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=-5|MAX=5|TITLE=Add or subtract a number of hydra heads"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.178",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 783,
-    "record_key": "Hydra ~ Regenerate Head"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 783,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Hydra ~ Regenerate Head",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:choice",

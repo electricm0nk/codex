@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Erinyes ~ Entangle",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:devil_erinyes"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Entangle"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|EntangleDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EntangleDC|10+(HD/2)+DEX"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EntangleDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Entangle)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EntangleDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Each erinyes carries a 50-foot-long rope that entangles opponents of any size as an animate rope spell (CL 16th, DC %1). An erinyes can hurl its rope 30 feet with no range penalty. An erinyes's rope functions only for the erinyes who made it and no other.|EntangleDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Erinyes ~ Entangle"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.75",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 348,
-    "record_key": "Erinyes ~ Entangle"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 348,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Erinyes ~ Entangle",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

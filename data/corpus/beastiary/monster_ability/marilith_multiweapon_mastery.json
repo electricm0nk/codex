@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Marilith ~ Multiweapon Mastery",
     "delivery": "Extraordinary",
@@ -13,19 +11,55 @@
     "owners": [
       "beastiary:monster:demon_marilith"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT-PRIMARY|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT-SECONDARY|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Slap|TOHIT|-8"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A marilith never takes penalties to her attack roll when fighting with multiple weapons."
+      },
+      {
+        "key": "KEY",
+        "value": "Marilith ~ Multiweapon Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.63",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 288,
-    "record_key": "Marilith ~ Multiweapon Mastery"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 288,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Marilith ~ Multiweapon Mastery",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

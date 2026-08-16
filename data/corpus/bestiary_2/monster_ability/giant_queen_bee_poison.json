@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Giant Queen Bee ~ Poison",
     "delivery": "Extraordinary",
@@ -16,19 +14,63 @@
       "bestiary_2:monster:bee_giant_queen",
       "bestiary_2:monster:bumblebee_giant"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Poison"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(sting)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantQueenBeePoisonDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantWueenBeePoisonDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Poison)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiantQueenBeePoisonDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Sting - injury; save Fort DC %1; frequency 1/round for 4 rounds; effect 1d2 Con; cure 1 save.|GiantQueenBeePoisonDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Giant Queen Bee ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.43",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 180,
-    "record_key": "Giant Queen Bee ~ Poison"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 180,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Giant Queen Bee ~ Poison",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

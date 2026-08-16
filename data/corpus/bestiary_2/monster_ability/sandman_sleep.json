@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Sandman ~ Sleep",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:sandman"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Sleep"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SandmanSleepDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SandmanSleepDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Sleep)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SandmanSleepDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature struck by a sandman's slam attack must succeed on a DC %1 Will save or immediately fall asleep, as if affected by a sleep spell (caster level 8th).  There is no limit to the number of Hit Dice a sandman can affect with this ability.|SandmanSleepDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Sandman ~ Sleep"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.236",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1086,
-    "record_key": "Sandman ~ Sleep"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1086,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Sandman ~ Sleep",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Brethedan ~ Adaptation",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:brethedan"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A Brethedan's body is extremely mutable, and can adapt to respond to virtually any situation. Once per round as a swift action that does not provoke attacks of opportunity, a Brethedan can reshape its body and chemistry to adopt any of the following qualities - Resistance 5 against a single energy type (acid, cold, electricity, or fire).; An additional natural attack (tentacle, bite, etc.) with damage appropriate to the Brethedan's size; Change its slam damage type to slashing or piercing; Increase its slam damage die by one step (from 1d6 to 1d8 for most Brethedans); Gain a +4 natural armor bonus to AC; Extend its reach to 20 feet. A Brethedan can only have one modification in effect at any one time-a Brethedan that selects a new adaptation loses any other in effect. More extreme adaptations are also possible (at the GM's discretion) but generally take days or even months to adopt."
+      },
+      {
+        "key": "KEY",
+        "value": "Brethedan ~ Adaptation"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 356,
-    "record_key": "Brethedan ~ Adaptation"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 356,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Brethedan ~ Adaptation",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

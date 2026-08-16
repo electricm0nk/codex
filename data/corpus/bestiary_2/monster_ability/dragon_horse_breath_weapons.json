@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Dragon Horse ~ Breath Weapons",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:dragon_horse"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DragonHorseBreathWeaponsDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DragonHorseBreathWeaponsDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DragonHorseBreathWeaponsDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a dragon horse can breathe out a 30-foot cone of mist.  This mist either deals 10d6 points of cold damage (DC %1 Reflex half), creates a region of fog in the area that lasts for 1 minute (similar to that created by a fog cloud spell), or creates a blast of severe wind (see Pathfinder RPG Core Rulebook 439) in the area.  The dragon horse may use this breath weapon once every 1d4 rounds.|DragonHorseBreathWeaponsDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Dragon Horse ~ Breath Weapons"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.104",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 420,
-    "record_key": "Dragon Horse ~ Breath Weapons"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 420,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Dragon Horse ~ Breath Weapons",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

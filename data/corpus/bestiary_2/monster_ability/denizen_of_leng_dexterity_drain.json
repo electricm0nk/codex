@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Denizen of Leng ~ Dexterity Drain",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:denizen_of_leng"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Dexterity Drain"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite,1d6)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DenizenOfLengDexterityDrainDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DenizenOfLengDexterityDrainDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Dexterity Drain)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DenizenOfLengDexterityDrainDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The otherworldly teeth and tongues of a denizen of Leng deal 1d6 points of Dexterity drain with a bite.  Constructs, elementals, and other creatures that do not possess flesh are immune to this effect.  A successful DC %1 Fortitude save reduces the Dexterity drain to 1 point.|DenizenOfLengDexterityDrainDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Denizen of Leng ~ Dexterity Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.82",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 376,
-    "record_key": "Denizen of Leng ~ Dexterity Drain"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 376,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Denizen of Leng ~ Dexterity Drain",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

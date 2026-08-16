@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Tyrant Jelly ~ Constrict",
     "delivery": "Extraordinary",
@@ -17,21 +15,69 @@
     "owners": [
       "bestiary_4:monster:tyrant_jelly"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2+%3plus 1d6 acid and poison)|ConstrictDice|ConstrictDieSize|ConstrictBonusDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDice|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConstrictBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConstrictDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConstrictDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can crush an opponent, dealing %1d%2+%3 bludgeoning damage, when you make a successful grapple check (in addition to any other effects caused by a successful check, including additional damage).|ConstrictDice|ConstrictDieSize|ConstrictBonusDamage|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "You can crush an opponent, dealing %1d%2+%3 bludgeoning damage, with a successful grapple check.|ConstrictDice|ConstrictDieSize|ConstrictBonusDamage|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Tyrant Jelly ~ Constrict"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.AttackOption"
+      }
+    ],
     "source_page": "p.298",
     "traits": [
       "AttackOption"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1390,
-    "record_key": "Tyrant Jelly ~ Constrict"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1390,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Tyrant Jelly ~ Constrict",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

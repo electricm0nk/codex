@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Viper Vine ~ Captivating Cloud",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:viper_vine"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Captivating Cloud"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ViperVineCaptivatingCloudDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ViperVineCaptivatingCloudDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Captivating Cloud)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ViperVineCaptivatingCloudDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a swift action, a viper vine can emit a transparent cloud of pollen in a 60-foot spread that has the power to lull the minds of those that smell it.  Once activated, the cloud persists for 5 rounds unless dispersed by a moderate or stronger wind.  All creatures in the cloud must succeed on a DC %1 Will saving throw each round or become captivated.  Once a creature becomes captivated, it takes no actions save to approach the viper vine via the most direct route possible.  If this path leads into a dangerous area, such as through fire or off a cliff, that creature receives a second saving throw to tend the effect before moving into peril.  A victm that is attacked by the viper vine gets a new saving throw as a free action during each of the viper vine's attacks to overcome the effect.  This is a mind-affecting effect.|ViperVineCaptivatingCloudDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Viper Vine ~ Captivating Cloud"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.279"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.279",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1338,
-    "record_key": "Viper Vine ~ Captivating Cloud"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1338,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Viper Vine ~ Captivating Cloud",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

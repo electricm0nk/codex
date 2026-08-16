@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Sea Hag ~ Evil Eye",
     "delivery": "Supernatural",
@@ -17,19 +15,59 @@
     "owners": [
       "beastiary:monster:sea_hag"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Evil Eye"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EvilEyeSaveDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EvilEyeSaveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Evil Eye)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EvilEyeSaveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day, a sea hag can cast her dire gaze upon any single creature within 30 feet. The target must succeed on a DC %1 Will save or be staggered as strange nebulous distress and a gnawing sense of impending doom plagues the victim. If a sea hag uses her evil eye on someone already afflicted by this curse, the victim must make a DC %2 Fortitude save or be overwhelmed with fright and collapse into a comatose state for 3 days. Each day that passes, the comatose victim must make a DC %3 Fortitude save or perish. The evil eye is a mind-affecting fear effect.|EvilEyeSaveDC|EvilEyeSaveDC|EvilEyeSaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Sea Hag ~ Evil Eye"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.243"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.243",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1095,
-    "record_key": "Sea Hag ~ Evil Eye"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1095,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Sea Hag ~ Evil Eye",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

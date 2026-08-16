@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Faceless Stalker ~ Change Shape",
     "delivery": "Supernatural",
@@ -13,19 +11,51 @@
     "owners": [
       "bestiary_2:monster:faceless_stalker"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(Medium humanoid,alter self)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Disguise=When using change shape|10"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A faceless stalker can assume the form of a Medium humanoid at will but requires 10 uninterrupted minutes to alter its body.  Performing this transformation is somewhat painful, but the faceless stalker can maintain its new form indefinitely once it has achieved it.  It can change back to its true form as a swift action and gains a +2 morale bonus on attack rolls, damage rolls, skill checks, and saving throws for 1 round after it does so.  Faceless stalkers retain their own innate abilities when they assume their new form and do not gain any of those belonging to the creature they mimic.  A faceless stalker gains a +10 bonus on Disguise checks when they are used in conjunction with this ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Faceless Stalker ~ Change Shape"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.122",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 532,
-    "record_key": "Faceless Stalker ~ Change Shape"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 532,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Faceless Stalker ~ Change Shape",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

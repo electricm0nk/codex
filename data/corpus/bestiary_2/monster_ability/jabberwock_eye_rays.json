@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Jabberwock ~ Eye Rays",
     "delivery": "Supernatural",
@@ -14,19 +12,43 @@
       "bestiary_2:monster:jabberwock",
       "bestiary_2:monster:jabberwock_lesser"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The jabberwock can project beams of fire from its eyes as a ranged touch attack as a standard action, with a range increment of 60 feet.  It projects two beams, and can target different creatures with these beams if it wishes as long as both targets are within 30 feet of each other.  A creature that takes damage from an eye beam suffers burn."
+      },
+      {
+        "key": "KEY",
+        "value": "Jabberwock ~ Eye Rays"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.168"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.168",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 724,
-    "record_key": "Jabberwock ~ Eye Rays"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 724,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Jabberwock ~ Eye Rays",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

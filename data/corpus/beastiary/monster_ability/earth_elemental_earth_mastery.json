@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Earth Elemental ~ Earth Mastery",
     "delivery": "Extraordinary",
@@ -17,22 +15,46 @@
       "beastiary:monster:elemental_earth_greater",
       "beastiary:monster:elemental_earth_elder"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An earth elemental gains a +1 bonus on attack and damage rolls if both it and its foe are touching the ground. If an opponent is airborne or waterborne, the elemental takes a -4 penalty on attack and damage rolls. These modifiers apply to bull rush and overrun maneuvers, whether the elemental is initiating or resisting these kinds of attacks. (These modifiers are not included in the statistics block.)"
+      },
+      {
+        "key": "KEY",
+        "value": "Earth Elemental ~ Earth Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Special Attack.Special Ability.Extraordinary"
+      }
+    ],
     "source_page": "p.122",
     "traits": [
       "Special Attack",
       "Special Ability"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 590,
-    "record_key": "Earth Elemental ~ Earth Mastery"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 590,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Earth Elemental ~ Earth Mastery",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

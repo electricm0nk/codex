@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Marilith ~ Infuse Weapon",
     "delivery": "Supernatural",
@@ -13,19 +11,55 @@
     "owners": [
       "beastiary:monster:demon_marilith"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Exotic|DAMAGE,TOHIT|1|TYPE=Enhancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Martial|DAMAGE,TOHIT|1|TYPE=Enhancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Simple|DAMAGE,TOHIT|1|TYPE=Enhancement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Any weapon a marilith wields gains a +1 enhancement bonus to attack and damage, and strikes as if it were a chaotic and evil cold iron weapon (in addition to retaining the qualities of its actual composition)."
+      },
+      {
+        "key": "KEY",
+        "value": "Marilith ~ Infuse Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.63",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 287,
-    "record_key": "Marilith ~ Infuse Weapon"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 287,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Marilith ~ Infuse Weapon",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

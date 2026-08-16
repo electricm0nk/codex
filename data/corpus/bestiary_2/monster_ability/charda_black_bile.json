@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Charda ~ Black Bile",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:charda"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Black Bile"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChardaBlackBileDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChardaBlackBileDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Black Bile)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChardaBlackBileDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A charda's body seethes with freezing black bile.  Its supernaturally cold, black bile is the source of the additional cold damage when a charda bites a creature.  As a standard action, a charda can expel its full store of bile as a breath weapon that can take the form of a 60-food line or a 30-foot cone.  All creatures in this area take 8d6 points of cold damage (DC %1 Reflex half).  A charda can use this breath weapon once every 1d4 rounds - while its black bile is recharging, it does not deal additional cold damage with its bite.|ChardaBlackBileDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Charda ~ Black Bile"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.55",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 239,
-    "record_key": "Charda ~ Black Bile"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 239,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Charda ~ Black Bile",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Tarrasque ~ Regeneration",
     "delivery": "Extraordinary",
@@ -13,21 +11,53 @@
     "owners": [
       "beastiary:monster:tarrasque"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|40"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "No form of attack can suppress the tarrasque's regeneration--it regenerates even if disintegrated or slain by a death effect."
+      },
+      {
+        "key": "DESC",
+        "value": "No form of attack can suppress the tarrasque's regeneration--it regenerates even if disintegrated or slain by a death effect. If the tarrasque fails a save against an effect that would kill it instantly, it rises from death 3 rounds later with 1 hit point if no further damage is inflicted upon its remains. It can be banished or otherwise transported as a means to save a region, but the method to truly kill it has yet to be discovered."
+      },
+      {
+        "key": "KEY",
+        "value": "Tarrasque ~ Regeneration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ModifyHP"
+      }
+    ],
     "source_page": "p.262",
     "traits": [
       "ModifyHP"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1183,
-    "record_key": "Tarrasque ~ Regeneration"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1183,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Tarrasque ~ Regeneration",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

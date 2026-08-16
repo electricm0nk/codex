@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Graeae ~ Coven",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:graeae"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Like hags, graeaes also form covens. A graeae coven can be composed entirely of graeaes, or could or include hags or witches with the coven hex. A hag or witch with the coven hex counts as a graeae for purposes of joining a graeae's coven. Likewise, a graeae counts as a hag for purposes of joining a hag's coven. [Graeae Coven] Whenever three or more graeaes of the same coven are within 10 feet of one another, they can work together to use any of the following spell-like abilities: clairaudience/clairvoyance, commune, contact other plane, speak with dead, and tongues. All three graeaes must spend a full-round action to take part in this form of cooperative magic. All coven spell-like abilities are CL 9th (or at the highest caster level available to the most powerful graeaes in the coven)."
+      },
+      {
+        "key": "KEY",
+        "value": "Graeae ~ Coven"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 794,
-    "record_key": "Graeae ~ Coven"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 794,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Graeae ~ Coven",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

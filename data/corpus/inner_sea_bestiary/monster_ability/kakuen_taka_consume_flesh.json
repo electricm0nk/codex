@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "corpus_key": "Kakuen-Taka ~ Consume Flesh",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "inner_sea_bestiary:monster:kakuen_taka"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Consume Flesh"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConsumeFleshDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConsumeFleshDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Consume Flesh)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConsumeFleshDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round, when a kakuen-taka kills or reduces a creature to negative hit points with its swarm attack, it automatically attempts to consume the target's flesh as a free action (Fortitude DC 24 negates). If the target fails its save, its body is destroyed and the kakuen-taka gains the benefits of a death knell spell. This is a death attack.[DC %1]|ConsumeFleshDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Kakuen-Taka ~ Consume Flesh"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.20",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
-    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
-    "line": 148,
-    "record_key": "Kakuen-Taka ~ Consume Flesh"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 148,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Kakuen-Taka ~ Consume Flesh",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

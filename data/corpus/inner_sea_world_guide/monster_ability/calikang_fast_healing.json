@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:22Z",
   "data": {
     "corpus_key": "Calikang ~ Fast Healing",
     "delivery": "Extraordinary",
@@ -15,21 +13,61 @@
     "owners": [
       "inner_sea_world_guide:monster:calikang"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1|FastHealingRate"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FastHealingRate|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A calikang regains hit points at %1 per round. Fast healing does not restore hit points lost from starvation, thirst, or suffocation, nor does it allow a creature to regrow lost body parts or allow lost body parts to be reattached. Fast healing continues to function (even at negative hit points) until a creature dies, at which point the effects of fast healing end immediately.|FastHealingRate"
+      },
+      {
+        "key": "KEY",
+        "value": "Calikang ~ Fast Healing"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.308"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ModifyHp"
+      }
+    ],
     "source_page": "p.308",
     "traits": [
       "ModifyHp"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
-    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
-    "line": 12,
-    "record_key": "Calikang ~ Fast Healing"
-  },
+  "ingested_at": "2026-08-15T01:24:22Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "record_key": "Calikang ~ Fast Healing",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

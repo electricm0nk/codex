@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Grig ~ Fiddle",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:grig"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Fiddle"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GrigFiddleDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GrigFiddleDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Fiddle)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GrigFiddleDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Grigs are capable of rubbing their legs together like a cricket to create a surprisingly pleasant sound not unlike that of a tiny fiddle.  As a standard action, a grig can create a catchy tune that compels any creature within a 20-foot spread to dance and caper.  A creature can resist this compulsion by making a DC %1 Will save.  Creatures that fail are compelled to dance and shuffle their feet, and are effectively staggered as long as the grig continues to fiddle.  A grig can maintain this effect for up to 10 rounds per day by concentrating.  Once a creature makes a save against a grig's fiddle, it is immune to further fiddle effects from that grig for 24 hours.  This is a sonic mind-affecting effect.|GrigFiddleDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Grig ~ Fiddle"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.147"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.147",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 649,
-    "record_key": "Grig ~ Fiddle"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 649,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Grig ~ Fiddle",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

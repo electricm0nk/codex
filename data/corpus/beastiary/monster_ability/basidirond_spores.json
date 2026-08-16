@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Basidirond ~ Spores",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:basidirond"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Spores"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(inhaled; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d2 Con damage; cure 1 save)|SporesDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SporesDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SporesDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Spores)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SporesDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature struck by a basidirond's slam attack is coated with spores. The creature struck must make a DC %1 Fortitude save or these spores take root in his flesh, and particularly in his lungs. Basidirond Spores: Disease--inhaled; save Fort DC 16; frequency 1/round for 6 rounds; effect 1d2 Con damage; cure 1 save.|SporesDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Basidirond ~ Spores"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.28",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 146,
-    "record_key": "Basidirond ~ Spores"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 146,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Basidirond ~ Spores",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

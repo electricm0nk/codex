@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Dragon (Void) ~ Suffocating Breath",
     "delivery": "Supernatural",
@@ -16,19 +14,39 @@
     "owners": [
       "bestiary_4:monster:dragon_void"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Instead of dealing cold damage, a very young or older void dragon can breathe a cone­shaped suffocation effect. An air-dependent creature that fails its Fortitude save (DC %1) suffocates (Pathfinder RPG Core Rulebook 445) for %2 rounds.|10+(HD/2)+CON|DragonAgeCategory"
+      },
+      {
+        "key": "KEY",
+        "value": "Dragon (Void) ~ Suffocating Breath"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 539,
-    "record_key": "Dragon (Void) ~ Suffocating Breath"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 539,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Dragon (Void) ~ Suffocating Breath",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",

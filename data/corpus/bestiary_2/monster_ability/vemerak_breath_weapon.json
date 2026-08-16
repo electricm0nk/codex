@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Vemerak ~ Breath Weapon",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:vemerak"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(90-foot line, 14d8 acid damage, DC %1 half, once every 1d4 rounds)|VemerakBreathWeaponDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VemerakBreathWeaponDC|10+CON+TL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VemerakBreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VemerakBreathWeaponDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A vemerak's acid breath weapon has no effect on inorganic or undead material.  If the breath weapon deals damage to a living fleshy creature, the acid creates a transparent cloud of foul-smelling vapor that fills that creature's space and persists for 1 round.  Any creature in or passing through the cloud must make a DC %1 Fortitude save or be nauseated for 1d4 rounds.  This cloud is a poison effect.|VemerakBreathWeaponDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Vemerak ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.278"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.278",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1331,
-    "record_key": "Vemerak ~ Breath Weapon"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1331,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Vemerak ~ Breath Weapon",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

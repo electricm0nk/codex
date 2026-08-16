@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Augnagar ~ Horrific Appearance",
     "delivery": "Supernatural",
@@ -13,19 +11,63 @@
     "owners": [
       "bestiary_2:monster:qlippoth_augnagar"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Horrific Appearance"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|AugnagarHorrificAppearanceDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AugnagarHorrificAppearanceDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AugnagarHorrificAppearanceDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Horrific Appearance)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AugnagarHorrificAppearanceDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Creatures that succumb to an augnagar's horrific appearance are driven momentarily insane with fear.  This results in 2 points of Charisma damage and leaves the victim confused for 1d3 rounds."
+      },
+      {
+        "key": "KEY",
+        "value": "Augnagar ~ Horrific Appearance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.219",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 993,
-    "record_key": "Augnagar ~ Horrific Appearance"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 993,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Augnagar ~ Horrific Appearance",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

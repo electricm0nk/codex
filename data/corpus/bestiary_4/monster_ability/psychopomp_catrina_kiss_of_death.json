@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Psychopomp (Catrina) ~ Kiss of Death",
     "delivery": "Supernatural",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:psychopomp_catrina"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A catrina can kill a grappled, helpless, or willing target with a long, passionate kiss. The target must succeed at a DC %1 Fortitude save or take 5d6 points of damage. Any creature damaged by the same catrina's kiss for three consecutive rounds instantly dies, regardless of how many hit points it has remaining. Creatures of the old age category take a -2 penalty on saving throws to resist this ability, while those in the venerable age category take a -4 penalty. This is a death effect.|13+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Psychopomp (Catrina) ~ Kiss of Death"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1175,
-    "record_key": "Psychopomp (Catrina) ~ Kiss of Death"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1175,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Psychopomp (Catrina) ~ Kiss of Death",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Handmaiden Devil ~ Tentacle Cage",
     "delivery": "Supernatural",
@@ -16,19 +14,63 @@
     "owners": [
       "bestiary_2:monster:devil_handmaiden"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(4d8+10 bludgeoning, AC %1, %2 hp)|TentacleCageAC|TentacleCageHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TentacleCageAC|10+(var(\"AC.NaturalArmor\")/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TentacleCageHP|HP/10"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TentacleCageAC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TentacleCageHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If a gylou successfully grapples a creature, she transfers that creature into her lower body's nest of cage-like tentacles.  This works like swallow whole.  The gylou's tentacles are AC %1 and have %2 hit points for the purpose of an entrapped creature cutting itself out.  A gylou's tendrils heal quickly, allowing her to use this ability 1 round after a creature cuts itself free.|TentacleCageAC|TentacleCageHP"
+      },
+      {
+        "key": "KEY",
+        "value": "Handmaiden Devil ~ Tentacle Cage"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.86",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 398,
-    "record_key": "Handmaiden Devil ~ Tentacle Cage"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 398,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Handmaiden Devil ~ Tentacle Cage",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

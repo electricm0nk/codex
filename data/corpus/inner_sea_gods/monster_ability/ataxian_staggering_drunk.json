@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "corpus_key": "Ataxian ~ Staggering Drunk",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "inner_sea_gods:monster:ataxian"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "For each alcoholic drink an Ataxian has consumed in the past hour, it gains a +1 dodge bonus to AC and takes a -1 penalty on all attack rolls, saving throws, skill checks, and ability checks, to a maximum of +4 and -4 respectively. These effects wear off after 1 hour."
+      },
+      {
+        "key": "KEY",
+        "value": "Ataxian ~ Staggering Drunk"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
-    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
-    "line": 131,
-    "record_key": "Ataxian ~ Staggering Drunk"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 131,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Ataxian ~ Staggering Drunk",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:22Z",
   "data": {
     "corpus_key": "Calikang ~ Breath Weapon",
     "delivery": "Supernatural",
@@ -19,19 +17,91 @@
     "owners": [
       "inner_sea_world_guide:monster:calikang"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. line, %3d6 energy damage, Reflex DC %4 half, usable %4/day)|BreathWeaponLine|BreathWeaponDice|BreathWeaponDC|BreathWeaponTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDice|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponLine|60"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponTimes|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponLine|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1-ft. line, %2d6 energy damage, Reflex DC %3 half, usable %4/day. A calikang can choose what kind of energy damage its breath weapon inflicts when it uses this ability. Calikangs are particularly adept at using electricity in this manner, and inflict %5 additional points of damage when they elect to inflict electricity damage with their breath weapon.|BreathWeaponLine|BreathWeaponDice|BreathWeaponDC|BreathWeaponTimes|HD"
+      },
+      {
+        "key": "KEY",
+        "value": "Calikang ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.308"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.308",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
-    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
-    "line": 15,
-    "record_key": "Calikang ~ Breath Weapon"
-  },
+  "ingested_at": "2026-08-15T01:24:22Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "record_key": "Calikang ~ Breath Weapon",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

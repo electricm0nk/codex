@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Nereid ~ Drowning Kiss",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:nereid"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Drowning Kiss"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NereidDrowningKissDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NereidDrowningKissDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Drowning Kiss)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NereidDrowningKissDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A nereid can flood the lungs of a willing, helpless, or fascinated creature by touching it (traditionally by kissing the creature on the lips).  If the target cannot breathe water, it cannot hold its breath and immediately begins to drown.  On its turn, the target can attempt a DC %1 Fortitude save to cough up this water; otherwise it falls unconscious at 0 hp.  On the next round, the target must save again or drop to -1 hit points and be dying; on the third round it must save again or die (see page 445 of the Pathfinder RPG Core Rulebook).|NereidDrowningKissDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Nereid ~ Drowning Kiss"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.198",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 873,
-    "record_key": "Nereid ~ Drowning Kiss"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 873,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Nereid ~ Drowning Kiss",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Frost Giant Stealth",
     "delivery": null,
@@ -13,19 +11,47 @@
     "owners": [
       "beastiary:monster:giant_frost"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Frost Giant Stealth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.149"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Stealth|4|TYPE=Racial"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Adjusts Stealth skill bonus by 4"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
     "source_page": "p.149",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 685,
-    "record_key": "Frost Giant Stealth"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 685,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Frost Giant Stealth",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:tempbonus"

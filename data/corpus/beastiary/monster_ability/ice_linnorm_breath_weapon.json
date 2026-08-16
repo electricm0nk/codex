@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Ice Linnorm ~ Breath Weapon",
     "delivery": "Supernatural",
@@ -18,19 +16,75 @@
     "owners": [
       "beastiary:monster:linnorm_ice"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1' Line of freezing ooze %2d%3, DC %4)|BreathWeaponLine|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDamageDie|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponLine|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every 1d4 rounds as a standard action, an ice linnorm can expel a %1-foot cone of freezing, viscous ooze, dealing %2d%3 points of cold damage to all creatures struck (Reflex DC %4 halves). The freezing ooze clings to those struck, and 1 round later the ooze hardens into thick sheets of ice. Creatures that were damaged are frozen motionless unless they can break free with a DC 25 Strength, Escape Artist, or combat maneuver check. Each round a creature remains frozen it takes 1d6 points of cold damage. Another creature can free a frozen target by tearing away the ice (this takes 1d4 rounds) or dealing at least 20 points of fire damage to the frozen target. Left unattended, the ice crumbles away in 2d4 rounds on its own. Creatures with the fire subtype cannot be frozen in place by this breath weapon. Flying creatures that don't have supernatural flight fall if frozen, and swimming creatures that are frozen rise toward the surface of the water at a speed of 60 feet per round.|BreathWeaponLine|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Ice Linnorm ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.191"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.191",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 847,
-    "record_key": "Ice Linnorm ~ Breath Weapon"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 847,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Ice Linnorm ~ Breath Weapon",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

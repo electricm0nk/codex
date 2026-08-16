@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Scarecrow ~ Fear",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:scarecrow"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Fear"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScarecrowFearDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScarecrowFearDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Fear)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ScarecrowFearDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A scarecrow's touch infuses its target with overwhelming waves of fear.  If the victim fails a DC %1 Will sve, she cowers and can take no actions other than attempting a new DC %1 Will save at the end of the following round (and each round thereafter) to end this fear.  A successful first save leaves the victim shaken for 1 round.  This is a mind-affecting fear effect.|ScarecrowFearDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Scarecrow ~ Fear"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.238"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.238",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1100,
-    "record_key": "Scarecrow ~ Fear"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1100,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Scarecrow ~ Fear",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

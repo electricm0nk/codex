@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Buggane ~ Earth Distortion",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:buggane"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per minute as a swift action, a buggane can empower itself to completely ignore the physicality of stone and metal, enabling it to pass through stone and metal barriers as easily as air. Until the beginning of the buggane's next turn, the buggane has earth glide and takes no damage from stone or metal weapons, or from the natural attacks of creatures of the earth subtype or stone or metal constructs. Additionally, a buggane's melee attacks ignore any AC bonus (including enhancement bonuses) from metal or stone armor and shields. While using earth distortion, the buggane cannot damage stone or metal constructs or creatures of the earth subtype with its natural attacks."
+      },
+      {
+        "key": "KEY",
+        "value": "Buggane ~ Earth Distortion"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 362,
-    "record_key": "Buggane ~ Earth Distortion"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 362,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Buggane ~ Earth Distortion",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

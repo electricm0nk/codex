@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "corpus_key": "Arcanotheign ~ Eldritch Blast",
     "delivery": "Supernatural",
@@ -15,21 +13,57 @@
     "owners": [
       "inner_sea_gods:monster:arcanotheign"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Eldritch Blast"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Eldritch Blast)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EldritchDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The herald chooses an additional effect for its eldritch blasts each round (DC %1 negates). A creature that fails its saves against both blasts in the same round suffers an increased effect. Dement (Will): The creature is confused for 1 minute. Increased effect: The creature goes insane (as insanity). Displace (Fortitude): The creature teleports (as dimension door) 5 feet in a random horizontal direction at the end of its turn each round for the next 10 rounds. Increased effect: The creature is affected by maze. Ignite (Reflex): The creature takes 2d6 points of fire damage. Increased effect: The creature catches on fire.|EldritchDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Arcanotheign ~ Eldritch Blast"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.AttackOption"
+      }
+    ],
     "source_page": null,
     "traits": [
       "AttackOption"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
-    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
-    "line": 213,
-    "record_key": "Arcanotheign ~ Eldritch Blast"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 213,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Arcanotheign ~ Eldritch Blast",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

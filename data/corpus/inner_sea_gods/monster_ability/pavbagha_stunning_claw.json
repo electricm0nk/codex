@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "corpus_key": "Pavbagha ~ Stunning Claw",
     "delivery": "Extraordinary",
@@ -16,19 +14,67 @@
     "owners": [
       "inner_sea_gods:monster:pavbagha"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Stunning Claw"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day, DC %2 Fort)|StunningClawTimes|StunningClawDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StunningClawDC|10+(HD/2)+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StunningClawDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Stunning Claw)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StunningClawTimes|HD"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StunningClawDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StunningClawTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability functions like the Stunning Fist feat, except the pavbagha uses a claw attack instead of an unarmed strike. The servitor can use this ability %1 times per day. A successful DC %2 Fortitude saving throw negates this effect. The save DC is Wisdom-based.|StunningClawTimes|StunningClawDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Pavbagha ~ Stunning Claw"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
-    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
-    "line": 195,
-    "record_key": "Pavbagha ~ Stunning Claw"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 195,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Pavbagha ~ Stunning Claw",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Neothelid ~ Psychic Crush",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:neothelid"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Psychic Crush"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(single creature within 60', fall unconsious and dying at -1 hp, Will DC %2 for 6d6 damage and sickened for 1 round, 3/day)|NeothelidPsychicCrushDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NeothelidPsychicCrushDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NeothelidPsychicCrushDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Psychic Crush)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NeothelidPsychicCrushDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action up to three times a day, a neothelid can attempt to crush the mind of a single creature within 60 feet. The target must make a DC %1 Will save or collapse, becoming unconscious and dying at -1 hit points. If the target succeeds on the save, it takes 6d6 points of damage and is sickened for 1 round. This is a mind-affecting effect. The save DC is Charisma-based.|NeothelidPsychicCrushDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Neothelid ~ Psychic Crush"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.214",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 974,
-    "record_key": "Neothelid ~ Psychic Crush"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 974,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Neothelid ~ Psychic Crush",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

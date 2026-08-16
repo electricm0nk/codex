@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Jinmenju ~ Enticing Head-Fruits",
     "delivery": "Supernatural",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:jinmenju"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature that begins its turn within 5 feet of a jinmenju must succeed at a DC %1 Will save or be magically compelled to immediately grab a head- fruit and eat it. This is a mind-affecting compulsion effect. A creature that successfully saves is immune to that jinmenju's enticing head-fruits for 24 hours. Anyone who takes a bite out of one suffers from the following effect. [Head-Fruit Poison] Head-fruit-ingested; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d3 Wisdom damage and confused for 1 round; cure 2 consecutive saves.|CON+16"
+      },
+      {
+        "key": "KEY",
+        "value": "Jinmenju ~ Enticing Head-Fruits"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 907,
-    "record_key": "Jinmenju ~ Enticing Head-Fruits"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 907,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Jinmenju ~ Enticing Head-Fruits",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

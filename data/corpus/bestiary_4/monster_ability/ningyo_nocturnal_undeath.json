@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Ningyo ~ Nocturnal Undeath",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:ningyo"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The body of a ningyo never rests peacefully. Every night, an hour after sundown, an intact ningyo corpse animates; its type changes to undead (aquatic), and it gains undead immunities, bonus hit points based on its Charisma instead of Constitution, and the startle ability. At dawn, the undead ningyo becomes a corpse again. An undead ningyo knows when the dawn is coming and attempts to find shelter so it is not discovered as a corpse. A ningyo missing a limb, head, or tail does not animate at night, but can do so if reunited with its missing body part. A ningyo corpse that is burned or torn apart and its pieces scattered does not rise as an undead."
+      },
+      {
+        "key": "KEY",
+        "value": "Ningyo ~ Nocturnal Undeath"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1131,
-    "record_key": "Ningyo ~ Nocturnal Undeath"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1131,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Ningyo ~ Nocturnal Undeath",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

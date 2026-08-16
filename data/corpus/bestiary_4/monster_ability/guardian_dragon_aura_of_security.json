@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Guardian Dragon ~ Aura of Security",
     "delivery": "Supernatural",
@@ -13,21 +11,45 @@
     "owners": [
       "bestiary_4:monster:guardian_dragon"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(1000 ft.)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A guardian dragon is alerted whenever a Tiny or larger creature enters its aura (as a mental alarm spell). If its dimensional lock spell-like ability is dispelled or destroyed, it may expend two uses of mythic power to cast it again. The dragon can use its false vision spell-like ability only within its aura, and the duration ends if the aura's area no longer includes the affected area."
+      },
+      {
+        "key": "KEY",
+        "value": "Guardian Dragon ~ Aura of Security"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Aura"
+      }
+    ],
     "source_page": null,
     "traits": [
       "Aura"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 843,
-    "record_key": "Guardian Dragon ~ Aura of Security"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 843,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Guardian Dragon ~ Aura of Security",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

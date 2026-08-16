@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Horse ~ Docile",
     "delivery": "Extraordinary",
@@ -13,19 +11,55 @@
     "owners": [
       "beastiary:monster:horse_pony"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hoof|DAMAGE|-ceil(STR/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hoof|TOHIT|-5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Unless specifically trained for combat, a horse's hooves are treated as secondary attacks."
+      },
+      {
+        "key": "KEY",
+        "value": "Horse ~ Docile"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.177"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      }
+    ],
     "source_page": "p.177",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 777,
-    "record_key": "Horse ~ Docile"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 777,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Horse ~ Docile",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

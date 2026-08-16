@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Violet Fungus ~ Rot",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:violet_fungus"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Rot"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|RotDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RotDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RotDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Rot)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RotDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature struck by a violet fungus's tentacle must succeed on a DC %1 Fortitude save or the flesh around the point of contact swiftly begins to rot away, exposing raw bone with shocking swiftness. This hideous affliction causes 1d4 points of Strength damage and 1d4 points of Constitution damage.|RotDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Violet Fungus ~ Rot"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.274"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.274",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1230,
-    "record_key": "Violet Fungus ~ Rot"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1230,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Violet Fungus ~ Rot",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

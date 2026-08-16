@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Crag Linnorm ~ Death Curse",
     "delivery": null,
@@ -15,21 +13,61 @@
     "owners": [
       "beastiary:monster:linnorm_crag"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Death Curse"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathCurseDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathCurseDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Death Curse)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeathCurseDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When a creature slays a crag linnorm, the slayer is affected by the curse of fire. Curse of Fire: save Will DC %1; effect creature gains vulnerability to fire.|DeathCurseDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Crag Linnorm ~ Death Curse"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.190"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatrual"
+      }
+    ],
     "source_page": "p.190",
     "traits": [
       "Supernatrual"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 842,
-    "record_key": "Crag Linnorm ~ Death Curse"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 842,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Crag Linnorm ~ Death Curse",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

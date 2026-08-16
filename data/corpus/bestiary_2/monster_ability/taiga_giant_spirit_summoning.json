@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Taiga Giant ~ Spirit Summoning",
     "delivery": "Supernatural",
@@ -13,19 +11,51 @@
     "owners": [
       "bestiary_2:monster:giant_taiga"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Enchantment Spells|Immunity to Illusion Spells"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|4|TYPE=Deflection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a taiga giant may perform a 10-minute ritual to tap into the power and insight of his ancestral spirits.  These spirits provide a +4 deflection bonus to AC, immunity to enchantment and illusion spells, and one of the following spell effects: bless, endure elements, protection from evil, protection from good, or see invisibility.  The effects of a spirit summoning persist for 24 hours."
+      },
+      {
+        "key": "KEY",
+        "value": "Taiga Giant ~ Spirit Summoning"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.131",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 576,
-    "record_key": "Taiga Giant ~ Spirit Summoning"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 576,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Taiga Giant ~ Spirit Summoning",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

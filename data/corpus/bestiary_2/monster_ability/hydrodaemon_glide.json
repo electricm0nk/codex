@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Hydrodaemon ~ Glide",
     "delivery": "Supernatural",
@@ -13,21 +11,45 @@
     "owners": [
       "bestiary_2:monster:daemon_hydrodaemon"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A hydrodaemon can launch itself into the air and glide along for 1 minute, gaining a fly speed of 40 feet with average maneuverability.  While gliding, the hydrodaemon gains the pounce ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Hydrodaemon ~ Glide"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ModifyMovement.Supernatural"
+      }
+    ],
     "source_page": "p.67",
     "traits": [
       "ModifyMovement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 294,
-    "record_key": "Hydrodaemon ~ Glide"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 294,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Hydrodaemon ~ Glide",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

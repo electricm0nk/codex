@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Gloomwing ~ Pheromones",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:gloomwing"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Pheromones"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GloomwingPheromonesDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GloomwingPheromonesDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Pheromones)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GloomwingPheromonesDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "After the first round of combat, a gloomwing can emit a strange, musky scent in a 30-foot radius as a free action.  All creatures within this area (save for other gloomwings or tenebrous worms) must make a DC %1 Fortitude save each round to avoid becoming weakened by the pheromones.  Once a creature fails a save against this effect, it takes a -4 penalty to its Strength score - this penalty lasts for as long as the battle continues and for 1 hour thereafter.  Lesser restoration or any other effect capable of healing ability damage immediately removes this Strength penalty.|GloomwingPheromonesDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Gloomwing ~ Pheromones"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.133"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.133",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 584,
-    "record_key": "Gloomwing ~ Pheromones"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 584,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Gloomwing ~ Pheromones",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

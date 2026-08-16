@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Iathavos ~ Abyssal Transformation",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:qlippoth_iathavos"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Abyssal Transformation"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IathavosAbyssalTransformationDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IathavosAbyssalTransformationDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Abyssal Transformation)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IathavosAbyssalTransformationDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If an iavathos establishes a hold on a creature of Large or smaller size, it can place that creature deep within the bristly folds of its flesh.  Treat this as an engulf attack (see page 296), except that at the start of the iathavos's turn, an engulfed creature must make a DC %1 Fortitude save or be transformed into a nygoth qlippoth that immediately squirms out of the iathavos's body to serve its new master.  Creatures transformed into nygoths are not controlled by the iathavos, but function and behave as if they were typical members of that species - they retain no memories or abilities they may have possessed in their previous lives.  Items held or worn by the unfortunate victim remain lodged within the folds of the iathavos's body and can only be retrieved if the iathavos is helpless or dead.  A creature transformed into a nygoth in this manner can be restored to its true shape via break enchantment, miracle, or wish.  Otherwise, slaying the nygoth allows the poor soul to be restored to life via reincarnation, resurrection, or true resurrection.|IathavosAbyssalTransformationDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Iathavos ~ Abyssal Transformation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.222"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.222",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1009,
-    "record_key": "Iathavos ~ Abyssal Transformation"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1009,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Iathavos ~ Abyssal Transformation",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

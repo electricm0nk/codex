@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Fleshdreg ~ Sin-Scent",
     "delivery": "Supernatural",
@@ -13,21 +11,41 @@
     "owners": [
       "bestiary_4:monster:fleshdreg"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Fleshdregs have scent against creatures whose nature reflects the fleshdreg's related sin. For example, a wrathful fleshdreg can scent creatures using rage effects. The GM should adjudicate what creatures a particular fleshdreg can scent."
+      },
+      {
+        "key": "KEY",
+        "value": "Fleshdreg ~ Sin-Scent"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Senses"
+      }
+    ],
     "source_page": null,
     "traits": [
       "Senses"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 661,
-    "record_key": "Fleshdreg ~ Sin-Scent"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 661,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Fleshdreg ~ Sin-Scent",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

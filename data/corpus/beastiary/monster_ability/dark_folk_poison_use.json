@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Dark Folk ~ Poison Use",
     "delivery": "Extraordinary",
@@ -13,21 +11,49 @@
     "owners": [
       "beastiary:monster:dark_stalker"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(Black Smear--injury; save Fort DC 15; frequency 1/round for 6 rounds; effect 1d2 Str; cure 1 save.)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Dark Folk are skilled in the use of poison and never risk accidentally poisoning themselves. Dark Folk favor a foul-smelling black paste distilled from certain deep-underground fungi known as black smear-- injury; save Fort DC 15; frequency 1/round for 6 rounds; effect 1d2 Str; cure 1 save."
+      },
+      {
+        "key": "KEY",
+        "value": "Dark Folk ~ Poison Use"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Poison Use"
+      }
+    ],
     "source_page": "p.53",
     "traits": [
       "Poison Use"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 258,
-    "record_key": "Dark Folk ~ Poison Use"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 258,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Dark Folk ~ Poison Use",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

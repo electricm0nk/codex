@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Hungry Flesh ~ Slime Trail",
     "delivery": "Extraordinary",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:hungry_flesh"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A hungry flesh leaves behind a trail of slime that acts as a grease spell (DC %1). Any living creature that touches this slime with bare flesh must succeed at a Fortitude save (with a +4 bonus) or contract tumor infestation. The slime dries up after 1 minute.|12+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Hungry Flesh ~ Slime Trail"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 872,
-    "record_key": "Hungry Flesh ~ Slime Trail"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 872,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Hungry Flesh ~ Slime Trail",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:22Z",
   "data": {
     "corpus_key": "Charau-ka ~ Thrown-Weapon Mastery",
     "delivery": "Extraordinary",
@@ -13,19 +11,59 @@
     "owners": [
       "inner_sea_world_guide:monster:charau_ka"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Throw Anything"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Thrown|1|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Thrown|CRITRANGEDOUBLE|1|TYPE=NonStackingCrit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Charau-ka are masters of thrown weapons. All charau-ka gain Throw Anything as a bonus feat. In addition, a charau-ka gains a +1 racial bonus on all thrown weapons, and their threat range for thrown weapons is doubled, as if the charau-ka possessed the Improve Critical feat for all thrown weapons. This effect doesn't stack with any other effect that expands the threat range of a weapon."
+      },
+      {
+        "key": "KEY",
+        "value": "Charau-ka ~ Thrown-Weapon Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.309"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.309",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
-    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
-    "line": 20,
-    "record_key": "Charau-ka ~ Thrown-Weapon Mastery"
-  },
+  "ingested_at": "2026-08-15T01:24:22Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "record_key": "Charau-ka ~ Thrown-Weapon Mastery",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

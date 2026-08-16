@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T11:18:41Z",
   "data": {
     "corpus_key": "Heresy Devil ~ Throne of Skulls",
     "delivery": "Supernatural",
@@ -13,19 +11,43 @@
     "owners": [
       "book_of_the_damned_volume_1:monster:devil_heresy"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "All ayngavhauls hover upon fearsome infernal thrones. These thrones grant the devils their fly speed and a +4 armor bonus. Should an ayngavhaul be grappled or knocked down, it is unseated from its throne and loses these benefits. An ayngavhaul has telepathic command over its throne and may call its conveyance back and reseat itself as a full-round action."
+      },
+      {
+        "key": "KEY",
+        "value": "Heresy Devil ~ Throne of Skulls"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.56",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
-    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177",
-    "line": 25,
-    "record_key": "Heresy Devil ~ Throne of Skulls"
-  },
+  "ingested_at": "2026-08-12T11:18:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
+    "record_key": "Heresy Devil ~ Throne of Skulls",
+    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Nabasu ~ Death-Stealing Gaze",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:demon_nabasu"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Death-Stealing Gaze"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|DeathStealingGazeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathStealingGazeDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathStealingGazeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Death-Stealing Gaze)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeathStealingGazeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action once per day per growth point (minimum of 1/day), a nabasu can activate its death-stealing gaze for a full round. All living creatures within 30 feet must succeed on a DC %1 Fortitude save or gain a negative level. A humanoid slain in this manner immediately transforms into a ghoul under the nabasu's control. A nabasu's gaze can only create one ghoul per round--if multiple humans perish from the gaze in a round, the nabasu picks which human becomes a ghoul.|DeathStealingGazeDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Nabasu ~ Death-Stealing Gaze"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.64",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 293,
-    "record_key": "Nabasu ~ Death-Stealing Gaze"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 293,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Nabasu ~ Death-Stealing Gaze",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

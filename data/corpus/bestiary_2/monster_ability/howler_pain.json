@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Howler ~ Pain",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:howler"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Pain"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(quills, quill defense)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HowlerPainDC|10+TL/2+DEX"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HowlerPainDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Pain)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HowlerPainDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a creature takes damage from a howler's quill attack or its quill defense, that creature must make a DC %1 Reflex save or a quill breaks off in its flesh, causing the target to become sickened until the quill is removed.  Removing one quill requires a DC 15 Heal check made as a full-round action.  For every 5 by which the check is exceeded, one additional quill can be removed.  On a failed check, a quill is still removed, but the process deals 1d4+1 points of damage to the victim.|HowlerPainDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Howler ~ Pain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.159"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.159",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 697,
-    "record_key": "Howler ~ Pain"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 697,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Howler ~ Pain",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

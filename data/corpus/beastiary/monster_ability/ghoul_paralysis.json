@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Ghoul ~ Paralysis",
     "delivery": "Supernatural",
@@ -16,19 +14,59 @@
       "beastiary:monster:ghoul_ghast",
       "beastiary:monster:ghoul_lacedon"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Paralysis"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GhoulParalysisDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GhoulParalysisDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Paralysis)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GhoulParalysisDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This special attack renders the victim immobile. Paralyzed creatures cannot move, speak, or take any physical actions. The creature is rooted to the spot, frozen and helpless. Paralysis works on the body, and a character can resist it with a Fortitude saving throw DC %1. Unlike hold person and similar effects, a paralysis effect does not allow a new save each round.|GhoulParalysisDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Ghoul ~ Paralysis"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.146",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 669,
-    "record_key": "Ghoul ~ Paralysis"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 669,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Ghoul ~ Paralysis",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

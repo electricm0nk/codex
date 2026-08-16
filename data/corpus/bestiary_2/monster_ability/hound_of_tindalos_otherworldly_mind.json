@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Hound of Tindalos ~ Otherworldly Mind",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:hound_of_tindalos"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Otherworldly Mind"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HoundOfTindalosOtherworldlyMindDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HoundOfTindalosOtherworldlyMindDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Otherworldly Mind)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HoundOfTindalosOtherworldlyMindDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any non-outsider attempting to read the thoughts of a hound of Tindalos or communicate with it telepathically takes 5d6 points of nonlethal damage and must make a DC %1 Will save or become confused for 2d4 rounds.  This is a mind-affecting effect.|HoundOfTindalosOtherworldlyMindDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Hound of Tindalos ~ Otherworldly Mind"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.158",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 690,
-    "record_key": "Hound of Tindalos ~ Otherworldly Mind"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 690,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Hound of Tindalos ~ Otherworldly Mind",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

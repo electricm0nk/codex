@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Black Pudding ~ Acid",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:black_pudding"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Acid"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|AcidDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Acid)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AcidDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A black pudding secretes a digestive acid that dissolves organic material and metal quickly, but does not affect stone. Each time a creature suffers damage from a black pudding's acid, its clothing and armor take the same amount of damage from the acid. A DC 21 Reflex save prevents damage to clothing and armor. A metal or wooden weapon that strikes a black pudding takes 2d6 acid damage unless the weapon's wielder succeeds on a DC %1 Reflex save. If a black pudding remains in contact with a wooden or metal object for 1 full round, it inflicts 21 points of acid damage (no save) to the object.|AcidDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Black Pudding ~ Acid"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.35",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 173,
-    "record_key": "Black Pudding ~ Acid"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 173,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Black Pudding ~ Acid",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

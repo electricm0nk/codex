@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Marut ~ Fists of Lightning and Thunder",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:inevitable_marut"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(slam,3d6 electricity or sonic and blindness or deafness)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MarutFistsOfLightningAndThunderDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MarutFistsOfLightningAndThunderDC|2|Ability Focus (Fists of Lightning and Thunder)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MarutFistsOfLightningAndThunderDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A marut's fists strike with the power of a thunderstorm.  For any given slam attack, a marut can choose whether the attack uses lightning or thunder.  A lightning attack deals an additional 3d6 points of electricity damage, and the resulting flash blinds the target for 2d6 rounds (Fortitude DC %1 negates the blindness).  A thunder attack deals an additional 3d6 points of sonic damage, and the resulting thunderclap deafens the target for 2d6 rounds (Fortitude DC %1 negates the deafness).|MarutFistsOfLightningAndThunderDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Marut ~ Fists of Lightning and Thunder"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.166"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.166",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 715,
-    "record_key": "Marut ~ Fists of Lightning and Thunder"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 715,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Marut ~ Fists of Lightning and Thunder",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T11:18:46Z",
   "data": {
     "corpus_key": "Brimorak ~ Boiling Blood",
     "delivery": "Supernatural",
@@ -13,21 +11,49 @@
     "owners": [
       "book_of_the_damned_volume_2:monster:demon_brimorak"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A brimorak's blood is boiling hot. It can cough out a hiedous amount of this scorching fluid as a breath weapon, but the blood also serves the demon as a defensive ability. Any creature that damages a brimorak with a slashing or piercing weapon is sprayed by boiling blood, and takes 1d4 points of fire damage with each successful hit with such a weapon. Creatures using reach weapons are not subject to this damage.|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "A brimorak's blood is boiling hot. It can cough out a hiedous amount of this scorching fluid as a breath weapon, but the blood also serves the demon as a defensive ability.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Brimorak ~ Boiling Blood"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Defensive"
+      }
+    ],
     "source_page": "p.56",
     "traits": [
       "Defensive"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
-    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf",
-    "line": 7,
-    "record_key": "Brimorak ~ Boiling Blood"
-  },
+  "ingested_at": "2026-08-12T11:18:46Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
+    "record_key": "Brimorak ~ Boiling Blood",
+    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

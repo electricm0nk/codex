@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Myrmecoleon ~ Scalding Spray",
     "delivery": "Extraordinary",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:myrmecoleon"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every 1d4 rounds, a myrmecoleon can eject a 60-foot cone of acidic chemicals from its mouth. Creatures caught in the blast take 8d6 points of acid damage and are blinded for 10 minutes (Reflex DC %1 half damage and negates blindness). Following the initial blast, the chemicals vaporize into a thick and noxious cloud 20 feet high with a 40-foot radius. Within the cloud, all sight is obscured beyond 5 feet. Furthermore, any living creature within the area of effect must succeed at a DC %1 Fortitude save or become nauseated for as long as it remains in the cloud and for 1d4+1 rounds after it leaves the cloud. Any creature that succeeds at its save but remains in the cloud must continue to save each round on the myrmecoleon's turn. This is a poison effect.|CON+15"
+      },
+      {
+        "key": "KEY",
+        "value": "Myrmecoleon ~ Scalding Spray"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1104,
-    "record_key": "Myrmecoleon ~ Scalding Spray"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1104,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Myrmecoleon ~ Scalding Spray",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

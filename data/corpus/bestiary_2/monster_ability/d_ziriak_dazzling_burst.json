@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "D'ziriak ~ Dazzling Burst",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:d_ziriak"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Dazzling Burst"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DziriakDazzlingBurstDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DziriakDazzlingBurstDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Dazzling Burst)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DziriakDazzlingBurstDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a d'ziriak can cause its body to flare with intense, colorful light as a swift action.  Non-d'ziriaks within a 20-foot radius must make a DC %1 Fortitude save or be dazzled for 1 minute.  After using this ability, the d'ziriak's brilliant glow is extinguished for 24 hours.  This ability is a light effect, and creatures that cannot see are immune to it.|DziriakDazzlingBurstDC"
+      },
+      {
+        "key": "KEY",
+        "value": "D'ziriak ~ Dazzling Burst"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.113"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.113",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 526,
-    "record_key": "D'ziriak ~ Dazzling Burst"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 526,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "D'ziriak ~ Dazzling Burst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

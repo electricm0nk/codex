@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "corpus_key": "Robot ~ Force Field",
     "delivery": "Extraordinary",
@@ -14,19 +12,43 @@
       "inner_sea_bestiary:monster:robot_annihilator",
       "inner_sea_bestiary:monster:robot_myrmidon"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|CR*5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A force field sheathes a robot in a thin layer of shimmering energy that grants a number of bonus hit points that varies according to the robot (typically 5 x the robot's CR). All damage dealt to a robot with an active force field is reduced from these hit points first. As long as the force field is active, the robot is immune to critical hits. A force field has fast healing equal to the robot's CR, but once its hit points are reduced to 0, the force field shuts down and does not reactivate for 24 hours."
+      },
+      {
+        "key": "KEY",
+        "value": "Robot ~ Force Field"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
-    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
-    "line": 285,
-    "record_key": "Robot ~ Force Field"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 285,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Robot ~ Force Field",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

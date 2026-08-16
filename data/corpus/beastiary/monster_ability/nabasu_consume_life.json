@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Nabasu ~ Consume Life",
     "delivery": "Supernatural",
@@ -13,19 +11,95 @@
     "owners": [
       "beastiary:monster:demon_nabasu"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 Growth Points)|GrowthPoints"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|GrowthPoints/2|TYPE=NaturalArmor.REPLACE"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT|GrowthPoints"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|GrowthPoints*10"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|CR|GrowthPoints/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|SR|GrowthPoints/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|GrowthPoints"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|ALL|GrowthPoints"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB,NabasuCasterLevel|GrowthPoints"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GrowthPoints|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When a nabasu creates a ghoul with its gaze attack, it gains a growth point. It gains a bonus equal to its growth point total on attack rolls, CMB rolls, saving throws, caster level checks, and skill checks. Its maximum hit points increase by 10 for each growth point, and its caster level for spell-like abilities increases by 1. For every 2 growth points, its natural armor bonus, SR, and CR increase by 1. Every time it gains a growth point it makes a DC 30 caster level check--success indicates it matures (gaining both the advanced and the giant simple templates) and plane shifts to the Abyss in a burst of smoke. A nabasu can have a maximum of 20 growth points--it automatically matures if it has not done so already when it reaches 20 growth points."
+      },
+      {
+        "key": "KEY",
+        "value": "Nabasu ~ Consume Life"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|GrowthPoints|%CHOICE"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "When a nabasu creates a ghoul with its gaze attack, it gains a growth point."
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=20|TITLE=Add to growth point total"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.64",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 292,
-    "record_key": "Nabasu ~ Consume Life"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 292,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Nabasu ~ Consume Life",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:choice",

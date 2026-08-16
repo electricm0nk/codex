@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Satyr ~ Pipes",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:satyr"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Pipes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|PipesSaveDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PipesSaveDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PipesSaveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Pipes)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PipesSaveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A satyr can focus and empower his magic by playing haunting melodies on his panpipes. When he plays, all creatures within a 60-foot radius must make a DC %1 Will save or be affected by charm person, fear, sleep, or suggestion, depending on what tune the satyr chooses. A creature that successfully saves against any of the pipes' effects cannot be affected by the same set of pipes for 24 hours, but can still be affected by the satyr's other spell-like abilities as normal. The satyr's use of his pipes does not count toward his uses per day of his spelllike abilities, and if separated from them he may continue to use his standard abilities. The pipes themselves are masterwork, and a satyr can craft a replacement with 1 week of labor.|PipesSaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Satyr ~ Pipes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.241"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.241",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1087,
-    "record_key": "Satyr ~ Pipes"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1087,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Satyr ~ Pipes",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

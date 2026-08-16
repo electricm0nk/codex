@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Kalavakus ~ Enslave Soul",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:demon_kalavakus"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Enslave Soul"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KalavakusEnslaveSoulDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KalavakusEnslaveSoulDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Enslave Soul)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KalavakusEnslaveSoulDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A kalavakus can attempt to enslave the soul of any mortal creature within 60 feet as a swift action.  The kalavakus must have line of sight to the target.  The target can resist this special attack with a DC %1 Will save, but is staggered for 1 round even if the save is successful.  If the save is successful, the creature is immune to this ability for 24 hours.  If the save is a failure, the target's soul is enslaved - this creature takes a =6 penalty on all attack rolls and saving throws against that kalavakus.  If a creature with an enslaved soul is slain by that kalavakus, the soul immediately infuses the demon's body, affecting it with a heal spell (CL 12th).  A kalavakus can have only one mortal soul enslaved at a time - if it enslaves a second soul, the first is released.  This is a mind-affecting death effect.|KalavakusEnslaveSoulDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Kalavakus ~ Enslave Soul"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.78",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 352,
-    "record_key": "Kalavakus ~ Enslave Soul"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 352,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Kalavakus ~ Enslave Soul",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

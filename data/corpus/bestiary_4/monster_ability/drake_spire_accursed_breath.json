@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Drake (Spire) ~ Accursed Breath",
     "delivery": "Supernatural",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:drake_spire"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a spire drake can spit a compressed ball of jet-black dust that bursts into a spray of clinging motes that sap the spiritual strength of creatures in an area. The attack has a range of 60 feet and deals 5d6 points of negative energy damage (Will DC %1 half) to all creatures in a 20-foot radius. Affected creatures take a -2 penalty on attack rolls, saving throws, skill checks, and ability checks for 1d4 rounds (or for 1 round on a successful Will save). As long as these motes cling to a creature, the effect of any conjuration (healing) effect used on that creature is halved. This is a curse effect.|14+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Drake (Spire) ~ Accursed Breath"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 591,
-    "record_key": "Drake (Spire) ~ Accursed Breath"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 591,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Drake (Spire) ~ Accursed Breath",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

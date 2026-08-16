@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "corpus_key": "Xocothian ~ Form of Sea and Sky",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "inner_sea_gods:monster:xocothian"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per hour, a xocothian can transform itself into two Small elementals (one air and one water) for up to 7 minutes. These elementals appear in adjacent squares. Each have half of the xocothian's current hit points and share the same mind. They can reform into the xocothian as a standard action if they are adjacent to each other - the reformed xocothian's hit points are equal to the total of the two elementals' hit points. If either elemental is slain, the xocothian must use its standard action on its next turn to reform (treat a slain elemental's hit points as 0 when determining the reformed xocothian's total hit points)."
+      },
+      {
+        "key": "KEY",
+        "value": "Xocothian ~ Form of Sea and Sky"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
-    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
-    "line": 177,
-    "record_key": "Xocothian ~ Form of Sea and Sky"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 177,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Xocothian ~ Form of Sea and Sky",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

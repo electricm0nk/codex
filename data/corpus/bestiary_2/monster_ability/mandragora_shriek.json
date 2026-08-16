@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Mandragora ~ Shriek",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:mandragora"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Shriek"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MandragoraShriekDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MandragoraShriekDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Shriek)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MandragoraShriekDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a standard action, a mandragora can give voice to an unsettling shriek.  All creatures within a 30-foot spread of a shrieking mandragora must make a DC %1 Will save or become nauseated for 1d4 rounds.  This is a sonic, mind-affecting ability.|MandragoraShriekDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Mandragora ~ Shriek"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.185"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.185",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 810,
-    "record_key": "Mandragora ~ Shriek"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 810,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Mandragora ~ Shriek",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

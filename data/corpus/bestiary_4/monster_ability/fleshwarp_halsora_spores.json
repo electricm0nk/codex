@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Fleshwarp (Halsora) ~ Spores",
     "delivery": "Extraordinary",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:fleshwarp_halsora"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A halsora's claws are covered in mutated russet mold spores. A creature hit by a claw attack must succeed at a DC %1 Fortitude save or take 2 points of Constitution damage per round. It can attempt a new Fortitude save each round to halt the growth. A creature reduced to 0 Constitution by these spores explodes in a mess of viscera and spores. Creatures within the burst must succeed at a DC %1 Fortitude saving throw or be affected as if they were hit by the halsora's claw attack. This is a disease effect.|15+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Fleshwarp (Halsora) ~ Spores"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 676,
-    "record_key": "Fleshwarp (Halsora) ~ Spores"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 676,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Fleshwarp (Halsora) ~ Spores",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

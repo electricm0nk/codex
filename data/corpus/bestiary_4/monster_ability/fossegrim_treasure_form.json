@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Fossegrim ~ Treasure Form",
     "delivery": "Supernatural",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:fossegrim"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action when completely underwater, a fossegrim can create an illusion causing it to resemble a Medium pile of gold and silver coins, glittering jewels, and valuable art objects. If a fossegrim speaks, moves, attacks, or uses any of its special abilities or spell-like abilities while in treasure form, the illusion dissipates. A successful DC %1 Will save is required to disbelieve this illusion. If a living creature within the fossegrim's melee reach touches or physically interacts with the illusion, the fossegrim reaches out to kiss or otherwise touch that creature, automatically affecting the creature with its drowning touch ability. The fossegrim can maintain this illusion indefinitely and can revert to its normal natural form as a free action. This is a mind-affecting illusion (glamer) effect.|14+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Fossegrim ~ Treasure Form"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 713,
-    "record_key": "Fossegrim ~ Treasure Form"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 713,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Fossegrim ~ Treasure Form",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

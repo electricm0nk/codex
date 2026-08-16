@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Kraken ~ Ink Cloud",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:kraken"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Ink Cloud"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(contact; save Fort DC %1; frequency 1/round for 10 rounds; effect 1 Str damage plus nausea; cure 2 consecutive saves)|InkCloudDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InkCloudDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InkCloudDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Ink Cloud)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InkCloudDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A kraken can emit a cloud of black, venomous ink in an 80-foot spread once per minute as a free action while underwater. This cloud provides total concealment, which the kraken can use to escape a fight that is going badly. Creatures within the cloud are considered to be in darkness. In addition, the ink is toxic, functioning as contact poison against all creatures caught within it. The ink cloud persists for 1 minute before dispersing. Kraken Ink; Ink cloud--contact; save Fort DC %1; frequency 1/round for 10 rounds; effect 1 Str damage plus nausea; cure 2 consecutive saves.|InkCloudDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Kraken ~ Ink Cloud"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.184"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.184",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 808,
-    "record_key": "Kraken ~ Ink Cloud"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 808,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Kraken ~ Ink Cloud",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

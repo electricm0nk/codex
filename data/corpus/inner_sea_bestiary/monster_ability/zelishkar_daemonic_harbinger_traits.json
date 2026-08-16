@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "corpus_key": "Zelishkar ~ Daemonic Harbinger Traits",
     "delivery": null,
@@ -13,19 +11,55 @@
     "owners": [
       "inner_sea_bestiary:monster:zelishkar"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Acid|Immunity to Charm|Immunity to Compulsion|Immunity to Death Effects|Immunity to Disease|Immunity to Poison|Resistance to Cold|Resistance to Electricity|Resistance to Fire|Telepathy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus,ElectricityResistanceBonus,FireResistanceBonus|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyRange|200"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A daemonic harbinger is a powerful daemon that has not yet made the full transition from unique daemon to a horseman. The harbinger's natural weapons, as well as any weapon it wields, are treated as evil and lawful for the purpose of overcoming damage reduction."
+      },
+      {
+        "key": "KEY",
+        "value": "Zelishkar ~ Daemonic Harbinger Traits"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
     "source_page": "p.62",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
-    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
-    "line": 430,
-    "record_key": "Zelishkar ~ Daemonic Harbinger Traits"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 430,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Zelishkar ~ Daemonic Harbinger Traits",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

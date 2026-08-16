@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Drake (Mist) ~ Fogburst",
     "delivery": "Supernatural",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:drake_mist"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a mist drake can expel a ball of solid mist that explodes into a cloud of fog upon impact. This attack has a range of 60 feet and deals 3d6 points of bludgeoning damage to all creatures in a 20-foot radius (Reflex DC %1 half). A flying creatures that fails its Reflex save is pushed 1d4 x 5 feet from the center of the fogburst's area of effect (taking 1d6 points of damage per 10 feet if it strikes a solid object), while creatures on the ground are knocked prone on a failed save. The area of effect of the fogburst is filled with mist (as obscuring mist) for 1d4 rounds after impact. Once a mist drake has used its fogburst attack, it cannot do so again for 1d6 rounds.|13+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Drake (Mist) ~ Fogburst"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 585,
-    "record_key": "Drake (Mist) ~ Fogburst"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 585,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Drake (Mist) ~ Fogburst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Bunyip ~ Roar",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:bunyip"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Roar"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BunyipRoarDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BunyipRoarDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Roar)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BunyipRoarDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A bunyip's roar is supernaturally loud and horrifying.  When a bunyip roars (a standard action the creature can perform at will), all hearing creatures with 4 or fewer HD within a 100-foot spread must succeed on a DC %1 Will save or become panicked for 2d4 rounds.  Whether or not the save is successful, creatures in the area are immune to the roar of that bunyip for 24 hours.  This is a sonic, mind-affecting fear effect.|BunyipRoarDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Bunyip ~ Roar"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.50",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 207,
-    "record_key": "Bunyip ~ Roar"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 207,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Bunyip ~ Roar",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

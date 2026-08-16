@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Leucrotta ~ Powerful Bite",
     "delivery": "Extraordinary",
@@ -13,19 +11,51 @@
     "owners": [
       "bestiary_2:monster:leucrotta"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|CRITRANGEADD|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A leucrotta's bite attack always applies 1-1/2 times its Strength modifier on damage rolls and threatens a critical hit on a roll of 19-20.  When a leucrotta bites an object, its bite treats the object as having a hardness of 5 less than the object's actual hardness rating."
+      },
+      {
+        "key": "KEY",
+        "value": "Leucrotta ~ Powerful Bite"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.178"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.178",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 778,
-    "record_key": "Leucrotta ~ Powerful Bite"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 778,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Leucrotta ~ Powerful Bite",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

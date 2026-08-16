@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T11:18:46Z",
   "data": {
     "corpus_key": "Vermlek ~ Flesh Armor",
     "delivery": "Supernatural",
@@ -13,21 +11,53 @@
     "owners": [
       "book_of_the_damned_volume_2:monster:demon_vermlek"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|3|TYPE=Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a vermlek wears a humanoid body (see inhabit body, below), it treats the dead flesh and muscle as armor and gains a +3 armor bonus to its AC.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "When a vermlek wears a humanoid body (see inhabit body, below), it treats the dead flesh and muscle as armor and gains a +3 armor bonus to its AC.|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Vermlek ~ Flesh Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Defensive"
+      }
+    ],
     "source_page": "p.54",
     "traits": [
       "Defensive"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
-    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf",
-    "line": 30,
-    "record_key": "Vermlek ~ Flesh Armor"
-  },
+  "ingested_at": "2026-08-12T11:18:46Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 30,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
+    "record_key": "Vermlek ~ Flesh Armor",
+    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

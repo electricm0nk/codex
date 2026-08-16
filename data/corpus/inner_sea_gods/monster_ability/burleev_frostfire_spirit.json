@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "corpus_key": "Burleev ~ Frostfire Spirit",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "inner_sea_gods:monster:burleev"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A burleev is surrounded by either cold or fire energy. The burleev can change the energy type as a swift action. When surrounded by fire, the burleev has the fire subtype, is immune to fire, it adds fire damage to its attacks, and creatures striking it with melee weapons, natural attacks, or unarmed strikes take 1d6 points of fire damage; when surrounded by cold, it instead gains the cold subtype, is immune to cold and deals cold damage rather than fire damage. It can also completely dampen its aura for 1d6 rounds, but cannot reactivate it until this time has passed."
+      },
+      {
+        "key": "KEY",
+        "value": "Burleev ~ Frostfire Spirit"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
-    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
-    "line": 218,
-    "record_key": "Burleev ~ Frostfire Spirit"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 218,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Burleev ~ Frostfire Spirit",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

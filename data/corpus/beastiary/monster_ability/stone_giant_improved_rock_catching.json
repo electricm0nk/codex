@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Stone Giant ~ Improved Rock Catching",
     "delivery": "Extraordinary",
@@ -13,21 +11,49 @@
     "owners": [
       "beastiary:monster:giant_stone"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 Reflex when attempting to catch a rock"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +4 racial bonus on your Reflex save when attempting to catch a thrown rock with rock catching. Once per round, if you would normally be hit by a rock, you can make a Reflex save to catch it as a free action. The DC is 15 for a Small rock, 20 for a Medium one, and 25 for a Large one. (If the projectile provides a magical bonus on attack rolls, the DC increases by that amount.) You must be aware of the attack in order to make a rock catching attempt."
+      },
+      {
+        "key": "KEY",
+        "value": "Stone Giant ~ Improved Rock Catching"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.151"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Defensive"
+      }
+    ],
     "source_page": "p.151",
     "traits": [
       "Defensive"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 689,
-    "record_key": "Stone Giant ~ Improved Rock Catching"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 689,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Stone Giant ~ Improved Rock Catching",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

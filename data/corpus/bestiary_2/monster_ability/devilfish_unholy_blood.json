@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Devilfish ~ Unholy Blood",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:devilfish"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Unholy Blood"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevilfishUnholyBloodDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevilfishUnholyBloodDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Unholy Blood)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DevilfishUnholyBloodDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A devilfish's blood is infused with fiendish magic. Once per day, as a swift action, a devilfish can emit a night-black cloud of this foul liquid, filling a 20-foot-radius cloud if underwater, or a 20-foot-radius burst on land. In water, the blood provides total concealment for everything but a devilfish (which can see through the blood with ease); on land the slippery blood coats the ground, making the area difficult terrain. The blood persists for 1 minute before fading. Anyone who enters a cloud of the blood in the water or who is within the area of a burst of blood on land must make a DC %1 Fortitude save or be nauseated for 1d4 rounds - this save need be made only once per cloud.|DevilfishUnholyBloodDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Devilfish ~ Unholy Blood"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.88",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 408,
-    "record_key": "Devilfish ~ Unholy Blood"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 408,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Devilfish ~ Unholy Blood",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

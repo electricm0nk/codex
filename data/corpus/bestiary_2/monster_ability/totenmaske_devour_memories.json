@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Totenmaske ~ Devour Memories",
     "delivery": "Supernatural",
@@ -15,19 +13,55 @@
     "owners": [
       "bestiary_2:monster:totenmaske"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Devour Memories"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TotenmaskeDevourMemoriesDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TotenmaskeDevourMemoriesDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Devour Memories)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TotenmaskeDevourMemoriesDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A totenmaske can eat the memories and dreams of a creature it bites. The target must make a DC %1 Will save or take 1d4 points of Charisma drain. A totenmaske gains a +4 bonus on Disguise checks made to impersonate a victim whose memories it has drained.|TotenmaskeDevourMemoriesDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Totenmaske ~ Devour Memories"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1294,
-    "record_key": "Totenmaske ~ Devour Memories"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1294,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Totenmaske ~ Devour Memories",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

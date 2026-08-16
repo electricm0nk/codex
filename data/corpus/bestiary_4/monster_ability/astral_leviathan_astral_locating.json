@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Astral Leviathan ~ Astral Locating",
     "delivery": "Supernatural",
@@ -13,21 +11,41 @@
     "owners": [
       "bestiary_4:monster:astral_leviathan"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An astral leviathan automatically knows the distance and direction to any place on the Astral Plane it has ever visited. Once per day it can use this ability to determine the location of a creature on the Astral Plane (as if using  locate creature  with unlimited range)."
+      },
+      {
+        "key": "KEY",
+        "value": "Astral Leviathan ~ Astral Locating"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Senses"
+      }
+    ],
     "source_page": null,
     "traits": [
       "Senses"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 289,
-    "record_key": "Astral Leviathan ~ Astral Locating"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 289,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Astral Leviathan ~ Astral Locating",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

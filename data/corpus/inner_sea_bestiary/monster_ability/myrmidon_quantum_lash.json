@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "corpus_key": "Myrmidon ~ Quantum Lash",
     "delivery": "Extraordinary",
@@ -13,19 +11,55 @@
     "owners": [
       "inner_sea_bestiary:monster:robot_myrmidon"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Quantum Lash|CRITRANGEADD|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Quantum Lash|DAMAGE|-8"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A myrmidon's two facial tentacles extend up to 20 feet and resolve as touch attacks. Chance to disrupt force fields or force effects."
+      },
+      {
+        "key": "KEY",
+        "value": "Myrmidon ~ Quantum Lash"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Quantum Lash,Weapon.Natural.Weapon Group Natural.Melee.Reach.Bludgeoning.Finesseable,*2,1d10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.45",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
-    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
-    "line": 305,
-    "record_key": "Myrmidon ~ Quantum Lash"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 305,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Myrmidon ~ Quantum Lash",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

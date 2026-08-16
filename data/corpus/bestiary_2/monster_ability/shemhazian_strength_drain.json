@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Shemhazian ~ Strength Drain",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:demon_shemhazian"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Strength Drain"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(Bite,2d4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShemhazianStrengthDrainDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShemhazianStrengthDrainDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Strength Drain)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShemhazianStrengthDrainDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A shemhazian demon deals 2d4 points of Strength drain with each successful bite.  A DC %1 Fortitude save reduces this amount to 1d4 points of Strength damage.|ShemhazianStrengthDrainDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Shemhazian ~ Strength Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.80",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 365,
-    "record_key": "Shemhazian ~ Strength Drain"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 365,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Shemhazian ~ Strength Drain",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

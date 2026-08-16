@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "corpus_key": "Alraune ~ Calming Fragrance",
     "delivery": "Supernatural",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_3:monster:alraune"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A supernaturally sweet perfume that calms the nerves and blunts aggression constantly surrounds an alraune to a radius of 60 feet. Any creature in this area of effect must make a DC 24 Will save at the start of its turn to avoid falling under the effects of calm emotions for 1 round. Creatures that could be attracted to the alraune's current apparent gender take a -2 penalty on this Will save, while all other creatures gain a +2 bonus on the save. This is a mind-affecting effect. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Alraune ~ Calming Fragrance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.13",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
-    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
-    "line": 325,
-    "record_key": "Alraune ~ Calming Fragrance"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 325,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Alraune ~ Calming Fragrance",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Slurk ~ Slime",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_2:monster:slurk"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A slurk's back is crusted with thick, dry slime and dozens of nodules.  As a standard action at will, a slurk can squirt a jet of this slime from one of these nodules as a ranged touch attack against any target within 30 feet.  Anyone the slurk successfully bull rushes or overruns is automatically squirted with back slime.  The hardened slime can be removed as a full-round action with a DC 15 Strength check.  The slurk's back slime grants a creature riding it a +8 bonus on Ride checks made to stay in the saddle, but a -8 penalty on Ride checks to dismount."
+      },
+      {
+        "key": "KEY",
+        "value": "Slurk ~ Slime"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.251"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.251",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1181,
-    "record_key": "Slurk ~ Slime"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1181,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Slurk ~ Slime",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

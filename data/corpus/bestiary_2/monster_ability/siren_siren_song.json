@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Siren ~ Siren Song",
     "delivery": "Supernatural",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_2:monster:siren"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a siren sings, all non-sirens within a 300-foot spread must succeed on a DC %1 Will save or become enthralled (see below).  The effect depends on the type of song the siren chooses, and continues for as long as the siren sings and for 1 round thereafter.  A creature that successfully saves cannot be affected again by any of that siren's songs for 1 hour.  These are sonic, mind-affecting effects.  Enthralled creatures behave in one of the following four ways, which the siren chooses when she begins singing.  Captivation: This functions exactly like a harpy's captivating song (Pathfinder RPG Bestiary 172).  Fascination: Affected creatures are fascinated.  Obsession: An obsessed creature becomes defensive of the siren and does all he can to prevent harm from coming to her, going so far as attacking his allies in her defense.  The victim is not controlled by the siren, but views her as a cherished ally.  This is a charm effect.  Slumber: The victim immediately falls asleep, rendering the creature helpless.  While the siren is singing, no noise will wake the sleeping creature, though slapping or wounding him does.  The creature continues sleeping for 1d4 minutes after the siren stops singing, but can be awakened by loud noises or any other normal method."
+      },
+      {
+        "key": "KEY",
+        "value": "Siren ~ Siren Song"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.247"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.247",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1161,
-    "record_key": "Siren ~ Siren Song"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1161,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Siren ~ Siren Song",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Vrock ~ Dance of Ruin",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:demon_vrock"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Dance of Ruin"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|DanceOfRuinDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DanceOfRuinDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DanceOfRuinDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Dance of Ruin)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DanceOfRuinDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A vrock can dance and chant as a full-round action--at the end of 3 rounds, a crackling wave of energy explodes from the vrock, dealing 5d6 points of electricity damage to all creatures within 100 feet. A DC %1 Reflex save halves this damage. For each additional vrock that joins in the dance, the damage increases by 5d6 and the DC to avoid the effect increases by +1, to a maximum of 20d6 when four or more vrocks are dancing (the DC continues to increase with additional vrocks, but the damage does not). The dance immediately ends and must be started anew if any of the participating vrocks is slain, stunned, or otherwise prevented from dancing.|DanceOfRuinDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Vrock ~ Dance of Ruin"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.69",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 319,
-    "record_key": "Vrock ~ Dance of Ruin"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 319,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Vrock ~ Dance of Ruin",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

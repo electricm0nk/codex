@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T11:18:46Z",
   "data": {
     "corpus_key": "Vavakia ~ Breath Weapon",
     "delivery": "Supernatural",
@@ -16,19 +14,71 @@
     "owners": [
       "book_of_the_damned_volume_2:monster:demon_vavakia"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDice|HD+2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every 1d4 rounds, a vavakia can breathe out a 60-foot cone of green fire that seems to writhe and coil with the tortured shapes of a thousand screaming ghosts. This green fire is akin to vomiting up the countless souls the vavakia has consumed, and these souls consume flesh as surely as they consume sanity. A creature struck by this breath weapon takes %1d6 points of damage (DC %2 Reflex half)--this damage manifests as blackened, melted flesh and skin but is treated as raw profane power. Evil creatures take half damage from the breath weapon, but good creatures who take any damage from a vavakia's breath weapon are automatically staggered for 1 round by the hideous sensation. In addition, any living creature that takes damage from a vavakia's breath weapon must also make a DC %2 Fortitude save to avoid suffering 1d8 points of Wisdom drain as her sanity slips away into madness. Immediately after the vavakia expels this green \"soul fire\", the wailing flames flow in reverse back into the demon's gullet through its open maw. This heals the vavakia 1d8 points of damage for each creature that was damaged by its breath weapon. The Wisdom drain element of this breath weapon is a mind-affecting effect. The save DC is Constitution-based.|BreathWeaponDice|BreathWeaponDC|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every 1d4 rounds, a vavakia can breathe out a 60-foot cone of green fire that seems to writhe and coil with the tortured shapes of a thousand screaming ghosts.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Vavakia ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.60",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
-    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf",
-    "line": 23,
-    "record_key": "Vavakia ~ Breath Weapon"
-  },
+  "ingested_at": "2026-08-12T11:18:46Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 23,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
+    "record_key": "Vavakia ~ Breath Weapon",
+    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

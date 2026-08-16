@@ -8317,3 +8317,168 @@ description it doesn't carry. No unit reclassified to force a `done` credit (§5
 
 Branch `sd31/spell-lists-e6-f2-003` pushed at the commit landing this receipt. `scripts/reclaim.sh`
 then `--apply` run at cycle end; reclaimed bytes recorded in that step's own output below.
+## SD31-E6-F9-001 — `monster_ability` misclassification fix + raw_tokens ingest lever (2026-08-16)
+
+**Card:** `epic-6-ingest-lanes` F9, plus `OPEN-ISSUES.md` row 34. **Worktree:**
+`worktree-wf_d70ea313-07f-5`, own branch `sd31/monster-ability-e6f9`, pushed to origin. **HEAD
+started from:** `d47acc8fa` (`origin/tranche/11` tip; the worktree's own checkout was off-branch, a
+clean `git reset --hard origin/tranche/11` recovered it before any read, per the mandatory
+branch-state check). **Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`), `preflight-oracle` PASS.
+
+### 1. The misclassification (row 34), re-derived one record deep, not transcribed
+
+Re-ran row 34's own headline command against the fresh checkout:
+`python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); u=[x for x in
+d['units'] if x['kind']=='monster_ability' and x['status']=='not-ingested' and x['book'] in
+('advanced_class_guide','core_essentials')]; print(len(u))"` → **486**, matching row 34 exactly
+(`advanced_class_guide` 106, `core_essentials` 380; `monster_ability` totals 3,107 units, 336 `done`,
+1,293 `held`, 1,478 `not-started` — 10.81% done, matching the card's stated shape).
+
+**Per-book `TYPE:` second-segment audit, not a blanket accept.** Row 34's diagnosis treated ACG and
+CE identically. Checking each not-done unit's `type_facet` SECOND segment against the corpus-wide
+confirmed genuine-monster-ability vocabulary (`Extraordinary`/`Supernatural`/`SpellLike`/
+`PermanencySpell`/`Immunity`/`Vision`/`Defensive`/`Communicate`/`Special Attack`/`Special Ability`,
+the same vocabulary `MONSTER_ABILITY_TYPE_FACETS`'s own SD28-E15 doc comment already established for
+CE and Bestiary 1) found: **`advanced_class_guide`'s 106 are 100% genuinely misclassified** (0
+`NaturalAttack`/`Universal Monster Rule` rows anywhere in `acg_abilities_race.lst`; every
+facet-matching row is a Favored-Class-Bonus sub-choice table entry) — but **`core_essentials`'s 380
+are NOT misclassified**, contra row 34. Row 34's own cited examples ("Aeon ~ Envisaging"
+`TYPE:SpecialQuality.Supernatural.Communicate`, "Aberration Traits Output"
+`TYPE:SpecialQuality.Extraordinary`) are genuine creature-type traits, not player content. Full
+corpus-wide re-scan (164 `_abilities_race*.lst` files across every `pathfinder/paizo` book, not
+just the 24 books currently carrying at least one `monster_ability` unit) found a THIRD,
+previously-unflagged book with the identical defect: **`ultimate_wilderness`** (50 of its 52 units —
+"Rogue Enemy ~ X"/"Bonus Druid Spell"/Favored-Class-Bonus-Output rows; the 2 real exceptions, "Plant
+Traits"/"Leshy Traits", are genuine Bestiary-appendix creature-type traits). `retro.py correction`
+filed for the CE portion of row 34's claim (`OPEN-ISSUES.md` row 69).
+
+**Fix, in file territory** (`src/bin/v06_work_inventory.rs`, `refine_kind()` +
+`MONSTER_ABILITY_TYPE_FACETS`): new `is_player_favored_class_choice_row()` gates the
+`SpecialQuality`/`SpecialAttack` facets (not `NaturalAttack`/`Universal Monster Rule`, 0 false
+positives corpus-wide, left unconditional) on two corpus-stated shapes: a `TYPE:` second segment
+ending in the literal word `Choice`, or any field carrying the literal string `Favored Class Bonus`
+or the `FavClassBonus`-suffixed `DEFINE:`/`BONUS:VAR` variable convention — both confirmed absent
+(`grep -c`, 0 hits) from `core_essentials` and every registered Bestiary before writing the fix. TDD:
+6 new tests (`refine_kind_monster_ability_tests`) — 3 positive (ACG Choice-shaped row, UW
+Favored-Class-Bonus-Output row, ACG bare-`SpecialQuality`+`FavClassBonus`-variable row, all must stay
+`RaceTrait`), 3 regression guards (CE's genuine "Aberration Traits Output", UW's genuine "Plant
+Traits", a bare `NaturalAttack` row must all still promote to `MonsterAbility`). **Mutation-proved
+live**: temporarily disabled the new gate (`&& true // MUTATION-TEST`), confirmed exactly the 3
+positive-case tests went RED while the 3 regression-guard tests stayed green, reverted.
+
+**Guarded regen, movement measured IN BOTH DIRECTIONS as required:**
+`monster_ability` 3,107→**2,951 (-156**: 106 ACG + 50 UW)`, `race_trait` 3,447→**3,603 (+156)**; board
+`done` **unchanged** at 7,603 (19.7373%, byte-identical before/after this fix alone) — a pure
+kind-attribution correction, zero doneness impact either direction, satisfying Decision 1(a) by
+construction. `docs/work-inventory.json` restored via `git checkout --` after measuring, per the wave
+rule. Row 34's finding (2) — the "twin problem" (orphaned bestiary abilities whose owning monster is
+unmodeled in its own book's chassis) — is untouched this cycle, still correctly blocked on Epic 6-F1's
+monster-ingest lever, out of this card's file territory.
+
+### 2. The grind: traced the dominant `held` rung end-to-end, then built the real lever
+
+Traced one `static`/`grounded` (`held`) unit end to end per the card's instruction:
+`bestiary_2:monster_ability:aurumvorax_grab`. Its shipped JSON carried a valid
+`source.kind:"lst_token"` citation but **no `data.raw_tokens` array** — and re-derivation found this
+true of **every one** of the kind's 1,629 shipped records corpus-wide (`python3` scan: 0 of 1,629
+carry `raw_tokens`). `corpus_literal_sweep`'s own population rule (`source.kind=="lst_token"` AND
+`data.raw_tokens` present) requires that field to ever promote a `static` unit's status to
+`literal-verified` — the ONLY status that reaches `done` for `static` — so this was silently capping
+the kind's entire `static`-grounded population at `held`, corpus-wide, for want of one field.
+
+**Built `src/bin/enrich_monster_ability_raw_tokens.rs`** — `monster_ability`'s ingest-path
+counterpart to the already-landed `enrich_spell_raw_tokens.rs`/`enrich_equipment_raw_tokens.rs`,
+book-agnostic (walks every `data/corpus/*/monster_ability/` directory on disk, not a fixed book
+list). Reuses `corpus_literal_sweep`'s own `tab_tokens`/`token_closure` functions byte-for-byte. TDD,
+9 tests (`split_token_field` round-trip, `.MOD`-row closure inclusion, already-enriched no-op,
+citation-miss honesty, non-lst-token skip, nested-file discovery), all green.
+
+**PI-safety checked before writing a single byte, per the dispatch's safety-critical mandate.**
+Confirmed 0 of the 1,629 pre-existing shipped records were already `license: "PI-REDACTED"` (nothing
+to preserve/re-redact). Separately **corrected the dispatch brief's own claim** ("6 registered
+monster books, zero declared-PI tokens today") — `grep -c "DESCISPI:YES\|NAMEISPI:YES"` over all 13
+currently-registered books' raw `.lst` found `bestiary_4`'s `b4_abilities_race.lst` carries **65**
+`DESCISPI:YES` declarations (Demon Lords, an Empyreal Lord, several Kaiju), all on `not-ingested` rows
+— cross-checked all 65 `KEY:`s against `data/corpus/bestiary_4/monster_ability/*.json`'s own
+`corpus_key`: **0 matches**, confirming no live exposure. `retro.py correction` filed
+(`OPEN-ISSUES.md` row 70, a forward-scope landmine for whoever ingests `bestiary_4`'s remaining
+`not-ingested` residue next).
+
+**Ran for real** against the pinned oracle: **1,616 enriched, 0 already-enriched, 13 citation
+misses** (all `ultimate_psionics` — Dreamscarred-Press's 3-segment-before-filename path shape breaks
+this tool's `book_dir_of`, a pre-existing defect already logged at row 46 for `corpus_literal_sweep`
+itself, honestly reported as a miss rather than silently dropped). **PI-checked again after
+writing**: `corpus_literal_sweep` (`--json-out /tmp/sweep-sd31-monster-ability-after-enrich.json`) —
+CLEAN, 0 findings, 19,422→21,038 records examined (+1,616, exact match); `declared_pi_shipping_audit`
+— CLEAN. Sampled `git diff` confirms only the new `raw_tokens` key was added on each of the 1,616
+files — every other field byte-identical (license/pi_field/pi_marker untouched; only JSON key ORDER
+differs, the same harmless `serde_json::to_string_pretty` re-serialization effect the two precedent
+tools already produce, not a content change).
+
+**Guarded regen, both fixes combined: `+102 done`, `-102 held`.** `monster_ability` `done`
+336→**438**, `held` 1,293→**1,191** (all 102 are `static`, promoted `grounded`→`literal-verified` by
+the new `raw_tokens`); board-wide `done` **7,603→7,705 (+102)**, **19.7373%→20.0021%**. Exact
+commands:
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture.json
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep.json DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture.json \
+  cargo run --locked --bin v06_work_inventory
+python3 -c "import json,sys,collections; sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P; \
+  d=json.load(open('docs/work-inventory.json')); U=[u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]; \
+  c=collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U); \
+  print(len(U), dict(c), round(100*c['done']/len(U),4))"
+```
+`docs/work-inventory.json` restored via `git checkout --` after measuring, not committed, per the
+wave rule.
+
+### DoD-8 — on-screen verification
+
+`bestiary_2:monster_ability:aurumvorax_grab` is one of the 102 units this cycle's own `raw_tokens`
+lever moved to `done`. Drove the real desktop app (`RUN_DESKTOP_AGENT=sd31-monster-ability`, own
+`node_modules` installed fresh via `npm ci` since none existed): Hub → "Browse Monster Catalog" →
+searched "Aurumvorax" → the Monster Catalog screen renders **"Grab — Special Attack (Ex) p.35 / An
+aurumvorax can grab a foe of up to one size category larger than itself. It gains a +8 racial bonus
+on grapple attempts rather than the normal +4 racial bonus afforded by the grab ability."** — the
+exact corpus description, byte-for-byte, on the real player-visible screen. Screenshot:
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F9-001/dod8-01-aurumvorax-grab.png`.
+
+### Gate
+
+Launched EARLY, background: `RETRO_ACTOR=sd31-monster-ability CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-monster-ability
+./scripts/verify.sh > docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F9-001-verify.log 2>&1`.
+Shared box was running 3+ sibling agents' own full gates concurrently (`sd31-e4-classwire`,
+`sd31-spell-lists`, `sd31-equip-residual` all observed alive via `pgrep -fa`), so `root-full`'s
+~490-binary build ran slow; this receipt is being written while it is still executing — **the log's
+own `RESULT:`/`VERIFY_EXIT=` line, appended below once obtained, is authoritative over this
+paragraph.** Confirmed alive and progressing throughout (`pgrep -fa "cargo test --locked
+--no-fail-fast"` matched a live PID at every check), not stalled.
+
+**Trap-report audit (DoD item 3), before/after:** `cargo run --locked --bin v06_corpus_trap_report --
+--audit` → `TRAP_EXIT=2`, `1 0 mod-record; 0 1191 wiring-class-mismatch`, `monster_ability` 25 of the
+1191 — **byte-identical to the pre-existing baseline** row 65 already recorded at this tip
+(950→1,191, `monster_ability` 25). Confirmed NOT made worse by this cycle: re-ran the audit at the
+post-fix tip and the `monster_ability` sub-count is still exactly 25 (my `refine_kind` fix moved units
+OUT of the kind but did not touch any `data/corpus/**/*.json` `wiring_class` field for the remaining
+ones, and my `raw_tokens` enrichment adds a field the trap-report's `wiring-class-mismatch` check does
+not read).
+
+**GATE RESULT: PASS. `VERIFY_EXIT=0`. 23/23 stages passed** (`preflight-disk`, `preflight-oracle`,
+`oracle-pin-selftest`, `producer-selftest`, `reachability-audit-selftest`, `reachability-audit`
+(98.95%, unchanged), `groundtruth-guard-selftest`, `pi-sweep`, `declared-pi-audit` (CLEAN),
+`audit-selftest`, `reclaim-selftest`, `driver-selftest`, `corpus-sweep-selftest`, `root-lib` (1849
+passed), `root-full` (6556 passed across 558 suites, all 529 `tests/*.rs` suites executed),
+`desktop` (447 passed), `reach` (27 passed), `corpus-sweep` (21038 records examined, 0 findings),
+`frontend-install`, `frontend-test` (99/99 files), `frontend-typecheck`, `clippy` (root:47
+desktop:7 warnings, 0 errors — matching the existing ceilings), `class-dump` (31/31 computing)).
+Confirmed via the background task's own completion notification (exit code 0) plus the log's own
+`RESULT: PASS` line, both independently agreeing.
+
+**Baseline movements** (DoD item 7, separate reviewable commit): `BASELINE_ROOT_FULL_TESTS`
+6541→6556 (+15, exactly this cycle's own new tests), `BASELINE_ROOT_TEST_BINARIES` 557→558 (+1,
+the new binary file), `BASELINE_CORPUS_LITERAL_RECORDS` 6331→21038 — the corpus-sweep population
+baseline was left stale across several intervening merged cycles (only +1,616 of the +14,707 jump
+is this cycle's own `enrich_monster_ability_raw_tokens` work; the rest is prior cycles' already-
+landed, never-recorded raw_tokens enrichment, reported honestly rather than re-attributed within
+this cycle's budget). Full reasoning in `scripts/verify-baselines.env`'s own new comment blocks.

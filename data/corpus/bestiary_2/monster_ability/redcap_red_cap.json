@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Redcap ~ Red Cap",
     "delivery": "Supernatural",
@@ -13,19 +11,55 @@
     "owners": [
       "bestiary_2:monster:redcap"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fast Healing"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|DAMAGE.Melee,DAMAGE.Ranged|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A redcap wears a tiny, shapeless woolen hat, dyed over and over with the blood of its victims.  While wearing this cap, a redcap gains a +4 bonus on damage rolls (included in the above totals) and fast healing 3.  These benefits are lost if the cap is removed or destroyed.  Caps are not transferable, even between redcaps.  A redcap can create a new cap to replace a lost cap with 10 minutes of work, although until the redcap takes a standard action to dip the cap in the blood of a foe the redcap helped to kill, the cap does not grant its bonuses."
+      },
+      {
+        "key": "KEY",
+        "value": "Redcap ~ Red Cap"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.233",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1068,
-    "record_key": "Redcap ~ Red Cap"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1068,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Redcap ~ Red Cap",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

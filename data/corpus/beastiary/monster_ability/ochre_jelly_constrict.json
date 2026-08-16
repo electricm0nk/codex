@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Ochre Jelly ~ Constrict",
     "delivery": "Extraordinary",
@@ -17,21 +15,77 @@
     "owners": [
       "beastiary:monster:ochre_jelly"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2+%3 plus %4d%5 acid)|ConstrictDice|ConstrictDieSize|ConstrictBonusDamage|AcidDice|AcidDieSize"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2+%3)|ConstrictDice|ConstrictDieSize|ConstrictBonusDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDice|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AcidDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AcidDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConstrictBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConstrictDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConstrictDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can crush an opponent, dealing %1d%2+%3 bludgeoning damage, when you make a successful grapple check (in addition to any other effects caused by a successful check, including additional damage).|ConstrictDice|ConstrictDieSize|ConstrictBonusDamage"
+      },
+      {
+        "key": "KEY",
+        "value": "Ochre Jelly ~ Constrict"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.AttackOption"
+      }
+    ],
     "source_page": "p.298",
     "traits": [
       "AttackOption"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1007,
-    "record_key": "Ochre Jelly ~ Constrict"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1007,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Ochre Jelly ~ Constrict",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
