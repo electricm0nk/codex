@@ -13673,7 +13673,13 @@ real production `compute_uc_class_chassis`/`ground_or_block_samurai_class_featur
 
 ### Reclaim
 
-`scripts/reclaim.sh --apply` run at cycle close; reclaimed bytes recorded in the handoff below.
+`scripts/reclaim.sh --apply`: **0 bytes** — every candidate (verify-logs, other agents' worktrees/
+branches/cargo-targets) was either younger than the 6h threshold or actively checked out/unmerged on
+this shared box (confirmed via `pgrep -fa 'cargo|rustc' | grep classwire4` returning empty before any
+manual deletion). Manually reclaimed this cycle's own no-longer-needed scratch target dirs (not the
+main `sd31-classwire4` gate dir, still potentially useful): `sd31-classwire4-regen` (1.1G, used for the
+guarded-regen measurement + trap report) and `sd31-classwire4-desktop` (1.4G, used for the standalone
+desktop compile check) — **~2.5GB reclaimed**, confirmed no live PID first.
 
 ### Branch tip
 
