@@ -1,6 +1,7 @@
-import { buildClassFeatureSurface } from './classFeaturesModel';
+import { buildClassFeatureSurface, matchesCorpusFeature } from './classFeaturesModel';
 import { assert, assertEqual } from '../testSupport/asserts';
 import type { ExplanationDto } from '../boundary/loadSavedCharacterDetail';
+import type { ClassFeatureDescriptionDto } from '../boundary/loadClassFeatureDescriptions';
 import type { HeldClass } from './characterProgression';
 
 const ROGUE: HeldClass[] = [{ classId: 'class:rogue', classLabel: 'Rogue', level: 11 }];
@@ -275,6 +276,118 @@ function verifiesTheUnnamespacedIdsKeepTheirExistingAttribution() {
   assertEqual(surface.features[1].label, 'Sneak Attack', 'label unchanged');
 }
 
+// --- SD31-D7-PROSE-003: the corpus-description join ------------------------
+
+function descriptionDto(
+  classSlug: string,
+  featureSlug: string,
+  description: string
+): ClassFeatureDescriptionDto {
+  return {
+    book: 'core_rulebook',
+    classSlug,
+    featureSlug,
+    key: `${classSlug} ~ ${featureSlug}`,
+    name: featureSlug,
+    description,
+  };
+}
+
+const SNEAK_ATTACK_DESC =
+  'This is exactly like the rogue ability of the same name, except that the attack must be made ' +
+  'with a sneak attack from hiding or while the target is denied its Dexterity bonus.';
+
+function verifiesMatchesCorpusFeatureRequiresTheClassSegmentAndTheTrailingSlug() {
+  assert(
+    matchesCorpusFeature('class_chassis.rogue.sneak_attack', 'rogue', 'sneak_attack'),
+    'a plain single-segment id must match its own class and feature slug'
+  );
+  assert(
+    matchesCorpusFeature(
+      'class_feature.pu.unchained_summoner.corpus_record.bond_senses_rounds_per_day',
+      'unchained_summoner',
+      'bond_senses_rounds_per_day'
+    ),
+    'a book-namespaced id with a corpus_record segment still matches by suffix'
+  );
+  assert(
+    !matchesCorpusFeature('class_chassis.cleric.sneak_attack', 'rogue', 'sneak_attack'),
+    'a different class segment must not match'
+  );
+  assert(
+    !matchesCorpusFeature('class_chassis.rogue.evasion', 'rogue', 'sneak_attack'),
+    'a different trailing feature slug must not match'
+  );
+}
+
+function verifiesARealClassFeatureRowJoinsToItsMatchingCorpusDescription() {
+  const surface = buildClassFeatureSurface(
+    [explanation('class_chassis.rogue.sneak_attack', 6, SNEAK_ATTACK_DETAIL)],
+    ROGUE,
+    [descriptionDto('rogue', 'sneak_attack', SNEAK_ATTACK_DESC)]
+  );
+
+  assertEqual(
+    surface.features[0].corpusDescription,
+    SNEAK_ATTACK_DESC,
+    'the real corpus description must join onto the matching row, byte for byte'
+  );
+  assertEqual(
+    surface.features[0].detail,
+    SNEAK_ATTACK_DETAIL,
+    'the engine detail is untouched by the new field'
+  );
+}
+
+/** PROVE THE JOIN CAN FAIL, case 1: no candidate at all (empty description population). */
+function verifiesNoMatchingCandidateLeavesCorpusDescriptionNull() {
+  const surface = buildClassFeatureSurface(
+    [explanation('class_chassis.rogue.sneak_attack', 6)],
+    ROGUE,
+    []
+  );
+  assertEqual(surface.features[0].corpusDescription, null, 'no candidate means no description');
+}
+
+/**
+ * PROVE THE JOIN CAN FAIL, case 2 (description not matching the corpus
+ * row): a candidate that shares the feature slug but belongs to a
+ * DIFFERENT class must never attach -- the exact `decisions.md §10` shared-
+ * NAME hazard the join's own class-segment check exists to prevent.
+ */
+function verifiesAWrongClassCandidateNeverAttachesEvenWithTheSameFeatureSlug() {
+  const surface = buildClassFeatureSurface(
+    [explanation('class_chassis.rogue.sneak_attack', 6)],
+    ROGUE,
+    [descriptionDto('ninja', 'sneak_attack', 'A ninja ability of the same name.')]
+  );
+  assertEqual(
+    surface.features[0].corpusDescription,
+    null,
+    'a same-named feature under a different class must never attach'
+  );
+}
+
+/**
+ * PROVE THE JOIN CAN FAIL, case 3: a chassis record with no class token
+ * (`classToken === null`) never attaches a description, even when a
+ * same-named candidate exists -- there is no `classSlug` to gate the match,
+ * and matching by feature slug alone is the shared-NAME hazard.
+ */
+function verifiesAChasisRecordWithNoClassTokenNeverAttachesADescription() {
+  const surface = buildClassFeatureSurface(
+    [explanation('class_chassis.base_attack_bonus', 5)],
+    ROGUE,
+    [descriptionDto('rogue', 'base_attack_bonus', 'Some unrelated rogue feature.')]
+  );
+  assertEqual(surface.features[0].classToken, null, 'no held class matched this id');
+  assertEqual(
+    surface.features[0].corpusDescription,
+    null,
+    'a chassis record with no class token must never guess a description'
+  );
+}
+
 async function main() {
   verifiesALevel11RoguesSneakAttackKeepsItsMagnitudeAndCitation();
   verifiesTheDetailTextIsNeverRewritten();
@@ -290,6 +403,11 @@ async function main() {
   verifiesABookNamespacedIdForAnUnheldClassStillGetsNoGuessedOwner();
   verifiesTheNamespaceScanIsBoundedToOneSegment();
   verifiesTheUnnamespacedIdsKeepTheirExistingAttribution();
+  verifiesMatchesCorpusFeatureRequiresTheClassSegmentAndTheTrailingSlug();
+  verifiesARealClassFeatureRowJoinsToItsMatchingCorpusDescription();
+  verifiesNoMatchingCandidateLeavesCorpusDescriptionNull();
+  verifiesAWrongClassCandidateNeverAttachesEvenWithTheSameFeatureSlug();
+  verifiesAChasisRecordWithNoClassTokenNeverAttachesADescription();
 }
 
 main().catch((error: unknown) => {

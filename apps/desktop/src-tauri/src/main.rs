@@ -6,6 +6,7 @@ mod character_hub;
 #[allow(non_snake_case)]
 mod characterHub;
 mod class_catalog;
+mod class_feature_descriptions;
 mod class_spell_levels;
 mod corpus_fixtures;
 mod corpus_full;
@@ -51,6 +52,7 @@ use characterHub::appendToCharacter::append_to_character;
 use characterHub::recomputeCharacter::recompute_character;
 use characterHub::reSaveCharacter::re_save_character;
 use class_catalog::list_class_catalog;
+use class_feature_descriptions::list_class_feature_descriptions;
 use class_spell_levels::list_class_spell_levels;
 use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
@@ -198,6 +200,12 @@ fn main() {
             // reached no surface at all until this catalog landed.
             list_monster_catalog,
             list_companion_catalog,
+            // SD31-D7-PROSE-003: real corpus `DESC:` text for class
+            // features, joined to the character sheet's own explanation ids
+            // -- `ClassFeatureRow.detail` renders the engine's COMPUTED
+            // derivation, never the rulebook prose, so this is a second,
+            // additive field, not a replacement.
+            list_class_feature_descriptions,
             list_equipment,
             list_spells,
             list_feats,

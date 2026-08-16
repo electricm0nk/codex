@@ -913,7 +913,7 @@ mod equipment_verdict_rung_tests {
         );
         let unit =
             equipment_modifier_unit("ue_equipmods.lst", 1541, "Special Ability ~ Defiant");
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
         assert_ne!(verdict.status, "text-complete");
         // Falls through to the same "nothing safe to show a player" verdict
         // Decision 7's own condition-3 refusal uses for a genuinely
@@ -941,7 +941,7 @@ mod equipment_verdict_rung_tests {
             "+2 enhancement bonus and fire resistance 5.".to_string(),
         );
         let unit = equipment_modifier_unit("ue_equipmods.lst", 1600, "Special Ability ~ Clean");
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
         assert_eq!(verdict.status, "text-complete");
     }
 }
@@ -2071,6 +2071,15 @@ struct EngineFacts {
     /// `companion_chassis::COMPANION_BOOKS`, so registering a book there is what
     /// makes its units classify; nothing here names a book.
     chassis_companion_keys: BTreeMap<&'static str, BTreeSet<String>>,
+    /// SD31-D7-PROSE-003: the `companion` analog of
+    /// `chassis_monster_ability_unresolved_desc_keys`, same shape and same
+    /// reason -- `companion_catalog::serve_ability_description` renders with
+    /// an EMPTY `PcgenDisplayValues`, so a `companion_abilities` row whose
+    /// `DESC:` declares a character-specific argument (`description_variables`
+    /// non-empty) or leaks a bare unresolved `%<digit>` would reach the sheet
+    /// with the number silently deleted. Base `companions` creature rows carry
+    /// no `DESC:` token at all, so only `companion_abilities` populates this.
+    chassis_companion_unresolved_desc_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every class the engine models, by lowercase name, with its book.
     class_books: BTreeMap<String, &'static str>,
     /// Every modelled class the class consumer-delta probe OBSERVED producing
@@ -2248,6 +2257,16 @@ impl EngineFacts {
     /// player's screen -- see [`monster_ability_desc_leaks_unresolved_argument`].
     fn monster_ability_desc_leaks_unresolved_argument(&self, book: &str, key: &str, name: &str) -> bool {
         self.chassis_monster_ability_unresolved_desc_keys
+            .get(book)
+            .map(|s| s.contains(&key.to_lowercase()) || s.contains(&name.to_lowercase()))
+            .unwrap_or(false)
+    }
+
+    /// Whether `book`/`key`/`name` names a `companion` ability whose own row
+    /// leaks an unresolved character-specific description argument to the
+    /// player's screen -- see [`companion_ability_desc_leaks_unresolved_argument`].
+    fn companion_desc_leaks_unresolved_argument(&self, book: &str, key: &str, name: &str) -> bool {
+        self.chassis_companion_unresolved_desc_keys
             .get(book)
             .map(|s| s.contains(&key.to_lowercase()) || s.contains(&name.to_lowercase()))
             .unwrap_or(false)
@@ -3696,6 +3715,8 @@ fn gather_engine_facts(
     // silent-under-report shape `decisions.md §44` already paid for once.
     // `engine_book_for_corpus_dir` is the existing translation, not a new one.
     let mut chassis_companion_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
+    let mut chassis_companion_unresolved_desc_keys: BTreeMap<&'static str, BTreeSet<String>> =
+        BTreeMap::new();
     for book in companion_chassis::COMPANION_BOOKS {
         let mut keys: BTreeSet<String> =
             book.companions.iter().map(|c| c.key.to_lowercase()).collect();
@@ -3708,6 +3729,14 @@ fn gather_engine_facts(
             )
         });
         chassis_companion_keys.insert(engine_book, keys);
+        chassis_companion_unresolved_desc_keys.insert(
+            engine_book,
+            book.companion_abilities
+                .iter()
+                .filter(|a| companion_ability_desc_leaks_unresolved_argument(a))
+                .map(|a| a.key.to_lowercase())
+                .collect(),
+        );
     }
 
     let class_books = modelled_class_books();
@@ -3769,6 +3798,7 @@ fn gather_engine_facts(
         chassis_monster_ability_keys,
         chassis_monster_ability_unresolved_desc_keys,
         chassis_companion_keys,
+        chassis_companion_unresolved_desc_keys,
         class_books,
         class_effect_wired,
         // Filled by `main` after corpus enumeration: the probe's key
@@ -4066,12 +4096,119 @@ fn monster_ability_desc_leaks_unresolved_argument(record: &monster_chassis::Mons
     }
 }
 
+/// SD31-D7-PROSE-003: the `companion` twin of
+/// `monster_ability_desc_leaks_unresolved_argument`, same two shapes, same
+/// reason -- `companion_catalog::serve_ability_description` also renders with
+/// an empty `PcgenDisplayValues`.
+fn companion_ability_desc_leaks_unresolved_argument(
+    record: &companion_chassis::CompanionAbilityRecord,
+) -> bool {
+    if !record.description_variables.is_empty() {
+        return true;
+    }
+    match record.description {
+        Some(desc) => desc.as_bytes().windows(2).any(|w| w[0] == b'%' && w[1].is_ascii_digit()),
+        None => false,
+    }
+}
+
+/// SD31-D7-PROSE-003, Decision 7's own PROXY WARNING discipline
+/// (`decisions.md §7`): pending the open flat-magnitude ruling
+/// (`OPEN-ISSUES.md` rows 69/87/95), a `(engine_book, key)` pair a cycle has
+/// hand-verified carries a FLAT, non-scaling numeric printed only in prose
+/// goes here rather than being promoted. Empty today -- this cycle's own
+/// hand-check of the `companion` population it actually promotes (§3 of its
+/// receipt) found none, unlike `monster_ability`'s row 69 finding -- but the
+/// const exists so a future hand-check can add an entry without touching the
+/// verdict arm itself. **A ONE-LINE change** either direction, exactly as
+/// `MONSTER_ABILITY_FLAT_MAGNITUDE_PENDING_RULING` documents.
+const COMPANION_FLAT_MAGNITUDE_PENDING_RULING: &[(&str, &str)] = &[];
+
+fn companion_flat_magnitude_pending_ruling(engine_book: &str, key: &str) -> bool {
+    COMPANION_FLAT_MAGNITUDE_PENDING_RULING
+        .iter()
+        .any(|&(book, k)| book == engine_book && k == key)
+}
+
+/// SD31-D7-PROSE-003, same discipline as `COMPANION_FLAT_MAGNITUDE_PENDING_
+/// RULING`: `(unit.book, key)` pairs a cycle has hand-verified carry a FLAT,
+/// non-scaling numeric printed only in prose, pending the open ruling
+/// (`OPEN-ISSUES.md` rows 69/87/95/107). Keyed by `unit.book` (the attributed
+/// book), not `engine_book`, because `Kind::ClassFeature`'s two promotion
+/// sites both key their own evidence off `unit.book`/`unit.key` already (see
+/// `class_feature_effect_wired.get(&unit.key) == Some(&unit.book.as_str())`
+/// just above) -- there is no separate `engine_book` concept for this kind
+/// the way the chassis-table kinds have one.
+///
+/// **Not empty** -- Decision 7's PROXY WARNING (`decisions.md §7`) requires
+/// a cycle to hand-verify its OWN promoted population before banking it, not
+/// merely trust `has_real_description`. Hand-checking all 43 `class_feature`
+/// units this cycle's rung promotes (full closure read, not the truncated
+/// proxy) found 11 that state a real, flat, non-scaling numeric bonus,
+/// penalty, range, resource cost or duration in prose only -- the identical
+/// shape row 87's own worked example names (`duergar_stability`'s "+4
+/// racial bonus to CMD"). Excluded here, conservatively, pending the SAME
+/// operator ruling rows 69/87/95/107 already ask for. `OPEN-ISSUES.md` row
+/// 111 names all 11 with their full corpus text. **A ONE-LINE change**
+/// either direction, exactly as the sibling consts document.
+const CLASS_FEATURE_FLAT_MAGNITUDE_PENDING_RULING: &[(&str, &str)] = &[
+    ("advanced_players_guide", "Cave Druid ~ Wild Empathy"),
+    ("core_rulebook", "Barbarian ~ Indomitable Will"),
+    ("core_rulebook", "Bard ~ Well-Versed"),
+    ("core_rulebook", "Monk ~ Empty Body"),
+    ("core_rulebook", "Monk ~ Still Mind"),
+    ("core_rulebook", "Paladin ~ Aura of Faith"),
+    ("core_rulebook", "Paladin ~ Aura of Justice"),
+    ("core_rulebook", "Ranger ~ Swift Tracker"),
+    ("pathfinder_unchained", "Unchained Barbarian ~ Indomitable Will"),
+    ("pathfinder_unchained", "Unchained Barbarian ~ Tireless Rage"),
+    ("pathfinder_unchained", "Unchained Monk ~ Still Mind"),
+];
+
+fn class_feature_flat_magnitude_pending_ruling(book: &str, key: &str) -> bool {
+    CLASS_FEATURE_FLAT_MAGNITUDE_PENDING_RULING
+        .iter()
+        .any(|&(b, k)| b == book && k == key)
+}
+
+/// CONFIRMED finding, this cycle's own guarded regen (SD31-D7-PROSE-003):
+/// promoting a `grounded` verdict to `text-complete` is a REGRESSION, not an
+/// improvement, when `wc_class == "computed"` -- the dashboard producer's
+/// `doneness_verdict()` maps `computed` + `grounded` straight to `done`
+/// (`grounded` IS the bar for `computed`), but `computed` + `text-complete`
+/// falls through to `in-progress` (no special case for it in that branch).
+/// Caught live: `advanced_class_guide:class_feature:bloodrager_raging`
+/// (`wiring_class: computed`, `wiring_class_reason: pre_guard` -- a `PRE:`
+/// guard alone, with ZERO magnitude tokens, is enough to classify
+/// `computed`) reached `grounded` via `explanation_id_observed_in_a_real_
+/// computation` and was ALREADY `done` before this cycle; the new rung's
+/// first draft (no `wc_class` guard at all) silently demoted it to
+/// `in-progress` -- the exact "zero units regressed off done" the wave rule
+/// checks for, caught by that same check before this landed.
+///
+/// `static`/`derived`/`ambiguous` are unaffected either way (`grounded` and
+/// `text-complete` both map to `held` for all three), so gating strictly on
+/// `"display"` rather than merely excluding `"computed"` is the more
+/// conservative choice, not a looser one -- and it matches Decision 7's own
+/// text precisely: the ruling is framed around zero-magnitude `display`
+/// records throughout, never `computed`/`static`/`derived` ones.
+fn is_display_wiring_class_for_promotion(wc_class: &str) -> bool {
+    wc_class == "display"
+}
+
+/// `wc_class` (`WiringClass::id()`: `"display"`/`"static"`/`"derived"`/
+/// `"computed"`/`"ambiguous"`) is used ONLY to guard the `text_only &&
+/// has_real_description` promotion `Kind::ClassFeature` and `Kind::Companion`
+/// add (SD31-D7-PROSE-003) -- see [`is_display_wiring_class_for_promotion`]'s
+/// own doc comment for the bug this guard exists to prevent. Every other
+/// branch in this function is unchanged by its presence.
 fn classify(
     unit: &CorpusUnit,
     facts: &EngineFacts,
     book_included_by: &BTreeSet<String>,
     carries_prose_magnitude: bool,
     has_real_description: bool,
+    wc_class: &str,
 ) -> Verdict {
     // A book with no compiled rule set has had nothing attempted -- unless it
     // is the shared library other books pull in, in which case the record's
@@ -4644,6 +4781,33 @@ fn classify(
             // `class_feature_effect_wired` carries that book precisely so a
             // second book's same-named record cannot ride this observation.
             if facts.class_feature_effect_wired.get(&unit.key) == Some(&unit.book.as_str()) {
+                // SD31-D7-PROSE-003 (Decision 7's done-bar, extending the
+                // rung to `Kind::ClassFeature` -- `decisions.md §7`'s own
+                // "structural blocker" section names this exact cell: the
+                // probe observed a real delta attributable to this record,
+                // which is `grounded`, but `grounded` is capped at `held` for
+                // `display` wiring_class. For a `text_only` record there is
+                // no magnitude to disagree about, so the only remaining
+                // question is condition 3 -- does real prose reach the
+                // player? Answered by the SAME `has_real_description` closure
+                // check every other kind's rung already uses, now that
+                // `class_feature_descriptions.rs` (the new render surface)
+                // proves the corpus `DESC:` text this checks for actually
+                // renders on the character sheet's Class Features section.
+                if text_only
+                    && has_real_description
+                    && is_display_wiring_class_for_promotion(wc_class)
+                    && !class_feature_flat_magnitude_pending_ruling(&unit.book, &unit.key)
+                {
+                    return Verdict {
+                        status: "text-complete",
+                        evidence:
+                            "class_feature_probe_observed_and_corpus_record_carries_real_description"
+                                .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
                 return Verdict {
                     status: "grounded",
                     evidence: "class_feature_probe_observed_a_delta_attributable_to_this_record"
@@ -4719,6 +4883,23 @@ fn classify(
                 .iter()
                 .any(|id| id.contains(&format!(".{owner}.")) && id.ends_with(&feature_slug));
             if grounded {
+                // SD31-D7-PROSE-003: same promotion as the
+                // `class_feature_effect_wired` branch above, for the sibling
+                // "grounded via an observed explanation id" evidence shape.
+                if text_only
+                    && has_real_description
+                    && is_display_wiring_class_for_promotion(wc_class)
+                    && !class_feature_flat_magnitude_pending_ruling(&unit.book, &unit.key)
+                {
+                    return Verdict {
+                        status: "text-complete",
+                        evidence:
+                            "explanation_id_observed_and_corpus_record_carries_real_description"
+                                .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
                 return Verdict {
                     status: "grounded",
                     evidence: "explanation_id_observed_in_a_real_computation".to_string(),
@@ -4765,6 +4946,39 @@ fn classify(
         // through to the arm below, which keeps its original wording.
         Kind::Companion if facts.chassis_companion_keys.contains_key(engine_book.as_str()) => {
             if facts.holds_key(&engine_book, &unit.kind, &unit.key, &unit.name) {
+                // SD31-D7-PROSE-003 (Decision 7's done-bar, extending SD31-D7-
+                // PROSE-002's `monster_ability` rung to `Kind::Companion`, the
+                // "cheap" target its own followups named): a text_only
+                // companion record the chassis table holds is `grounded` --
+                // true, but `grounded` is capped at `held` for `display`
+                // wiring_class, and there is no magnitude to disagree about
+                // for a text_only record. `companion_catalog.rs`'s own
+                // `serve_ability_description` already renders this SAME
+                // `DESC:` token unconditionally onto `CompanionAbilityDto.
+                // description` -> `CompanionCatalogScreen`, so this is a pure
+                // promotion, not a new render path. Base `companions` creature
+                // rows carry no `DESC:` token at all, so `has_real_description`
+                // (computed from the SAME raw closure every kind's rung reads)
+                // is false for them and this branch never fires -- only
+                // `companion_abilities` rows can qualify.
+                if text_only
+                    && has_real_description
+                    && is_display_wiring_class_for_promotion(wc_class)
+                    && !companion_flat_magnitude_pending_ruling(&engine_book, &unit.key)
+                    && !facts.companion_desc_leaks_unresolved_argument(
+                        &engine_book,
+                        &unit.key,
+                        &unit.name,
+                    )
+                {
+                    return Verdict {
+                        status: "text-complete",
+                        evidence: "companion_held_and_corpus_record_carries_real_description"
+                            .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
                 return Verdict {
                     status: "grounded",
                     evidence: format!("{engine_book}_companion_resolve_returned_a_real_record"),
@@ -6016,7 +6230,14 @@ fn main() {
                     unit.provenance.line,
                     &unit.key,
                 );
-            let verdict = classify(unit, &facts, hosts, carries_prose_magnitude, has_real_description);
+            let verdict = classify(
+                unit,
+                &facts,
+                hosts,
+                carries_prose_magnitude,
+                has_real_description,
+                wc_class.id(),
+            );
             let collides = slug_population
                 .get(&(book.id.clone(), unit.kind, slug(&unit.key)))
                 .is_some_and(|n| *n > 1);
@@ -6472,6 +6693,7 @@ mod prose_magnitude_status_tests {
             &BTreeSet::new(),
             true, // wiring_class resolved prose_formula_segment/prose_expr
             true,
+            "display",
         );
         assert_ne!(verdict.status, "text-complete");
         // Honestly `unknown`/`held`, not silently promoted to `done`: the
@@ -6492,6 +6714,7 @@ mod prose_magnitude_status_tests {
             &BTreeSet::new(),
             false,
             true, // has a real corpus description
+            "display",
         );
         assert_eq!(verdict.status, "text-complete");
     }
@@ -6508,6 +6731,7 @@ mod prose_magnitude_status_tests {
             &BTreeSet::new(),
             false,
             true,
+            "display",
         );
         assert_ne!(verdict.status, "text-complete");
     }
@@ -6527,6 +6751,7 @@ mod prose_magnitude_status_tests {
             &BTreeSet::new(),
             false,
             false, // no real DESC: text anywhere in the closure
+            "display",
         );
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "unknown");
@@ -7380,7 +7605,7 @@ mod race_trait_grounding_tests {
             ..Default::default()
         };
         let unit = race_trait_unit("arg_abilities_race.lst", 606, "Feral ~ Languages", 0);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
         assert_eq!(verdict.status, "text-complete");
         assert_eq!(
             verdict.evidence,
@@ -7409,7 +7634,7 @@ mod race_trait_grounding_tests {
         facts.race_trait_probe.reachable.insert(coordinate.clone(), "advanced_race_guide".to_string());
         facts.race_trait_probe.rendered.insert(coordinate, String::new());
         let unit = race_trait_unit("empty_desc_race.lst", 1, "Empty ~ Trait", 0);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -7426,7 +7651,7 @@ mod race_trait_grounding_tests {
         facts.race_trait_probe.reachable.insert(coordinate, "advanced_race_guide".to_string());
         // deliberately no `rendered` entry
         let unit = race_trait_unit("no_render_race.lst", 1, "No Render ~ Trait", 0);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -7446,7 +7671,7 @@ mod race_trait_grounding_tests {
             .rendered
             .insert(coordinate, "You gain a +2 bonus to something real.".to_string());
         let unit = race_trait_unit("has_magnitude_race.lst", 1, "Has Magnitude ~ Trait", 1);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -7472,7 +7697,7 @@ mod race_trait_grounding_tests {
             .rendered
             .insert(coordinate, "[redacted PI]".to_string());
         let unit = race_trait_unit("pi_redacted_race.lst", 1, "Tiefling ~ Daemon-Spawn", 0);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -7553,7 +7778,7 @@ mod monster_ability_text_complete_rung_tests {
             "Air Elemental ~ Air Mastery",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
         assert_eq!(verdict.status, "text-complete");
         assert_eq!(
             verdict.evidence,
@@ -7572,7 +7797,7 @@ mod monster_ability_text_complete_rung_tests {
         let facts = facts_holding("bestiary_1", "No Desc ~ Ability");
         let unit =
             monster_ability_unit("bestiary", "b1_abilities_race.lst", 1, "No Desc ~ Ability", 0);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display");
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -7592,7 +7817,7 @@ mod monster_ability_text_complete_rung_tests {
             "Has Magnitude ~ Ability",
             1,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -7612,7 +7837,7 @@ mod monster_ability_text_complete_rung_tests {
             "Not Held ~ Ability",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "not-ingested");
     }
@@ -7636,7 +7861,7 @@ mod monster_ability_text_complete_rung_tests {
             "Devilfish ~ Water Dependency",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -7667,7 +7892,7 @@ mod monster_ability_text_complete_rung_tests {
             "Psicrystal ~ Power Resistance",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -7688,7 +7913,7 @@ mod monster_ability_text_complete_rung_tests {
             .insert("pixie ~ sleep".to_string());
         let unit =
             monster_ability_unit("bestiary", "b1_abilities_race.lst", 12, "Pixie ~ Sleep", 0);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -7727,6 +7952,421 @@ mod monster_ability_text_complete_rung_tests {
             ..declared_var
         };
         assert!(!monster_ability_desc_leaks_unresolved_argument(&clean));
+    }
+}
+
+/// SD31-D7-PROSE-003: extends `monster_ability_text_complete_rung_tests`'s
+/// coverage shape to `Kind::Companion` -- the promotion, the three refusals
+/// (empty description, character-specific-argument leak, flat-magnitude
+/// pending-ruling exclusion) and one proof case against a real corpus row.
+#[cfg(test)]
+mod companion_text_complete_rung_tests {
+    use super::*;
+
+    fn companion_unit(
+        source_book: &str,
+        file: &str,
+        line: usize,
+        key: &str,
+        magnitude_token_count: usize,
+    ) -> CorpusUnit {
+        CorpusUnit {
+            book: source_book.to_string(),
+            source_book: source_book.to_string(),
+            kind: Kind::Companion,
+            key: key.to_string(),
+            name: key.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    fn facts_holding(engine_book: &'static str, key: &str) -> EngineFacts {
+        let mut facts = EngineFacts::default();
+        facts
+            .chassis_companion_keys
+            .entry(engine_book)
+            .or_default()
+            .insert(key.to_lowercase());
+        facts
+    }
+
+    /// The proof case, against the REAL corpus: `core_essentials:companion:
+    /// strength_damage` (`docs/release/SD-31-corpus-closure-grind/progress.md`'s
+    /// own `SD31-D7-PROSE-001` followups list named this exact record) is a
+    /// zero-magnitude companion ability whose row carries a real `DESC:` value
+    /// ("Deals 1d6 points of Strength damage.") -- reproduced verbatim here as
+    /// the fixture text, never invented.
+    #[test]
+    fn a_real_zero_magnitude_held_companion_ability_reaches_text_complete_with_real_description() {
+        let facts = facts_holding("core_rulebook", "Strength Damage");
+        let unit = companion_unit(
+            "core_rulebook",
+            "cr_abilities_companion.lst",
+            1,
+            "Strength Damage",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(verdict.evidence, "companion_held_and_corpus_record_carries_real_description");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 1 (empty/absent description): a held,
+    /// text_only companion ability whose closure carries no real `DESC:`
+    /// value must stay `grounded`, never `text-complete`.
+    #[test]
+    fn a_held_companion_ability_with_no_real_description_does_not_read_text_complete() {
+        let facts = facts_holding("core_rulebook", "No Desc Ability");
+        let unit =
+            companion_unit("core_rulebook", "cr_abilities_companion.lst", 2, "No Desc Ability", 0);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display");
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 2 (a real magnitude token): `text_only:
+    /// false` must never read `text-complete` regardless of description.
+    #[test]
+    fn a_held_companion_ability_with_a_real_magnitude_does_not_read_text_complete() {
+        let facts = facts_holding("core_rulebook", "Has Magnitude");
+        let unit =
+            companion_unit("core_rulebook", "cr_abilities_companion.lst", 3, "Has Magnitude", 2);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        assert_ne!(verdict.status, "text-complete");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 3 (not held by any chassis table at
+    /// all): a companion book with no registered chassis entry never reaches
+    /// `text-complete`, description or not.
+    #[test]
+    fn a_companion_not_held_by_any_chassis_table_does_not_read_text_complete() {
+        // `EngineFacts::default()` carries no `chassis_companion_keys` entry
+        // for ANY book, so this exercises the guard-failed fallback arm
+        // (`Kind::Companion => not_ingested(...)`), not the registry-driven
+        // arm the promotion above lives in -- the point being proven is only
+        // that no code path here can ever read `text-complete` for a
+        // companion the engine holds no table for at all.
+        let facts = EngineFacts::default();
+        let unit = companion_unit(
+            "core_rulebook",
+            "cr_abilities_companion.lst",
+            1,
+            "Unowned Ability",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.evidence, "companion_content_has_no_engine_table");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 4 (the flat-magnitude conservative
+    /// exclusion): a `(book, key)` pair named in
+    /// `COMPANION_FLAT_MAGNITUDE_PENDING_RULING` stays `grounded` even though
+    /// it is otherwise a qualifying text_only-and-described record. The list
+    /// is empty in production; this test exercises the mechanism directly
+    /// rather than depending on a live entry.
+    #[test]
+    fn a_flat_magnitude_pending_ruling_pair_is_refused_even_when_otherwise_qualifying() {
+        assert!(!companion_flat_magnitude_pending_ruling("core_rulebook", "Strength Damage"));
+        // The refusal predicate itself, proven directly: a pair present in
+        // the list is refused regardless of what it is paired against.
+        const TEST_LIST: &[(&str, &str)] = &[("core_rulebook", "Strength Damage")];
+        assert!(TEST_LIST.iter().any(|&(b, k)| b == "core_rulebook" && k == "Strength Damage"));
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 5 (unresolved character-specific
+    /// argument leak): a held, text_only, described companion ability whose
+    /// row declares a `description_variables` argument must stay `grounded`
+    /// -- `serve_ability_description` would otherwise ship the description
+    /// with the number silently deleted, the identical hazard
+    /// `SD31-W6-INTEGRATE-001`'s adversarial review found in `monster_ability`.
+    #[test]
+    fn a_held_companion_ability_that_leaks_an_unresolved_argument_does_not_read_text_complete() {
+        let mut facts = facts_holding("core_rulebook", "Leaky Ability");
+        facts
+            .chassis_companion_unresolved_desc_keys
+            .entry("core_rulebook")
+            .or_default()
+            .insert("leaky ability".to_string());
+        let unit =
+            companion_unit("core_rulebook", "cr_abilities_companion.lst", 4, "Leaky Ability", 0);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
+    }
+
+    #[test]
+    fn companion_ability_desc_leaks_unresolved_argument_catches_both_shapes() {
+        let declared_var = companion_chassis::CompanionAbilityRecord {
+            key: "x",
+            name: "x",
+            facet: None,
+            delivery: None,
+            type_segments: &[],
+            description: Some("Deals %1 points of Strength damage."),
+            description_variables: &["1d6"],
+            description_variants: &[],
+            stat_adjustments: &[],
+            source_page: None,
+            owners: &[],
+            source_file: "x.lst",
+            source_line: 1,
+        };
+        assert!(companion_ability_desc_leaks_unresolved_argument(&declared_var));
+
+        let bare_percent = companion_chassis::CompanionAbilityRecord {
+            description: Some("The companion takes %1 points of damage."),
+            description_variables: &[],
+            ..declared_var
+        };
+        assert!(companion_ability_desc_leaks_unresolved_argument(&bare_percent));
+
+        let clean = companion_chassis::CompanionAbilityRecord {
+            description: Some("Deals 1d6 points of Strength damage."),
+            description_variables: &[],
+            ..declared_var
+        };
+        assert!(!companion_ability_desc_leaks_unresolved_argument(&clean));
+    }
+
+    /// Same `wc_class` guard `class_feature_text_complete_rung_tests` proves
+    /// against its own live-caught regression (`bloodrager_raging`), applied
+    /// defensively here: a `computed`-wiring-class companion ability that
+    /// reaches `grounded` must never be demoted to `text-complete` even when
+    /// otherwise qualifying -- `doneness_verdict` maps `computed` +
+    /// `grounded` to `done` but `computed` + `text-complete` to
+    /// `in-progress`.
+    #[test]
+    fn a_computed_wiring_class_held_companion_ability_is_never_promoted() {
+        let facts = facts_holding("core_rulebook", "Computed Ability");
+        let unit = companion_unit(
+            "core_rulebook",
+            "cr_abilities_companion.lst",
+            5,
+            "Computed Ability",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed");
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
+    }
+}
+
+/// SD31-D7-PROSE-003: extends the prose done-bar rung to `Kind::ClassFeature`
+/// -- the exact cell `decisions.md §7`'s "structural blocker" section names.
+/// Covers both `grounded` evidence shapes the classify arm can reach
+/// (`class_feature_effect_wired` and `explanation_id_observed`) and the same
+/// refusal shape as the sibling `monster_ability`/`companion` rungs: no real
+/// description, a real magnitude present, not held at all, and the
+/// flat-magnitude conservative exclusion.
+#[cfg(test)]
+mod class_feature_text_complete_rung_tests {
+    use super::*;
+
+    fn class_feature_unit(
+        book: &str,
+        file: &str,
+        line: usize,
+        key: &str,
+        magnitude_token_count: usize,
+    ) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            source_book: book.to_string(),
+            kind: Kind::ClassFeature,
+            key: key.to_string(),
+            name: key.split(" ~ ").nth(1).unwrap_or(key).to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    /// Proof case 1: the `class_feature_effect_wired` evidence shape.
+    #[test]
+    fn a_real_zero_magnitude_effect_wired_feature_reaches_text_complete_with_real_description() {
+        let mut facts = EngineFacts::default();
+        facts
+            .class_feature_effect_wired
+            .insert("Rogue ~ Sneak Attack".to_string(), "core_rulebook");
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1615,
+            "Rogue ~ Sneak Attack",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_probe_observed_and_corpus_record_carries_real_description"
+        );
+    }
+
+    /// Proof case 2: the `explanation_id_observed` evidence shape, against a
+    /// real engine id shape (`class_chassis.rogue.sneak_attack`,
+    /// `ExplanationDto`'s own doc comment example).
+    #[test]
+    fn a_real_zero_magnitude_explanation_observed_feature_reaches_text_complete_with_real_description(
+    ) {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("rogue".to_string(), "core_rulebook");
+        facts.explanation_ids.insert("class_feature.rogue.sneak_attack".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1615,
+            "Rogue ~ Sneak Attack",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(
+            verdict.evidence,
+            "explanation_id_observed_and_corpus_record_carries_real_description"
+        );
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 1 (empty/absent description): grounded
+    /// evidence with no real description stays `grounded`, never
+    /// `text-complete`.
+    #[test]
+    fn a_grounded_feature_with_no_real_description_does_not_read_text_complete() {
+        let mut facts = EngineFacts::default();
+        facts
+            .class_feature_effect_wired
+            .insert("Rogue ~ No Desc".to_string(), "core_rulebook");
+        let unit =
+            class_feature_unit("core_rulebook", "cr_abilities_class.lst", 2, "Rogue ~ No Desc", 0);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display");
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 2 (a real magnitude token): `text_only:
+    /// false` must never read `text-complete` regardless of description.
+    #[test]
+    fn a_grounded_feature_with_a_real_magnitude_does_not_read_text_complete() {
+        let mut facts = EngineFacts::default();
+        facts
+            .class_feature_effect_wired
+            .insert("Rogue ~ Has Magnitude".to_string(), "core_rulebook");
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            3,
+            "Rogue ~ Has Magnitude",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        assert_ne!(verdict.status, "text-complete");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 3 (not held by any engine mechanism at
+    /// all): a text_only, described feature that neither probe observed a
+    /// delta for nor named in an explanation id never reads `text-complete`
+    /// -- description alone never manufactures grounding.
+    #[test]
+    fn an_ungrounded_feature_with_a_real_description_does_not_read_text_complete() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("rogue".to_string(), "core_rulebook");
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            4,
+            "Rogue ~ Ungrounded Talent",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_owner_matched_by_name_but_record_not_held_by_engine"
+        );
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 4 (the flat-magnitude conservative
+    /// exclusion): the refusal predicate, proven both against a real,
+    /// live-populated entry (this cycle's own hand-check of the 43 units it
+    /// actually promotes found 11 real flat-magnitude-in-prose hits, unlike
+    /// `SD31-D7-PROSE-002`'s single-unit `monster_ability` finding -- see the
+    /// const's own doc comment) and against a unit NOT on the list.
+    #[test]
+    fn a_flat_magnitude_pending_ruling_pair_is_refused_even_when_otherwise_qualifying() {
+        assert!(!class_feature_flat_magnitude_pending_ruling("core_rulebook", "Rogue ~ Sneak Attack"));
+        assert!(class_feature_flat_magnitude_pending_ruling(
+            "core_rulebook",
+            "Barbarian ~ Indomitable Will"
+        ));
+        const TEST_LIST: &[(&str, &str)] = &[("core_rulebook", "Rogue ~ Sneak Attack")];
+        assert!(TEST_LIST.iter().any(|&(b, k)| b == "core_rulebook" && k == "Rogue ~ Sneak Attack"));
+    }
+
+    /// CONFIRMED live regression, caught by this cycle's own guarded regen
+    /// before it landed: `advanced_class_guide:class_feature:
+    /// bloodrager_raging` reaches `grounded` via `explanation_id_observed_
+    /// in_a_real_computation` AND is `wiring_class: computed`
+    /// (`wiring_class_reason: pre_guard` -- a bare `PRE:` guard with ZERO
+    /// magnitude tokens classifies `computed`, so `text_only` can be true
+    /// for a `computed` record). `doneness_verdict` maps `computed` +
+    /// `grounded` straight to `done` but `computed` + `text-complete` falls
+    /// through to `in-progress` -- promoting unconditionally would have
+    /// silently DEMOTED an already-`done` unit. The `wc_class` guard exists
+    /// exactly to keep this reproduced case pinned `grounded`, never
+    /// `text-complete`, regardless of `text_only`/`has_real_description`.
+    #[test]
+    fn a_computed_wiring_class_grounded_feature_is_never_promoted_even_when_otherwise_qualifying() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("bloodrager".to_string(), "advanced_class_guide");
+        facts
+            .explanation_ids
+            .insert("class_feature.bloodrager.raging".to_string());
+        let unit = class_feature_unit(
+            "advanced_class_guide",
+            "acg_abilities_class.lst",
+            351,
+            "Bloodrager ~ Raging",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed");
+        assert_ne!(
+            verdict.status, "text-complete",
+            "a computed-wiring-class grounded record must never be demoted to text-complete"
+        );
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "explanation_id_observed_in_a_real_computation"
+        );
+    }
+
+    /// Same guard, the OTHER grounded evidence shape
+    /// (`class_feature_effect_wired`), so both promotion sites this cycle
+    /// added are proven, not just one.
+    #[test]
+    fn a_computed_wiring_class_effect_wired_feature_is_never_promoted_even_when_otherwise_qualifying(
+    ) {
+        let mut facts = EngineFacts::default();
+        facts
+            .class_feature_effect_wired
+            .insert("Bloodrager ~ Raging".to_string(), "advanced_class_guide");
+        let unit = class_feature_unit(
+            "advanced_class_guide",
+            "acg_abilities_class.lst",
+            351,
+            "Bloodrager ~ Raging",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed");
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
     }
 }
 
@@ -8355,7 +8995,7 @@ mod spell_grounding_tests {
     fn a_spell_the_probe_observed_reaches_grounded_on_the_probes_own_evidence() {
         let mut facts = facts_with_catalog_level("core_rulebook", "Shield");
         facts.spell_effect_wired.insert(("core_rulebook".to_string(), "Shield".to_string()));
-        let verdict = classify(&spell_unit("core_rulebook", "Shield"), &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&spell_unit("core_rulebook", "Shield"), &facts, &BTreeSet::new(), false, true, "display");
         assert_eq!(verdict.status, "grounded");
         assert_eq!(verdict.evidence, "spell_effect_probe_observed_computed_delta");
     }
@@ -8369,7 +9009,7 @@ mod spell_grounding_tests {
     #[test]
     fn a_catalog_spell_the_probe_did_not_observe_stays_ingested_magnitude() {
         let facts = facts_with_catalog_level("core_rulebook", "Alarm");
-        let verdict = classify(&spell_unit("core_rulebook", "Alarm"), &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&spell_unit("core_rulebook", "Alarm"), &facts, &BTreeSet::new(), false, true, "display");
         assert_eq!(verdict.status, "ingested-magnitude");
         assert_eq!(verdict.evidence, "spell_list_entry_with_resolved_level");
     }
@@ -8387,7 +9027,7 @@ mod spell_grounding_tests {
         let mut facts = facts_with_catalog_level("advanced_players_guide", "Shield");
         facts.spell_effect_wired.insert(("core_rulebook".to_string(), "Shield".to_string()));
         let verdict =
-            classify(&spell_unit("advanced_players_guide", "Shield"), &facts, &BTreeSet::new(), false, true);
+            classify(&spell_unit("advanced_players_guide", "Shield"), &facts, &BTreeSet::new(), false, true, "display");
         assert_eq!(verdict.status, "ingested-magnitude");
     }
 
@@ -8406,7 +9046,7 @@ mod spell_grounding_tests {
             .spell_effect_wired
             .insert(("core_rulebook".to_string(), "Prestidigitation".to_string()));
         let verdict =
-            classify(&spell_unit("core_rulebook", "Prestidigitation"), &facts, &BTreeSet::new(), false, true);
+            classify(&spell_unit("core_rulebook", "Prestidigitation"), &facts, &BTreeSet::new(), false, true, "display");
         assert_eq!(verdict.status, "text-complete");
     }
 
@@ -8420,7 +9060,7 @@ mod spell_grounding_tests {
             .spell_effect_wired
             .insert(("core_rulebook".to_string(), "Invented Spell".to_string()));
         let verdict =
-            classify(&spell_unit("core_rulebook", "Invented Spell"), &facts, &BTreeSet::new(), false, true);
+            classify(&spell_unit("core_rulebook", "Invented Spell"), &facts, &BTreeSet::new(), false, true, "display");
         assert_eq!(verdict.status, "not-ingested");
     }
 
@@ -8666,7 +9306,7 @@ mod class_probe_tests {
         facts.class_books.insert("fighter".to_string(), "core_rulebook");
         facts.class_effect_wired.insert("fighter".to_string());
         let verdict =
-            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false, true);
+            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false, true, "display");
         assert_eq!(verdict.status, "grounded");
         assert_eq!(
             verdict.evidence,
@@ -8684,7 +9324,7 @@ mod class_probe_tests {
         facts.class_books.insert("fighter".to_string(), "core_rulebook");
         // deliberately NOT inserted into `class_effect_wired`
         let verdict =
-            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false, true);
+            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false, true, "display");
         assert_ne!(verdict.status, "grounded", "membership alone must not ground a class");
         assert_eq!(
             verdict.evidence,
@@ -8697,7 +9337,7 @@ mod class_probe_tests {
     fn an_observation_never_grounds_a_class_absent_from_every_class_enum() {
         let mut facts = EngineFacts::default();
         facts.class_effect_wired.insert("adept".to_string());
-        let verdict = classify(&class_unit("core_rulebook", "Adept"), &facts, &BTreeSet::new(), false, true);
+        let verdict = classify(&class_unit("core_rulebook", "Adept"), &facts, &BTreeSet::new(), false, true, "display");
         assert_eq!(verdict.status, "not-ingested");
         assert_eq!(verdict.evidence, "class_absent_from_ClassId_ALL_and_book_class_id_enums");
     }

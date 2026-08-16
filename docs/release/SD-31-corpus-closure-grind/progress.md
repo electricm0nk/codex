@@ -11363,3 +11363,367 @@ checking every live PID's `CARGO_TARGET_DIR` against `/proc/<pid>/environ`.
    reported anywhere, so a run that never exercises the check is indistinguishable from one that did and
    found nothing. File: `src/rules_core/corpus_literal_sweep.rs`.
 
+
+## Cycle `SD31-D7-PROSE-003` (`RETRO_ACTOR=sd31-cf-surface`) — 2026-08-16
+
+**Card:** the `class_feature` prose surface — Decision 7 applied to the largest kind (40% of
+the board), which had never moved through wave 6. Build the missing render surface first
+(the real deliverable), extend the prose done-bar rung to `Kind::ClassFeature` second, and
+extend it to `Kind::Companion` (the cheap, render-infrastructure-already-exists target
+wave 6 named).
+
+### §0 — Branch state, oracle pin
+
+Starting HEAD `b8c36417dd6dff1bad090d65e3b958f8f39177b2` on `tranche/11` (tip of
+`docs(sd31): Decision 10 amendment`). Package dir present. Tree was NOT clean at start:
+untracked sibling-cycle artifacts only (`OPEN-ISSUES.md`/verify.log copies from prior
+waves' own commits' untracked leftovers, `docs/retro/events/*.jsonl` — left alone, not
+mine). `./scripts/verify.sh --only preflight-oracle` — PASS, `PCGEN_ORACLE_SHA=
+7f818006e371188e5717fd18d74d18a420747fc6` from `scripts/pcgen-oracle-pin.env`.
+
+### §1 — The render surface (the real deliverable)
+
+**Traced `ClassFeatureRow` end to end first**, per the card's own instruction: it renders
+`ExplanationDto.detail` — the engine's own COMPUTED derivation text from `pilot_compute.rs`
+— never the corpus `DESC:` field. Confirmed by reading `classFeaturesModel.ts`'s own doc
+comment ("`detail` is rendered verbatim... the engine's corpus citation") and its
+`buildClassFeatureSurface` implementation: `detail: explanation.detail`, full stop. No raw-
+prose render path existed for `class_feature`, exactly as `SD31-D7-PROSE-002`'s followups
+recorded.
+
+**Built the missing surface**, following the worked example
+(`monster_catalog::serve_ability_description → MonsterCatalogScreen.tsx`) rather than
+inventing a new pattern:
+
+- **`apps/desktop/src-tauri/src/class_feature_descriptions.rs`** (new file): reads the
+  already-generated, already-PI-screened `cache_gen::class_feature` JSON cache directly
+  from `data/corpus/*/class_feature/**/*.json` via `codex_repo_root()` — the SAME real-
+  corpus-at-runtime pattern `corpus_full.rs` already established for equipment (module doc
+  comment traces the precedent). Renders each real `DESC:` value through
+  `render_pcgen_desc` + `leaked_pcgen_syntax`, exposed as a new Tauri command
+  `list_class_feature_descriptions`.
+  - **Skip-and-report, not panic, on a leak** — deliberately different from
+    `monster_catalog`/`companion_catalog`'s hard panic: this catalog walks 12,000+ live
+    corpus records at process-start time (not a small hand-vetted table), and the module's
+    own leak-detection test found a REAL live malformed row
+    (`advanced_class_guide:class_feature:enhancement_savant_subschool_perfection_of_self`
+    — a row declaring two pipe-separated arguments whose prose only references `%1`, which
+    mis-splits under `render_pcgen_desc`'s segment-count heuristic and leaves a literal `|`
+    in the output). A hard panic there would crash every character sheet at process start
+    over one bad row anywhere in the whole corpus. 16 records total refused this way,
+    across 6 books — logged via `eprintln!`, never silently dropped, and pinned by a
+    regression test naming the exact record.
+  - 7 new tests, including `loads_thousands_of_real_described_class_features_from_the_
+    live_corpus` (proves >1,000 real records load) and
+    `every_real_class_feature_description_renders_without_a_pcgen_syntax_leak` (walks
+    EVERY real record the cache carries, not a sample — this is what caught the 16 leaks
+    before they shipped).
+- **`apps/desktop/src/boundary/loadClassFeatureDescriptions.ts`** (new file): the boundary
+  wrapper, same shape as `loadMonsterCatalog.ts`.
+- **`classFeaturesModel.ts`**: added `ClassFeatureRow.corpusDescription: string | null` and
+  `matchesCorpusFeature(id, classSlug, featureSlug)` — the join predicate is a DELIBERATE,
+  verbatim reuse of `v06_work_inventory.rs`'s own `Kind::ClassFeature` matching rule
+  (`id.contains(".{owner}.") && id.ends_with(&feature_slug)`), not a second invented rule:
+  the frontend's join can never be more permissive than the join the board's own doneness
+  measurement already trusts. `classToken === null` (the pre-namespacing `class_chassis.*`
+  family) always refuses — no `classSlug` to gate the match, which would otherwise be the
+  exact shared-NAME hazard `decisions.md §10`'s first guard exists to prevent.
+- **`CharacterSheet.tsx`**: `ActionsTab` now fetches the description table once
+  (`useEffect`, gracefully degrades to `[]` with no Tauri runtime or on fetch failure —
+  a player-visible ENHANCEMENT, not a load-bearing dependency of the section) and renders
+  `row.corpusDescription` as a second, italicized paragraph below the engine's own
+  `row.detail` when present. Absent entirely (no extra paragraph) when `null`, matching
+  this file's own "absence is rendered as absence" rule.
+- **`main.rs`**: registered the new module and Tauri command (minimal, necessary closure of
+  the "Tauri/DTO path" the card's file grant names).
+
+**DoD-8 — proven on-screen, byte-matched by direct file read, not inferred from the render**
+(§7 below has the full detail): Sneaky Pete (Human Rogue 11, a real saved character)'s
+Trapfinding row on the live Actions tab shows the real corpus text alongside the engine's
+own derivation; byte-matches `data/corpus/core_rulebook/class_feature/rogue/trapfinding.
+json`'s `data.description` (modulo the standing, approved `%N`-drop no-fabrication rule).
+
+### §2 — Extended the rung to `Kind::ClassFeature`
+
+Once the surface existed, extended the prose done-bar rung
+(`SD31-D7-PROSE-001`/`002`'s own precedent) to the two `grounded`-evidence shapes
+`Kind::ClassFeature`'s classify arm can reach (`class_feature_effect_wired` match,
+`explanation_id_observed`): `text_only && has_real_description &&
+is_display_wiring_class_for_promotion(wc_class) && !class_feature_flat_magnitude_pending_
+ruling(...)` promotes `grounded` → `text-complete`. `has_real_description` needed no new
+plumbing — `closure_has_real_description`/`corpus_json_has_real_description` already run
+generically for every kind, over the SAME `.lst` closure `class_feature` units are already
+enumerated from.
+
+**Sized the population per §7's correction**: `wiring_class == display AND
+magnitude_token_count == 0`, re-derived, never the raw proxy alone.
+
+**Mutation-tested, 6 new tests** (`class_feature_text_complete_rung_tests`): both proof
+cases (the two grounded evidence shapes), no-real-description refusal, real-magnitude
+refusal, not-held-at-all refusal, and the flat-magnitude exclusion mechanism.
+
+### §3 — Extended the rung to `Kind::Companion`
+
+The cheap target wave 6 named: `companion_catalog.rs` already carries its own
+`serve_ability_description`, byte-identical shape to the monster one. Added
+`chassis_companion_unresolved_desc_keys` (the companion twin of
+`chassis_monster_ability_unresolved_desc_keys`) and
+`companion_ability_desc_leaks_unresolved_argument` (the companion twin of the monster_
+ability leak guard `SD31-W6-INTEGRATE-001`'s adversarial review found), then the same
+promotion shape at the `Kind::Companion` `holds_key` branch. 7 new tests
+(`companion_text_complete_rung_tests`), same coverage shape as `monster_ability`'s own
+rung.
+
+### §4 — CONFIRMED live regression, caught before landing, fixed the same cycle
+
+The guarded regen's own before/after diff found **1 unit demoted off `done`**:
+`advanced_class_guide:class_feature:bloodrager_raging` (`wiring_class: computed`,
+`wiring_class_reason: pre_guard`) was already `done` via `grounded` (`computed`+`grounded`
+→ `done`), and the first-draft rung's unconditional promotion rewrote it to `text-complete`
+(`computed`+`text-complete` → `in-progress`, no special case) — a real regression, not a
+hypothetical one. Root cause is general: `grounded`→`text-complete` only helps `display`
+wiring_class; `static`/`derived`/`ambiguous` are neutral; `computed` is actively worse.
+
+**Fixed by threading `wc_class: &str` into `classify()`** (a new required parameter — every
+call site updated, 25+ sites across the file, all pre-existing tests unaffected by passing
+`"display"`, the value that reproduces their prior behaviour) and gating all THREE of this
+cycle's promotion sites on `wc_class == "display"` via `is_display_wiring_class_for_
+promotion`. Re-ran the guarded regen: `moved away from done: 0`. Two new regression tests
+pin the exact reproduced case (`a_computed_wiring_class_grounded_feature_is_never_promoted_
+even_when_otherwise_qualifying` and its companion/effect-wired siblings), both confirmed red
+before the fix, green after. Investigated whether the SAME shape lurks in the pre-existing,
+untouched `feat`/`spell` promotion branches (4 live units carry `computed`+`text-complete`
+today) and traced it one record deep: `Kind::Feat`'s promotion is only reachable AFTER
+`feat_effect_wired` already returned false, so it can never intercept an existing `grounded`
+path the way this cycle's new code did — those 4 units are correctly `in-progress`, not
+regressed. Logged as `OPEN-ISSUES.md` row 110 so a future cycle does not re-investigate.
+
+### §5 — Decision 7's PROXY WARNING, discharged against the real promoted population
+
+Hand-checked the FULL corpus `DESC:` text of all 43 `class_feature` units this cycle's rung
+would otherwise promote (the whole population, not a sample — small enough to read in
+full) and found **11** that state a real, flat, non-scaling numeric bonus/penalty/range/
+resource-cost/duration in prose only, the identical shape row 87's own worked example
+names. Excluded all 11 via `CLASS_FEATURE_FLAT_MAGNITUDE_PENDING_RULING`, the conservative
+default the card's own instruction named, pending the same open ruling rows 69/87/95/107
+already ask for. `companion`'s 165-unit population was also hand-checked in full and found
+genuinely clean — `COMPANION_FLAT_MAGNITUDE_PENDING_RULING` stays empty, verified rather
+than assumed. Full detail, every unit named with its corpus text: `OPEN-ISSUES.md` row 111.
+
+### §6 — Guarded regen: the board delta, measured and restored per the wave rule
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-cf-surface.json
+# corpus-literal-sweep: 23859 records examined of 24736 read, 228147 tokens compared
+# (9 synthesized), 24311 digests checked, 0 findings. CLEAN.
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-cf-surface.json
+# derived-evaluator-fixture-check: 100 of 101 covered units cleared; 1 failed (pre-existing,
+# unrelated: advanced_players_guide:equipment:spindle_of_perfect_knowledge). FIXTURE_EXIT=0.
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-cf-surface.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-cf-surface.json \
+  cargo run --locked --bin v06_work_inventory
+```
+
+Producer's own verdict function, BEFORE (copied pre-regen) vs. AFTER (final, post-§4/§5
+fixes):
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('<path>'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),2))
+"
+# BEFORE: 38521 {'done': 9488, 'not-started': 19915, 'unmeasurable': 5123, 'deferred': 36,
+#                'held': 3193, 'in-progress': 766} 24.63
+# AFTER:  38521 {'done': 9685, 'not-started': 19915, 'unmeasurable': 5123, 'deferred': 36,
+#                'held': 2996, 'in-progress': 766} 25.14
+```
+
+**Board headline: done 9,488 → 9,685 (+197), 24.63% → 25.14%.** Per-unit diff (every id
+individually compared before/after, not just aggregate counts):
+
+```
+moved to done: 197   moved away from done: 0
+by kind: companion 165, class_feature 32
+```
+
+32 = the 43 `class_feature` units the rung's two evidence shapes reach, minus the 11
+conservatively excluded per §5. 165 `companion` units, matching the pre-existing 223-unit
+population `SD31-E6-F7-001`'s own render-readiness report sized (210 ready via the
+`description.is_some() || !description_variants.is_empty()` predicate that row already
+recommended — the delta from 210 is the flat-magnitude/leak/held-elsewhere refusals this
+rung's own guards correctly apply). **Zero units regressed off `done`.**
+
+Per the wave rule, `docs/work-inventory.json` is NOT committed with this regen's content —
+`git checkout --` it before the final commit; the delta above is independently
+re-derivable from the two commands.
+
+### §7 — DoD item 8: on-screen verification, both new render surfaces proven
+
+```
+export RUN_DESKTOP_AGENT=sd31-cf-surface
+./.claude/skills/run-desktop/driver.sh launch
+```
+
+`verify-on-screen.sh` supports only `equipment`/`spell`/`race_trait`/`monster` — neither
+`class_feature` nor `companion` is one of its four families, so `driver.sh` was driven
+directly, per the mandate's own fallback instruction.
+
+**`class_feature`**: Loaded the real saved character "Sneaky Pete" (Human Rogue 11) via
+**Load Character**, opened the **Actions** tab, scrolled to the Rogue's **Trapfinding**
+row. Two paragraphs render: the engine's own derivation (unchanged), and — NEW — the real
+corpus text, italicized: *"You add to Perception skill checks made to locate traps and to
+Disable Device skill checks. You can use the Disable Device skill to disarm magical
+traps."* Byte-matched by direct read: `data/corpus/core_rulebook/class_feature/rogue/
+trapfinding.json`'s `data.description` is `"You add +%1 to Perception skill checks...
+disarm magical traps.|TrapfindingBonus"` — `render_pcgen_desc` drops the unresolved `%1`
+(with its introducing `+`, the standing no-fabrication contract; `TrapfindingBonus` is not
+a value this engine computes for display), producing exactly the on-screen text. The SAME
+tab's **Master Strike** row shows the identical two-paragraph shape for a second record,
+corroborating the mechanism generally. Artifacts: `artifacts/SD31-D7-PROSE-003/item8/
+class-feature-rogue-trapfinding{,-crop}.png` + `.verify.md`.
+
+**`companion`**: From the hub, **Browse Companion Catalog** → searched `Elemental, Air` →
+the **Elemental, Air (Small)** entry (Core Essentials p.120) shows its **Air Mastery**
+ability: *"Airborne creatures take a -1 penalty on attack and damage rolls against an air
+elemental."* — `core_essentials:companion:air_elemental_air_mastery`, one of this cycle's
+165 promoted units. Byte-matched: `data/corpus/core_essentials/companion/air_elemental_
+air_mastery.json`'s `data.description` is identical, verbatim, no `%N` substitution
+present. Artifact: `artifacts/SD31-D7-PROSE-003/item8/companion-air-elemental-air-mastery.
+png` + `.verify.md`.
+
+```
+./.claude/skills/run-desktop/driver.sh stop
+```
+
+### §8 — DoD item 3: `v06_corpus_trap_report --audit`, confirmed not worsened
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- --audit
+# TRAP_EXIT=2 (pre-existing RED, rows 27/65 — unrelated to this card)
+grep -c '\[wiring-class-mismatch\]' <log>   # 1191
+grep -c '\[mod-record\]' <log>              # 0
+```
+
+1,191 — byte-identical to the wave's own recorded baseline. Not worsened.
+
+### §9 — Four-check wired-integration audit, all clean
+
+```
+git diff --unified=0 b8c36417d -- 'src/**/*.rs' 'apps/desktop/src-tauri/**/*.rs' \
+  | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS
+# OK_NO_TOKENS
+git diff --unified=0 b8c36417d -- 'apps/desktop/**/*.tsx' 'apps/desktop/**/*.jsx' \
+  | grep -nE 'onClick=\{\s*\(\)\s*=>\s*\{\s*\}\s*\}|onClick=\{undefined' || echo OK_NO_NOOP_HANDLERS
+# OK_NO_NOOP_HANDLERS
+git diff --unified=0 b8c36417d -- 'apps/desktop/**/*.{ts,tsx,jsx,rs}' 'src/**/*.rs' \
+  ':!**/__tests__/**' ':!**/*.test.*' \
+  | grep -nE 'mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__' || echo OK_NO_MOCK_LEAKS
+# OK_NO_MOCK_LEAKS
+git diff --unified=0 b8c36417d -- 'apps/desktop/**/*.{ts,tsx}' 'src/**/*.rs' \
+  | grep -nE '"Would [^"]*"' || echo OK_NO_WOULD_STRINGS
+# OK_NO_WOULD_STRINGS
+```
+
+No new corpus record was generated this cycle (`class_feature_descriptions.rs` only READS
+the already-generated, already-PI-screened `cache_gen::class_feature` output; nothing in
+`data/corpus/` was written) — the SD-30 PI contracts (`§52.3`/`§53.5`) were not
+independently re-invoked beyond the standard gate's own `pi-sweep`/`declared-pi-audit`
+stages, which already cover both (§10 below, both PASS).
+
+### §10 — Full gate
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D7-PROSE-003-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+Launched early, in the background, kept alive while §1–§9 were written. One prior run this
+cycle caught a real, self-inflicted failure before landing: `root-full`'s repo-wide
+`sd24_wired_integration_audit.rs` flagged the literal word "placeholder" in a NEW,
+non-comment-prefixed line of a `CharacterSheet.tsx` JSX block comment
+(`placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral` — the audit's
+"reviewed comment prose" exemption only covers lines starting `//`/`*`, and a JSX
+`{/* ... */}` block's continuation lines do not). Reworded the comment (no functional
+change) and relaunched a clean run.
+
+**`VERIFY_EXIT=0`. `RESULT: PASS`. All 23/23 stages green**: `preflight-disk`,
+`preflight-oracle`, `oracle-pin-selftest`, `producer-selftest`,
+`reachability-audit-selftest`, `reachability-audit` (98.95%, unchanged), `groundtruth-guard-
+selftest`, `pi-sweep`, `declared-pi-audit`, `audit-selftest`, `reclaim-selftest`, `driver-
+selftest`, `corpus-sweep-selftest`, `root-lib` (1894 passed), `root-full` (**6701** passed
+across 563 suites, all 529 `tests/*.rs` suites executed), `desktop` (**455** passed), `reach`
+(27 passed — claim present for `class_features`/`companion`), `corpus-sweep` (23859
+examined, 0 findings), `frontend-install`, `frontend-test` (**99/99 files**),
+`frontend-typecheck` (clean), `clippy` (root:47 desktop:7 warnings, 0 errors — BOTH
+byte-identical to baseline, no new warnings), `class-dump` (31/31 computing). Log:
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D7-PROSE-003-verify.log`
+(`/tmp/codex-verify-1clJ3G` for the per-stage raw logs).
+
+This cycle's own binary-level proof also ran independently and confirms the totals:
+`cargo test --locked --bin v06_work_inventory` — 145 passed, 0 failed (15 new tests this
+cycle added — 7 in `companion_text_complete_rung_tests`, 6 in `class_feature_text_complete_
+rung_tests`, 2 computed-wiring-class regression tests — over the pre-cycle 130);
+`cargo test --locked --manifest-path apps/desktop/src-tauri/Cargo.toml` — 455 passed, 0
+failed (7 new in `class_feature_descriptions::tests`, over the pre-cycle 448); `npm test`
+(frontend) — 99/99 files PASS including `classFeaturesModel.test.ts`'s 5 new assertions;
+`npm run typecheck` — clean.
+
+**Baseline notes, not failures** (`verify.sh`'s own diagnostic): `BASELINE_ROOT_FULL_TESTS`
+stale (6685 recorded, 6701 measured, +16) and `BASELINE_DESKTOP_TESTS` stale (448 recorded,
+455 measured, +7 — exactly this cycle's own `class_feature_descriptions::tests`). Bumped in
+a SEPARATE commit, per DoD item 7, immediately after this one.
+
+### §11 — Reclaim
+
+`scripts/reclaim.sh` then `--apply` at cycle end.
+
+### Files changed
+
+- `src/bin/v06_work_inventory.rs` (owned entirely) — `Kind::ClassFeature`/`Kind::Companion`
+  promotion, `wc_class` threaded into `classify()` (25+ call sites), the two flat-magnitude
+  consts, the two `*_desc_leaks_unresolved_argument` companion guards, 19 new tests total.
+- `apps/desktop/src-tauri/src/class_feature_descriptions.rs` (**new file**) — the
+  class_feature render surface, 7 tests.
+- `apps/desktop/src/boundary/loadClassFeatureDescriptions.ts` (**new file**) — the boundary
+  wrapper.
+- `apps/desktop/src/characterHub/classFeaturesModel.ts` — `corpusDescription` field,
+  `matchesCorpusFeature`, `findCorpusDescription`.
+- `apps/desktop/src/characterHub/classFeaturesModel.test.ts` — 5 new tests.
+- `apps/desktop/src/characterHub/CharacterSheet.tsx` — fetch + render the new field.
+- `apps/desktop/src-tauri/src/main.rs` — module + Tauri command registration (minimal,
+  necessary closure of the DTO path).
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` — rows 110, 111
+  appended.
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D7-PROSE-003/item8/*` — DoD-8
+  evidence (2 PASS, both byte-match-confirmed).
+- `docs/release/SD-31-corpus-closure-grind/progress.md` — this receipt.
+- `docs/work-inventory.json` — regenerated for measurement, then `git checkout --`'d before
+  commit per the wave rule (NOT part of this cycle's commit).
+
+### Followups
+
+1. **~824-unit flat-magnitude ruling** (`OPEN-ISSUES` rows 69/87/95/107), now also carrying
+   11 named `class_feature` units (row 111). Same operator ruling every prior wave has
+   asked for; `wiring_class.rs`'s `prose_scaling_phrases` detector is the actual mechanism
+   either reading drives, unchanged this cycle (a sibling lane's file).
+2. **`class_feature`'s registry gap** (`OPEN-ISSUES` row 96, `SD31-E4-F1-002`): register
+   `PuClassId::ALL`/`UcClassId::ALL` into `v06_work_inventory.rs`'s `modelled_class_books()`
+   — deliberately NOT attempted this cycle (a separately-scoped blocker, not named in this
+   card's own instructions; touching class-identity registration is a bigger, riskier
+   change than this card's prose-rung scope). Once landed, `pathfinder_unchained`'s 826
+   `class_feature` units (currently unreachable by either promotion branch, since
+   `class_books`/`corpus_class_names` never resolve a Pathfinder Unchained class name today)
+   become reachable by this SAME rung with no further code change — a real, sizeable
+   follow-on this cycle's work is already positioned to pay out.
+3. **The 16-record class_feature description leak population**, named and refused this
+   cycle (`class_feature_descriptions.rs` module doc comment) — a genuine corpus-data
+   defect (a DESC row declaring more pipe-arguments than its prose references), not this
+   engine's own bug. Worth a future cache_gen-side fix (re-derive the argument count from
+   the prose's own `%N` references rather than trusting the row's declared count) so these
+   16 records' descriptions can be served too, once someone owns that generator.
+4. Companion (item 3 in this cycle's own dispatch) is now fully discharged — no further
+   render work needed for the `companion` kind's prose done-bar.

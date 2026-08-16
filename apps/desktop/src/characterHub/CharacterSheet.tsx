@@ -10,6 +10,10 @@ import {
 import { previewLevelUp as previewLevelUpGrants } from '../boundary/previewLevelUp';
 import { buildClassFeatureSurface } from './classFeaturesModel';
 import {
+  loadClassFeatureDescriptions,
+  type ClassFeatureDescriptionDto,
+} from '../boundary/loadClassFeatureDescriptions';
+import {
   buildRacialTraitsSurface,
   type RacialTraitRow,
   type RacialTraitsSurface,
@@ -1822,7 +1826,38 @@ function ActionsTab(props: {
   racialTraits: RacialTraitsSurface;
   raceLabel: string;
 }) {
-  const surface = buildClassFeatureSurface(props.explanations, props.heldClasses);
+  // SD31-D7-PROSE-003: the real corpus `DESC:` text, fetched once and joined
+  // in `buildClassFeatureSurface` -- a SECOND, additive data source
+  // alongside `props.explanations`, never a replacement for the engine's own
+  // computed `detail`. Self-contained (fetched here rather than threaded
+  // through more prop layers) so a caller with no Tauri runtime (the browser
+  // preview) simply renders with `corpusDescription: null` everywhere,
+  // exactly as `loadClassFeatureDescriptions`'s own empty-array fallback
+  // intends.
+  const [classFeatureDescriptions, setClassFeatureDescriptions] = useState<
+    ClassFeatureDescriptionDto[]
+  >([]);
+  useEffect(() => {
+    let cancelled = false;
+    loadClassFeatureDescriptions()
+      .then((descriptions) => {
+        if (!cancelled) {
+          setClassFeatureDescriptions(descriptions);
+        }
+      })
+      .catch(() => {
+        // Real corpus prose is a player-visible enhancement, not a
+        // load-bearing dependency of the Class Features section: the
+        // engine's own `detail` still renders either way. Swallowed rather
+        // than surfaced as an error banner, matching `loadClassFeatureDescriptions`'s
+        // own no-Tauri-runtime fallback.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const surface = buildClassFeatureSurface(props.explanations, props.heldClasses, classFeatureDescriptions);
   const generalBenefits = props.levelEntries.flatMap((entry) =>
     entry.features.map((feature) => ({ characterLevel: entry.characterLevel, feature }))
   );
@@ -1888,6 +1923,29 @@ function ActionsTab(props: {
               >
                 {row.detail}
               </p>
+              {/*
+                SD31-D7-PROSE-003: the real rulebook `DESC:` text, when the
+                corpus row carries one and it joins to this record. A
+                SEPARATE paragraph from `row.detail` above: `detail` is the
+                engine's own computed derivation (sometimes just a bare
+                magnitude with no prose at all), this is the actual printed
+                rules text — never rewritten, never merged with `detail`.
+                Absent entirely (no extra paragraph, no stand-in text) when
+                `corpusDescription` is `null`, matching this file's own
+                "absence is rendered as absence" rule.
+              */}
+              {row.corpusDescription !== null ? (
+                <p
+                  style={{
+                    color: 'var(--color-text-secondary)',
+                    fontSize: '0.72rem',
+                    fontStyle: 'italic',
+                    margin: `0.3rem 0 0 calc(${CLASS_FEATURE_GUTTER} + 0.6rem)`,
+                  }}
+                >
+                  {row.corpusDescription}
+                </p>
+              ) : null}
             </div>
           ))}
         </>
