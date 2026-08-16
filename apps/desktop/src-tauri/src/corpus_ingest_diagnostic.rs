@@ -1129,15 +1129,21 @@ mod tests {
     /// — so agreement between them is real evidence rather than a tautology,
     /// and a table that silently loses records shows up as a mismatch here.
     ///
-    /// ARG's 201 corpus-JSON-only racial traits (156 -> 201 by SD-31 Epic
-    /// 1-F2, 2026-08-15) are the one declared difference, stated as a number
-    /// here rather than waved at, so the two artifacts reconcile exactly.
+    /// ARG's corpus-JSON-only racial traits + class_feature records (201 ->
+    /// 844 by SD-31 `epic-5-chassis-sweep` F1, `SD31-E5-F1-001`, 2026-08-15)
+    /// are the one declared difference, stated as a number here rather than
+    /// waved at, so the two artifacts reconcile exactly.
     #[test]
     fn the_two_ingested_books_totals_reconcile_with_their_license_artifacts() {
         for (book_id, corpus_dir, corpus_only_records) in [
             // 156 -> 201 by SD-31 Epic 1-F2 (2026-08-15): Bestiary 2's 6-race
-            // batch added 45 more ARG race_trait records.
-            ("advanced_race_guide", "advanced_race_guide", 201u32),
+            // batch added 45 more ARG race_trait records. 201 -> 844 by
+            // SD-31 `SD31-E5-F1-001` (2026-08-15): `cache_gen::class_feature`
+            // wrote 643 new class_feature corpus-JSON-only records for this
+            // book (no rules_tables module carries class_feature data, so
+            // this is not double-counted -- see that cycle's module doc
+            // comment and `artifacts/SD31-E5-F1-001-lever-measurement.md`).
+            ("advanced_race_guide", "advanced_race_guide", 844u32),
             ("pathfinder_unchained", "pathfinder_unchained", 0),
         ] {
             let response = build_corpus_ingest_diagnostic();

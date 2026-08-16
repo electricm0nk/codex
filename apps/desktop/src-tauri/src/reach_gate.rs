@@ -654,6 +654,22 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // this entry names the directory the same way every other book here
     // does.
     ("ultimate_equipment", "ultimate_equipment"),
+    // SD-31 `epic-5-chassis-sweep` F1 (`SD31-E5-F1-001`). `cache_gen::
+    // class_feature` wrote the first-ever `data/corpus/<book>/` directory
+    // at all for these six books (no LICENSE.json, no other kind's corpus
+    // JSON, nothing -- `corpus_ingest_diagnostic.rs` has no entry for any
+    // of them either, so no diagnostic book id exists to reuse; same-name
+    // pairing, matching every other book above with no diagnostic entry).
+    // `ultimate_combat`/`ultimate_intrigue` already drive real `reach_of`
+    // claims (feats/equipment/archetypes) sourced directly from their
+    // compiled `rules_tables` modules, never from `data/corpus/`, which is
+    // why they could be claimed without ever needing a row here until now.
+    ("occult_adventures", "occult_adventures"),
+    ("adventurers_guide", "adventurers_guide"),
+    ("ultimate_combat", "ultimate_combat"),
+    ("ultimate_intrigue", "ultimate_intrigue"),
+    ("inner_sea_magic", "inner_sea_magic"),
+    ("inner_sea_taverns", "inner_sea_taverns"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -2375,6 +2391,49 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          archetype-selection surface to reach a player through. Remedy: same as ACG above; \
          delete once landed.",
     ),
+    // SD-31 `epic-5-chassis-sweep` F1 (`SD31-E5-F1-001`, 2026-08-15). 21
+    // books' `class_feature` corpus JSON went from absent to real, byte-
+    // verified content in one cycle (`cache_gen::class_feature`,
+    // `artifacts/SD31-E5-F1-001-lever-measurement.md` for the full proving
+    // trace). No reach claim exists for any of them because none can,
+    // honestly, today: `Kind::ClassFeature`'s doneness path
+    // (`v06_work_inventory.rs`'s `classify()`) requires the ENGINE to
+    // already compute the feature (a consumer-delta probe or a matching
+    // `explanation_id`) before a record can ground at all -- a corpus
+    // dump cannot manufacture that, only unlock the `literal-verified`
+    // stamp for the rare subset (14 units, corpus-wide) already grounded
+    // by pre-existing engine wiring. The remaining, overwhelming majority
+    // of each book's class_feature content genuinely has no engine
+    // chassis wiring yet -- that is `epic-4-mechanism`'s scope, which has
+    // landed zero classes corpus-wide as of this cycle
+    // (`SD-31-corpus-closure-grind/kanban.md`'s `epic-4-mechanism` row).
+    // Remedy, identical for all 21: wire that class's chassis mechanism
+    // (per-class, `epic-4-mechanism`), then either claim the family here
+    // or delete the entry once its records reach a player. Record counts
+    // below are this cycle's own written totals per book (primary-file
+    // sourced only; see the same artifact for the nested-support-file and
+    // `ultimate_psionics` exclusions).
+    ("acg", "class_features", "Gap: 2395 Advanced Class Guide class_feature records are ingested corpus-wide; the engine's own per-class mechanism wiring (epic-4-mechanism) has not landed for any of ACG's classes yet, so no reach claim exists. Remedy: wire per-class chassis mechanisms, then claim or delete per class as they land."),
+    ("advanced_race_guide", "class_features", "Gap: 643 Advanced Race Guide class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("apg", "class_features", "Gap: 2055 Advanced Player's Guide class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("bestiary_4", "class_features", "Gap: 4 Bestiary 4 class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("bestiary_6", "class_features", "Gap: 18 Bestiary 6 class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("book_of_the_damned_volume_1", "class_features", "Gap: 10 Book of the Damned Vol. 1 class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("book_of_the_damned_volume_2", "class_features", "Gap: 205 Book of the Damned Vol. 2 class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("crb", "class_features", "Gap: 959 Core Rulebook class_feature records are ingested corpus-wide; most CRB classes have SOME pre-existing engine wiring (14 of the 25 corpus-wide static-grounded units this cycle promoted are CRB's own already-computed features), but the great majority of CRB's own class_feature records still have no engine wiring -- epic-4-mechanism has not run a dedicated CRB pass. Remedy: same as ACG above, per remaining class/feature."),
+    ("horror_adventures", "class_features", "Gap: 165 Horror Adventures class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("inner_sea_combat", "class_features", "Gap: 306 Inner Sea Combat class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("inner_sea_intrigue", "class_features", "Gap: 158 Inner Sea Intrigue class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("inner_sea_world_guide", "class_features", "Gap: 142 Inner Sea World Guide class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("monster_codex", "class_features", "Gap: 68 Monster Codex class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("ultimate_magic", "class_features", "Gap: 1069 Ultimate Magic class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("ultimate_wilderness", "class_features", "Gap: 753 Ultimate Wilderness class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("occult_adventures", "class_features", "Gap: 979 Occult Adventures class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind); every one of OA's 6 base classes (Occultist, Spiritualist, Medium, Mesmerist, Kineticist, Psychic) measures 0/N wired-able per epic-3-measurement's own SD31-E3-F1-001 clearance table, so no reach claim can exist until real class-chassis wiring lands. Remedy: same as ACG above."),
+    ("adventurers_guide", "class_features", "Gap: 651 Adventurer's Guide class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind); this book carries no compiled rule set at all today (`evidence: no_compiled_rule_set_for_book` on every sampled unit), so no reach claim can exist until the book itself is onboarded to the engine, not only its class_feature kind. Remedy: onboard the book's class chassis, then wire per-class mechanisms as ACG above."),
+    ("ultimate_combat", "class_features", "Gap: 991 Ultimate Combat class_feature records are ingested corpus-wide (first data/corpus/ultimate_combat/ directory this book has ever had -- its existing feats/equipment/archetypes reach claims are sourced directly from the compiled rules_tables module, never from data/corpus/). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("ultimate_intrigue", "class_features", "Gap: 651 Ultimate Intrigue class_feature records are ingested corpus-wide (first data/corpus/ultimate_intrigue/ directory this book has ever had, same shape as Ultimate Combat above). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("inner_sea_magic", "class_features", "Gap: 198 Inner Sea Magic class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("inner_sea_taverns", "class_features", "Gap: 11 Inner Sea Taverns class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
 ];
 
 /// Records that reach a real surface carrying nothing but their own key.

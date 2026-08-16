@@ -5190,3 +5190,79 @@ screen covers both NAME and DESCRIPTION" --actual "only DESCRIPTION was ever thr
 NAME silently dropped (OPEN-ISSUES.md row 38)" --verified-by "src/rules_core/cache_gen/class_feature.rs's
 own declared_pi_at + generate() calling BOTH declared.name and declared.description, contrasted against
 ultimate_equipment.rs's generate_equipment() which only ever reads declared.description"`.
+
+### 9. AMENDMENT — the first gate run found a real defect this cycle introduced, fixed before landing
+
+**Section 5's gate DID complete, and it was RED**, for a real reason this cycle caused, not an
+environmental flake — `root-full` (`cargo exit 101`, 6468 passed across 553 suites,
+`/tmp/codex-verify-4Omfbo/root-full.log`): `tests/sd27_book_license_record_counts.rs` FAILED 2 of its 6
+tests. `every_owned_books_stated_record_count_equals_the_records_on_disk`:
+`data/corpus/advanced_players_guide/LICENSE.json states records_processed = 646, but 2701 licensed
+content records are on disk` — this cycle's 2055 new `class_feature` records, added under an
+already-tracked book, silently drifted its OGL redistribution-compliance artifact stale, exactly the
+defect class this test's own doc comment describes as its whole reason for existing.
+`every_owned_books_stated_redaction_count_equals_the_redactions_on_disk` failed the same way for
+`advanced_race_guide` (`records_redacted` stated 0, 1 on disk — a genuine `DESCISPI:YES` redaction this
+cycle's own `fiendish_vessel/fiendish_familiar.json` correctly produced but never reported upward).
+
+**Root cause:** my own earlier decision (recorded, in real time, in this receipt's own working notes) to
+skip touching `LICENSE.json` this cycle, reasoning `cache_gen::ultimate_equipment` shipped without one so
+it must be optional — WRONG for any book this cycle touched that ALREADY HAD one. 14 of the 21 books this
+cycle wrote (`advanced_players_guide`, `ultimate_magic`, `core_rulebook`, `ultimate_wilderness`,
+`advanced_race_guide`, `horror_adventures`, `inner_sea_combat`, `book_of_the_damned_volume_2`,
+`inner_sea_world_guide`, `inner_sea_intrigue`, `monster_codex`, `bestiary_6`,
+`book_of_the_damned_volume_1`, `bestiary_4`) already carried a `LICENSE.json` from an earlier lane's
+ingest of a DIFFERENT kind in the same book; `advanced_class_guide` is the one pinned exemption
+(`BOOKS_WITHOUT_A_STATED_RECORD_COUNT`); the other 6 books this cycle touched
+(`occult_adventures`, `ultimate_combat`, `ultimate_intrigue`, `adventurers_guide`, `inner_sea_magic`,
+`inner_sea_taverns`) have no `LICENSE.json` at all and so are outside this guard's covered set entirely —
+correctly untouched.
+
+**Fix:** re-derived `records_processed` (total on-disk `.json` files under each book, excluding
+`LICENSE.json` and `_parity/`) and `records_redacted` (records whose `license == "PI-REDACTED"` or
+`pi_marker` is non-null) for all 14 affected books, EXACTLY mirroring the test's own derivation logic
+(`record_files_by_kind`/the redaction test's own license-field check, read from
+`tests/sd27_book_license_record_counts.rs` before writing the fix, not guessed):
+
+```
+advanced_players_guide: records_processed 646 -> 2701, records_redacted -> 0
+ultimate_magic: records_processed 32 -> 1101, records_redacted -> 0
+core_rulebook: records_processed 3484 -> 4443, records_redacted -> 0
+ultimate_wilderness: records_processed 327 -> 1080, records_redacted -> 0
+advanced_race_guide: records_processed 694 -> 1337, records_redacted -> 1
+horror_adventures: records_processed 54 -> 219, records_redacted -> 0
+inner_sea_combat: records_processed 10 -> 316, records_redacted -> 50
+book_of_the_damned_volume_2: records_processed 21 -> 226, records_redacted -> 11
+inner_sea_world_guide: records_processed 23 -> 165, records_redacted -> 20
+inner_sea_intrigue: records_processed 11 -> 169, records_redacted -> 33
+monster_codex: records_processed 25 -> 93, records_redacted -> 0
+bestiary_6: records_processed 26 -> 44, records_redacted -> 0
+book_of_the_damned_volume_1: records_processed 43 -> 53, records_redacted -> 1
+bestiary_4: records_processed 827 -> 831, records_redacted -> 0
+```
+
+Each book's `screening_method_note` was also restated (not silently bumped — the note quotes the new
+number and describes this cycle's own screening method), matching the established single-note-per-book
+convention (every sampled prior `LICENSE.json` carries exactly one `PASS --` note, replaced by the most
+recent cycle's own, never chained).
+
+**Note the interesting non-`class_feature` deltas:** `inner_sea_combat`/`inner_sea_intrigue`/
+`inner_sea_world_guide`/`book_of_the_damned_volume_1/2` show large `records_redacted` jumps (11-50) that
+are NOT this cycle's own `class_feature` redactions alone — those books' `LICENSE.json`s were already
+stale against OTHER kinds' redactions from EARLIER lanes before this cycle ever touched them (their
+`records_redacted` was stated `0` against a real on-disk count already nonzero pre-cycle for reasons
+unrelated to `class_feature`). This cycle's fix corrects the field to the TRUE current on-disk state
+regardless of which lane's records caused which portion of the count — the field's contract is "matches
+the corpus," not "matches only this cycle's contribution."
+
+A second, full `./scripts/verify.sh` run was launched after this fix to confirm `root-full` (and
+everything downstream of it in the first run) goes green; its own `VERIFY_EXIT=` line, if obtained before
+this cycle's turn budget closes, is appended below this section rather than silently substituted for
+Section 5's honest first-run result. If no second exit code was obtained, the fix and its correctness
+(independently verified by directly re-reading `tests/sd27_book_license_record_counts.rs`'s derivation
+logic and hand-computing the same values it would compute) stand on their own; the DoD-1 gap is reported
+plainly, not inferred as closed.
+
+Retro event: `docs/retro/events/sd31-cachegen-cf.jsonl` id `1786846072002-sd31-cachegen-cf-43ea04`
+(`type: rework`) — a real defect this cycle introduced was caught by its own gate before landing, fixed
+same-cycle, not deferred.
