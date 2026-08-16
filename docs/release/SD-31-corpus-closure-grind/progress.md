@@ -12010,3 +12010,222 @@ own first-draft Universal-Rules regression; this cycle's own first-draft cross-l
 
 `scripts/reclaim.sh` then `--apply` run after the gate's own artifacts stabilized; reclaimed bytes
 recorded in this cycle's structured-output figures.
+## Cycle `SD31-D10-REGISTER-001` (`RETRO_ACTOR=sd31-supersession`) — 2026-08-16, "the Supersession Register"
+
+**Role:** `sd31-supersession`, own worktree `wf_599fa00f-e92-2`, own branch `sd31/d10-supersession-register`
+cut from `tranche/11` tip. **HEAD at claim:** package dir absent at claim, tree clean, so
+`git fetch origin && git reset --hard origin/tranche/11` per protocol —landed at `b8c36417d`
+("docs(sd31): Decision 10 amendment — variant lines are new content, never supersession"). **Oracle
+pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`),
+`./scripts/verify.sh --only preflight-oracle` → PASS. `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-supersession`.
+
+### Card
+
+Decision 10 — build the Supersession Register (`decisions.md` Decision 10 + its 2026-08-16
+amendment). Two non-optional guards: (1) match `(kind, corpus_key)`, never `(kind, name)`; (2) a
+later VARIANT is not a reprint — `pathfinder_unchained`/`mythic_adventures` default to excluded. A
+register entry needs field-level proof the two records are the SAME object, not merely a shared key.
+The gate must be proven able to fail. The denominator change ships as its own reported number, not
+applied silently.
+
+### Method — full detail in `SUPERSESSION-REGISTER.md` §0-§4
+
+`docs/release/SD-31-corpus-closure-grind/artifacts/supersession_register_build.py` (new, committed —
+reproducible, not a one-off scratch script):
+
+1. Load `docs/work-inventory.json`, exclude every `book == "core_essentials"` unit (644, re-derived
+   fresh — see "Finding" below, this is NOT the ~53 Decision 9 expected).
+2. Group remaining 37,896 units by `(kind, corpus_key)`; keep groups spanning >1 book: **743 objects,
+   1,543 units** (re-derived; close to but not identical to Decision 10's own 748/1,553 — expected
+   drift, corpus moved between waves).
+3. **Guard 2**: blanket-exclude every group touching `pathfinder_unchained`/`mythic_adventures` — 165
+   groups, 331 units, 0 admitted with `reprint_proof` this pass (found none). Confirms the 95
+   `core_rulebook`↔`mythic_adventures` pairs Decision 10 named stay excluded.
+4. For the remaining 578 clean groups: fetch each side's raw `.lst` row from the pinned oracle
+   (`source_file`+`source_line`), strip provenance/pricing fields (`SOURCE*`, `COST`, `OUTPUTNAME`,
+   `KEY`, `NAMEISPI`), normalize `TYPE:` as an order-insensitive tag set, compare.
+   - **117 objects (135 redundant units) are field-identical → the register.**
+   - **433 share a key but differ materially → correctly excluded** (the `(kind, corpus_key)`-level
+     analogue of Guard 1's `(kind, name)` false-positive shape — a shared identifier is still not
+     proof of duplication by itself).
+   - 21 near-miss (similarity ≥ 0.90, one added/reordered tag) + 7 raw-line-not-found → **candidates
+     needing record-level comparison**, NOT the register, per the card's own instruction.
+5. Publication order from each book's own `.pcc` `SOURCEDATE:` header, read fresh every run (never
+   from memory) — full table of 36 books' `SOURCEDATE`s derived and cross-checked this cycle.
+
+**805 is not quoted as an outcome anywhere** (the amendment's explicit instruction) — real figure:
+**135**.
+
+### Finding — core_essentials re-attribution is still 644/644, confirming row 98 is unfixed
+
+Traced one record deep before treating the 644-unit exclusion as routine (`OPEN-ISSUES.md` row 110,
+`retro.py note`) — and found `OPEN-ISSUES.md` row 98 (`SD31-ATTRIB-002`) already carries this exact
+finding in full: `resolve_true_book_for_core_essentials()` (`src/bin/v06_work_inventory.rs`, lane 1's
+file — NOT touched) only scans a file's first 5 lines for `SOURCELONG:`; `ce_abilities_race.lst`
+(which carries the card's own worked example, `core_essentials:monster_ability:kyton_unnerving_gaze`)
+declares `SOURCELONG:` per-row-group at 11 mid-file directive lines instead, and row 98 already
+computed that 516 of its 545 residual units are further resolvable by walking to the nearest
+preceding directive, naming the precise fix (source-line-aware resolution, synced with
+`corpus_literal_sweep.rs`'s `short_book_of`). This cycle's contribution is confirming, independently
+and at a fresh tip (`2ae22bdae`, five waves after row 98's `5d0cd1595`), that the defect is **still
+unfixed** — 644, byte-identical to row 98's own count — not a new discovery. Row 110 records the
+confirmation and points back to row 98 rather than re-deriving its already-precise remedy. Reported,
+not fixed (out of this card's write scope either way).
+
+### The gate — `scripts/supersession_register_gate.py`, proven able to fail
+
+New file, mirrors `scripts/reachability_audit.py`'s established pattern (pure `validate_entry`/
+`validate_register` functions + a thin CLI). Wired as `supersession-gate` (FULL, after `corpus-sweep`)
+and `supersession-gate-selftest` (BOTH stage sets, hermetic) in `scripts/verify.sh`.
+
+**Mutation-tested, both required refusal shapes, 12 unit tests
+(`scripts/tests/test_supersession_register_gate.py`, all green):**
+- materially-different pair (same key, different `BONUS` magnitude) → refused;
+- `pathfinder_unchained`/`mythic_adventures` with no `reprint_proof` → refused; same book WITH real
+  `reprint_proof` → passes; blank-string `reprint_proof` → still refused (closes the trivial bypass);
+  `mythic_adventures` on the superseded side → also refused;
+- `core_essentials` on either side → refused; backwards `SOURCEDATE` order → refused;
+  `denominator.count_removed` mismatch → refused;
+- genuinely identical pair (incl. re-ordered `TYPE:` tags) → passes.
+
+**Also live-mutation-tested against the wired stage itself**, not only the unit tests:
+
+```
+export PCGEN_CORPUS_ROOT=$HOME/workspace/repos/pcgen/data
+cp SUPERSESSION-REGISTER.json /tmp/register-backup.json
+# seeded: appended a bad entry (a proven pair's surviving side hand-edited to pathfinder_unchained)
+./scripts/verify.sh --only supersession-gate
+# -> FAIL: 3 violations (variant guard, material-difference guard, count_removed mismatch)
+cp /tmp/register-backup.json SUPERSESSION-REGISTER.json   # restored
+./scripts/verify.sh --only supersession-gate
+# -> PASS  supersession-gate  (117 objects, all clean)
+```
+
+### Correction caught before shipping — numerator impact (`retro.py correction`)
+
+First draft of the denominator section claimed "none of the 135 superseded units are `done`, so
+applying only tightens the denominator" — checked against raw `status` alone, not the real verdict.
+Re-checked with `pf1e_dashboard_producer.doneness_verdict()`: **36 of 135 ARE currently `done`** (34
+`equipment`, 1 `companion`, 1 `monster` — all `ultimate_combat` firearm/armor duplicates of
+`ultimate_equipment` reprints, plus `bestiary_3:companion:companion_advancement_giant_vulture` and
+`bestiary_3:monster:kami_shikigami`). Applying the register would move BOTH sides:
+
+```
+numerator  9,488 -> 9,452   (-36, all keep their credit on the SURVIVING side)
+denominator 38,521 -> 38,386 (-135)
+mandate %   24.6307% -> 24.6236%   (moves DOWN slightly, not up)
+```
+
+Corrected in `SUPERSESSION-REGISTER.md` §8, `SUPERSESSION-REGISTER.json`'s new `numerator_impact`
+block, and `OPEN-ISSUES.md` row 111 before any of them shipped with the wrong claim.
+
+### Denominator change — reported, not applied
+
+| | before | proposed after | count removed |
+|---|---:|---:|---:|
+| mandate denominator (`decisions.md §5`) | 38,521 | 38,386 | 135 |
+
+**Status: PROPOSED, NOT APPLIED.** Applying it needs `v06_work_inventory.rs`'s doneness/rung path
+(lane 3's file territory) to build an `EXCLUDED_UNIT_IDS` set from the register's
+`objects[].superseded[].id` and skip those units the same way `EXCLUDED_BOOKS` already skips a whole
+book — additive, no verdict logic touched. Precise spec at `OPEN-ISSUES.md` row 111; not made this
+cycle, per the card's own explicit file-territory boundary.
+
+### File territory respected
+
+Touched only: `docs/release/SD-31-corpus-closure-grind/artifacts/SUPERSESSION-REGISTER.{md,json}`,
+`.../artifacts/supersession_register_build.py` (new), `scripts/supersession_register_gate.py` (new),
+`scripts/tests/test_supersession_register_gate.py` (new), `scripts/verify.sh` (two new stages, additive),
+`docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` (append-only, rows 110/111),
+this `progress.md` receipt. **Did not touch** `src/bin/v06_work_inventory.rs`, `pilot_compute.rs`, or
+any ingest-lane file — both findings that would have needed them (the core_essentials resolve gap,
+the denominator wiring) are reported precisely instead, per the card's own instruction.
+`docs/work-inventory.json` was only ever READ, never written, and is not part of this commit
+(`git status --porcelain` confirms it untouched throughout).
+
+### Gate
+
+Launched early, kept alive throughout (root-full is the slow stage on a 6-lane-shared box).
+
+    LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D10-REGISTER-001-verify.log
+    ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+
+**25/25 stages PASS, `VERIFY_EXIT=0`**, captured directly (`tail -1` after the run, not through a
+pipe): `preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+reachability-audit-selftest reachability-audit groundtruth-guard-selftest
+supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest
+driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep
+supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump`.
+
+Notable stage results: `root-lib` 1894 passed; `root-full` 6685 passed across 563 suites, all 529
+`tests/*.rs` suites executed; `desktop` 448 passed; `reach` 27 passed (this card's families claim
+zero new production `reach_gate.rs` entries — I did not touch `pilot_compute.rs`/ingest lanes, so my
+own reach-shaped proof is the live mutation test on `supersession-gate` below, not a new
+`UNREACHED_RECORD_FINDINGS` entry); `corpus-sweep` 23,859 records examined of 24,736 read, 228,147
+tokens compared, 0 findings; **`supersession-gate` 117 objects, all clean**; `frontend-test` 99/99;
+`frontend-typecheck` clean; `clippy` root:47 desktop:7 (exactly at the recorded ceiling); `class-dump`
+31/31 computing.
+
+Log: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D10-REGISTER-001-verify.log`.
+
+**DoD-3 (`v06_corpus_trap_report -- --audit`), against the pre-existing baseline:**
+
+    cargo run --locked --bin v06_corpus_trap_report -- --audit
+    -> TRAP mod-record: 1 defect 0
+    -> TRAP wiring-class-mismatch: 0 defect 1191
+
+**Exactly the recorded baseline (rows 27/65, 1,191 wiring-class-mismatch) — did not worsen it.** This
+card's changes touch no corpus record, no `wiring_class` computation, and no `data/corpus/**` file, so
+an unchanged trap count is the expected, confirmed result, not merely a hoped-for one.
+
+**Count-change sweep**: this cycle adds 2 new `verify.sh` stages (23 -> 25) and changes no other
+pinned count (no corpus record added/removed/edited, no baseline test count touched). Grepped for a
+hardcoded stage-count assertion elsewhere (`grep -rn '25 stages\|ALL_STAGES\[@\]\|len(ALL_STAGES)'
+scripts/ tests/ apps/`) — none found outside `verify.sh` itself.
+
+**PI screening**: no new `data/corpus/` record written this cycle (only Python analysis/gate scripts
+and Markdown/JSON artifacts, transcribing already-public book *titles* and mechanical field names, not
+character-specific PI text). The gate's own `pi-sweep` (10 hits, 10 baseline rows — unchanged) and
+`declared-pi-audit` (clean) stages both passed.
+
+### Retro
+
+- `correction` — Decision 10's own 805 upper-bound is not the outcome; re-derived to 135
+  (`1786882008624-sd31-supersession-004513`).
+- `note` — core_essentials still 644/644 unresolved, not the ~53 Decision 9 expected; SOURCELONG
+  per-row-group vs. first-5-lines root cause (`1786882015816-sd31-supersession-b825c2`).
+- `correction` — this cycle's own first-draft "denominator only, no numerator impact" claim was wrong;
+  36 of 135 superseded units are currently `done` (`1786882293388-sd31-supersession-3129a8`).
+
+### Followups (named, not attempted — outside this card's write scope)
+
+1. `OPEN-ISSUES.md` row 110 — extend `resolve_true_book_for_core_essentials`'s `SOURCELONG` signal to
+   scan per-row-group (nearest preceding uncommented `SOURCELONG:` above the target row), not a fixed
+   5-line window. Lane 1 / a future `epic-6-ingest-lanes` cycle. Re-run this register's build script
+   afterward — its "deferred to post-dissolution pass" candidates in `SUPERSESSION-REGISTER.md` §1
+   will then be pairable.
+2. `OPEN-ISSUES.md` row 111 — wire `EXCLUDED_UNIT_IDS` (built from the register) alongside
+   `EXCLUDED_BOOKS` in `v06_work_inventory.rs`/`pf1e_dashboard_producer.py`'s denominator computations,
+   re-run the guarded regen, re-derive the mandate headline against 38,386.
+3. `SUPERSESSION-REGISTER.md` §7's 28 candidates (21 near-miss, 7 raw-line-not-found) — a future cycle
+   with record-level time can push some into the register or resolve the lookup gap; none were forced
+   in this pass.
+
+### DoD-8 — on-screen verification: not applicable, stated precisely rather than faked
+
+This card produces no player-visible change — a documentation artifact (`SUPERSESSION-REGISTER.md`/
+`.json`), a standalone gate script, and two `verify.sh` stages. No `docs/work-inventory.json` edit, no
+`pilot_compute.rs`/desktop/frontend touch, no doneness movement (the proposed denominator change is
+explicitly NOT applied this cycle — see above). There is nothing for a character-sheet screenshot to
+prove that this receipt's own live mutation test (§ above: seeded bad entry → `FAIL`, restored →
+`PASS`, both via the real wired `./scripts/verify.sh --only supersession-gate` stage) does not already
+prove more directly. Not run to avoid a paperwork exercise with no corresponding claim.
+
+### End of cycle
+
+`./scripts/reclaim.sh` (dry run) then `--apply`: **0 items, 0.0B reclaimed** — every candidate on this
+shared 6-lane box correctly refused (too-recent verify-log dirs, worktrees still checked out, branches
+with a live upstream), the same "correctly refused, not a bug" shape prior integration receipts
+recorded. Manually deleted this cycle's own `CARGO_TARGET_DIR`
+(`/home/ubuntu/cargo-targets/sd31-supersession`, **31G**) per the standing per-cycle cleanup rule —
+outside `reclaim.sh`'s own scanned roots since it was still fresh, not orphaned.
