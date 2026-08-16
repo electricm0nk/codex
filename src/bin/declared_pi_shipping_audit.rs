@@ -115,22 +115,61 @@ fn audit_shipped_records(corpus_root: &Path, data_corpus_root: &Path) -> Vec<Vio
             });
         }
 
-        if declared.description {
-            let desc = doc.get("data").and_then(|d| d.get("description")).and_then(Value::as_str);
-            let license = doc.get("license").and_then(Value::as_str);
-            let pi_field = doc.get("pi_field").and_then(Value::as_str);
-            let redacted_desc = desc == Some(REDACTED_PI_MARKER);
-            let redacted_license = license == Some("PI-REDACTED");
-            let redacted_field = pi_field == Some("description");
-            if !(redacted_desc && redacted_license && redacted_field) {
-                violations.push(Violation {
-                    file: file_str,
-                    reason: format!(
-                        "DESC-PI-SHIPPED: cites {rel_path}:{line} (DESCISPI:YES) but data.description={desc:?} \
-                         license={license:?} pi_field={pi_field:?} (expected description=\"[redacted PI]\", \
-                         license=\"PI-REDACTED\", pi_field=\"description\")"
-                    ),
-                });
+        let desc = doc.get("data").and_then(|d| d.get("description")).and_then(Value::as_str);
+        let license = doc.get("license").and_then(Value::as_str);
+        let pi_field = doc.get("pi_field").and_then(Value::as_str);
+        let redacted_desc = desc == Some(REDACTED_PI_MARKER);
+        let redacted_license = license == Some("PI-REDACTED");
+        let redacted_field = pi_field == Some("description");
+
+        if declared.description && !(redacted_desc && redacted_license && redacted_field) {
+            violations.push(Violation {
+                file: file_str.clone(),
+                reason: format!(
+                    "DESC-PI-SHIPPED: cites {rel_path}:{line} (DESCISPI:YES) but data.description={desc:?} \
+                     license={license:?} pi_field={pi_field:?} (expected description=\"[redacted PI]\", \
+                     license=\"PI-REDACTED\", pi_field=\"description\")"
+                ),
+            });
+        }
+
+        // `SD31-W4-INTEGRATE-001` (`OPEN-ISSUES.md` row 48/49): the FIRST
+        // version of this check inspected `data.description` only, and
+        // only fired when the CORPUS ROW ITSELF declares `DESCISPI:YES`.
+        // Neither restriction is safe: `data.description` being correctly
+        // redacted does not mean the record is safe -- `data.raw_tokens`
+        // can still hold the original `DESC:` token verbatim, since every
+        // redaction call site writes the marker into `description` but
+        // never touches `raw_tokens`. And a description can be, and
+        // routinely is, redacted for a reason `declared_at` cannot see at
+        // all: the separate `§52.3` blacklist term scan
+        // (`pi_screening::classify_field`), which fires on prose the
+        // corpus row never declared PI at all. 413 shipped records were
+        // exposed this way (367 declared, 46 blacklist-only) before this
+        // extension existed. So this check runs over EVERY record this
+        // repo has already marked `license: "PI-REDACTED"`,
+        // `pi_field: "description"` -- regardless of which screen
+        // triggered the redaction -- not only the `declared.description`
+        // subset.
+        if redacted_license && redacted_field {
+            if let Some(raw_tokens) = doc.get("data").and_then(|d| d.get("raw_tokens")).and_then(Value::as_array) {
+                for token in raw_tokens {
+                    if token.get("key").and_then(Value::as_str) != Some("DESC") {
+                        continue;
+                    }
+                    let value = token.get("value").and_then(Value::as_str);
+                    if value != Some(REDACTED_PI_MARKER) {
+                        violations.push(Violation {
+                            file: file_str.clone(),
+                            reason: format!(
+                                "DESC-PI-SHIPPED-IN-RAW-TOKENS: record is license=\"PI-REDACTED\" \
+                                 pi_field=\"description\" (cites {rel_path}:{line}) but data.raw_tokens \
+                                 carries a DESC entry whose value is {value:?}, not the redaction marker \
+                                 -- data.description alone being redacted does not close this leak"
+                            ),
+                        });
+                    }
+                }
             }
         }
     }
@@ -315,6 +354,98 @@ mod tests {
         s.write(
             "corpus/some_book/race_trait/kodar.json",
             &record_json("Kodar Trait", "[redacted PI]", "PI-REDACTED", "description", "some_book/rows.lst", 1),
+        );
+        let violations = audit_shipped_records(&s.root.join("pcgen"), &s.root.join("corpus"));
+        assert!(violations.is_empty(), "{violations:?}");
+    }
+
+    // --- CHECK A mutation proof: DESC-PI-SHIPPED-IN-RAW-TOKENS ----------
+
+    fn record_json_with_raw_tokens(
+        name: &str,
+        description: &str,
+        license: &str,
+        pi_field: &str,
+        source_path: &str,
+        line: u32,
+        raw_desc_value: &str,
+    ) -> String {
+        format!(
+            r#"{{"data":{{"key":"{name}","name":"{name}","description":"{description}",
+                "raw_tokens":[{{"key":"DESC","value":"{raw_desc_value}"}}]}},
+                "source":{{"kind":"lst_token","path":"{source_path}","line":{line},"record_key":"{name}"}},
+                "license":"{license}","pi_field":"{pi_field}"}}"#
+        )
+    }
+
+    /// The exact hole this extension closes: `data.description` is
+    /// correctly redacted, but `data.raw_tokens` still carries the
+    /// original declared-PI prose verbatim.
+    #[test]
+    fn a_correctly_redacted_description_with_a_leaking_raw_token_is_a_violation() {
+        let s = Scratch::new("desc_pi_raw_leak_declared");
+        s.write("pcgen/some_book/rows.lst", "Kodar Trait\tDESCISPI:YES\tDESC:Named after the Kodar Mountains.\n");
+        s.write(
+            "corpus/some_book/race_trait/kodar.json",
+            &record_json_with_raw_tokens(
+                "Kodar Trait",
+                "[redacted PI]",
+                "PI-REDACTED",
+                "description",
+                "some_book/rows.lst",
+                1,
+                "Named after the Kodar Mountains.",
+            ),
+        );
+        let violations = audit_shipped_records(&s.root.join("pcgen"), &s.root.join("corpus"));
+        assert_eq!(violations.len(), 1, "the raw_tokens leak must be caught: {violations:?}");
+        assert!(violations[0].reason.contains("DESC-PI-SHIPPED-IN-RAW-TOKENS"));
+    }
+
+    /// The same leak shape, but triggered by the `§52.3` blacklist term
+    /// scan rather than a `DESCISPI:YES` declaration -- `declared_at`
+    /// cannot see this trigger at all, so the check must run over every
+    /// `license: "PI-REDACTED"` record, not only ones `declared.description`
+    /// flags.
+    #[test]
+    fn a_blacklist_only_redaction_with_a_leaking_raw_token_is_also_caught() {
+        let s = Scratch::new("desc_pi_raw_leak_blacklist");
+        // No DESCISPI:YES declaration on this row at all.
+        s.write("pcgen/some_book/rows.lst", "Jarn's Ward\tDESC:Named for the sage Jarn.\n");
+        s.write(
+            "corpus/some_book/spell/jarns_ward.json",
+            &record_json_with_raw_tokens(
+                "Jarn's Ward",
+                "[redacted PI]",
+                "PI-REDACTED",
+                "description",
+                "some_book/rows.lst",
+                1,
+                "Named for the sage Jarn.",
+            ),
+        );
+        let violations = audit_shipped_records(&s.root.join("pcgen"), &s.root.join("corpus"));
+        assert_eq!(violations.len(), 1, "{violations:?}");
+        assert!(violations[0].reason.contains("DESC-PI-SHIPPED-IN-RAW-TOKENS"));
+    }
+
+    /// A correctly redacted raw_tokens DESC entry (the post-fix shape) is
+    /// not a violation.
+    #[test]
+    fn a_raw_tokens_desc_entry_that_is_also_redacted_is_not_a_violation() {
+        let s = Scratch::new("desc_pi_raw_clean");
+        s.write("pcgen/some_book/rows.lst", "Kodar Trait\tDESCISPI:YES\tDESC:Named after the Kodar Mountains.\n");
+        s.write(
+            "corpus/some_book/race_trait/kodar.json",
+            &record_json_with_raw_tokens(
+                "Kodar Trait",
+                "[redacted PI]",
+                "PI-REDACTED",
+                "description",
+                "some_book/rows.lst",
+                1,
+                "[redacted PI]",
+            ),
         );
         let violations = audit_shipped_records(&s.root.join("pcgen"), &s.root.join("corpus"));
         assert!(violations.is_empty(), "{violations:?}");

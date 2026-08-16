@@ -38,19 +38,19 @@
       },
       {
         "key": "DESC",
-        "value": "Allies within %1 feet of a Storm Kindler (including herself) are treated as|StormKindlerAuraRadius"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "one size category|PREVARLT:StormKindlerLVL,7"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "two size categories|PREVARGTEQ:StormKindlerLVL,7"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "larger for the purpose of wind effects (this stacks with the bonus from Storm-Lashed), and they gain a +%1 competence bonus on all saving throws to resist spells and effects with the air or water descriptors.|StormKindlerAuraBonus"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",

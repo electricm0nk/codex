@@ -34,7 +34,7 @@
       },
       {
         "key": "DESC",
-        "value": "If a Golden Legionnaire sees a creature within 60 feet of him attack an ally or any friendly creature, including himself, he can select that attacker as a designated adversary. When a Golden Legionnaire does this, he gains a +%1 morale bonus on attack rolls and weapon damage rolls against the designated adversary for %2 rounds. A Golden Legionnaire can have %3 designated adversaries. If he already has his maximum number of designated adversaries selected, he can end the effects of his allied retribution against one of his previously designated adversaries and select a new one. The Golden Legionnaire can reselect a creature that is already a designated adversary if it attacks an ally or a friendly creature again, allowing him to restart the effect's duration.|AlliedRetributionBonus|GoldenLegionnaireLVL|GoldenLegionnaireLVL/3"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",

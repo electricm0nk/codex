@@ -30,15 +30,15 @@
       },
       {
         "key": "DESC",
-        "value": "A Rivethun emissary gains detect undead as a spell-like ability, usable %1 times per day.|RivethunEmissaryLVL"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This spell-like ability also detects creatures of the fey type. The Rivethun emissary must continue concentrating to discern which auras are undead and which are fey, gaining this knowledge as she learns the strength and location of each aura on her third round of concentration.|PREVARGTEQ:RivethunEmissaryLVL,2"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This spell-like ability also detects creatures of the outsider type, also requiring concentration to distinguish between aura types.|PREVARGTEQ:RivethunEmissaryLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",

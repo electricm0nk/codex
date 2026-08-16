@@ -34,27 +34,27 @@
       },
       {
         "key": "DESC",
-        "value": "A Storm Kindler becomes a physical embodiment of the fury of the storm. As a standard action, she can transform herself into a whirlwind (as per the universal monster rule, Pathfinder RPG Bestiary 306) for %1 minutes per day. These minutes need not be consecutive, but must be spent in 1-minute increments. If the Storm Kindler is underwater when she uses this ability, she instead transforms into a vortex of the same size (this functions identically to the whirlwind ability, but can form only underwater and can't leave the water). The Storm Kindler can breathe water while in vortex form. If the Storm Kindler does not have a fly or swim speed, she gains one (as appropriate to her new form) equal to her base land speed while in storm shape. With a fly speed, she has average maneuverability. As a swift action, the Storm Kindler can change the height of her whirlwind form from a minimum of 10 feet tall to a maximum of %2 feet tall. The Storm Kindler can damage and trap|StormKindlerLVL|StormShapeHeight"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "Small|PREVARLT:StormKindlerLVL,4"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "Medium|PREVARGTEQ:StormKindlerLVL,4|PREVARLT:StormKindlerLVL,6"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "Large|PREVARGTEQ:StormKindlerLVL,6|PREVARLT:StormKindlerLVL,8"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "Huge|PREVARGTEQ:StormKindlerLVL,8"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "or smaller creatures caught in her whirlwind, dealing lethal damage equal to her unarmed strike damage to each such creature that fails a Reflex save (DC %1) and lifting it into the air if it fails a second Reflex save.|10+StormKindlerLVL+STR"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",

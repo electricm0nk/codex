@@ -34,19 +34,19 @@
       },
       {
         "key": "DESC",
-        "value": "Within %1, the locals are more likely to react favorably toward the Chelish diva.|%LIST|PREVARLT:BardLVL,17"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "The diva's renown has spread far, and most civilized folk know of her (GM's discretion).|PREVARGTEQ:BardLVL,17"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "The bard gains a +%1 bonus on Bluff and Intimidate checks in that area and to influence people from that area.|DivaFamousBonus"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "The region is a settlement or settlements with a total population of %1,000 or fewer people.|DivaFamousPopulation|PREVARLT:BardLVL,17"
+        "value": "[redacted PI]"
       },
       {
         "key": "STACK",

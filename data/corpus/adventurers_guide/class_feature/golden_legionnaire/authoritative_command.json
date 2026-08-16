@@ -34,15 +34,15 @@
       },
       {
         "key": "DESC",
-        "value": "As a move action,|PREVARLT:GoldenLegionnaireLVL,8"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "As a swift action,|PREVARGTEQ:GoldenLegionnaireLVL,8"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "a Golden Legionnaire can issue orders to %1 allies who are within 30 feet and can see, hear, and understand him. As long as at least one selected ally obeys the Golden Legionnaire's orders during that round, the Golden Legionnaire and each compliant ally gain a +%2 competence bonus on attack rolls, weapon damage rolls, and saving throws and to Armor Class for 1 round. Affected allies are not under any obligation to obey these commands, but do not gain the bonuses if they ignore the commands.|GoldenLegionnaireLVL/2|AuthoritativeCommandBonus"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",

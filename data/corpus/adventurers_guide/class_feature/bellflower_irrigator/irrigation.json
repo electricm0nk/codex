@@ -30,7 +30,7 @@
       },
       {
         "key": "DESC",
-        "value": "If a Bellflower irrigator studies his target for 3 rounds (spending a standard action each round to do so) and then makes a sneak attack with a melee weapon that successfully deals damage, the attack has the additional effect of possibly either paralyzing or killing the target (Bellflower irrigator's choice). The death attack fails if the target detects the Bellflower irrigator or recognizes him as an enemy. If the victim of the attack fails a Fortitude save (DC %1) against the kill effect, she dies. If the saving throw fails against the paralysis effect, the victim is rendered helpless and unable to act for 1d6+%2 rounds. If the victim's saving throw succeeds, the attack is just a normal sneak attack. Once the Bellflower irrigator has completed the 3 rounds of study, he must make the irrigation attempt within the next 3 rounds. A Bellflower irrigator can attempt to kill or paralyze a creature in this way %3 times per day.|10+RogueLVL/2+INT|RogueLVL/2|(RogueLVL-4)/4"
+        "value": "[redacted PI]"
       }
     ]
   },

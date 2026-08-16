@@ -34,11 +34,11 @@
       },
       {
         "key": "DESC",
-        "value": "The recovery of the lost lyrics and melody of the famed \"Song of Silver\" aided the Silver Ravens immeasurably in their fight against the Chelish tyrant Barzillai Thrune. While the true \"Song of Silver\" must be performed in the Kintargo Opera House by a skilled performer, argent dramaturges have learned to create a lesser version of the \"Song of Silver\" that can take effect when performed in any location. When the argent dramaturge uses her argent performance to create the \"Song of Silver,\" all weapons (both natural and manufactured) within a %1`-foot radius of the argent dramaturge are treated as if they were silver for the purpose of overcoming damage reduction, and %2 targets become immune to fear effects and gain a +4 sacred bonus on saving throws against charm and compulsion effects.|SongOfSilverRadius|max(1,CHA)"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "Once per day as an immediate action, an argent dramaturge can grant a single ally who is currently benefiting from the saving throw bonus from the \"Song of Silver\" the effects of a breath of life spell (CL = the argent dramaturge's character level). Granting this effect immediately ends the \"Song of Silver\" performance, and the argent dramaturge must wait 3 rounds before activating a new \"Song of Silver\" (but she can activate other argent or bardic performances in the meantime).|PREVARGTEQ:ArgentDramaturgeLVL,5"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",

@@ -30,15 +30,15 @@
       },
       {
         "key": "DESC",
-        "value": "When using battle dance, the Dawnflower dervish can enter a trance-like state where his spinning motion represents the movement of the planets around the sun, and his spirit is attuned to the healing aspects of Sarenrae. By spending a move action focusing on his whirling, the dervish can apply the Quicken Spell feat to any cure spell he is about to cast (effectively spending a move action and swift action to cast the spell). This does not alter the level of the spell or the casting time."
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "The dervish can use this ability once per day.|PREVAREQ:MeditativeWhirlTimes,1"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "The dervish can use this ability %1 times per day.|MeditativeWhirlTimes|PREVARGT:MeditativeWhirlTimes,1"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",

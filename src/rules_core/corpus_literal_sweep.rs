@@ -50,6 +50,8 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
+use crate::rules_core::shape_b_v1::REDACTED_PI_MARKER;
+
 /// Token keys this repo synthesizes rather than transcribes, each with the
 /// LST token name its value must be found under in the book's corpus.
 ///
@@ -90,6 +92,16 @@ pub struct ShippedRecord {
     pub identities: BTreeSet<String>,
     /// `data.raw_tokens`, in order.
     pub tokens: Vec<ShippedToken>,
+    /// `true` when this record's `license` is `"PI-REDACTED"` and
+    /// `pi_field` is `"description"` -- the declared-PI reader
+    /// (`SD-30 decisions.md §53.5`) redacted `data.description` to
+    /// [`REDACTED_PI_MARKER`]. When true, a `raw_tokens` entry whose value
+    /// is ALSO exactly the marker is expected to differ from the real
+    /// corpus row (that IS the redaction) and is exempted from the
+    /// byte-match check in [`compare_tokens`] -- see that function's own
+    /// doc comment for why this is a narrow, declared exemption and not a
+    /// loosened rule.
+    pub pi_redacted_description: bool,
 }
 
 /// One way a shipped record failed to byte-match its corpus literal.
@@ -204,6 +216,18 @@ pub fn token_closure(
 /// `book_corpus_tokens` is every tab field of every `.lst` row in the record's
 /// book — the wider surface a synthesized token is checked against, since by
 /// construction it was read from a file other than the record's own row.
+///
+/// **The one declared exemption.** When `record.pi_redacted_description` is
+/// `true` (its `license`/`pi_field` state a real, declared-PI redaction
+/// already verified by `declared_pi_shipping_audit`'s CHECK A), a `DESC`
+/// token whose value is EXACTLY [`REDACTED_PI_MARKER`] is expected to
+/// differ from the real corpus row — that mismatch IS the redaction, not a
+/// transcription defect — and is skipped rather than reported. Narrow by
+/// construction: only the `DESC` key, only the literal marker byte string,
+/// only when the record's own metadata already declares the redaction, so a
+/// record that merely happens to carry that string coincidentally (and is
+/// NOT `license: "PI-REDACTED"`) is still checked normally, and every OTHER
+/// token on a redacted record still must byte-match.
 pub fn compare_tokens(
     record: &ShippedRecord,
     closure: &BTreeSet<String>,
@@ -213,6 +237,9 @@ pub fn compare_tokens(
     let mut findings = Vec::new();
     for token in &record.tokens {
         tally.tokens_compared += 1;
+        if record.pi_redacted_description && token.key == "DESC" && token.value == REDACTED_PI_MARKER {
+            continue;
+        }
         let joined = token.joined();
         if let Some((_, lst_name)) =
             SYNTHESIZED_TOKEN_KEYS.iter().find(|(key, _)| *key == token.key)
@@ -358,6 +385,8 @@ fn parse_transcription(
             identities.insert(name.to_string());
         }
     }
+    let pi_redacted_description = value.get("license").and_then(serde_json::Value::as_str) == Some("PI-REDACTED")
+        && value.get("pi_field").and_then(serde_json::Value::as_str) == Some("description");
     Ok(Some(ShippedRecord {
         record_path: record_path.to_string(),
         source_path,
@@ -368,6 +397,7 @@ fn parse_transcription(
             .map(str::to_string),
         identities,
         tokens,
+        pi_redacted_description,
     }))
 }
 
@@ -386,6 +416,7 @@ mod tests {
                 .iter()
                 .map(|(k, v)| ShippedToken { key: k.to_string(), value: v.to_string() })
                 .collect(),
+            pi_redacted_description: false,
         }
     }
 
@@ -425,6 +456,60 @@ mod tests {
             "a shipped COST of 50 over a corpus COST of 5 must be reported"
         );
         assert_eq!(tally.tokens_compared, 2);
+    }
+
+    /// `OPEN-ISSUES.md` row 48/49: a record whose description was
+    /// genuinely PI-redacted (`license: "PI-REDACTED"`,
+    /// `pi_field: "description"`) legitimately carries a `DESC` raw_token
+    /// reading `[redacted PI]`, which by construction differs from the
+    /// real corpus row's own `DESC:` value. That must NOT be reported.
+    #[test]
+    fn a_declared_pi_redacted_desc_token_is_exempt_from_the_byte_match() {
+        let mut rec = record(&[("COST", "5"), ("DESC", "[redacted PI]")]);
+        rec.pi_redacted_description = true;
+        let rows = ["Thing\tCOST:5\tDESC:The real Golarion-specific prose."];
+        let mut tally = SweepTally::default();
+        let findings = compare_tokens(
+            &rec,
+            &closure_of(&rows, &rec.identities),
+            &BTreeSet::new(),
+            &mut tally,
+        );
+        assert_eq!(findings, vec![], "a declared-redacted DESC token must not be flagged");
+    }
+
+    /// The exemption is narrow: it does not extend to any OTHER drifted
+    /// token on a redacted record, and it does not fire at all unless the
+    /// record's own metadata declares the redaction.
+    #[test]
+    fn the_redaction_exemption_does_not_cover_other_tokens_or_undeclared_records() {
+        // Other tokens on a redacted record still must byte-match.
+        let mut rec = record(&[("COST", "50"), ("DESC", "[redacted PI]")]);
+        rec.pi_redacted_description = true;
+        let rows = ["Thing\tCOST:5\tDESC:The real Golarion-specific prose."];
+        let mut tally = SweepTally::default();
+        let findings = compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(
+            findings,
+            vec![Finding::TokenNotInClosure { record: rec.record_path.clone(), token: "COST:50".to_string() }],
+            "COST drift on a redacted record must still be reported"
+        );
+
+        // The literal marker string on a record that is NOT declared
+        // redacted is still checked normally (and fails, as it should).
+        let rec2 = record(&[("DESC", "[redacted PI]")]);
+        assert!(!rec2.pi_redacted_description);
+        let rows2 = ["Thing\tDESC:The real prose."];
+        let mut tally2 = SweepTally::default();
+        let findings2 = compare_tokens(&rec2, &closure_of(&rows2, &rec2.identities), &BTreeSet::new(), &mut tally2);
+        assert_eq!(
+            findings2,
+            vec![Finding::TokenNotInClosure {
+                record: rec2.record_path.clone(),
+                token: "DESC:[redacted PI]".to_string()
+            }],
+            "the marker string on an UNDECLARED record must still be checked normally"
+        );
     }
 
     #[test]

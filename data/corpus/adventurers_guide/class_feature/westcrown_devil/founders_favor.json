@@ -38,7 +38,7 @@
       },
       {
         "key": "DESC",
-        "value": "A group known as the founders of Aroden are the patrons of Westcrown. So strong are the traditions this group imprinted on the city that even Cheliax's relatively recent dedication to the Prince of Darkness has not effaced their mark upon the City of Twilight. A Westcrown devil learns to call upon the founders' spiritual power, enjoying a mastery of the city matched by few. At 1st level, a Westcrown devil gains a pool of favor points equal to his class level + his Intelligence, Wisdom, or Charisma modifier (whichever is highest). In addition to the powers inspired by specific founders, the Westcrown devil can spend one favor point to add a +%2 bonus on a skill check without spending an action. The Westcrown devil must use this ability before learning the result of the check, and he can add this additional bonus only once per skill check. The pool of favor is replenished each morning after 8 hours of rest. As the Westcrown devil gains levels, he learns to call upon powers inspired by specific founders. The caster level of spell-like abilities used this way is equal to the character's class level. Effects (including spell-like abilities) that allow a saving throw have a DC %3.|FoundersFavorPool|max(1,WestcrownDevilLVL/2)|FoundersFavorDC"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",

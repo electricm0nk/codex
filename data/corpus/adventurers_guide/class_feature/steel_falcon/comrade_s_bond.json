@@ -30,23 +30,23 @@
       },
       {
         "key": "DESC",
-        "value": "A Steel Falcon's love of freedom and hatred of slavery are so great that she evokes similar feelings in her companions."
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "Once per day as a move action,|PREVARLT:SteelFalconLVL,7"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "Twice per day as a swift action,|PREVARGTEQ:SteelFalconLVL,7|PREVARLT:SteelFalconLVL,10"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "Three times per day as a free action,|PREVARGTEQ:SteelFalconLVL,10"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "she can grant her allies half her enemy of slavers bonus against all appropriate targets in sight; the allies must be within 30 feet and able to see or hear her. This bonus lasts for %1 rounds. This bonus does not stack with any favored enemy bonuses her allies have; they use whichever bonus is higher.|max(1,CHA)"
+        "value": "[redacted PI]"
       }
     ]
   },

@@ -30,31 +30,31 @@
       },
       {
         "key": "DESC",
-        "value": "A mantis zealot can emulate Achaekek's grace. As long as he is wearing light or no armor, as a swift action he can gain"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "improved |PRECLASS:1,Warpriest=13"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "uncanny dodge. He can use this ability for %1 minutes per day, but it must be spent in 1-minute increments.|WarpriestLVL"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": " If he already has the uncanny dodge ability from another source, he instead gains improved uncanny dodge while this ability is active.|!PRECLASS:1,Warpriest=13"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": " When he uses this ability, he gains evasion (or improved evasion if he already has evasion from another source).|PRECLASS:1,Warpriest=10|!PRECLASS:1,Warpriest=19"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": " He can activate this ability as part of making an initiative check, before rolling the die.|PRECLASS:1,Warpriest=16"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": " He gains improved evasion instead of evasion.|PRECLASS:1,Warpriest=19"
+        "value": "[redacted PI]"
       }
     ]
   },

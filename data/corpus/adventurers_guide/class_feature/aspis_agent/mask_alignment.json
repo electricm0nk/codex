@@ -30,15 +30,15 @@
       },
       {
         "key": "DESC",
-        "value": "As a standard action, an Aspis agent can alter her alignment aura to deceive effects that detect alignment. She can emulate a different aura of her choice or to radiate no alignment aura. This affects only alignment detection, not effects that cause harm or are otherwise based on alignment. This effect lasts until she dismisses it or changes her alignment aura again."
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "An Aspis agent targeted with an effect that detects alignment or with any alignment-based effect can automatically identify the effect by attempting a Spellcraft check. If successful, she can mask her alignment as an immediate action.|PREVARGTEQ:AspisAgentLVL,6"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "When an Aspis agent assumes a false alignment aura, she is treated as having that alignment for all effects of magic items, spells, and spell-like or supernatural effects (such as forbiddance, sympathy, or an unholy weapon), including magical traps based on alignment. While masking her alignment, she ignores these types of effects that relate to her true alignment.|PREVARGTEQ:AspisAgentLVL,10"
+        "value": "[redacted PI]"
       }
     ]
   },
