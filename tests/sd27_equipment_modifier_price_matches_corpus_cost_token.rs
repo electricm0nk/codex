@@ -202,9 +202,13 @@ fn every_newly_reachable_record_is_priced_by_its_own_corpus_cost_token() {
         "records priced by a numeric COST: token, by an unevaluated formula, and with no COST: \
          token at all"
     );
-    // ACG 269 + ARG 200 + PU 42: every record in all three books is covered,
-    // so none can be skipped by a silently-failing file walk.
-    assert_eq!(checked_numeric + checked_formula + checked_absent, 511);
+    // RAISED `SD31-W4-INTEGRATE-001`, 2026-08-16, same reconciliation as the
+    // tuple assertion above: 511 -> 574 (433 + 1 + 140), covering
+    // `equipment_gap_tables`'s real ACG/ARG additions on top of the
+    // original ACG 269 + ARG 200 + PU 42 population. Every record in all
+    // three books is still covered, so none can be skipped by a
+    // silently-failing file walk.
+    assert_eq!(checked_numeric + checked_formula + checked_absent, 574);
 }
 
 /// The two rows named in the on-screen defect report, stated explicitly so
