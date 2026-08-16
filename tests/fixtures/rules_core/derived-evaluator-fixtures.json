@@ -1735,5 +1735,101 @@
         "bonus": -2
       }
     }
+  ],
+  "monster_token_family": "BONUS:VAR|SLA_CL",
+  "monster_derivation": "PF1's own \"Spell-Like Abilities\" universal monster rule (Bestiary Appendix 1: \"Unless otherwise noted... the creature's caster level is equal to its Hit Dice.\"). PCGen encodes this per-monster as a bare BONUS:VAR|SLA_CL|HD token (or the equivalent max(TL,1) form used inside its own SPELLS:Innate lines). This repo's monster ingest carries no dedicated Hit Dice field, so expected.spell_like_ability_caster_level is hand-read from the SAME row's MONSTERCLASS:<type>:<HD> token's trailing integer -- pinned verbatim here as monster_class_token -- never from running the evaluator under test.",
+  "monster_independence": "Every monster_entries value is read by hand from the upstream PCGen .lst bytes (upstream_lst/upstream_lst_sha256/upstream_line) -- the same four independent guarantees derived_evaluator_fixture_check.rs's module doc states for the equipment entries apply here: different source artifact (upstream .lst, not data/corpus/), committed before the check that reads it, re-derivable from the pinned field (tests/derived_evaluator_fixture_check_monster.rs), and anchored to the same upstream bytes the engine's own corpus ingest cites.",
+  "monster_entries": [
+    {
+      "unit_id": "bestiary:monster:demon_balor",
+      "book": "bestiary",
+      "record_key": "Demon (Balor)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 93,
+      "corpus_field": "BONUS:VAR|SLA_CL|HD",
+      "monster_class_token": "Outsider (Fort/Will):20",
+      "expected": {
+        "spell_like_ability_caster_level": 20
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:linnorm_crag",
+      "book": "bestiary",
+      "record_key": "Linnorm (Crag)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 269,
+      "corpus_field": "BONUS:VAR|SLA_CL|HD",
+      "monster_class_token": "Dragon:15",
+      "expected": {
+        "spell_like_ability_caster_level": 15
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:linnorm_ice",
+      "book": "bestiary",
+      "record_key": "Linnorm (Ice)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 270,
+      "corpus_field": "BONUS:VAR|SLA_CL|HD",
+      "monster_class_token": "Dragon:18",
+      "expected": {
+        "spell_like_ability_caster_level": 18
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:linnorm_tarn",
+      "book": "bestiary",
+      "record_key": "Linnorm (Tarn)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 271,
+      "corpus_field": "BONUS:VAR|SLA_CL|HD",
+      "monster_class_token": "Dragon:22",
+      "expected": {
+        "spell_like_ability_caster_level": 22
+      }
+    },
+    {
+      "unit_id": "book_of_the_damned_volume_2:monster:demon_brimorak",
+      "book": "book_of_the_damned_volume_2",
+      "record_key": "Demon (Brimorak)",
+      "upstream_lst": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_races.lst",
+      "upstream_lst_sha256": "837eb03a72aedd5790bab3fc53ffd3a19f7e66f3d75e32fdad653697abef6dd7",
+      "upstream_line": 8,
+      "corpus_field": "BONUS:VAR|SLA_CL|HD",
+      "monster_class_token": "Outsider (Fort/Ref):6",
+      "expected": {
+        "spell_like_ability_caster_level": 6
+      }
+    },
+    {
+      "unit_id": "book_of_the_damned_volume_2:monster:demon_seraptis",
+      "book": "book_of_the_damned_volume_2",
+      "record_key": "Demon (Seraptis)",
+      "upstream_lst": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_races.lst",
+      "upstream_lst_sha256": "837eb03a72aedd5790bab3fc53ffd3a19f7e66f3d75e32fdad653697abef6dd7",
+      "upstream_line": 9,
+      "corpus_field": "BONUS:VAR|SLA_CL|HD",
+      "monster_class_token": "Outsider (Fort/Will):15",
+      "expected": {
+        "spell_like_ability_caster_level": 15
+      }
+    },
+    {
+      "unit_id": "book_of_the_damned_volume_2:monster:demon_vavakia",
+      "book": "book_of_the_damned_volume_2",
+      "record_key": "Demon (Vavakia)",
+      "upstream_lst": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_races.lst",
+      "upstream_lst_sha256": "837eb03a72aedd5790bab3fc53ffd3a19f7e66f3d75e32fdad653697abef6dd7",
+      "upstream_line": 10,
+      "corpus_field": "BONUS:VAR|SLA_CL|HD",
+      "monster_class_token": "Outsider (Fort/Will):18",
+      "expected": {
+        "spell_like_ability_caster_level": 18
+      }
+    }
   ]
 }
