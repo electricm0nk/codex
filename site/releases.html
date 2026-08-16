@@ -6,18 +6,45 @@
   <title>Releases — Campaign Codex</title>
   <meta name="description" content="Release notes for Campaign Codex, the open-source Pathfinder 1e rules engine." />
   <meta name="author" content="electricm0nk" />
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('codex-theme') === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="/styles.css" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E📕%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="/">Campaign Codex</a>
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="12" cy="12" rx="10" ry="4" stroke="currentColor" stroke-width="1.4"/>
+            <ellipse cx="12" cy="12" rx="10" ry="4" stroke="currentColor" stroke-width="1.4" transform="rotate(60 12 12)"/>
+            <ellipse cx="12" cy="12" rx="10" ry="4" stroke="currentColor" stroke-width="1.4" transform="rotate(120 12 12)"/>
+            <circle cx="12" cy="12" r="2.2" fill="currentColor"/>
+          </svg>
+        </span>
+        Campaign Codex
+      </a>
       <nav class="site-nav" aria-label="Primary">
         <a href="/">Overview</a>
-        <a href="/status.html">Status</a>
+        <a href="/#why">Why Codex</a>
+        <a href="/#install">Install</a>
         <a href="/releases.html">Releases</a>
         <a href="https://github.com/electricm0nk/codex">GitHub →</a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle light mode" aria-pressed="false">
+          <span class="theme-toggle-track">
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5a8.5 8.5 0 1 0 11.2 11.2Z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span class="theme-toggle-thumb"></span>
+          </span>
+        </button>
       </nav>
     </div>
   </header>
@@ -165,9 +192,29 @@
 
   <footer class="site-footer">
     <div class="wrap">
-      <p>Campaign Codex is an independent open-source project. Pathfinder and the Pathfinder Compatibility Logo are trademarks of Paizo Inc.</p>
+      <p>Campaign Codex is an independent open-source project, not affiliated with or endorsed by any third-party system publisher. See <a href="/#trademarks">third-party trademarks</a>.</p>
       <p>Source code: MIT. Game rules data: see per-dataset licenses.</p>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      function isLight() { return document.documentElement.getAttribute('data-theme') === 'light'; }
+      function sync() { btn.setAttribute('aria-pressed', String(isLight())); }
+      sync();
+      btn.addEventListener('click', function () {
+        if (isLight()) {
+          document.documentElement.removeAttribute('data-theme');
+          try { localStorage.setItem('codex-theme', 'dark'); } catch (e) {}
+        } else {
+          document.documentElement.setAttribute('data-theme', 'light');
+          try { localStorage.setItem('codex-theme', 'light'); } catch (e) {}
+        }
+        sync();
+      });
+    })();
+  </script>
 </body>
 </html>
