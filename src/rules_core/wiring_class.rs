@@ -1155,6 +1155,16 @@ pub fn build_copy_base_index(
     index
 }
 
+/// The two corpus-wide indexes [`token_closure_rows`] resolves a record's
+/// closure against — bundled into one parameter so the function stays
+/// under clippy's `too_many_arguments` threshold as this program adds more
+/// closure-widening indexes over time (`.MOD` rows, then `.COPY=` bases;
+/// see each field's own doc comment for what it resolves and why).
+pub struct ClosureIndexes<'a> {
+    pub mod_index: &'a BTreeMap<(String, String), Vec<String>>,
+    pub copy_base_index: &'a BTreeMap<(String, String), String>,
+}
+
 /// The full token closure for one record: its base corpus row, the plain
 /// base row a `.COPY=` row inherits from (if any — see
 /// [`build_copy_base_index`]), and every `.MOD` row targeting its name or
@@ -1162,8 +1172,7 @@ pub fn build_copy_base_index(
 /// `.iter().map(|r| r.as_deref())`) to [`determine_closure`].
 pub fn token_closure_rows(
     lines: &mut CorpusLines,
-    mod_index: &BTreeMap<(String, String), Vec<String>>,
-    copy_base_index: &BTreeMap<(String, String), String>,
+    indexes: ClosureIndexes,
     book: &str,
     file: &str,
     line: usize,
@@ -1172,15 +1181,14 @@ pub fn token_closure_rows(
 ) -> Vec<Option<String>> {
     let base_row = lines.line(book, file, line);
     let mut rows = vec![base_row.clone()];
-    if let Some(row) = base_row.as_deref() {
-        if let Some(base_identity) = copy_base_identity(row) {
-            if let Some(copy_base_row) =
-                copy_base_index.get(&(book.to_string(), base_identity.to_string()))
-            {
-                rows.push(Some(copy_base_row.clone()));
-            }
-        }
+    if let Some(row) = base_row.as_deref()
+        && let Some(base_identity) = copy_base_identity(row)
+        && let Some(copy_base_row) =
+            indexes.copy_base_index.get(&(book.to_string(), base_identity.to_string()))
+    {
+        rows.push(Some(copy_base_row.clone()));
     }
+    let mod_index = indexes.mod_index;
     let mut seen_names: BTreeSet<&str> = BTreeSet::new();
     for n in [name, key] {
         if !seen_names.insert(n) {

@@ -21,7 +21,8 @@ use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
 use crate::rules_core::wiring_class::{
-    CorpusLines, build_copy_base_index, build_mod_index, determine_closure, token_closure_rows,
+    ClosureIndexes, CorpusLines, build_copy_base_index, build_mod_index, determine_closure,
+    token_closure_rows,
 };
 
 /// GE-01 `wiring_class` support shared by every per-book generator: builds
@@ -80,8 +81,7 @@ impl WiringClassIndex {
     ) -> (String, Vec<String>) {
         let rows = token_closure_rows(
             lines,
-            &self.mod_index,
-            &self.copy_base_index,
+            ClosureIndexes { mod_index: &self.mod_index, copy_base_index: &self.copy_base_index },
             &self.book_id,
             file,
             line as usize,

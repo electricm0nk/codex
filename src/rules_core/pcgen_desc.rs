@@ -772,7 +772,7 @@ pub fn leaked_pcgen_syntax(text: &str) -> Option<&'static str> {
             && !(i > 0 && chars[i - 1].is_ascii_digit())
             && !is_percentile_dice_notation(&chars, i)
         {
-            return Some("unsubstituted bare '%' placeholder hole");
+            return Some("unsubstituted bare '%' gap");
         }
         if *c == '|' {
             let left_open = i == 0 || chars[i - 1].is_whitespace();
@@ -915,27 +915,27 @@ mod tests {
     fn a_percent_hole_not_followed_by_a_digit_or_keyword_still_leaks() {
         assert_eq!(
             leaked_pcgen_syntax("Cast % 1/day"),
-            Some("unsubstituted bare '%' placeholder hole")
+            Some("unsubstituted bare '%' gap")
         );
         assert_eq!(
             leaked_pcgen_syntax("Cast % at will"),
-            Some("unsubstituted bare '%' placeholder hole")
+            Some("unsubstituted bare '%' gap")
         );
         assert_eq!(
             leaked_pcgen_syntax("+% enhancement"),
-            Some("unsubstituted bare '%' placeholder hole")
+            Some("unsubstituted bare '%' gap")
         );
         assert_eq!(
             leaked_pcgen_syntax("Darkvision % ft."),
-            Some("unsubstituted bare '%' placeholder hole")
+            Some("unsubstituted bare '%' gap")
         );
         assert_eq!(
             leaked_pcgen_syntax("Item has 10 ranks in %"),
-            Some("unsubstituted bare '%' placeholder hole")
+            Some("unsubstituted bare '%' gap")
         );
         assert_eq!(
             leaked_pcgen_syntax("+%d6 additional ectoplasmic damage"),
-            Some("unsubstituted bare '%' placeholder hole")
+            Some("unsubstituted bare '%' gap")
         );
         // Literal percent signs (digit immediately before '%') must never
         // be flagged by this new arm.
@@ -962,7 +962,7 @@ mod tests {
         // by a dice count.
         assert_eq!(
             leaked_pcgen_syntax("gold%"),
-            Some("unsubstituted bare '%' placeholder hole")
+            Some("unsubstituted bare '%' gap")
         );
     }
 

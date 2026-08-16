@@ -6564,8 +6564,7 @@ fn main() {
             // the directory `enumerate_book` actually walked to find it.
             let rows = token_closure_rows(
                 &mut corpus_lines,
-                &mod_index,
-                &copy_base_index,
+                wiring_class::ClosureIndexes { mod_index: &mod_index, copy_base_index: &copy_base_index },
                 &unit.source_book,
                 &unit.provenance.file,
                 unit.provenance.line,
@@ -7221,8 +7220,7 @@ mod wiring_class_wiring_tests {
 
         let rows = token_closure_rows(
             &mut lines,
-            &mod_index,
-            &copy_base_index,
+            wiring_class::ClosureIndexes { mod_index: &mod_index, copy_base_index: &copy_base_index },
             &unit.book,
             &unit.provenance.file,
             unit.provenance.line,
@@ -7287,8 +7285,7 @@ mod wiring_class_wiring_tests {
 
         let rows = token_closure_rows(
             &mut lines,
-            &mod_index,
-            &copy_base_index,
+            wiring_class::ClosureIndexes { mod_index: &mod_index, copy_base_index: &copy_base_index },
             &unit.book,
             &unit.provenance.file,
             unit.provenance.line,
@@ -7335,8 +7332,7 @@ mod wiring_class_wiring_tests {
 
         let rows = token_closure_rows(
             &mut lines,
-            &mod_index,
-            &copy_base_index,
+            wiring_class::ClosureIndexes { mod_index: &mod_index, copy_base_index: &copy_base_index },
             &unit.book,
             &unit.provenance.file,
             unit.provenance.line,
@@ -7370,8 +7366,7 @@ mod wiring_class_wiring_tests {
         };
         let rows = token_closure_rows(
             &mut lines,
-            &mod_index,
-            &copy_base_index,
+            wiring_class::ClosureIndexes { mod_index: &mod_index, copy_base_index: &copy_base_index },
             &unit.book,
             &unit.provenance.file,
             unit.provenance.line,
